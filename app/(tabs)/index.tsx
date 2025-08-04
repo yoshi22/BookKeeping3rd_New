@@ -4,8 +4,10 @@ import { useRouter } from "expo-router";
 import {
   Screen,
   Container,
+  Flex,
 } from "../../src/components/layout/ResponsiveLayout";
 import { useTheme } from "../../src/context/ThemeContext";
+import { TypographyUtils } from "../../src/theme/typography";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -14,42 +16,113 @@ export default function HomeScreen() {
   return (
     <Screen safeArea={true} statusBarStyle="dark-content">
       <Container style={styles.container}>
-        {/* アプリタイトル（ヘッダー代替） */}
-        <View style={styles.headerSection}>
-          <Text style={styles.appTitle}>簿記3級 確実復習</Text>
-        </View>
+        <Flex
+          align="center"
+          justify="center"
+          gap={theme.spacing["4xl"]}
+          style={styles.mainContent}
+        >
+          {/* アプリタイトルセクション */}
+          <Flex align="center" gap={theme.spacing.md}>
+            <Text
+              style={[
+                TypographyUtils.getTextStyle("h2"),
+                { color: theme.colors.primary, textAlign: "center" },
+              ]}
+            >
+              簿記3級問題集「確実復習」
+            </Text>
+            <Text
+              style={[
+                TypographyUtils.getTextStyle("subtitle1"),
+                { color: theme.colors.textSecondary, textAlign: "center" },
+              ]}
+            >
+              間違えた問題を確実に潰す学習アプリ
+            </Text>
+          </Flex>
 
-        <Text style={styles.title}>簿記3級問題集「確実復習」</Text>
-        <Text style={styles.subtitle}>間違えた問題を確実に潰す学習アプリ</Text>
+          {/* メニューセクション */}
+          <Flex gap={theme.spacing.lg} style={styles.menuContainer}>
+            <TouchableOpacity
+              style={[
+                styles.menuButton,
+                { backgroundColor: theme.colors.surface },
+              ]}
+              onPress={() => router.push("/learning")}
+            >
+              <Text style={styles.menuIcon}>📚</Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("h5"),
+                  { color: theme.colors.text, marginBottom: theme.spacing.xs },
+                ]}
+              >
+                学習開始
+              </Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("body2"),
+                  { color: theme.colors.textSecondary, textAlign: "center" },
+                ]}
+              >
+                問題を解いて基礎力アップ
+              </Text>
+            </TouchableOpacity>
 
-        <View style={styles.menuContainer}>
-          <TouchableOpacity
-            style={styles.menuButton}
-            onPress={() => router.push("/learning")}
-          >
-            <Text style={styles.menuIcon}>📚</Text>
-            <Text style={styles.menuTitle}>学習開始</Text>
-            <Text style={styles.menuSubtitle}>問題を解いて基礎力アップ</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.menuButton,
+                { backgroundColor: theme.colors.surface },
+              ]}
+              onPress={() => router.push("/review")}
+            >
+              <Text style={styles.menuIcon}>🔄</Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("h5"),
+                  { color: theme.colors.text, marginBottom: theme.spacing.xs },
+                ]}
+              >
+                復習
+              </Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("body2"),
+                  { color: theme.colors.textSecondary, textAlign: "center" },
+                ]}
+              >
+                間違えた問題を重点的に
+              </Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.menuButton}
-            onPress={() => router.push("/review")}
-          >
-            <Text style={styles.menuIcon}>🔄</Text>
-            <Text style={styles.menuTitle}>復習</Text>
-            <Text style={styles.menuSubtitle}>間違えた問題を重点的に</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.menuButton}
-            onPress={() => router.push("/stats")}
-          >
-            <Text style={styles.menuIcon}>📊</Text>
-            <Text style={styles.menuTitle}>学習統計</Text>
-            <Text style={styles.menuSubtitle}>進捗状況を確認</Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={[
+                styles.menuButton,
+                { backgroundColor: theme.colors.surface },
+              ]}
+              onPress={() => router.push("/stats")}
+            >
+              <Text style={styles.menuIcon}>📊</Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("h5"),
+                  { color: theme.colors.text, marginBottom: theme.spacing.xs },
+                ]}
+              >
+                学習統計
+              </Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("body2"),
+                  { color: theme.colors.textSecondary, textAlign: "center" },
+                ]}
+              >
+                進捗状況を確認
+              </Text>
+            </TouchableOpacity>
+          </Flex>
+        </Flex>
       </Container>
     </Screen>
   );
@@ -58,47 +131,18 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-    backgroundColor: "#f5f5f5",
   },
-  headerSection: {
-    position: "absolute",
-    top: 20,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    paddingHorizontal: 20,
-    zIndex: 1,
-  },
-  appTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#2f95dc",
-    textAlign: "center",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#2f95dc",
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: "center",
-    color: "#666",
-    marginBottom: 40,
+  mainContent: {
+    flex: 1,
+    paddingVertical: 40,
   },
   menuContainer: {
     width: "100%",
     maxWidth: 400,
   },
   menuButton: {
-    backgroundColor: "white",
-    padding: 20,
-    marginBottom: 15,
-    borderRadius: 10,
+    padding: 24,
+    borderRadius: 12,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -111,17 +155,6 @@ const styles = StyleSheet.create({
   },
   menuIcon: {
     fontSize: 32,
-    marginBottom: 10,
-  },
-  menuTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
-    color: "#333",
-  },
-  menuSubtitle: {
-    fontSize: 14,
-    color: "#666",
-    textAlign: "center",
+    marginBottom: 12,
   },
 });
