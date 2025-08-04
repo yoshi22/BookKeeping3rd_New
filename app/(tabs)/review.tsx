@@ -142,6 +142,11 @@ export default function ReviewScreen() {
 
   return (
     <Screen safeArea={true} scrollable={true} statusBarStyle="dark-content">
+      {/* アプリタイトル（ヘッダー代替） */}
+      <View style={styles.headerSection}>
+        <Text style={styles.appTitle}>復習</Text>
+      </View>
+
       <View style={styles.header}>
         <Text style={styles.title}>復習モード</Text>
         <Text style={styles.subtitle}>間違えた問題を効率的に復習</Text>
@@ -258,9 +263,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
+  headerSection: {
+    position: "absolute",
+    top: 20,
+    left: 0,
+    right: 0,
+    alignItems: "center",
+    paddingHorizontal: 20,
+    zIndex: 1,
+  },
+  appTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#2f95dc",
+    textAlign: "center",
+  },
   header: {
     padding: 20,
     alignItems: "center",
+    paddingTop: 60, // ヘッダータイトル分のスペース
   },
   title: {
     fontSize: 24,
