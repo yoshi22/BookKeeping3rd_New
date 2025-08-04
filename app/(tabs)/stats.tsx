@@ -16,6 +16,7 @@ import {
   LearningGoals,
 } from "../../src/services/statistics-service";
 import { Screen } from "../../src/components/layout/ResponsiveLayout";
+import { setupDatabase } from "../../src/data/migrations";
 
 export default function StatsScreen() {
   const [overallStats, setOverallStats] = useState<OverallStatistics | null>(
@@ -35,10 +36,31 @@ export default function StatsScreen() {
     trial_balance: { icon: "📊", color: "#4cd964" },
   };
 
+  // データベース初期化確認
+  const ensureDatabaseInitialized = async () => {
+    try {
+      console.log("[StatsScreen] データベース初期化確認開始");
+      await setupDatabase();
+      console.log("[StatsScreen] データベース初期化確認完了");
+    } catch (error) {
+      console.error("[StatsScreen] データベース初期化エラー:", error);
+      console.error("[StatsScreen] Error details:", {
+        message: error instanceof Error ? error.message : error,
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+      throw new Error(
+        `データベースの初期化に失敗しました: ${error instanceof Error ? error.message : error}`,
+      );
+    }
+  };
+
   // 統計データ読み込み
   const loadStatistics = async () => {
     try {
       console.log("[StatsScreen] 統計データ読み込み開始");
+
+      // データベース初期化確認
+      await ensureDatabaseInitialized();
 
       // 全体統計
       const overall = await statisticsService.getOverallStatistics();
@@ -55,7 +77,32 @@ export default function StatsScreen() {
       console.log("[StatsScreen] 統計データ読み込み完了");
     } catch (error) {
       console.error("[StatsScreen] 統計データ読み込みエラー:", error);
-      Alert.alert("エラー", "統計データの読み込みに失敗しました");
+
+      let errorMessage = "統計データの読み込みに失敗しました";
+      if (error instanceof Error) {
+        console.error("[StatsScreen] Error details:", {
+          message: error.message,
+          stack: error.stack,
+        });
+
+        if (error.message.includes("データベースの初期化に失敗しました")) {
+          errorMessage = `データベースの初期化エラー`;
+        } else if (error.message.includes("Database setup failed")) {
+          errorMessage = "データベースの初期化エラー";
+        } else if (error.message.includes("database initialization failed")) {
+          errorMessage =
+            "データベースの初期化に失敗しました。アプリを再起動してください。";
+        } else if (
+          error.message.includes("sqlite") ||
+          error.message.includes("SQLite")
+        ) {
+          errorMessage = "データベースに接続できませんでした。";
+        } else {
+          errorMessage = `統計データ読み込みエラー：${error.message}`;
+        }
+      }
+
+      Alert.alert("エラー", errorMessage);
     } finally {
       setLoading(false);
       setRefreshing(false);

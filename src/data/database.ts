@@ -42,45 +42,83 @@ class WebDatabaseMock {
   runSync(sql: string, params: any[] = []): any {
     console.log(`[WebDB] Mock SQL実行: ${sql}`, params);
 
-    // 基本的なSQL操作をシミュレート
-    const rows: any[] = [];
-    let changes = 0;
-    let lastInsertRowId: number | undefined = undefined;
+    try {
+      // 基本的なSQL操作をシミュレート
+      const rows: any[] = [];
+      let changes = 0;
+      let lastInsertRowId: number | undefined = undefined;
 
-    if (sql.includes("PRAGMA")) {
-      rows.push({ pragma: "ok" });
-    } else if (sql.includes("CREATE TABLE") || sql.includes("CREATE INDEX")) {
-      // テーブル作成・インデックス作成は成功をシミュレート
-      changes = 0;
-    } else if (sql.includes("SELECT")) {
-      const tableName = this.extractTableName(sql);
-      const data = this.tables.get(tableName) || [];
-      rows.push(...data);
-    } else if (sql.includes("INSERT")) {
-      const tableName = this.extractTableName(sql);
-      const data = this.tables.get(tableName) || [];
-      const newId = data.length + 1;
-      data.push({ id: newId, ...this.parseInsertParams(params) });
-      this.tables.set(tableName, data);
-      changes = 1;
-      lastInsertRowId = newId;
-    } else if (sql.includes("UPDATE") || sql.includes("DELETE")) {
-      changes = 1;
+      if (sql.includes("PRAGMA")) {
+        // PRAGMA文は常に成功を返す
+        if (sql.includes("foreign_keys")) {
+          rows.push({ foreign_keys: 1 });
+        } else if (sql.includes("journal_mode")) {
+          rows.push({ journal_mode: "WAL" });
+        } else if (sql.includes("synchronous")) {
+          rows.push({ synchronous: 1 });
+        } else if (sql.includes("auto_vacuum")) {
+          rows.push({ auto_vacuum: 2 });
+        } else if (sql.includes("integrity_check")) {
+          rows.push({ integrity_check: "ok" });
+        } else {
+          rows.push({ pragma: "ok" });
+        }
+      } else if (sql.includes("CREATE TABLE") || sql.includes("CREATE INDEX")) {
+        // テーブル作成・インデックス作成は成功をシミュレート
+        changes = 0;
+        console.log(
+          `[WebDB] テーブル/インデックス作成をシミュレート: ${sql.substring(0, 50)}...`,
+        );
+      } else if (sql.includes("SELECT")) {
+        const tableName = this.extractTableName(sql);
+        const data = this.tables.get(tableName) || [];
+
+        // COUNT(*) クエリの特別処理
+        if (sql.includes("COUNT(*)")) {
+          rows.push({ count: data.length });
+        } else {
+          rows.push(...data.slice(0, 100)); // 最大100件まで返す
+        }
+        console.log(`[WebDB] SELECT from ${tableName}: ${rows.length}件`);
+      } else if (sql.includes("INSERT")) {
+        const tableName = this.extractTableName(sql);
+        const data = this.tables.get(tableName) || [];
+        const newId = data.length + 1;
+        data.push({ id: newId, ...this.parseInsertParams(params) });
+        this.tables.set(tableName, data);
+        changes = 1;
+        lastInsertRowId = newId;
+        console.log(`[WebDB] INSERT into ${tableName}: ID=${newId}`);
+      } else if (sql.includes("UPDATE") || sql.includes("DELETE")) {
+        const tableName = this.extractTableName(sql);
+        changes = 1;
+        console.log(
+          `[WebDB] UPDATE/DELETE from ${tableName}: affected=${changes}`,
+        );
+      }
+
+      const result = {
+        getAllSync: () => {
+          console.log(`[WebDB] getAllSync returning ${rows.length} rows`);
+          return rows;
+        },
+        changes,
+        lastInsertRowId,
+      };
+
+      console.log(
+        `[WebDB] SQL実行結果: changes=${changes}, lastInsertRowId=${lastInsertRowId}, rows=${rows.length}`,
+      );
+      return result;
+    } catch (error) {
+      console.error(`[WebDB] Mock SQL実行エラー: ${sql}`, error);
+      // エラーでも最低限の結果を返してアプリが動作するようにする
+      return {
+        getAllSync: () => [],
+        changes: 0,
+        lastInsertRowId: undefined,
+      };
     }
-
-    const result = {
-      getAllSync: () => {
-        console.log(`[WebDB] getAllSync returning ${rows.length} rows:`, rows);
-        return rows;
-      },
-      changes,
-      lastInsertRowId,
-    };
-
-    console.log(
-      `[WebDB] SQL実行結果: changes=${changes}, lastInsertRowId=${lastInsertRowId}, rows=${rows.length}`,
-    );
-    return result;
   }
 
   async withTransactionAsync(operations: Function): Promise<void> {
@@ -153,12 +191,13 @@ export class DatabaseService {
    * 初期化実行
    */
   private async performInitialization(): Promise<void> {
-    try {
-      console.log(
-        `[DatabaseService] データベース接続開始: ${DATABASE_CONFIG.name}`,
-      );
-      console.log(`[DatabaseService] Platform.OS: ${Platform.OS}`);
+    console.log(
+      `[DatabaseService] データベース接続開始: ${DATABASE_CONFIG.name}`,
+    );
+    console.log(`[DatabaseService] Platform.OS: ${Platform.OS}`);
+    console.log(`[DatabaseService] SQLite モジュール利用可能: ${!!SQLite}`);
 
+    try {
       // Web環境の場合はモック実装を使用
       if (Platform.OS === "web") {
         console.log("[DatabaseService] Web環境検出 - モック実装を使用");
@@ -172,41 +211,80 @@ export class DatabaseService {
           this.db = new WebDatabaseMock();
         } else {
           try {
+            console.log(
+              `[DatabaseService] SQLite接続試行: ${DATABASE_CONFIG.name}`,
+            );
             this.db = SQLite.openDatabaseSync(DATABASE_CONFIG.name);
             console.log("[DatabaseService] SQLite接続成功");
           } catch (sqliteError) {
-            console.warn(
-              "[DatabaseService] SQLite初期化失敗、フォールバックを使用:",
+            console.error(
+              "[DatabaseService] SQLite初期化失敗、詳細:",
               sqliteError,
             );
+            console.error(
+              "[DatabaseService] SQLite Error Stack:",
+              sqliteError instanceof Error
+                ? sqliteError.stack
+                : "No stack trace",
+            );
+            console.warn("[DatabaseService] フォールバックとしてモックを使用");
             this.db = new WebDatabaseMock();
           }
         }
       }
 
-      // 外部キー制約を有効化
-      await this.executeSql("PRAGMA foreign_keys = ON");
+      console.log("[DatabaseService] データベースインスタンス作成完了");
 
-      // WALモードを有効化（パフォーマンス向上）
-      await this.executeSql("PRAGMA journal_mode = WAL");
+      // 基本的なPRAGMA設定を実行
+      try {
+        console.log("[DatabaseService] PRAGMA設定開始");
 
-      // 同期モード設定（データ整合性とパフォーマンスのバランス）
-      await this.executeSql("PRAGMA synchronous = NORMAL");
+        // 外部キー制約を有効化
+        console.log("[DatabaseService] 外部キー制約設定中");
+        await this.executeSql("PRAGMA foreign_keys = ON");
 
-      // バキュームの自動実行設定
-      await this.executeSql("PRAGMA auto_vacuum = INCREMENTAL");
+        // Web環境ではWALモードは使用不可の場合があるため、条件分岐
+        if (Platform.OS !== "web" && SQLite) {
+          console.log("[DatabaseService] WALモード設定中");
+          await this.executeSql("PRAGMA journal_mode = WAL");
+
+          console.log("[DatabaseService] 同期モード設定中");
+          await this.executeSql("PRAGMA synchronous = NORMAL");
+
+          console.log("[DatabaseService] オートバキューム設定中");
+          await this.executeSql("PRAGMA auto_vacuum = INCREMENTAL");
+        }
+
+        console.log("[DatabaseService] PRAGMA設定完了");
+      } catch (pragmaError) {
+        console.warn("[DatabaseService] PRAGMA設定で一部エラー:", pragmaError);
+        // PRAGMA設定のエラーは初期化を阻止しない
+      }
 
       console.log("[DatabaseService] データベース接続完了");
-
       this.isInitialized = true;
     } catch (error) {
+      console.error("[DatabaseService] 初期化中の予期しないエラー:", error);
+      console.error("[DatabaseService] Error details:", {
+        message: error instanceof Error ? error.message : error,
+        stack: error instanceof Error ? error.stack : undefined,
+        platform: Platform.OS,
+        sqliteAvailable: !!SQLite,
+      });
+
       const dbError = this.createDatabaseError(
         "Database initialization failed",
         error,
         "CRITICAL",
-        { config: DATABASE_CONFIG, platform: Platform.OS },
+        {
+          config: DATABASE_CONFIG,
+          platform: Platform.OS,
+          sqliteAvailable: !!SQLite,
+          errorType:
+            error instanceof Error ? error.constructor.name : typeof error,
+        },
       );
-      console.error("[DatabaseService] 初期化エラー:", dbError);
+      console.error("[DatabaseService] 最終初期化エラー:", dbError);
       throw dbError;
     }
   }

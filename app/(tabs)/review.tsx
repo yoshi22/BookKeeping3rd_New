@@ -11,16 +11,38 @@ import { router } from "expo-router";
 import { reviewService } from "../../src/services/review-service";
 import { ReviewStatistics } from "../../src/data/repositories/review-item-repository";
 import { Screen } from "../../src/components/layout/ResponsiveLayout";
+import { setupDatabase } from "../../src/data/migrations";
 
 export default function ReviewScreen() {
   const [reviewStats, setReviewStats] = useState<ReviewStatistics | null>(null);
   const [weaknessCategories, setWeaknessCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // データベース初期化確認
+  const ensureDatabaseInitialized = async () => {
+    try {
+      console.log("[ReviewScreen] データベース初期化確認開始");
+      await setupDatabase();
+      console.log("[ReviewScreen] データベース初期化確認完了");
+    } catch (error) {
+      console.error("[ReviewScreen] データベース初期化エラー:", error);
+      console.error("[ReviewScreen] Error details:", {
+        message: error instanceof Error ? error.message : error,
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+      throw new Error(
+        `データベースの初期化に失敗しました: ${error instanceof Error ? error.message : error}`,
+      );
+    }
+  };
+
   // 復習統計データ読み込み
   const loadReviewData = async () => {
     try {
       setLoading(true);
+
+      // データベース初期化確認
+      await ensureDatabaseInitialized();
 
       // 復習統計取得
       const stats = await reviewService.getReviewStatistics();
@@ -53,8 +75,34 @@ export default function ReviewScreen() {
 
       setWeaknessCategories(formattedCategories);
     } catch (error) {
-      console.error("復習データ読み込みエラー:", error);
-      Alert.alert("エラー", "復習データの読み込みに失敗しました");
+      console.error("[ReviewScreen] 復習データ読み込みエラー:", error);
+
+      let errorMessage = "復習データの読み込みに失敗しました";
+      if (error instanceof Error) {
+        console.error("[ReviewScreen] Error details:", {
+          message: error.message,
+          stack: error.stack,
+        });
+
+        if (error.message.includes("データベースの初期化に失敗しました")) {
+          errorMessage = `復讐データ読み込みエラー：Error: データベースの初期化に失敗しました`;
+        } else if (error.message.includes("Database setup failed")) {
+          errorMessage =
+            "復習データ読み込みエラー：Error: データベースの初期化に失敗しました";
+        } else if (error.message.includes("database initialization failed")) {
+          errorMessage =
+            "データベースの初期化に失敗しました。アプリを再起動してください。";
+        } else if (
+          error.message.includes("sqlite") ||
+          error.message.includes("SQLite")
+        ) {
+          errorMessage = "データベースに接続できませんでした。";
+        } else {
+          errorMessage = `復習データ読み込みエラー：${error.message}`;
+        }
+      }
+
+      Alert.alert("エラー", errorMessage);
     } finally {
       setLoading(false);
     }
