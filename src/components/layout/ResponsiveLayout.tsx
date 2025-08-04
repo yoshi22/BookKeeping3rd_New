@@ -1,54 +1,57 @@
 /**
  * レスポンシブレイアウトコンポーネント
  * 簿記3級問題集アプリ - Step 5.1: UIコンポーネント改善
- * 
+ *
  * 画面サイズに対応したレイアウトシステム
  */
 
-import React from 'react';
-import { 
-  View, 
-  ViewStyle, 
-  Dimensions, 
-  ScrollView, 
-  SafeAreaView,
+import React from "react";
+import {
+  View,
+  ViewStyle,
+  Dimensions,
+  ScrollView,
   Platform,
   StatusBar,
-} from 'react-native';
-import { useTheme, useResponsiveTheme } from '../../context/ThemeContext';
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme, useResponsiveTheme } from "../../context/ThemeContext";
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type Orientation = 'portrait' | 'landscape';
+export type Breakpoint = "xs" | "sm" | "md" | "lg" | "xl";
+export type Orientation = "portrait" | "landscape";
 
 /**
  * ブレークポイント定義
  */
 export const breakpoints = {
-  xs: 0,     // ~ 359px
-  sm: 360,   // 360px ~ 413px
-  md: 414,   // 414px ~ 767px
-  lg: 768,   // 768px ~ 1023px
-  xl: 1024,  // 1024px ~
+  xs: 0, // ~ 359px
+  sm: 360, // 360px ~ 413px
+  md: 414, // 414px ~ 767px
+  lg: 768, // 768px ~ 1023px
+  xl: 1024, // 1024px ~
 };
 
 /**
  * 現在のブレークポイントを取得
  */
 export function getCurrentBreakpoint(width: number = screenWidth): Breakpoint {
-  if (width >= breakpoints.xl) return 'xl';
-  if (width >= breakpoints.lg) return 'lg';
-  if (width >= breakpoints.md) return 'md';
-  if (width >= breakpoints.sm) return 'sm';
-  return 'xs';
+  if (width >= breakpoints.xl) return "xl";
+  if (width >= breakpoints.lg) return "lg";
+  if (width >= breakpoints.md) return "md";
+  if (width >= breakpoints.sm) return "sm";
+  return "xs";
 }
 
 /**
  * 画面向きを取得
  */
-export function getOrientation(width: number = screenWidth, height: number = screenHeight): Orientation {
-  return width > height ? 'landscape' : 'portrait';
+export function getOrientation(
+  width: number = screenWidth,
+  height: number = screenHeight,
+): Orientation {
+  return width > height ? "landscape" : "portrait";
 }
 
 /**
@@ -61,31 +64,31 @@ interface ContainerProps {
   style?: ViewStyle;
 }
 
-export function Container({ 
-  children, 
-  padding = true, 
+export function Container({
+  children,
+  padding = true,
   maxWidth,
-  style 
+  style,
 }: ContainerProps) {
   const { theme } = useTheme();
   const responsiveTheme = useResponsiveTheme(screenWidth);
 
   const containerStyle: ViewStyle = {
     flex: 1,
-    width: '100%',
-    maxWidth: maxWidth || '100%',
-    alignSelf: 'center',
+    width: "100%",
+    maxWidth: maxWidth || "100%",
+    alignSelf: "center",
     ...(padding && {
-      paddingHorizontal: responsiveTheme.getResponsiveSpacing(theme.layoutSpacing.screenPaddingHorizontal),
-      paddingVertical: responsiveTheme.getResponsiveSpacing(theme.layoutSpacing.screenPaddingVertical),
+      paddingHorizontal: responsiveTheme.getResponsiveSpacing(
+        theme.layoutSpacing.screenPaddingHorizontal,
+      ),
+      paddingVertical: responsiveTheme.getResponsiveSpacing(
+        theme.layoutSpacing.screenPaddingVertical,
+      ),
     }),
   };
 
-  return (
-    <View style={[containerStyle, style]}>
-      {children}
-    </View>
-  );
+  return <View style={[containerStyle, style]}>{children}</View>;
 }
 
 /**
@@ -98,18 +101,13 @@ interface GridProps {
   style?: ViewStyle;
 }
 
-export function Grid({ 
-  children, 
-  columns = 2, 
-  gap,
-  style 
-}: GridProps) {
+export function Grid({ children, columns = 2, gap, style }: GridProps) {
   const { theme } = useTheme();
   const defaultGap = gap || theme.spacing.md;
 
   const gridStyle: ViewStyle = {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     marginHorizontal: -defaultGap / 2,
   };
 
@@ -138,22 +136,28 @@ export function Grid({
  */
 interface FlexProps {
   children: React.ReactNode;
-  direction?: 'row' | 'column';
-  justify?: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around' | 'space-evenly';
-  align?: 'flex-start' | 'center' | 'flex-end' | 'stretch';
+  direction?: "row" | "column";
+  justify?:
+    | "flex-start"
+    | "center"
+    | "flex-end"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
+  align?: "flex-start" | "center" | "flex-end" | "stretch";
   wrap?: boolean;
   gap?: number;
   style?: ViewStyle;
 }
 
-export function Flex({ 
-  children, 
-  direction = 'column',
-  justify = 'flex-start',
-  align = 'stretch',
+export function Flex({
+  children,
+  direction = "column",
+  justify = "flex-start",
+  align = "stretch",
   wrap = false,
   gap,
-  style 
+  style,
 }: FlexProps) {
   const { theme } = useTheme();
   const defaultGap = gap || theme.spacing.md;
@@ -162,15 +166,11 @@ export function Flex({
     flexDirection: direction,
     justifyContent: justify,
     alignItems: align,
-    flexWrap: wrap ? 'wrap' : 'nowrap',
+    flexWrap: wrap ? "wrap" : "nowrap",
     gap: defaultGap,
   };
 
-  return (
-    <View style={[flexStyle, style]}>
-      {children}
-    </View>
-  );
+  return <View style={[flexStyle, style]}>{children}</View>;
 }
 
 /**
@@ -184,12 +184,12 @@ interface ShowProps {
   below?: Breakpoint;
 }
 
-export function Show({ 
-  children, 
-  breakpoint, 
+export function Show({
+  children,
+  breakpoint,
   orientation,
   above,
-  below 
+  below,
 }: ShowProps) {
   const currentBreakpoint = getCurrentBreakpoint();
   const currentOrientation = getOrientation();
@@ -238,33 +238,35 @@ interface ResponsiveLayoutProps {
   style?: ViewStyle;
 }
 
-export function ResponsiveLayout({ 
-  children, 
-  xs, 
-  sm, 
-  md, 
-  lg, 
-  xl, 
-  style 
+export function ResponsiveLayout({
+  children,
+  xs,
+  sm,
+  md,
+  lg,
+  xl,
+  style,
 }: ResponsiveLayoutProps) {
   const currentBreakpoint = getCurrentBreakpoint();
 
   const getResponsiveStyle = (): ViewStyle => {
     switch (currentBreakpoint) {
-      case 'xs': return xs || {};
-      case 'sm': return sm || xs || {};
-      case 'md': return md || sm || xs || {};
-      case 'lg': return lg || md || sm || xs || {};
-      case 'xl': return xl || lg || md || sm || xs || {};
-      default: return {};
+      case "xs":
+        return xs || {};
+      case "sm":
+        return sm || xs || {};
+      case "md":
+        return md || sm || xs || {};
+      case "lg":
+        return lg || md || sm || xs || {};
+      case "xl":
+        return xl || lg || md || sm || xs || {};
+      default:
+        return {};
     }
   };
 
-  return (
-    <View style={[getResponsiveStyle(), style]}>
-      {children}
-    </View>
-  );
+  return <View style={[getResponsiveStyle(), style]}>{children}</View>;
 }
 
 /**
@@ -274,21 +276,22 @@ interface ScreenProps {
   children: React.ReactNode;
   scrollable?: boolean;
   safeArea?: boolean;
-  statusBarStyle?: 'light-content' | 'dark-content';
+  statusBarStyle?: "light-content" | "dark-content";
   style?: ViewStyle;
 }
 
-export function Screen({ 
-  children, 
+export function Screen({
+  children,
   scrollable = false,
   safeArea = true,
   statusBarStyle,
-  style 
+  style,
 }: ScreenProps) {
   const { theme } = useTheme();
 
   // ステータスバーのスタイルを自動決定
-  const autoStatusBarStyle = statusBarStyle || (theme.isDark ? 'light-content' : 'dark-content');
+  const autoStatusBarStyle =
+    statusBarStyle || (theme.isDark ? "light-content" : "dark-content");
 
   const screenStyle: ViewStyle = {
     flex: 1,
@@ -296,7 +299,7 @@ export function Screen({
   };
 
   const content = scrollable ? (
-    <ScrollView 
+    <ScrollView
       style={{ flex: 1 }}
       contentContainerStyle={{ flexGrow: 1 }}
       showsVerticalScrollIndicator={false}
@@ -304,20 +307,20 @@ export function Screen({
     >
       {children}
     </ScrollView>
-  ) : children;
+  ) : (
+    children
+  );
 
   const screenContent = safeArea ? (
     <SafeAreaView style={[screenStyle, style]}>
-      {Platform.OS === 'ios' && (
-        <StatusBar barStyle={autoStatusBarStyle} />
-      )}
+      {Platform.OS === "ios" && <StatusBar barStyle={autoStatusBarStyle} />}
       {content}
     </SafeAreaView>
   ) : (
     <View style={[screenStyle, style]}>
-      {Platform.OS === 'android' && (
-        <StatusBar 
-          barStyle={autoStatusBarStyle} 
+      {Platform.OS === "android" && (
+        <StatusBar
+          barStyle={autoStatusBarStyle}
           backgroundColor={theme.colors.primary}
         />
       )}
@@ -338,15 +341,21 @@ interface CardGridProps {
 
 export function CardGrid({ children, style }: CardGridProps) {
   const currentBreakpoint = getCurrentBreakpoint();
-  
+
   const getColumns = (): number => {
     switch (currentBreakpoint) {
-      case 'xs': return 1;
-      case 'sm': return 1;
-      case 'md': return 2;
-      case 'lg': return 3;
-      case 'xl': return 4;
-      default: return 2;
+      case "xs":
+        return 1;
+      case "sm":
+        return 1;
+      case "md":
+        return 2;
+      case "lg":
+        return 3;
+      case "xl":
+        return 4;
+      default:
+        return 2;
     }
   };
 
@@ -370,11 +379,12 @@ export function StatsLayout({ children, style }: StatsLayoutProps) {
   const orientation = getOrientation();
 
   // 横向きの場合は横並び、縦向きの場合は縦並び
-  const isHorizontal = orientation === 'landscape' && currentBreakpoint !== 'xs';
+  const isHorizontal =
+    orientation === "landscape" && currentBreakpoint !== "xs";
 
   return (
-    <Flex 
-      direction={isHorizontal ? 'row' : 'column'}
+    <Flex
+      direction={isHorizontal ? "row" : "column"}
       justify="space-between"
       style={style}
     >
@@ -393,31 +403,25 @@ interface QuestionLayoutProps {
   style?: ViewStyle;
 }
 
-export function QuestionLayout({ 
-  question, 
-  answers, 
-  actions, 
-  style 
+export function QuestionLayout({
+  question,
+  answers,
+  actions,
+  style,
 }: QuestionLayoutProps) {
   const { theme } = useTheme();
-  
+
   return (
     <Container style={style}>
       <Flex gap={theme.spacing.lg}>
         {/* 問題文 */}
-        <View style={{ flex: 1 }}>
-          {question}
-        </View>
-        
+        <View style={{ flex: 1 }}>{question}</View>
+
         {/* 解答欄 */}
-        <View style={{ flex: 2 }}>
-          {answers}
-        </View>
-        
+        <View style={{ flex: 2 }}>{answers}</View>
+
         {/* アクションボタン */}
-        <View>
-          {actions}
-        </View>
+        <View>{actions}</View>
       </Flex>
     </Container>
   );
@@ -427,10 +431,10 @@ export function QuestionLayout({
  * レスポンシブフック
  */
 export function useResponsive() {
-  const [dimensions, setDimensions] = React.useState(Dimensions.get('window'));
+  const [dimensions, setDimensions] = React.useState(Dimensions.get("window"));
 
   React.useEffect(() => {
-    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+    const subscription = Dimensions.addEventListener("change", ({ window }) => {
       setDimensions(window);
     });
 
@@ -444,10 +448,10 @@ export function useResponsive() {
     dimensions,
     breakpoint,
     orientation,
-    isSmallScreen: breakpoint === 'xs' || breakpoint === 'sm',
-    isMediumScreen: breakpoint === 'md',
-    isLargeScreen: breakpoint === 'lg' || breakpoint === 'xl',
-    isPortrait: orientation === 'portrait',
-    isLandscape: orientation === 'landscape',
+    isSmallScreen: breakpoint === "xs" || breakpoint === "sm",
+    isMediumScreen: breakpoint === "md",
+    isLargeScreen: breakpoint === "lg" || breakpoint === "xl",
+    isPortrait: orientation === "portrait",
+    isLandscape: orientation === "landscape",
   };
 }

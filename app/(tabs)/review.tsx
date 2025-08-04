@@ -1,8 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import { router } from 'expo-router';
-import { reviewService } from '../../src/services/review-service';
-import { ReviewStatistics } from '../../src/data/repositories/review-item-repository';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from "react-native";
+import { router } from "expo-router";
+import { reviewService } from "../../src/services/review-service";
+import { ReviewStatistics } from "../../src/data/repositories/review-item-repository";
+import { Screen } from "../../src/components/layout/ResponsiveLayout";
 
 export default function ReviewScreen() {
   const [reviewStats, setReviewStats] = useState<ReviewStatistics | null>(null);
@@ -13,32 +21,40 @@ export default function ReviewScreen() {
   const loadReviewData = async () => {
     try {
       setLoading(true);
-      
+
       // 復習統計取得
       const stats = await reviewService.getReviewStatistics();
       setReviewStats(stats);
-      
+
       // 弱点分野分析
       const weakAreas = await reviewService.analyzeWeakAreas();
-      
+
       // UI表示用にフォーマット
-      const formattedCategories = weakAreas.map(area => ({
+      const formattedCategories = weakAreas.map((area) => ({
         id: area.category,
         name: area.categoryName,
         reviewCount: area.reviewCount,
-        priority: area.averagePriority >= 70 ? 'high' : 
-                  area.averagePriority >= 50 ? 'medium' : 'low',
+        priority:
+          area.averagePriority >= 70
+            ? "high"
+            : area.averagePriority >= 50
+              ? "medium"
+              : "low",
         averagePriority: area.averagePriority,
         recommendation: area.recommendation,
         lastReviewed: area.lastReviewedAt,
-        icon: area.category === 'journal' ? '📝' : 
-              area.category === 'ledger' ? '📋' : '📊'
+        icon:
+          area.category === "journal"
+            ? "📝"
+            : area.category === "ledger"
+              ? "📋"
+              : "📊",
       }));
-      
+
       setWeaknessCategories(formattedCategories);
     } catch (error) {
-      console.error('復習データ読み込みエラー:', error);
-      Alert.alert('エラー', '復習データの読み込みに失敗しました');
+      console.error("復習データ読み込みエラー:", error);
+      Alert.alert("エラー", "復習データの読み込みに失敗しました");
     } finally {
       setLoading(false);
     }
@@ -51,32 +67,39 @@ export default function ReviewScreen() {
   // 復習セッション開始
   const startReviewSession = async (priorityOnly: boolean = false) => {
     try {
-      const options = priorityOnly ? {
-        priorityLevels: ['critical', 'high'] as const,
-        maxCount: 10
-      } : {
-        maxCount: 20
-      };
-      
+      const options = priorityOnly
+        ? {
+            priorityLevels: ["critical", "high"] as (
+              | "critical"
+              | "high"
+              | "medium"
+              | "low"
+            )[],
+            maxCount: 10,
+          }
+        : {
+            maxCount: 20,
+          };
+
       const session = await reviewService.startReviewSession(options);
-      
+
       if (session.questions.length === 0) {
-        Alert.alert('お知らせ', '復習対象の問題がありません');
+        Alert.alert("お知らせ", "復習対象の問題がありません");
         return;
       }
-      
+
       // 復習問題画面に遷移（セッション情報を渡す）
       router.push({
-        pathname: '/question/[id]',
-        params: { 
+        pathname: "/question/[id]",
+        params: {
           id: session.questions[0].id,
           sessionId: session.sessionId,
-          sessionType: 'review'
-        }
+          sessionType: "review",
+        },
       });
     } catch (error) {
-      console.error('復習セッション開始エラー:', error);
-      Alert.alert('エラー', '復習セッションの開始に失敗しました');
+      console.error("復習セッション開始エラー:", error);
+      Alert.alert("エラー", "復習セッションの開始に失敗しました");
     }
   };
 
@@ -85,40 +108,40 @@ export default function ReviewScreen() {
     try {
       const session = await reviewService.startReviewSession({
         category: categoryId as any,
-        maxCount: 15
+        maxCount: 15,
       });
-      
+
       if (session.questions.length === 0) {
-        Alert.alert('お知らせ', `${categoryId}の復習対象問題がありません`);
+        Alert.alert("お知らせ", `${categoryId}の復習対象問題がありません`);
         return;
       }
-      
+
       router.push({
-        pathname: '/question/[id]',
-        params: { 
+        pathname: "/question/[id]",
+        params: {
           id: session.questions[0].id,
           sessionId: session.sessionId,
-          sessionType: 'review'
-        }
+          sessionType: "review",
+        },
       });
     } catch (error) {
-      console.error('カテゴリ別復習開始エラー:', error);
-      Alert.alert('エラー', '復習の開始に失敗しました');
+      console.error("カテゴリ別復習開始エラー:", error);
+      Alert.alert("エラー", "復習の開始に失敗しました");
     }
   };
 
   if (loading) {
     return (
-      <View style={styles.container}>
+      <Screen safeArea={true} statusBarStyle="dark-content">
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>復習データを読み込み中...</Text>
         </View>
-      </View>
+      </Screen>
     );
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <Screen safeArea={true} scrollable={true} statusBarStyle="dark-content">
       <View style={styles.header}>
         <Text style={styles.title}>復習モード</Text>
         <Text style={styles.subtitle}>間違えた問題を効率的に復習</Text>
@@ -126,15 +149,21 @@ export default function ReviewScreen() {
 
       <View style={styles.statsContainer}>
         <View style={styles.statCard}>
-          <Text style={styles.statNumber}>{reviewStats?.totalReviewItems || 0}</Text>
+          <Text style={styles.statNumber}>
+            {reviewStats?.totalReviewItems || 0}
+          </Text>
           <Text style={styles.statLabel}>復習対象</Text>
         </View>
         <View style={styles.statCard}>
-          <Text style={styles.statNumber}>{reviewStats?.priorityReviewCount || 0}</Text>
+          <Text style={styles.statNumber}>
+            {reviewStats?.priorityReviewCount || 0}
+          </Text>
           <Text style={styles.statLabel}>重点復習</Text>
         </View>
         <View style={styles.statCard}>
-          <Text style={styles.statNumber}>{reviewStats?.masteredCount || 0}</Text>
+          <Text style={styles.statNumber}>
+            {reviewStats?.masteredCount || 0}
+          </Text>
           <Text style={styles.statLabel}>克服済み</Text>
         </View>
       </View>
@@ -142,7 +171,7 @@ export default function ReviewScreen() {
       {(reviewStats?.totalReviewItems || 0) > 0 ? (
         <>
           <View style={styles.actionContainer}>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.primaryButton}
               onPress={() => startReviewSession(true)}
             >
@@ -153,7 +182,7 @@ export default function ReviewScreen() {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.secondaryButton}
               onPress={() => startReviewSession(false)}
             >
@@ -168,7 +197,7 @@ export default function ReviewScreen() {
           <View style={styles.categoriesContainer}>
             <Text style={styles.sectionTitle}>分野別弱点</Text>
             {weaknessCategories.map((category) => (
-              <TouchableOpacity 
+              <TouchableOpacity
                 key={category.id}
                 style={styles.categoryCard}
                 onPress={() => startCategoryReview(category.id)}
@@ -183,15 +212,22 @@ export default function ReviewScreen() {
                     {category.recommendation}
                   </Text>
                 </View>
-                <View style={[
-                  styles.priorityBadge,
-                  category.priority === 'high' ? styles.highPriority :
-                  category.priority === 'medium' ? styles.mediumPriority :
-                  styles.lowPriority
-                ]}>
+                <View
+                  style={[
+                    styles.priorityBadge,
+                    category.priority === "high"
+                      ? styles.highPriority
+                      : category.priority === "medium"
+                        ? styles.mediumPriority
+                        : styles.lowPriority,
+                  ]}
+                >
                   <Text style={styles.priorityText}>
-                    {category.priority === 'high' ? '高' :
-                     category.priority === 'medium' ? '中' : '低'}
+                    {category.priority === "high"
+                      ? "高"
+                      : category.priority === "medium"
+                        ? "中"
+                        : "低"}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -205,50 +241,50 @@ export default function ReviewScreen() {
           <Text style={styles.emptySubtitle}>
             問題を解くと、間違えた問題が自動的に復習リストに追加されます
           </Text>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.startLearningButton}
-            onPress={() => router.push('/(tabs)/learning')}
+            onPress={() => router.push("/(tabs)/learning")}
           >
             <Text style={styles.startLearningText}>学習を始める</Text>
           </TouchableOpacity>
         </View>
       )}
-    </ScrollView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
   },
   header: {
     padding: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
-    color: '#2f95dc',
+    color: "#2f95dc",
   },
   subtitle: {
     fontSize: 16,
-    textAlign: 'center',
-    color: '#666',
+    textAlign: "center",
+    color: "#666",
   },
   statsContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 20,
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
   },
   statCard: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     minWidth: 80,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
@@ -256,35 +292,35 @@ const styles = StyleSheet.create({
   },
   statNumber: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#ff6b35',
+    fontWeight: "bold",
+    color: "#ff6b35",
   },
   statLabel: {
     fontSize: 12,
-    color: '#666',
+    color: "#666",
     marginTop: 5,
   },
   actionContainer: {
     padding: 20,
   },
   primaryButton: {
-    backgroundColor: '#ff6b35',
+    backgroundColor: "#ff6b35",
     padding: 20,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 15,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,
   },
   secondaryButton: {
-    backgroundColor: '#2f95dc',
+    backgroundColor: "#2f95dc",
     padding: 20,
     borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
@@ -296,32 +332,32 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
     marginBottom: 5,
   },
   buttonSubtitle: {
     fontSize: 14,
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
   },
   categoriesContainer: {
     padding: 20,
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 15,
-    color: '#333',
+    color: "#333",
   },
   categoryCard: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
+    flexDirection: "row",
+    backgroundColor: "white",
     padding: 15,
     marginBottom: 15,
     borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
@@ -336,13 +372,13 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
-    color: '#333',
+    color: "#333",
   },
   categoryCount: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
   },
   priorityBadge: {
     paddingHorizontal: 8,
@@ -350,21 +386,21 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   highPriority: {
-    backgroundColor: '#ff4444',
+    backgroundColor: "#ff4444",
   },
   mediumPriority: {
-    backgroundColor: '#ff9500',
+    backgroundColor: "#ff9500",
   },
   lowPriority: {
-    backgroundColor: '#4cd964',
+    backgroundColor: "#4cd964",
   },
   priorityText: {
-    color: 'white',
+    color: "white",
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   emptyState: {
-    alignItems: 'center',
+    alignItems: "center",
     padding: 40,
   },
   emptyIcon: {
@@ -373,42 +409,42 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 15,
-    color: '#333',
+    color: "#333",
   },
   emptySubtitle: {
     fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
+    color: "#666",
+    textAlign: "center",
     marginBottom: 30,
     lineHeight: 24,
   },
   startLearningButton: {
-    backgroundColor: '#2f95dc',
+    backgroundColor: "#2f95dc",
     paddingHorizontal: 30,
     paddingVertical: 15,
     borderRadius: 25,
   },
   startLearningText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 40,
   },
   loadingText: {
     fontSize: 16,
-    color: '#666',
+    color: "#666",
   },
   categoryRecommendation: {
     fontSize: 12,
-    color: '#888',
+    color: "#888",
     marginTop: 2,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
 });

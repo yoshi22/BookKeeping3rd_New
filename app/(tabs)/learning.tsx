@@ -1,38 +1,45 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { useRouter } from "expo-router";
+import { Screen } from "../../src/components/layout/ResponsiveLayout";
 
 export default function LearningScreen() {
   const router = useRouter();
   const categories = [
     {
-      id: 'journal',
-      name: '仕訳',
-      description: '基本的な仕訳問題',
+      id: "journal",
+      name: "仕訳",
+      description: "基本的な仕訳問題",
       totalQuestions: 250,
       completedQuestions: 0,
-      icon: '📝'
+      icon: "📝",
     },
     {
-      id: 'ledger',
-      name: '帳簿',
-      description: '元帳・補助簿問題',
+      id: "ledger",
+      name: "帳簿",
+      description: "元帳・補助簿問題",
       totalQuestions: 40,
       completedQuestions: 0,
-      icon: '📋'
+      icon: "📋",
     },
     {
-      id: 'trial_balance',
-      name: '試算表',
-      description: '試算表作成・修正問題',
+      id: "trial_balance",
+      name: "試算表",
+      description: "試算表作成・修正問題",
       totalQuestions: 12,
       completedQuestions: 0,
-      icon: '📊'
-    }
+      icon: "📊",
+    },
   ];
 
   return (
-    <ScrollView style={styles.container}>
+    <Screen safeArea={true} scrollable={true} statusBarStyle="dark-content">
       <View style={styles.header}>
         <Text style={styles.title}>学習モード</Text>
         <Text style={styles.subtitle}>カテゴリを選択して学習を開始</Text>
@@ -40,24 +47,24 @@ export default function LearningScreen() {
 
       <View style={styles.categoriesContainer}>
         {categories.map((category) => (
-          <TouchableOpacity 
+          <TouchableOpacity
             key={category.id}
             style={styles.categoryCard}
             onPress={() => {
               // サンプル問題の最初の問題に遷移
-              let firstQuestionId = '';
+              let firstQuestionId = "";
               switch (category.id) {
-                case 'journal':
-                  firstQuestionId = 'Q_J_001';
+                case "journal":
+                  firstQuestionId = "Q_J_001";
                   break;
-                case 'ledger':
-                  firstQuestionId = 'Q_L_001';
+                case "ledger":
+                  firstQuestionId = "Q_L_001";
                   break;
-                case 'trial_balance':
-                  firstQuestionId = 'Q_T_001';
+                case "trial_balance":
+                  firstQuestionId = "Q_T_001";
                   break;
               }
-              
+
               if (firstQuestionId) {
                 router.push(`/question/${firstQuestionId}`);
               }
@@ -66,7 +73,9 @@ export default function LearningScreen() {
             <Text style={styles.categoryIcon}>{category.icon}</Text>
             <View style={styles.categoryInfo}>
               <Text style={styles.categoryName}>{category.name}</Text>
-              <Text style={styles.categoryDescription}>{category.description}</Text>
+              <Text style={styles.categoryDescription}>
+                {category.description}
+              </Text>
               <Text style={styles.categoryProgress}>
                 {category.completedQuestions}/{category.totalQuestions}問完了
               </Text>
@@ -79,11 +88,11 @@ export default function LearningScreen() {
       </View>
 
       <View style={styles.mockExamSection}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.mockExamButton}
           onPress={() => {
             // TODO: Navigate to mock exam
-            console.log('Start mock exam');
+            console.log("Start mock exam");
           }}
         >
           <Text style={styles.mockExamIcon}>🎯</Text>
@@ -91,41 +100,41 @@ export default function LearningScreen() {
           <Text style={styles.mockExamSubtitle}>本試験形式で実力チェック</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
   },
   header: {
     padding: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
-    color: '#2f95dc',
+    color: "#2f95dc",
   },
   subtitle: {
     fontSize: 16,
-    textAlign: 'center',
-    color: '#666',
+    textAlign: "center",
+    color: "#666",
   },
   categoriesContainer: {
     padding: 20,
   },
   categoryCard: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
+    flexDirection: "row",
+    backgroundColor: "white",
     padding: 15,
     marginBottom: 15,
     borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -143,38 +152,38 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
-    color: '#333',
+    color: "#333",
   },
   categoryDescription: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
     marginBottom: 5,
   },
   categoryProgress: {
     fontSize: 12,
-    color: '#2f95dc',
+    color: "#2f95dc",
   },
   categoryAction: {
     paddingHorizontal: 15,
     paddingVertical: 8,
-    backgroundColor: '#2f95dc',
+    backgroundColor: "#2f95dc",
     borderRadius: 5,
   },
   actionText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
   mockExamSection: {
     padding: 20,
   },
   mockExamButton: {
-    backgroundColor: '#ff6b35',
+    backgroundColor: "#ff6b35",
     padding: 20,
     borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -189,13 +198,13 @@ const styles = StyleSheet.create({
   },
   mockExamTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
     marginBottom: 5,
   },
   mockExamSubtitle: {
     fontSize: 14,
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
   },
 });

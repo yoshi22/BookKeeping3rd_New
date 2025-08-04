@@ -1,43 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, RefreshControl } from 'react-native';
-import { router } from 'expo-router';
-import { statisticsService, OverallStatistics, CategoryStatistics, LearningGoals } from '../../src/services/statistics-service';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+  RefreshControl,
+} from "react-native";
+import { router } from "expo-router";
+import {
+  statisticsService,
+  OverallStatistics,
+  CategoryStatistics,
+  LearningGoals,
+} from "../../src/services/statistics-service";
+import { Screen } from "../../src/components/layout/ResponsiveLayout";
 
 export default function StatsScreen() {
-  const [overallStats, setOverallStats] = useState<OverallStatistics | null>(null);
+  const [overallStats, setOverallStats] = useState<OverallStatistics | null>(
+    null,
+  );
   const [categoryStats, setCategoryStats] = useState<CategoryStatistics[]>([]);
-  const [learningGoals, setLearningGoals] = useState<LearningGoals | null>(null);
+  const [learningGoals, setLearningGoals] = useState<LearningGoals | null>(
+    null,
+  );
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   // カテゴリ表示設定
   const categoryDisplayConfig = {
-    journal: { icon: '📝', color: '#2f95dc' },
-    ledger: { icon: '📋', color: '#ff6b35' },
-    trial_balance: { icon: '📊', color: '#4cd964' }
+    journal: { icon: "📝", color: "#2f95dc" },
+    ledger: { icon: "📋", color: "#ff6b35" },
+    trial_balance: { icon: "📊", color: "#4cd964" },
   };
 
   // 統計データ読み込み
   const loadStatistics = async () => {
     try {
-      console.log('[StatsScreen] 統計データ読み込み開始');
-      
+      console.log("[StatsScreen] 統計データ読み込み開始");
+
       // 全体統計
       const overall = await statisticsService.getOverallStatistics();
       setOverallStats(overall);
-      
+
       // カテゴリ別統計
       const categories = await statisticsService.getCategoryStatistics();
       setCategoryStats(categories);
-      
+
       // 学習目標
       const goals = await statisticsService.getLearningGoals();
       setLearningGoals(goals);
-      
-      console.log('[StatsScreen] 統計データ読み込み完了');
+
+      console.log("[StatsScreen] 統計データ読み込み完了");
     } catch (error) {
-      console.error('[StatsScreen] 統計データ読み込みエラー:', error);
-      Alert.alert('エラー', '統計データの読み込みに失敗しました');
+      console.error("[StatsScreen] 統計データ読み込みエラー:", error);
+      Alert.alert("エラー", "統計データの読み込みに失敗しました");
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -70,21 +88,16 @@ export default function StatsScreen() {
   // ローディング表示
   if (loading) {
     return (
-      <View style={styles.container}>
+      <Screen safeArea={true} statusBarStyle="dark-content">
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>統計データを読み込み中...</Text>
         </View>
-      </View>
+      </Screen>
     );
   }
 
   return (
-    <ScrollView 
-      style={styles.container}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
+    <Screen safeArea={true} scrollable={true} statusBarStyle="dark-content">
       <View style={styles.header}>
         <Text style={styles.title}>学習統計</Text>
         <Text style={styles.subtitle}>あなたの学習状況を確認</Text>
@@ -98,22 +111,24 @@ export default function StatsScreen() {
             <View style={styles.goalHeader}>
               <Text style={styles.goalTitle}>問題解答目標</Text>
               <Text style={styles.goalProgress}>
-                {learningGoals.dailyGoal.achieved}/{learningGoals.dailyGoal.target}問
+                {learningGoals.dailyGoal.achieved}/
+                {learningGoals.dailyGoal.target}問
               </Text>
             </View>
             <View style={styles.goalProgressBar}>
-              <View 
+              <View
                 style={[
-                  styles.goalProgressFill, 
-                  { width: `${Math.min(learningGoals.dailyGoal.completion * 100, 100)}%` }
-                ]} 
+                  styles.goalProgressFill,
+                  {
+                    width: `${Math.min(learningGoals.dailyGoal.completion * 100, 100)}%`,
+                  },
+                ]}
               />
             </View>
             <Text style={styles.goalSubtext}>
-              {learningGoals.dailyGoal.completion >= 1 ? 
-                '🎉 目標達成！' : 
-                `あと${learningGoals.dailyGoal.target - learningGoals.dailyGoal.achieved}問で目標達成`
-              }
+              {learningGoals.dailyGoal.completion >= 1
+                ? "🎉 目標達成！"
+                : `あと${learningGoals.dailyGoal.target - learningGoals.dailyGoal.achieved}問で目標達成`}
             </Text>
           </View>
         </View>
@@ -122,30 +137,42 @@ export default function StatsScreen() {
       <View style={styles.overallStatsContainer}>
         <View style={styles.statRow}>
           <View style={styles.mainStatCard}>
-            <Text style={styles.mainStatNumber}>{overallStats?.totalQuestions || 302}</Text>
+            <Text style={styles.mainStatNumber}>
+              {overallStats?.totalQuestions || 302}
+            </Text>
             <Text style={styles.mainStatLabel}>総問題数</Text>
           </View>
           <View style={styles.mainStatCard}>
-            <Text style={styles.mainStatNumber}>{overallStats?.answeredQuestions || 0}</Text>
+            <Text style={styles.mainStatNumber}>
+              {overallStats?.answeredQuestions || 0}
+            </Text>
             <Text style={styles.mainStatLabel}>解答済み</Text>
           </View>
         </View>
-        
+
         <View style={styles.statRow}>
           <View style={styles.subStatCard}>
-            <Text style={styles.subStatNumber}>{formatAccuracy(overallStats?.accuracyRate || 0)}</Text>
+            <Text style={styles.subStatNumber}>
+              {formatAccuracy(overallStats?.accuracyRate || 0)}
+            </Text>
             <Text style={styles.subStatLabel}>正答率</Text>
           </View>
           <View style={styles.subStatCard}>
-            <Text style={styles.subStatNumber}>{overallStats?.studyDays || 0}</Text>
+            <Text style={styles.subStatNumber}>
+              {overallStats?.studyDays || 0}
+            </Text>
             <Text style={styles.subStatLabel}>学習日数</Text>
           </View>
           <View style={styles.subStatCard}>
-            <Text style={styles.subStatNumber}>{formatTime(overallStats?.totalStudyTimeMs || 0)}</Text>
+            <Text style={styles.subStatNumber}>
+              {formatTime(overallStats?.totalStudyTimeMs || 0)}
+            </Text>
             <Text style={styles.subStatLabel}>学習時間</Text>
           </View>
           <View style={styles.subStatCard}>
-            <Text style={styles.subStatNumber}>{overallStats?.currentStreak || 0}</Text>
+            <Text style={styles.subStatNumber}>
+              {overallStats?.currentStreak || 0}
+            </Text>
             <Text style={styles.subStatLabel}>連続学習</Text>
           </View>
         </View>
@@ -164,40 +191,46 @@ export default function StatsScreen() {
                   {formatAccuracy(category.accuracyRate)}
                 </Text>
               </View>
-              
+
               <View style={styles.progressBarContainer}>
                 <View style={styles.progressBarBg}>
-                  <View 
+                  <View
                     style={[
-                      styles.progressBarFill, 
-                      { 
+                      styles.progressBarFill,
+                      {
                         width: `${category.completionRate * 100}%`,
-                        backgroundColor: config.color 
-                      }
-                    ]} 
+                        backgroundColor: config.color,
+                      },
+                    ]}
                   />
                 </View>
                 <Text style={styles.progressText}>
                   {category.answeredQuestions}/{category.totalQuestions}
                 </Text>
               </View>
-              
+
               <View style={styles.categoryDetails}>
-                <Text style={styles.detailText}>正解: {category.correctAnswers}問</Text>
+                <Text style={styles.detailText}>
+                  正解: {category.correctAnswers}問
+                </Text>
                 <Text style={styles.detailText}>
                   残り: {category.totalQuestions - category.answeredQuestions}問
                 </Text>
               </View>
-              
+
               {/* 追加統計情報 */}
               <View style={styles.additionalStats}>
                 <View style={styles.additionalStatItem}>
                   <Text style={styles.additionalStatLabel}>復習対象</Text>
-                  <Text style={styles.additionalStatValue}>{category.reviewItemsCount}問</Text>
+                  <Text style={styles.additionalStatValue}>
+                    {category.reviewItemsCount}問
+                  </Text>
                 </View>
                 <View style={styles.additionalStatItem}>
                   <Text style={styles.additionalStatLabel}>克服済み</Text>
-                  <Text style={styles.additionalStatValue}>{category.masteredCount}問</Text>
+                  <Text style={styles.additionalStatValue}>
+                    {category.masteredCount}問
+                  </Text>
                 </View>
                 <View style={styles.additionalStatItem}>
                   <Text style={styles.additionalStatLabel}>平均時間</Text>
@@ -218,54 +251,54 @@ export default function StatsScreen() {
           <Text style={styles.emptySubtitle}>
             問題を解き始めると、ここに詳細な学習統計が表示されます
           </Text>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.startButton}
-            onPress={() => router.push('/(tabs)/learning')}
+            onPress={() => router.push("/(tabs)/learning")}
           >
             <Text style={styles.startButtonText}>学習を始める</Text>
           </TouchableOpacity>
         </View>
       )}
-    </ScrollView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
   },
   header: {
     padding: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
-    color: '#2f95dc',
+    color: "#2f95dc",
   },
   subtitle: {
     fontSize: 16,
-    textAlign: 'center',
-    color: '#666',
+    textAlign: "center",
+    color: "#666",
   },
   overallStatsContainer: {
     padding: 20,
   },
   statRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 15,
   },
   mainStatCard: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     flex: 1,
     marginHorizontal: 5,
     padding: 20,
     borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
@@ -273,22 +306,22 @@ const styles = StyleSheet.create({
   },
   mainStatNumber: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#2f95dc',
+    fontWeight: "bold",
+    color: "#2f95dc",
   },
   mainStatLabel: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
     marginTop: 5,
   },
   subStatCard: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     flex: 1,
     marginHorizontal: 2,
     padding: 15,
     borderRadius: 8,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
@@ -296,38 +329,38 @@ const styles = StyleSheet.create({
   },
   subStatNumber: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
   },
   subStatLabel: {
     fontSize: 11,
-    color: '#666',
+    color: "#666",
     marginTop: 3,
-    textAlign: 'center',
+    textAlign: "center",
   },
   categoryStatsContainer: {
     padding: 20,
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 15,
-    color: '#333',
+    color: "#333",
   },
   categoryStatCard: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
     marginBottom: 15,
     borderRadius: 10,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,
   },
   categoryHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 15,
   },
   categoryIcon: {
@@ -336,24 +369,24 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     flex: 1,
-    color: '#333',
+    color: "#333",
   },
   categoryAccuracy: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#2f95dc',
+    fontWeight: "bold",
+    color: "#2f95dc",
   },
   progressBarContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
   },
   progressBarBg: {
     flex: 1,
     height: 8,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: "#e0e0e0",
     borderRadius: 4,
     marginRight: 10,
   },
@@ -363,19 +396,19 @@ const styles = StyleSheet.create({
   },
   progressText: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
     minWidth: 60,
   },
   categoryDetails: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   detailText: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
   },
   emptyState: {
-    alignItems: 'center',
+    alignItems: "center",
     padding: 40,
   },
   emptyIcon: {
@@ -384,103 +417,103 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 15,
-    color: '#333',
+    color: "#333",
   },
   emptySubtitle: {
     fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
+    color: "#666",
+    textAlign: "center",
     marginBottom: 30,
     lineHeight: 24,
   },
   startButton: {
-    backgroundColor: '#2f95dc',
+    backgroundColor: "#2f95dc",
     paddingHorizontal: 30,
     paddingVertical: 15,
     borderRadius: 25,
   },
   startButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 40,
   },
   loadingText: {
     fontSize: 16,
-    color: '#666',
+    color: "#666",
   },
   goalsContainer: {
     padding: 20,
   },
   goalCard: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,
   },
   goalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 15,
   },
   goalTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
   },
   goalProgress: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#2f95dc',
+    fontWeight: "bold",
+    color: "#2f95dc",
   },
   goalProgressBar: {
     height: 8,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: "#e0e0e0",
     borderRadius: 4,
     marginBottom: 10,
   },
   goalProgressFill: {
     height: 8,
-    backgroundColor: '#4cd964',
+    backgroundColor: "#4cd964",
     borderRadius: 4,
   },
   goalSubtext: {
     fontSize: 14,
-    color: '#666',
-    textAlign: 'center',
+    color: "#666",
+    textAlign: "center",
   },
   additionalStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 15,
     paddingTop: 15,
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
+    borderTopColor: "#e0e0e0",
   },
   additionalStatItem: {
-    alignItems: 'center',
+    alignItems: "center",
     flex: 1,
   },
   additionalStatLabel: {
     fontSize: 12,
-    color: '#666',
+    color: "#666",
     marginBottom: 5,
   },
   additionalStatValue: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
   },
 });
