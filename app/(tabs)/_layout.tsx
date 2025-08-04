@@ -1,10 +1,32 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, Platform } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemeProvider, useTheme } from "../../src/context/ThemeContext";
 
 function TabLayout() {
   const { theme } = useTheme();
+  const insets = useSafeAreaInsets();
+
+  // iOS下部SafeArea対応: 必要最小限の計算
+  const tabBarBottomPadding =
+    Platform.OS === "ios"
+      ? Math.max(insets.bottom, 8) // 最小8pt、過剰な保証を削減
+      : theme.spacing.xs;
+
+  const tabBarHeight =
+    Platform.OS === "ios"
+      ? 60 + tabBarBottomPadding // 基本高さ + 最小SafeArea
+      : 60;
+
+  // デバッグログ
+  if (__DEV__ && Platform.OS === "ios") {
+    console.log("TabBar SafeArea Debug:", {
+      insetsBottom: insets.bottom,
+      tabBarBottomPadding,
+      tabBarHeight,
+    });
+  }
 
   return (
     <Tabs
@@ -16,8 +38,8 @@ function TabLayout() {
           borderTopColor: theme.colors.border,
           borderTopWidth: 1,
           paddingTop: theme.spacing.xs,
-          paddingBottom: theme.spacing.sm,
-          height: 60,
+          paddingBottom: tabBarBottomPadding,
+          height: tabBarHeight,
           ...theme.shadows.small,
         },
         tabBarLabelStyle: {

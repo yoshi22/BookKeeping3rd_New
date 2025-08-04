@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   mainContent: {
     flex: 1,
-    paddingVertical: 40,
+    paddingVertical: 20, // 垂直パディングを削減
   },
   menuContainer: {
     width: "100%",

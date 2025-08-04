@@ -14,7 +14,10 @@ import {
   Platform,
   StatusBar,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { useTheme, useResponsiveTheme } from "../../context/ThemeContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -84,9 +87,11 @@ export function Container({
       paddingHorizontal: responsiveTheme.getResponsiveSpacing(
         theme.layoutSpacing.screenPaddingHorizontal,
       ),
-      paddingVertical: responsiveTheme.getResponsiveSpacing(
-        theme.layoutSpacing.screenPaddingVertical,
-      ),
+      // 垂直パディングを最小限に調整してタブバーとの余白重複を避ける
+      paddingVertical:
+        responsiveTheme.getResponsiveSpacing(
+          theme.layoutSpacing.screenPaddingVertical,
+        ) * 0.5,
     }),
   };
 
@@ -290,29 +295,29 @@ export function Screen({
   style,
 }: ScreenProps) {
   const { theme } = useTheme();
+  const insets = useSafeAreaInsets();
 
   // ステータスバーのスタイルを自動決定
   const autoStatusBarStyle =
     statusBarStyle || (theme.isDark ? "light-content" : "dark-content");
 
-  // シンプルで確実なスタイル設定
+  // SafeAreaView使用時は内部paddingを最小限に調整
+  // タブバーとの重複を避けるため、SafeAreaViewの自動処理に依存
   const screenStyle: ViewStyle = {
     flex: 1,
     backgroundColor: theme.colors.background,
-    // iOS用の固定マージン設定（シンプルで確実）
-    ...(Platform.OS === "ios" &&
-      safeArea && {
-        paddingTop: 44, // ステータスバー用固定値
-        paddingBottom: 34, // ホームインジケーター用固定値
-      }),
   };
 
   const content = scrollable ? (
     <ScrollView
       style={{ flex: 1 }}
-      contentContainerStyle={{ flexGrow: 1 }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingBottom: Platform.OS === "ios" ? 0 : 0,
+      }}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
+      bounces={true}
     >
       {children}
     </ScrollView>

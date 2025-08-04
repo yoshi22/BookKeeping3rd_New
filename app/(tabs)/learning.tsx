@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   header: {
     padding: 20,
     alignItems: "center",
-    paddingTop: 60, // ヘッダータイトル分のスペース
+    paddingTop: 40, // ヘッダータイトル分のスペースを削減
   },
   title: {
     fontSize: 24,
