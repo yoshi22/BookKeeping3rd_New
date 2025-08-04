@@ -4,7 +4,6 @@
  */
 
 import { Platform } from "react-native";
-import * as SQLite from "expo-sqlite";
 import {
   Database,
   DatabaseConfig,
@@ -12,6 +11,16 @@ import {
   DatabaseResult,
   QueryResult,
 } from "../types/database";
+
+// Web環境では expo-sqlite をインポートしない
+let SQLite: any = null;
+if (Platform.OS !== "web") {
+  try {
+    SQLite = require("expo-sqlite");
+  } catch (error) {
+    console.warn("[DatabaseService] SQLite import failed:", error);
+  }
+}
 
 /**
  * データベース設定
@@ -59,16 +68,30 @@ class WebDatabaseMock {
       changes = 1;
     }
 
-    return {
-      getAllSync: () => rows,
+    const result = {
+      getAllSync: () => {
+        console.log(`[WebDB] getAllSync returning ${rows.length} rows:`, rows);
+        return rows;
+      },
       changes,
       lastInsertRowId,
     };
+
+    console.log(
+      `[WebDB] SQL実行結果: changes=${changes}, lastInsertRowId=${lastInsertRowId}, rows=${rows.length}`,
+    );
+    return result;
   }
 
   async withTransactionAsync(operations: Function): Promise<void> {
     console.log("[WebDB] Mock トランザクション実行");
-    await operations(this);
+    try {
+      await operations(this);
+      console.log("[WebDB] Mock トランザクション成功");
+    } catch (error) {
+      console.error("[WebDB] Mock トランザクションエラー:", error);
+      throw error;
+    }
   }
 
   closeSync(): void {
@@ -96,7 +119,7 @@ class WebDatabaseMock {
  */
 export class DatabaseService {
   private static instance: DatabaseService;
-  private db: SQLite.SQLiteDatabase | WebDatabaseMock | null = null;
+  private db: any | WebDatabaseMock | null = null;
   private isInitialized: boolean = false;
   private initializationPromise: Promise<void> | null = null;
 
@@ -134,6 +157,7 @@ export class DatabaseService {
       console.log(
         `[DatabaseService] データベース接続開始: ${DATABASE_CONFIG.name}`,
       );
+      console.log(`[DatabaseService] Platform.OS: ${Platform.OS}`);
 
       // Web環境の場合はモック実装を使用
       if (Platform.OS === "web") {
@@ -141,14 +165,22 @@ export class DatabaseService {
         this.db = new WebDatabaseMock();
       } else {
         // ネイティブ環境ではSQLiteを使用
-        try {
-          this.db = SQLite.openDatabaseSync(DATABASE_CONFIG.name);
-        } catch (sqliteError) {
+        if (!SQLite) {
           console.warn(
-            "[DatabaseService] SQLite初期化失敗、フォールバックを使用:",
-            sqliteError,
+            "[DatabaseService] SQLite モジュールが利用できません - モックを使用",
           );
           this.db = new WebDatabaseMock();
+        } else {
+          try {
+            this.db = SQLite.openDatabaseSync(DATABASE_CONFIG.name);
+            console.log("[DatabaseService] SQLite接続成功");
+          } catch (sqliteError) {
+            console.warn(
+              "[DatabaseService] SQLite初期化失敗、フォールバックを使用:",
+              sqliteError,
+            );
+            this.db = new WebDatabaseMock();
+          }
         }
       }
 
@@ -223,7 +255,7 @@ export class DatabaseService {
    * トランザクション実行
    */
   public async executeTransaction(
-    operations: (db: SQLite.SQLiteDatabase | WebDatabaseMock) => Promise<void>,
+    operations: (db: any | WebDatabaseMock) => Promise<void>,
   ): Promise<DatabaseResult> {
     if (!this.isInitialized || !this.db) {
       await this.initialize();

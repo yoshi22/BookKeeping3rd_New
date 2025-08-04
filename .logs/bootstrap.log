@@ -1,0 +1,49 @@
+=== BookKeeping3rd Bootstrap Log ===
+Date: Sun Aug  3 22:18:36 JST 2025
+Working Directory: /Users/muroiyousuke/Projects/BookKeeping3rd
+
+=== Node.js Environment ===
+Node: v20.19.2
+NPM: 10.8.2
+
+=== Xcode Environment ===
+Xcode 16.4
+Build version 16F6
+
+=== iOS Simulators (Available) ===
+    iPhone 16 Pro (C3FCED38-6CF4-4AA8-BBB4-3FF3ECEAE908) (Booted) 
+    iPhone 16 Pro Max (22A2D154-C864-465D-8FAA-7431819CDD42) (Shutdown) 
+    iPhone 16e (CAB2F85D-65E9-4FF0-AABA-F85EA10C9E79) (Shutdown) 
+    iPhone 16 (571E87BC-4607-4A44-90FC-8AA650BCB8DF) (Shutdown) 
+    iPhone 16 Plus (E8CFD697-E0EA-4CCA-BC68-95F38FBD7414) (Shutdown) 
+
+=== UV Version ===
+uv 0.8.4 (Homebrew 2025-07-30)
+
+=== Claude MCP Status ===
+xcodebuild: npx -y xcodebuildmcp@latest - ✓ Connected
+chatgpt: uvx chatgpt-mcp - ✓ Connected
+context7: npx -y @upstash/context7-mcp - ✓ Connected
+puppeteer: npx -y @modelcontextprotocol/server-puppeteer - ✓ Connected
+serena: uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context ide-assistant --project /Users/muroiyousuke/Projects/BookKeeping3rd - ✓ Connected
+
+=== Key Dependencies ===
+bookkeeping-app@1.0.0 /Users/muroiyousuke/Projects/BookKeeping3rd
+├── expo@52.0.47
+├── react-native@0.76.9
+├── react-test-renderer@18.3.1
+└── react@18.3.1
+
+=== App Configuration Check ===
+Icon: ./assets/icon.png -rw-r--r--  1 muroiyousuke  staff  18478 Aug  2 23:48 assets/icon.png
+✓ EXISTS
+Splash: ./assets/splash.png -rw-r--r--  1 muroiyousuke  staff  53018 Aug  2 23:48 assets/splash.png
+✓ EXISTS
+
+=== Known Issues Detection ===
+React Test Renderer: ✓ Correct version (18.3.1)
+Expo Dev Client: bookkeeping-app@1.0.0 /Users/muroiyousuke/Projects/BookKeeping3rd
+└── expo-dev-client@5.0.20
+
+✓ Installed
+EOF < /dev/null

@@ -1,0 +1,23 @@
+__tests__/accessibility/accessibility.test.ts(29,6): error TS1161: Unterminated regular expression literal.
+__tests__/accessibility/accessibility.test.ts(55,66): error TS1005: '>' expected.
+__tests__/accessibility/accessibility.test.ts(75,64): error TS1005: '>' expected.
+__tests__/accessibility/accessibility.test.ts(91,63): error TS1005: '>' expected.
+__tests__/accessibility/accessibility.test.ts(110,40): error TS1005: '>' expected.
+__tests__/accessibility/accessibility.test.ts(132,44): error TS1005: '>' expected.
+__tests__/accessibility/accessibility.test.ts(159,40): error TS1005: '>' expected.
+__tests__/accessibility/accessibility.test.ts(180,44): error TS1005: '>' expected.
+__tests__/accessibility/accessibility.test.ts(213,40): error TS1005: '>' expected.
+__tests__/accessibility/accessibility.test.ts(239,40): error TS1005: '>' expected.
+__tests__/accessibility/accessibility.test.ts(262,44): error TS1005: '>' expected.
+__tests__/accessibility/accessibility.test.ts(288,44): error TS1005: '>' expected.
+__tests__/integration/learning-integration.test.ts(32,6): error TS1161: Unterminated regular expression literal.
+__tests__/integration/learning-integration.test.ts(58,79): error TS1005: '>' expected.
+__tests__/integration/learning-integration.test.ts(119,79): error TS1005: '>' expected.
+__tests__/integration/learning-integration.test.ts(158,79): error TS1005: '>' expected.
+__tests__/integration/learning-integration.test.ts(204,68): error TS1005: '>' expected.
+__tests__/integration/learning-integration.test.ts(224,79): error TS1005: '>' expected.
+__tests__/integration/learning-integration.test.ts(270,79): error TS1005: '>' expected.
+__tests__/integration/learning-integration.test.ts(306,61): error TS1005: '>' expected.
+__tests__/integration/learning-integration.test.ts(328,79): error TS1005: '>' expected.
+__tests__/integration/learning-integration.test.ts(355,68): error TS1005: '>' expected.
+__tests__/integration/learning-integration.test.ts(390,65): error TS1005: '>' expected.

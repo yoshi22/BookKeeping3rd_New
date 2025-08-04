@@ -1,0 +1,50 @@
+
+> bookkeeping-app@1.0.0 test
+> jest
+
+FAIL __tests__/integration/database-integration.test.ts
+  ● Test suite failed to run
+
+    [@RNC/AsyncStorage]: NativeModule: AsyncStorage is null.
+
+    To fix this issue try these steps:
+
+      • Uninstall, rebuild and restart the app.
+
+      • Run the packager with `--reset-cache` flag.
+
+      • If you are using CocoaPods on iOS, run `pod install` in the `ios` directory, then rebuild and re-run the app.
+
+      • Make sure your project's `package.json` depends on `@react-native-async-storage/async-storage`, even if you only depend on it indirectly through other dependencies. CLI only autolinks native modules found in your `package.json`.
+
+      • If this happens while testing with Jest, check out how to integrate AsyncStorage here: https://react-native-async-storage.github.io/async-storage/docs/advanced/jest
+
+    If none of these fix the issue, please open an issue on the GitHub repository: https://github.com/react-native-async-storage/async-storage/issues
+
+       6 |  */
+       7 |
+    >  8 | import AsyncStorage from '@react-native-async-storage/async-storage';
+         | ^
+       9 | import DatabaseService from '../../src/services/DatabaseService';
+      10 | import ProgressTracker from '../../src/services/ProgressTracker';
+      11 | import ReviewManager from '../../src/services/ReviewManager';
+
+      at Object.<anonymous> (node_modules/@react-native-async-storage/async-storage/lib/commonjs/AsyncStorage.native.ts:23:9)
+      at Object.require (node_modules/@react-native-async-storage/async-storage/lib/commonjs/index.ts:1:1)
+      at Object.require (__tests__/integration/database-integration.test.ts:8:1)
+
+FAIL e2e/mock-exam-flow.test.ts
+  ● 模試機能 E2E テスト › 模試受験フロー › 模試受験完了フロー（18問・60分制限）
+
+    DetoxRuntimeError: Detox worker instance has not been installed in this context (DetoxPrimaryContext).
+
+    HINT: If you are using Detox with Jest according to the latest guide, please report this issue on our GitHub tracker:
+    https://github.com/wix/Detox/issues
+    Otherwise, make sure you call detox.installWorker() beforehand.
+
+      16 |       
+      17 |       // 模試画面へ移動
+    > 18 |       await element(by.id('tab-mock-exam')).tap();
+         |                        ^
+      19 |       await waitFor(element(by.id('mock-exam-screen'))).toBeVisible().withTimeout(3000);
+      20 |       

@@ -1,0 +1,1 @@
+FAILURE: ChatGPT response still garbled after IME switch attempt

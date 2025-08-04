@@ -1,0 +1,10 @@
+node_modules/
+dist/
+build/
+lib/
+bin/
+temp/
+.expo/
+*.d.ts
+__tests__/
+docs/

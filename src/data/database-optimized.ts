@@ -10,7 +10,6 @@
  */
 
 import { Platform } from "react-native";
-import * as SQLite from "expo-sqlite";
 import {
   Database,
   DatabaseConfig,
@@ -18,6 +17,16 @@ import {
   DatabaseResult,
   QueryResult,
 } from "../types/database";
+
+// Web環境では expo-sqlite をインポートしない
+let SQLite: any = null;
+if (Platform.OS !== "web") {
+  try {
+    SQLite = require("expo-sqlite");
+  } catch (error) {
+    console.warn("[DatabaseOptimized] SQLite import failed:", error);
+  }
+}
 
 /**
  * Web用データベースモック（localStorage ベース）

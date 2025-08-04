@@ -1,0 +1,137 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo *)",
+      "Bash(printf *)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(git status)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(mv:*)",
+      "Bash(true)",
+      "Bash(rmdir:*)",
+      "Bash(cp:*)",
+      "Bash(touch:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run check:quick)",
+      "Bash(npm run lint)",
+      "Bash(npm test:*)",
+      "Bash(npx prettier:*)",
+      "Bash(npx expo start:*)",
+      "Bash(npx expo run:ios)",
+      "Bash(npx expo prebuild -p ios)",
+      "Bash(npx expo doctor)",
+      "Bash(node:*)",
+      "Bash(scripts/safe_write.sh:*)",
+      "WebFetch(domain:www.kentei.ne.jp)",
+      "WebFetch(domain:www.tac-school.co.jp)",
+      "WebFetch(domain:inuboki.com)",
+      "WebFetch(domain:www.c-c-j.com)",
+      "mcp__puppeteer__puppeteer_navigate",
+      "mcp__puppeteer__puppeteer_screenshot",
+      "mcp__puppeteer__puppeteer_evaluate",
+      "mcp__puppeteer__puppeteer_click",
+      "mcp__puppeteer__puppeteer_fill",
+      "mcp__serena__replace_symbol_body",
+      "Bash(curl:*)",
+      "Bash(pkill:*)",
+      "Bash(npx expo start:*)",
+      "mcp__serena__check_onboarding_performed",
+      "mcp__serena__onboarding",
+      "mcp__serena__list_dir",
+      "mcp__serena__get_symbols_overview",
+      "mcp__serena__write_memory",
+      "Bash(xcrun simctl list:*)",
+      "Bash(xcrun simctl openurl:*)",
+      "Bash(xcrun simctl boot:*)",
+      "Bash(open:*)",
+      "Bash(npx expo prebuild:*)",
+      "mcp__serena__read_memory",
+      "Bash(npx expo doctor:*)",
+      "Bash(npx:*)",
+      "mcp__chatgpt__ask_chatgpt",
+      "Bash(shortcuts list)",
+      "mcp__serena__find_file",
+      "mcp__serena__search_for_pattern",
+      "mcp__chatgpt__ask_chatgpt_tool",
+      "mcp__serena__find_symbol",
+      "mcp__serena__replace_regex",
+      "mcp__chatgpt__get_chatgpt_response_tool"
+    ],
+    "deny": [
+      "Bash(sudo:*)",
+      "Bash(rm -rf:*)",
+      "Bash(find . -delete:*)",
+      "Bash(git push --force:*)",
+      "Bash(git tag -f:*)",
+      "Bash(git clean -xdf:*)",
+      "Bash(diskutil:*)",
+      "Bash(dd:*)",
+      "Bash(mkfs:*)",
+      "Bash(launchctl:*)",
+      "Bash(systemsetup:*)",
+      "Bash(security:*)",
+      "Bash(openssl:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(brew install:*)",
+      "Bash(pip install:*)",
+      "Bash(pod install:*)",
+      "Bash(npm publish:*)",
+      "Bash(eas submit:*)",
+      "Bash(eas build -p ios --profile production:*)",
+      "Bash(cat ~/.ssh/*:*)",
+      "Bash(cat ~/.aws/*:*)",
+      "Bash(cat ~/.npmrc:*)",
+      "Bash(cat ~/.gcloud/*:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "context7"
+  ],
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p \"$CLAUDE_PROJECT_DIR/.logs\" || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd=$(jq -r '.tool_input.command'); if printf '%s' \"$cmd\" | grep -Eq '(^|[^\\\\])\\s(>|>>)'; then printf '{\"decision\":\"block\",\"reason\":\"File redirection (>, >>) is disallowed. Use scripts/safe_write.sh.\"}'; else printf '{}'; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "p=$(jq -r '.tool_input.file_path // empty'); if [ -n \"$p\" ]; then npx prettier -w \"$p\" >/dev/null 2>&1 || true; fi",
+            "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "npm run -s check:quick >/tmp/cc_check.txt 2>&1 || (printf '{\"decision\":\"block\",\"reason\":\"check:quick failed. See last lines:\\n%s\"}' \"$(tail -n 80 /tmp/cc_check.txt | sed 's/\"/\\\\\"/g')\"; exit 0)",
+            "timeout": 300
+          }
+        ]
+      }
+    ]
+  }
+}

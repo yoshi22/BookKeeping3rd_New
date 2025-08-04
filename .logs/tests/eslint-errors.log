@@ -1,0 +1,20 @@
+
+> bookkeeping-app@1.0.0 lint
+> eslint . --ext .js,.jsx,.ts,.tsx
+
+
+/Users/muroiyousuke/Projects/BookKeeping3rd/app/(tabs)/_layout.tsx
+  83:26  error  Parsing error: Unexpected token :
+
+/Users/muroiyousuke/Projects/BookKeeping3rd/app/(tabs)/learning.tsx
+  86:13  warning  Unexpected console statement  no-console
+
+/Users/muroiyousuke/Projects/BookKeeping3rd/app/(tabs)/review.tsx
+  9:68  error  Parsing error: Unexpected token ]
+
+/Users/muroiyousuke/Projects/BookKeeping3rd/app/(tabs)/stats.tsx
+  8:73  error  Parsing error: Unexpected token ]
+
+/Users/muroiyousuke/Projects/BookKeeping3rd/app/question/[id].tsx
+  76:68  error  Parsing error: Unexpected token >>
+

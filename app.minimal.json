@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "BookKeeping3rd",
+    "slug": "bookkeeping3rd",
+    "version": "1.0.0",
+    "platforms": ["ios", "android", "web"],
+    "assetBundlePatterns": ["**/*"]
+  }
+}

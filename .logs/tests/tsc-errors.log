@@ -1,0 +1,210 @@
+__tests__/integration/database-integration.test.ts(9,29): error TS2307: Cannot find module '../../src/services/DatabaseService' or its corresponding type declarations.
+__tests__/integration/database-integration.test.ts(10,29): error TS2307: Cannot find module '../../src/services/ProgressTracker' or its corresponding type declarations.
+__tests__/integration/database-integration.test.ts(11,27): error TS2307: Cannot find module '../../src/services/ReviewManager' or its corresponding type declarations.
+__tests__/integration/database-integration.test.ts(14,50): error TS2307: Cannot find module '../fixtures/databaseData' or its corresponding type declarations.
+__tests__/integration/database-integration.test.ts(48,32): error TS7006: Parameter 'question' implicitly has an 'any' type.
+__tests__/integration/database-integration.test.ts(59,31): error TS7006: Parameter 'question' implicitly has an 'any' type.
+__tests__/integration/database-integration.test.ts(68,37): error TS7006: Parameter 'question' implicitly has an 'any' type.
+__tests__/integration/database-integration.test.ts(81,97): error TS7006: Parameter 'q' implicitly has an 'any' type.
+__tests__/integration/database-integration.test.ts(87,47): error TS7006: Parameter 'q' implicitly has an 'any' type.
+__tests__/integration/database-integration.test.ts(88,49): error TS7006: Parameter 'q' implicitly has an 'any' type.
+__tests__/integration/database-integration.test.ts(103,30): error TS7006: Parameter 'question' implicitly has an 'any' type.
+__tests__/integration/database-integration.test.ts(111,33): error TS7006: Parameter 'question' implicitly has an 'any' type.
+__tests__/integration/database-integration.test.ts(205,50): error TS7006: Parameter 'item' implicitly has an 'any' type.
+__tests__/integration/database-integration.test.ts(349,46): error TS7006: Parameter 'item' implicitly has an 'any' type.
+__tests__/integration/database-integration.test.ts(354,28): error TS7006: Parameter 'mistake' implicitly has an 'any' type.
+__tests__/integration/database-integration.test.ts(464,44): error TS7006: Parameter 'record' implicitly has an 'any' type.
+__tests__/security/security.test.ts(9,29): error TS2307: Cannot find module '../../src/services/DatabaseService' or its corresponding type declarations.
+__tests__/security/security.test.ts(10,31): error TS2307: Cannot find module '../../src/security/SecurityValidator' or its corresponding type declarations.
+__tests__/security/security.test.ts(11,28): error TS2307: Cannot find module '../../src/security/DataEncryption' or its corresponding type declarations.
+__tests__/security/security.test.ts(12,28): error TS2307: Cannot find module '../../src/security/InputSanitizer' or its corresponding type declarations.
+__tests__/security/security.test.ts(15,52): error TS2307: Cannot find module '../fixtures/securityData' or its corresponding type declarations.
+__tests__/security/security.test.ts(281,30): error TS18046: 'error' is of type 'unknown'.
+__tests__/security/security.test.ts(523,9): error TS7006: Parameter 'pkg' implicitly has an 'any' type.
+app/(tabs)/review.tsx(61,62): error TS2345: Argument of type '{ priorityLevels: readonly ["critical", "high"]; maxCount: number; } | { maxCount: number; priorityLevels?: undefined; }' is not assignable to parameter of type 'GenerateReviewListOptions | undefined'.
+  Type '{ priorityLevels: readonly ["critical", "high"]; maxCount: number; }' is not assignable to type 'GenerateReviewListOptions'.
+    Types of property 'priorityLevels' are incompatible.
+      The type 'readonly ["critical", "high"]' is 'readonly' and cannot be assigned to the mutable type '("medium" | "high" | "low" | "critical")[]'.
+e2e/learning-flow.test.ts(199,20): error TS2551: Property 'disableNetworkSynchronization' does not exist on type 'Device'. Did you mean 'disableSynchronization'?
+e2e/learning-flow.test.ts(213,20): error TS2551: Property 'enableNetworkSynchronization' does not exist on type 'Device'. Did you mean 'enableSynchronization'?
+e2e/learning-flow.test.ts(238,14): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'number' is not assignable to parameter of type 'SystemElement'.
+e2e/learning-flow.test.ts(238,24): error TS2339: Property 'toBeLessThan' does not exist on type 'Expect<Promise<void>> & WebExpect<Promise<void>> & SecuredWebExpect<Promise<void>> & SystemExpect<Promise<void>>'.
+e2e/learning-flow.test.ts(258,14): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'number' is not assignable to parameter of type 'SystemElement'.
+e2e/learning-flow.test.ts(258,31): error TS2339: Property 'toBeLessThan' does not exist on type 'Expect<Promise<void>> & WebExpect<Promise<void>> & SecuredWebExpect<Promise<void>> & SystemExpect<Promise<void>>'.
+e2e/setup.ts(6,18): error TS2305: Module '"detox"' has no exported member 'cleanup'.
+e2e/setup.ts(42,15): error TS2339: Property 'currentSpec' does not exist on type 'typeof jasmine'.
+e2e/setup.ts(42,38): error TS2339: Property 'currentSpec' does not exist on type 'typeof jasmine'.
+e2e/setup.ts(43,30): error TS2339: Property 'currentSpec' does not exist on type 'typeof jasmine'.
+src/components/AnswerForm.tsx(76,9): error TS2741: Property 'questionType' is missing in type 'Record<string, any>' but required in type 'CBTAnswerData'.
+src/components/feedback/ErrorBoundary.tsx(79,34): error TS1323: Dynamic imports are only supported when the '--module' flag is set to 'es2020', 'es2022', 'esnext', 'commonjs', 'amd', 'system', 'umd', 'node16', 'node18', 'node20', or 'nodenext'.
+src/components/feedback/ErrorBoundary.tsx(293,37): error TS1323: Dynamic imports are only supported when the '--module' flag is set to 'es2020', 'es2022', 'esnext', 'commonjs', 'amd', 'system', 'umd', 'node16', 'node18', 'node20', or 'nodenext'.
+src/components/feedback/ErrorBoundary.tsx(293,44): error TS2307: Cannot find module '../../services/DatabaseService' or its corresponding type declarations.
+src/components/feedback/LoadingStates.tsx(129,11): error TS2322: Type '({ borderRadius: number; } | { width: number; height: number; backgroundColor: string; marginHorizontal: number; })[]' is not assignable to type 'ViewStyle'.
+  Types of property 'filter' are incompatible.
+    Type '{ <S extends { borderRadius: number; } | { width: number; height: number; backgroundColor: string; marginHorizontal: number; }>(predicate: (value: { borderRadius: number; } | { width: number; height: number; backgroundColor: string; marginHorizontal: number; }, index: number, array: ({ ...; } | { ...; })[]) => value...' is not assignable to type 'string | readonly FilterFunction[] | undefined'.
+src/components/feedback/LoadingStates.tsx(339,50): error TS2322: Type '{ children: Element; key: number; duration: number; delay: number; }' is not assignable to type 'IntrinsicAttributes & PulseProps'.
+  Property 'delay' does not exist on type 'IntrinsicAttributes & PulseProps'.
+src/components/feedback/LoadingStates.tsx(357,50): error TS2322: Type '{ children: Element; key: number; duration: number; delay: number; }' is not assignable to type 'IntrinsicAttributes & PulseProps'.
+  Property 'delay' does not exist on type 'IntrinsicAttributes & PulseProps'.
+src/components/feedback/LoadingStates.tsx(387,36): error TS2322: Type '{ children: Element; duration: number; delay: number; }' is not assignable to type 'IntrinsicAttributes & PulseProps'.
+  Property 'delay' does not exist on type 'IntrinsicAttributes & PulseProps'.
+src/components/feedback/LoadingStates.tsx(402,42): error TS2322: Type '{ children: Element; duration: number; delay: number; }' is not assignable to type 'IntrinsicAttributes & PulseProps'.
+  Property 'delay' does not exist on type 'IntrinsicAttributes & PulseProps'.
+src/components/LazyComponent.tsx(52,21): error TS2448: Block-scoped variable 'DefaultLoadingComponent' used before its declaration.
+src/components/LazyComponent.tsx(52,21): error TS2454: Variable 'DefaultLoadingComponent' is used before being assigned.
+src/components/LazyComponent.tsx(53,19): error TS2448: Block-scoped variable 'DefaultErrorComponent' used before its declaration.
+src/components/LazyComponent.tsx(53,19): error TS2454: Variable 'DefaultErrorComponent' is used before being assigned.
+src/components/LazyComponent.tsx(97,15): error TS2344: Type 'P' does not satisfy the constraint 'ComponentType<any>'.
+  Type 'P' is not assignable to type 'FunctionComponent<any>'.
+src/components/LazyComponent.tsx(179,14): error TS2322: Type 'P' is not assignable to type 'IntrinsicAttributes & ((PropsWithoutRef<P> & RefAttributes<Component<P, any, any>>) | PropsWithRef<P>)'.
+  Type 'P' is not assignable to type 'IntrinsicAttributes & PropsWithRef<P>'.
+    Type 'P' is not assignable to type 'IntrinsicAttributes'.
+src/components/MockExamScreen.tsx(17,10): error TS2614: Module '"./QuestionDisplay.optimized"' has no exported member 'QuestionDisplay'. Did you mean to use 'import QuestionDisplay from "./QuestionDisplay.optimized"' instead?
+src/components/MockExamScreen.tsx(18,10): error TS2614: Module '"./AnswerForm"' has no exported member 'AnswerForm'. Did you mean to use 'import AnswerForm from "./AnswerForm"' instead?
+src/components/MockExamScreen.tsx(19,10): error TS2614: Module '"./QuestionNavigation.optimized"' has no exported member 'QuestionNavigation'. Did you mean to use 'import QuestionNavigation from "./QuestionNavigation.optimized"' instead?
+src/components/MockExamScreen.tsx(270,23): error TS2339: Property 'answered' does not exist on type '{ answeredQuestions: number; totalQuestions: number; progressPercentage: number; } | { answered: number; total: number; percentage: number; }'.
+  Property 'answered' does not exist on type '{ answeredQuestions: number; totalQuestions: number; progressPercentage: number; }'.
+src/components/MockExamScreen.tsx(270,43): error TS2339: Property 'total' does not exist on type '{ answeredQuestions: number; totalQuestions: number; progressPercentage: number; } | { answered: number; total: number; percentage: number; }'.
+  Property 'total' does not exist on type '{ answeredQuestions: number; totalQuestions: number; progressPercentage: number; }'.
+src/components/MockExamScreen.tsx(290,36): error TS2339: Property 'progressPercentage' does not exist on type '{ answeredQuestions: number; totalQuestions: number; progressPercentage: number; } | { answered: number; total: number; percentage: number; }'.
+  Property 'progressPercentage' does not exist on type '{ answered: number; total: number; percentage: number; }'.
+src/components/MockExamScreen.tsx(310,26): error TS7006: Parameter 'answer' implicitly has an 'any' type.
+src/components/MockExamScreen.tsx(310,34): error TS7006: Parameter 'answerTime' implicitly has an 'any' type.
+src/components/MockExamSelector.tsx(57,40): error TS7006: Parameter 's' implicitly has an 'any' type.
+src/components/MockExamSelector.tsx(122,10): error TS18048: 'item.bestScore' is possibly 'undefined'.
+src/components/MockExamSelector.tsx(127,15): error TS18048: 'item.bestScore' is possibly 'undefined'.
+src/components/MockExamSelector.tsx(159,10): error TS18048: 'item.attemptCount' is possibly 'undefined'.
+src/components/onboarding/OnboardingFlow.tsx(382,34): error TS1323: Dynamic imports are only supported when the '--module' flag is set to 'es2020', 'es2022', 'esnext', 'commonjs', 'amd', 'system', 'umd', 'node16', 'node18', 'node20', or 'nodenext'.
+src/components/onboarding/OnboardingFlow.tsx(394,34): error TS1323: Dynamic imports are only supported when the '--module' flag is set to 'es2020', 'es2022', 'esnext', 'commonjs', 'amd', 'system', 'umd', 'node16', 'node18', 'node20', or 'nodenext'.
+src/components/onboarding/OnboardingFlow.tsx(404,34): error TS1323: Dynamic imports are only supported when the '--module' flag is set to 'es2020', 'es2022', 'esnext', 'commonjs', 'amd', 'system', 'umd', 'node16', 'node18', 'node20', or 'nodenext'.
+src/components/QuestionDisplay.optimized.tsx(66,13): error TS2322: Type '{ selectedAccount: any; onAccountSelect: (newValue: any) => void; excludeAccounts: string[]; placeholder: string; }' is not assignable to type 'IntrinsicAttributes & AccountDropdownProps'.
+  Property 'selectedAccount' does not exist on type 'IntrinsicAttributes & AccountDropdownProps'.
+src/components/QuestionDisplay.optimized.tsx(80,13): error TS2322: Type '{ value: any; onValueChange: (newValue: any) => void; format: "number" | "currency" | "percentage"; placeholder: string; }' is not assignable to type 'IntrinsicAttributes & NumberInputProps'.
+  Property 'onValueChange' does not exist on type 'IntrinsicAttributes & NumberInputProps'.
+src/components/QuestionDisplay.optimized.tsx(204,9): error TS2322: Type '{ questionId: string; categoryName: string; questionText: string; difficulty: number; }' is not assignable to type 'IntrinsicAttributes & QuestionTextProps'.
+  Property 'categoryName' does not exist on type 'IntrinsicAttributes & QuestionTextProps'.
+src/components/QuestionDisplay.optimized.tsx(254,11): error TS2322: Type '{ explanation: string; isCorrect: boolean; userAnswer: Record<string, any>; correctAnswer: Record<string, any>; expanded: boolean; }' is not assignable to type 'IntrinsicAttributes & ExplanationPanelProps'.
+  Property 'expanded' does not exist on type 'IntrinsicAttributes & ExplanationPanelProps'.
+src/components/QuestionNavigation.optimized.tsx(152,17): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: ViewProps): View', gave the following error.
+    Type '({ height: "100%"; backgroundColor: string; borderRadius: number; } | { width: string; })[]' is not assignable to type 'StyleProp<ViewStyle>'.
+      Type '({ height: "100%"; backgroundColor: string; borderRadius: number; } | { width: string; })[]' is not assignable to type 'RecursiveArray<ViewStyle | Falsy | RegisteredStyle<ViewStyle>>'.
+        The types returned by 'pop()' are incompatible between these types.
+          Type '{ height: "100%"; backgroundColor: string; borderRadius: number; } | { width: string; } | undefined' is not assignable to type 'ViewStyle | Falsy | RegisteredStyle<ViewStyle> | RecursiveArray<ViewStyle | Falsy | RegisteredStyle<ViewStyle>> | readonly (ViewStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+            Type '{ width: string; }' is not assignable to type 'ViewStyle | Falsy | RegisteredStyle<ViewStyle> | RecursiveArray<ViewStyle | Falsy | RegisteredStyle<ViewStyle>> | readonly (ViewStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+              Type '{ width: string; }' is not assignable to type 'ViewStyle'.
+                Types of property 'width' are incompatible.
+                  Type 'string' is not assignable to type 'DimensionValue | undefined'.
+  Overload 2 of 2, '(props: ViewProps, context: any): View', gave the following error.
+    Type '({ height: "100%"; backgroundColor: string; borderRadius: number; } | { width: string; })[]' is not assignable to type 'StyleProp<ViewStyle>'.
+      Type '({ height: "100%"; backgroundColor: string; borderRadius: number; } | { width: string; })[]' is not assignable to type 'RecursiveArray<ViewStyle | Falsy | RegisteredStyle<ViewStyle>>'.
+        The types returned by 'pop()' are incompatible between these types.
+          Type '{ height: "100%"; backgroundColor: string; borderRadius: number; } | { width: string; } | undefined' is not assignable to type 'ViewStyle | Falsy | RegisteredStyle<ViewStyle> | RecursiveArray<ViewStyle | Falsy | RegisteredStyle<ViewStyle>> | readonly (ViewStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+            Type '{ width: string; }' is not assignable to type 'ViewStyle | Falsy | RegisteredStyle<ViewStyle> | RecursiveArray<ViewStyle | Falsy | RegisteredStyle<ViewStyle>> | readonly (ViewStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+              Type '{ width: string; }' is not assignable to type 'ViewStyle'.
+                Types of property 'width' are incompatible.
+                  Type 'string' is not assignable to type 'DimensionValue | undefined'.
+src/components/ui/Animation.tsx(475,14): error TS2783: 'direction' is specified more than once, so this usage will be overwritten.
+src/components/ui/Button.tsx(82,43): error TS2322: Type 'TextStyle | undefined' is not assignable to type 'Falsy | { fontWeight: "600"; textAlign: "center"; } | { fontSize: any; lineHeight: any; } | { color: any; } | RegisteredStyle<{ fontWeight: "600"; textAlign: "center"; } | { fontSize: any; lineHeight: any; } | { ...; }> | RecursiveArray<...> | readonly (Falsy | ... 3 more ... | RegisteredStyle<...>)[]'.
+  Type 'TextStyle' is not assignable to type 'Falsy | { fontWeight: "600"; textAlign: "center"; } | { fontSize: any; lineHeight: any; } | { color: any; } | RegisteredStyle<{ fontWeight: "600"; textAlign: "center"; } | { fontSize: any; lineHeight: any; } | { ...; }> | RecursiveArray<...> | readonly (Falsy | ... 3 more ... | RegisteredStyle<...>)[]'.
+    Type 'TextStyle' is not assignable to type '{ fontSize: any; lineHeight: any; }'.
+      Property 'fontSize' is optional in type 'TextStyle' but required in type '{ fontSize: any; lineHeight: any; }'.
+src/components/ui/Card.tsx(32,11): error TS2320: Interface 'TouchableCardProps' cannot simultaneously extend types 'BaseCardProps' and 'Omit<TouchableOpacityProps, "style">'.
+  Named property 'children' of types 'BaseCardProps' and 'Omit<TouchableOpacityProps, "style">' are not identical.
+src/components/ui/Card.tsx(214,46): error TS2551: Property 'trial-balance' does not exist on type '{ journal: string; ledger: string; trialBalance: string; }'. Did you mean 'trialBalance'?
+src/components/ui/Typography.tsx(64,17): error TS18046: 'value' is of type 'unknown'.
+src/components/ui/Typography.tsx(65,19): error TS18046: 'value' is of type 'unknown'.
+src/components/ui/Typography.tsx(66,19): error TS18046: 'value' is of type 'unknown'.
+src/components/ui/Typography.tsx(67,22): error TS18046: 'value' is of type 'unknown'.
+src/components/ui/Typography.tsx(107,7): error TS2322: Type '{ id?: string | undefined; children: ReactNode; color?: TextColor | undefined; onLayout?: ((event: LayoutChangeEvent) => void) | undefined; ... 61 more ...; accessibilityLevel: 1 | ... 4 more ... | 6; }' is not assignable to type 'IntrinsicAttributes & TypographyProps'.
+  Property 'accessibilityLevel' does not exist on type 'IntrinsicAttributes & TypographyProps'. Did you mean 'accessibilityLabel'?
+src/data/database-optimized.ts(157,15): error TS2503: Cannot find namespace 'SQLite'.
+src/data/database-optimized.ts(169,27): error TS2503: Cannot find namespace 'SQLite'.
+src/data/migrations/index.ts(40,37): error TS1323: Dynamic imports are only supported when the '--module' flag is set to 'es2020', 'es2022', 'esnext', 'commonjs', 'amd', 'system', 'umd', 'node16', 'node18', 'node20', or 'nodenext'.
+src/data/migrations/migration-manager.ts(112,16): error TS7006: Parameter '_' implicitly has an 'any' type.
+src/data/migrations/migration-manager.ts(112,19): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/data/migrations/migration-manager.ts(131,14): error TS7006: Parameter '_' implicitly has an 'any' type.
+src/data/migrations/migration-manager.ts(131,17): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/data/migrations/migration-manager.ts(245,16): error TS7006: Parameter '_' implicitly has an 'any' type.
+src/data/migrations/migration-manager.ts(245,19): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/data/migrations/migration-manager.ts(259,14): error TS7006: Parameter '_' implicitly has an 'any' type.
+src/data/migrations/migration-manager.ts(259,17): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/data/repositories/base-repository.optimized.ts(95,26): error TS2339: Property 'handle' does not exist on type 'typeof ErrorHandler'.
+src/data/repositories/base-repository.optimized.ts(133,26): error TS2339: Property 'handle' does not exist on type 'typeof ErrorHandler'.
+src/data/repositories/base-repository.optimized.ts(166,26): error TS2339: Property 'handle' does not exist on type 'typeof ErrorHandler'.
+src/data/repositories/base-repository.optimized.ts(201,26): error TS2339: Property 'handle' does not exist on type 'typeof ErrorHandler'.
+src/data/repositories/base-repository.optimized.ts(239,26): error TS2339: Property 'handle' does not exist on type 'typeof ErrorHandler'.
+src/data/repositories/base-repository.optimized.ts(277,26): error TS2339: Property 'handle' does not exist on type 'typeof ErrorHandler'.
+src/data/repositories/base-repository.ts(267,35): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(o: {}): string[]', gave the following error.
+    Argument of type 'T' is not assignable to parameter of type '{}'.
+  Overload 2 of 2, '(o: object): string[]', gave the following error.
+    Argument of type 'T' is not assignable to parameter of type 'object'.
+src/data/repositories/base-repository.ts(269,36): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(o: { [s: string]: unknown; } | ArrayLike<unknown>): unknown[]', gave the following error.
+    Argument of type 'T' is not assignable to parameter of type '{ [s: string]: unknown; } | ArrayLike<unknown>'.
+      Type 'T' is not assignable to type 'ArrayLike<unknown>'.
+  Overload 2 of 2, '(o: {}): any[]', gave the following error.
+    Argument of type 'T' is not assignable to parameter of type '{}'.
+src/data/repositories/base-repository.ts(315,16): error TS7006: Parameter '_' implicitly has an 'any' type.
+src/data/repositories/base-repository.ts(315,19): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/data/repositories/learning-history-repository.ts(111,40): error TS2345: Argument of type '{ question_id: string; user_answer_json: string; is_correct: boolean; answer_time_ms: number; session_id: string | undefined; session_type: SessionType; validation_errors_json: string | null; answered_at: string; }' is not assignable to parameter of type 'Omit<LearningHistory, "id"> & { id?: string | number | undefined; }'.
+  Type '{ question_id: string; user_answer_json: string; is_correct: boolean; answer_time_ms: number; session_id: string | undefined; session_type: SessionType; validation_errors_json: string | null; answered_at: string; }' is not assignable to type 'Omit<LearningHistory, "id">'.
+    Types of property 'validation_errors_json' are incompatible.
+      Type 'string | null' is not assignable to type 'string | undefined'.
+        Type 'null' is not assignable to type 'string | undefined'.
+src/data/repositories/learning-history-repository.ts(134,21): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+src/data/repositories/mock-exam-repository.ts(16,41): error TS2314: Generic type 'BaseRepository<T>' requires 1 type argument(s).
+src/data/repositories/mock-exam-repository.ts(25,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(34,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(44,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(59,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(76,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(88,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(96,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(109,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(117,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(127,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(144,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(154,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(168,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(180,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(196,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(232,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(239,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(249,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(260,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(280,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(292,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(302,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(312,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(324,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(347,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(357,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(380,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(390,33): error TS2339: Property 'db' does not exist on type 'MockExamRepository'.
+src/data/repositories/mock-exam-repository.ts(410,12): error TS2339: Property 'errorHandler' does not exist on type 'MockExamRepository'.
+src/services/answer-service.ts(143,32): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'CBTAnswerData'.
+src/services/answer-service.ts(213,18): error TS2339: Property 'debit_account' does not exist on type 'CBTAnswerData'.
+src/services/answer-service.ts(214,18): error TS2339: Property 'debit_amount' does not exist on type 'CBTAnswerData'.
+src/services/answer-service.ts(215,18): error TS2339: Property 'credit_account' does not exist on type 'CBTAnswerData'.
+src/services/answer-service.ts(216,18): error TS2339: Property 'credit_amount' does not exist on type 'CBTAnswerData'.
+src/services/answer-service.ts(230,25): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'CBTAnswerData'.
+  No index signature with a parameter of type 'string' was found on type 'CBTAnswerData'.
+src/services/answer-service.ts(251,14): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'CBTAnswerData'.
+  No index signature with a parameter of type 'string' was found on type 'CBTAnswerData'.
+src/services/memory-optimizer.ts(111,60): error TS2339: Property 'memory' does not exist on type 'Performance'.
+src/services/memory-optimizer.ts(115,32): error TS2339: Property 'memory' does not exist on type 'Performance'.
+src/services/mock-exam-service.ts(60,29): error TS2351: This expression is not constructable.
+  Type 'typeof MockExamRepository' has no construct signatures.
+src/services/mock-exam-service.ts(97,39): error TS7006: Parameter 'q' implicitly has an 'any' type.
+src/services/mock-exam-service.ts(101,39): error TS7006: Parameter 'q' implicitly has an 'any' type.
+src/services/mock-exam-service.ts(105,39): error TS7006: Parameter 'q' implicitly has an 'any' type.
+src/services/mock-exam-service.ts(147,37): error TS2345: Argument of type '{ question_id: string; user_answer_json: string; is_correct: false; answer_time_ms: number; session_id: string; session_type: "mock_exam"; }' is not assignable to parameter of type 'Omit<LearningHistory, "id"> & { id?: string | number | undefined; }'.
+  Property 'answered_at' is missing in type '{ question_id: string; user_answer_json: string; is_correct: false; answer_time_ms: number; session_id: string; session_type: "mock_exam"; }' but required in type 'Omit<LearningHistory, "id">'.
+src/services/mock-exam-service.ts(239,50): error TS2339: Property 'checkAnswer' does not exist on type 'AnswerService'.
+src/services/mock-exam-service.ts(333,31): error TS2339: Property 'incrementIncorrectCount' does not exist on type 'ReviewItemRepository'.
