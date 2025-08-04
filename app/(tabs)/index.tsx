@@ -4,7 +4,6 @@ import { useRouter } from "expo-router";
 import {
   Screen,
   Container,
-  SafeAreaDebug,
 } from "../../src/components/layout/ResponsiveLayout";
 import { useTheme } from "../../src/context/ThemeContext";
 
@@ -13,50 +12,46 @@ export default function HomeScreen() {
   const { theme } = useTheme();
 
   return (
-    <SafeAreaDebug showIndicators={true}>
-      <Screen safeArea={true} statusBarStyle="dark-content">
-        <Container style={styles.container} additionalIOSPadding={true}>
-          {/* アプリタイトル（ヘッダー代替） */}
-          <View style={styles.headerSection}>
-            <Text style={styles.appTitle}>簿記3級 確実復習</Text>
-          </View>
+    <Screen safeArea={true} statusBarStyle="dark-content">
+      <Container style={styles.container}>
+        {/* アプリタイトル（ヘッダー代替） */}
+        <View style={styles.headerSection}>
+          <Text style={styles.appTitle}>簿記3級 確実復習</Text>
+        </View>
 
-          <Text style={styles.title}>簿記3級問題集「確実復習」</Text>
-          <Text style={styles.subtitle}>
-            間違えた問題を確実に潰す学習アプリ
-          </Text>
+        <Text style={styles.title}>簿記3級問題集「確実復習」</Text>
+        <Text style={styles.subtitle}>間違えた問題を確実に潰す学習アプリ</Text>
 
-          <View style={styles.menuContainer}>
-            <TouchableOpacity
-              style={styles.menuButton}
-              onPress={() => router.push("/learning")}
-            >
-              <Text style={styles.menuIcon}>📚</Text>
-              <Text style={styles.menuTitle}>学習開始</Text>
-              <Text style={styles.menuSubtitle}>問題を解いて基礎力アップ</Text>
-            </TouchableOpacity>
+        <View style={styles.menuContainer}>
+          <TouchableOpacity
+            style={styles.menuButton}
+            onPress={() => router.push("/learning")}
+          >
+            <Text style={styles.menuIcon}>📚</Text>
+            <Text style={styles.menuTitle}>学習開始</Text>
+            <Text style={styles.menuSubtitle}>問題を解いて基礎力アップ</Text>
+          </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.menuButton}
-              onPress={() => router.push("/review")}
-            >
-              <Text style={styles.menuIcon}>🔄</Text>
-              <Text style={styles.menuTitle}>復習</Text>
-              <Text style={styles.menuSubtitle}>間違えた問題を重点的に</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.menuButton}
+            onPress={() => router.push("/review")}
+          >
+            <Text style={styles.menuIcon}>🔄</Text>
+            <Text style={styles.menuTitle}>復習</Text>
+            <Text style={styles.menuSubtitle}>間違えた問題を重点的に</Text>
+          </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.menuButton}
-              onPress={() => router.push("/stats")}
-            >
-              <Text style={styles.menuIcon}>📊</Text>
-              <Text style={styles.menuTitle}>学習統計</Text>
-              <Text style={styles.menuSubtitle}>進捗状況を確認</Text>
-            </TouchableOpacity>
-          </View>
-        </Container>
-      </Screen>
-    </SafeAreaDebug>
+          <TouchableOpacity
+            style={styles.menuButton}
+            onPress={() => router.push("/stats")}
+          >
+            <Text style={styles.menuIcon}>📊</Text>
+            <Text style={styles.menuTitle}>学習統計</Text>
+            <Text style={styles.menuSubtitle}>進捗状況を確認</Text>
+          </TouchableOpacity>
+        </View>
+      </Container>
+    </Screen>
   );
 }
 

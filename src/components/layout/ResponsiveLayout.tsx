@@ -13,12 +13,8 @@ import {
   ScrollView,
   Platform,
   StatusBar,
-  Text,
 } from "react-native";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme, useResponsiveTheme } from "../../context/ThemeContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -78,16 +74,6 @@ export function Container({
 }: ContainerProps) {
   const { theme } = useTheme();
   const responsiveTheme = useResponsiveTheme(screenWidth);
-  const insets = useSafeAreaInsets();
-
-  // より積極的なiOS SafeArea対応
-  const iOSExtraPadding =
-    Platform.OS === "ios" && additionalIOSPadding
-      ? {
-          paddingTop: Math.max(insets.top, 44), // ナビゲーションバーを考慮
-          paddingBottom: Math.max(insets.bottom, 34), // ホームインジケーターを考慮
-        }
-      : {};
 
   const containerStyle: ViewStyle = {
     flex: 1,
@@ -102,16 +88,7 @@ export function Container({
         theme.layoutSpacing.screenPaddingVertical,
       ),
     }),
-    // iOS用の追加マージン（より積極的）
-    ...iOSExtraPadding,
   };
-
-  // デバッグログ
-  React.useEffect(() => {
-    if (__DEV__ && Platform.OS === "ios" && additionalIOSPadding) {
-      console.log("Container iOS Extra Padding:", iOSExtraPadding);
-    }
-  }, [additionalIOSPadding, JSON.stringify(iOSExtraPadding)]);
 
   return <View style={[containerStyle, style]}>{children}</View>;
 }
@@ -313,46 +290,20 @@ export function Screen({
   style,
 }: ScreenProps) {
   const { theme } = useTheme();
-  const insets = useSafeAreaInsets();
 
   // ステータスバーのスタイルを自動決定
   const autoStatusBarStyle =
     statusBarStyle || (theme.isDark ? "light-content" : "dark-content");
 
-  // デバッグログ：SafeArea値を出力
-  React.useEffect(() => {
-    if (__DEV__ && Platform.OS === "ios") {
-      console.log("Screen SafeArea Insets:", {
-        top: insets.top,
-        bottom: insets.bottom,
-        left: insets.left,
-        right: insets.right,
-        statusBarHeight: StatusBar.currentHeight || 0,
-      });
-      console.log("Window dimensions:", Dimensions.get("window"));
-      console.log("Screen dimensions:", Dimensions.get("screen"));
-    }
-  }, [insets]);
-
-  // iOS用の強制的なSafeArea設定（ヘッダー非表示を考慮）
-  const iosMinInsets = {
-    // 上部：ステータスバーのみを考慮（ヘッダーは非表示なので）
-    top: Math.max(insets.top, 50), // 最小値50pt（ステータスバー + マージン）
-    bottom: Math.max(insets.bottom, 34), // 最小値34pt（ホームインジケーター対応）
-    left: Math.max(insets.left, 0),
-    right: Math.max(insets.right, 0),
-  };
-
+  // シンプルで確実なスタイル設定
   const screenStyle: ViewStyle = {
     flex: 1,
     backgroundColor: theme.colors.background,
-    // iOS用の強制マージン設定
+    // iOS用の固定マージン設定（シンプルで確実）
     ...(Platform.OS === "ios" &&
       safeArea && {
-        paddingTop: iosMinInsets.top,
-        paddingBottom: iosMinInsets.bottom,
-        paddingLeft: iosMinInsets.left,
-        paddingRight: iosMinInsets.right,
+        paddingTop: 44, // ステータスバー用固定値
+        paddingBottom: 34, // ホームインジケーター用固定値
       }),
   };
 
@@ -369,31 +320,23 @@ export function Screen({
     children
   );
 
-  // iOSの場合はViewを使用してマージンを完全制御
-  const screenContent =
-    safeArea && Platform.OS === "ios" ? (
-      <View style={[screenStyle, style]}>
-        <StatusBar barStyle={autoStatusBarStyle} />
-        {content}
-      </View>
-    ) : safeArea ? (
-      <SafeAreaView style={[screenStyle, style]}>
-        {Platform.OS === "ios" && <StatusBar barStyle={autoStatusBarStyle} />}
-        {content}
-      </SafeAreaView>
-    ) : (
-      <View style={[screenStyle, style]}>
-        {Platform.OS === "android" && (
-          <StatusBar
-            barStyle={autoStatusBarStyle}
-            backgroundColor={theme.colors.primary}
-          />
-        )}
-        {content}
-      </View>
-    );
-
-  return screenContent;
+  // シンプルな実装：safeAreaがtrueの場合はSafeAreaView、falseの場合はView
+  return safeArea ? (
+    <SafeAreaView style={[screenStyle, style]}>
+      <StatusBar barStyle={autoStatusBarStyle} />
+      {content}
+    </SafeAreaView>
+  ) : (
+    <View style={[screenStyle, style]}>
+      <StatusBar
+        barStyle={autoStatusBarStyle}
+        backgroundColor={
+          Platform.OS === "android" ? theme.colors.primary : undefined
+        }
+      />
+      {content}
+    </View>
+  );
 }
 
 /**
@@ -489,117 +432,6 @@ export function QuestionLayout({
         <View>{actions}</View>
       </Flex>
     </Container>
-  );
-}
-
-/**
- * デバッグ用SafeAreaインジケーター（開発時のみ表示）
- */
-interface SafeAreaDebugProps {
-  children: React.ReactNode;
-  showIndicators?: boolean;
-}
-
-export function SafeAreaDebug({
-  children,
-  showIndicators = __DEV__,
-}: SafeAreaDebugProps) {
-  const insets = useSafeAreaInsets();
-
-  if (!showIndicators) {
-    return <>{children}</>;
-  }
-
-  // iOS用の実際に適用されるマージン値（ヘッダー非表示を考慮）
-  const actualInsets =
-    Platform.OS === "ios"
-      ? {
-          top: Math.max(insets.top, 50),
-          bottom: Math.max(insets.bottom, 34),
-          left: Math.max(insets.left, 0),
-          right: Math.max(insets.right, 0),
-        }
-      : insets;
-
-  return (
-    <>
-      {/* SafeArea可視化用のインジケーター */}
-      <View
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: actualInsets.top,
-          backgroundColor: "rgba(255, 0, 0, 0.3)",
-          zIndex: 9999,
-          pointerEvents: "none",
-        }}
-      />
-      <View
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: actualInsets.bottom,
-          backgroundColor: "rgba(0, 255, 0, 0.3)",
-          zIndex: 9999,
-          pointerEvents: "none",
-        }}
-      />
-      <View
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          width: actualInsets.left,
-          backgroundColor: "rgba(0, 0, 255, 0.3)",
-          zIndex: 9999,
-          pointerEvents: "none",
-        }}
-      />
-      <View
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          right: 0,
-          width: actualInsets.right,
-          backgroundColor: "rgba(255, 255, 0, 0.3)",
-          zIndex: 9999,
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* デバッグ情報表示 */}
-      {Platform.OS === "ios" && (
-        <View
-          style={{
-            position: "absolute",
-            top: actualInsets.top + 10,
-            left: 10,
-            backgroundColor: "rgba(0, 0, 0, 0.8)",
-            padding: 10,
-            borderRadius: 5,
-            zIndex: 10000,
-            pointerEvents: "none",
-          }}
-        >
-          <Text style={{ color: "white", fontSize: 12, fontFamily: "Courier" }}>
-            SafeArea Debug{"\n"}
-            Original: t:{insets.top} b:{insets.bottom} l:{insets.left} r:
-            {insets.right}
-            {"\n"}
-            Applied: t:{actualInsets.top} b:{actualInsets.bottom} l:
-            {actualInsets.left} r:{actualInsets.right}
-          </Text>
-        </View>
-      )}
-
-      {children}
-    </>
   );
 }
 

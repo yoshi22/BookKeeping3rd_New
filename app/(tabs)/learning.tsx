@@ -7,10 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
-import {
-  Screen,
-  SafeAreaDebug,
-} from "../../src/components/layout/ResponsiveLayout";
+import { Screen } from "../../src/components/layout/ResponsiveLayout";
 
 export default function LearningScreen() {
   const router = useRouter();
@@ -42,77 +39,73 @@ export default function LearningScreen() {
   ];
 
   return (
-    <SafeAreaDebug showIndicators={true}>
-      <Screen safeArea={true} scrollable={true} statusBarStyle="dark-content">
-        {/* アプリタイトル（ヘッダー代替） */}
-        <View style={styles.headerSection}>
-          <Text style={styles.appTitle}>学習</Text>
-        </View>
+    <Screen safeArea={true} scrollable={true} statusBarStyle="dark-content">
+      {/* アプリタイトル（ヘッダー代替） */}
+      <View style={styles.headerSection}>
+        <Text style={styles.appTitle}>学習</Text>
+      </View>
 
-        <View style={styles.header}>
-          <Text style={styles.title}>学習モード</Text>
-          <Text style={styles.subtitle}>カテゴリを選択して学習を開始</Text>
-        </View>
+      <View style={styles.header}>
+        <Text style={styles.title}>学習モード</Text>
+        <Text style={styles.subtitle}>カテゴリを選択して学習を開始</Text>
+      </View>
 
-        <View style={styles.categoriesContainer}>
-          {categories.map((category) => (
-            <TouchableOpacity
-              key={category.id}
-              style={styles.categoryCard}
-              onPress={() => {
-                // サンプル問題の最初の問題に遷移
-                let firstQuestionId = "";
-                switch (category.id) {
-                  case "journal":
-                    firstQuestionId = "Q_J_001";
-                    break;
-                  case "ledger":
-                    firstQuestionId = "Q_L_001";
-                    break;
-                  case "trial_balance":
-                    firstQuestionId = "Q_T_001";
-                    break;
-                }
-
-                if (firstQuestionId) {
-                  router.push(`/question/${firstQuestionId}`);
-                }
-              }}
-            >
-              <Text style={styles.categoryIcon}>{category.icon}</Text>
-              <View style={styles.categoryInfo}>
-                <Text style={styles.categoryName}>{category.name}</Text>
-                <Text style={styles.categoryDescription}>
-                  {category.description}
-                </Text>
-                <Text style={styles.categoryProgress}>
-                  {category.completedQuestions}/{category.totalQuestions}問完了
-                </Text>
-              </View>
-              <View style={styles.categoryAction}>
-                <Text style={styles.actionText}>開始</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        <View style={styles.mockExamSection}>
+      <View style={styles.categoriesContainer}>
+        {categories.map((category) => (
           <TouchableOpacity
-            style={styles.mockExamButton}
+            key={category.id}
+            style={styles.categoryCard}
             onPress={() => {
-              // TODO: Navigate to mock exam
-              console.log("Start mock exam");
+              // サンプル問題の最初の問題に遷移
+              let firstQuestionId = "";
+              switch (category.id) {
+                case "journal":
+                  firstQuestionId = "Q_J_001";
+                  break;
+                case "ledger":
+                  firstQuestionId = "Q_L_001";
+                  break;
+                case "trial_balance":
+                  firstQuestionId = "Q_T_001";
+                  break;
+              }
+
+              if (firstQuestionId) {
+                router.push(`/question/${firstQuestionId}`);
+              }
             }}
           >
-            <Text style={styles.mockExamIcon}>🎯</Text>
-            <Text style={styles.mockExamTitle}>模擬試験</Text>
-            <Text style={styles.mockExamSubtitle}>
-              本試験形式で実力チェック
-            </Text>
+            <Text style={styles.categoryIcon}>{category.icon}</Text>
+            <View style={styles.categoryInfo}>
+              <Text style={styles.categoryName}>{category.name}</Text>
+              <Text style={styles.categoryDescription}>
+                {category.description}
+              </Text>
+              <Text style={styles.categoryProgress}>
+                {category.completedQuestions}/{category.totalQuestions}問完了
+              </Text>
+            </View>
+            <View style={styles.categoryAction}>
+              <Text style={styles.actionText}>開始</Text>
+            </View>
           </TouchableOpacity>
-        </View>
-      </Screen>
-    </SafeAreaDebug>
+        ))}
+      </View>
+
+      <View style={styles.mockExamSection}>
+        <TouchableOpacity
+          style={styles.mockExamButton}
+          onPress={() => {
+            // TODO: Navigate to mock exam
+            console.log("Start mock exam");
+          }}
+        >
+          <Text style={styles.mockExamIcon}>🎯</Text>
+          <Text style={styles.mockExamTitle}>模擬試験</Text>
+          <Text style={styles.mockExamSubtitle}>本試験形式で実力チェック</Text>
+        </TouchableOpacity>
+      </View>
+    </Screen>
   );
 }
 
