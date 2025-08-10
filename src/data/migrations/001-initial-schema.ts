@@ -3,7 +3,7 @@
  * 簿記3級問題集アプリ - 新コンテンツ構成対応
  */
 
-import { MigrationInfo } from '../../types/database';
+import { MigrationInfo } from "../../types/database";
 
 /**
  * 初期スキーママイグレーション
@@ -13,12 +13,12 @@ import { MigrationInfo } from '../../types/database';
  */
 export const migration001: MigrationInfo = {
   version: 1,
-  name: 'initial-schema',
-  description: '初期データベーススキーマ作成（新コンテンツ構成対応）',
-  timestamp: '2025-01-27T10:00:00Z',
+  name: "initial-schema",
+  description: "初期データベーススキーマ作成（新コンテンツ構成対応）",
+  timestamp: "2025-01-27T10:00:00Z",
   sql: [
     // === カテゴリテーブル作成 ===
-    `CREATE TABLE categories (
+    `CREATE TABLE IF NOT EXISTS categories (
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL,
       description TEXT,
@@ -28,7 +28,7 @@ export const migration001: MigrationInfo = {
     )`,
 
     // === 問題テーブル作成（CBT形式対応） ===
-    `CREATE TABLE questions (
+    `CREATE TABLE IF NOT EXISTS questions (
       id TEXT PRIMARY KEY,
       category_id TEXT NOT NULL,
       question_text TEXT NOT NULL,
@@ -48,7 +48,7 @@ export const migration001: MigrationInfo = {
     )`,
 
     // === 勘定科目マスタテーブル作成（CBT形式対応） ===
-    `CREATE TABLE account_items (
+    `CREATE TABLE IF NOT EXISTS account_items (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       code TEXT NOT NULL UNIQUE,
       name TEXT NOT NULL,
@@ -63,7 +63,7 @@ export const migration001: MigrationInfo = {
     )`,
 
     // === 学習履歴テーブル作成（CBT形式対応） ===
-    `CREATE TABLE learning_history (
+    `CREATE TABLE IF NOT EXISTS learning_history (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       question_id TEXT NOT NULL,
       user_answer_json TEXT NOT NULL,
@@ -82,7 +82,7 @@ export const migration001: MigrationInfo = {
     )`,
 
     // === 復習アイテムテーブル作成 ===
-    `CREATE TABLE review_items (
+    `CREATE TABLE IF NOT EXISTS review_items (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       question_id TEXT NOT NULL UNIQUE,
       incorrect_count INTEGER NOT NULL DEFAULT 0,
@@ -102,7 +102,7 @@ export const migration001: MigrationInfo = {
     )`,
 
     // === 学習進捗テーブル作成 ===
-    `CREATE TABLE user_progress (
+    `CREATE TABLE IF NOT EXISTS user_progress (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       category_id TEXT NOT NULL UNIQUE,
       total_questions INTEGER NOT NULL DEFAULT 0,
@@ -119,7 +119,7 @@ export const migration001: MigrationInfo = {
     )`,
 
     // === 模試定義テーブル作成 ===
-    `CREATE TABLE mock_exams (
+    `CREATE TABLE IF NOT EXISTS mock_exams (
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL,
       description TEXT,
@@ -137,7 +137,7 @@ export const migration001: MigrationInfo = {
     )`,
 
     // === 模試問題関連テーブル作成 ===
-    `CREATE TABLE mock_exam_questions (
+    `CREATE TABLE IF NOT EXISTS mock_exam_questions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       mock_exam_id TEXT NOT NULL,
       question_id TEXT NOT NULL,
@@ -155,7 +155,7 @@ export const migration001: MigrationInfo = {
     )`,
 
     // === 模試結果テーブル作成 ===
-    `CREATE TABLE mock_exam_results (
+    `CREATE TABLE IF NOT EXISTS mock_exam_results (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       exam_id TEXT NOT NULL,
       total_score INTEGER NOT NULL,
@@ -172,7 +172,7 @@ export const migration001: MigrationInfo = {
     )`,
 
     // === アプリ設定テーブル作成 ===
-    `CREATE TABLE app_settings (
+    `CREATE TABLE IF NOT EXISTS app_settings (
       key TEXT PRIMARY KEY,
       value TEXT NOT NULL,
       type TEXT NOT NULL DEFAULT 'string',
@@ -183,43 +183,43 @@ export const migration001: MigrationInfo = {
 
     // === インデックス作成 ===
     // 問題テーブル
-    `CREATE INDEX idx_questions_category ON questions (category_id)`,
-    `CREATE INDEX idx_questions_difficulty ON questions (difficulty)`,
-    
+    `CREATE INDEX IF NOT EXISTS idx_questions_category ON questions (category_id)`,
+    `CREATE INDEX IF NOT EXISTS idx_questions_difficulty ON questions (difficulty)`,
+
     // 学習履歴テーブル
-    `CREATE INDEX idx_history_question ON learning_history (question_id)`,
-    `CREATE INDEX idx_history_date ON learning_history (answered_at)`,
-    `CREATE INDEX idx_history_session ON learning_history (session_id)`,
-    
+    `CREATE INDEX IF NOT EXISTS idx_history_question ON learning_history (question_id)`,
+    `CREATE INDEX IF NOT EXISTS idx_history_date ON learning_history (answered_at)`,
+    `CREATE INDEX IF NOT EXISTS idx_history_session ON learning_history (session_id)`,
+
     // 勘定科目マスタ
-    `CREATE INDEX idx_accounts_category ON account_items (category)`,
-    `CREATE INDEX idx_accounts_sort ON account_items (sort_order)`,
-    
+    `CREATE INDEX IF NOT EXISTS idx_accounts_category ON account_items (category)`,
+    `CREATE INDEX IF NOT EXISTS idx_accounts_sort ON account_items (sort_order)`,
+
     // 復習アイテム
-    `CREATE INDEX idx_review_status ON review_items (status)`,
-    `CREATE INDEX idx_review_priority ON review_items (priority_score DESC)`,
-    `CREATE INDEX idx_review_last_answered ON review_items (last_answered_at)`,
-    
+    `CREATE INDEX IF NOT EXISTS idx_review_status ON review_items (status)`,
+    `CREATE INDEX IF NOT EXISTS idx_review_priority ON review_items (priority_score DESC)`,
+    `CREATE INDEX IF NOT EXISTS idx_review_last_answered ON review_items (last_answered_at)`,
+
     // 学習進捗
-    `CREATE INDEX idx_progress_category ON user_progress (category_id)`,
-    
+    `CREATE INDEX IF NOT EXISTS idx_progress_category ON user_progress (category_id)`,
+
     // 模試結果
-    `CREATE INDEX idx_exam_results_date ON mock_exam_results (taken_at)`,
-    `CREATE INDEX idx_exam_results_score ON mock_exam_results (total_score)`,
-    
+    `CREATE INDEX IF NOT EXISTS idx_exam_results_date ON mock_exam_results (taken_at)`,
+    `CREATE INDEX IF NOT EXISTS idx_exam_results_score ON mock_exam_results (total_score)`,
+
     // 模試問題関連
-    `CREATE INDEX idx_mock_questions_exam ON mock_exam_questions (mock_exam_id)`,
-    `CREATE INDEX idx_mock_questions_section ON mock_exam_questions (mock_exam_id, section_number)`,
+    `CREATE INDEX IF NOT EXISTS idx_mock_questions_exam ON mock_exam_questions (mock_exam_id)`,
+    `CREATE INDEX IF NOT EXISTS idx_mock_questions_section ON mock_exam_questions (mock_exam_id, section_number)`,
 
     // === 初期データ投入 ===
     // カテゴリ初期データ（新コンテンツ構成対応）
-    `INSERT INTO categories (id, name, description, sort_order, total_questions) VALUES
+    `INSERT OR REPLACE INTO categories (id, name, description, sort_order, total_questions) VALUES
       ('journal', '仕訳', '基本的な仕訳問題（25パターン×10問）', 1, 250),
       ('ledger', '帳簿', '元帳・補助簿に関する問題（4種類×10問）', 2, 40),
       ('trial_balance', '試算表', '試算表作成・修正に関する問題（3パターン×4問）', 3, 12)`,
 
     // アプリ設定初期データ
-    `INSERT INTO app_settings (key, value, type) VALUES
+    `INSERT OR REPLACE INTO app_settings (key, value, type) VALUES
       ('font_size', '16', 'number'),
       ('high_contrast', 'false', 'boolean'),
       ('sound_enabled', 'true', 'boolean'),
@@ -229,7 +229,7 @@ export const migration001: MigrationInfo = {
       ('database_version', '1', 'number')`,
 
     // 勘定科目マスタ初期データ（簿記3級レベルの基本勘定科目）
-    `INSERT INTO account_items (code, name, category, question_types_json, sort_order) VALUES
+    `INSERT OR REPLACE INTO account_items (code, name, category, question_types_json, sort_order) VALUES
       ('111', '現金', 'asset', '["journal", "ledger", "trial_balance"]', 1),
       ('112', '預金', 'asset', '["journal", "ledger", "trial_balance"]', 2),
       ('113', '売掛金', 'asset', '["journal", "ledger", "trial_balance"]', 3),
@@ -264,40 +264,40 @@ export const migration001: MigrationInfo = {
       ('518', '雑費', 'expense', '["journal", "trial_balance"]', 58)`,
 
     // 模試定義初期データ（5セット）
-    `INSERT INTO mock_exams (id, name, description, structure_json) VALUES
+    `INSERT OR REPLACE INTO mock_exams (id, name, description, structure_json) VALUES
       ('MOCK_001', '基礎レベル模試', '基本的な問題中心の模試', '{"section1":{"count":15,"maxScore":60,"questionCategory":"journal","timeRecommendation":30},"section2":{"count":2,"maxScore":20,"questionCategory":"ledger","timeRecommendation":15},"section3":{"count":1,"maxScore":20,"questionCategory":"trial_balance","timeRecommendation":15}}'),
       ('MOCK_002', '標準レベル模試', '標準的な難易度の模試', '{"section1":{"count":15,"maxScore":60,"questionCategory":"journal","timeRecommendation":30},"section2":{"count":2,"maxScore":20,"questionCategory":"ledger","timeRecommendation":15},"section3":{"count":1,"maxScore":20,"questionCategory":"trial_balance","timeRecommendation":15}}'),
       ('MOCK_003', '応用レベル模試', '応用問題を含む模試', '{"section1":{"count":15,"maxScore":60,"questionCategory":"journal","timeRecommendation":30},"section2":{"count":2,"maxScore":20,"questionCategory":"ledger","timeRecommendation":15},"section3":{"count":1,"maxScore":20,"questionCategory":"trial_balance","timeRecommendation":15}}'),
       ('MOCK_004', '実践レベル模試', '実践的な問題構成の模試', '{"section1":{"count":15,"maxScore":60,"questionCategory":"journal","timeRecommendation":30},"section2":{"count":2,"maxScore":20,"questionCategory":"ledger","timeRecommendation":15},"section3":{"count":1,"maxScore":20,"questionCategory":"trial_balance","timeRecommendation":15}}'),
-      ('MOCK_005', '総合レベル模試', '総合的な実力測定模試', '{"section1":{"count":15,"maxScore":60,"questionCategory":"journal","timeRecommendation":30},"section2":{"count":2,"maxScore":20,"questionCategory":"ledger","timeRecommendation":15},"section3":{"count":1,"maxScore":20,"questionCategory":"trial_balance","timeRecommendation":15}}')`
+      ('MOCK_005', '総合レベル模試', '総合的な実力測定模試', '{"section1":{"count":15,"maxScore":60,"questionCategory":"journal","timeRecommendation":30},"section2":{"count":2,"maxScore":20,"questionCategory":"ledger","timeRecommendation":15},"section3":{"count":1,"maxScore":20,"questionCategory":"trial_balance","timeRecommendation":15}}')`,
   ],
 
   rollbackSql: [
-    'DROP INDEX IF EXISTS idx_mock_questions_section',
-    'DROP INDEX IF EXISTS idx_mock_questions_exam',
-    'DROP INDEX IF EXISTS idx_exam_results_score',
-    'DROP INDEX IF EXISTS idx_exam_results_date',
-    'DROP INDEX IF EXISTS idx_progress_category',
-    'DROP INDEX IF EXISTS idx_review_last_answered',
-    'DROP INDEX IF EXISTS idx_review_priority',
-    'DROP INDEX IF EXISTS idx_review_status',
-    'DROP INDEX IF EXISTS idx_accounts_sort',
-    'DROP INDEX IF EXISTS idx_accounts_category',
-    'DROP INDEX IF EXISTS idx_history_session',
-    'DROP INDEX IF EXISTS idx_history_date',
-    'DROP INDEX IF EXISTS idx_history_question',
-    'DROP INDEX IF EXISTS idx_questions_difficulty',
-    'DROP INDEX IF EXISTS idx_questions_category',
-    
-    'DROP TABLE IF EXISTS app_settings',
-    'DROP TABLE IF EXISTS mock_exam_results',
-    'DROP TABLE IF EXISTS mock_exam_questions',
-    'DROP TABLE IF EXISTS mock_exams',
-    'DROP TABLE IF EXISTS user_progress',
-    'DROP TABLE IF EXISTS review_items',
-    'DROP TABLE IF EXISTS learning_history',
-    'DROP TABLE IF EXISTS account_items',
-    'DROP TABLE IF EXISTS questions',
-    'DROP TABLE IF EXISTS categories'
-  ]
+    "DROP INDEX IF EXISTS idx_mock_questions_section",
+    "DROP INDEX IF EXISTS idx_mock_questions_exam",
+    "DROP INDEX IF EXISTS idx_exam_results_score",
+    "DROP INDEX IF EXISTS idx_exam_results_date",
+    "DROP INDEX IF EXISTS idx_progress_category",
+    "DROP INDEX IF EXISTS idx_review_last_answered",
+    "DROP INDEX IF EXISTS idx_review_priority",
+    "DROP INDEX IF EXISTS idx_review_status",
+    "DROP INDEX IF EXISTS idx_accounts_sort",
+    "DROP INDEX IF EXISTS idx_accounts_category",
+    "DROP INDEX IF EXISTS idx_history_session",
+    "DROP INDEX IF EXISTS idx_history_date",
+    "DROP INDEX IF EXISTS idx_history_question",
+    "DROP INDEX IF EXISTS idx_questions_difficulty",
+    "DROP INDEX IF EXISTS idx_questions_category",
+
+    "DROP TABLE IF EXISTS app_settings",
+    "DROP TABLE IF EXISTS mock_exam_results",
+    "DROP TABLE IF EXISTS mock_exam_questions",
+    "DROP TABLE IF EXISTS mock_exams",
+    "DROP TABLE IF EXISTS user_progress",
+    "DROP TABLE IF EXISTS review_items",
+    "DROP TABLE IF EXISTS learning_history",
+    "DROP TABLE IF EXISTS account_items",
+    "DROP TABLE IF EXISTS questions",
+    "DROP TABLE IF EXISTS categories",
+  ],
 };

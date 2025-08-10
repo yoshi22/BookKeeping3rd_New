@@ -141,8 +141,11 @@ export class StatisticsService {
       
       console.log('[StatisticsService] 全体学習統計取得開始');
       
-      // 基本統計取得
+      // 基本統計取得（回答数ベース）
       const basicStats = await learningHistoryRepository.getStatistics();
+      
+      // ユニーク問題数取得（重複除外）
+      const uniqueStats = await learningHistoryRepository.getUniqueAnsweredQuestions();
       
       // 総問題数取得
       const totalQuestions = await this.getTotalQuestionsCount();
@@ -156,12 +159,17 @@ export class StatisticsService {
       // 最初と最後の学習日取得
       const { firstStudiedAt, lastStudiedAt } = await this.getStudyDateRange();
       
+      // 統計データの整合性確保
+      const answeredQuestions = uniqueStats.totalUniqueQuestions;
+      const correctAnswers = uniqueStats.correctUniqueQuestions;
+      const incorrectAnswers = Math.max(0, answeredQuestions - correctAnswers); // 負の値を防ぐ
+      
       const statistics: OverallStatistics = {
         totalQuestions,
-        answeredQuestions: basicStats.totalAnswers,
-        correctAnswers: basicStats.correctAnswers,
-        incorrectAnswers: basicStats.totalAnswers - basicStats.correctAnswers,
-        accuracyRate: basicStats.accuracyRate,
+        answeredQuestions, // ユニーク回答済み問題数
+        correctAnswers, // ユニーク正解問題数
+        incorrectAnswers, // 不正解数（負の値を防ぐ）
+        accuracyRate: answeredQuestions > 0 ? correctAnswers / answeredQuestions : 0,
         studyDays,
         totalStudyTimeMs: basicStats.totalStudyTime,
         averageStudyTimeMs: basicStats.averageAnswerTime,
@@ -175,6 +183,13 @@ export class StatisticsService {
       statisticsCache.setOverallStats(statistics);
       
       console.log('[StatisticsService] 全体学習統計取得完了');
+      console.log('[StatisticsService] 統計データ:', {
+        totalQuestions: statistics.totalQuestions,
+        answeredQuestions: statistics.answeredQuestions,
+        correctAnswers: statistics.correctAnswers,
+        incorrectAnswers: statistics.incorrectAnswers
+      });
+      
       return statistics;
     } catch (error) {
       console.error('[StatisticsService] getOverallStatistics エラー:', error);
@@ -205,8 +220,8 @@ export class StatisticsService {
       const statistics: CategoryStatistics[] = [];
       
       for (const category of categories) {
-        // カテゴリ別基本統計
-        const basicStats = await learningHistoryRepository.getStatistics({ category });
+        // カテゴリ別ユニーク問題数（重複回答を除外した一意の問題数）
+        const categoryUniqueStats = await learningHistoryRepository.getUniqueAnsweredQuestions({ category });
         
         // カテゴリ別総問題数
         const totalQuestions = await this.getCategoryQuestionsCount(category);
@@ -218,21 +233,28 @@ export class StatisticsService {
         // 難易度別統計
         const difficultyBreakdown = await this.getDifficultyBreakdown(category);
         
-        // 完了問題数計算（一度でも正解した問題）
-        const masteredCount = await this.getMasteredQuestionsCount(category);
+        // 平均回答時間（基本統計から取得）
+        const basicStats = await learningHistoryRepository.getStatistics({ category });
+        
+        // ユニーク問題数を使用して統計を計算
+        const uniqueAnswered = categoryUniqueStats.totalUniqueQuestions;
+        const uniqueCorrect = categoryUniqueStats.correctUniqueQuestions;
+        
+        // 克服済み問題数は、一度でも正解した問題数と同じ
+        const masteredCount = uniqueCorrect;
         
         const categoryStats: CategoryStatistics = {
           category,
           categoryName: categoryNames[category],
           totalQuestions,
-          answeredQuestions: basicStats.totalAnswers,
-          correctAnswers: basicStats.correctAnswers,
-          incorrectAnswers: basicStats.totalAnswers - basicStats.correctAnswers,
-          accuracyRate: basicStats.accuracyRate,
+          answeredQuestions: uniqueAnswered, // ユニーク回答済み問題数
+          correctAnswers: uniqueCorrect, // ユニーク正解問題数
+          incorrectAnswers: Math.max(0, uniqueAnswered - uniqueCorrect), // 負の値を防ぐ
+          accuracyRate: uniqueAnswered > 0 ? uniqueCorrect / uniqueAnswered : 0,
           averageAnswerTimeMs: basicStats.averageAnswerTime,
-          completionRate: totalQuestions > 0 ? basicStats.totalAnswers / totalQuestions : 0,
-          reviewItemsCount: categoryReviewStats.total,
-          masteredCount,
+          completionRate: totalQuestions > 0 ? uniqueAnswered / totalQuestions : 0,
+          reviewItemsCount: categoryReviewStats?.total || 0, // 復習対象問題数
+          masteredCount, // 克服済み問題数（一度でも正解した問題数）
           lastStudiedAt: basicStats.lastAnsweredAt,
           difficultyBreakdown
         };

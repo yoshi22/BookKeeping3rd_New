@@ -1,26 +1,33 @@
 /**
  * テーマコンテキスト
  * 簿記3級問題集アプリ - Step 5.1: UIコンポーネント改善
- * 
+ *
  * ライト/ダークモード切り替えとテーマ管理
  */
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { Appearance, ColorSchemeName } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { 
-  lightColors, 
-  darkColors, 
-  ColorPalette, 
-  learningColors, 
-  categoryColors, 
-  gradients, 
-  shadows 
-} from '../theme/colors';
-import { typography, TypographyVariant } from '../theme/typography';
-import { spacing, componentSpacing, layoutSpacing } from '../theme/spacing';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+import { Appearance, ColorSchemeName, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { initializeDatabase } from "../data/migrations/index";
+import {
+  lightColors,
+  darkColors,
+  ColorPalette,
+  learningColors,
+  categoryColors,
+  gradients,
+  shadows,
+} from "../theme/colors";
+import { typography, TypographyVariant } from "../theme/typography";
+import { spacing, componentSpacing, layoutSpacing } from "../theme/spacing";
 
-export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeMode = "light" | "dark" | "system";
 
 export interface Theme {
   mode: ThemeMode;
@@ -45,16 +52,18 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const THEME_STORAGE_KEY = 'bookkeeping_theme_mode';
+const THEME_STORAGE_KEY = "bookkeeping_theme_mode";
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [themeMode, setThemeModeState] = useState<ThemeMode>('system');
+  const [themeMode, setThemeModeState] = useState<ThemeMode>("system");
   const [systemColorScheme, setSystemColorScheme] = useState<ColorSchemeName>(
-    Appearance.getColorScheme()
+    Appearance.getColorScheme(),
   );
 
   // 実際のテーマ（ライト/ダーク）を決定
-  const isDark = themeMode === 'dark' || (themeMode === 'system' && systemColorScheme === 'dark');
+  const isDark =
+    themeMode === "dark" ||
+    (themeMode === "system" && systemColorScheme === "dark");
 
   // テーマオブジェクトの構築
   const theme: Theme = {
@@ -80,19 +89,48 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return () => subscription?.remove();
   }, []);
 
-  // 保存されたテーマ設定を復元
+  // データベース初期化とテーマ設定復元
   useEffect(() => {
-    loadThemeMode();
+    const initializeApp = async () => {
+      try {
+        console.log("[ThemeProvider] アプリ初期化開始");
+        // データベース初期化を最優先で実行
+        await initializeDatabase();
+        console.log("[ThemeProvider] データベース初期化完了");
+
+        // テーマ設定復元
+        await loadThemeMode();
+        console.log("[ThemeProvider] テーマ設定復元完了");
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        console.error("[ThemeProvider] アプリ初期化エラー:", errorMessage);
+        console.error("[ThemeProvider] エラー詳細:", error);
+        // エラーメッセージを短縮して表示
+        const shortMessage =
+          errorMessage.length > 100
+            ? errorMessage.substring(0, 100) + "..."
+            : errorMessage;
+        Alert.alert(
+          "初期化エラー",
+          `データベース初期化に失敗しました: ${shortMessage}`,
+          [{ text: "OK" }],
+        );
+        // エラーが発生してもアプリは継続
+      }
+    };
+
+    initializeApp();
   }, []);
 
   const loadThemeMode = async () => {
     try {
       const savedMode = await AsyncStorage.getItem(THEME_STORAGE_KEY);
-      if (savedMode && ['light', 'dark', 'system'].includes(savedMode)) {
+      if (savedMode && ["light", "dark", "system"].includes(savedMode)) {
         setThemeModeState(savedMode as ThemeMode);
       }
     } catch (error) {
-      console.error('Failed to load theme mode:', error);
+      console.error("Failed to load theme mode:", error);
     }
   };
 
@@ -101,12 +139,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       setThemeModeState(mode);
       await AsyncStorage.setItem(THEME_STORAGE_KEY, mode);
     } catch (error) {
-      console.error('Failed to save theme mode:', error);
+      console.error("Failed to save theme mode:", error);
     }
   };
 
   const toggleTheme = () => {
-    const nextMode: ThemeMode = themeMode === 'light' ? 'dark' : 'light';
+    const nextMode: ThemeMode = themeMode === "light" ? "dark" : "light";
     setThemeMode(nextMode);
   };
 
@@ -118,16 +156,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 }
 
 export function useTheme(): ThemeContextType {
   const context = useContext(ThemeContext);
   if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
+    throw new Error("useTheme must be used within a ThemeProvider");
   }
   return context;
 }
@@ -136,7 +172,7 @@ export function useTheme(): ThemeContextType {
  * テーマユーティリティフック
  */
 export function useThemedStyles<T extends Record<string, any>>(
-  createStyles: (theme: Theme) => T
+  createStyles: (theme: Theme) => T,
 ): T {
   const { theme } = useTheme();
   return createStyles(theme);
@@ -191,19 +227,19 @@ export function useSpacing() {
  */
 export function useAccessibleStyles() {
   const { theme } = useTheme();
-  
+
   return {
     // 高コントラストモード対応
     getHighContrastColor: (normalColor: string, highContrastColor?: string) => {
       // 実際の実装では、ユーザーの設定を確認
       return highContrastColor || normalColor;
     },
-    
+
     // 大きなフォントサイズ対応
     getScaledFontSize: (baseFontSize: number, scale: number = 1) => {
       return Math.round(baseFontSize * scale);
     },
-    
+
     // 最小タッチターゲットサイズの確保
     getMinTouchTargetStyle: () => ({
       minHeight: 44,
@@ -217,13 +253,13 @@ export function useAccessibleStyles() {
  */
 export function useResponsiveTheme(screenWidth: number) {
   const { theme } = useTheme();
-  
+
   const getBreakpoint = () => {
-    if (screenWidth < 360) return 'xs';
-    if (screenWidth < 414) return 'sm';
-    if (screenWidth < 768) return 'md';
-    if (screenWidth < 1024) return 'lg';
-    return 'xl';
+    if (screenWidth < 360) return "xs";
+    if (screenWidth < 414) return "sm";
+    if (screenWidth < 768) return "md";
+    if (screenWidth < 1024) return "lg";
+    return "xl";
   };
 
   const breakpoint = getBreakpoint();

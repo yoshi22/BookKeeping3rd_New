@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   RefreshControl,
 } from "react-native";
 import { router } from "expo-router";
+import { useFocusEffect } from '@react-navigation/native';
 import {
   statisticsService,
   OverallStatistics,
@@ -114,9 +115,34 @@ export default function StatsScreen() {
     loadStatistics();
   }, []);
 
+  // 画面がフォーカスされたときに最新データを再取得
+  useFocusEffect(
+    useCallback(() => {
+      console.log('[StatsScreen] 画面フォーカス - 最新統計データを取得');
+      // キャッシュをクリアして最新のデータを取得
+      try {
+        const { statisticsCache } = require('../../src/services/statistics-cache');
+        statisticsCache.clearAll();
+      } catch (error) {
+        console.warn('[StatsScreen] キャッシュクリアに失敗:', error);
+      }
+      loadStatistics();
+    }, [])
+  );
+
   // リフレッシュ処理
   const onRefresh = () => {
     setRefreshing(true);
+    // キャッシュをクリアして最新データを取得
+    try {
+      const {
+        statisticsCache,
+      } = require("../../src/services/statistics-cache");
+      statisticsCache.clearAll();
+      console.log("[StatsScreen] キャッシュクリア実行");
+    } catch (error) {
+      console.warn("キャッシュクリアに失敗:", error);
+    }
     loadStatistics();
   };
 
@@ -198,7 +224,7 @@ export default function StatsScreen() {
             <Text style={styles.mainStatNumber}>
               {overallStats?.answeredQuestions || 0}
             </Text>
-            <Text style={styles.mainStatLabel}>解答済み</Text>
+            <Text style={styles.mainStatLabel}>解答済み問題数</Text>
           </View>
         </View>
 
@@ -250,23 +276,26 @@ export default function StatsScreen() {
                     style={[
                       styles.progressBarFill,
                       {
-                        width: `${category.completionRate * 100}%`,
+                        width: `${Math.min(category.completionRate * 100, 100)}%`,
                         backgroundColor: config.color,
                       },
                     ]}
                   />
                 </View>
                 <Text style={styles.progressText}>
-                  {category.answeredQuestions}/{category.totalQuestions}
+                  {Math.min(category.answeredQuestions, category.totalQuestions)}/{category.totalQuestions}問
                 </Text>
               </View>
 
               <View style={styles.categoryDetails}>
                 <Text style={styles.detailText}>
-                  正解: {category.correctAnswers}問
+                  正解: {Math.min(category.correctAnswers, category.answeredQuestions)}問
                 </Text>
                 <Text style={styles.detailText}>
-                  残り: {category.totalQuestions - category.answeredQuestions}問
+                  不正解: {Math.max(0, category.answeredQuestions - category.correctAnswers)}問
+                </Text>
+                <Text style={styles.detailText}>
+                  未回答: {Math.max(0, category.totalQuestions - category.answeredQuestions)}問
                 </Text>
               </View>
 
@@ -470,10 +499,13 @@ const styles = StyleSheet.create({
   categoryDetails: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginBottom: 10,
   },
   detailText: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#666",
+    flex: 1,
+    textAlign: "center",
   },
   emptyState: {
     alignItems: "center",

@@ -13,7 +13,7 @@ import {
 import { questionRepository } from "../data/repositories/question-repository";
 import { reviewService, ReviewUpdateResult } from "./review-service";
 import { statisticsCache } from "./statistics-cache";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "../utils/uuid";
 
 /**
  * 解答送信リクエスト
@@ -71,10 +71,23 @@ export class AnswerService {
         question,
       );
 
+      console.log(`[DEBUG] submitAnswer - バリデーション結果`, {
+        questionId: request.questionId,
+        validationErrors: validationErrors,
+        answerData: request.answerData,
+      });
+
       // 4. 正解判定
       const isCorrect =
         validationErrors.length === 0 &&
         this.isAnswerCorrect(request.answerData, question);
+
+      console.log(`[DEBUG] submitAnswer - 正解判定結果`, {
+        questionId: request.questionId,
+        validationErrorsLength: validationErrors.length,
+        isCorrect: isCorrect,
+        validationPassed: validationErrors.length === 0,
+      });
 
       // 5. セッションID生成（未提供の場合）
       const sessionId = request.sessionId || uuidv4();
@@ -104,18 +117,33 @@ export class AnswerService {
         request.sessionType === "review"
       ) {
         try {
+          console.log(
+            `[AnswerService] 復習状況更新開始: questionId=${request.questionId}, isCorrect=${isCorrect}, sessionType=${request.sessionType}`,
+          );
           reviewUpdate = await reviewService.updateReviewStatus(
             request.questionId,
             isCorrect,
             answerTimeMs,
           );
           console.log(
-            `[AnswerService] 復習状況更新: ${reviewUpdate.action} - ${reviewUpdate.message}`,
+            `[AnswerService] 復習状況更新完了: ${reviewUpdate.action} - ${reviewUpdate.message}`,
+          );
+          console.log(
+            `[AnswerService] 復習状況更新詳細: previousStatus=${reviewUpdate.previousStatus}, newStatus=${reviewUpdate.newStatus}, previousPriority=${reviewUpdate.previousPriority}, newPriority=${reviewUpdate.newPriority}`,
           );
         } catch (reviewError) {
           console.error("[AnswerService] 復習状況更新エラー:", reviewError);
+          console.error("[AnswerService] Error details:", {
+            message:
+              reviewError instanceof Error ? reviewError.message : reviewError,
+            stack: reviewError instanceof Error ? reviewError.stack : undefined,
+          });
           // 復習状況更新エラーは致命的ではないため、処理を継続
         }
+      } else {
+        console.log(
+          `[AnswerService] 復習状況更新スキップ: sessionType=${request.sessionType} (学習・復習セッションではない)`,
+        );
       }
 
       // 9. 正解データ取得
@@ -162,8 +190,23 @@ export class AnswerService {
 
       // 必須フィールドチェック
       template.fields?.forEach((field: any) => {
-        if (field.required && !(answerData as any)[field.name]) {
-          errors.push(`${field.label}は必須項目です`);
+        const value = (answerData as any)[field.name];
+        if (
+          field.required &&
+          (value === null || value === undefined || value === "")
+        ) {
+          // フィールドタイプに応じた具体的なエラーメッセージ
+          let message = `${field.label}は必須項目です`;
+          if (field.type === "text" && field.name === "date") {
+            message += "。「月/日」の形式で入力してください（例: 4/1）";
+          } else if (field.type === "text" && field.name === "description") {
+            message += "。取引内容を簡潔に記入してください（例: 商品仕入）";
+          } else if (field.type === "number") {
+            message += "。半角数字で入力してください";
+          } else if (field.type === "dropdown") {
+            message += "。プルダウンから選択してください";
+          }
+          errors.push(message);
         }
       });
 
@@ -201,21 +244,46 @@ export class AnswerService {
   /**
    * 正解判定ロジック
    */
-  private isAnswerCorrect(
+  public isAnswerCorrect(
     answerData: CBTAnswerData,
     question: Question,
   ): boolean {
+    console.log("[DEBUG] isAnswerCorrect - 開始", {
+      questionId: question.id,
+      categoryId: question.category_id,
+      correctAnswerJson: question.correct_answer_json,
+      answerDataKeys: Object.keys(answerData),
+      answerData: answerData,
+    });
+
     try {
       const correctAnswer = JSON.parse(
         question.correct_answer_json,
       ) as QuestionCorrectAnswer;
 
+      console.log("[DEBUG] isAnswerCorrect - パース成功", {
+        questionId: question.id,
+        parsedCorrectAnswer: correctAnswer,
+      });
+
       switch (question.category_id) {
         case "journal":
+          console.log(
+            "[DEBUG] isAnswerCorrect - journal分岐に入る",
+            question.id,
+          );
           return this.isJournalAnswerCorrect(answerData, correctAnswer);
         case "ledger":
+          console.log(
+            "[DEBUG] isAnswerCorrect - ledger分岐に入る",
+            question.id,
+          );
           return this.isLedgerAnswerCorrect(answerData, correctAnswer);
         case "trial_balance":
+          console.log(
+            "[DEBUG] isAnswerCorrect - trial_balance分岐に入る",
+            question.id,
+          );
           return this.isTrialBalanceAnswerCorrect(answerData, correctAnswer);
         default:
           console.error(
@@ -225,6 +293,11 @@ export class AnswerService {
       }
     } catch (error) {
       console.error("[AnswerService] 正解判定エラー:", error);
+      console.error("[DEBUG] isAnswerCorrect - パースエラー詳細", {
+        questionId: question.id,
+        correctAnswerJson: question.correct_answer_json,
+        error: error,
+      });
       return false;
     }
   }
@@ -239,14 +312,139 @@ export class AnswerService {
     const entry = correctAnswer.journalEntry;
     if (!entry) return false;
 
-    // 借方・貸方の勘定科目と金額を厳密に比較
     const data = answerData as any;
-    return (
+
+    console.log("[DEBUG] isJournalAnswerCorrect - 仕訳答え合わせデバッグ:", {
+      questionId: data.questionId || "不明",
+      userAnswer: {
+        debit_account: data.debit_account,
+        debit_amount: data.debit_amount,
+        credit_account: data.credit_account,
+        credit_amount: data.credit_amount,
+      },
+      correctAnswer: {
+        debit_account: entry.debit_account,
+        debit_amount: entry.debit_amount,
+        credit_account: entry.credit_account,
+        credit_amount: entry.credit_amount,
+      },
+      typeComparison: {
+        debit_account_type: `${typeof data.debit_account} vs ${typeof entry.debit_account}`,
+        debit_amount_type: `${typeof data.debit_amount} vs ${typeof entry.debit_amount}`,
+        credit_account_type: `${typeof data.credit_account} vs ${typeof entry.credit_account}`,
+        credit_amount_type: `${typeof data.credit_amount} vs ${typeof entry.credit_amount}`,
+      },
+      detailedMatch: {
+        debit_account_match: data.debit_account === entry.debit_account,
+        debit_amount_match: data.debit_amount === entry.debit_amount,
+        credit_account_match: data.credit_account === entry.credit_account,
+        credit_amount_match: data.credit_amount === entry.credit_amount,
+      },
+    });
+
+    // Check if the answer data is in the new array format (from JournalEntryForm)
+    if (
+      data.debits &&
+      data.credits &&
+      Array.isArray(data.debits) &&
+      Array.isArray(data.credits)
+    ) {
+      console.log("[DEBUG] Using new array format validation");
+      return this.isMultipleJournalEntriesCorrect(data, correctAnswer);
+    }
+
+    // Legacy format: single debit/credit entries
+    const isCorrect =
       data.debit_account === entry.debit_account &&
       data.debit_amount === entry.debit_amount &&
       data.credit_account === entry.credit_account &&
-      data.credit_amount === entry.credit_amount
+      data.credit_amount === entry.credit_amount;
+
+    console.log(`[DEBUG] Legacy format validation result: ${isCorrect}`);
+    return isCorrect;
+  }
+
+  /**
+   * 複数仕訳エントリの正解判定（JournalEntryForm形式）
+   */
+  private isMultipleJournalEntriesCorrect(
+    data: {
+      debits: Array<{ account: string; amount: number }>;
+      credits: Array<{ account: string; amount: number }>;
+    },
+    correctAnswer: QuestionCorrectAnswer,
+  ): boolean {
+    const entry = correctAnswer.journalEntry;
+    if (!entry) return false;
+
+    // Filter out empty entries (no account or zero amount)
+    const validDebits = data.debits.filter((d) => d.account && d.amount > 0);
+    const validCredits = data.credits.filter((c) => c.account && c.amount > 0);
+
+    // For simple questions (single debit/credit), convert to arrays for comparison
+    if (entry.debit_account && entry.credit_account) {
+      const expectedDebits = [
+        { account: entry.debit_account, amount: entry.debit_amount },
+      ];
+      const expectedCredits = [
+        { account: entry.credit_account, amount: entry.credit_amount },
+      ];
+
+      return (
+        this.compareJournalEntryArrays(validDebits, expectedDebits) &&
+        this.compareJournalEntryArrays(validCredits, expectedCredits)
+      );
+    }
+
+    // For complex questions with multiple entries (future implementation)
+    if (
+      "debits" in entry &&
+      "credits" in entry &&
+      entry.debits &&
+      entry.credits
+    ) {
+      return (
+        this.compareJournalEntryArrays(
+          validDebits,
+          entry.debits as Array<{ account: string; amount: number }>,
+        ) &&
+        this.compareJournalEntryArrays(
+          validCredits,
+          entry.credits as Array<{ account: string; amount: number }>,
+        )
+      );
+    }
+
+    return false;
+  }
+
+  /**
+   * 仕訳エントリ配列の比較
+   */
+  private compareJournalEntryArrays(
+    userEntries: Array<{ account: string; amount: number }>,
+    correctEntries: Array<{ account: string; amount: number }>,
+  ): boolean {
+    if (userEntries.length !== correctEntries.length) {
+      return false;
+    }
+
+    // Sort both arrays by account name for consistent comparison
+    const sortedUser = [...userEntries].sort((a, b) =>
+      a.account.localeCompare(b.account),
     );
+    const sortedCorrect = [...correctEntries].sort((a, b) =>
+      a.account.localeCompare(b.account),
+    );
+
+    // Compare each entry
+    return sortedUser.every((userEntry, index) => {
+      const correctEntry = sortedCorrect[index];
+      return (
+        userEntry.account === correctEntry.account &&
+        userEntry.amount === correctEntry.amount
+      );
+    });
   }
 
   /**
@@ -259,20 +457,156 @@ export class AnswerService {
     const entry = correctAnswer.ledgerEntry;
     if (!entry?.entries) return false;
 
-    // 複数エントリの場合は部分一致も考慮
     const data = answerData as any;
-    return entry.entries.every((correct, index) => {
-      const answerKey = `entry_${index}`;
-      const userEntry = data[answerKey];
+    console.log("[AnswerService] Ledger validation - answerData:", data);
+    console.log(
+      "[AnswerService] Ledger validation - correctAnswer:",
+      correctAnswer,
+    );
 
-      if (!userEntry) return false;
+    // Check if answer data contains multiple entries (new format)
+    if (data.entries && Array.isArray(data.entries)) {
+      return this.validateMultipleLedgerEntries(data.entries, entry.entries);
+    }
 
-      return (
-        (!correct.account || userEntry.account === correct.account) &&
-        (!correct.amount || userEntry.amount === correct.amount) &&
-        (!correct.description || userEntry.description === correct.description)
-      );
+    // Single entry format (legacy support)
+    if (entry.entries.length === 1) {
+      const correctEntry = entry.entries[0];
+
+      // Match field names from answer template: date, description, debit_amount, credit_amount
+      // with correct answer (handle both snake_case and camelCase)
+      const userDate = data.date;
+      const userDescription = data.description;
+      const userDebitAmount = data.debit_amount || 0;
+      const userCreditAmount = data.credit_amount || 0;
+
+      const correctDate = (correctEntry as any).date;
+      const correctDescription = (correctEntry as any).description;
+      const correctDebitAmount =
+        (correctEntry as any).debitAmount ||
+        (correctEntry as any).debit_amount ||
+        0;
+      const correctCreditAmount =
+        (correctEntry as any).creditAmount ||
+        (correctEntry as any).credit_amount ||
+        0;
+
+      console.log("[AnswerService] Comparing single entry:", {
+        userDate,
+        correctDate,
+        userDescription,
+        correctDescription,
+        userDebitAmount,
+        correctDebitAmount,
+        userCreditAmount,
+        correctCreditAmount,
+      });
+
+      // Match all required fields
+      const dateMatch = !correctDate || userDate === correctDate;
+      const descMatch =
+        !correctDescription ||
+        userDescription?.includes(correctDescription) ||
+        correctDescription?.includes(userDescription);
+      const debitMatch = userDebitAmount === correctDebitAmount;
+      const creditMatch = userCreditAmount === correctCreditAmount;
+
+      console.log("[AnswerService] Single entry match results:", {
+        dateMatch,
+        descMatch,
+        debitMatch,
+        creditMatch,
+      });
+
+      return dateMatch && descMatch && debitMatch && creditMatch;
+    }
+
+    return false;
+  }
+
+  /**
+   * 複数帳簿エントリの正解判定
+   */
+  private validateMultipleLedgerEntries(
+    userEntries: any[],
+    correctEntries: any[],
+  ): boolean {
+    console.log("[AnswerService] Validating multiple entries:", {
+      userEntries,
+      correctEntries,
     });
+
+    if (userEntries.length !== correctEntries.length) {
+      console.log(
+        `[AnswerService] Entry count mismatch: user=${userEntries.length}, correct=${correctEntries.length}`,
+      );
+      return false;
+    }
+
+    // Sort both arrays by date for consistent comparison
+    const sortedUserEntries = [...userEntries].sort((a, b) =>
+      a.date.localeCompare(b.date),
+    );
+    const sortedCorrectEntries = [...correctEntries].sort((a, b) =>
+      (a.date || "").localeCompare(b.date || ""),
+    );
+
+    // Validate each entry
+    for (let i = 0; i < sortedUserEntries.length; i++) {
+      const userEntry = sortedUserEntries[i];
+      const correctEntry = sortedCorrectEntries[i];
+
+      // Extract values with support for different field naming conventions
+      const userDate = userEntry.date;
+      const userDescription = userEntry.description;
+      const userDebitAmount = userEntry.debit_amount || 0;
+      const userCreditAmount = userEntry.credit_amount || 0;
+
+      const correctDate = (correctEntry as any).date;
+      const correctDescription = (correctEntry as any).description;
+      const correctDebitAmount =
+        (correctEntry as any).debitAmount ||
+        (correctEntry as any).debit_amount ||
+        0;
+      const correctCreditAmount =
+        (correctEntry as any).creditAmount ||
+        (correctEntry as any).credit_amount ||
+        0;
+
+      console.log(`[AnswerService] Comparing entry ${i + 1}:`, {
+        userDate,
+        correctDate,
+        userDescription,
+        correctDescription,
+        userDebitAmount,
+        correctDebitAmount,
+        userCreditAmount,
+        correctCreditAmount,
+      });
+
+      // Match fields for this entry
+      const dateMatch = !correctDate || userDate === correctDate;
+      const descMatch =
+        !correctDescription ||
+        userDescription?.includes(correctDescription) ||
+        correctDescription?.includes(userDescription);
+      const debitMatch = userDebitAmount === correctDebitAmount;
+      const creditMatch = userCreditAmount === correctCreditAmount;
+
+      console.log(`[AnswerService] Entry ${i + 1} match results:`, {
+        dateMatch,
+        descMatch,
+        debitMatch,
+        creditMatch,
+      });
+
+      if (!dateMatch || !descMatch || !debitMatch || !creditMatch) {
+        return false;
+      }
+    }
+
+    console.log("[AnswerService] All entries match - answer is correct");
+    return true;
   }
 
   /**

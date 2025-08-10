@@ -45,7 +45,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
    */
   async findMockExamById(examId: string): Promise<MockExam | null> {
     try {
-      const result = await this.db.executeSql(
+      const result = await databaseService.executeSql(
         "SELECT * FROM mock_exams WHERE id = ? AND is_active = 1",
         [examId],
       );
@@ -60,10 +60,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         is_active: Boolean(row.is_active),
       };
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.findMockExamById",
-      );
+      console.error("MockExamRepository.findMockExamById error:", error);
       throw error;
     }
   }
@@ -82,10 +79,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
 
       return JSON.parse(exam.structure_json) as MockExamStructure;
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.getMockExamStructure",
-      );
+      console.error("MockExamRepository.getMockExamStructure");
       throw error;
     }
   }
@@ -97,7 +91,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
    */
   async findMockExamQuestions(examId: string): Promise<MockExamQuestion[]> {
     try {
-      const result = await this.db.executeSql(
+      const result = await databaseService.executeSql(
         `
         SELECT * FROM mock_exam_questions 
         WHERE mock_exam_id = ? 
@@ -108,10 +102,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
 
       return result.rows;
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.findMockExamQuestions",
-      );
+      console.error("MockExamRepository.findMockExamQuestions");
       throw error;
     }
   }
@@ -124,7 +115,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
     sectionNumber: 1 | 2 | 3,
   ): Promise<MockExamQuestion[]> {
     try {
-      const result = await this.db.executeSql(
+      const result = await databaseService.executeSql(
         `
         SELECT * FROM mock_exam_questions 
         WHERE mock_exam_id = ? AND section_number = ?
@@ -135,10 +126,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
 
       return result.rows;
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.findMockExamQuestionsBySection",
-      );
+      console.error("MockExamRepository.findMockExamQuestionsBySection");
       throw error;
     }
   }
@@ -148,7 +136,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
    */
   async findMockExamQuestionsWithDetails(examId: string) {
     try {
-      const result = await this.db.executeSql(
+      const result = await databaseService.executeSql(
         `
         SELECT 
           meq.*,
@@ -168,10 +156,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
 
       return result.rows;
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.findMockExamQuestionsWithDetails",
-      );
+      console.error("MockExamRepository.findMockExamQuestionsWithDetails");
       throw error;
     }
   }
@@ -183,7 +168,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
     data: Omit<MockExamQuestion, "id">,
   ): Promise<number> {
     try {
-      const result = await this.db.executeSql(
+      const result = await databaseService.executeSql(
         `
         INSERT INTO mock_exam_questions (
           mock_exam_id, question_id, section_number, question_order, points
@@ -198,12 +183,9 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         ],
       );
 
-      return result.insertId;
+      return result.insertId || 0;
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.createMockExamQuestion",
-      );
+      console.error("MockExamRepository.createMockExamQuestion");
       throw error;
     }
   }
@@ -217,7 +199,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
     data: Omit<MockExamResult, "id" | "taken_at">,
   ): Promise<number> {
     try {
-      const result = await this.db.executeSql(
+      const result = await databaseService.executeSql(
         `
         INSERT INTO mock_exam_results (
           exam_id, total_score, max_score, is_passed, 
@@ -234,12 +216,9 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         ],
       );
 
-      return result.insertId;
+      return result.insertId || 0;
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.createMockExamResult",
-      );
+      console.error("MockExamRepository.createMockExamResult");
       throw error;
     }
   }
@@ -277,17 +256,14 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         params.push(filter.limit);
       }
 
-      const result = await this.db.executeSql(query, params);
+      const result = await databaseService.executeSql(query, params);
 
       return result.rows.map((row: any) => ({
         ...row,
         is_passed: Boolean(row.is_passed),
       }));
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.findMockExamResults",
-      );
+      console.error("MockExamRepository.findMockExamResults");
       throw error;
     }
   }
@@ -297,7 +273,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
    */
   async findMockExamResultsByExamId(examId: string): Promise<MockExamResult[]> {
     try {
-      const result = await this.db.executeSql(
+      const result = await databaseService.executeSql(
         `
         SELECT * FROM mock_exam_results 
         WHERE exam_id = ? 
@@ -311,10 +287,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         is_passed: Boolean(row.is_passed),
       }));
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.findMockExamResultsByExamId",
-      );
+      console.error("MockExamRepository.findMockExamResultsByExamId");
       throw error;
     }
   }
@@ -336,7 +309,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
 
       query += " ORDER BY taken_at DESC LIMIT 1";
 
-      const result = await this.db.executeSql(query, params);
+      const result = await databaseService.executeSql(query, params);
 
       if (result.rows.length === 0) {
         return null;
@@ -348,10 +321,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         is_passed: Boolean(row.is_passed),
       };
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.findLatestMockExamResult",
-      );
+      console.error("MockExamRepository.findLatestMockExamResult");
       throw error;
     }
   }
@@ -363,7 +333,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
     resultId: number,
   ): Promise<MockExamDetailedResults | null> {
     try {
-      const result = await this.db.executeSql(
+      const result = await databaseService.executeSql(
         `
         SELECT detailed_results_json FROM mock_exam_results WHERE id = ?
       `,
@@ -378,10 +348,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         result.rows[0].detailed_results_json,
       ) as MockExamDetailedResults;
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.getMockExamDetailedResults",
-      );
+      console.error("MockExamRepository.getMockExamDetailedResults");
       throw error;
     }
   }
@@ -393,7 +360,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
    */
   async getMockExamStatistics() {
     try {
-      const result = await this.db.executeSql(`
+      const result = await databaseService.executeSql(`
         SELECT 
           COUNT(*) as total_attempts,
           COUNT(CASE WHEN is_passed = 1 THEN 1 END) as passed_attempts,
@@ -419,10 +386,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         averageTime: stats.average_time || 0,
       };
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.getMockExamStatistics",
-      );
+      console.error("MockExamRepository.getMockExamStatistics");
       throw error;
     }
   }
@@ -432,7 +396,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
    */
   async getMockExamStatisticsByExam() {
     try {
-      const result = await this.db.executeSql(`
+      const result = await databaseService.executeSql(`
         SELECT 
           exam_id,
           COUNT(*) as attempt_count,
@@ -456,10 +420,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         averageTime: row.average_time || 0,
       }));
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.getMockExamStatisticsByExam",
-      );
+      console.error("MockExamRepository.getMockExamStatisticsByExam");
       throw error;
     }
   }
@@ -469,7 +430,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
    */
   async getRecentMockExamTrend(limit: number = 10) {
     try {
-      const result = await this.db.executeSql(
+      const result = await databaseService.executeSql(
         `
         SELECT 
           exam_id,
@@ -492,10 +453,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         takenAt: row.taken_at,
       }));
     } catch (error) {
-      this.errorHandler.handleDatabaseError(
-        error,
-        "MockExamRepository.getRecentMockExamTrend",
-      );
+      console.error("MockExamRepository.getRecentMockExamTrend");
       throw error;
     }
   }

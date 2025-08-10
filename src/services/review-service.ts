@@ -96,6 +96,8 @@ export class ReviewService {
       const existing = await reviewItemRepository.findByQuestionId(questionId);
       const now = new Date().toISOString();
 
+      let result: ReviewUpdateResult;
+
       if (isCorrect) {
         // 正解の場合
         if (existing) {
@@ -106,7 +108,7 @@ export class ReviewService {
             // 克服済み → 復習リストから除外
             await reviewItemRepository.deleteByQuestionId(questionId);
 
-            return {
+            result = {
               questionId,
               previousStatus: existing.status as ReviewStatus,
               newStatus: "mastered",
@@ -134,7 +136,7 @@ export class ReviewService {
               },
             );
 
-            return {
+            result = {
               questionId,
               previousStatus: existing.status as ReviewStatus,
               newStatus: updatedItem.status as ReviewStatus,
@@ -146,7 +148,7 @@ export class ReviewService {
           }
         } else {
           // 正解だが初回 → 復習対象にしない
-          return {
+          result = {
             questionId,
             previousStatus: "needs_review",
             newStatus: "needs_review",
@@ -181,7 +183,7 @@ export class ReviewService {
             },
           );
 
-          return {
+          result = {
             questionId,
             previousStatus: existing.status as ReviewStatus,
             newStatus: newStatus,
@@ -192,24 +194,40 @@ export class ReviewService {
           };
         } else {
           // 新規復習アイテム作成
+          console.log(
+            `[ReviewService] 新規復習アイテム作成開始: ${questionId}`,
+          );
+
           const category = await this.getQuestionCategory(questionId);
+          console.log(`[ReviewService] 問題カテゴリ取得: ${category}`);
+
           const initialPriority = this.calculatePriority({
             incorrectCount: 1,
             consecutiveCorrectCount: 0,
             lastAnsweredAt: now,
             category,
           });
+          console.log(`[ReviewService] 初期優先度計算: ${initialPriority}`);
 
-          const newItem = await reviewItemRepository.createOrUpdate({
+          const createData = {
             questionId,
             incorrectCount: 1,
             consecutiveCorrectCount: 0,
-            status: "needs_review",
+            status: "needs_review" as ReviewStatus,
             priorityScore: initialPriority,
             lastAnsweredAt: now,
-          });
+          };
+          console.log(`[ReviewService] 復習アイテム作成データ:`, createData);
 
-          return {
+          const newItem = await reviewItemRepository.createOrUpdate(createData);
+          console.log(`[ReviewService] 復習アイテム作成完了:`, newItem);
+
+          // 作成後の確認
+          const verification =
+            await reviewItemRepository.findByQuestionId(questionId);
+          console.log(`[ReviewService] 作成確認クエリ結果:`, verification);
+
+          result = {
             questionId,
             previousStatus: "needs_review",
             newStatus: "needs_review",
@@ -220,6 +238,19 @@ export class ReviewService {
           };
         }
       }
+
+      // 復習アイテムが変更された場合は統計キャッシュをクリア
+      if (result.action !== "no_change") {
+        try {
+          const { statisticsCache } = require('./statistics-cache');
+          statisticsCache.clearAll();  
+          console.log('[ReviewService] 復習アイテム変更により統計キャッシュをクリア');
+        } catch (error) {
+          console.warn('[ReviewService] 統計キャッシュクリアに失敗:', error);
+        }
+      }
+
+      return result;
     } catch (error) {
       console.error("[ReviewService] updateReviewStatus エラー:", error);
       throw error;
@@ -297,7 +328,12 @@ export class ReviewService {
       }
 
       // 復習アイテム取得
+      console.log("[ReviewService] 復習アイテム取得フィルター:", filter);
       const reviewItems = await reviewItemRepository.getReviewList(filter);
+      console.log(
+        `[ReviewService] 復習アイテム取得結果: ${reviewItems.length}件`,
+        reviewItems,
+      );
 
       if (reviewItems.length === 0) {
         console.log("[ReviewService] 復習対象の問題がありません");
@@ -330,7 +366,10 @@ export class ReviewService {
     try {
       console.log("[ReviewService] 復習統計取得開始");
       const result = await reviewItemRepository.getReviewStatistics();
-      console.log("[ReviewService] 復習統計取得完了");
+      console.log(
+        "[ReviewService] 復習統計取得完了:",
+        JSON.stringify(result, null, 2),
+      );
       return result;
     } catch (error) {
       console.error("[ReviewService] getReviewStatistics エラー:", error);
@@ -387,6 +426,7 @@ export class ReviewService {
     try {
       console.log("[ReviewService] 弱点分野分析開始");
       const stats = await this.getReviewStatistics();
+      console.log("[ReviewService] 統計データに基づく分析:", stats);
       const analysis = [];
 
       const categoryNames = {
@@ -399,8 +439,14 @@ export class ReviewService {
         stats.categoryBreakdown,
       )) {
         const categoryKey = category as QuestionCategory;
+
+        // 復習対象の実際の件数（needs_review + priority_review のみ）
         const totalReview =
           categoryStats.needsReview + categoryStats.priorityReview;
+
+        console.log(
+          `[ReviewService] ${categoryKey}の復習対象件数: ${totalReview}`,
+        );
 
         let recommendation = "";
         if (totalReview === 0) {
@@ -416,7 +462,7 @@ export class ReviewService {
         analysis.push({
           category: categoryKey,
           categoryName: categoryNames[categoryKey],
-          reviewCount: totalReview,
+          reviewCount: totalReview, // 統計と一致する件数を使用
           averagePriority: Math.round(categoryStats.averagePriority),
           recommendation,
         });
@@ -425,7 +471,10 @@ export class ReviewService {
       // 復習が必要な順でソート
       analysis.sort((a, b) => b.averagePriority - a.averagePriority);
 
-      console.log("[ReviewService] 弱点分野分析完了");
+      console.log(
+        "[ReviewService] 弱点分野分析完了:",
+        JSON.stringify(analysis, null, 2),
+      );
       return analysis;
     } catch (error) {
       console.error("[ReviewService] analyzeWeakAreas エラー:", error);

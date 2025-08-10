@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { useRouter } from "expo-router";
 import {
   Screen,
@@ -14,11 +20,11 @@ export default function HomeScreen() {
   const { theme } = useTheme();
 
   return (
-    <Screen safeArea={true} statusBarStyle="dark-content">
+    <Screen safeArea={true} statusBarStyle="dark-content" scrollable={true}>
       <Container style={styles.container}>
         <Flex
           align="center"
-          justify="center"
+          justify="flex-start"
           gap={theme.spacing["4xl"]}
           style={styles.mainContent}
         >
@@ -26,7 +32,7 @@ export default function HomeScreen() {
           <Flex align="center" gap={theme.spacing.md}>
             <Text
               style={[
-                TypographyUtils.getTextStyle("h2"),
+                TypographyUtils.getTextStyle("h3"),
                 { color: theme.colors.primary, textAlign: "center" },
               ]}
             >
@@ -34,7 +40,7 @@ export default function HomeScreen() {
             </Text>
             <Text
               style={[
-                TypographyUtils.getTextStyle("subtitle1"),
+                TypographyUtils.getTextStyle("body1"),
                 { color: theme.colors.textSecondary, textAlign: "center" },
               ]}
             >
@@ -54,7 +60,7 @@ export default function HomeScreen() {
               <Text style={styles.menuIcon}>📚</Text>
               <Text
                 style={[
-                  TypographyUtils.getTextStyle("h5"),
+                  TypographyUtils.getTextStyle("h6"),
                   { color: theme.colors.text, marginBottom: theme.spacing.xs },
                 ]}
               >
@@ -80,7 +86,7 @@ export default function HomeScreen() {
               <Text style={styles.menuIcon}>🔄</Text>
               <Text
                 style={[
-                  TypographyUtils.getTextStyle("h5"),
+                  TypographyUtils.getTextStyle("h6"),
                   { color: theme.colors.text, marginBottom: theme.spacing.xs },
                 ]}
               >
@@ -106,7 +112,7 @@ export default function HomeScreen() {
               <Text style={styles.menuIcon}>📊</Text>
               <Text
                 style={[
-                  TypographyUtils.getTextStyle("h5"),
+                  TypographyUtils.getTextStyle("h6"),
                   { color: theme.colors.text, marginBottom: theme.spacing.xs },
                 ]}
               >
@@ -121,6 +127,58 @@ export default function HomeScreen() {
                 進捗状況を確認
               </Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.menuButton,
+                { backgroundColor: theme.colors.surface },
+              ]}
+              onPress={() => router.push("/mock-exam")}
+            >
+              <Text style={styles.menuIcon}>🎯</Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("h6"),
+                  { color: theme.colors.text, marginBottom: theme.spacing.xs },
+                ]}
+              >
+                CBT模擬試験
+              </Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("body2"),
+                  { color: theme.colors.textSecondary, textAlign: "center" },
+                ]}
+              >
+                本番形式で実力試験
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.menuButton,
+                { backgroundColor: theme.colors.surface },
+              ]}
+              onPress={() => router.push("/test-journal")}
+            >
+              <Text style={styles.menuIcon}>🧪</Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("h6"),
+                  { color: theme.colors.text, marginBottom: theme.spacing.xs },
+                ]}
+              >
+                仕訳フォームテスト
+              </Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("body2"),
+                  { color: theme.colors.textSecondary, textAlign: "center" },
+                ]}
+              >
+                複数借方・貸方UI確認
+              </Text>
+            </TouchableOpacity>
           </Flex>
         </Flex>
       </Container>
@@ -133,12 +191,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mainContent: {
-    flex: 1,
-    paddingVertical: 20, // 垂直パディングを削減
+    paddingVertical: 20,
+    paddingTop: 40, // 上部のマージンを調整
+    paddingBottom: 100, // 下部に十分なパディングを追加（タブバーのため）
   },
   menuContainer: {
     width: "100%",
     maxWidth: 400,
+    paddingBottom: 20, // 下部に追加のパディング
   },
   menuButton: {
     padding: 24,

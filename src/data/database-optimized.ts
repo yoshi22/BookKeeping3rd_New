@@ -28,6 +28,10 @@ if (Platform.OS !== "web") {
   }
 }
 
+// SQLiteの型定義（nullの場合を考慮）
+type SQLiteDatabase = any;
+type SQLiteType = typeof SQLite | null;
+
 /**
  * Web用データベースモック（localStorage ベース）
  */
@@ -113,7 +117,37 @@ class WebDatabaseMock {
 
   // 最適化版で必要なメソッドを追加
   runSync(sql: string, params: any[] = []): any {
-    return this.mockExecuteSql(sql, params);
+    const result = this.mockExecuteSql(sql, params);
+    return {
+      getAllSync: () => {
+        if (result.rows && typeof result.rows.length === "number") {
+          const rows = [];
+          for (let i = 0; i < result.rows.length; i++) {
+            rows.push(result.rows.item ? result.rows.item(i) : result.rows[i]);
+          }
+          return rows;
+        }
+        return [];
+      },
+      changes: result.rowsAffected || 0,
+      lastInsertRowId: result.insertId,
+    };
+  }
+
+  prepareSync(sql: string): any {
+    console.log(`[WebDB] Mock prepareSync: ${sql}`);
+    return {
+      executeSync: (params: any[] = []) => {
+        console.log(`[WebDB] Mock executeSync with params:`, params);
+        const result = this.runSync(sql, params);
+        return {
+          getAllSync: () => result.getAllSync(),
+        };
+      },
+      finalizeSync: () => {
+        console.log(`[WebDB] Mock finalizeSync`);
+      },
+    };
   }
 
   async withTransactionAsync(operations: Function): Promise<void> {
@@ -154,7 +188,7 @@ interface QueryCacheEntry {
  */
 export class OptimizedDatabaseService {
   private static instance: OptimizedDatabaseService;
-  private db: SQLite.SQLiteDatabase | WebDatabaseMock | null = null;
+  private db: SQLiteDatabase | WebDatabaseMock | null = null;
   private isInitialized: boolean = false;
   private initializationPromise: Promise<void> | null = null;
 
@@ -166,7 +200,7 @@ export class OptimizedDatabaseService {
 
   // 起動時間最適化
   private lazyLoadPromises = new Map<string, Promise<any>>();
-  private connectionPool: SQLite.SQLiteDatabase[] = [];
+  private connectionPool: SQLiteDatabase[] = [];
   private readonly MAX_CONNECTIONS = 3;
 
   /**
@@ -198,7 +232,12 @@ export class OptimizedDatabaseService {
       } else {
         // ネイティブ環境ではSQLiteを使用（最小限の初期化のみ実行）
         try {
-          this.db = SQLite.openDatabaseSync(OPTIMIZED_DATABASE_CONFIG.name);
+          if (!SQLite) {
+            console.warn("[OptimizedDB] SQLite not available, using fallback");
+            this.db = new WebDatabaseMock();
+          } else {
+            this.db = SQLite.openDatabaseSync(OPTIMIZED_DATABASE_CONFIG.name);
+          }
         } catch (sqliteError) {
           console.warn(
             "[OptimizedDB] SQLite初期化失敗、フォールバックを使用:",

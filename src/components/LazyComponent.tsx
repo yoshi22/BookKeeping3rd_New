@@ -1,7 +1,7 @@
 /**
  * 遅延ローディングコンポーネント
  * 簿記3級問題集アプリ - Step 4.1: パフォーマンス最適化
- * 
+ *
  * 主な最適化:
  * - Dynamic Import による遅延ローディング
  * - Intersection Observer による可視性検出
@@ -9,16 +9,16 @@
  * - エラー境界とフォールバック
  */
 
-import React, { 
-  lazy, 
-  Suspense, 
-  memo, 
-  useState, 
-  useEffect, 
-  useRef, 
-  ComponentType 
-} from 'react';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import React, {
+  lazy,
+  Suspense,
+  memo,
+  useState,
+  useEffect,
+  useRef,
+  ComponentType,
+} from "react";
+import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 
 /**
  * 遅延ローディング設定
@@ -27,33 +27,19 @@ export interface LazyLoadingConfig {
   // 基本設定
   rootMargin?: string; // Intersection Observer の rootMargin
   threshold?: number; // 可視性の閾値
-  
+
   // プリロード設定
   preload?: boolean; // 事前ローディング
   preloadDelay?: number; // プリロード遅延時間（ms）
-  
+
   // フォールバック設定
   loadingComponent?: ComponentType;
   errorComponent?: ComponentType<{ error: Error; retry: () => void }>;
-  
+
   // パフォーマンス設定
   enableMemoryOptimization?: boolean; // メモリ最適化
   unloadWhenHidden?: boolean; // 非表示時にアンロード
 }
-
-/**
- * デフォルト設定
- */
-const DEFAULT_CONFIG: Required<LazyLoadingConfig> = {
-  rootMargin: '50px',
-  threshold: 0.1,
-  preload: false,
-  preloadDelay: 1000,
-  loadingComponent: DefaultLoadingComponent,
-  errorComponent: DefaultErrorComponent,
-  enableMemoryOptimization: true,
-  unloadWhenHidden: false,
-};
 
 /**
  * デフォルトローディングコンポーネント
@@ -65,36 +51,52 @@ const DefaultLoadingComponent = memo(() => (
   </View>
 ));
 
-DefaultLoadingComponent.displayName = 'DefaultLoadingComponent';
+DefaultLoadingComponent.displayName = "DefaultLoadingComponent";
 
 /**
  * デフォルトエラーコンポーネント
  */
-const DefaultErrorComponent = memo<{ error: Error; retry: () => void }>(({ error, retry }) => (
-  <View style={styles.errorContainer}>
-    <Text style={styles.errorTitle}>読み込みエラー</Text>
-    <Text style={styles.errorMessage}>{error.message}</Text>
-    <Text style={styles.retryButton} onPress={retry}>
-      再試行
-    </Text>
-  </View>
-));
+const DefaultErrorComponent = memo<{ error: Error; retry: () => void }>(
+  ({ error, retry }) => (
+    <View style={styles.errorContainer}>
+      <Text style={styles.errorTitle}>読み込みエラー</Text>
+      <Text style={styles.errorMessage}>{error.message}</Text>
+      <Text style={styles.retryButton} onPress={retry}>
+        再試行
+      </Text>
+    </View>
+  ),
+);
 
-DefaultErrorComponent.displayName = 'DefaultErrorComponent';
+DefaultErrorComponent.displayName = "DefaultErrorComponent";
+
+/**
+ * デフォルト設定
+ */
+const DEFAULT_CONFIG: Required<LazyLoadingConfig> = {
+  rootMargin: "50px",
+  threshold: 0.1,
+  preload: false,
+  preloadDelay: 1000,
+  loadingComponent: DefaultLoadingComponent,
+  errorComponent: DefaultErrorComponent,
+  enableMemoryOptimization: true,
+  unloadWhenHidden: false,
+};
 
 /**
  * 遅延ローディングコンポーネントファクトリー
  */
-export function createLazyComponent<P = {}>(
+export function createLazyComponent<P extends {} = {}>(
   importFunction: () => Promise<{ default: ComponentType<P> }>,
-  config?: LazyLoadingConfig
+  config?: LazyLoadingConfig,
 ): ComponentType<P> {
   const finalConfig = { ...DEFAULT_CONFIG, ...config };
-  
+
   // Dynamic Import でコンポーネントを遅延ローディング
   const LazyLoadedComponent = lazy(importFunction);
-  
-  return memo<P>((props) => {
+
+  return memo<P>((props: P) => {
     const [isVisible, setIsVisible] = useState(false);
     const [isPreloaded, setIsPreloaded] = useState(false);
     const [shouldLoad, setShouldLoad] = useState(finalConfig.preload);
@@ -103,7 +105,7 @@ export function createLazyComponent<P = {}>(
 
     // Intersection Observer による可視性検出（Web環境のみ）
     useEffect(() => {
-      if (typeof IntersectionObserver === 'undefined') {
+      if (typeof IntersectionObserver === "undefined") {
         // React Native環境では即座にロード
         setIsVisible(true);
         setShouldLoad(true);
@@ -123,7 +125,7 @@ export function createLazyComponent<P = {}>(
         {
           rootMargin: finalConfig.rootMargin,
           threshold: finalConfig.threshold,
-        }
+        },
       );
 
       const currentElement = containerRef.current as any;
@@ -136,7 +138,11 @@ export function createLazyComponent<P = {}>(
           observer.unobserve(currentElement);
         }
       };
-    }, [finalConfig.rootMargin, finalConfig.threshold, finalConfig.unloadWhenHidden]);
+    }, [
+      finalConfig.rootMargin,
+      finalConfig.threshold,
+      finalConfig.unloadWhenHidden,
+    ]);
 
     // プリロード処理
     useEffect(() => {
@@ -176,7 +182,7 @@ export function createLazyComponent<P = {}>(
       <View ref={containerRef} style={styles.container}>
         <Suspense fallback={<finalConfig.loadingComponent />}>
           <ErrorBoundary ErrorComponent={finalConfig.errorComponent}>
-            <LazyLoadedComponent {...props} />
+            <LazyLoadedComponent {...(props as any)} />
           </ErrorBoundary>
         </Suspense>
       </View>
@@ -188,8 +194,8 @@ export function createLazyComponent<P = {}>(
  * エラー境界コンポーネント
  */
 class ErrorBoundary extends React.Component<
-  { 
-    children: React.ReactNode; 
+  {
+    children: React.ReactNode;
     ErrorComponent: ComponentType<{ error: Error; retry: () => void }>;
   },
   { hasError: boolean; error: Error | null }
@@ -204,7 +210,7 @@ class ErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('[LazyComponent] Error boundary caught:', error, errorInfo);
+    console.error("[LazyComponent] Error boundary caught:", error, errorInfo);
   }
 
   private handleRetry = () => {
@@ -214,7 +220,9 @@ class ErrorBoundary extends React.Component<
   render() {
     if (this.state.hasError && this.state.error) {
       const { ErrorComponent } = this.props;
-      return <ErrorComponent error={this.state.error} retry={this.handleRetry} />;
+      return (
+        <ErrorComponent error={this.state.error} retry={this.handleRetry} />
+      );
     }
 
     return this.props.children;
@@ -224,30 +232,33 @@ class ErrorBoundary extends React.Component<
 /**
  * 遅延ローディング用の高次コンポーネント（HOC）
  */
-export function withLazyLoading<P = {}>(
+export function withLazyLoading<P extends {} = {}>(
   Component: ComponentType<P>,
-  config?: LazyLoadingConfig
+  config?: LazyLoadingConfig,
 ): ComponentType<P> {
-  return createLazyComponent(() => Promise.resolve({ default: Component }), config);
+  return createLazyComponent(
+    () => Promise.resolve({ default: Component }),
+    config,
+  );
 }
 
 /**
  * プリロード機能付き遅延ローディング
  */
-export function createPreloadableLazyComponent<P = {}>(
+export function createPreloadableLazyComponent<P extends {} = {}>(
   importFunction: () => Promise<{ default: ComponentType<P> }>,
-  config?: LazyLoadingConfig
+  config?: LazyLoadingConfig,
 ) {
   const LazyComponent = createLazyComponent(importFunction, config);
-  
+
   // プリロード関数
   const preload = () => {
     return importFunction();
   };
-  
+
   // コンポーネントにプリロード関数を追加
   (LazyComponent as any).preload = preload;
-  
+
   return LazyComponent as ComponentType<P> & { preload: () => Promise<any> };
 }
 
@@ -270,9 +281,12 @@ export class LazyComponentManager {
    * 複数コンポーネントの一括プリロード
    */
   public async preloadComponents(
-    components: Array<{ name: string; loader: () => Promise<any> }>
+    components: Array<{ name: string; loader: () => Promise<any> }>,
   ): Promise<void> {
-    console.log('[LazyComponentManager] 一括プリロード開始:', components.length);
+    console.log(
+      "[LazyComponentManager] 一括プリロード開始:",
+      components.length,
+    );
     const startTime = performance.now();
 
     const preloadPromises = components.map(async ({ name, loader }) => {
@@ -292,7 +306,10 @@ export class LazyComponentManager {
         this.preloadedComponents.add(name);
         console.log(`[LazyComponentManager] プリロード完了: ${name}`);
       } catch (error) {
-        console.error(`[LazyComponentManager] プリロードエラー: ${name}`, error);
+        console.error(
+          `[LazyComponentManager] プリロードエラー: ${name}`,
+          error,
+        );
       } finally {
         this.loadingComponents.delete(name);
       }
@@ -301,7 +318,9 @@ export class LazyComponentManager {
     await Promise.allSettled(preloadPromises);
 
     const endTime = performance.now();
-    console.log(`[LazyComponentManager] 一括プリロード完了: ${endTime - startTime}ms`);
+    console.log(
+      `[LazyComponentManager] 一括プリロード完了: ${endTime - startTime}ms`,
+    );
   }
 
   /**
@@ -322,7 +341,7 @@ export class LazyComponentManager {
   public clearPreloadCache(): void {
     this.preloadedComponents.clear();
     this.loadingComponents.clear();
-    console.log('[LazyComponentManager] プリロードキャッシュクリア');
+    console.log("[LazyComponentManager] プリロードキャッシュクリア");
   }
 }
 
@@ -348,57 +367,57 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   loadingText: {
     marginTop: 10,
     fontSize: 14,
-    color: '#666',
+    color: "#666",
   },
   errorContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   errorTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#d32f2f',
+    fontWeight: "bold",
+    color: "#d32f2f",
     marginBottom: 10,
   },
   errorMessage: {
     fontSize: 14,
-    color: '#666',
-    textAlign: 'center',
+    color: "#666",
+    textAlign: "center",
     marginBottom: 20,
   },
   retryButton: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#2f95dc',
+    fontWeight: "bold",
+    color: "#2f95dc",
     padding: 10,
-    backgroundColor: '#f0f8ff',
+    backgroundColor: "#f0f8ff",
     borderRadius: 8,
   },
 });
 
 /**
  * 使用例:
- * 
+ *
  * // 基本的な遅延ローディング
  * const LazyQuestionDisplay = createLazyComponent(
  *   () => import('./QuestionDisplay'),
  *   { preload: true, preloadDelay: 2000 }
  * );
- * 
+ *
  * // プリロード機能付き
  * const PreloadableStats = createPreloadableLazyComponent(
  *   () => import('./StatsScreen')
  * );
- * 
+ *
  * // 使用時
  * PreloadableStats.preload(); // 事前ローディング
  */

@@ -2,8 +2,6 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-このファイルは、Claude Code (claude.ai/code) がこのリポジトリでコード作業を行う際のガイダンスを提供します。
-
 ## プロジェクト概要
 
 これは Expo、TypeScript、SQLite で構築された React Native 簿記練習アプリ（簿記3級問題集「確実復習」）です。間違えた問題の反復練習を通してユーザーの簿記習得を支援することに焦点を当てています。最新版では CBT 形式の模試機能が完全実装済みです。
@@ -16,26 +14,71 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **テスト**: Jest + React Testing Library + E2E用Detox
 - **パターン**: データアクセス用Repository Pattern + ビジネスロジック用Service層
 
+## 開発環境セットアップ
+
+**必要な環境:**
+
+- Node.js 18以上
+- npm または yarn
+- Xcode (iOS開発用) または Android Studio (Android開発用)
+- Expo CLI (`npm install -g expo-cli`)
+
+**初期セットアップ:**
+
+```bash
+npm install                # 依存関係インストール
+npx expo doctor           # 環境診断
+npm start                 # 開発サーバー起動
+```
+
 ## よく使う開発コマンド
 
 ```bash
+# プロジェクト把握
+node scripts/scan.js   # プロジェクト概要をクイックスキャン (/scan コマンド)
+
+# 問題データ修正
+node scripts/add-question-categories.js   # problemsStrategy.mdに基づく問題分類の追加
+
 # 開発
 npm start              # Expo開発サーバー起動
-npm run ios           # iOSシミュレーター実行
-npm run android       # Androidエミュレーター実行
-npm run web           # Web版実行（開発用のみ）
+npm run ios            # iOSシミュレーター実行
+npm run android        # Androidエミュレーター実行
+npm run web            # Web版実行（開発用のみ）
 
 # 品質管理・テスト
-npm test              # Jestテスト実行
-npm run lint          # ESLint実行
-npm run check:quick   # TypeScript型チェック + lint + test (完全な品質チェック)
-npx tsc --noEmit      # TypeScript型チェックのみ
+npm test               # Jestテスト実行
+npm run lint           # ESLint実行
+npm run check:quick    # TypeScript型チェック + lint + test (完全な品質チェック)
+npx tsc --noEmit       # TypeScript型チェックのみ
+
+# 特定テスト実行
+npm test -- --testPathPattern=data         # データ層テストのみ
+npm test -- --testPathPattern=integration  # 統合テストのみ
+npm test -- --watch                        # ウォッチモード
+npm test -- --coverage                     # カバレッジ付き実行
 
 # Expoコマンド
-npx expo doctor       # 環境セットアップ確認
-npx expo run:ios      # iOS開発ビルドの作成・実行
-npx expo run:android  # Android開発ビルドの作成・実行
-npx expo prebuild     # ネイティブコード生成
+npx expo doctor        # 環境セットアップ確認
+npx expo run:ios       # iOS開発ビルドの作成・実行
+npx expo run:android   # Android開発ビルドの作成・実行
+npx expo prebuild      # ネイティブコード生成
+
+# E2Eテスト (Detox)
+npx detox build --configuration ios.sim.debug    # iOS E2Eテスト用ビルド
+npx detox test --configuration ios.sim.debug     # iOS E2Eテスト実行
+npx detox build --configuration android.emu.debug # Android E2Eテスト用ビルド
+npx detox test --configuration android.emu.debug  # Android E2Eテスト実行
+
+# デバッグ・ユーティリティ
+node scripts/test-database.js              # データベース接続テスト
+node scripts/test-review-system.js         # 復習システム単体テスト
+node scripts/test-answer-service.js        # 解答サービステスト
+node scripts/test-mock-exam-system.js      # 模試システムテスト
+node scripts/test-statistics-system.js     # 統計システムテスト
+node scripts/insert-sample-questions.js    # サンプル問題データ投入
+node scripts/web-smoke-test.js             # Web版スモークテスト
+scripts/ensure-english.sh                  # 入力言語を英語に切り替え（macOS）
 ```
 
 ## コードアーキテクチャ
@@ -46,6 +89,7 @@ npx expo prebuild     # ネイティブコード生成
 ├── app/               # Expo Router - ファイルベースルーティング
 │   ├── (tabs)/       # タブナビゲーション（学習・復習・統計・模試等）
 │   ├── question/     # 動的ルート（問題詳細）
+│   ├── mock-exam.tsx # 模試実行画面
 │   └── _layout.tsx   # ルートレイアウト
 ├── src/              # メインソースコード
 │   ├── data/         # データアクセス層
@@ -99,13 +143,10 @@ src/
 
 **TypeScriptパス**: クリーンなインポートのためにパスエイリアスを使用:
 
+- `@/*` → `src/*` (一般的なパス)
 - `@/components/*` → `src/components/*`
 - `@/services/*` → `src/services/*`
 - `@/types/*` → `src/types/*`
-- `@/data/*` → `src/data/*`
-- `@/hooks/*` → `src/hooks/*`
-- `@/utils/*` → `src/utils/*`
-- `@/theme/*` → `src/theme/*`
 
 **エラーハンドリング**: `src/utils/error-handler.ts` の集中エラーハンドラーを使用してください。すべての非同期操作は `safeAsyncOperation` でラップしてください。
 
@@ -121,17 +162,21 @@ src/
 アプリは10個の主要テーブルを持つSQLiteを使用:
 
 - `questions` - 問題内容とメタデータ
-- `learning_histories` - ユーザーの解答記録
+- `learning_history` - ユーザーの解答記録
 - `review_items` - 復習対象項目（優先度付き）
 - `mock_exams` - 模試定義
 - `mock_exam_results` - 模試完了記録
-- その他5つのサポートテーブル
+- `categories` - 問題カテゴリ管理
+- `account_items` - 勘定科目マスタ
+- `user_progress` - 学習進捗管理
+- `mock_exam_questions` - 模試問題関連
+- `app_settings` - アプリ設定
 
 **重要**: データベースアクセスには必ずリポジトリ層を使用してください。コンポーネント内で生SQLを書いてはいけません。
 
 **データベースマイグレーション**: `src/data/migrations/` でスキーマ変更を管理。新しいマイグレーションは連番で作成し、`migration-manager.ts` で実行。
 
-**サンプルデータ**: 開発用のサンプル問題は `src/data/sample-questions.ts`、模試は `src/data/sample-mock-exams.ts` で管理。
+**サンプルデータ**: 開発用のサンプル問題は `src/data/sample-questions.ts`、模試は `src/data/sample-mock-exams.ts` で管理。サンプルデータは `src/data/migrations/index.ts` の `loadSampleData()` 関数で自動読み込みされます。
 
 ## テスト戦略
 
@@ -143,21 +188,7 @@ src/
 
 **テストピラミッド**: 単体テスト(70%) > 統合テスト(25%) > E2Eテスト(5%)
 
-特定のテストタイプの実行:
-
-```bash
-npm test                                    # 全テスト
-npm test -- --testPathPattern=data         # データ層テストのみ
-npm test -- --testPathPattern=integration  # 統合テストのみ
-npm test -- --watch                        # ウォッチモード
-npm test -- --coverage                     # カバレッジ付き実行
-
-# E2Eテスト (Detox)
-npx detox build --configuration ios.sim.debug    # iOS E2Eテスト用ビルド
-npx detox test --configuration ios.sim.debug     # iOS E2Eテスト実行
-npx detox build --configuration android.emu.debug # Android E2Eテスト用ビルド
-npx detox test --configuration android.emu.debug  # Android E2Eテスト実行
-```
+特定のテストタイプの実行は上記の「よく使う開発コマンド」セクションを参照してください。
 
 ## 主要開発ガイドライン
 
@@ -185,6 +216,22 @@ npx detox test --configuration android.emu.debug  # Android E2Eテスト実行
 
 **データフロー:**
 コンポーネント → カスタムフック → サービス → リポジトリ → データベース
+
+**CBT（Computer-Based Testing）システム:**
+このアプリの核心は簿記検定試験のCBT形式に対応した問題形式です:
+
+- **仕訳問題**: 複数の仕訳エントリを入力する形式
+- **帳簿問題**: 仕訳から帳簿への転記問題
+- **試算表問題**: 勘定残高を計算する問題
+
+**復習システムのアルゴリズム:**
+間隔反復学習に基づく優先度システムを実装:
+
+1. 問題の誤答回数に基づく基本スコア
+2. 時間経過による減衰処理
+3. 連続正解による優先度減点
+4. カテゴリ別の重要度ボーナス
+5. 連続2回正解で復習対象から除外（「克服済み」）
 
 ## 特別なファイル・設定
 
@@ -222,16 +269,152 @@ npx detox test --configuration android.emu.debug  # Android E2Eテスト実行
 - UI全体で日本語テキストサポートが必須です
 - アプリは間隔反復アルゴリズムを復習スケジューリングに使用します
 
+## シミュレーター操作ガイドライン
+
+**重要**: Claude Codeでシミュレーター動作確認を行う際は、以下のガイドラインを**厳格に遵守**してください：
+
+### 座標ベース操作の禁止
+
+- **x, y座標を使った直接的なタップ・クリック操作は絶対に行わないでください**
+- `tap`, `click_on_screen_at_coordinates` 等の座標指定ツールの使用を禁止します
+- スクリーンショットから目視で座標を推測する操作も禁止です
+
+### 推奨するアクセス方法
+
+1. **UI階層ベースのアクセス**:
+
+   ```bash
+   # 良い例: UI要素の説明テキストやラベルでアクセス
+   mobile_list_elements_on_screen  # 要素一覧を取得
+   mobile_click_on_element_by_text "学習を開始"  # テキストベース
+   ```
+
+2. **describe_ui ツールの活用**:
+
+   ```bash
+   # UI構造を理解してからアクセス
+   mcp__xcodebuild__describe_ui --simulatorUuid "SIMULATOR_UUID"
+   ```
+
+3. **アクセシビリティID・TestID の利用**:
+   ```bash
+   # 開発時に設定されたテストIDを使用
+   mobile_click_on_element_by_id "learning_start_button"
+   ```
+
+### 許可される操作
+
+- `mobile_list_elements_on_screen` - 画面要素の取得
+- `mobile_click_on_element_by_text` - テキスト内容によるクリック
+- `mobile_click_on_element_by_id` - ID指定によるクリック
+- `mcp__xcodebuild__describe_ui` - UI構造の詳細取得
+- `mobile_press_button` - ハードウェアボタン操作
+- `mobile_swipe_on_screen` - スワイプジェスチャー（方向指定）
+
+### 動作確認の推奨フロー
+
+1. **画面構造の理解**: `describe_ui`でUI階層を把握
+2. **要素の特定**: `list_elements_on_screen`で操作対象を確認
+3. **安全な操作**: テキストやIDベースでの要素操作
+4. **結果の確認**: 操作後の画面状態を再度確認
+
+この方針により、座標変化に依存しない安定したテスト自動化を実現し、UI変更に対する耐性を確保します。
+
+## ナビゲーション構造
+
+**メインタブ (app/(tabs)/):**
+
+1. **home.tsx** - ホーム画面（統計サマリー・学習継続日数）
+2. **learning.tsx** - 学習画面（新規問題の学習）
+3. **review.tsx** - 復習画面（間違えた問題の優先復習）
+4. **statistics.tsx** - 統計画面（詳細な学習進捗）
+5. **mock-exams.tsx** - 模試一覧画面
+
+**問題解答フロー:**
+
+- 学習/復習タブ → 問題選択 → `app/question/[id].tsx` で解答
+- 模試タブ → 模試選択 → `app/mock-exam.tsx` で時間制限付き解答
+
 ---
 
-## 重要な姿勢 (Important Approach)
+## 復習システムの動作原理
 
-- **ultrathink** で深く考え、段階的に下書き→検証→改善を繰り返す
-- **最後まで諦めず**、未確定箇所は仮説→検証→明示的TODOの順に収束させる
-- **出典・根拠**は必ずメモし、引用の可否（著作権・利用規約）を都度判断する
-- **必ずultrathinkすること** - 複雑な問題は段階的に分析・検証する
-- **必要に応じてMCPを利用すること** - 適切なツールを活用して効率的に作業する
-- **毎回のチャットの末尾に以下を追加すること** - 必ずultrathinkして、必要に応じてMCP(context7, puppeteer, serena, chatgpt)を利用します
+このアプリの核心機能である復習システムの理解が重要です:
+
+**復習アイテム作成の流れ:**
+
+1. ユーザーが学習タブで問題に正解 → 復習対象にならない
+2. ユーザーが学習タブで問題に不正解 → `review_items` テーブルに復習アイテム作成
+3. 復習タブでは `review_items` テーブルから復習対象問題を優先度順に表示
+4. 連続2回正解すると復習アイテムが削除され「克服済み」になる
+
+**重要**: 新規環境では復習タブが空なのは正常な動作です。まず学習タブで間違えた問題がある場合のみ復習タブに表示されます。
+
+**データフローアーキテクチャ:**
+
+```
+ユーザー操作 → コンポーネント → カスタムフック → サービス層 → リポジトリ層 → SQLite
+                    ↑                                                    ↓
+                    └────────────── 状態更新 ←──────────────────────────┘
+```
+
+**クリティカルパス（解答処理）:**
+
+1. `app/question/[id].tsx` - 問題画面UI
+2. `src/services/answer-service.ts` - 解答の正誤判定・記録
+3. `src/services/review-service.ts` - 復習状況の更新
+4. `src/data/repositories/review-item-repository.ts` - データベース操作
+
+## よくある問題とトラブルシューティング
+
+**復習タブに問題が表示されない:**
+
+1. `review_items` テーブルのデータを確認: 直接SQLクエリでデバッグ
+2. `answer-service.ts` → `review-service.ts` → `review-item-repository.ts` の順でデバッグログを確認
+3. 学習タブで意図的に間違えた解答をして、復習アイテム作成プロセスを追跡
+
+**データベース初期化エラー:**
+
+1. SQLite接続確認: `src/data/database.ts` のログを確認
+2. マイグレーション実行状況: `src/data/migrations/migration-manager.ts` のログ確認
+3. Web環境ではモック実装を使用（`WebDatabaseMock` クラス）
+
+**TypeScript コンパイルエラー:**
+多くの最適化ファイル（`*.optimized.tsx`）でTypeScriptエラーが発生することがありますが、これらは開発用最適化版なので、基本版（`*.tsx`）を使用してください。
+
+**パフォーマンス問題:**
+
+- 大量データ処理: `database-optimized.ts` と `base-repository.optimized.ts` を使用
+- メモリ使用量監視: `memory-optimizer.ts` でメモリリークをチェック
+- 統計計算キャッシュ: `statistics-cache.ts` で重い計算をキャッシュ
+
+## アプリ固有の実装詳細
+
+**Detox E2Eテスト設定:**
+
+- iOS: `BookKeeping3rd.app` (iPhone 12 シミュレーター)
+- Android: `app-debug.apk` (Pixel 4 API 30 エミュレーター)
+- ワークスペース名に注意: `ios/BookKeeping3rd.xcworkspace`
+
+**Web版の制限事項:**
+
+- SQLiteはモック実装（`WebDatabaseMock`）を使用
+- 開発・デバッグ用途のみ、本番利用は想定外
+- Expo WebビューでのUI確認が主目的
+
+**アプリ識別子:**
+
+- Bundle ID: `com.example.bookkeepingapp`
+- Package Name: `bookkeeping-app`
+- Display Name: `簿記3級問題集`
+- Project ID: `3` (iOS), `BookKeeping3rd` (Workspace)
+
+**サンプルデータ構成:**
+
+- 仕訳問題: 300問以上（基礎〜応用）
+- 帳簿問題: 50問（各種帳簿転記）
+- 試算表問題: 20問（合計・残高試算表）
+- 模試: 5セット（基礎〜総合レベル）
 
 ## 最終バリデーション
 
@@ -249,72 +432,21 @@ npm run lint          # ESLintエラー確認
 npm test              # テスト失敗確認
 ```
 
-### 利用可能なMCPサーバー
+## 既知の問題と対処法
 
-- **context7**: ライブラリドキュメント・API仕様の最新情報取得
-- **xcodebuild**: iOS/macOS アプリのビルド・テスト・デバイス管理
-- **puppeteer**: ウェブブラウザ自動化・スクリーンショット・E2Eテスト
-- **serena**: コード解析・構造把握・シンボリック編集
-- **chatgpt**: ChatGPT との連携・追加の AI 支援
+**TypeScript コンパイルエラー:**
+`npm run check:quick` 実行時に多数のTypeScriptエラーが発生することがありますが、以下の対処を行ってください：
 
-## ChatGPT MCP 運用ガイド
+1. 最適化ファイル（`*.optimized.tsx`）のエラーは無視可（開発用の最適化版のため）
+2. `node_modules` の型定義エラーは `npm install` で解決
+3. 実際の実行には影響しない型エラーも含まれています
 
-### 基本的な使用方法
+**復習タブの分野別弱点表示の不整合:**
+`review_items` テーブルの統計クエリで `mastered` ステータスを除外するよう修正済み。`src/data/repositories/review-item-repository.ts` の `getReviewStatistics` メソッドを参照。
 
-ChatGPT MCPは日本語プロンプトで直接使用可能です。IME自動切替機能により文字化けを最小限に抑制します。
+**Expo開発サーバーポート競合:**
+ポート 8081 が使用中の場合は、既存プロセスを終了：
 
 ```bash
-# 基本的な質問・分析
-mcp__chatgpt__ask_chatgpt_tool: "日本語でのプロンプトテキスト"
-
-# 応答取得
-mcp__chatgpt__get_chatgpt_response_tool
+kill -9 $(lsof -ti:8081)
 ```
-
-### IME自動切替機能
-
-ChatGPT MCPツール実行前に自動でIMEが英数モードに切り替わります：
-
-- **対象ツール**: `mcp__chatgpt__.*` パターン
-- **実行スクリプト**: `scripts/ensure-english.sh`
-- **ログ確認**: `.logs/chatgpt/ime-switch.log`
-
-### 推奨運用パターン
-
-1. **文書レビュー・分析**:
-
-   ```
-   プロンプト: "以下の文書について分析し、改善点を指摘してください: [文書内容]"
-   ```
-
-2. **技術検証・ベストプラクティス確認**:
-
-   ```
-   プロンプト: "React Nativeアプリのテスト戦略について、最新のベストプラクティスと比較してください"
-   ```
-
-3. **コードレビュー補助**:
-   ```
-   プロンプト: "以下のテスト計画について、不足している観点や改善の余地を教えてください"
-   ```
-
-### トラブルシューティング
-
-**文字化けが発生する場合**:
-
-1. 手動でIME切替: `im-select com.apple.keylayout.ABC`
-2. ログ確認: `cat .logs/chatgpt/ime-switch.log`
-3. ChatGPTアプリの再起動
-
-**応答が取得できない場合**:
-
-1. ChatGPTアプリが起動しているか確認
-2. ネットワーク接続確認
-3. MCPサーバーの再起動: Claude Code再起動
-
-### 注意事項
-
-- 長文プロンプトは分割して送信することを推奨
-- 技術的な分析には具体的な観点を指定
-- 結果は常にClaude Codeで検証・整理する
-- 個人情報を含むプロンプトは送信しない

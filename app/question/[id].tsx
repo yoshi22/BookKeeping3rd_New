@@ -20,55 +20,13 @@ import AnswerResultDialog from "../../src/components/AnswerResultDialog";
 import { useQuestionNavigation } from "../../src/hooks/useQuestionNavigation";
 import { SubmitAnswerResponse } from "../../src/services/answer-service";
 import { SessionType } from "../../src/types/database";
-
-// サンプル問題データ（簡略化）
-const sampleQuestions = {
-  Q_J_001: {
-    id: "Q_J_001",
-    category_id: "journal",
-    question_text: "商品200,000円を現金で仕入れた。",
-    explanation:
-      "商品を仕入れたときは「仕入」勘定で処理します。現金で支払っているので、現金が減少します。",
-    difficulty: 1,
-  },
-  Q_J_002: {
-    id: "Q_J_002",
-    category_id: "journal",
-    question_text: "商品300,000円を売り上げ、代金は掛けとした。",
-    explanation:
-      "商品を販売したときは「売上」勘定に記録します。代金が掛けの場合は「売掛金」勘定を使用します。",
-    difficulty: 1,
-  },
-  Q_J_003: {
-    id: "Q_J_003",
-    category_id: "journal",
-    question_text: "売掛金150,000円を現金で回収した。",
-    explanation:
-      "売掛金を現金で回収したときは、現金が増加し、売掛金が減少します。",
-    difficulty: 1,
-  },
-  Q_L_001: {
-    id: "Q_L_001",
-    category_id: "ledger",
-    question_text:
-      "以下の取引を現金出納帳に記入してください。\n4月1日 商品100,000円を現金で仕入れた。\n4月3日 売上200,000円を現金で受け取った。\n4月1日の現金残高は50,000円でした。",
-    explanation:
-      "現金出納帳では、期首残高50,000円から仕入で100,000円減少（残高-50,000円）、その後売上で200,000円増加して最終残高150,000円となります。",
-    difficulty: 2,
-  },
-  Q_T_001: {
-    id: "Q_T_001",
-    category_id: "trial_balance",
-    question_text:
-      "以下の残高から試算表を作成してください。\n現金: 100,000円\n売掛金: 200,000円\n商品: 150,000円\n買掛金: 80,000円\n資本金: 370,000円\n\n借方合計を求めてください。",
-    explanation:
-      "借方科目（現金100,000円 + 売掛金200,000円 + 商品150,000円）の合計は450,000円です。試算表では借方合計と貸方合計が一致する必要があります。",
-    difficulty: 2,
-  },
-};
+import { QuestionRepository } from "../../src/data/repositories/question-repository";
+import type { Question } from "../../src/types/models";
+import { reviewService } from "../../src/services/review-service";
 
 export default function QuestionScreen() {
-  const { id } = useLocalSearchParams();
+  const { id, sessionId, sessionType, filteredQuestions } =
+    useLocalSearchParams();
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -81,6 +39,7 @@ export default function QuestionScreen() {
   const [questionStartTime, setQuestionStartTime] = useState<number>(
     Date.now(),
   );
+  const [categoryQuestions, setCategoryQuestions] = useState<Question[]>([]);
 
   // 問題IDからカテゴリを推定
   const getCategoryFromId = (
@@ -107,13 +66,13 @@ export default function QuestionScreen() {
     getCategoryName,
   } = useQuestionNavigation({
     category,
-    questions: [], // 空配列でサンプルデータを使用
+    questions: categoryQuestions, // データベースから取得した問題を使用
     initialQuestionId: id as string,
   });
 
   // 問題データ読み込み
   useEffect(() => {
-    const loadQuestion = async () => {
+    const loadQuestions = async () => {
       try {
         if (!id || typeof id !== "string") {
           Alert.alert("エラー", "問題IDが指定されていません");
@@ -121,28 +80,83 @@ export default function QuestionScreen() {
           return;
         }
 
-        // 問題が見つからない場合
-        if (!currentQuestion) {
-          Alert.alert("エラー", "問題が見つかりません");
+        setIsLoading(true);
+
+        let questions: Question[] = [];
+
+        // フィルター済み問題リストがある場合はそれを使用
+        if (filteredQuestions && typeof filteredQuestions === "string") {
+          console.log(
+            "[QuestionScreen] フィルター済み問題リストを使用:",
+            filteredQuestions,
+          );
+
+          const filteredIds = filteredQuestions.split(",");
+          const questionRepository = new QuestionRepository();
+
+          // フィルター済み問題IDから問題を取得
+          const questionsData = await Promise.all(
+            filteredIds.map(async (questionId) => {
+              return await questionRepository.findById(questionId.trim());
+            }),
+          );
+
+          // nullでない問題のみを抽出
+          questions = questionsData.filter((q) => q !== null) as Question[];
+          console.log(
+            `[QuestionScreen] フィルター済み問題: ${questions.length}件`,
+          );
+        }
+        // 復習セッションの場合は復習対象問題のみを取得
+        else if (sessionType === "review" && sessionId) {
+          console.log("[QuestionScreen] 復習セッション用の問題を取得:", {
+            sessionId,
+            category,
+          });
+
+          // 復習リストから該当カテゴリの問題のみを取得
+          const reviewQuestions = await reviewService.generateReviewList({
+            category: category,
+            maxCount: 50, // 十分な数を設定
+          });
+
+          questions = reviewQuestions;
+          console.log(`[QuestionScreen] 復習対象問題: ${questions.length}件`);
+        } else {
+          // 通常の学習モードの場合は全問題を取得（全302問を順次進行）
+          const questionRepository = new QuestionRepository();
+          // カテゴリ別ではなく、全問題を取得して順次進行させる
+          const allQuestions = await Promise.all([
+            questionRepository.findByCategory('journal'),      // 仕訳問題（250問）
+            questionRepository.findByCategory('ledger'),       // 帳簿問題（40問）  
+            questionRepository.findByCategory('trial_balance') // 試算表問題（12問）
+          ]);
+          // 全問題を1つの配列にまとめる（problemsStrategy.mdに従い302問順次進行）
+          questions = allQuestions.flat().sort((a, b) => a.id.localeCompare(b.id));
+          console.log(`[QuestionScreen] 全302問を順次進行モードで読み込み: ${questions.length}件`);
+        }
+
+        if (questions.length === 0) {
+          Alert.alert("エラー", "このカテゴリの問題が見つかりません");
           router.back();
           return;
         }
 
+        setCategoryQuestions(questions);
+
         // 問題開始時間を記録
         setQuestionStartTime(Date.now());
 
-        // 簡単な遅延でローディング状態をシミュレート
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 500);
+        setIsLoading(false);
       } catch (error) {
+        console.error("[QuestionScreen] 問題読み込みエラー:", error);
         Alert.alert("エラー", "問題の読み込みに失敗しました");
         router.back();
       }
     };
 
-    loadQuestion();
-  }, [id, currentQuestion]);
+    loadQuestions();
+  }, [id, category, sessionType, sessionId, filteredQuestions]);
 
   // 解答変更処理
   const handleAnswerChange = (fieldName: string, value: any) => {
@@ -221,6 +235,37 @@ export default function QuestionScreen() {
   const getAnswerFields = (question: any) => {
     if (!question) return [];
 
+    // まずanswer_template_jsonから解答フィールドを取得を試みる
+    try {
+      if (question.answer_template_json) {
+        const answerTemplate = JSON.parse(question.answer_template_json);
+
+        if (
+          answerTemplate &&
+          answerTemplate.fields &&
+          Array.isArray(answerTemplate.fields)
+        ) {
+          console.log(
+            "[QuestionScreen] answer_template_jsonからフィールドを生成:",
+            answerTemplate,
+          );
+
+          return answerTemplate.fields.map((field: any) => ({
+            label: field.label,
+            type: field.type as "dropdown" | "number" | "text",
+            name: field.name,
+            required: field.required || false,
+            format: field.format,
+            options: field.options,
+          }));
+        }
+      }
+    } catch (error) {
+      console.warn("[QuestionScreen] answer_template_json解析エラー:", error);
+    }
+
+    // フォールバック: カテゴリごとのデフォルトフィールド
+    console.log("[QuestionScreen] フォールバック: デフォルトフィールドを使用");
     switch (question.category_id) {
       case "journal":
         return [
@@ -288,7 +333,7 @@ export default function QuestionScreen() {
         onQuestionSelect={goToQuestion}
         canGoPrevious={canGoPrevious}
         canGoNext={canGoNext}
-        showQuestionNumbers={true}
+        showQuestionNumbers={false}
       />
 
       {/* 問題表示 */}
@@ -305,7 +350,7 @@ export default function QuestionScreen() {
         correctAnswer={submitResult?.correctAnswer}
         onBack={handleGoBack}
         onAnswerChange={handleAnswerChange}
-        sessionType={"learning" as SessionType}
+        sessionType={(sessionType as SessionType) || "learning"}
         startTime={questionStartTime}
         onSubmitAnswer={handleAnswerSubmitted}
       />

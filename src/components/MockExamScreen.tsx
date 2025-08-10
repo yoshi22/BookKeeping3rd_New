@@ -3,7 +3,7 @@
  * 時間制限付きCBT形式模試の実行機能
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -12,14 +12,18 @@ import {
   Alert,
   Modal,
   ActivityIndicator,
-  ScrollView
-} from 'react-native';
-import { QuestionDisplay } from './QuestionDisplay.optimized';
-import { AnswerForm } from './AnswerForm';
-import { QuestionNavigation } from './QuestionNavigation.optimized';
-import { MockExamService, MockExamSession, MockExamSessionResult } from '../services/mock-exam-service';
-import { CBTAnswerData } from '../types/database';
-import { Question, MockExamQuestion } from '../types/models';
+  ScrollView,
+} from "react-native";
+import QuestionDisplay from "./QuestionDisplay";
+import AnswerForm from "./AnswerForm";
+import QuestionNavigation from "./QuestionNavigation";
+import {
+  MockExamService,
+  MockExamSession,
+  MockExamSessionResult,
+} from "../services/mock-exam-service";
+import { CBTAnswerData } from "../types/database";
+import { Question, MockExamQuestion } from "../types/models";
 
 interface MockExamScreenProps {
   examId: string;
@@ -30,7 +34,7 @@ interface MockExamScreenProps {
 export const MockExamScreen: React.FC<MockExamScreenProps> = ({
   examId,
   onComplete,
-  onExit
+  onExit,
 }) => {
   const [session, setSession] = useState<MockExamSession | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -66,9 +70,9 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
       setSession(newSession);
       setRemainingTime(mockExamService.getRemainingTime(newSession));
     } catch (error) {
-      console.error('Failed to initialize mock exam session:', error);
-      Alert.alert('エラー', '模試の開始に失敗しました', [
-        { text: 'OK', onPress: onExit }
+      console.error("Failed to initialize mock exam session:", error);
+      Alert.alert("エラー", "模試の開始に失敗しました", [
+        { text: "OK", onPress: onExit },
       ]);
     } finally {
       setLoading(false);
@@ -97,29 +101,37 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
-    
+
     Alert.alert(
-      '時間終了',
-      '制限時間が終了しました。模試を自動的に終了します。',
-      [{ text: 'OK', onPress: handleForceSubmit }],
-      { cancelable: false }
+      "時間終了",
+      "制限時間が終了しました。模試を自動的に終了します。",
+      [{ text: "OK", onPress: handleForceSubmit }],
+      { cancelable: false },
     );
   };
 
-  const handleAnswerSubmit = async (questionId: string, answer: CBTAnswerData, answerTime: number) => {
+  const handleAnswerSubmit = async (
+    questionId: string,
+    answer: CBTAnswerData,
+    answerTime: number,
+  ) => {
     if (!session) return;
 
     try {
-      await mockExamService.recordMockExamAnswer(session, questionId, answer, answerTime);
-      
+      await mockExamService.recordMockExamAnswer(
+        session,
+        questionId,
+        answer,
+        answerTime,
+      );
+
       // セッション状態を更新
       const updatedSession = { ...session };
       updatedSession.answers.set(questionId, answer);
       setSession(updatedSession);
-
     } catch (error) {
-      console.error('Failed to record answer:', error);
-      Alert.alert('エラー', '解答の記録に失敗しました');
+      console.error("Failed to record answer:", error);
+      Alert.alert("エラー", "解答の記録に失敗しました");
     }
   };
 
@@ -131,15 +143,19 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
     if (!session) return;
 
     const progress = mockExamService.getSessionProgress(session);
-    
+
     if (progress.answeredQuestions < progress.totalQuestions) {
       Alert.alert(
-        '未解答の問題があります',
+        "未解答の問題があります",
         `${progress.totalQuestions - progress.answeredQuestions}問が未解答です。本当に提出しますか？`,
         [
-          { text: 'キャンセル', style: 'cancel' },
-          { text: '提出', style: 'destructive', onPress: () => setShowSubmitConfirm(true) }
-        ]
+          { text: "キャンセル", style: "cancel" },
+          {
+            text: "提出",
+            style: "destructive",
+            onPress: () => setShowSubmitConfirm(true),
+          },
+        ],
       );
     } else {
       setShowSubmitConfirm(true);
@@ -152,7 +168,7 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
     try {
       setSubmitting(true);
       setShowSubmitConfirm(false);
-      
+
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
@@ -160,8 +176,8 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
       const result = await mockExamService.completeMockExamSession(session);
       onComplete(result);
     } catch (error) {
-      console.error('Failed to submit exam:', error);
-      Alert.alert('エラー', '模試の提出に失敗しました');
+      console.error("Failed to submit exam:", error);
+      Alert.alert("エラー", "模試の提出に失敗しました");
       setSubmitting(false);
     }
   };
@@ -174,8 +190,8 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
       const result = await mockExamService.completeMockExamSession(session);
       onComplete(result);
     } catch (error) {
-      console.error('Failed to force submit exam:', error);
-      Alert.alert('エラー', '模試の終了に失敗しました');
+      console.error("Failed to force submit exam:", error);
+      Alert.alert("エラー", "模試の終了に失敗しました");
     }
   };
 
@@ -194,7 +210,7 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
     const totalSeconds = Math.floor(timeMs / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
   const getCurrentQuestion = (): (Question & MockExamQuestion) | null => {
@@ -211,7 +227,8 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
   };
 
   const getProgressInfo = () => {
-    if (!session) return { answered: 0, total: 0, percentage: 0 };
+    if (!session)
+      return { answeredQuestions: 0, totalQuestions: 0, progressPercentage: 0 };
     return mockExamService.getSessionProgress(session);
   };
 
@@ -257,22 +274,24 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
             <Text style={styles.exitButtonText}>終了</Text>
           </TouchableOpacity>
         </View>
-        
+
         <View style={styles.headerCenter}>
-          <Text style={[
-            styles.timeText,
-            remainingTime < 300000 && styles.timeWarning, // 5分切ったら警告色
-            remainingTime < 60000 && styles.timeCritical   // 1分切ったら危険色
-          ]}>
+          <Text
+            style={[
+              styles.timeText,
+              remainingTime < 300000 && styles.timeWarning, // 5分切ったら警告色
+              remainingTime < 60000 && styles.timeCritical, // 1分切ったら危険色
+            ]}
+          >
             残り時間: {formatTime(remainingTime)}
           </Text>
           <Text style={styles.progressText}>
-            {progress.answered}/{progress.total} 問題
+            {progress.answeredQuestions}/{progress.totalQuestions} 問題
           </Text>
         </View>
-        
+
         <View style={styles.headerRight}>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={handleSubmitExam}
             style={styles.submitButton}
           >
@@ -284,11 +303,11 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
       {/* 進捗バー */}
       <View style={styles.progressContainer}>
         <View style={styles.progressBar}>
-          <View 
+          <View
             style={[
-              styles.progressFill, 
-              { width: `${progress.progressPercentage}%` }
-            ]} 
+              styles.progressFill,
+              { width: `${progress.progressPercentage}%` },
+            ]}
           />
         </View>
       </View>
@@ -298,20 +317,67 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
         {currentQuestion && (
           <>
             <QuestionDisplay
-              question={currentQuestion}
-              currentAnswer={currentAnswer}
-              onAnswerChange={() => {}} // 模試では即座に保存しない
+              questionId={currentQuestion.question_id}
+              categoryName={currentQuestion.category_id}
+              questionText={currentQuestion.question_text}
+              difficulty={currentQuestion.difficulty}
+              answers={currentAnswer ? { answer: currentAnswer } : {}}
+              explanation={currentQuestion.explanation}
               showExplanation={false}
+              onBack={() => {}} // 模試では戻るボタンは無効
+              onAnswerChange={() => {}} // 模試では即座に保存しない
             />
-            
+
             <AnswerForm
-              question={currentQuestion}
-              initialAnswer={currentAnswer}
-              onSubmit={(answer, answerTime) => 
-                handleAnswerSubmit(currentQuestion.question_id, answer, answerTime)
-              }
-              submitButtonText="解答を記録"
-              allowMultipleSubmit={true}
+              fields={[]} // TODO: Extract fields from question
+              answers={currentAnswer || {}}
+              onAnswerChange={() => {}} // TODO: Implement answer change handler
+              questionId={currentQuestion.question_id}
+              sessionType="mock_exam"
+              onSubmitAnswer={(response) => {
+                if (response.success) {
+                  const answerData: CBTAnswerData = {
+                    questionType: currentQuestion.category_id as
+                      | "journal"
+                      | "ledger"
+                      | "trial_balance",
+                  };
+
+                  // Transform the response data to match CBTAnswerData format
+                  if (response.correctAnswer.journalEntry) {
+                    answerData.journalEntry = {
+                      debit: {
+                        account:
+                          response.correctAnswer.journalEntry.debit_account,
+                        amount:
+                          response.correctAnswer.journalEntry.debit_amount,
+                      },
+                      credit: {
+                        account:
+                          response.correctAnswer.journalEntry.credit_account,
+                        amount:
+                          response.correctAnswer.journalEntry.credit_amount,
+                      },
+                    };
+                  }
+
+                  if (response.correctAnswer.ledgerEntry) {
+                    answerData.ledgerEntry = response.correctAnswer.ledgerEntry;
+                  }
+
+                  if (response.correctAnswer.trialBalance) {
+                    answerData.trialBalance =
+                      response.correctAnswer.trialBalance;
+                  }
+
+                  handleAnswerSubmit(
+                    currentQuestion.question_id,
+                    answerData,
+                    response.answerTimeMs,
+                  );
+                }
+              }}
+              showSubmitButton={true}
             />
           </>
         )}
@@ -320,11 +386,21 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
       {/* 問題ナビゲーション */}
       <View style={styles.navigationContainer}>
         <QuestionNavigation
-          questions={session.questions}
-          currentIndex={currentQuestionIndex}
-          answeredQuestions={Array.from(session.answers.keys())}
+          currentQuestionIndex={currentQuestionIndex}
+          totalQuestions={session.questions.length}
+          categoryName="模試"
+          onPrevious={() =>
+            handleQuestionChange(Math.max(0, currentQuestionIndex - 1))
+          }
+          onNext={() =>
+            handleQuestionChange(
+              Math.min(session.questions.length - 1, currentQuestionIndex + 1),
+            )
+          }
           onQuestionSelect={handleQuestionChange}
-          showAnswerStatus={true}
+          canGoPrevious={currentQuestionIndex > 0}
+          canGoNext={currentQuestionIndex < session.questions.length - 1}
+          showQuestionNumbers={true}
         />
       </View>
 
@@ -339,7 +415,7 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
           <View style={styles.modalContainer}>
             <Text style={styles.modalTitle}>模試を終了しますか？</Text>
             <Text style={styles.modalMessage}>
-              終了すると進捗は保存されません。{'\n'}
+              終了すると進捗は保存されません。{"\n"}
               本当に終了しますか？
             </Text>
             <View style={styles.modalButtons}>
@@ -371,7 +447,7 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
           <View style={styles.modalContainer}>
             <Text style={styles.modalTitle}>模試を提出しますか？</Text>
             <Text style={styles.modalMessage}>
-              提出後は解答の変更はできません。{'\n'}
+              提出後は解答の変更はできません。{"\n"}
               本当に提出しますか？
             </Text>
             <View style={styles.modalButtons}>
@@ -398,85 +474,85 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   centerContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 16,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: "#f8f9fa",
     borderBottomWidth: 1,
-    borderBottomColor: '#e9ecef',
+    borderBottomColor: "#e9ecef",
   },
   headerLeft: {
     flex: 1,
   },
   headerCenter: {
     flex: 2,
-    alignItems: 'center',
+    alignItems: "center",
   },
   headerRight: {
     flex: 1,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   timeText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#212529',
+    fontWeight: "bold",
+    color: "#212529",
   },
   timeWarning: {
-    color: '#fd7e14',
+    color: "#fd7e14",
   },
   timeCritical: {
-    color: '#dc3545',
+    color: "#dc3545",
   },
   progressText: {
     fontSize: 12,
-    color: '#6c757d',
+    color: "#6c757d",
     marginTop: 2,
   },
   exitButton: {
-    backgroundColor: '#6c757d',
+    backgroundColor: "#6c757d",
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 6,
   },
   exitButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   submitButton: {
-    backgroundColor: '#28a745',
+    backgroundColor: "#28a745",
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 6,
   },
   submitButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   progressContainer: {
     paddingHorizontal: 16,
     paddingVertical: 8,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: "#f8f9fa",
   },
   progressBar: {
     height: 4,
-    backgroundColor: '#e9ecef',
+    backgroundColor: "#e9ecef",
     borderRadius: 2,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   progressFill: {
-    height: '100%',
-    backgroundColor: '#007AFF',
+    height: "100%",
+    backgroundColor: "#007AFF",
   },
   questionContainer: {
     flex: 1,
@@ -484,28 +560,28 @@ const styles = StyleSheet.create({
   },
   navigationContainer: {
     borderTopWidth: 1,
-    borderTopColor: '#e9ecef',
-    backgroundColor: '#f8f9fa',
+    borderTopColor: "#e9ecef",
+    backgroundColor: "#f8f9fa",
   },
   loadingText: {
     marginTop: 12,
     fontSize: 16,
-    color: '#6c757d',
+    color: "#6c757d",
   },
   errorText: {
     fontSize: 16,
-    color: '#dc3545',
-    textAlign: 'center',
+    color: "#dc3545",
+    textAlign: "center",
     marginBottom: 20,
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 12,
     padding: 24,
     margin: 20,
@@ -513,42 +589,42 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#212529',
+    fontWeight: "bold",
+    color: "#212529",
     marginBottom: 12,
-    textAlign: 'center',
+    textAlign: "center",
   },
   modalMessage: {
     fontSize: 14,
-    color: '#6c757d',
+    color: "#6c757d",
     lineHeight: 20,
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 24,
   },
   modalButtons: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 12,
   },
   modalButton: {
     flex: 1,
     paddingVertical: 12,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
   },
   cancelButton: {
-    backgroundColor: '#6c757d',
+    backgroundColor: "#6c757d",
   },
   cancelButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   confirmButton: {
-    backgroundColor: '#dc3545',
+    backgroundColor: "#dc3545",
   },
   confirmButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });

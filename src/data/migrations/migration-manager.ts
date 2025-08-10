@@ -41,36 +41,67 @@ export class MigrationManager {
   /**
    * マイグレーションテーブル作成
    */
+  /**
+   * マイグレーションテーブル作成
+   */
   private async createMigrationTable(): Promise<void> {
-    const sql = `
-      CREATE TABLE IF NOT EXISTS migrations (
+    console.log("[MigrationManager] マイグレーションテーブル作成開始");
+
+    try {
+      // シンプルなトランザクション無しでテーブル作成を試行
+      const sql = `CREATE TABLE IF NOT EXISTS migrations (
         version INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
         description TEXT NOT NULL,
         executed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         checksum TEXT
-      );
-    `;
+      )`;
 
-    try {
-      console.log("[MigrationManager] マイグレーションテーブル作成開始");
-
-      // データベース接続状態確認
-      if (!databaseService.isConnected()) {
-        throw new Error("Database not connected");
-      }
-
+      console.log("[MigrationManager] SQL実行:", sql);
       await databaseService.executeSql(sql);
       console.log("[MigrationManager] マイグレーションテーブル作成完了");
+
+      // テーブル作成後、存在確認（オプション）
+      try {
+        const testResult = await databaseService.executeSql(
+          "SELECT name FROM sqlite_master WHERE type='table' AND name='migrations'",
+        );
+
+        if (testResult.rows.length === 0) {
+          throw new Error("Migration table was not created successfully");
+        }
+
+        console.log("[MigrationManager] マイグレーションテーブル存在確認完了");
+      } catch (verifyError) {
+        console.error(
+          "[MigrationManager] テーブル存在確認エラー:",
+          verifyError,
+        );
+        throw verifyError;
+      }
     } catch (error) {
       console.error(
         "[MigrationManager] マイグレーションテーブル作成エラー:",
         error,
       );
-      console.error(
-        "[MigrationManager] Error details:",
-        error instanceof Error ? error.stack : error,
-      );
+      console.error("[MigrationManager] Error details:", {
+        message: error instanceof Error ? error.message : error,
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      // データベースが破損している可能性がある場合の処理
+      if (
+        error instanceof Error &&
+        (error.message.includes("database is locked") ||
+          error.message.includes("Transaction execution failed") ||
+          error.message.includes("database disk image is malformed"))
+      ) {
+        console.warn(
+          "[MigrationManager] データベース破損の可能性 - リセットが必要",
+        );
+        throw new Error(`Database corruption detected: ${error.message}`);
+      }
+
       throw error;
     }
   }
@@ -122,22 +153,90 @@ export class MigrationManager {
   /**
    * 個別マイグレーション実行
    */
+  /**
+   * 個別マイグレーション実行
+   */
   private async executeMigration(migration: MigrationInfo): Promise<void> {
     console.log(
       `[MigrationManager] マイグレーション実行開始: v${migration.version} - ${migration.name}`,
     );
 
+    // 既に実行済みかチェック（重複実行防止）
     try {
-      // トランザクション内でマイグレーション実行
-      await databaseService.executeTransaction(async (tx) => {
-        // 各SQLステートメントを実行
-        for (const sql of migration.sql) {
-          await databaseService.executeSql(sql, []);
-        }
+      const executed = await databaseService.executeSql(
+        "SELECT version FROM migrations WHERE version = ?",
+        [migration.version],
+      );
+      if (executed.rows.length > 0) {
+        console.log(
+          `[MigrationManager] マイグレーション v${migration.version} は既に実行済みです。スキップします。`,
+        );
+        return;
+      }
+    } catch (checkError) {
+      console.log(
+        `[MigrationManager] マイグレーション実行状態チェック時のエラー（継続）:`,
+        checkError,
+      );
+    }
 
-        // マイグレーション記録を保存
+    try {
+      // SQLステートメントを小さなチャンクに分割して実行
+      const CHUNK_SIZE = 3; // 一度に実行するSQL文の数をさらに制限
+      const sqlChunks: string[][] = [];
+
+      for (let i = 0; i < migration.sql.length; i += CHUNK_SIZE) {
+        sqlChunks.push(migration.sql.slice(i, i + CHUNK_SIZE));
+      }
+
+      console.log(
+        `[MigrationManager] ${migration.sql.length}のSQL文を${sqlChunks.length}個のチャンクで実行`,
+      );
+
+      // 各チャンクを個別に実行（トランザクション無し）
+      for (let chunkIndex = 0; chunkIndex < sqlChunks.length; chunkIndex++) {
+        const chunk = sqlChunks[chunkIndex];
+
+        try {
+          for (const sql of chunk) {
+            console.log(
+              `[MigrationManager] SQL実行 (チャンク ${chunkIndex + 1}/${sqlChunks.length}): ${sql.substring(0, 50)}...`,
+            );
+            await databaseService.executeSql(sql, []);
+          }
+
+          console.log(
+            `[MigrationManager] チャンク ${chunkIndex + 1}/${sqlChunks.length} 完了`,
+          );
+        } catch (chunkError) {
+          // IF NOT EXISTSやOR REPLACEがあるので、既存エラーは無視
+          const errorMessage =
+            chunkError instanceof Error
+              ? chunkError.message
+              : String(chunkError);
+          if (
+            errorMessage.includes("already exists") ||
+            errorMessage.includes("UNIQUE constraint failed") ||
+            errorMessage.includes("duplicate column name") ||
+            errorMessage.includes("column already exists")
+          ) {
+            console.log(
+              `[MigrationManager] チャンク ${chunkIndex + 1} 既存オブジェクト検出（継続）`,
+            );
+          } else {
+            console.error(
+              `[MigrationManager] チャンク ${chunkIndex + 1} エラー:`,
+              chunkError,
+            );
+            throw chunkError;
+          }
+        }
+      }
+
+      // マイグレーション記録を保存（単独実行）
+      try {
         await databaseService.executeSql(
-          "INSERT INTO migrations (version, name, description, checksum) VALUES (?, ?, ?, ?)",
+          "INSERT OR REPLACE INTO migrations (version, name, description, checksum) VALUES (?, ?, ?, ?)",
           [
             migration.version,
             migration.name,
@@ -145,7 +244,15 @@ export class MigrationManager {
             this.calculateChecksum(migration.sql.join("")),
           ],
         );
-      });
+
+        console.log(`[MigrationManager] マイグレーション記録保存完了`);
+      } catch (recordError) {
+        console.warn(
+          `[MigrationManager] マイグレーション記録保存失敗（SQLは実行済み）:`,
+          recordError,
+        );
+        // 記録保存の失敗は致命的でない - SQLは既に実行済み
+      }
 
       console.log(
         `[MigrationManager] マイグレーション完了: v${migration.version} - ${migration.name}`,

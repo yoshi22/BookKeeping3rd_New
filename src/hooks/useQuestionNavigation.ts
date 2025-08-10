@@ -33,58 +33,16 @@ interface UseQuestionNavigationReturn {
   getProgress: () => { current: number; total: number; percentage: number };
 }
 
-// サンプル問題データ（カテゴリ別）
-const SAMPLE_QUESTIONS: Record<string, Question[]> = {
-  journal: [
-    {
-      id: 'Q_J_001',
-      category_id: 'journal',
-      question_text: '商品200,000円を現金で仕入れた。',
-      explanation: '商品を仕入れたときは「仕入」勘定で処理します。現金で支払っているので、現金が減少します。',
-      difficulty: 1,
-    },
-    {
-      id: 'Q_J_002',
-      category_id: 'journal',
-      question_text: '商品300,000円を売り上げ、代金は掛けとした。',
-      explanation: '商品を販売したときは「売上」勘定に記録します。代金が掛けの場合は「売掛金」勘定を使用します。',
-      difficulty: 1,
-    },
-    {
-      id: 'Q_J_003',
-      category_id: 'journal',
-      question_text: '売掛金150,000円を現金で回収した。',
-      explanation: '売掛金を現金で回収したときは、現金が増加し、売掛金が減少します。',
-      difficulty: 1,
-    },
-  ],
-  ledger: [
-    {
-      id: 'Q_L_001',
-      category_id: 'ledger',
-      question_text: '以下の取引を現金出納帳に記入してください。\n4月1日 商品100,000円を現金で仕入れた。\n4月3日 売上200,000円を現金で受け取った。\n4月1日の現金残高は50,000円でした。',
-      explanation: '現金出納帳では、期首残高50,000円から仕入で100,000円減少（残高-50,000円）、その後売上で200,000円増加して最終残高150,000円となります。',
-      difficulty: 2,
-    },
-  ],
-  trial_balance: [
-    {
-      id: 'Q_T_001',
-      category_id: 'trial_balance',
-      question_text: '以下の残高から試算表を作成してください。\n現金: 100,000円\n売掛金: 200,000円\n商品: 150,000円\n買掛金: 80,000円\n資本金: 370,000円\n\n借方合計を求めてください。',
-      explanation: '借方科目（現金100,000円 + 売掛金200,000円 + 商品150,000円）の合計は450,000円です。試算表では借方合計と貸方合計が一致する必要があります。',
-      difficulty: 2,
-    },
-  ],
-};
+// 以前のハードコーディングされたサンプルデータは削除
+// 現在は問題画面から実際の問題配列が渡される
 
 export function useQuestionNavigation({
   category,
   questions = [],
   initialQuestionId,
 }: UseQuestionNavigationProps): UseQuestionNavigationReturn {
-  // 問題リストの取得（サンプルデータまたは渡された問題）
-  const questionList = questions.length > 0 ? questions : (SAMPLE_QUESTIONS[category] || []);
+  // 問題リストの取得（渡された問題を使用）
+  const questionList = questions;
   
   const [currentIndex, setCurrentIndex] = useState(0);
 

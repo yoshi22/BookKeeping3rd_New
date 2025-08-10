@@ -1,26 +1,46 @@
 /**
  * 統一タイポグラフィコンポーネント
  * 簿記3級問題集アプリ - Step 5.1: UIコンポーネント改善
- * 
+ *
  * レスポンシブ・アクセシブル・テーマ対応のテキスト
  */
 
-import React from 'react';
-import { Text, TextProps, TextStyle } from 'react-native';
-import { useTheme, useThemedStyles } from '../../context/ThemeContext';
+import React from "react";
+import { Text, TextProps, TextStyle } from "react-native";
+import { useTheme, useThemedStyles } from "../../context/ThemeContext";
 
-export type TypographyVariant = 
-  | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-  | 'body1' | 'body2' | 'caption' | 'subtitle1' | 'subtitle2'
-  | 'button' | 'buttonLarge'
-  | 'numeric' | 'numericLarge'
-  | 'question' | 'questionTitle' | 'explanation'
-  | 'error' | 'warning';
+export type TypographyVariant =
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "body1"
+  | "body2"
+  | "caption"
+  | "subtitle1"
+  | "subtitle2"
+  | "button"
+  | "buttonLarge"
+  | "numeric"
+  | "numericLarge"
+  | "question"
+  | "questionTitle"
+  | "explanation"
+  | "error"
+  | "warning";
 
-export type TextAlign = 'left' | 'center' | 'right' | 'justify';
-export type TextColor = 'primary' | 'secondary' | 'disabled' | 'success' | 'warning' | 'error';
+export type TextAlign = "left" | "center" | "right" | "justify";
+export type TextColor =
+  | "primary"
+  | "secondary"
+  | "disabled"
+  | "success"
+  | "warning"
+  | "error";
 
-interface TypographyProps extends Omit<TextProps, 'style'> {
+interface TypographyProps extends Omit<TextProps, "style"> {
   variant?: TypographyVariant;
   color?: TextColor;
   align?: TextAlign;
@@ -29,9 +49,9 @@ interface TypographyProps extends Omit<TextProps, 'style'> {
 }
 
 export function Typography({
-  variant = 'body1',
-  color = 'primary',
-  align = 'left',
+  variant = "body1",
+  color = "primary",
+  align = "left",
   style,
   children,
   ...props
@@ -59,12 +79,12 @@ const createStyles = (theme: any) => {
   const alignStyles: Record<string, TextStyle> = {};
 
   // バリアントスタイルの生成
-  Object.entries(theme.typography).forEach(([key, value]) => {
+  Object.entries(theme.typography).forEach(([key, value]: [string, any]) => {
     variantStyles[`variant_${key}`] = {
-      fontSize: value.fontSize,
-      lineHeight: value.lineHeight,
-      fontWeight: value.fontWeight,
-      letterSpacing: value.letterSpacing,
+      fontSize: value?.fontSize,
+      lineHeight: value?.lineHeight,
+      fontWeight: value?.fontWeight,
+      letterSpacing: value?.letterSpacing,
     };
   });
 
@@ -77,10 +97,10 @@ const createStyles = (theme: any) => {
   colorStyles.color_error = { color: theme.colors.error };
 
   // 配置スタイルの生成
-  alignStyles.align_left = { textAlign: 'left' };
-  alignStyles.align_center = { textAlign: 'center' };
-  alignStyles.align_right = { textAlign: 'right' };
-  alignStyles.align_justify = { textAlign: 'justify' };
+  alignStyles.align_left = { textAlign: "left" };
+  alignStyles.align_center = { textAlign: "center" };
+  alignStyles.align_right = { textAlign: "right" };
+  alignStyles.align_justify = { textAlign: "justify" };
 
   return {
     ...variantStyles,
@@ -92,19 +112,19 @@ const createStyles = (theme: any) => {
 /**
  * 見出しコンポーネント
  */
-interface HeadingProps extends Omit<TypographyProps, 'variant'> {
+interface HeadingProps extends Omit<TypographyProps, "variant"> {
   level: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 export function Heading({ level, ...props }: HeadingProps) {
   const variant = `h${level}` as TypographyVariant;
-  
+
   return (
     <Typography
       variant={variant}
       accessible={true}
       accessibilityRole="header"
-      accessibilityLevel={level}
+      accessibilityValue={{ text: `見出し${level}` }}
       {...props}
     />
   );
@@ -113,33 +133,27 @@ export function Heading({ level, ...props }: HeadingProps) {
 /**
  * 本文コンポーネント
  */
-interface BodyTextProps extends Omit<TypographyProps, 'variant'> {
-  size?: 'small' | 'medium';
+interface BodyTextProps extends Omit<TypographyProps, "variant"> {
+  size?: "small" | "medium";
 }
 
-export function BodyText({ size = 'medium', ...props }: BodyTextProps) {
-  const variant = size === 'small' ? 'body2' : 'body1';
-  
+export function BodyText({ size = "medium", ...props }: BodyTextProps) {
+  const variant = size === "small" ? "body2" : "body1";
+
   return <Typography variant={variant} {...props} />;
 }
 
 /**
  * キャプションコンポーネント
  */
-export function Caption(props: Omit<TypographyProps, 'variant'>) {
-  return (
-    <Typography
-      variant="caption"
-      color="secondary"
-      {...props}
-    />
-  );
+export function Caption(props: Omit<TypographyProps, "variant">) {
+  return <Typography variant="caption" color="secondary" {...props} />;
 }
 
 /**
  * エラーテキストコンポーネント
  */
-export function ErrorText(props: Omit<TypographyProps, 'variant' | 'color'>) {
+export function ErrorText(props: Omit<TypographyProps, "variant" | "color">) {
   return (
     <Typography
       variant="error"
@@ -154,7 +168,7 @@ export function ErrorText(props: Omit<TypographyProps, 'variant' | 'color'>) {
 /**
  * 警告テキストコンポーネント
  */
-export function WarningText(props: Omit<TypographyProps, 'variant' | 'color'>) {
+export function WarningText(props: Omit<TypographyProps, "variant" | "color">) {
   return (
     <Typography
       variant="warning"
@@ -171,15 +185,15 @@ export function WarningText(props: Omit<TypographyProps, 'variant' | 'color'>) {
  */
 
 // 勘定科目表示
-interface AccountNameProps extends Omit<TypographyProps, 'variant'> {
+interface AccountNameProps extends Omit<TypographyProps, "variant"> {
   account: string;
 }
 
 export function AccountName({ account, ...props }: AccountNameProps) {
   const { theme } = useTheme();
-  
+
   const accountStyle = {
-    fontWeight: '600' as const,
+    fontWeight: "600" as const,
     color: theme.colors.primary,
     backgroundColor: theme.colors.surface,
     paddingHorizontal: theme.spacing.sm,
@@ -201,22 +215,22 @@ export function AccountName({ account, ...props }: AccountNameProps) {
 }
 
 // 金額表示
-interface AmountProps extends Omit<TypographyProps, 'variant'> {
+interface AmountProps extends Omit<TypographyProps, "variant"> {
   amount: number;
   currency?: string;
 }
 
-export function Amount({ amount, currency = '円', ...props }: AmountProps) {
+export function Amount({ amount, currency = "円", ...props }: AmountProps) {
   const { theme } = useTheme();
-  
+
   const formatAmount = (value: number) => {
-    return new Intl.NumberFormat('ja-JP').format(value);
+    return new Intl.NumberFormat("ja-JP").format(value);
   };
 
   const amountStyle = {
-    fontWeight: '700' as const,
+    fontWeight: "700" as const,
     color: theme.colors.primary,
-    fontVariant: ['tabular-nums'] as any,
+    fontVariant: ["tabular-nums"] as any,
   };
 
   return (
@@ -227,21 +241,27 @@ export function Amount({ amount, currency = '円', ...props }: AmountProps) {
       accessibilityLabel={`金額: ${formatAmount(amount)}${currency}`}
       {...props}
     >
-      {formatAmount(amount)}{currency}
+      {formatAmount(amount)}
+      {currency}
     </Typography>
   );
 }
 
 // スコア表示
-interface ScoreProps extends Omit<TypographyProps, 'variant'> {
+interface ScoreProps extends Omit<TypographyProps, "variant"> {
   score: number;
   maxScore: number;
   showPercentage?: boolean;
 }
 
-export function Score({ score, maxScore, showPercentage = true, ...props }: ScoreProps) {
+export function Score({
+  score,
+  maxScore,
+  showPercentage = true,
+  ...props
+}: ScoreProps) {
   const { theme } = useTheme();
-  
+
   const percentage = Math.round((score / maxScore) * 100);
   const getScoreColor = () => {
     if (percentage >= 80) return theme.colors.success;
@@ -251,10 +271,12 @@ export function Score({ score, maxScore, showPercentage = true, ...props }: Scor
 
   const scoreStyle = {
     color: getScoreColor(),
-    fontWeight: '800' as const,
+    fontWeight: "800" as const,
   };
 
-  const displayText = showPercentage ? `${score}点 (${percentage}%)` : `${score}/${maxScore}`;
+  const displayText = showPercentage
+    ? `${score}点 (${percentage}%)`
+    : `${score}/${maxScore}`;
 
   return (
     <Typography
@@ -270,35 +292,35 @@ export function Score({ score, maxScore, showPercentage = true, ...props }: Scor
 }
 
 // タイマー表示
-interface TimerProps extends Omit<TypographyProps, 'variant'> {
+interface TimerProps extends Omit<TypographyProps, "variant"> {
   seconds: number;
-  format?: 'mm:ss' | 'hh:mm:ss';
+  format?: "mm:ss" | "hh:mm:ss";
 }
 
-export function Timer({ seconds, format = 'mm:ss', ...props }: TimerProps) {
+export function Timer({ seconds, format = "mm:ss", ...props }: TimerProps) {
   const { theme } = useTheme();
-  
+
   const formatTime = (totalSeconds: number) => {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const secs = totalSeconds % 60;
 
-    if (format === 'hh:mm:ss') {
-      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    if (format === "hh:mm:ss") {
+      return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
     }
-    return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
   const getTimerColor = () => {
-    if (seconds <= 60) return theme.colors.error;    // 1分以下は赤
+    if (seconds <= 60) return theme.colors.error; // 1分以下は赤
     if (seconds <= 300) return theme.colors.warning; // 5分以下は黄
     return theme.colors.text;
   };
 
   const timerStyle = {
     color: getTimerColor(),
-    fontWeight: '700' as const,
-    fontVariant: ['tabular-nums'] as any,
+    fontWeight: "700" as const,
+    fontVariant: ["tabular-nums"] as any,
   };
 
   return (
@@ -315,13 +337,16 @@ export function Timer({ seconds, format = 'mm:ss', ...props }: TimerProps) {
 }
 
 // 進捗パーセンテージ表示
-interface ProgressPercentProps extends Omit<TypographyProps, 'variant'> {
+interface ProgressPercentProps extends Omit<TypographyProps, "variant"> {
   percentage: number;
 }
 
-export function ProgressPercent({ percentage, ...props }: ProgressPercentProps) {
+export function ProgressPercent({
+  percentage,
+  ...props
+}: ProgressPercentProps) {
   const { theme } = useTheme();
-  
+
   const getProgressColor = () => {
     if (percentage >= 100) return theme.colors.success;
     if (percentage >= 75) return theme.learningColors.completed;
@@ -331,7 +356,7 @@ export function ProgressPercent({ percentage, ...props }: ProgressPercentProps) 
 
   const progressStyle = {
     color: getProgressColor(),
-    fontWeight: '600' as const,
+    fontWeight: "600" as const,
   };
 
   return (

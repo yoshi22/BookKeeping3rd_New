@@ -6,6 +6,10 @@
 import {
   QuestionCategory,
   QuestionDifficulty,
+  QuestionSubcategory,
+  JournalSubcategory,
+  LedgerSubcategory,
+  TrialBalanceSubcategory,
   SessionType,
   ReviewStatus,
   CBTAnswerData,
@@ -17,6 +21,10 @@ import {
 export type {
   QuestionCategory,
   QuestionDifficulty,
+  QuestionSubcategory,
+  JournalSubcategory,
+  LedgerSubcategory,
+  TrialBalanceSubcategory,
   SessionType,
   ReviewStatus,
   CBTAnswerData,
@@ -32,12 +40,19 @@ export type {
 export interface Question {
   id: string; // Q_J_001〜Q_J_250(仕訳), Q_L_001〜Q_L_040(帳簿), Q_T_001〜Q_T_012(試算表)
   category_id: QuestionCategory;
+  subcategory?: QuestionSubcategory; // 詳細カテゴリ（現金・預金取引など）
   question_text: string;
   answer_template_json: string; // CBT解答テンプレート（プルダウン項目・入力欄定義）
   correct_answer_json: string; // 正解データ（勘定科目・金額のJSON）
   explanation: string;
   difficulty: QuestionDifficulty;
-  tags_json?: string; // タグ配列JSON（オプション）
+  tags_json?: string; // タグ配列JSON（現金過不足、小口現金等の詳細パターン）
+  
+  // problemsStrategy.mdに基づく順序制御
+  section_number: 1 | 2 | 3; // 第1問/第2問/第3問
+  question_order: number;    // 各セクション内での出題順序
+  pattern_type?: string;     // パターン識別（現金過不足、商品売買基本等）
+  
   created_at: string;
   updated_at: string;
 }

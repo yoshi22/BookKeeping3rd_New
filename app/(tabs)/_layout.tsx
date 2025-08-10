@@ -99,6 +99,16 @@ function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "設定",
+          headerShown: false, // ヘッダー非表示
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="settings" color={color} focused={focused} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
@@ -111,6 +121,7 @@ function TabBarIcon(props: { name: string; color: string; focused: boolean }) {
     book: "📚",
     refresh: "🔄",
     "bar-chart": "📊",
+    settings: "⚙️",
   };
 
   return (

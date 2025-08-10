@@ -36,3 +36,19 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+# Test coverage
+coverage/
+*.lcov
+
+# Build test directories  
+build-test/
+
+# IDE
+.idea/
+.vscode/
+
+# Temporary files
+*.tmp
+*.log
+test-questions.db

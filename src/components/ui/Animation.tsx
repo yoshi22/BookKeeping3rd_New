@@ -1,19 +1,14 @@
 /**
  * アニメーションコンポーネント
  * 簿記3級問題集アプリ - Step 5.1: UIコンポーネント改善
- * 
+ *
  * スムーズなアニメーションとトランジション
  */
 
-import React, { useEffect, useRef } from 'react';
-import {
-  Animated,
-  ViewStyle,
-  Easing,
-  Dimensions,
-} from 'react-native';
+import React, { useEffect, useRef } from "react";
+import { Animated, ViewStyle, Easing, Dimensions } from "react-native";
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 // アニメーション設定
 export const animationConfig = {
@@ -40,11 +35,11 @@ interface FadeInProps {
   style?: ViewStyle;
 }
 
-export function FadeIn({ 
-  children, 
-  duration = animationConfig.duration.normal, 
+export function FadeIn({
+  children,
+  duration = animationConfig.duration.normal,
   delay = 0,
-  style 
+  style,
 }: FadeInProps) {
   const opacity = useRef(new Animated.Value(0)).current;
 
@@ -58,11 +53,7 @@ export function FadeIn({
     }).start();
   }, [opacity, duration, delay]);
 
-  return (
-    <Animated.View style={[style, { opacity }]}>
-      {children}
-    </Animated.View>
-  );
+  return <Animated.View style={[style, { opacity }]}>{children}</Animated.View>;
 }
 
 /**
@@ -70,18 +61,18 @@ export function FadeIn({
  */
 interface SlideInProps {
   children: React.ReactNode;
-  direction: 'left' | 'right' | 'up' | 'down';
+  direction: "left" | "right" | "up" | "down";
   duration?: number;
   delay?: number;
   style?: ViewStyle;
 }
 
-export function SlideIn({ 
-  children, 
-  direction, 
+export function SlideIn({
+  children,
+  direction,
   duration = animationConfig.duration.normal,
   delay = 0,
-  style 
+  style,
 }: SlideInProps) {
   const translateX = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(0)).current;
@@ -90,16 +81,16 @@ export function SlideIn({
     // 初期位置を設定
     const initialOffset = 50;
     switch (direction) {
-      case 'left':
+      case "left":
         translateX.setValue(-initialOffset);
         break;
-      case 'right':
+      case "right":
         translateX.setValue(initialOffset);
         break;
-      case 'up':
+      case "up":
         translateY.setValue(-initialOffset);
         break;
-      case 'down':
+      case "down":
         translateY.setValue(initialOffset);
         break;
     }
@@ -124,7 +115,9 @@ export function SlideIn({
   }, [translateX, translateY, direction, duration, delay]);
 
   return (
-    <Animated.View style={[style, { transform: [{ translateX }, { translateY }] }]}>
+    <Animated.View
+      style={[style, { transform: [{ translateX }, { translateY }] }]}
+    >
       {children}
     </Animated.View>
   );
@@ -142,13 +135,13 @@ interface ScaleInProps {
   style?: ViewStyle;
 }
 
-export function ScaleIn({ 
-  children, 
+export function ScaleIn({
+  children,
   duration = animationConfig.duration.normal,
   delay = 0,
   fromScale = 0.8,
   toScale = 1,
-  style 
+  style,
 }: ScaleInProps) {
   const scale = useRef(new Animated.Value(fromScale)).current;
 
@@ -175,42 +168,47 @@ export function ScaleIn({
 interface PulseProps {
   children: React.ReactNode;
   duration?: number;
+  delay?: number;
   minScale?: number;
   maxScale?: number;
   style?: ViewStyle;
 }
 
-export function Pulse({ 
-  children, 
+export function Pulse({
+  children,
   duration = 1000,
+  delay = 0,
   minScale = 0.95,
   maxScale = 1.05,
-  style 
+  style,
 }: PulseProps) {
   const scale = useRef(new Animated.Value(minScale)).current;
 
   useEffect(() => {
-    const pulseAnimation = Animated.loop(
-      Animated.sequence([
-        Animated.timing(scale, {
-          toValue: maxScale,
-          duration: duration / 2,
-          easing: animationConfig.easing.easeInOut,
-          useNativeDriver: true,
-        }),
-        Animated.timing(scale, {
-          toValue: minScale,
-          duration: duration / 2,
-          easing: animationConfig.easing.easeInOut,
-          useNativeDriver: true,
-        }),
-      ])
-    );
+    const pulseAnimation = Animated.sequence([
+      Animated.delay(delay),
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(scale, {
+            toValue: maxScale,
+            duration: duration / 2,
+            easing: animationConfig.easing.easeInOut,
+            useNativeDriver: true,
+          }),
+          Animated.timing(scale, {
+            toValue: minScale,
+            duration: duration / 2,
+            easing: animationConfig.easing.easeInOut,
+            useNativeDriver: true,
+          }),
+        ]),
+      ),
+    ]);
 
     pulseAnimation.start();
 
     return () => pulseAnimation.stop();
-  }, [scale, duration, minScale, maxScale]);
+  }, [scale, duration, delay, minScale, maxScale]);
 
   return (
     <Animated.View style={[style, { transform: [{ scale }] }]}>
@@ -230,12 +228,12 @@ interface RotateProps {
   style?: ViewStyle;
 }
 
-export function Rotate({ 
-  children, 
+export function Rotate({
+  children,
   duration = 1000,
   degrees = 360,
   continuous = false,
-  style 
+  style,
 }: RotateProps) {
   const rotation = useRef(new Animated.Value(0)).current;
 
@@ -247,7 +245,7 @@ export function Rotate({
             duration,
             easing: Easing.linear,
             useNativeDriver: true,
-          })
+          }),
         )
       : Animated.timing(rotation, {
           toValue: 1,
@@ -263,11 +261,13 @@ export function Rotate({
 
   const rotateInterpolation = rotation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0deg', `${degrees}deg`],
+    outputRange: ["0deg", `${degrees}deg`],
   });
 
   return (
-    <Animated.View style={[style, { transform: [{ rotate: rotateInterpolation }] }]}>
+    <Animated.View
+      style={[style, { transform: [{ rotate: rotateInterpolation }] }]}
+    >
       {children}
     </Animated.View>
   );
@@ -285,13 +285,13 @@ interface ProgressBarProps {
   style?: ViewStyle;
 }
 
-export function AnimatedProgressBar({ 
-  progress, 
+export function AnimatedProgressBar({
+  progress,
   duration = animationConfig.duration.slow,
   height = 8,
-  backgroundColor = '#E0E0E0',
-  progressColor = '#4CAF50',
-  style 
+  backgroundColor = "#E0E0E0",
+  progressColor = "#4CAF50",
+  style,
 }: ProgressBarProps) {
   const progressValue = useRef(new Animated.Value(0)).current;
 
@@ -306,20 +306,20 @@ export function AnimatedProgressBar({
 
   const widthInterpolation = progressValue.interpolate({
     inputRange: [0, 100],
-    outputRange: ['0%', '100%'],
-    extrapolate: 'clamp',
+    outputRange: ["0%", "100%"],
+    extrapolate: "clamp",
   });
 
   return (
-    <Animated.View 
+    <Animated.View
       style={[
         {
           height,
           backgroundColor,
           borderRadius: height / 2,
-          overflow: 'hidden',
+          overflow: "hidden",
         },
-        style
+        style,
       ]}
       accessible={true}
       accessibilityRole="progressbar"
@@ -327,7 +327,7 @@ export function AnimatedProgressBar({
     >
       <Animated.View
         style={{
-          height: '100%',
+          height: "100%",
           width: widthInterpolation,
           backgroundColor: progressColor,
           borderRadius: height / 2,
@@ -349,13 +349,13 @@ interface CounterProps {
   textStyle?: any;
 }
 
-export function AnimatedCounter({ 
-  from, 
-  to, 
+export function AnimatedCounter({
+  from,
+  to,
   duration = animationConfig.duration.slow,
   decimals = 0,
   style,
-  textStyle 
+  textStyle,
 }: CounterProps) {
   const animatedValue = useRef(new Animated.Value(from)).current;
   const [displayValue, setDisplayValue] = React.useState(from);
@@ -379,9 +379,7 @@ export function AnimatedCounter({
 
   return (
     <Animated.View style={style}>
-      <Animated.Text style={textStyle}>
-        {displayValue}
-      </Animated.Text>
+      <Animated.Text style={textStyle}>{displayValue}</Animated.Text>
     </Animated.View>
   );
 }
@@ -391,22 +389,24 @@ export function AnimatedCounter({
  */
 interface SlideTransitionProps {
   children: React.ReactNode;
-  direction: 'horizontal' | 'vertical';
+  direction: "horizontal" | "vertical";
   duration?: number;
   style?: ViewStyle;
 }
 
-export function SlideTransition({ 
-  children, 
+export function SlideTransition({
+  children,
   direction,
   duration = animationConfig.duration.normal,
-  style 
+  style,
 }: SlideTransitionProps) {
   const slideValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    slideValue.setValue(direction === 'horizontal' ? screenWidth : screenHeight);
-    
+    slideValue.setValue(
+      direction === "horizontal" ? screenWidth : screenHeight,
+    );
+
     Animated.timing(slideValue, {
       toValue: 0,
       duration,
@@ -415,14 +415,13 @@ export function SlideTransition({
     }).start();
   }, [slideValue, direction, duration]);
 
-  const transformStyle = direction === 'horizontal' 
-    ? { transform: [{ translateX: slideValue }] }
-    : { transform: [{ translateY: slideValue }] };
+  const transformStyle =
+    direction === "horizontal"
+      ? { transform: [{ translateX: slideValue }] }
+      : { transform: [{ translateY: slideValue }] };
 
   return (
-    <Animated.View style={[style, transformStyle]}>
-      {children}
-    </Animated.View>
+    <Animated.View style={[style, transformStyle]}>{children}</Animated.View>
   );
 }
 
@@ -436,11 +435,11 @@ interface FlipCardProps {
   style?: ViewStyle;
 }
 
-export function FlipCard({ 
-  children, 
-  isFlipped, 
+export function FlipCard({
+  children,
+  isFlipped,
   duration = animationConfig.duration.normal,
-  style 
+  style,
 }: FlipCardProps) {
   const flipAnimation = useRef(new Animated.Value(0)).current;
 
@@ -455,7 +454,7 @@ export function FlipCard({
 
   const rotateY = flipAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0deg', '180deg'],
+    outputRange: ["0deg", "180deg"],
   });
 
   return (
@@ -470,9 +469,17 @@ export function FlipCard({
  */
 
 // 問題切り替えアニメーション
-export function QuestionTransition({ children, ...props }: SlideInProps) {
+export function QuestionTransition({
+  children,
+  direction = "right",
+  ...props
+}: SlideInProps) {
   return (
-    <SlideIn direction="right" duration={animationConfig.duration.fast} {...props}>
+    <SlideIn
+      direction={direction}
+      duration={animationConfig.duration.fast}
+      {...props}
+    >
       {children}
     </SlideIn>
   );
@@ -485,12 +492,16 @@ interface AnswerRevealProps {
   style?: ViewStyle;
 }
 
-export function AnswerReveal({ children, isCorrect, style }: AnswerRevealProps) {
+export function AnswerReveal({
+  children,
+  isCorrect,
+  style,
+}: AnswerRevealProps) {
   return (
     <FadeIn duration={animationConfig.duration.normal}>
-      <ScaleIn 
-        fromScale={0.9} 
-        toScale={1} 
+      <ScaleIn
+        fromScale={0.9}
+        toScale={1}
         duration={animationConfig.duration.normal}
         style={style}
       >

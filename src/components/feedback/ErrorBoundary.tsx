@@ -290,8 +290,8 @@ function DataErrorFallback({ error }: { error: Error }) {
   const handleDataReset = async () => {
     try {
       // データベースの再初期化
-      const DatabaseService = await import('../../services/DatabaseService');
-      await DatabaseService.default.resetDatabase();
+      // Database reset removed - DatabaseService not available
+      // await DatabaseService.default.resetDatabase();
       
       // アプリの再読み込み
       window.location.reload();

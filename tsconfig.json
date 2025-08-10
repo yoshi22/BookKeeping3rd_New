@@ -19,5 +19,13 @@
       "@/types/*": ["./src/types/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": [
+    "node_modules",
+    "backup/**/*",
+    "coverage/**/*",
+    "build-test/**/*",
+    "scripts/dev-tools/**/*",
+    "scripts/data-tools/**/*"
+  ]
 }

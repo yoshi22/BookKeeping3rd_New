@@ -52,6 +52,28 @@ export interface Database {
 // 問題カテゴリ型（新コンテンツ構成対応）
 export type QuestionCategory = 'journal' | 'ledger' | 'trial_balance';
 
+// problemsStrategy.mdに基づく詳細分類
+export type JournalSubcategory = 
+  | 'cash_deposit'      // 現金・預金取引
+  | 'merchandise_trade' // 商品売買取引
+  | 'receivables_debts' // 債権・債務
+  | 'salary_tax'        // 給与・税金
+  | 'fixed_assets'      // 固定資産
+  | 'year_end_adj';     // 決算整理
+
+export type LedgerSubcategory = 
+  | 'account_posting'   // 勘定記入問題
+  | 'subsidiary_books'  // 補助簿記入問題
+  | 'voucher_entry'     // 伝票記入問題
+  | 'theory_selection'; // 理論・選択問題
+
+export type TrialBalanceSubcategory = 
+  | 'financial_statements' // 財務諸表作成
+  | 'worksheet'            // 精算表作成
+  | 'trial_balance';       // 試算表作成
+
+export type QuestionSubcategory = JournalSubcategory | LedgerSubcategory | TrialBalanceSubcategory;
+
 // CBT解答形式型
 export type CBTAnswerFormat = 'dropdown_input' | 'number_input' | 'text_input';
 

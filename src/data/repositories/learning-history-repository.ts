@@ -441,6 +441,94 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
   }
 
   /**
+   * ユニークな問題数を取得（カテゴリ別）
+   */
+  public async getUniqueAnsweredQuestions(options: {
+    category?: QuestionCategory;
+  } = {}): Promise<{
+    totalUniqueQuestions: number;
+    correctUniqueQuestions: number;
+    categoryBreakdown: {
+      [key in QuestionCategory]: {
+        totalUnique: number;
+        correctUnique: number;
+      };
+    };
+  }> {
+    try {
+      let whereClause = "";
+      const params: any[] = [];
+
+      // カテゴリフィルター
+      if (options.category) {
+        whereClause = "WHERE q.category_id = ?";
+        params.push(options.category);
+      }
+
+      // 全体のユニーク問題数
+      // 注意：正解数は重複を除いた一意の問題のうち、少なくとも1回正解した問題数
+      const overallQuery = `
+        SELECT 
+          COUNT(DISTINCT lh.question_id) as totalUniqueQuestions,
+          COUNT(DISTINCT CASE WHEN EXISTS(
+            SELECT 1 FROM learning_history lh2 
+            WHERE lh2.question_id = lh.question_id AND lh2.is_correct = 1
+          ) THEN lh.question_id END) as correctUniqueQuestions
+        FROM learning_history lh
+        INNER JOIN questions q ON lh.question_id = q.id
+        ${whereClause}
+      `;
+
+      const overallResult = await this.executeQuery<any>(overallQuery, params);
+      const overall = overallResult.rows[0] || {};
+
+      // カテゴリ別ユニーク問題数
+      const categoryQuery = `
+        SELECT 
+          q.category_id,
+          COUNT(DISTINCT lh.question_id) as totalUnique,
+          COUNT(DISTINCT CASE WHEN EXISTS(
+            SELECT 1 FROM learning_history lh2 
+            WHERE lh2.question_id = lh.question_id AND lh2.is_correct = 1
+          ) THEN lh.question_id END) as correctUnique
+        FROM learning_history lh
+        INNER JOIN questions q ON lh.question_id = q.id
+        GROUP BY q.category_id
+      `;
+
+      const categoryResult = await this.executeQuery<any>(categoryQuery, []);
+      const categoryBreakdown = {
+        journal: { totalUnique: 0, correctUnique: 0 },
+        ledger: { totalUnique: 0, correctUnique: 0 },
+        trial_balance: { totalUnique: 0, correctUnique: 0 },
+      };
+
+      categoryResult.rows.forEach((row) => {
+        const category = row.category_id as QuestionCategory;
+        if (categoryBreakdown[category]) {
+          categoryBreakdown[category] = {
+            totalUnique: row.totalUnique || 0,
+            correctUnique: row.correctUnique || 0,
+          };
+        }
+      });
+
+      const result = {
+        totalUniqueQuestions: overall.totalUniqueQuestions || 0,
+        correctUniqueQuestions: overall.correctUniqueQuestions || 0,
+        categoryBreakdown,
+      };
+
+      console.log('[LearningHistoryRepository] getUniqueAnsweredQuestions result:', result);
+
+      return result;
+    } catch (error) {
+      console.error("[LearningHistoryRepository] getUniqueAnsweredQuestions エラー:", error);
+      throw error;
+    }
+  }
+
+  /**
    * 間違い問題抽出
    */
   public async findIncorrectQuestions(

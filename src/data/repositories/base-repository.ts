@@ -264,9 +264,9 @@ export abstract class BaseRepository<T> {
    */
   public async upsert(data: T): Promise<T> {
     try {
-      const columns = Object.keys(data);
+      const columns = Object.keys(data as Record<string, any>);
       const placeholders = columns.map(() => "?").join(", ");
-      const values = Object.values(data);
+      const values = Object.values(data as Record<string, any>);
 
       const sql = `INSERT OR REPLACE INTO ${this.tableName} (${columns.join(", ")}) VALUES (${placeholders})`;
       const result = await databaseService.executeSql(sql, values);
@@ -299,7 +299,7 @@ export abstract class BaseRepository<T> {
       const results: T[] = [];
 
       // トランザクション内でバッチ処理
-      await databaseService.executeTransaction(async (tx) => {
+      await databaseService.executeTransaction(async (db) => {
         for (const data of dataList) {
           const columns = Object.keys(data);
           const placeholders = columns.map(() => "?").join(", ");
@@ -307,17 +307,8 @@ export abstract class BaseRepository<T> {
 
           const sql = `INSERT INTO ${this.tableName} (${columns.join(", ")}) VALUES (${placeholders})`;
 
-          await new Promise<void>((resolve, reject) => {
-            tx.executeSql(
-              sql,
-              values,
-              () => resolve(),
-              (_, error) => {
-                reject(error);
-                return false;
-              },
-            );
-          });
+          // SQLite同期メソッドを使用
+          db.runSync(sql, values);
         }
       });
 
@@ -368,7 +359,7 @@ export abstract class BaseRepository<T> {
     try {
       let result: R;
 
-      await databaseService.executeTransaction(async () => {
+      await databaseService.executeTransaction(async (db) => {
         result = await operation();
       });
 

@@ -107,15 +107,18 @@ export class MockExamService {
       const sectionProgress = {
         section1: {
           completed: 0,
-          total: examQuestions.filter((q) => q.section_number === 1).length,
+          total: examQuestions.filter((q: any) => q.section_number === 1)
+            .length,
         },
         section2: {
           completed: 0,
-          total: examQuestions.filter((q) => q.section_number === 2).length,
+          total: examQuestions.filter((q: any) => q.section_number === 2)
+            .length,
         },
         section3: {
           completed: 0,
-          total: examQuestions.filter((q) => q.section_number === 3).length,
+          total: examQuestions.filter((q: any) => q.section_number === 3)
+            .length,
         },
       };
 
@@ -265,8 +268,7 @@ export class MockExamService {
       }
 
       // AnswerServiceで正解判定
-      // 解答を検証して採点（isAnswerCorrectメソッドを直接呼び出し）
-      const isCorrect = (this.answerService as any).isAnswerCorrect(
+      const isCorrect = this.answerService.isAnswerCorrect(
         userAnswer,
         question,
       );
@@ -378,20 +380,12 @@ export class MockExamService {
         // 復習アイテムとして追加する（incrementIncorrectCountの代替）
         await this.reviewRepo.create({
           question_id: questionId,
-          priority_level: "high",
-          review_count: 0,
-          last_reviewed_at: undefined,
-          scheduled_for: new Date(),
-          category_id: "mock_exam",
-          difficulty_level: "medium",
-          time_spent_total: 0,
-          correct_streak: 0,
           incorrect_count: 1,
-          is_mastered: false,
-          review_algorithm_data: JSON.stringify({
-            source: "mock_exam",
-            addedAt: new Date().toISOString(),
-          }),
+          consecutive_correct_count: 0,
+          status: "needs_review",
+          priority_score: 80, // 高優先度として設定
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         });
       } catch (error) {
         console.warn(`Failed to add question to review: ${questionId}`, error);

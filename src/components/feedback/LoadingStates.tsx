@@ -1,25 +1,20 @@
 /**
  * ローディング状態コンポーネント
  * 簿記3級問題集アプリ - Step 5.2: UX最適化
- * 
+ *
  * 快適なローディング体験の提供
  */
 
-import React from 'react';
-import {
-  View,
-  ViewStyle,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
-import { useTheme, useThemedStyles } from '../../context/ThemeContext';
-import { Typography } from '../ui/Typography';
-import { Card, CardContent } from '../ui/Card';
-import { Pulse, Rotate, FadeIn, AnimatedProgressBar } from '../ui/Animation';
-import { Container } from '../layout/ResponsiveLayout';
+import React from "react";
+import { View, ViewStyle, ActivityIndicator, StyleSheet } from "react-native";
+import { useTheme, useThemedStyles } from "../../context/ThemeContext";
+import { Typography } from "../ui/Typography";
+import { Card, CardContent } from "../ui/Card";
+import { Pulse, Rotate, FadeIn, AnimatedProgressBar } from "../ui/Animation";
+import { Container } from "../layout/ResponsiveLayout";
 
-export type LoadingSize = 'small' | 'medium' | 'large';
-export type LoadingVariant = 'spinner' | 'dots' | 'progress' | 'skeleton';
+export type LoadingSize = "small" | "medium" | "large";
+export type LoadingVariant = "spinner" | "dots" | "progress" | "skeleton";
 
 interface LoadingProps {
   size?: LoadingSize;
@@ -29,25 +24,25 @@ interface LoadingProps {
   style?: ViewStyle;
 }
 
-export function Loading({ 
-  size = 'medium', 
-  variant = 'spinner',
+export function Loading({
+  size = "medium",
+  variant = "spinner",
   message,
   progress,
-  style 
+  style,
 }: LoadingProps) {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
 
   const renderLoadingIndicator = () => {
     switch (variant) {
-      case 'spinner':
+      case "spinner":
         return <LoadingSpinner size={size} />;
-      case 'dots':
+      case "dots":
         return <LoadingDots size={size} />;
-      case 'progress':
+      case "progress":
         return <LoadingProgress progress={progress || 0} />;
-      case 'skeleton':
+      case "skeleton":
         return <LoadingSkeleton />;
       default:
         return <LoadingSpinner size={size} />;
@@ -59,9 +54,9 @@ export function Loading({
       {renderLoadingIndicator()}
       {message && (
         <FadeIn delay={300}>
-          <Typography 
-            variant="body2" 
-            color="secondary" 
+          <Typography
+            variant="body2"
+            color="secondary"
             align="center"
             style={styles.message}
           >
@@ -82,21 +77,22 @@ interface LoadingSpinnerProps {
 
 function LoadingSpinner({ size }: LoadingSpinnerProps) {
   const { theme } = useTheme();
-  
+
   const getSpinnerSize = () => {
     switch (size) {
-      case 'small': return 20;
-      case 'medium': return 32;
-      case 'large': return 48;
-      default: return 32;
+      case "small":
+        return 20;
+      case "medium":
+        return 32;
+      case "large":
+        return 48;
+      default:
+        return 32;
     }
   };
 
   return (
-    <ActivityIndicator
-      size={getSpinnerSize()}
-      color={theme.colors.primary}
-    />
+    <ActivityIndicator size={getSpinnerSize()} color={theme.colors.primary} />
   );
 }
 
@@ -106,13 +102,17 @@ function LoadingSpinner({ size }: LoadingSpinnerProps) {
 function LoadingDots({ size }: LoadingSpinnerProps) {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
-  
+
   const getDotSize = () => {
     switch (size) {
-      case 'small': return 6;
-      case 'medium': return 8;
-      case 'large': return 12;
-      default: return 8;
+      case "small":
+        return 6;
+      case "medium":
+        return 8;
+      case "large":
+        return 12;
+      default:
+        return 8;
     }
   };
 
@@ -126,15 +126,13 @@ function LoadingDots({ size }: LoadingSpinnerProps) {
           duration={800}
           minScale={0.6}
           maxScale={1}
-          style={[
-            styles.dot,
-            { 
-              width: dotSize, 
-              height: dotSize, 
-              backgroundColor: theme.colors.primary,
-              marginHorizontal: dotSize / 2,
-            }
-          ]}
+          style={{
+            ...styles.dot,
+            width: dotSize,
+            height: dotSize,
+            backgroundColor: theme.colors.primary,
+            marginHorizontal: dotSize / 2,
+          }}
         >
           <View />
         </Pulse>
@@ -181,13 +179,13 @@ function LoadingSkeleton() {
     <View style={styles.skeletonContainer}>
       {[1, 2, 3].map((index) => (
         <Pulse key={index} duration={1200} minScale={0.95} maxScale={1}>
-          <View 
+          <View
             style={[
               styles.skeletonItem,
               { backgroundColor: theme.colors.surface },
-              index === 1 && { width: '80%' },
-              index === 2 && { width: '60%' },
-            ]} 
+              index === 1 && { width: "80%" },
+              index === 2 && { width: "60%" },
+            ]}
           />
         </Pulse>
       ))}
@@ -203,7 +201,10 @@ interface FullScreenLoadingProps {
   variant?: LoadingVariant;
 }
 
-export function FullScreenLoading({ message, variant = 'spinner' }: FullScreenLoadingProps) {
+export function FullScreenLoading({
+  message,
+  variant = "spinner",
+}: FullScreenLoadingProps) {
   const styles = useThemedStyles(createStyles);
 
   return (
@@ -211,11 +212,7 @@ export function FullScreenLoading({ message, variant = 'spinner' }: FullScreenLo
       <Container style={styles.fullScreenContent}>
         <Card variant="elevated" style={styles.fullScreenCard}>
           <CardContent>
-            <Loading 
-              variant={variant}
-              size="large"
-              message={message}
-            />
+            <Loading variant={variant} size="large" message={message} />
           </CardContent>
         </Card>
       </Container>
@@ -274,9 +271,7 @@ export function ButtonLoading({ isLoading, children }: ButtonLoadingProps) {
         color={theme.colors.background}
         style={styles.buttonSpinner}
       />
-      <View style={styles.buttonContent}>
-        {children}
-      </View>
+      <View style={styles.buttonContent}>{children}</View>
     </View>
   );
 }
@@ -330,22 +325,27 @@ export function QuestionLoading() {
         <CardContent>
           {/* 問題タイトル部分 */}
           <Pulse duration={1200}>
-            <View style={[styles.skeletonItem, { height: 24, marginBottom: theme.spacing.lg }]} />
+            <View
+              style={[
+                styles.skeletonItem,
+                { height: 24, marginBottom: theme.spacing.lg },
+              ]}
+            />
           </Pulse>
 
           {/* 問題文部分 */}
           <View style={styles.questionTextSkeleton}>
             {[1, 2, 3].map((index) => (
               <Pulse key={index} duration={1200} delay={index * 100}>
-                <View 
+                <View
                   style={[
-                    styles.skeletonItem, 
-                    { 
-                      height: 16, 
-                      width: index === 3 ? '60%' : '100%',
-                      marginBottom: theme.spacing.sm 
-                    }
-                  ]} 
+                    styles.skeletonItem,
+                    {
+                      height: 16,
+                      width: index === 3 ? "60%" : "100%",
+                      marginBottom: theme.spacing.sm,
+                    },
+                  ]}
                 />
               </Pulse>
             ))}
@@ -355,9 +355,24 @@ export function QuestionLoading() {
           <View style={styles.optionsSkeleton}>
             {[1, 2, 3, 4].map((index) => (
               <Pulse key={index} duration={1200} delay={index * 150}>
-                <View style={[styles.optionSkeleton, { marginBottom: theme.spacing.md }]}>
-                  <View style={[styles.skeletonItem, { width: 24, height: 24, borderRadius: 12 }]} />
-                  <View style={[styles.skeletonItem, { flex: 1, height: 16, marginLeft: theme.spacing.md }]} />
+                <View
+                  style={[
+                    styles.optionSkeleton,
+                    { marginBottom: theme.spacing.md },
+                  ]}
+                >
+                  <View
+                    style={[
+                      styles.skeletonItem,
+                      { width: 24, height: 24, borderRadius: 12 },
+                    ]}
+                  />
+                  <View
+                    style={[
+                      styles.skeletonItem,
+                      { flex: 1, height: 16, marginLeft: theme.spacing.md },
+                    ]}
+                  />
                 </View>
               </Pulse>
             ))}
@@ -382,10 +397,17 @@ export function StatsLoading() {
         <Card variant="elevated" style={styles.mainStatCard}>
           <CardContent>
             <Pulse duration={1200}>
-              <View style={[styles.skeletonItem, { height: 48, marginBottom: theme.spacing.md }]} />
+              <View
+                style={[
+                  styles.skeletonItem,
+                  { height: 48, marginBottom: theme.spacing.md },
+                ]}
+              />
             </Pulse>
             <Pulse duration={1200} delay={200}>
-              <View style={[styles.skeletonItem, { height: 20, width: '70%' }]} />
+              <View
+                style={[styles.skeletonItem, { height: 20, width: "70%" }]}
+              />
             </Pulse>
           </CardContent>
         </Card>
@@ -397,10 +419,20 @@ export function StatsLoading() {
               <Card variant="outlined" style={styles.subStatCard}>
                 <CardContent>
                   <Pulse duration={1200}>
-                    <View style={[styles.skeletonItem, { height: 32, marginBottom: theme.spacing.sm }]} />
+                    <View
+                      style={[
+                        styles.skeletonItem,
+                        { height: 32, marginBottom: theme.spacing.sm },
+                      ]}
+                    />
                   </Pulse>
                   <Pulse duration={1200} delay={100}>
-                    <View style={[styles.skeletonItem, { height: 16, width: '80%' }]} />
+                    <View
+                      style={[
+                        styles.skeletonItem,
+                        { height: 16, width: "80%" },
+                      ]}
+                    />
                   </Pulse>
                 </CardContent>
               </Card>
@@ -412,146 +444,147 @@ export function StatsLoading() {
   );
 }
 
-const createStyles = (theme: any) => StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: theme.spacing.lg,
-  },
+const createStyles = (theme: any) =>
+  StyleSheet.create({
+    container: {
+      alignItems: "center",
+      justifyContent: "center",
+      padding: theme.spacing.lg,
+    },
 
-  message: {
-    marginTop: theme.spacing.md,
-    maxWidth: 200,
-  },
+    message: {
+      marginTop: theme.spacing.md,
+      maxWidth: 200,
+    },
 
-  // ドットローディング
-  dotsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    // ドットローディング
+    dotsContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+    },
 
-  dot: {
-    borderRadius: 999,
-  },
+    dot: {
+      borderRadius: 999,
+    },
 
-  // プログレスローディング
-  progressContainer: {
-    width: 200,
-    alignItems: 'center',
-  },
+    // プログレスローディング
+    progressContainer: {
+      width: 200,
+      alignItems: "center",
+    },
 
-  progressBar: {
-    width: '100%',
-    marginBottom: theme.spacing.sm,
-  },
+    progressBar: {
+      width: "100%",
+      marginBottom: theme.spacing.sm,
+    },
 
-  progressText: {
-    minWidth: 40,
-  },
+    progressText: {
+      minWidth: 40,
+    },
 
-  // スケルトンローディング
-  skeletonContainer: {
-    width: '100%',
-  },
+    // スケルトンローディング
+    skeletonContainer: {
+      width: "100%",
+    },
 
-  skeletonItem: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.spacing.xs,
-    marginBottom: theme.spacing.sm,
-    height: 20,
-  },
+    skeletonItem: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.spacing.xs,
+      marginBottom: theme.spacing.sm,
+      height: 20,
+    },
 
-  // フルスクリーンローディング
-  fullScreenContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: `${theme.colors.background}CC`,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 9999,
-  },
+    // フルスクリーンローディング
+    fullScreenContainer: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: `${theme.colors.background}CC`,
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 9999,
+    },
 
-  fullScreenContent: {
-    width: '80%',
-    maxWidth: 300,
-  },
+    fullScreenContent: {
+      width: "80%",
+      maxWidth: 300,
+    },
 
-  fullScreenCard: {
-    alignItems: 'center',
-  },
+    fullScreenCard: {
+      alignItems: "center",
+    },
 
-  // インラインローディング
-  inlineContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+    // インラインローディング
+    inlineContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
 
-  inlineSpinner: {
-    marginRight: theme.spacing.sm,
-  },
+    inlineSpinner: {
+      marginRight: theme.spacing.sm,
+    },
 
-  // ボタンローディング
-  buttonLoadingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    // ボタンローディング
+    buttonLoadingContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+    },
 
-  buttonSpinner: {
-    marginRight: theme.spacing.sm,
-  },
+    buttonSpinner: {
+      marginRight: theme.spacing.sm,
+    },
 
-  buttonContent: {
-    opacity: 0.7,
-  },
+    buttonContent: {
+      opacity: 0.7,
+    },
 
-  // カードローディング
-  cardLoading: {
-    marginBottom: theme.spacing.md,
-  },
+    // カードローディング
+    cardLoading: {
+      marginBottom: theme.spacing.md,
+    },
 
-  // リストローディング
-  listContainer: {
-    gap: theme.spacing.md,
-  },
+    // リストローディング
+    listContainer: {
+      gap: theme.spacing.md,
+    },
 
-  // 問題ローディング
-  questionTextSkeleton: {
-    marginBottom: theme.spacing.xl,
-  },
+    // 問題ローディング
+    questionTextSkeleton: {
+      marginBottom: theme.spacing.xl,
+    },
 
-  optionsSkeleton: {
-    marginTop: theme.spacing.lg,
-  },
+    optionsSkeleton: {
+      marginTop: theme.spacing.lg,
+    },
 
-  optionSkeleton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+    optionSkeleton: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
 
-  // 統計ローディング
-  statsContainer: {
-    gap: theme.spacing.lg,
-  },
+    // 統計ローディング
+    statsContainer: {
+      gap: theme.spacing.lg,
+    },
 
-  mainStatCard: {
-    alignItems: 'center',
-  },
+    mainStatCard: {
+      alignItems: "center",
+    },
 
-  subStatsContainer: {
-    flexDirection: 'row',
-    gap: theme.spacing.md,
-  },
+    subStatsContainer: {
+      flexDirection: "row",
+      gap: theme.spacing.md,
+    },
 
-  subStatCard: {
-    flex: 1,
-    alignItems: 'center',
-  },
-});
+    subStatCard: {
+      flex: 1,
+      alignItems: "center",
+    },
+  });
 
 /**
  * ローディング状態管理フック
@@ -567,17 +600,18 @@ export function useLoading(initialState = false) {
     setIsLoading(false);
   }, []);
 
-  const withLoading = React.useCallback(async <T,>(
-    asyncFn: () => Promise<T>
-  ): Promise<T> => {
-    try {
-      startLoading();
-      const result = await asyncFn();
-      return result;
-    } finally {
-      stopLoading();
-    }
-  }, [startLoading, stopLoading]);
+  const withLoading = React.useCallback(
+    async <T,>(asyncFn: () => Promise<T>): Promise<T> => {
+      try {
+        startLoading();
+        const result = await asyncFn();
+        return result;
+      } finally {
+        stopLoading();
+      }
+    },
+    [startLoading, stopLoading],
+  );
 
   return {
     isLoading,

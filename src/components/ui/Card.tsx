@@ -1,22 +1,22 @@
 /**
  * 統一カードコンポーネント
  * 簿記3級問題集アプリ - Step 5.1: UIコンポーネント改善
- * 
+ *
  * レスポンシブ・テーマ対応のカードレイアウト
  */
 
-import React from 'react';
+import React from "react";
 import {
   View,
   ViewStyle,
   StyleSheet,
   TouchableOpacity,
   TouchableOpacityProps,
-} from 'react-native';
-import { useTheme, useThemedStyles } from '../../context/ThemeContext';
+} from "react-native";
+import { useTheme, useThemedStyles } from "../../context/ThemeContext";
 
-export type CardVariant = 'default' | 'elevated' | 'outlined' | 'filled';
-export type CardSize = 'small' | 'medium' | 'large';
+export type CardVariant = "default" | "elevated" | "outlined" | "filled";
+export type CardSize = "small" | "medium" | "large";
 
 interface BaseCardProps {
   children: React.ReactNode;
@@ -29,7 +29,10 @@ interface StaticCardProps extends BaseCardProps {
   onPress?: never;
 }
 
-interface TouchableCardProps extends BaseCardProps, Omit<TouchableOpacityProps, 'style'> {
+interface TouchableCardProps
+  extends Omit<BaseCardProps, "children">,
+    Omit<TouchableOpacityProps, "style" | "children"> {
+  children: React.ReactNode;
   onPress: () => void;
 }
 
@@ -37,8 +40,8 @@ type CardProps = StaticCardProps | TouchableCardProps;
 
 export function Card({
   children,
-  variant = 'default',
-  size = 'medium',
+  variant = "default",
+  size = "medium",
   style,
   onPress,
   ...props
@@ -75,41 +78,42 @@ export function Card({
   );
 }
 
-const createStyles = (theme: any) => StyleSheet.create({
-  card: {
-    borderRadius: theme.spacing.md,
-    overflow: 'hidden',
-  },
+const createStyles = (theme: any) =>
+  StyleSheet.create({
+    card: {
+      borderRadius: theme.spacing.md,
+      overflow: "hidden",
+    },
 
-  // バリアント
-  card_default: {
-    backgroundColor: theme.colors.card,
-    ...theme.shadows.small,
-  },
-  card_elevated: {
-    backgroundColor: theme.colors.card,
-    ...theme.shadows.large,
-  },
-  card_outlined: {
-    backgroundColor: theme.colors.card,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-  },
-  card_filled: {
-    backgroundColor: theme.colors.surface,
-  },
+    // バリアント
+    card_default: {
+      backgroundColor: theme.colors.card,
+      ...theme.shadows.small,
+    },
+    card_elevated: {
+      backgroundColor: theme.colors.card,
+      ...theme.shadows.large,
+    },
+    card_outlined: {
+      backgroundColor: theme.colors.card,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    card_filled: {
+      backgroundColor: theme.colors.surface,
+    },
 
-  // サイズ
-  card_small: {
-    padding: theme.spacing.md,
-  },
-  card_medium: {
-    padding: theme.spacing.lg,
-  },
-  card_large: {
-    padding: theme.spacing.xl,
-  },
-});
+    // サイズ
+    card_small: {
+      padding: theme.spacing.md,
+    },
+    card_medium: {
+      padding: theme.spacing.lg,
+    },
+    card_large: {
+      padding: theme.spacing.xl,
+    },
+  });
 
 /**
  * カードヘッダーコンポーネント
@@ -122,21 +126,18 @@ interface CardHeaderProps {
 export function CardHeader({ children, style }: CardHeaderProps) {
   const styles = useThemedStyles(createHeaderStyles);
 
-  return (
-    <View style={[styles.header, style]}>
-      {children}
-    </View>
-  );
+  return <View style={[styles.header, style]}>{children}</View>;
 }
 
-const createHeaderStyles = (theme: any) => StyleSheet.create({
-  header: {
-    paddingBottom: theme.spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.borderLight,
-    marginBottom: theme.spacing.md,
-  },
-});
+const createHeaderStyles = (theme: any) =>
+  StyleSheet.create({
+    header: {
+      paddingBottom: theme.spacing.md,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+      marginBottom: theme.spacing.md,
+    },
+  });
 
 /**
  * カードコンテンツコンポーネント
@@ -149,18 +150,15 @@ interface CardContentProps {
 export function CardContent({ children, style }: CardContentProps) {
   const styles = useThemedStyles(createContentStyles);
 
-  return (
-    <View style={[styles.content, style]}>
-      {children}
-    </View>
-  );
+  return <View style={[styles.content, style]}>{children}</View>;
 }
 
-const createContentStyles = (theme: any) => StyleSheet.create({
-  content: {
-    gap: theme.spacing.md,
-  },
-});
+const createContentStyles = (theme: any) =>
+  StyleSheet.create({
+    content: {
+      gap: theme.spacing.md,
+    },
+  });
 
 /**
  * カードアクションコンポーネント
@@ -168,10 +166,19 @@ const createContentStyles = (theme: any) => StyleSheet.create({
 interface CardActionsProps {
   children: React.ReactNode;
   style?: ViewStyle;
-  justify?: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around';
+  justify?:
+    | "flex-start"
+    | "center"
+    | "flex-end"
+    | "space-between"
+    | "space-around";
 }
 
-export function CardActions({ children, style, justify = 'flex-end' }: CardActionsProps) {
+export function CardActions({
+  children,
+  style,
+  justify = "flex-end",
+}: CardActionsProps) {
   const styles = useThemedStyles(createActionsStyles);
 
   return (
@@ -181,16 +188,17 @@ export function CardActions({ children, style, justify = 'flex-end' }: CardActio
   );
 }
 
-const createActionsStyles = (theme: any) => StyleSheet.create({
-  actions: {
-    flexDirection: 'row',
-    paddingTop: theme.spacing.md,
-    marginTop: theme.spacing.md,
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.borderLight,
-    gap: theme.spacing.sm,
-  },
-});
+const createActionsStyles = (theme: any) =>
+  StyleSheet.create({
+    actions: {
+      flexDirection: "row",
+      paddingTop: theme.spacing.md,
+      marginTop: theme.spacing.md,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.borderLight,
+      gap: theme.spacing.sm,
+    },
+  });
 
 /**
  * 特定用途向けのカードコンポーネント
@@ -199,19 +207,21 @@ const createActionsStyles = (theme: any) => StyleSheet.create({
 // 問題カード
 interface QuestionCardProps extends BaseCardProps {
   questionId: string;
-  category: 'journal' | 'ledger' | 'trial-balance';
+  category: "journal" | "ledger" | "trial-balance";
   onPress?: () => void;
 }
 
-export function QuestionCard({ 
-  questionId, 
-  category, 
-  children, 
-  onPress, 
-  ...props 
+export function QuestionCard({
+  questionId,
+  category,
+  children,
+  onPress,
+  ...props
 }: QuestionCardProps) {
   const { theme } = useTheme();
-  const categoryColor = theme.categoryColors[category];
+  const categoryKey = category === "trial-balance" ? "trialBalance" : category;
+  const categoryColor =
+    theme.categoryColors?.[categoryKey] || theme.colors.primary;
 
   const cardStyle = {
     borderLeftWidth: 4,
@@ -235,17 +245,26 @@ export function QuestionCard({
 interface StatCardProps extends BaseCardProps {
   value: string | number;
   label: string;
-  trend?: 'up' | 'down' | 'neutral';
+  trend?: "up" | "down" | "neutral";
 }
 
-export function StatCard({ value, label, trend, children, ...props }: StatCardProps) {
+export function StatCard({
+  value,
+  label,
+  trend,
+  children,
+  ...props
+}: StatCardProps) {
   const { theme } = useTheme();
-  
+
   const getTrendColor = () => {
     switch (trend) {
-      case 'up': return theme.colors.success;
-      case 'down': return theme.colors.error;
-      default: return theme.colors.textSecondary;
+      case "up":
+        return theme.colors.success;
+      case "down":
+        return theme.colors.error;
+      default:
+        return theme.colors.textSecondary;
     }
   };
 
@@ -274,9 +293,15 @@ interface ProgressCardProps extends BaseCardProps {
   subtitle?: string;
 }
 
-export function ProgressCard({ progress, title, subtitle, children, ...props }: ProgressCardProps) {
+export function ProgressCard({
+  progress,
+  title,
+  subtitle,
+  children,
+  ...props
+}: ProgressCardProps) {
   const { theme } = useTheme();
-  
+
   const getProgressColor = () => {
     if (progress >= 80) return theme.colors.success;
     if (progress >= 60) return theme.colors.warning;

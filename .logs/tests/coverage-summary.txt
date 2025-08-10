@@ -1,0 +1,31 @@
+=== Test Coverage Summary ===
+Generated: Mon Aug  4 09:15:59 JST 2025
+
+Overall Coverage:
+- Lines: 8.02%
+- Functions: 7.63%
+- Branches: 6.58%
+- Statements: 8.02%
+
+Key Areas with Coverage:
+- DatabaseService: 30.6% (Core database operations)
+- QuestionRepository: 87.76% (Question data access)
+- ErrorHandler: 91.07% (Error handling utilities)
+
+Major Areas Needing Coverage:
+- Services layer: 0% (Business logic)
+- Repositories (most): 0-16%
+- Hooks: 0% (React custom hooks)
+- Theme system: 0% (Design system)
+
+Test Results:
+- Test Suites: 3 failed, 2 skipped, 2 passed (7 total)
+- Tests: 23 failed, 2 skipped, 47 passed (72 total)
+- Main Issues: Detox E2E tests and integration test dependencies
+
+Recommendations:
+1. Focus on unit tests for services layer
+2. Fix Detox E2E test configuration
+3. Improve integration test stability
+4. Add more repository tests
+EOF < /dev/null
