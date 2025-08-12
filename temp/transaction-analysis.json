@@ -1,0 +1,5715 @@
+[
+  {
+    "id": "Q_J_001",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n現金実査の結果、現金の実際有高が288,000円であったが、帳簿残高は809,000円であった。原因は不明である。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "288000",
+      "809000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_002",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n小口現金係に565,000円を前渡しした。小口現金はインプレスト・システムを採用している。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "565000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_003",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n得意先から売掛金567,000円が当座預金口座に振り込まれた。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "567000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_004",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n当座預金残高が不足したため、買掛金104,000円の小切手振出により当座借越となった。当座借越限度額は500,000円である。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "104000",
+      "500000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_005",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n普通預金から現金380,000円を引き出した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "380000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_006",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n定期預金150,000円が満期となり、利息2,000円（税引後）とともに普通預金に振り替えられた。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "150000",
+      "2000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_007",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n現金過不足50,000円（借方残高）の原因を調査したところ、通信費30,000円の記入漏れが判明した。残額は原因不明である。",
+    "transactionType": [
+      "現金過不足処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "50000",
+      "30000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_008",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n商品850,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "850000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_009",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n商品990,000円を売り上げ、代金のうち300,000円は現金で受け取り、残額は掛けとした。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "990000",
+      "300000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_010",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n仕入先に商品の注文を行い、内金として200,000円を現金で支払った。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "200000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_011",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n掛けで仕入れた商品100,000円について、品質不良のため50,000円の値引きを受けた。",
+    "transactionType": [
+      "商品売買",
+      "値引処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "100000",
+      "50000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_012",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n商品300,000円を仕入れ、引取運賃5,000円を現金で支払った。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "300000",
+      "5000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_013",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n得意先から注文を受け、内金として150,000円を現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "150000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_014",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n掛けで売り上げた商品80,000円が返品された。",
+    "transactionType": [
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "80000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_015",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n商品500,000円を売り上げ、発送費8,000円を現金で支払った（当社負担）。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "500000",
+      "8000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_016",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n得意先に対する売掛金450,000円を回収し、小切手で受け取った。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "450000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_017",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n仕入先に対する買掛金380,000円を小切手を振り出して支払った。",
+    "transactionType": [
+      "小切手処理",
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "380000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_018",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n得意先から売掛金の決済として約束手形600,000円を受け取った。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "600000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_019",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n仕入先に対する買掛金の決済として約束手形500,000円を振り出した。",
+    "transactionType": [
+      "手形処理",
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "500000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_020",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n所有する受取手形300,000円を裏書譲渡して買掛金の支払いに充てた。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "300000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_021",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n取引先に現金200,000円を貸し付け、借用証書を受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "200000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_022",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n銀行から現金1,000,000円を借り入れた。返済期限は1年後である。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "1000000",
+      "1"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_023",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n従業員の給料総額800,000円から、源泉所得税50,000円、社会保険料60,000円を天引きし、差引額を現金で支払った。",
+    "transactionType": [
+      "給与支払",
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "800000",
+      "50000",
+      "60000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_024",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n前月分の源泉所得税35,000円と住民税25,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "35000",
+      "25000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_025",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n社会保険料120,000円（従業員負担分60,000円、会社負担分60,000円）を現金で納付した。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "120000",
+      "60000",
+      "60000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_026",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n賞与総額1,500,000円から源泉所得税100,000円、社会保険料150,000円を天引きし、差引額を振込で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "1500000",
+      "100000",
+      "150000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_027",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n法人税の中間申告により、法人税等300,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "300000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_028",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n消費税の確定申告により、消費税200,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "200000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_029",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n従業員への前月分給料500,000円が未払いとなっていたため、当月初めに現金で支払った。",
+    "transactionType": [
+      "給与支払",
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "500000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_030",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n備品600,000円を購入し、代金は現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "600000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_031",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n建物5,000,000円を取得し、登記料50,000円、仲介手数料100,000円を現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "5000000",
+      "50000",
+      "100000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_032",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、建物（取得原価3,000,000円、残存価額10％、耐用年数30年）について定額法により減価償却を行う。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "3000000",
+      "10",
+      "30"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_033",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n備品（取得原価400,000円、減価償却累計額250,000円）を100,000円で売却し、代金は現金で受け取った。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分",
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "400000",
+      "250000",
+      "100000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_034",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n車両（取得原価800,000円、減価償却累計額600,000円）を300,000円で売却し、代金は月末に受け取ることにした。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理",
+      "資産処分",
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "800000",
+      "600000",
+      "300000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_035",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n不要となった機械（取得原価500,000円、減価償却累計額500,000円）を除却し、処分費用10,000円を現金で支払った。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分",
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "500000",
+      "500000",
+      "10000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_036",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n火災により建物（取得原価2,000,000円、減価償却累計額800,000円）が焼失した。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "2000000",
+      "800000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_037",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、売掛金残高500,000円に対して2％の貸倒引当金を差額補充法により設定する。なお、貸倒引当金の残高は3,000円である。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "500000",
+      "2",
+      "3000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_038",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n前期に貸倒処理した売掛金20,000円が当期に回収され、現金で受け取った。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "20000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_039",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、向こう1年分の保険料120,000円のうち、翌期分80,000円を前払費用に振り替える。",
+    "transactionType": [
+      "保険料処理",
+      "前払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "1",
+      "120000",
+      "80000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_040",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、当期の家賃収入360,000円のうち、翌期分30,000円が含まれているため、前受収益に振り替える。",
+    "transactionType": [
+      "家賃処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "360000",
+      "30000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_041",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、当月分の給料400,000円が未払いとなっているため、未払費用を計上する。",
+    "transactionType": [
+      "給与支払",
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "400000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_042",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、貸付金100,000円に対する利息1,000円が未収となっているため、未収収益を計上する。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "100000",
+      "1000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_043",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、消耗品の未使用高が25,000円あったため、貯蔵品に振り替える。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "25000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_044",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n商品800,000円を仕入れ、代金のうち300,000円は現金で支払い、残額は約束手形を振り出した。",
+    "transactionType": [
+      "手形処理",
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "800000",
+      "300000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_045",
+    "questionText": "【仕訳問題】次の取引について仕訳しなさい。\n\n得意先の売掛金50,000円が貸倒れとなった。なお、貸倒引当金の残高は30,000円である。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "50000",
+      "30000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_046",
+    "questionText": "売上げた商品のうち68,000円分が品違いのため返品された。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "68000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_047",
+    "questionText": "商品591,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "591000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_048",
+    "questionText": "商品を578,000円で販売し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "578000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_049",
+    "questionText": "仕入れた商品のうち924,000円分を品違いのため返品した。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "924000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_050",
+    "questionText": "売上げた商品のうち776,000円分が品違いのため返品された。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "776000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_051",
+    "questionText": "商品219,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "219000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_052",
+    "questionText": "商品を822,000円で販売し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "822000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_053",
+    "questionText": "仕入れた商品のうち950,000円分を品違いのため返品した。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "950000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_054",
+    "questionText": "売上げた商品のうち898,000円分が品違いのため返品された。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "898000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_055",
+    "questionText": "商品867,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "867000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_056",
+    "questionText": "商品を876,000円で販売し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "876000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_057",
+    "questionText": "仕入れた商品のうち804,000円分を品違いのため返品した。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "804000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_058",
+    "questionText": "売上げた商品のうち189,000円分が品違いのため返品された。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "189000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_059",
+    "questionText": "商品770,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "770000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_060",
+    "questionText": "商品を92,000円で販売し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "92000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_061",
+    "questionText": "仕入れた商品のうち201,000円分を品違いのため返品した。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "201000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_062",
+    "questionText": "売上げた商品のうち909,000円分が品違いのため返品された。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "909000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_063",
+    "questionText": "商品445,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "445000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_064",
+    "questionText": "商品を328,000円で販売し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "328000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_065",
+    "questionText": "仕入れた商品のうち582,000円分を品違いのため返品した。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "582000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_066",
+    "questionText": "売上げた商品のうち108,000円分が品違いのため返品された。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "108000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_067",
+    "questionText": "商品612,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "612000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_068",
+    "questionText": "商品を235,000円で販売し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "235000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_069",
+    "questionText": "仕入れた商品のうち786,000円分を品違いのため返品した。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "786000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_070",
+    "questionText": "売上げた商品のうち695,000円分が品違いのため返品された。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "695000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_071",
+    "questionText": "商品924,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "924000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_072",
+    "questionText": "商品を172,000円で販売し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "172000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_073",
+    "questionText": "仕入れた商品のうち860,000円分を品違いのため返品した。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "860000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_074",
+    "questionText": "売上げた商品のうち146,000円分が品違いのため返品された。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "146000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_075",
+    "questionText": "商品19,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "19000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_076",
+    "questionText": "商品を132,000円で販売し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "132000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_077",
+    "questionText": "仕入れた商品のうち824,000円分を品違いのため返品した。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "824000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_078",
+    "questionText": "売上げた商品のうち775,000円分が品違いのため返品された。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "775000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_079",
+    "questionText": "商品113,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "113000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_080",
+    "questionText": "商品を833,000円で販売し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "833000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_081",
+    "questionText": "仕入れた商品のうち872,000円分を品違いのため返品した。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "872000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_082",
+    "questionText": "売上げた商品のうち263,000円分が品違いのため返品された。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "263000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_083",
+    "questionText": "商品286,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "286000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_084",
+    "questionText": "商品を800,000円で販売し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "800000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_085",
+    "questionText": "仕入れた商品のうち84,000円分を品違いのため返品した。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "84000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_086",
+    "questionText": "売上げた商品のうち390,000円分が品違いのため返品された。",
+    "transactionType": [
+      "商品売買",
+      "返品処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "390000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_087",
+    "questionText": "商品150,000円を仕入れ、代金は掛けとした。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "150000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_088",
+    "questionText": "売掛金855,000円を現金で回収した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "855000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_089",
+    "questionText": "買掛金696,000円を小切手を振り出して支払った。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "696000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_090",
+    "questionText": "売掛金526,000円の代金として約束手形を受け取った。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "526000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_091",
+    "questionText": "買掛金387,000円の支払いのため約束手形を振り出した。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "387000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_092",
+    "questionText": "売掛金898,000円を現金で回収した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "898000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_093",
+    "questionText": "買掛金106,000円を小切手を振り出して支払った。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "106000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_094",
+    "questionText": "売掛金935,000円の代金として約束手形を受け取った。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "935000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_095",
+    "questionText": "買掛金169,000円の支払いのため約束手形を振り出した。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "169000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_096",
+    "questionText": "売掛金86,000円を現金で回収した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "86000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_097",
+    "questionText": "買掛金606,000円を小切手を振り出して支払った。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "606000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_098",
+    "questionText": "売掛金69,000円の代金として約束手形を受け取った。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "69000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_099",
+    "questionText": "買掛金489,000円の支払いのため約束手形を振り出した。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "489000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_100",
+    "questionText": "売掛金773,000円を現金で回収した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "773000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_101",
+    "questionText": "買掛金897,000円を小切手を振り出して支払った。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "897000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_102",
+    "questionText": "売掛金744,000円の代金として約束手形を受け取った。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "744000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_103",
+    "questionText": "買掛金535,000円の支払いのため約束手形を振り出した。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "535000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_104",
+    "questionText": "売掛金610,000円を現金で回収した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "610000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_105",
+    "questionText": "買掛金675,000円を小切手を振り出して支払った。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "675000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_106",
+    "questionText": "売掛金823,000円の代金として約束手形を受け取った。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "823000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_107",
+    "questionText": "買掛金698,000円の支払いのため約束手形を振り出した。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "698000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_108",
+    "questionText": "売掛金362,000円を現金で回収した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "362000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_109",
+    "questionText": "買掛金708,000円を小切手を振り出して支払った。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "708000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_110",
+    "questionText": "売掛金859,000円の代金として約束手形を受け取った。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "859000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_111",
+    "questionText": "買掛金88,000円の支払いのため約束手形を振り出した。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "88000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_112",
+    "questionText": "売掛金7,000円を現金で回収した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "7000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_113",
+    "questionText": "買掛金639,000円を小切手を振り出して支払った。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "639000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_114",
+    "questionText": "売掛金420,000円の代金として約束手形を受け取った。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "420000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_115",
+    "questionText": "買掛金249,000円の支払いのため約束手形を振り出した。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "249000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_116",
+    "questionText": "売掛金814,000円を現金で回収した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "814000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_117",
+    "questionText": "買掛金111,000円を小切手を振り出して支払った。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "111000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_118",
+    "questionText": "売掛金201,000円の代金として約束手形を受け取った。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "201000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_119",
+    "questionText": "買掛金248,000円の支払いのため約束手形を振り出した。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "248000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_120",
+    "questionText": "売掛金712,000円を現金で回収した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "712000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_121",
+    "questionText": "買掛金314,000円を小切手を振り出して支払った。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "314000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_122",
+    "questionText": "売掛金190,000円の代金として約束手形を受け取った。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "190000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_123",
+    "questionText": "買掛金85,000円の支払いのため約束手形を振り出した。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "85000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_124",
+    "questionText": "売掛金608,000円を現金で回収した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "608000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_125",
+    "questionText": "買掛金975,000円を小切手を振り出して支払った。",
+    "transactionType": [
+      "小切手処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "975000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_126",
+    "questionText": "売掛金472,000円の代金として約束手形を受け取った。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "472000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_127",
+    "questionText": "買掛金275,000円の支払いのため約束手形を振り出した。",
+    "transactionType": [
+      "手形処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "275000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_128",
+    "questionText": "売掛金50,000円を現金で回収した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "50000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_129",
+    "questionText": "従業員に給料563,000円を支払った。なお、源泉所得税146,000円を差し引いた。",
+    "transactionType": [
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "563000",
+      "146000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_130",
+    "questionText": "社会保険料584,000円（会社負担181,000円、従業員負担18,100円）を現金で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "584000",
+      "181000",
+      "18100"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_131",
+    "questionText": "固定資産税973,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "973000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_132",
+    "questionText": "法人税等33,000円を当座預金から納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "33000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_133",
+    "questionText": "従業員に給料176,000円を支払った。なお、源泉所得税817,000円を差し引いた。",
+    "transactionType": [
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "176000",
+      "817000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_134",
+    "questionText": "社会保険料59,000円（会社負担387,000円、従業員負担38,700円）を現金で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "59000",
+      "387000",
+      "38700"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_135",
+    "questionText": "固定資産税729,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "729000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_136",
+    "questionText": "法人税等699,000円を当座預金から納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "699000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_137",
+    "questionText": "従業員に給料573,000円を支払った。なお、源泉所得税151,000円を差し引いた。",
+    "transactionType": [
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "573000",
+      "151000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_138",
+    "questionText": "社会保険料994,000円（会社負担248,000円、従業員負担24,800円）を現金で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "994000",
+      "248000",
+      "24800"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_139",
+    "questionText": "固定資産税314,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "314000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_140",
+    "questionText": "法人税等314,000円を当座預金から納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "314000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_141",
+    "questionText": "従業員に給料809,000円を支払った。なお、源泉所得税941,000円を差し引いた。",
+    "transactionType": [
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "809000",
+      "941000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_142",
+    "questionText": "社会保険料330,000円（会社負担169,000円、従業員負担16,900円）を現金で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "330000",
+      "169000",
+      "16900"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_143",
+    "questionText": "固定資産税435,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "435000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_144",
+    "questionText": "法人税等163,000円を当座預金から納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "163000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_145",
+    "questionText": "従業員に給料919,000円を支払った。なお、源泉所得税824,000円を差し引いた。",
+    "transactionType": [
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "919000",
+      "824000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_146",
+    "questionText": "社会保険料691,000円（会社負担357,000円、従業員負担35,700円）を現金で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "691000",
+      "357000",
+      "35700"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_147",
+    "questionText": "固定資産税783,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "783000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_148",
+    "questionText": "法人税等550,000円を当座預金から納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "550000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_149",
+    "questionText": "従業員に給料223,000円を支払った。なお、源泉所得税504,000円を差し引いた。",
+    "transactionType": [
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "223000",
+      "504000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_150",
+    "questionText": "社会保険料435,000円（会社負担119,000円、従業員負担11,900円）を現金で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "435000",
+      "119000",
+      "11900"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_151",
+    "questionText": "固定資産税54,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "54000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_152",
+    "questionText": "法人税等310,000円を当座預金から納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "310000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_153",
+    "questionText": "従業員に給料512,000円を支払った。なお、源泉所得税193,000円を差し引いた。",
+    "transactionType": [
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "512000",
+      "193000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_154",
+    "questionText": "社会保険料999,000円（会社負担228,000円、従業員負担22,800円）を現金で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "999000",
+      "228000",
+      "22800"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_155",
+    "questionText": "固定資産税947,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "947000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_156",
+    "questionText": "法人税等497,000円を当座預金から納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "497000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_157",
+    "questionText": "従業員に給料77,000円を支払った。なお、源泉所得税752,000円を差し引いた。",
+    "transactionType": [
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "77000",
+      "752000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_158",
+    "questionText": "社会保険料543,000円（会社負担159,000円、従業員負担15,900円）を現金で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "543000",
+      "159000",
+      "15900"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_159",
+    "questionText": "固定資産税540,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "540000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_160",
+    "questionText": "法人税等847,000円を当座預金から納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "847000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_161",
+    "questionText": "従業員に給料604,000円を支払った。なお、源泉所得税633,000円を差し引いた。",
+    "transactionType": [
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "604000",
+      "633000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_162",
+    "questionText": "社会保険料157,000円（会社負担740,000円、従業員負担74,000円）を現金で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "157000",
+      "740000",
+      "74000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_163",
+    "questionText": "固定資産税462,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "462000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_164",
+    "questionText": "法人税等814,000円を当座預金から納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "814000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_165",
+    "questionText": "従業員に給料292,000円を支払った。なお、源泉所得税238,000円を差し引いた。",
+    "transactionType": [
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "292000",
+      "238000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_166",
+    "questionText": "社会保険料701,000円（会社負担348,000円、従業員負担34,800円）を現金で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "701000",
+      "348000",
+      "34800"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_167",
+    "questionText": "固定資産税18,000円を現金で納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "18000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_168",
+    "questionText": "法人税等111,000円を当座預金から納付した。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "111000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_J_169",
+    "questionText": "従業員に給料598,000円を支払った。なお、源泉所得税819,000円を差し引いた。",
+    "transactionType": [
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "598000",
+      "819000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_170",
+    "questionText": "社会保険料39,000円（会社負担500,000円、従業員負担50,000円）を現金で支払った。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "39000",
+      "500000",
+      "50000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_171",
+    "questionText": "備品507,000円を購入し、代金は現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "507000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_172",
+    "questionText": "決算において、建物の減価償却費273,000円を計上する。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "273000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_173",
+    "questionText": "帳簿価額702,000円の車両を943,000円で売却し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分"
+    ],
+    "keyNumbers": [
+      "702000",
+      "943000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_174",
+    "questionText": "使用不能となった備品（取得原価536,000円、減価償却累計額633,000円）を除却した。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "536000",
+      "633000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_175",
+    "questionText": "備品536,000円を購入し、代金は現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "536000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_176",
+    "questionText": "決算において、建物の減価償却費413,000円を計上する。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "413000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_177",
+    "questionText": "帳簿価額823,000円の車両を435,000円で売却し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分"
+    ],
+    "keyNumbers": [
+      "823000",
+      "435000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_178",
+    "questionText": "使用不能となった備品（取得原価89,000円、減価償却累計額822,000円）を除却した。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "89000",
+      "822000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_179",
+    "questionText": "備品25,000円を購入し、代金は現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "25000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_180",
+    "questionText": "決算において、建物の減価償却費966,000円を計上する。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "966000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_181",
+    "questionText": "帳簿価額315,000円の車両を604,000円で売却し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分"
+    ],
+    "keyNumbers": [
+      "315000",
+      "604000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_182",
+    "questionText": "使用不能となった備品（取得原価30,000円、減価償却累計額717,000円）を除却した。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "30000",
+      "717000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_183",
+    "questionText": "備品425,000円を購入し、代金は現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "425000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_184",
+    "questionText": "決算において、建物の減価償却費713,000円を計上する。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "713000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_185",
+    "questionText": "帳簿価額751,000円の車両を96,000円で売却し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分"
+    ],
+    "keyNumbers": [
+      "751000",
+      "96000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_186",
+    "questionText": "使用不能となった備品（取得原価92,000円、減価償却累計額472,000円）を除却した。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "92000",
+      "472000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_187",
+    "questionText": "備品910,000円を購入し、代金は現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "910000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_188",
+    "questionText": "決算において、建物の減価償却費93,000円を計上する。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "93000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_189",
+    "questionText": "帳簿価額984,000円の車両を4,000円で売却し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分"
+    ],
+    "keyNumbers": [
+      "984000",
+      "4000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_190",
+    "questionText": "使用不能となった備品（取得原価305,000円、減価償却累計額440,000円）を除却した。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "305000",
+      "440000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_191",
+    "questionText": "備品656,000円を購入し、代金は現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "656000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_192",
+    "questionText": "決算において、建物の減価償却費655,000円を計上する。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "655000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_193",
+    "questionText": "帳簿価額806,000円の車両を360,000円で売却し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分"
+    ],
+    "keyNumbers": [
+      "806000",
+      "360000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_194",
+    "questionText": "使用不能となった備品（取得原価539,000円、減価償却累計額836,000円）を除却した。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "539000",
+      "836000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_195",
+    "questionText": "備品324,000円を購入し、代金は現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "324000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_196",
+    "questionText": "決算において、建物の減価償却費112,000円を計上する。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "112000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_197",
+    "questionText": "帳簿価額603,000円の車両を767,000円で売却し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分"
+    ],
+    "keyNumbers": [
+      "603000",
+      "767000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_198",
+    "questionText": "使用不能となった備品（取得原価71,000円、減価償却累計額831,000円）を除却した。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "71000",
+      "831000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_199",
+    "questionText": "備品633,000円を購入し、代金は現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "633000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_200",
+    "questionText": "決算において、建物の減価償却費670,000円を計上する。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "670000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_201",
+    "questionText": "帳簿価額580,000円の車両を613,000円で売却し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分"
+    ],
+    "keyNumbers": [
+      "580000",
+      "613000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_202",
+    "questionText": "使用不能となった備品（取得原価431,000円、減価償却累計額989,000円）を除却した。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "431000",
+      "989000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_203",
+    "questionText": "備品504,000円を購入し、代金は現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "504000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_204",
+    "questionText": "決算において、建物の減価償却費668,000円を計上する。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "668000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_205",
+    "questionText": "帳簿価額529,000円の車両を310,000円で売却し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分"
+    ],
+    "keyNumbers": [
+      "529000",
+      "310000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_206",
+    "questionText": "使用不能となった備品（取得原価719,000円、減価償却累計額191,000円）を除却した。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "719000",
+      "191000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_207",
+    "questionText": "備品862,000円を購入し、代金は現金で支払った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "862000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_208",
+    "questionText": "決算において、建物の減価償却費563,000円を計上する。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "563000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_209",
+    "questionText": "帳簿価額142,000円の車両を521,000円で売却し、代金は現金で受け取った。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産処分"
+    ],
+    "keyNumbers": [
+      "142000",
+      "521000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_210",
+    "questionText": "使用不能となった備品（取得原価269,000円、減価償却累計額390,000円）を除却した。",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "269000",
+      "390000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_211",
+    "questionText": "決算において、売掛金668,000円に対して2%の貸倒引当金を設定する。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "668000",
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_212",
+    "questionText": "期首商品棚卸高417,000円、当期商品仕入高318,000円、期末商品棚卸高31,800円である。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理"
+    ],
+    "keyNumbers": [
+      "417000",
+      "318000",
+      "31800"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_213",
+    "questionText": "支払保険料712,000円のうち、275,000円は次期分である。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "712000",
+      "275000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_214",
+    "questionText": "当期の支払利息166,000円が未払いである。",
+    "transactionType": [
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "166000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_215",
+    "questionText": "決算において、売掛金716,000円に対して2%の貸倒引当金を設定する。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "716000",
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_216",
+    "questionText": "期首商品棚卸高75,000円、当期商品仕入高12,000円、期末商品棚卸高1,200円である。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理"
+    ],
+    "keyNumbers": [
+      "75000",
+      "12000",
+      "1200"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_217",
+    "questionText": "支払保険料405,000円のうち、90,000円は次期分である。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "405000",
+      "90000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_218",
+    "questionText": "当期の支払利息435,000円が未払いである。",
+    "transactionType": [
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "435000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_219",
+    "questionText": "決算において、売掛金573,000円に対して2%の貸倒引当金を設定する。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "573000",
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_220",
+    "questionText": "期首商品棚卸高207,000円、当期商品仕入高898,000円、期末商品棚卸高89,800円である。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理"
+    ],
+    "keyNumbers": [
+      "207000",
+      "898000",
+      "89800"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_221",
+    "questionText": "支払保険料557,000円のうち、304,000円は次期分である。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "557000",
+      "304000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_222",
+    "questionText": "当期の支払利息859,000円が未払いである。",
+    "transactionType": [
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "859000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_223",
+    "questionText": "決算において、売掛金240,000円に対して2%の貸倒引当金を設定する。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "240000",
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_224",
+    "questionText": "期首商品棚卸高963,000円、当期商品仕入高231,000円、期末商品棚卸高23,100円である。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理"
+    ],
+    "keyNumbers": [
+      "963000",
+      "231000",
+      "23100"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_225",
+    "questionText": "支払保険料742,000円のうち、209,000円は次期分である。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "742000",
+      "209000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_226",
+    "questionText": "当期の支払利息692,000円が未払いである。",
+    "transactionType": [
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "692000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_227",
+    "questionText": "決算において、売掛金724,000円に対して2%の貸倒引当金を設定する。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "724000",
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_228",
+    "questionText": "期首商品棚卸高48,000円、当期商品仕入高967,000円、期末商品棚卸高96,700円である。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理"
+    ],
+    "keyNumbers": [
+      "48000",
+      "967000",
+      "96700"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_229",
+    "questionText": "支払保険料488,000円のうち、321,000円は次期分である。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "488000",
+      "321000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_230",
+    "questionText": "当期の支払利息938,000円が未払いである。",
+    "transactionType": [
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "938000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_231",
+    "questionText": "決算において、売掛金862,000円に対して2%の貸倒引当金を設定する。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "862000",
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_232",
+    "questionText": "期首商品棚卸高425,000円、当期商品仕入高143,000円、期末商品棚卸高14,300円である。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理"
+    ],
+    "keyNumbers": [
+      "425000",
+      "143000",
+      "14300"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_233",
+    "questionText": "支払保険料132,000円のうち、628,000円は次期分である。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "132000",
+      "628000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_234",
+    "questionText": "当期の支払利息265,000円が未払いである。",
+    "transactionType": [
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "265000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_235",
+    "questionText": "決算において、売掛金183,000円に対して2%の貸倒引当金を設定する。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "183000",
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_236",
+    "questionText": "期首商品棚卸高268,000円、当期商品仕入高182,000円、期末商品棚卸高18,200円である。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理"
+    ],
+    "keyNumbers": [
+      "268000",
+      "182000",
+      "18200"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_237",
+    "questionText": "支払保険料213,000円のうち、450,000円は次期分である。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "213000",
+      "450000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_238",
+    "questionText": "当期の支払利息658,000円が未払いである。",
+    "transactionType": [
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "658000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_239",
+    "questionText": "決算において、売掛金998,000円に対して2%の貸倒引当金を設定する。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "998000",
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_240",
+    "questionText": "期首商品棚卸高134,000円、当期商品仕入高585,000円、期末商品棚卸高58,500円である。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理"
+    ],
+    "keyNumbers": [
+      "134000",
+      "585000",
+      "58500"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_241",
+    "questionText": "支払保険料882,000円のうち、150,000円は次期分である。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "882000",
+      "150000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_242",
+    "questionText": "当期の支払利息488,000円が未払いである。",
+    "transactionType": [
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "488000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_243",
+    "questionText": "決算において、売掛金1,000円に対して2%の貸倒引当金を設定する。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "1000",
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_244",
+    "questionText": "期首商品棚卸高254,000円、当期商品仕入高326,000円、期末商品棚卸高32,600円である。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理"
+    ],
+    "keyNumbers": [
+      "254000",
+      "326000",
+      "32600"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_245",
+    "questionText": "支払保険料828,000円のうち、690,000円は次期分である。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "828000",
+      "690000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_246",
+    "questionText": "当期の支払利息49,000円が未払いである。",
+    "transactionType": [
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "49000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_247",
+    "questionText": "決算において、売掛金568,000円に対して2%の貸倒引当金を設定する。",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "568000",
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_248",
+    "questionText": "期首商品棚卸高284,000円、当期商品仕入高683,000円、期末商品棚卸高68,300円である。",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理"
+    ],
+    "keyNumbers": [
+      "284000",
+      "683000",
+      "68300"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_J_249",
+    "questionText": "支払保険料143,000円のうち、659,000円は次期分である。",
+    "transactionType": [
+      "保険料処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "143000",
+      "659000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_J_250",
+    "questionText": "当期の支払利息446,000円が未払いである。",
+    "transactionType": [
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "446000"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_001",
+    "questionText": "【現金勘定記入問題】\n\n2025年10月の現金勘定への記入を行い、残高を計算してください。\n\n【前月繰越残高】\n現金：337,541円\n\n【10月の取引】\n10月5日 現金売上：276,641円（増加）\n10月10日 給料支払：215,025円（減少）\n10月15日 売掛金回収：184,924円（増加）\n10月20日 買掛金支払：241,381円（減少）\n10月28日 現金実査による過不足判明：8,502円（不足）\n\n【現金過不足の処理】\n月末に現金実査を行い、過不足を確認して適切に処理してください。\n\n【作成指示】\n1. 現金勘定へ各取引を記入\n2. 借方・貸方の合計を計算\n3. 月末残高を算出\n4. 現金過不足がある場合は適切に処理",
+    "transactionType": [
+      "現金過不足処理",
+      "商品売買",
+      "給与支払"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "10",
+      "337541",
+      "10",
+      "10",
+      "5",
+      "276641",
+      "10",
+      "10",
+      "215025",
+      "10",
+      "15",
+      "184924",
+      "10",
+      "20",
+      "241381",
+      "10",
+      "28",
+      "8502",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_L_002",
+    "questionText": "【売掛金勘定記入問題】\n\n2025年1月の売掛金勘定への記入を行い、残高を計算してください。\n\n【前月繰越残高】\n売掛金：564,069円\n\n【1月の取引】\n1月3日 掛売上：190,909円\n1月8日 現金回収：51,829円\n1月15日 掛売上：179,338円\n1月22日 手形回収：111,922円\n1月28日 貸倒れ発生：35,813円\n\n【貸倒処理】\n貸倒れが発生した場合は、貸倒引当金を優先充当し、不足分は貸倒損失として処理してください。\n（貸倒引当金残高：30,000円）\n\n【作成指示】\n1. 売掛金勘定へ各取引を記入\n2. 発生と回収を適切に処理\n3. 貸倒れの処理を行う\n4. 月末残高を算出",
+    "transactionType": [
+      "手形処理",
+      "商品売買",
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "1",
+      "564069",
+      "1",
+      "1",
+      "3",
+      "190909",
+      "1",
+      "8",
+      "51829",
+      "1",
+      "15",
+      "179338",
+      "1",
+      "22",
+      "111922",
+      "1",
+      "28",
+      "35813",
+      "30000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_L_003",
+    "questionText": "【商品勘定記入問題（三分法）】\n\n2025年10月の商品売買取引を三分法により記帳し、売上原価を算定してください。\n\n【期首商品棚卸高】\n914,556円\n\n【当月の取引】\n・当月仕入高：1,404,670円\n・当月売上高：1,826,071円\n\n【期末商品棚卸高】\n558,925円\n\n【作成指示】\n1. 仕入勘定、売上勘定、繰越商品勘定を作成\n2. 三分法による商品売買の記帳\n3. 売上原価の算定（期首＋仕入－期末）\n4. 売上総利益の計算",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "10",
+      "914556",
+      "1404670",
+      "1826071",
+      "558925",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_L_004",
+    "questionText": "【建物勘定・減価償却累計額勘定記入問題】\n\n2025年3月末決算において、建物の減価償却を行い、関連勘定への記入を行ってください。\n\n【建物情報】\n・取得原価：4,960,026円\n・耐用年数：20年\n・償却方法：定額法（残存価額なし）\n・使用年数：19年経過\n\n【前期末の状況】\n・建物勘定残高：4,960,026円\n・減価償却累計額：4,464,018円\n\n【作成指示】\n1. 当期の減価償却費を計算\n2. 建物減価償却累計額勘定への記入\n3. 減価償却費勘定への記入\n4. 建物の帳簿価額を算出",
+    "transactionType": [
+      "減価償却"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理",
+      "月次処理",
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "2025",
+      "3",
+      "4960026",
+      "20",
+      "19",
+      "4960026",
+      "4464018",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_L_005",
+    "questionText": "【買掛金勘定記入問題】\n\n2025年11月の買掛金勘定への記入を行い、残高を計算してください。\n\n【前月繰越残高】\n買掛金：523,589円\n\n【11月の取引】\n11月7日 掛仕入：393,285円\n11月14日 現金支払：227,553円\n11月21日 買掛金相殺：66,069円\n\n【作成指示】\n1. 買掛金勘定へ各取引を記入\n2. 関連勘定との連動を確認\n3. 月末残高を算出\n4. 必要に応じて関連勘定（支払利息等）も作成",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "11",
+      "523589",
+      "11",
+      "11",
+      "7",
+      "393285",
+      "11",
+      "14",
+      "227553",
+      "11",
+      "21",
+      "66069",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_L_006",
+    "questionText": "【借入金勘定・支払利息勘定記入問題】\n\n2025年3月の借入金勘定への記入を行い、残高を計算してください。\n\n【前月繰越残高】\n借入金：725,963円\n\n【3月の取引】\n3月7日 借入金返済（元本）：227,258円\n3月14日 支払利息：20,524円\n3月21日 追加借入：135,870円\n\n【作成指示】\n1. 借入金勘定へ各取引を記入\n2. 関連勘定との連動を確認\n3. 月末残高を算出\n4. 必要に応じて関連勘定（支払利息等）も作成",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "3",
+      "725963",
+      "3",
+      "3",
+      "7",
+      "227258",
+      "3",
+      "14",
+      "20524",
+      "3",
+      "21",
+      "135870",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_007",
+    "questionText": "【貸倒引当金勘定記入問題】\n\n2025年8月の貸倒引当金勘定への記入を行い、残高を計算してください。\n\n【前月繰越残高】\n貸倒引当金：111,039円\n\n【8月の取引】\n8月7日 貸倒れ発生（充当）：17,606円\n8月14日 決算時繰入：44,781円\n8月21日 戻入益：11,908円\n\n【作成指示】\n1. 貸倒引当金勘定へ各取引を記入\n2. 関連勘定との連動を確認\n3. 月末残高を算出\n4. 必要に応じて関連勘定（支払利息等）も作成",
+    "transactionType": [
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "8",
+      "111039",
+      "8",
+      "8",
+      "7",
+      "17606",
+      "8",
+      "14",
+      "44781",
+      "8",
+      "21",
+      "11908",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_L_008",
+    "questionText": "【売上勘定・仕入勘定の対応関係】\n\n2025年6月の売上勘定と仕入勘定の記入を行ってください。\n\n【6月の取引】\n・現金売上：397,450.8円\n・掛売上：596,176.2円\n・現金仕入：260,123.1円\n・掛仕入：606,953.9円\n\n【作成指示】\n1. 売上勘定と仕入勘定を作成\n2. 現金取引と掛取引を区別して記入\n3. 各勘定の月末残高を算出\n4. 売上総利益を計算（売上－仕入）",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "6",
+      "6",
+      "397450",
+      "8",
+      "596176",
+      "2",
+      "260123",
+      "1",
+      "606953",
+      "9",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_L_009",
+    "questionText": "【給料勘定・未払費用の期間配分記入】\n\n2025年11月の給料勘定と未払費用の記入を行ってください。\n\n【給料情報】\n・月額給料：321,134円\n・支払日：毎月25日（当月分）\n・決算日：11月末\n\n【11月の処理】\n・11月25日：当月給料支払\n・11月末：未払給料の計上（26日～月末分）\n\n【作成指示】\n1. 給料勘定への記入\n2. 未払給料の日割計算\n3. 未払費用勘定への記入\n4. 期間配分の適切な処理",
+    "transactionType": [
+      "給与支払",
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "11",
+      "321134",
+      "25",
+      "11",
+      "11",
+      "11",
+      "25",
+      "11",
+      "26",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_L_010",
+    "questionText": "【諸口勘定を含む複合仕訳の転記処理】\n\n2025年5月の諸口勘定を含む複合仕訳の転記を行ってください。\n\n【複合仕訳の例】\n5月10日の取引：\n（借方）\n・仕入 300,000円\n・支払手数料 5,000円\n（貸方）\n・現金 100,000円\n・買掛金 200,000円\n・未払金 5,000円\n\n【作成指示】\n1. 各勘定への個別転記\n2. 諸口勘定の使用方法を説明\n3. 相手勘定が複数ある場合の処理\n4. 転記の正確性を確認",
+    "transactionType": [
+      "商品売買",
+      "未払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2025",
+      "5",
+      "5",
+      "10",
+      "300000",
+      "5000",
+      "100000",
+      "200000",
+      "5000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_011",
+    "questionText": "【現金出納帳記入問題】\n\n2025年6月の現金出納帳を作成してください。\n\n収入・支出・残高記入を含む詳細な記帳を行います。\n\n【前月繰越】\n333,931円\n\n【当月の取引】\n複数の収入・支出取引（詳細は問題文参照）\n\n【作成指示】\n1. 日付順に記帳\n2. 摘要欄の適切な記入\n3. 収入・支出・残高の計算\n4. 月末締切処理",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "6",
+      "333931",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_012",
+    "questionText": "【当座預金出納帳記入問題】\n\n2025年3月の当座預金出納帳を作成してください。\n\n預入・引出・残高管理を含む詳細な記帳を行います。\n\n【前月繰越】\n455,377円\n\n【当月の取引】\n複数の収入・支出取引（詳細は問題文参照）\n\n【作成指示】\n1. 日付順に記帳\n2. 摘要欄の適切な記入\n3. 収入・支出・残高の計算\n4. 月末締切処理",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "3",
+      "455377",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_013",
+    "questionText": "【小口現金出納帳記入問題】\n\n2025年4月の小口現金出納帳を作成してください。\n\n補給・支払・精算を含む詳細な記帳を行います。\n\n【前月繰越】\n100,326円\n\n【当月の取引】\n複数の収入・支出取引（詳細は問題文参照）\n\n【作成指示】\n1. 日付順に記帳\n2. 摘要欄の適切な記入\n3. 収入・支出・残高の計算\n4. 月末締切処理",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "4",
+      "100326",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_014",
+    "questionText": "【普通預金通帳記入問題】\n\n2025年2月の普通預金通帳を作成してください。\n\n記帳・利息計算を含む詳細な記帳を行います。\n\n【前月繰越】\n408,537円\n\n【当月の取引】\n複数の収入・支出取引（詳細は問題文参照）\n\n【作成指示】\n1. 日付順に記帳\n2. 摘要欄の適切な記入\n3. 収入・支出・残高の計算\n4. 月末締切処理",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "2",
+      "408537",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_015",
+    "questionText": "【仕入帳記入問題】\n\n2025年9月の仕入帳を作成してください。\n\n日付・仕入先・品名・金額記入を行います。\n\n【記入項目】\n・日付\n・取引先/品名\n・数量・単価・金額\n・残高計算\n\n【作成指示】\n1. 取引順に記帳\n2. 単価計算方法の適用\n3. 残高の継続的管理\n4. 月末棚卸との照合",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "9",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_L_016",
+    "questionText": "【売上帳記入問題】\n\n2025年2月の売上帳を作成してください。\n\n日付・得意先・品名・金額記入を行います。\n\n【記入項目】\n・日付\n・取引先/品名\n・数量・単価・金額\n・残高計算\n\n【作成指示】\n1. 取引順に記帳\n2. 単価計算方法の適用\n3. 残高の継続的管理\n4. 月末棚卸との照合",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "2",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_L_017",
+    "questionText": "【商品有高帳（先入先出法）記入問題】\n\n2025年10月の商品有高帳（先入先出法）を作成してください。\n\n単価・残高計算を行います。\n\n【記入項目】\n・日付\n・取引先/品名\n・数量・単価・金額\n・残高計算\n\n【作成指示】\n1. 取引順に記帳\n2. 単価計算方法の適用\n3. 残高の継続的管理\n4. 月末棚卸との照合",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "10",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_018",
+    "questionText": "【商品有高帳（移動平均法）記入問題】\n\n2025年6月の商品有高帳（移動平均法）を作成してください。\n\n単価・残高計算を行います。\n\n【記入項目】\n・日付\n・取引先/品名\n・数量・単価・金額\n・残高計算\n\n【作成指示】\n1. 取引順に記帳\n2. 単価計算方法の適用\n3. 残高の継続的管理\n4. 月末棚卸との照合",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "6",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_019",
+    "questionText": "【売掛金元帳・買掛金元帳記入問題】\n\n2025年2月の売掛金元帳・買掛金元帳を作成してください。\n\n残高管理を含む詳細な記帳を行います。\n\n【作成指示】\n1. 得意先別・仕入先別の管理\n2. 発生・回収・支払の記録\n3. 手形期日の管理\n4. 残高の確認と照合",
+    "transactionType": [
+      "手形処理",
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2025",
+      "2",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_020",
+    "questionText": "【受取手形記入帳・支払手形記入帳記入問題】\n\n2025年1月の受取手形記入帳・支払手形記入帳を作成してください。\n\n期日管理を含む詳細な記帳を行います。\n\n【作成指示】\n1. 得意先別・仕入先別の管理\n2. 発生・回収・支払の記録\n3. 手形期日の管理\n4. 残高の確認と照合",
+    "transactionType": [
+      "手形処理",
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2025",
+      "1",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_021",
+    "questionText": "【3伝票制：入金伝票による現金収入取引】\n\n2025年5月の取引を3伝票制により記録してください。\n\n【取引内容】\n27日：取引金額 627,660円\n20日：取引金額 386,900円\n1日：取引金額 319,066円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "3",
+      "2025",
+      "5",
+      "3",
+      "27",
+      "627660",
+      "20",
+      "386900",
+      "1",
+      "319066",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_022",
+    "questionText": "【3伝票制：出金伝票による現金支出取引】\n\n2025年2月の取引を3伝票制により記録してください。\n\n【取引内容】\n24日：取引金額 682,448円\n15日：取引金額 572,665円\n8日：取引金額 666,219円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "3",
+      "2025",
+      "2",
+      "3",
+      "24",
+      "682448",
+      "15",
+      "572665",
+      "8",
+      "666219",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_023",
+    "questionText": "【3伝票制：振替伝票による現金以外取引】\n\n2025年8月の取引を3伝票制により記録してください。\n\n【取引内容】\n3日：取引金額 301,530円\n7日：取引金額 280,539円\n12日：取引金額 406,302円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "振替処理"
+    ],
+    "keyNumbers": [
+      "3",
+      "2025",
+      "8",
+      "3",
+      "3",
+      "301530",
+      "7",
+      "280539",
+      "12",
+      "406302",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_024",
+    "questionText": "【3伝票制：掛け取引の振替伝票記入】\n\n2025年9月の取引を3伝票制により記録してください。\n\n【取引内容】\n27日：取引金額 85,665円\n24日：取引金額 191,383円\n11日：取引金額 151,791円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "振替処理"
+    ],
+    "keyNumbers": [
+      "3",
+      "2025",
+      "9",
+      "3",
+      "27",
+      "85665",
+      "24",
+      "191383",
+      "11",
+      "151791",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_025",
+    "questionText": "【3伝票制：一部現金取引の伝票分割】\n\n2025年5月の取引を3伝票制により記録してください。\n\n【取引内容】\n13日：取引金額 252,840円\n27日：取引金額 235,649円\n28日：取引金額 248,951円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "3",
+      "2025",
+      "5",
+      "3",
+      "13",
+      "252840",
+      "27",
+      "235649",
+      "28",
+      "248951",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_026",
+    "questionText": "【3伝票制：3伝票から仕訳日計表への集計】\n\n2025年11月の取引を3伝票制により記録してください。\n\n【取引内容】\n28日：取引金額 159,981円\n12日：取引金額 300,530円\n4日：取引金額 125,950円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "3",
+      "3",
+      "2025",
+      "11",
+      "3",
+      "28",
+      "159981",
+      "12",
+      "300530",
+      "4",
+      "125950",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_027",
+    "questionText": "【5伝票制：売上伝票による売上取引専用記録】\n\n2025年11月の取引を5伝票制により記録してください。\n\n【取引内容】\n22日：取引金額 526,373円\n7日：取引金額 705,035円\n18日：取引金額 296,150円\n\n【作成指示】\n1. 5伝票制の特徴理解\n2. 売上・仕入専用伝票の使用\n3. 他の伝票との使い分け\n4. 総勘定元帳への正確な転記",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "5",
+      "2025",
+      "11",
+      "5",
+      "22",
+      "526373",
+      "7",
+      "705035",
+      "18",
+      "296150",
+      "1",
+      "5",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_028",
+    "questionText": "【5伝票制：仕入伝票による仕入取引専用記録】\n\n2025年4月の取引を5伝票制により記録してください。\n\n【取引内容】\n17日：取引金額 178,273円\n11日：取引金額 197,758円\n28日：取引金額 155,282円\n\n【作成指示】\n1. 5伝票制の特徴理解\n2. 売上・仕入専用伝票の使用\n3. 他の伝票との使い分け\n4. 総勘定元帳への正確な転記",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "5",
+      "2025",
+      "4",
+      "5",
+      "17",
+      "178273",
+      "11",
+      "197758",
+      "28",
+      "155282",
+      "1",
+      "5",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_029",
+    "questionText": "【5伝票制：5伝票制での取引分類・適用判定】\n\n2025年4月の取引を5伝票制により記録してください。\n\n【取引内容】\n25日：取引金額 611,082円\n25日：取引金額 739,173円\n8日：取引金額 436,244円\n\n【作成指示】\n1. 5伝票制の特徴理解\n2. 売上・仕入専用伝票の使用\n3. 他の伝票との使い分け\n4. 総勘定元帳への正確な転記",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "5",
+      "5",
+      "2025",
+      "4",
+      "5",
+      "25",
+      "611082",
+      "25",
+      "739173",
+      "8",
+      "436244",
+      "1",
+      "5",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_030",
+    "questionText": "【5伝票制：5伝票から総勘定元帳への転記】\n\n2025年8月の取引を5伝票制により記録してください。\n\n【取引内容】\n8日：取引金額 605,681円\n8日：取引金額 700,622円\n4日：取引金額 764,578円\n\n【作成指示】\n1. 5伝票制の特徴理解\n2. 売上・仕入専用伝票の使用\n3. 他の伝票との使い分け\n4. 総勘定元帳への正確な転記",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "5",
+      "5",
+      "2025",
+      "8",
+      "5",
+      "8",
+      "605681",
+      "8",
+      "700622",
+      "4",
+      "764578",
+      "1",
+      "5",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_031",
+    "questionText": "【理論問題：簿記の基本原理と記帳体系】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n簿記の基本原理と記帳体系に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 貸借平均\nB. 負債\nC. 商業簿記\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_032",
+    "questionText": "【理論問題：仕訳の原則と借方・貸方の理解】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n仕訳の原則と借方・貸方の理解に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 単式簿記\nC. 収益\nD. 収益\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_033",
+    "questionText": "【理論問題：帳簿組織と補助簿の役割】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n帳簿組織と補助簿の役割に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 貸方\nC. 貸借対照\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_034",
+    "questionText": "【理論問題：伝票制度の種類と特徴】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n伝票制度の種類と特徴に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 資産\nB. 単式簿記\nC. 商業簿記\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_035",
+    "questionText": "【理論問題：試算表の種類と作成目的】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n試算表の種類と作成目的に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 資産\nB. 損益計算\nC. 貸借対照\nD. 試算表\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_036",
+    "questionText": "【理論問題：決算整理の意義と手続き】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n決算整理の意義と手続きに関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 損益計算\nC. 貸借対照\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算整理"
+    ],
+    "keyNumbers": [
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "low"
+  },
+  {
+    "id": "Q_L_037",
+    "questionText": "【理論問題：財務諸表の構成要素】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n財務諸表の構成要素に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 複式簿記\nB. 負債\nC. 収益\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_038",
+    "questionText": "【理論問題：勘定科目の分類と体系】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n勘定科目の分類と体系に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 負債\nC. 商業簿記\nD. 試算表\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_039",
+    "questionText": "【理論問題：簿記上の取引の定義】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n簿記上の取引の定義に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 資産\nB. 負債\nC. 商業簿記\nD. 試算表\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_L_040",
+    "questionText": "【理論問題：複式簿記の特徴と利点】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n複式簿記の特徴と利点に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 貸借平均\nB. 負債\nC. 商業簿記\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+    "transactionType": [
+      "一般仕訳"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [],
+    "keyNumbers": [
+      "2"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "none"
+  },
+  {
+    "id": "Q_T_001",
+    "questionText": "【決算整理後試算表作成問題】\n\n2025年9月の取引および決算整理事項から、決算整理後試算表を作成し、貸借対照表と損益計算書を作成してください。\n\n【期中取引】\n9月2日 前払金 867,000 / 現金 867,000 （前払金支払）\n9月4日 水道光熱費 833,000 / 現金 833,000 （水道光熱費支払）\n9月4日 現金 256,000 / 資本金 256,000 （資本金受入）\n9月9日 消耗品費 384,000 / 現金 384,000 （消耗品購入）\n9月9日 借入金 447,000 / 現金 447,000 （借入金返済）\n9月10日 仕入 851,000 / 買掛金 851,000 （商品仕入）\n9月15日 借入金 105,000 / 現金 105,000 （借入金返済）\n9月17日 現金 167,000 / 売上 167,000 （商品売上）\n\n【決算整理事項】\n・貸倒引当金設定：貸倒引当金繰入 934,000 / 貸倒引当金 934,000\n・減価償却：減価償却費 331,000 / 減価償却累計額 331,000\n・前払費用計上：前払費用 709,000 / 保険料 709,000\n\n【作成指示】\n1. 上記取引を仕訳する\n2. 決算整理仕訳を行う\n3. 決算整理後試算表を作成する\n4. 貸借対照表と損益計算書を作成する",
+    "transactionType": [
+      "商品売買",
+      "保険料処理",
+      "減価償却",
+      "貸倒処理",
+      "前払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算整理",
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "2025",
+      "9",
+      "9",
+      "2",
+      "867000",
+      "867000",
+      "9",
+      "4",
+      "833000",
+      "833000",
+      "9",
+      "4",
+      "256000",
+      "256000",
+      "9",
+      "9",
+      "384000",
+      "384000",
+      "9",
+      "9",
+      "447000",
+      "447000",
+      "9",
+      "10",
+      "851000",
+      "851000",
+      "9",
+      "15",
+      "105000",
+      "105000",
+      "9",
+      "17",
+      "167000",
+      "167000",
+      "934000",
+      "934000",
+      "331000",
+      "331000",
+      "709000",
+      "709000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_T_002",
+    "questionText": "【決算整理後試算表作成問題】\n\n2025年10月の取引および決算整理事項から、決算整理後試算表を作成し、貸借対照表と損益計算書を作成してください。\n\n【期中取引】\n10月1日 現金 757,000 / 資本金 757,000 （資本金受入）\n10月4日 前払金 353,000 / 現金 353,000 （前払金支払）\n10月5日 現金 624,000 / 前受金 624,000 （前受金受取）\n10月8日 仕入 970,000 / 買掛金 970,000 （商品仕入）\n10月12日 水道光熱費 229,000 / 現金 229,000 （水道光熱費支払）\n10月23日 売掛金 941,000 / 売上 941,000 （掛売上）\n10月27日 現金 857,000 / 売掛金 857,000 （売掛金回収）\n10月27日 商品 806,000 / 買掛金 806,000 （商品仕入）\n\n【決算整理事項】\n・貸倒引当金設定：貸倒引当金繰入 590,000 / 貸倒引当金 590,000\n・減価償却：減価償却費 386,000 / 減価償却累計額 386,000\n\n【作成指示】\n1. 上記取引を仕訳する\n2. 決算整理仕訳を行う\n3. 決算整理後試算表を作成する\n4. 貸借対照表と損益計算書を作成する",
+    "transactionType": [
+      "商品売買",
+      "減価償却",
+      "貸倒処理",
+      "前払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算整理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "10",
+      "10",
+      "1",
+      "757000",
+      "757000",
+      "10",
+      "4",
+      "353000",
+      "353000",
+      "10",
+      "5",
+      "624000",
+      "624000",
+      "10",
+      "8",
+      "970000",
+      "970000",
+      "10",
+      "12",
+      "229000",
+      "229000",
+      "10",
+      "23",
+      "941000",
+      "941000",
+      "10",
+      "27",
+      "857000",
+      "857000",
+      "10",
+      "27",
+      "806000",
+      "806000",
+      "590000",
+      "590000",
+      "386000",
+      "386000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_T_003",
+    "questionText": "【決算整理後試算表作成問題】\n\n2025年12月の取引および決算整理事項から、決算整理後試算表を作成し、貸借対照表と損益計算書を作成してください。\n\n【期中取引】\n12月16日 水道光熱費 517,000 / 現金 517,000 （水道光熱費支払）\n12月17日 旅費交通費 847,000 / 現金 847,000 （交通費支払）\n12月19日 広告宣伝費 631,000 / 現金 631,000 （広告費支払）\n12月20日 消耗品費 399,000 / 現金 399,000 （消耗品購入）\n12月20日 水道光熱費 832,000 / 現金 832,000 （水道光熱費支払）\n12月22日 仕入 140,000 / 買掛金 140,000 （商品仕入）\n12月22日 広告宣伝費 836,000 / 現金 836,000 （広告費支払）\n12月27日 広告宣伝費 189,000 / 現金 189,000 （広告費支払）\n\n【決算整理事項】\n・貸倒引当金設定：貸倒引当金繰入 185,000 / 貸倒引当金 185,000\n・減価償却：減価償却費 426,000 / 減価償却累計額 426,000\n・前払費用計上：前払費用 341,000 / 保険料 341,000\n\n【作成指示】\n1. 上記取引を仕訳する\n2. 決算整理仕訳を行う\n3. 決算整理後試算表を作成する\n4. 貸借対照表と損益計算書を作成する",
+    "transactionType": [
+      "商品売買",
+      "保険料処理",
+      "減価償却",
+      "貸倒処理",
+      "前払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算整理",
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "2025",
+      "12",
+      "12",
+      "16",
+      "517000",
+      "517000",
+      "12",
+      "17",
+      "847000",
+      "847000",
+      "12",
+      "19",
+      "631000",
+      "631000",
+      "12",
+      "20",
+      "399000",
+      "399000",
+      "12",
+      "20",
+      "832000",
+      "832000",
+      "12",
+      "22",
+      "140000",
+      "140000",
+      "12",
+      "22",
+      "836000",
+      "836000",
+      "12",
+      "27",
+      "189000",
+      "189000",
+      "185000",
+      "185000",
+      "426000",
+      "426000",
+      "341000",
+      "341000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_T_004",
+    "questionText": "【決算整理後試算表作成問題】\n\n2025年9月の取引および決算整理事項から、決算整理後試算表を作成し、貸借対照表と損益計算書を作成してください。\n\n【期中取引】\n9月9日 前払金 674,000 / 現金 674,000 （前払金支払）\n9月10日 商品 245,000 / 買掛金 245,000 （商品仕入）\n9月21日 借入金 798,000 / 現金 798,000 （借入金返済）\n9月21日 給料 786,000 / 現金 786,000 （給料支払）\n9月22日 水道光熱費 917,000 / 現金 917,000 （水道光熱費支払）\n9月23日 仕入 645,000 / 買掛金 645,000 （商品仕入）\n9月27日 現金 214,000 / 資本金 214,000 （資本金受入）\n9月28日 現金 372,000 / 前受金 372,000 （前受金受取）\n\n【決算整理事項】\n・貸倒引当金設定：貸倒引当金繰入 630,000 / 貸倒引当金 630,000\n・減価償却：減価償却費 818,000 / 減価償却累計額 818,000\n・前払費用計上：前払費用 104,000 / 保険料 104,000\n\n【作成指示】\n1. 上記取引を仕訳する\n2. 決算整理仕訳を行う\n3. 決算整理後試算表を作成する\n4. 貸借対照表と損益計算書を作成する",
+    "transactionType": [
+      "商品売買",
+      "給与支払",
+      "保険料処理",
+      "減価償却",
+      "貸倒処理",
+      "前払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算整理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "9",
+      "9",
+      "9",
+      "674000",
+      "674000",
+      "9",
+      "10",
+      "245000",
+      "245000",
+      "9",
+      "21",
+      "798000",
+      "798000",
+      "9",
+      "21",
+      "786000",
+      "786000",
+      "9",
+      "22",
+      "917000",
+      "917000",
+      "9",
+      "23",
+      "645000",
+      "645000",
+      "9",
+      "27",
+      "214000",
+      "214000",
+      "9",
+      "28",
+      "372000",
+      "372000",
+      "630000",
+      "630000",
+      "818000",
+      "818000",
+      "104000",
+      "104000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_T_005",
+    "questionText": "【8桁精算表作成問題】\n\n2025年1月末の決算整理前試算表と決算整理事項から、8桁精算表を作成してください。\n\n【決算整理前試算表】\n現金（借方）：213,000円\n小口現金（貸方）：311,000円\n当座預金（貸方）：399,000円\n普通預金（貸方）：471,000円\n受取手形（貸方）：697,000円\n売掛金（借方）：528,000円\n商品（借方）：369,000円\n繰越商品（貸方）：433,000円\n仕入（借方）：324,000円\n売上（貸方）：156,000円\n支払手形（貸方）：149,000円\n買掛金（貸方）：759,000円\n\n【決算整理事項】\n・貸倒引当金設定：935,000円\n・減価償却：268,000円\n\n【作成指示】\n1. 決算整理前試算表の残高を転記\n2. 決算整理仕訳を記入\n3. 決算整理後試算表を作成\n4. 損益計算書欄と貸借対照表欄を完成させる",
+    "transactionType": [
+      "手形処理",
+      "商品売買",
+      "減価償却",
+      "貸倒処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理",
+      "決算整理"
+    ],
+    "keyNumbers": [
+      "8",
+      "2025",
+      "1",
+      "8",
+      "213000",
+      "311000",
+      "399000",
+      "471000",
+      "697000",
+      "528000",
+      "369000",
+      "433000",
+      "324000",
+      "156000",
+      "149000",
+      "759000",
+      "935000",
+      "268000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_T_006",
+    "questionText": "【8桁精算表作成問題】\n\n2025年5月末の決算整理前試算表と決算整理事項から、8桁精算表を作成してください。\n\n【決算整理前試算表】\n現金（借方）：680,000円\n小口現金（貸方）：423,000円\n当座預金（貸方）：854,000円\n普通預金（貸方）：344,000円\n受取手形（貸方）：382,000円\n売掛金（借方）：943,000円\n商品（借方）：953,000円\n繰越商品（貸方）：447,000円\n仕入（借方）：241,000円\n売上（貸方）：933,000円\n支払手形（貸方）：488,000円\n買掛金（貸方）：565,000円\n\n【決算整理事項】\n・貸倒引当金設定：728,000円\n・減価償却：536,000円\n・前払費用計上：875,000円\n\n【作成指示】\n1. 決算整理前試算表の残高を転記\n2. 決算整理仕訳を記入\n3. 決算整理後試算表を作成\n4. 損益計算書欄と貸借対照表欄を完成させる",
+    "transactionType": [
+      "手形処理",
+      "商品売買",
+      "減価償却",
+      "貸倒処理",
+      "前払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理",
+      "決算整理"
+    ],
+    "keyNumbers": [
+      "8",
+      "2025",
+      "5",
+      "8",
+      "680000",
+      "423000",
+      "854000",
+      "344000",
+      "382000",
+      "943000",
+      "953000",
+      "447000",
+      "241000",
+      "933000",
+      "488000",
+      "565000",
+      "728000",
+      "536000",
+      "875000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_T_007",
+    "questionText": "【8桁精算表作成問題】\n\n2025年9月末の決算整理前試算表と決算整理事項から、8桁精算表を作成してください。\n\n【決算整理前試算表】\n現金（借方）：992,000円\n小口現金（貸方）：488,000円\n当座預金（貸方）：242,000円\n普通預金（貸方）：979,000円\n受取手形（貸方）：854,000円\n売掛金（借方）：841,000円\n商品（借方）：594,000円\n繰越商品（貸方）：960,000円\n仕入（借方）：650,000円\n売上（貸方）：363,000円\n支払手形（貸方）：540,000円\n買掛金（貸方）：679,000円\n\n【決算整理事項】\n・貸倒引当金設定：947,000円\n・減価償却：744,000円\n・前払費用計上：153,000円\n\n【作成指示】\n1. 決算整理前試算表の残高を転記\n2. 決算整理仕訳を記入\n3. 決算整理後試算表を作成\n4. 損益計算書欄と貸借対照表欄を完成させる",
+    "transactionType": [
+      "手形処理",
+      "商品売買",
+      "減価償却",
+      "貸倒処理",
+      "前払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理",
+      "決算整理"
+    ],
+    "keyNumbers": [
+      "8",
+      "2025",
+      "9",
+      "8",
+      "992000",
+      "488000",
+      "242000",
+      "979000",
+      "854000",
+      "841000",
+      "594000",
+      "960000",
+      "650000",
+      "363000",
+      "540000",
+      "679000",
+      "947000",
+      "744000",
+      "153000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_T_008",
+    "questionText": "【8桁精算表作成問題】\n\n2025年11月末の決算整理前試算表と決算整理事項から、8桁精算表を作成してください。\n\n【決算整理前試算表】\n現金（借方）：863,000円\n小口現金（貸方）：875,000円\n当座預金（貸方）：508,000円\n普通預金（貸方）：488,000円\n受取手形（貸方）：310,000円\n売掛金（借方）：797,000円\n商品（借方）：977,000円\n繰越商品（貸方）：328,000円\n仕入（借方）：636,000円\n売上（貸方）：624,000円\n支払手形（貸方）：741,000円\n買掛金（貸方）：972,000円\n\n【決算整理事項】\n・貸倒引当金設定：693,000円\n・減価償却：178,000円\n・前払費用計上：263,000円\n\n【作成指示】\n1. 決算整理前試算表の残高を転記\n2. 決算整理仕訳を記入\n3. 決算整理後試算表を作成\n4. 損益計算書欄と貸借対照表欄を完成させる",
+    "transactionType": [
+      "手形処理",
+      "商品売買",
+      "減価償却",
+      "貸倒処理",
+      "前払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "月次処理",
+      "決算整理"
+    ],
+    "keyNumbers": [
+      "8",
+      "2025",
+      "11",
+      "8",
+      "863000",
+      "875000",
+      "508000",
+      "488000",
+      "310000",
+      "797000",
+      "977000",
+      "328000",
+      "636000",
+      "624000",
+      "741000",
+      "972000",
+      "693000",
+      "178000",
+      "263000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_T_009",
+    "questionText": "【合計試算表作成問題】\n\n2025年2月の期首残高と期中取引から、2月末の合計試算表を作成してください。\n\n【期首残高】\n現金：525,000円（借方残高）\n商品：151,000円（借方残高）\n売掛金：473,000円（借方残高）\n買掛金：798,000円（貸方残高）\n資本金：796,000円（貸方残高）\n\n【期中取引】\n2月1日 現金 414,000 / 借入金 414,000 （借入）\n2月2日 給料 784,000 / 現金 784,000 （給料支払）\n2月6日 売掛金 591,000 / 売上 591,000 （掛売上）\n2月7日 仕入 923,000 / 買掛金 923,000 （商品仕入）\n2月10日 前払金 274,000 / 現金 274,000 （前払金支払）\n2月12日 買掛金 461,000 / 現金 461,000 （買掛金支払）\n2月13日 現金 405,000 / 売上 405,000 （商品売上）\n2月21日 水道光熱費 196,000 / 現金 196,000 （水道光熱費支払）\n2月27日 借入金 663,000 / 現金 663,000 （借入金返済）\n2月27日 現金 705,000 / 前受金 705,000 （前受金受取）\n\n【作成指示】\n1. 各勘定科目の借方合計と貸方合計を計算\n2. 合計試算表を作成\n3. 借方合計と貸方合計が一致することを確認\n4. 各勘定科目の残高を算出",
+    "transactionType": [
+      "商品売買",
+      "給与支払",
+      "前払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理",
+      "月次処理"
+    ],
+    "keyNumbers": [
+      "2025",
+      "2",
+      "2",
+      "525000",
+      "151000",
+      "473000",
+      "798000",
+      "796000",
+      "2",
+      "1",
+      "414000",
+      "414000",
+      "2",
+      "2",
+      "784000",
+      "784000",
+      "2",
+      "6",
+      "591000",
+      "591000",
+      "2",
+      "7",
+      "923000",
+      "923000",
+      "2",
+      "10",
+      "274000",
+      "274000",
+      "2",
+      "12",
+      "461000",
+      "461000",
+      "2",
+      "13",
+      "405000",
+      "405000",
+      "2",
+      "21",
+      "196000",
+      "196000",
+      "2",
+      "27",
+      "663000",
+      "663000",
+      "2",
+      "27",
+      "705000",
+      "705000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_T_010",
+    "questionText": "【合計試算表作成問題】\n\n2025年2月の期首残高と期中取引から、2月末の合計試算表を作成してください。\n\n【期首残高】\n現金：192,000円（借方残高）\n商品：283,000円（借方残高）\n売掛金：727,000円（借方残高）\n買掛金：318,000円（貸方残高）\n資本金：476,000円（貸方残高）\n\n【期中取引】\n2月1日 現金 504,000 / 売上 504,000 （商品売上）\n2月2日 仕入 983,000 / 買掛金 983,000 （商品仕入）\n2月5日 現金 744,000 / 借入金 744,000 （借入）\n2月16日 現金 445,000 / 売掛金 445,000 （売掛金回収）\n2月17日 通信費 628,000 / 現金 628,000 （通信費支払）\n2月22日 消耗品費 624,000 / 現金 624,000 （消耗品購入）\n2月24日 仕入 946,000 / 買掛金 946,000 （商品仕入）\n2月25日 広告宣伝費 933,000 / 現金 933,000 （広告費支払）\n2月26日 現金 756,000 / 借入金 756,000 （借入）\n2月28日 借入金 932,000 / 現金 932,000 （借入金返済）\n\n【作成指示】\n1. 各勘定科目の借方合計と貸方合計を計算\n2. 合計試算表を作成\n3. 借方合計と貸方合計が一致することを確認\n4. 各勘定科目の残高を算出",
+    "transactionType": [
+      "商品売買"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理",
+      "月次処理",
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "2025",
+      "2",
+      "2",
+      "192000",
+      "283000",
+      "727000",
+      "318000",
+      "476000",
+      "2",
+      "1",
+      "504000",
+      "504000",
+      "2",
+      "2",
+      "983000",
+      "983000",
+      "2",
+      "5",
+      "744000",
+      "744000",
+      "2",
+      "16",
+      "445000",
+      "445000",
+      "2",
+      "17",
+      "628000",
+      "628000",
+      "2",
+      "22",
+      "624000",
+      "624000",
+      "2",
+      "24",
+      "946000",
+      "946000",
+      "2",
+      "25",
+      "933000",
+      "933000",
+      "2",
+      "26",
+      "756000",
+      "756000",
+      "2",
+      "28",
+      "932000",
+      "932000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_T_011",
+    "questionText": "【合計試算表作成問題】\n\n2025年4月の期首残高と期中取引から、4月末の合計試算表を作成してください。\n\n【期首残高】\n現金：667,000円（借方残高）\n商品：282,000円（借方残高）\n売掛金：201,000円（借方残高）\n買掛金：624,000円（貸方残高）\n資本金：264,000円（貸方残高）\n\n【期中取引】\n4月9日 前払金 772,000 / 現金 772,000 （前払金支払）\n4月10日 買掛金 809,000 / 現金 809,000 （買掛金支払）\n4月10日 通信費 176,000 / 現金 176,000 （通信費支払）\n4月18日 現金 383,000 / 前受金 383,000 （前受金受取）\n4月18日 旅費交通費 401,000 / 現金 401,000 （交通費支払）\n4月21日 売掛金 593,000 / 売上 593,000 （掛売上）\n4月22日 消耗品費 580,000 / 現金 580,000 （消耗品購入）\n4月24日 消耗品費 763,000 / 現金 763,000 （消耗品購入）\n4月27日 通信費 567,000 / 現金 567,000 （通信費支払）\n4月27日 現金 143,000 / 売上 143,000 （商品売上）\n\n【作成指示】\n1. 各勘定科目の借方合計と貸方合計を計算\n2. 合計試算表を作成\n3. 借方合計と貸方合計が一致することを確認\n4. 各勘定科目の残高を算出",
+    "transactionType": [
+      "商品売買",
+      "前払費用"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理",
+      "月次処理",
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "2025",
+      "4",
+      "4",
+      "667000",
+      "282000",
+      "201000",
+      "624000",
+      "264000",
+      "4",
+      "9",
+      "772000",
+      "772000",
+      "4",
+      "10",
+      "809000",
+      "809000",
+      "4",
+      "10",
+      "176000",
+      "176000",
+      "4",
+      "18",
+      "383000",
+      "383000",
+      "4",
+      "18",
+      "401000",
+      "401000",
+      "4",
+      "21",
+      "593000",
+      "593000",
+      "4",
+      "22",
+      "580000",
+      "580000",
+      "4",
+      "24",
+      "763000",
+      "763000",
+      "4",
+      "27",
+      "567000",
+      "567000",
+      "4",
+      "27",
+      "143000",
+      "143000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  },
+  {
+    "id": "Q_T_012",
+    "questionText": "【合計試算表作成問題】\n\n2025年1月の期首残高と期中取引から、1月末の合計試算表を作成してください。\n\n【期首残高】\n現金：707,000円（借方残高）\n商品：429,000円（借方残高）\n売掛金：167,000円（借方残高）\n買掛金：931,000円（貸方残高）\n資本金：919,000円（貸方残高）\n\n【期中取引】\n1月3日 水道光熱費 619,000 / 現金 619,000 （水道光熱費支払）\n1月3日 給料 661,000 / 現金 661,000 （給料支払）\n1月7日 商品 177,000 / 買掛金 177,000 （商品仕入）\n1月11日 消耗品費 392,000 / 現金 392,000 （消耗品購入）\n1月13日 現金 950,000 / 売掛金 950,000 （売掛金回収）\n1月14日 借入金 875,000 / 現金 875,000 （借入金返済）\n1月22日 借入金 754,000 / 現金 754,000 （借入金返済）\n1月24日 家賃 493,000 / 現金 493,000 （家賃支払）\n1月24日 給料 747,000 / 現金 747,000 （給料支払）\n1月25日 現金 637,000 / 売掛金 637,000 （売掛金回収）\n\n【作成指示】\n1. 各勘定科目の借方合計と貸方合計を計算\n2. 合計試算表を作成\n3. 借方合計と貸方合計が一致することを確認\n4. 各勘定科目の残高を算出",
+    "transactionType": [
+      "商品売買",
+      "給与支払",
+      "家賃処理"
+    ],
+    "specificAccounts": [],
+    "amounts": [],
+    "businessContext": [
+      "決算処理",
+      "月次処理",
+      "資産取得"
+    ],
+    "keyNumbers": [
+      "2025",
+      "1",
+      "1",
+      "707000",
+      "429000",
+      "167000",
+      "931000",
+      "919000",
+      "1",
+      "3",
+      "619000",
+      "619000",
+      "1",
+      "3",
+      "661000",
+      "661000",
+      "1",
+      "7",
+      "177000",
+      "177000",
+      "1",
+      "11",
+      "392000",
+      "392000",
+      "1",
+      "13",
+      "950000",
+      "950000",
+      "1",
+      "14",
+      "875000",
+      "875000",
+      "1",
+      "22",
+      "754000",
+      "754000",
+      "1",
+      "24",
+      "493000",
+      "493000",
+      "1",
+      "24",
+      "747000",
+      "747000",
+      "1",
+      "25",
+      "637000",
+      "637000",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "canCustomize": true,
+    "customizationLevel": "medium"
+  }
+]

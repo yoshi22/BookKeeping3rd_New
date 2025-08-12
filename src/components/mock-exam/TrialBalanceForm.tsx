@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -22,7 +22,6 @@ export interface TrialBalanceEntry {
 }
 
 export interface TrialBalanceFormProps {
-  questionText: string;
   onSubmit: (entries: TrialBalanceEntry[]) => void;
   onNext?: () => void;
   onPrevious?: () => void;
@@ -98,7 +97,6 @@ const ACCOUNT_OPTIONS = [
 ];
 
 export default function TrialBalanceForm({
-  questionText,
   onSubmit,
   onNext,
   onPrevious,
@@ -148,15 +146,29 @@ export default function TrialBalanceForm({
     }
   };
 
-  const updateEntry = (
-    index: number,
-    field: keyof TrialBalanceEntry,
-    value: any,
-  ) => {
-    const newEntries = [...entries];
-    newEntries[index] = { ...newEntries[index], [field]: value };
-    setEntries(newEntries);
-  };
+  const updateEntry = useCallback(
+    (index: number, field: keyof TrialBalanceEntry, value: any) => {
+      console.log("[TrialBalanceForm] updateEntry called:", {
+        index,
+        field,
+        value,
+      });
+
+      setEntries((prevEntries) => {
+        const newEntries = [...prevEntries];
+        newEntries[index] = { ...newEntries[index], [field]: value };
+
+        console.log("[TrialBalanceForm] updateEntry setting new state:", {
+          oldEntries: prevEntries,
+          newEntries,
+          targetEntry: newEntries[index],
+        });
+
+        return newEntries;
+      });
+    },
+    [],
+  );
 
   const validateAndSubmit = () => {
     // 入力された項目を抽出
@@ -254,25 +266,6 @@ export default function TrialBalanceForm({
     <ScrollView
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
-      {/* 問題文 */}
-      <View
-        style={[styles.questionCard, { backgroundColor: theme.colors.surface }]}
-      >
-        <Text
-          style={[styles.questionNumber, { color: theme.colors.textSecondary }]}
-        >
-          第3問 問{questionNumber}/{totalQuestions}
-        </Text>
-        <Text
-          style={[styles.remainingTime, { color: theme.colors.textSecondary }]}
-        >
-          残り時間: {timeRemaining}
-        </Text>
-        <Text style={[styles.questionText, { color: theme.colors.text }]}>
-          {questionText}
-        </Text>
-      </View>
-
       {/* 試算表フォーム */}
       <View
         style={[styles.formCard, { backgroundColor: theme.colors.surface }]}
@@ -675,7 +668,6 @@ export default function TrialBalanceForm({
         visible={explanationModalVisible}
         onClose={() => setExplanationModalVisible(false)}
         explanation={explanation || ""}
-        questionText={questionText}
         correctAnswer={correctAnswer}
         userAnswer={userAnswer}
         isCorrect={isCorrect}

@@ -231,6 +231,20 @@ export default function QuestionScreen() {
     );
   }
 
+  // Parse answer template from question data
+  const getAnswerTemplate = (question: any) => {
+    if (!question?.answer_template_json) return undefined;
+    
+    try {
+      const template = JSON.parse(question.answer_template_json);
+      console.log("[QuestionScreen] Parsed answer template:", template);
+      return template;
+    } catch (error) {
+      console.warn("[QuestionScreen] answer_template_json解析エラー:", error);
+      return undefined;
+    }
+  };
+
   // 問題タイプに応じた解答フィールドを取得
   const getAnswerFields = (question: any) => {
     if (!question) return [];
@@ -353,6 +367,7 @@ export default function QuestionScreen() {
         sessionType={(sessionType as SessionType) || "learning"}
         startTime={questionStartTime}
         onSubmitAnswer={handleAnswerSubmitted}
+        answerTemplate={getAnswerTemplate(currentQuestion)}
       />
 
       {/* 解答結果ダイアログ */}

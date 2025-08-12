@@ -60,6 +60,80 @@ export default function ExplanationPanel({
   const renderCorrectAnswer = () => {
     if (!correctAnswer) return null;
 
+    
+    // 伝票問題の場合（vouchers配列）
+    if (correctAnswer.vouchers && Array.isArray(correctAnswer.vouchers)) {
+      const vouchers = correctAnswer.vouchers;
+      return (
+        <View style={styles.correctAnswerSection}>
+          <Text style={styles.correctAnswerTitle}>正答</Text>
+          {vouchers.map((voucher: any, vIndex: number) => (
+            <View key={vIndex} style={styles.voucherBox}>
+              <Text style={styles.voucherTitle}>{voucher.type}</Text>
+              {voucher.entries && voucher.entries.map((entry: any, eIndex: number) => (
+                <View key={eIndex} style={styles.voucherEntry}>
+                  {entry.date && (
+                    <Text style={styles.entryText}>日付: {entry.date}</Text>
+                  )}
+                  {entry.account && (
+                    <Text style={styles.entryText}>勘定科目: {entry.account}</Text>
+                  )}
+                  {entry.amount !== undefined && (
+                    <Text style={styles.entryText}>金額: {formatAnswerValue(entry.amount)}円</Text>
+                  )}
+                  {entry.debit_account && (
+                    <Text style={styles.entryText}>借方科目: {entry.debit_account}</Text>
+                  )}
+                  {entry.debit_amount !== undefined && (
+                    <Text style={styles.entryText}>借方金額: {formatAnswerValue(entry.debit_amount)}円</Text>
+                  )}
+                  {entry.credit_account && (
+                    <Text style={styles.entryText}>貸方科目: {entry.credit_account}</Text>
+                  )}
+                  {entry.credit_amount !== undefined && (
+                    <Text style={styles.entryText}>貸方金額: {formatAnswerValue(entry.credit_amount)}円</Text>
+                  )}
+                  {entry.description && (
+                    <Text style={styles.entryText}>摘要: {entry.description}</Text>
+                  )}
+                  {entry.customer && (
+                    <Text style={styles.entryText}>得意先: {entry.customer}</Text>
+                  )}
+                  {entry.supplier && (
+                    <Text style={styles.entryText}>仕入先: {entry.supplier}</Text>
+                  )}
+                  {entry.payment_type && (
+                    <Text style={styles.entryText}>取引区分: {entry.payment_type}</Text>
+                  )}
+                </View>
+              ))}
+            </View>
+          ))}
+        </View>
+      );
+    }
+
+    // 選択問題の場合（single_choice/multiple_choice）
+    if (correctAnswer.selected !== undefined || correctAnswer.selected_options !== undefined) {
+      return (
+        <View style={styles.correctAnswerSection}>
+          <Text style={styles.correctAnswerTitle}>正答</Text>
+          <View style={styles.choiceAnswerBox}>
+            {correctAnswer.selected !== undefined ? (
+              <Text style={styles.selectedText}>
+                正解: {correctAnswer.selected}番
+              </Text>
+            ) : correctAnswer.selected_options ? (
+              <Text style={styles.selectedText}>
+                正解: {correctAnswer.selected_options.join(", ")}
+              </Text>
+            ) : null}
+          </View>
+        </View>
+      );
+    }
+
+
     // 帳簿問題（複数エントリ）の場合
     if (correctAnswer.ledgerEntry?.entries) {
       const entries = correctAnswer.ledgerEntry.entries;
@@ -76,7 +150,7 @@ export default function ExplanationPanel({
               <Text style={styles.entryText}>
                 借方金額:{" "}
                 {formatAnswerValue(
-                  entry.debitAmount || entry.debit_amount || 0,
+                  entry.debitAmount || entry.debit_amount || entry.amount || 0,
                 )}
                 円
               </Text>
@@ -93,7 +167,113 @@ export default function ExplanationPanel({
       );
     }
 
-    // 仕訳問題の場合
+    // 新形式の帳簿問題（entries直接配列）の場合
+    if (correctAnswer.entries && Array.isArray(correctAnswer.entries)) {
+      const entries = correctAnswer.entries;
+      return (
+        <View style={styles.correctAnswerSection}>
+          <Text style={styles.correctAnswerTitle}>正答</Text>
+          <View style={styles.ledgerTableBox}>
+            <View style={styles.ledgerTableHeader}>
+              <Text style={styles.ledgerHeaderText}>日付</Text>
+              <Text style={styles.ledgerHeaderText}>摘要</Text>
+              <Text style={styles.ledgerHeaderText}>借方</Text>
+              <Text style={styles.ledgerHeaderText}>貸方</Text>
+              <Text style={styles.ledgerHeaderText}>残高</Text>
+            </View>
+            {entries.map((entry: any, index: number) => {
+              // debitとbalanceがネストされている場合の処理
+              const debitValue =
+                typeof entry.debit === "object" && entry.debit?.entries
+                  ? entry.debit.entries[0]?.amount || 0
+                  : entry.debit || 0;
+              const creditValue = entry.credit || 0;
+              const balanceValue =
+                typeof entry.balance === "object" && entry.balance?.entries
+                  ? entry.balance.entries[0]?.amount || 0
+                  : entry.balance || 0;
+
+              return (
+                <View key={index} style={styles.ledgerTableRow}>
+                  <Text style={styles.ledgerCellText}>{entry.date || ""}</Text>
+                  <Text style={styles.ledgerCellText}>
+                    {entry.description || ""}
+                  </Text>
+                  <Text style={styles.ledgerCellAmount}>
+                    {debitValue > 0 ? formatAnswerValue(debitValue) : ""}
+                  </Text>
+                  <Text style={styles.ledgerCellAmount}>
+                    {creditValue > 0 ? formatAnswerValue(creditValue) : ""}
+                  </Text>
+                  <Text style={styles.ledgerCellAmount}>
+                    {balanceValue > 0 ? formatAnswerValue(balanceValue) : ""}
+                  </Text>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+      );
+    }
+
+    // 仕訳問題の場合（新形式：journalEntries配列）
+    if (
+      correctAnswer.journalEntries &&
+      Array.isArray(correctAnswer.journalEntries)
+    ) {
+      return (
+        <View style={styles.correctAnswerSection}>
+          <Text style={styles.correctAnswerTitle}>正答</Text>
+          <View style={styles.journalEntryBox}>
+            <View style={styles.journalRow}>
+              <View style={styles.journalColumn}>
+                <Text style={styles.journalHeader}>借方</Text>
+                {correctAnswer.journalEntries.map(
+                  (entry: any, index: number) => {
+                    if (entry.debit_account && entry.debit_amount > 0) {
+                      return (
+                        <View key={`debit-${index}`} style={styles.entryRow}>
+                          <Text style={styles.entryText}>
+                            {entry.debit_account}
+                          </Text>
+                          <Text style={styles.entryAmount}>
+                            {formatAnswerValue(entry.debit_amount)}円
+                          </Text>
+                        </View>
+                      );
+                    }
+                    return null;
+                  },
+                )}
+              </View>
+              <View style={styles.journalDivider} />
+              <View style={styles.journalColumn}>
+                <Text style={styles.journalHeader}>貸方</Text>
+                {correctAnswer.journalEntries.map(
+                  (entry: any, index: number) => {
+                    if (entry.credit_account && entry.credit_amount > 0) {
+                      return (
+                        <View key={`credit-${index}`} style={styles.entryRow}>
+                          <Text style={styles.entryText}>
+                            {entry.credit_account}
+                          </Text>
+                          <Text style={styles.entryAmount}>
+                            {formatAnswerValue(entry.credit_amount)}円
+                          </Text>
+                        </View>
+                      );
+                    }
+                    return null;
+                  },
+                )}
+              </View>
+            </View>
+          </View>
+        </View>
+      );
+    }
+
+    // 仕訳問題の場合（旧形式：journalEntry単一オブジェクト - 後方互換性のため残す）
     if (correctAnswer.journalEntry) {
       const entry = correctAnswer.journalEntry;
       return (
@@ -247,16 +427,6 @@ export default function ExplanationPanel({
               </Text>
             </ScrollView>
           </View>
-
-          {/* 学習ヒント */}
-          <View style={styles.hintSection}>
-            <Text style={styles.hintTitle}>💡 学習のコツ</Text>
-            <Text style={styles.hintText}>
-              {isCorrect
-                ? "正解です！この調子で他の問題にも挑戦してみましょう。"
-                : "間違いは学習の大切な機会です。解説をよく読んで理解を深めましょう。復習機能で再度挑戦できます。"}
-            </Text>
-          </View>
         </View>
       )}
     </View>
@@ -374,24 +544,6 @@ const styles = StyleSheet.create({
     color: "#444",
     textAlign: "left",
   },
-  hintSection: {
-    backgroundColor: "#f0f7ff",
-    padding: 16,
-    borderRadius: 8,
-    borderLeftWidth: 4,
-    borderLeftColor: "#2196f3",
-  },
-  hintTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#1976d2",
-    marginBottom: 8,
-  },
-  hintText: {
-    fontSize: 13,
-    lineHeight: 20,
-    color: "#1976d2",
-  },
   correctAnswerSection: {
     marginBottom: 16,
   },
@@ -460,5 +612,114 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 14,
     fontWeight: "bold",
+  },
+  journalRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  journalColumn: {
+    flex: 1,
+    paddingHorizontal: 8,
+  },
+  journalHeader: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 8,
+    textAlign: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "#4caf50",
+    paddingBottom: 4,
+  },
+  journalDivider: {
+    width: 1,
+    backgroundColor: "#4caf50",
+    marginHorizontal: 8,
+  },
+  entryRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 6,
+    paddingVertical: 2,
+  },
+  entryAmount: {
+    fontSize: 13,
+    color: "#333",
+    fontWeight: "500",
+    marginLeft: 8,
+  },
+  ledgerTableBox: {
+    backgroundColor: "#e8f5e8",
+    borderColor: "#4caf50",
+    borderWidth: 2,
+    borderRadius: 8,
+    overflow: "hidden",
+  },
+  ledgerTableHeader: {
+    flexDirection: "row",
+    backgroundColor: "#4caf50",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  ledgerHeaderText: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: "bold",
+    color: "white",
+    textAlign: "center",
+  },
+  ledgerTableRow: {
+    flexDirection: "row",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
+  },
+  ledgerCellText: {
+    flex: 1,
+    fontSize: 12,
+    color: "#333",
+    textAlign: "center",
+  },
+  ledgerCellAmount: {
+    flex: 1,
+    fontSize: 12,
+    color: "#333",
+    textAlign: "right",
+    fontWeight: "500",
+  },
+
+  voucherBox: {
+    backgroundColor: "#f9f9f9",
+    padding: 12,
+    marginBottom: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
+  },
+  voucherTitle: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+    paddingBottom: 4,
+  },
+  voucherEntry: {
+    paddingVertical: 4,
+    paddingLeft: 8,
+  },
+  choiceAnswerBox: {
+    backgroundColor: "#f0f8ff",
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#4a90e2",
+  },
+  selectedText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
   },
 });

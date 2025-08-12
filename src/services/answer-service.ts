@@ -266,6 +266,31 @@ export class AnswerService {
         parsedCorrectAnswer: correctAnswer,
       });
 
+      // First check if it's a choice question based on answer template
+      try {
+        const answerTemplate = JSON.parse(question.answer_template_json);
+        if (
+          answerTemplate?.type === "single_choice" ||
+          answerTemplate?.type === "multiple_choice"
+        ) {
+          console.log(
+            `[DEBUG] isAnswerCorrect - choice問題として処理: ${answerTemplate.type}`,
+            question.id,
+          );
+          return this.isChoiceAnswerCorrect(
+            answerData,
+            correctAnswer,
+            answerTemplate.type,
+          );
+        }
+      } catch (templateError) {
+        console.warn(
+          "[DEBUG] answer_template_json解析失敗、カテゴリベース判定に移行:",
+          templateError,
+        );
+      }
+
+      // Fall back to category-based routing
       switch (question.category_id) {
         case "journal":
           console.log(
@@ -616,14 +641,173 @@ export class AnswerService {
     answerData: CBTAnswerData,
     correctAnswer: QuestionCorrectAnswer,
   ): boolean {
-    const balances = correctAnswer.trialBalance?.balances;
-    if (!balances) return false;
-
-    // 各勘定科目の残高を比較
-    const data = answerData as any;
-    return Object.entries(balances).every(([account, amount]) => {
-      return data[account] === amount;
+    console.log("[DEBUG] isTrialBalanceAnswerCorrect - 開始", {
+      answerData,
+      correctAnswer,
     });
+
+    // Handle legacy format first (for backward compatibility)
+    const balances = correctAnswer.trialBalance?.balances;
+    if (balances) {
+      console.log("[DEBUG] Using legacy trialBalance.balances format");
+      const data = answerData as any;
+      return Object.entries(balances).every(([account, amount]) => {
+        return data[account] === amount;
+      });
+    }
+
+    // Handle new format: { entries: [...] }
+    const correctEntries = (correctAnswer as any).entries;
+    if (!correctEntries || !Array.isArray(correctEntries)) {
+      console.error("[DEBUG] No valid entries found in correctAnswer");
+      return false;
+    }
+
+    // Get user answer entries
+    const data = answerData as any;
+    const userEntries = data.entries;
+    if (!userEntries || !Array.isArray(userEntries)) {
+      console.error("[DEBUG] No valid entries found in user answer");
+      return false;
+    }
+
+    console.log("[DEBUG] Comparing entries format:", {
+      correctEntries: correctEntries.length,
+      userEntries: userEntries.length,
+    });
+
+    // Convert both arrays to account balance maps for comparison
+    const correctBalances =
+      this.convertTrialBalanceEntriesToBalances(correctEntries);
+    const userBalances = this.convertTrialBalanceEntriesToBalances(userEntries);
+
+    console.log("[DEBUG] Balance comparison:", {
+      correctBalances,
+      userBalances,
+    });
+
+    // Compare all accounts
+    const allAccounts = new Set([
+      ...Object.keys(correctBalances),
+      ...Object.keys(userBalances),
+    ]);
+
+    for (const account of allAccounts) {
+      const correctBalance = correctBalances[account] || {
+        debit: 0,
+        credit: 0,
+      };
+      const userBalance = userBalances[account] || { debit: 0, credit: 0 };
+
+      if (
+        correctBalance.debit !== userBalance.debit ||
+        correctBalance.credit !== userBalance.credit
+      ) {
+        console.log(`[DEBUG] Mismatch for account ${account}:`, {
+          correct: correctBalance,
+          user: userBalance,
+        });
+        return false;
+      }
+    }
+
+    console.log("[DEBUG] All trial balance entries match");
+    return true;
+  }
+
+  /**
+   * Convert trial balance entries to balance map for comparison
+   */
+  private convertTrialBalanceEntriesToBalances(
+    entries: Array<{
+      accountName: string;
+      debitAmount: number;
+      creditAmount: number;
+    }>,
+  ): Record<string, { debit: number; credit: number }> {
+    const balances: Record<string, { debit: number; credit: number }> = {};
+
+    for (const entry of entries) {
+      balances[entry.accountName] = {
+        debit: entry.debitAmount || 0,
+        credit: entry.creditAmount || 0,
+      };
+    }
+
+    return balances;
+  }
+
+  /**
+   * 選択問題の正解判定
+   */
+  private isChoiceAnswerCorrect(
+    answerData: CBTAnswerData,
+    correctAnswer: QuestionCorrectAnswer,
+    questionType: "single_choice" | "multiple_choice",
+  ): boolean {
+    const data = answerData as any;
+    console.log("[AnswerService] Choice validation - answerData:", data);
+    console.log(
+      "[AnswerService] Choice validation - correctAnswer:",
+      correctAnswer,
+    );
+    console.log(
+      "[AnswerService] Choice validation - questionType:",
+      questionType,
+    );
+
+    if (questionType === "single_choice") {
+      // Single choice: compare selected option
+      const userSelected = data.selected;
+      const correctSelected = (correctAnswer as any).selected;
+
+      console.log("[AnswerService] Single choice comparison:", {
+        userSelected,
+        correctSelected,
+        match: userSelected === correctSelected,
+      });
+
+      return userSelected === correctSelected;
+    } else if (questionType === "multiple_choice") {
+      // Multiple choice: compare selected options arrays
+      const userSelectedOptions = data.selected_options;
+      const correctSelectedOptions = (correctAnswer as any).selected_options;
+
+      if (
+        !Array.isArray(userSelectedOptions) ||
+        !Array.isArray(correctSelectedOptions)
+      ) {
+        console.error(
+          "[AnswerService] Multiple choice validation: options are not arrays",
+          {
+            userSelectedOptions,
+            correctSelectedOptions,
+          },
+        );
+        return false;
+      }
+
+      // Sort both arrays for consistent comparison
+      const sortedUser = [...userSelectedOptions].sort();
+      const sortedCorrect = [...correctSelectedOptions].sort();
+
+      console.log("[AnswerService] Multiple choice comparison:", {
+        userSelectedOptions: sortedUser,
+        correctSelectedOptions: sortedCorrect,
+        lengthMatch: sortedUser.length === sortedCorrect.length,
+      });
+
+      // Compare lengths and contents
+      if (sortedUser.length !== sortedCorrect.length) {
+        return false;
+      }
+
+      return sortedUser.every(
+        (option, index) => option === sortedCorrect[index],
+      );
+    }
+
+    return false;
   }
 
   /**

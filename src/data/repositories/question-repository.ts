@@ -287,7 +287,7 @@ export class QuestionRepository extends BaseRepository<Question> {
       if (options.limit) {
         sql += " LIMIT ?";
         params.push(options.limit);
-        
+
         if (options.offset) {
           sql += " OFFSET ?";
           params.push(options.offset);
@@ -301,7 +301,10 @@ export class QuestionRepository extends BaseRepository<Question> {
       );
       return result.rows;
     } catch (error) {
-      console.error(`[QuestionRepository] findWithProblemsStrategyOrder エラー:`, error);
+      console.error(
+        `[QuestionRepository] findWithProblemsStrategyOrder エラー:`,
+        error,
+      );
       throw error;
     }
   }
@@ -309,14 +312,14 @@ export class QuestionRepository extends BaseRepository<Question> {
   /**
    * サブカテゴリ一覧取得（problemsStrategy.md基準）
    */
-  public async getSubcategoriesWithCounts(
-    sectionNumber?: 1 | 2 | 3
-  ): Promise<Array<{
-    subcategory: string;
-    pattern_type: string;
-    count: number;
-    section_number: number;
-  }>> {
+  public async getSubcategoriesWithCounts(sectionNumber?: 1 | 2 | 3): Promise<
+    Array<{
+      subcategory: string;
+      pattern_type: string;
+      count: number;
+      section_number: number;
+    }>
+  > {
     try {
       let sql = `
         SELECT 
@@ -346,10 +349,15 @@ export class QuestionRepository extends BaseRepository<Question> {
         section_number: number;
       }>(sql, params);
 
-      console.log(`[QuestionRepository] サブカテゴリ一覧 ${result.rows.length}件取得`);
+      console.log(
+        `[QuestionRepository] サブカテゴリ一覧 ${result.rows.length}件取得`,
+      );
       return result.rows;
     } catch (error) {
-      console.error(`[QuestionRepository] getSubcategoriesWithCounts エラー:`, error);
+      console.error(
+        `[QuestionRepository] getSubcategoriesWithCounts エラー:`,
+        error,
+      );
       throw error;
     }
   }
@@ -357,13 +365,15 @@ export class QuestionRepository extends BaseRepository<Question> {
   /**
    * 問題のタグ情報を解析して3層階層で取得
    */
-  public async getQuestionWithTagHierarchy(questionId: string): Promise<Question & {
-    tagHierarchy?: {
-      category: string;
-      pattern: string;
-      detailed: string[];
-    };
-  }> {
+  public async getQuestionWithTagHierarchy(questionId: string): Promise<
+    Question & {
+      tagHierarchy?: {
+        category: string;
+        pattern: string;
+        detailed: string[];
+      };
+    }
+  > {
     try {
       const question = await this.findById(questionId);
       if (!question) {
@@ -371,41 +381,50 @@ export class QuestionRepository extends BaseRepository<Question> {
       }
 
       let tagHierarchy = undefined;
-      
+
       if (question.tags_json) {
         try {
           const tags = JSON.parse(question.tags_json);
-          
+
           // サブカテゴリからカテゴリ名を取得
-          const categoryMap = {
-            'cash_deposit': '現金・預金取引',
-            'merchandise_trade': '商品売買取引', 
-            'receivables_debts': '債権・債務',
-            'salary_tax': '給与・税金',
-            'fixed_assets': '固定資産',
-            'year_end_adj': '決算整理',
-            'account_posting': '勘定記入問題',
-            'subsidiary_books': '補助簿記入問題',
-            'voucher_entry': '伝票記入問題',
-            'theory_selection': '理論・選択問題',
-            'financial_statements': '財務諸表作成',
-            'worksheet': '精算表作成',
-            'trial_balance': '試算表作成'
+          const categoryMap: { [key: string]: string } = {
+            cash_deposit: "現金・預金取引",
+            merchandise_trade: "商品売買取引",
+            receivables_debts: "債権・債務",
+            salary_tax: "給与・税金",
+            fixed_assets: "固定資産",
+            year_end_adj: "決算整理",
+            account_posting: "勘定記入問題",
+            subsidiary_books: "補助簿記入問題",
+            voucher_entry: "伝票記入問題",
+            theory_selection: "理論・選択問題",
+            financial_statements: "財務諸表作成",
+            worksheet: "精算表作成",
+            trial_balance: "試算表作成",
           };
 
           tagHierarchy = {
-            category: categoryMap[question.subcategory as string] || question.subcategory || '',
-            pattern: question.pattern_type || '',
-            detailed: Array.isArray(tags) ? tags : []
+            category:
+              categoryMap[question.subcategory as string] ||
+              question.subcategory ||
+              "",
+            pattern: question.pattern_type || "",
+            detailed: Array.isArray(tags) ? tags : [],
           };
         } catch (parseError) {
-          console.warn(`[QuestionRepository] タグJSON解析エラー for ${questionId}:`, parseError);
+          console.warn(
+            `[QuestionRepository] タグJSON解析エラー for ${questionId}:`,
+            parseError,
+          );
         }
       }
 
       return { ...question, tagHierarchy };
     } catch (error) {
-      console.error(`[QuestionRepository] getQuestionWithTagHierarchy エラー:`, error);
+      console.error(
+        `[QuestionRepository] getQuestionWithTagHierarchy エラー:`,
+        error,
+      );
       throw error;
     }
   }
@@ -422,7 +441,7 @@ export class QuestionRepository extends BaseRepository<Question> {
     try {
       // 全問題数
       const totalResult = await this.executeQuery<{ count: number }>(
-        "SELECT COUNT(*) as count FROM questions"
+        "SELECT COUNT(*) as count FROM questions",
       );
       const totalQuestions = totalResult.rows[0]?.count || 0;
 
@@ -431,7 +450,7 @@ export class QuestionRepository extends BaseRepository<Question> {
         section_number: 1 | 2 | 3;
         count: number;
       }>(
-        "SELECT section_number, COUNT(*) as count FROM questions WHERE section_number IS NOT NULL GROUP BY section_number"
+        "SELECT section_number, COUNT(*) as count FROM questions WHERE section_number IS NOT NULL GROUP BY section_number",
       );
 
       const sectionBreakdown: Record<1 | 2 | 3, number> = { 1: 0, 2: 0, 3: 0 };
@@ -444,7 +463,7 @@ export class QuestionRepository extends BaseRepository<Question> {
         subcategory: string;
         count: number;
       }>(
-        "SELECT subcategory, COUNT(*) as count FROM questions WHERE subcategory IS NOT NULL GROUP BY subcategory"
+        "SELECT subcategory, COUNT(*) as count FROM questions WHERE subcategory IS NOT NULL GROUP BY subcategory",
       );
 
       const subcategoryBreakdown: Record<string, number> = {};
@@ -457,7 +476,7 @@ export class QuestionRepository extends BaseRepository<Question> {
         pattern_type: string;
         count: number;
       }>(
-        "SELECT pattern_type, COUNT(*) as count FROM questions WHERE pattern_type IS NOT NULL GROUP BY pattern_type"
+        "SELECT pattern_type, COUNT(*) as count FROM questions WHERE pattern_type IS NOT NULL GROUP BY pattern_type",
       );
 
       const patternBreakdown: Record<string, number> = {};
@@ -472,10 +491,16 @@ export class QuestionRepository extends BaseRepository<Question> {
         patternBreakdown,
       };
 
-      console.log("[QuestionRepository] problemsStrategy統計情報取得完了:", stats);
+      console.log(
+        "[QuestionRepository] problemsStrategy統計情報取得完了:",
+        stats,
+      );
       return stats;
     } catch (error) {
-      console.error("[QuestionRepository] getProblemsStrategyStats エラー:", error);
+      console.error(
+        "[QuestionRepository] getProblemsStrategyStats エラー:",
+        error,
+      );
       throw error;
     }
   }

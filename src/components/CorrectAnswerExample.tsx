@@ -74,8 +74,7 @@ export default function CorrectAnswerExample({
           <View style={styles.fieldRow}>
             <Text style={styles.fieldLabel}>金額:</Text>
             <Text style={styles.fieldValue}>
-              {firstEntry.amount?.toLocaleString()}
-              円
+              {firstEntry.amount?.toLocaleString()}円
             </Text>
           </View>
         )}
@@ -84,20 +83,46 @@ export default function CorrectAnswerExample({
   };
 
   const renderTrialBalanceExample = () => {
-    const balances = correctAnswer.trialBalance?.balances;
-    if (!balances) return null;
+    // entriesフォーマットに対応（試算表問題の実際のデータ形式）
+    const entries = correctAnswer.entries;
+    if (!entries || !Array.isArray(entries)) return null;
 
     return (
       <View style={styles.exampleContainer}>
         <Text style={styles.exampleTitle}>📝 正解例</Text>
-        {Object.entries(balances).map(([account, amount]) => (
-          <View key={account} style={styles.fieldRow}>
-            <Text style={styles.fieldLabel}>{account}:</Text>
-            <Text style={styles.fieldValue}>
-              {(amount as number).toLocaleString()}円
-            </Text>
-          </View>
-        ))}
+        {entries.map((entry: any, index: number) => {
+          // 借方金額または貸方金額がある勘定科目のみ表示
+          if (entry.debitAmount > 0) {
+            return (
+              <View
+                key={`${entry.accountName}-${index}`}
+                style={styles.fieldRow}
+              >
+                <Text style={styles.fieldLabel}>
+                  {entry.accountName}（借方）:
+                </Text>
+                <Text style={styles.fieldValue}>
+                  {entry.debitAmount.toLocaleString()}円
+                </Text>
+              </View>
+            );
+          } else if (entry.creditAmount > 0) {
+            return (
+              <View
+                key={`${entry.accountName}-${index}`}
+                style={styles.fieldRow}
+              >
+                <Text style={styles.fieldLabel}>
+                  {entry.accountName}（貸方）:
+                </Text>
+                <Text style={styles.fieldValue}>
+                  {entry.creditAmount.toLocaleString()}円
+                </Text>
+              </View>
+            );
+          }
+          return null;
+        })}
       </View>
     );
   };

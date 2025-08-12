@@ -47,12 +47,12 @@ export interface Question {
   explanation: string;
   difficulty: QuestionDifficulty;
   tags_json?: string; // タグ配列JSON（現金過不足、小口現金等の詳細パターン）
-  
+
   // problemsStrategy.mdに基づく順序制御
   section_number: 1 | 2 | 3; // 第1問/第2問/第3問
-  question_order: number;    // 各セクション内での出題順序
-  pattern_type?: string;     // パターン識別（現金過不足、商品売買基本等）
-  
+  question_order: number; // 各セクション内での出題順序
+  pattern_type?: string; // パターン識別（現金過不足、商品売買基本等）
+
   created_at: string;
   updated_at: string;
 }
@@ -192,12 +192,15 @@ export interface AppSetting {
  */
 export interface QuestionAnswerTemplate {
   type: "journal_entry" | "ledger_entry" | "trial_balance";
+  allowMultipleEntries?: boolean;
+  maxEntries?: number;
   fields: Array<{
     label: string;
-    type: "dropdown" | "number" | "text";
+    type: "dropdown" | "number" | "text" | "date";
     name: string;
     required: boolean;
     format?: "currency" | "percentage";
+    placeholder?: string;
     options?: string[]; // ドロップダウンの選択肢
   }>;
 }

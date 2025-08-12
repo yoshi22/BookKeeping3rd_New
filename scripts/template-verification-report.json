@@ -1,0 +1,93 @@
+{
+  "timestamp": "2025-08-11T11:06:54.968Z",
+  "totalQuestions": 40,
+  "correctTemplates": 33,
+  "incorrectTemplates": 7,
+  "issues": [
+    {
+      "id": "Q_L_031",
+      "actual": "voucher_entry",
+      "expected": [
+        "single_choice",
+        "multiple_choice"
+      ]
+    },
+    {
+      "id": "Q_L_032",
+      "actual": "voucher_entry",
+      "expected": [
+        "single_choice",
+        "multiple_choice"
+      ]
+    },
+    {
+      "id": "Q_L_033",
+      "actual": "voucher_entry",
+      "expected": [
+        "single_choice",
+        "multiple_choice"
+      ]
+    },
+    {
+      "id": "Q_L_034",
+      "actual": "voucher_entry",
+      "expected": [
+        "single_choice",
+        "multiple_choice"
+      ]
+    },
+    {
+      "id": "Q_L_035",
+      "actual": "voucher_entry",
+      "expected": [
+        "single_choice",
+        "multiple_choice"
+      ]
+    },
+    {
+      "id": "Q_L_036",
+      "actual": "voucher_entry",
+      "expected": [
+        "single_choice",
+        "multiple_choice"
+      ]
+    },
+    {
+      "id": "Q_L_037",
+      "actual": "voucher_entry",
+      "expected": [
+        "single_choice",
+        "multiple_choice"
+      ]
+    }
+  ],
+  "patternSummary": [
+    {
+      "pattern": "パターン1",
+      "name": "勘定記入問題",
+      "range": "Q_L_001-Q_L_010",
+      "expectedType": "ledger_entry"
+    },
+    {
+      "pattern": "パターン2",
+      "name": "補助簿記入問題",
+      "range": "Q_L_011-Q_L_020",
+      "expectedType": "ledger_entry"
+    },
+    {
+      "pattern": "パターン3",
+      "name": "伝票記入問題",
+      "range": "Q_L_021-Q_L_030",
+      "expectedType": "voucher_entry"
+    },
+    {
+      "pattern": "パターン4",
+      "name": "理論・選択問題",
+      "range": "Q_L_031-Q_L_040",
+      "expectedType": [
+        "single_choice",
+        "multiple_choice"
+      ]
+    }
+  ]
+}

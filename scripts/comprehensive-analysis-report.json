@@ -1,0 +1,737 @@
+{
+  "totalProblems": 40,
+  "problemsNeedingFix": [
+    {
+      "id": "Q_L_001",
+      "pattern": "パターン1：勘定記入問題",
+      "subPattern": "資産勘定",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_002",
+      "pattern": "パターン1：勘定記入問題",
+      "subPattern": "資産勘定",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_003",
+      "pattern": "パターン1：勘定記入問題",
+      "subPattern": "資産勘定",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_004",
+      "pattern": "パターン1：勘定記入問題",
+      "subPattern": "資産勘定",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_005",
+      "pattern": "パターン1：勘定記入問題",
+      "subPattern": "負債・純資産勘定",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_006",
+      "pattern": "パターン1：勘定記入問題",
+      "subPattern": "負債・純資産勘定",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_007",
+      "pattern": "パターン1：勘定記入問題",
+      "subPattern": "負債・純資産勘定",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_008",
+      "pattern": "パターン1：勘定記入問題",
+      "subPattern": "収益・費用勘定",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_009",
+      "pattern": "パターン1：勘定記入問題",
+      "subPattern": "収益・費用勘定",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_010",
+      "pattern": "パターン1：勘定記入問題",
+      "subPattern": "収益・費用勘定",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_011",
+      "pattern": "パターン2：補助簿記入問題",
+      "subPattern": "現金・預金補助簿",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_012",
+      "pattern": "パターン2：補助簿記入問題",
+      "subPattern": "現金・預金補助簿",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_013",
+      "pattern": "パターン2：補助簿記入問題",
+      "subPattern": "現金・預金補助簿",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_014",
+      "pattern": "パターン2：補助簿記入問題",
+      "subPattern": "現金・預金補助簿",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_015",
+      "pattern": "パターン2：補助簿記入問題",
+      "subPattern": "売買補助簿",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_016",
+      "pattern": "パターン2：補助簿記入問題",
+      "subPattern": "売買補助簿",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_017",
+      "pattern": "パターン2：補助簿記入問題",
+      "subPattern": "売買補助簿",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_018",
+      "pattern": "パターン2：補助簿記入問題",
+      "subPattern": "売買補助簿",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_019",
+      "pattern": "パターン2：補助簿記入問題",
+      "subPattern": "債権・債務補助簿",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_020",
+      "pattern": "パターン2：補助簿記入問題",
+      "subPattern": "債権・債務補助簿",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: ledger_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_021",
+      "pattern": "パターン3：伝票記入問題",
+      "subPattern": "3伝票制",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: voucher_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_022",
+      "pattern": "パターン3：伝票記入問題",
+      "subPattern": "3伝票制",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: voucher_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_023",
+      "pattern": "パターン3：伝票記入問題",
+      "subPattern": "3伝票制",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: voucher_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_024",
+      "pattern": "パターン3：伝票記入問題",
+      "subPattern": "3伝票制",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: voucher_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_025",
+      "pattern": "パターン3：伝票記入問題",
+      "subPattern": "3伝票制",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: voucher_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_026",
+      "pattern": "パターン3：伝票記入問題",
+      "subPattern": "3伝票制",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: voucher_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_027",
+      "pattern": "パターン3：伝票記入問題",
+      "subPattern": "5伝票制",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: voucher_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_028",
+      "pattern": "パターン3：伝票記入問題",
+      "subPattern": "5伝票制",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: voucher_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_029",
+      "pattern": "パターン3：伝票記入問題",
+      "subPattern": "5伝票制",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: voucher_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_030",
+      "pattern": "パターン3：伝票記入問題",
+      "subPattern": "5伝票制",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: voucher_entry)"
+      ]
+    },
+    {
+      "id": "Q_L_031",
+      "pattern": "パターン4：理論・選択問題",
+      "subPattern": "帳簿組織",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+      ]
+    },
+    {
+      "id": "Q_L_032",
+      "pattern": "パターン4：理論・選択問題",
+      "subPattern": "帳簿組織",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+      ]
+    },
+    {
+      "id": "Q_L_033",
+      "pattern": "パターン4：理論・選択問題",
+      "subPattern": "帳簿組織",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+      ]
+    },
+    {
+      "id": "Q_L_034",
+      "pattern": "パターン4：理論・選択問題",
+      "subPattern": "帳簿組織",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+      ]
+    },
+    {
+      "id": "Q_L_035",
+      "pattern": "パターン4：理論・選択問題",
+      "subPattern": "簿記理論",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+      ]
+    },
+    {
+      "id": "Q_L_036",
+      "pattern": "パターン4：理論・選択問題",
+      "subPattern": "簿記理論",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+      ]
+    },
+    {
+      "id": "Q_L_037",
+      "pattern": "パターン4：理論・選択問題",
+      "subPattern": "簿記理論",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+      ]
+    },
+    {
+      "id": "Q_L_038",
+      "pattern": "パターン4：理論・選択問題",
+      "subPattern": "試算表・決算",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+      ]
+    },
+    {
+      "id": "Q_L_039",
+      "pattern": "パターン4：理論・選択問題",
+      "subPattern": "試算表・決算",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+      ]
+    },
+    {
+      "id": "Q_L_040",
+      "pattern": "パターン4：理論・選択問題",
+      "subPattern": "試算表・決算",
+      "issues": [
+        "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+        "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+      ]
+    }
+  ],
+  "analysisDetails": {
+    "パターン1：勘定記入問題": {
+      "subPatternResults": {
+        "資産勘定": {
+          "totalQuestions": 4,
+          "questionsWithIssues": 4,
+          "issues": [
+            {
+              "id": "Q_L_001",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_002",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_003",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_004",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            }
+          ]
+        },
+        "負債・純資産勘定": {
+          "totalQuestions": 3,
+          "questionsWithIssues": 3,
+          "issues": [
+            {
+              "id": "Q_L_005",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_006",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_007",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            }
+          ]
+        },
+        "収益・費用勘定": {
+          "totalQuestions": 3,
+          "questionsWithIssues": 3,
+          "issues": [
+            {
+              "id": "Q_L_008",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_009",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_010",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            }
+          ]
+        }
+      },
+      "problemsChecked": 10,
+      "problemsWithIssues": 10
+    },
+    "パターン2：補助簿記入問題": {
+      "subPatternResults": {
+        "現金・預金補助簿": {
+          "totalQuestions": 4,
+          "questionsWithIssues": 4,
+          "issues": [
+            {
+              "id": "Q_L_011",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_012",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_013",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_014",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            }
+          ]
+        },
+        "売買補助簿": {
+          "totalQuestions": 4,
+          "questionsWithIssues": 4,
+          "issues": [
+            {
+              "id": "Q_L_015",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_016",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_017",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_018",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            }
+          ]
+        },
+        "債権・債務補助簿": {
+          "totalQuestions": 2,
+          "questionsWithIssues": 2,
+          "issues": [
+            {
+              "id": "Q_L_019",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_020",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: ledger_entry)"
+              ]
+            }
+          ]
+        }
+      },
+      "problemsChecked": 10,
+      "problemsWithIssues": 10
+    },
+    "パターン3：伝票記入問題": {
+      "subPatternResults": {
+        "3伝票制": {
+          "totalQuestions": 6,
+          "questionsWithIssues": 6,
+          "issues": [
+            {
+              "id": "Q_L_021",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: voucher_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_022",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: voucher_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_023",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: voucher_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_024",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: voucher_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_025",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: voucher_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_026",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: voucher_entry)"
+              ]
+            }
+          ]
+        },
+        "5伝票制": {
+          "totalQuestions": 4,
+          "questionsWithIssues": 4,
+          "issues": [
+            {
+              "id": "Q_L_027",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: voucher_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_028",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: voucher_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_029",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: voucher_entry)"
+              ]
+            },
+            {
+              "id": "Q_L_030",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: voucher_entry)"
+              ]
+            }
+          ]
+        }
+      },
+      "problemsChecked": 10,
+      "problemsWithIssues": 10
+    },
+    "パターン4：理論・選択問題": {
+      "subPatternResults": {
+        "帳簿組織": {
+          "totalQuestions": 4,
+          "questionsWithIssues": 4,
+          "issues": [
+            {
+              "id": "Q_L_031",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+              ]
+            },
+            {
+              "id": "Q_L_032",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+              ]
+            },
+            {
+              "id": "Q_L_033",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+              ]
+            },
+            {
+              "id": "Q_L_034",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+              ]
+            }
+          ]
+        },
+        "簿記理論": {
+          "totalQuestions": 3,
+          "questionsWithIssues": 3,
+          "issues": [
+            {
+              "id": "Q_L_035",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+              ]
+            },
+            {
+              "id": "Q_L_036",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+              ]
+            },
+            {
+              "id": "Q_L_037",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+              ]
+            }
+          ]
+        },
+        "試算表・決算": {
+          "totalQuestions": 3,
+          "questionsWithIssues": 3,
+          "issues": [
+            {
+              "id": "Q_L_038",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+              ]
+            },
+            {
+              "id": "Q_L_039",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+              ]
+            },
+            {
+              "id": "Q_L_040",
+              "issues": [
+                "JSONパースエラー: Expected property name or '}' in JSON at position 1",
+                "回答形式が不適切:  (期待値: multiple_choice/single_choice)"
+              ]
+            }
+          ]
+        }
+      },
+      "problemsChecked": 10,
+      "problemsWithIssues": 10
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "timestamp": "2025-08-11T11:40:50.143Z",
+  "totalProblems": 6,
+  "passed": 4,
+  "failed": 2,
+  "details": {
+    "passed": [
+      "Q_L_015",
+      "Q_L_016",
+      "Q_L_017",
+      "Q_L_018"
+    ],
+    "failed": [
+      {
+        "id": "Q_L_019",
+        "issues": [
+          "解説が一般的"
+        ]
+      },
+      {
+        "id": "Q_L_020",
+        "issues": [
+          "解説が一般的"
+        ]
+      }
+    ]
+  }
+}
