@@ -31,6 +31,7 @@ export interface QuestionStats {
     journal: number;
     ledger: number;
     trial_balance: number;
+    financial_statement: number;
   };
   difficultyBreakdown: Record<QuestionDifficulty, number>;
   averageDifficulty: number;
@@ -528,6 +529,7 @@ export class QuestionRepository extends BaseRepository<Question> {
         journal: 0,
         ledger: 0,
         trial_balance: 0,
+        financial_statement: 0,
       };
 
       categoryResult.rows.forEach((row) => {
@@ -593,6 +595,7 @@ export class QuestionRepository extends BaseRepository<Question> {
         journal: 0,
         ledger: 0,
         trial_balance: 0,
+        financial_statement: 0,
       };
 
       categoryResult.rows.forEach((row) => {
@@ -801,6 +804,7 @@ export class QuestionRepository extends BaseRepository<Question> {
         journal: 250,
         ledger: 40,
         trial_balance: 12,
+        financial_statement: 2,
       };
 
       const stats = await this.getStats();
@@ -829,6 +833,7 @@ export class QuestionRepository extends BaseRepository<Question> {
           journal: "Q_J_",
           ledger: "Q_L_",
           trial_balance: "Q_T_",
+          financial_statement: "Q_F_",
         }[row.category_id];
 
         if (!row.id.startsWith(expectedPrefix)) {
@@ -891,6 +896,7 @@ export class QuestionRepository extends BaseRepository<Question> {
             journal: "journal_entry",
             ledger: "ledger_entry",
             trial_balance: "trial_balance",
+            financial_statement: "financial_statement",
           };
 
           if (template.type !== expectedTypes[question.category_id]) {

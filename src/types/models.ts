@@ -49,8 +49,8 @@ export interface Question {
   tags_json?: string; // タグ配列JSON（現金過不足、小口現金等の詳細パターン）
 
   // problemsStrategy.mdに基づく順序制御
-  section_number: 1 | 2 | 3; // 第1問/第2問/第3問
-  question_order: number; // 各セクション内での出題順序
+  section_number?: 1 | 2 | 3; // 第1問/第2問/第3問
+  question_order?: number; // 各セクション内での出題順序
   pattern_type?: string; // パターン識別（現金過不足、商品売買基本等）
 
   created_at: string;
@@ -229,6 +229,27 @@ export interface QuestionCorrectAnswer {
   // 試算表問題の正解
   trialBalance?: {
     balances: Record<string, number>;
+  };
+
+  // 試算表問題の別形式（エントリー配列）
+  entries?: Array<{
+    accountName: string;
+    debitAmount: number;
+    creditAmount: number;
+  }>;
+
+  // 財務諸表形式（複雑な試算表問題用）
+  financialStatements?: {
+    balanceSheet?: {
+      assets?: Array<{ accountName: string; amount: number }>;
+      liabilities?: Array<{ accountName: string; amount: number }>;
+      equity?: Array<{ accountName: string; amount: number }>;
+    };
+    incomeStatement?: {
+      revenues?: Array<{ accountName: string; amount: number }>;
+      expenses?: Array<{ accountName: string; amount: number }>;
+      netIncome?: number;
+    };
   };
 }
 
