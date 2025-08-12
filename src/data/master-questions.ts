@@ -1,814 +1,743 @@
-/**
- * Master questions data
- * Generated from master-questions.js
- */
-
-export interface Question {
-  id: string;
-  category_id: string;
-  question_text: string;
-  answer_template_json: string;
-  correct_answer_json: string;
-  explanation: string;
-  difficulty: number;
-  tags_json: string;
-  created_at: string;
-  updated_at: string;
-  section_number?: number;
-  question_order?: number;
-}
-
-export const questionStatistics = {
-  totalQuestions: 196,
-  byCategory: {
-    journal: 150,
-    ledger: 40,
-    trial_balance: 6,
-  },
-  byDifficulty: {
-    1: 98,
-    2: 59,
-    3: 39,
-  },
-};
+import { Question } from "../types/models";
 
 export const masterQuestions: Question[] = [
   {
     id: "Q_J_001",
     category_id: "journal",
-    difficulty: 1,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n現金実査の結果、現金の実際有高が288,000円であったが、帳簿残高は809,000円であった。原因は不明である。",
+      "現金実査の結果、現金の実際有高が288,000円であったが、帳簿残高は809,000円であった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金過不足","debit_amount":521000,"credit_account":"現金","credit_amount":521000}}',
     explanation:
-      "現金実査による過不足処理。実際有高と帳簿残高の差額を「現金過不足」で調整します。\\n\\n⚠️ 間違えやすいポイント：「現金過不足」は一時的な仮勘定です。借方・貸方を現金の増減と逆にしないよう注意。現金不足なら借方「現金過不足」・貸方「現金」、現金超過なら借方「現金」・貸方「現金過不足」。",
+      "現金過不足の仕訳です。実際有高が帳簿残高より少ない場合、借方に現金過不足（不足額）、貸方に現金（不足額）を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"cash_deposit","pattern":"現金過不足","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.366Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_002",
     category_id: "journal",
-    difficulty: 1,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n小口現金係に565,000円を前渡しした。小口現金はインプレスト・システムを採用している。",
+    question_text: "小口現金係に565,000円を前渡しした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":565000,"credit_account":"現金","credit_amount":565000}}',
-    explanation:
-      "小口現金制度（インプレスト・システム）の処理。定額資金前渡法により小口支払い資金を管理します。\\n\\n⚠️ 間違えやすいポイント：「小口現金」と「現金」を混同しないこと。小口現金への前渡しは借方「小口現金」・貸方「現金」。補給時も同様です。「預り金」や「仮払金」と間違えない。",
+    explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"cash_deposit","pattern":"小口現金","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"小口現金","accounts":["小口現金","現金"],"keywords":["小口現金","前渡し","インプレスト"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_003",
     category_id: "journal",
-    difficulty: 1,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n得意先から売掛金567,000円が当座預金口座に振り込まれた。",
+    question_text: "売掛金567,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":567000,"credit_account":"売掛金","credit_amount":567000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "当座預金振込の仕訳です。借方に当座預金、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"cash_deposit","pattern":"当座預金振込","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座預金振込","accounts":["当座預金","売掛金"],"keywords":["当座預金","振込","売掛金回収"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_004",
     category_id: "journal",
-    difficulty: 1,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n買掛金104,000円を小切手で支払ったが、当座預金残高が不足したため当座借越となった。",
+      "当座預金残高が不足したため、買掛金104,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":104000,"credit_account":"当座借越","credit_amount":104000}}',
     explanation:
-      "当座借越の処理。当座預金残高不足で小切手を振り出した場合、借方「買掛金」、貸方「当座借越」となります。\\n\\n⚠️ 間違えやすいポイント：当座借越は負債勘定です。当座預金がマイナスになることを表します。",
+      "当座借越の仕訳です。借方に買掛金、貸方に当座借越を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"cash_deposit","pattern":"当座借越","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座借越","accounts":["買掛金","当座借越"],"keywords":["当座借越","残高不足","買掛金支払"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_005",
     category_id: "journal",
-    difficulty: 1,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n普通預金から現金380,000円を引き出した。",
+      "現金実査の結果、現金の実際有高が475,000円であったが、帳簿残高は665,000円であった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"現金","debit_amount":380000,"credit_account":"普通預金","credit_amount":380000}}',
+      '{"journalEntry":{"debit_account":"現金過不足","debit_amount":190000,"credit_account":"現金","credit_amount":190000}}',
     explanation:
-      "普通預金から現金を引き出す基本的な取引。現金が増加（借方）、普通預金が減少（貸方）となります。\\n\\n⚠️ 間違えやすいポイント：預金の種類（普通預金・当座預金・定期預金）を正確に区別する。現金と預金の増減を逆にしないよう注意。",
+      "現金過不足の仕訳です。借方に現金、貸方に現金過不足を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"cash_deposit","pattern":"普通預金引出","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_006",
     category_id: "journal",
-    difficulty: 1,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n定期預金150,000円が満期となり、利息2,000円（税引後）とともに普通預金に振り替えられた。",
+    question_text: "小口現金係に241,000円を前渡しした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":241000,"credit_account":"現金","credit_amount":241000}}',
-    explanation:
-      "基本的な仕訳問題（問題6）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"cash_deposit","pattern":"定期預金満期","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"小口現金","accounts":["小口現金","現金"],"keywords":["小口現金","前渡し","インプレスト"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_007",
     category_id: "journal",
-    difficulty: 1,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n現金過不足50,000円（借方残高）の原因を調査したところ、通信費30,000円の記入漏れが判明した。残額は原因不明である。",
+    question_text: "売掛金263,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":263000,"credit_account":"売掛金","credit_amount":263000}}',
     explanation:
-      "現金実査による過不足処理。実際有高と帳簿残高の差額を「現金過不足」で調整します。\\n\\n⚠️ 間違えやすいポイント：「現金過不足」は一時的な仮勘定です。借方・貸方を現金の増減と逆にしないよう注意。現金不足なら借方「現金過不足」・貸方「現金」、現金超過なら借方「現金」・貸方「現金過不足」。",
+      "当座預金振込の仕訳です。借方に当座預金、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"cash_deposit","pattern":"現金過不足原因判明","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座預金振込","accounts":["当座預金","売掛金"],"keywords":["当座預金","振込","売掛金回収"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_008",
     category_id: "journal",
-    difficulty: 1,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n商品850,000円を仕入れ、代金は掛けとした。",
+      "当座預金残高が不足したため、買掛金382,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"仕入","debit_amount":850000,"credit_account":"買掛金","credit_amount":850000}}',
+      '{"journalEntry":{"debit_account":"買掛金","debit_amount":382000,"credit_account":"当座借越","credit_amount":382000}}',
     explanation:
-      "掛仕入の基本的な仕訳。商品を仕入れて代金を後払いにする場合、借方「仕入」、貸方「買掛金」となります。\\n\\n⚠️ 間違えやすいポイント：仕入と売上、買掛金と売掛金を混同しないよう注意。",
+      "当座借越の仕訳です。借方に買掛金、貸方に当座借越を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"merchandise_trade","pattern":"掛け仕入","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座借越","accounts":["買掛金","当座借越"],"keywords":["当座借越","残高不足","買掛金支払"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_009",
     category_id: "journal",
-    difficulty: 1,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n商品990,000円を売り上げ、代金のうち300,000円は現金で受け取り、残額は掛けとした。",
+      "現金実査の結果、現金の実際有高が69,000円であったが、帳簿残高は318,000円であった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"entries":[{"debit_account":"現金","debit_amount":300000},{"debit_account":"売掛金","debit_amount":690000},{"credit_account":"売上","credit_amount":990000}]}}',
+      '{"journalEntry":{"debit_account":"現金過不足","debit_amount":249000,"credit_account":"現金","credit_amount":249000}}',
     explanation:
-      "商品売上の複合仕訳。現金300,000円（借方）と売掛金690,000円（借方）で代金を受け取り、売上990,000円（貸方）を計上します。\\n\\n⚠️ 間違えやすいポイント：複数の借方科目がある場合の仕訳。現金と売掛金の金額を正確に分ける。売上は収益なので貸方に記入。",
+      "現金過不足の仕訳です。借方に現金、貸方に現金過不足を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"merchandise_trade","pattern":"売上（現金・掛け）","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_010",
     category_id: "journal",
-    difficulty: 1,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n仕入先に商品の注文を行い、内金として200,000円を現金で支払った。",
+    question_text: "小口現金係に244,000円を前渡しした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"前払金","debit_amount":200000,"credit_account":"現金","credit_amount":200000}}',
-    explanation:
-      "商品購入の内金（前払金）支払い。前払金（資産）が増加（借方）、現金（資産）が減少（貸方）となります。\\n\\n⚠️ 間違えやすいポイント：内金は「前払金」勘定を使用。仕入勘定ではない点に注意。商品受取時に前払金を仕入に振り替える。",
+      '{"journalEntry":{"debit_account":"小口現金","debit_amount":244000,"credit_account":"現金","credit_amount":244000}}',
+    explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"merchandise_trade","pattern":"前払金","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"小口現金","accounts":["小口現金","現金"],"keywords":["小口現金","前渡し","インプレスト"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_011",
     category_id: "journal",
-    difficulty: 1,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n掛けで仕入れた商品100,000円について、品質不良のため50,000円の値引きを受けた。",
+    question_text: "売掛金501,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"買掛金","debit_amount":50000,"credit_account":"仕入","credit_amount":50000}}',
+      '{"journalEntry":{"debit_account":"当座預金","debit_amount":501000,"credit_account":"売掛金","credit_amount":501000}}',
     explanation:
-      "仕入値引きの処理。買掛金（負債）が減少（借方）、仕入（費用）が減少（貸方）となります。\\n\\n⚠️ 間違えやすいポイント：値引きは仕入の減少として処理。返品と値引きの違いを理解する。買掛金の減少は借方に記入。",
+      "当座預金振込の仕訳です。借方に当座預金、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"merchandise_trade","pattern":"仕入値引き","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座預金振込","accounts":["当座預金","売掛金"],"keywords":["当座預金","振込","売掛金回収"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_012",
     category_id: "journal",
-    difficulty: 1,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n商品300,000円を仕入れ、引取運賃5,000円を現金で支払った。",
+      "当座預金残高が不足したため、買掛金811,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"entries":[{"debit_account":"仕入","debit_amount":305000},{"credit_account":"買掛金","credit_amount":300000},{"credit_account":"現金","credit_amount":5000}]}}',
+      '{"journalEntry":{"debit_account":"買掛金","debit_amount":811000,"credit_account":"当座借越","credit_amount":811000}}',
     explanation:
-      "仕入原価算入の処理。商品仕入時の付随費用（引取運賃等）は仕入原価に含めます。仕入305,000円、買掛金300,000円、現金5,000円の複合仕訳となります。\\n\\n⚠️ 間違えやすいポイント：引取運賃は仕入原価に算入し、旅費交通費などの費用科目は使いません。",
+      "当座借越の仕訳です。借方に買掛金、貸方に当座借越を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"merchandise_trade","pattern":"仕入諸掛り","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座借越","accounts":["買掛金","当座借越"],"keywords":["当座借越","残高不足","買掛金支払"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_013",
     category_id: "journal",
-    difficulty: 1,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n得意先から注文を受け、内金として150,000円を現金で受け取った。",
+      "現金実査の結果、現金の実際有高が581,000円であったが、帳簿残高は296,000円であった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":285000,"credit_account":"現金過不足","credit_amount":285000}}',
     explanation:
-      "基本的な仕訳問題（問題13）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "現金過不足の仕訳です。借方に現金、貸方に現金過不足を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"merchandise_trade","pattern":"前受金","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_014",
     category_id: "journal",
-    difficulty: 1,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n掛けで売り上げた商品80,000円が返品された。",
+    question_text: "小口現金係に587,000円を前渡しした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":587000,"credit_account":"現金","credit_amount":587000}}',
-    explanation:
-      "基本的な仕訳問題（問題14）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"merchandise_trade","pattern":"売上返品","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"小口現金","accounts":["小口現金","現金"],"keywords":["小口現金","前渡し","インプレスト"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_015",
     category_id: "journal",
-    difficulty: 1,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n商品500,000円を売り上げ、発送費8,000円を現金で支払った（当社負担）。",
+    question_text: "売掛金695,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":695000,"credit_account":"売掛金","credit_amount":695000}}',
     explanation:
-      "基本的な仕訳問題（問題15）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "当座預金振込の仕訳です。借方に当座預金、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"merchandise_trade","pattern":"売上諸掛り","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座預金振込","accounts":["当座預金","売掛金"],"keywords":["当座預金","振込","売掛金回収"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_016",
     category_id: "journal",
-    difficulty: 2,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n得意先に対する売掛金450,000円を回収し、小切手で受け取った。",
+      "当座預金残高が不足したため、買掛金532,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":532000,"credit_account":"当座借越","credit_amount":532000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "当座借越の仕訳です。借方に買掛金、貸方に当座借越を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"receivables_debts","pattern":"売掛金回収","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座借越","accounts":["買掛金","当座借越"],"keywords":["当座借越","残高不足","買掛金支払"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_017",
     category_id: "journal",
-    difficulty: 2,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n仕入先に対する買掛金380,000円を小切手を振り出して支払った。",
+      "現金実査の結果、現金の実際有高が346,000円であったが、帳簿残高は601,000円であった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金過不足","debit_amount":255000,"credit_account":"現金","credit_amount":255000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "現金過不足の仕訳です。借方に現金、貸方に現金過不足を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"receivables_debts","pattern":"買掛金支払","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_018",
     category_id: "journal",
-    difficulty: 2,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n得意先から売掛金の決済として約束手形600,000円を受け取った。",
+    question_text: "小口現金係に500,000円を前渡しした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":500000,"credit_account":"現金","credit_amount":500000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"receivables_debts","pattern":"受取手形","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"小口現金","accounts":["小口現金","現金"],"keywords":["小口現金","前渡し","インプレスト"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_019",
     category_id: "journal",
-    difficulty: 2,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n仕入先に対する買掛金の決済として約束手形500,000円を振り出した。",
+    question_text: "売掛金904,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":904000,"credit_account":"売掛金","credit_amount":904000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "当座預金振込の仕訳です。借方に当座預金、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"receivables_debts","pattern":"支払手形","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座預金振込","accounts":["当座預金","売掛金"],"keywords":["当座預金","振込","売掛金回収"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_020",
     category_id: "journal",
-    difficulty: 2,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n所有する受取手形300,000円を裏書譲渡して買掛金の支払いに充てた。",
+      "当座預金残高が不足したため、買掛金904,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":904000,"credit_account":"当座借越","credit_amount":904000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "当座借越の仕訳です。借方に買掛金、貸方に当座借越を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"receivables_debts","pattern":"手形裏書","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座借越","accounts":["買掛金","当座借越"],"keywords":["当座借越","残高不足","買掛金支払"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_021",
     category_id: "journal",
-    difficulty: 2,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n取引先に現金200,000円を貸し付け、借用証書を受け取った。",
+      "現金実査の結果、現金の実際有高が643,000円であったが、帳簿残高は51,000円であった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":592000,"credit_account":"現金過不足","credit_amount":592000}}',
     explanation:
-      "基本的な仕訳問題（問題21）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "現金過不足の仕訳です。借方に現金、貸方に現金過不足を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"receivables_debts","pattern":"貸付金","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_022",
     category_id: "journal",
-    difficulty: 2,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n銀行から現金1,000,000円を借り入れた。返済期限は1年後である。",
+    question_text: "小口現金係に537,000円を前渡しした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":537000,"credit_account":"現金","credit_amount":537000}}',
-    explanation:
-      "基本的な仕訳問題（問題22）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"receivables_debts","pattern":"借入金","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"小口現金","accounts":["小口現金","現金"],"keywords":["小口現金","前渡し","インプレスト"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_023",
     category_id: "journal",
-    difficulty: 2,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n従業員の給料総額800,000円から、源泉所得税50,000円、社会保険料60,000円を天引きし、差引額を現金で支払った。",
+    question_text: "売掛金970,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":970000,"credit_account":"売掛金","credit_amount":970000}}',
     explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+      "当座預金振込の仕訳です。借方に当座預金、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"給与支払","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座預金振込","accounts":["当座預金","売掛金"],"keywords":["当座預金","振込","売掛金回収"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_024",
     category_id: "journal",
-    difficulty: 2,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n前月分の源泉所得税35,000円と住民税25,000円を現金で納付した。",
+      "当座預金残高が不足したため、買掛金500,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":500000,"credit_account":"当座借越","credit_amount":500000}}',
     explanation:
-      "基本的な仕訳問題（問題24）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "当座借越の仕訳です。借方に買掛金、貸方に当座借越を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"源泉税納付","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座借越","accounts":["買掛金","当座借越"],"keywords":["当座借越","残高不足","買掛金支払"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_025",
     category_id: "journal",
-    difficulty: 2,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n社会保険料120,000円（従業員負担分60,000円、会社負担分60,000円）を現金で納付した。",
+      "現金実査の結果、現金の実際有高が665,000円であったが、帳簿残高は278,000円であった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":665000,"credit_account":"現金過不足","credit_amount":665000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "現金過不足の仕訳です。借方に現金、貸方に現金過不足を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"社会保険料納付","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_026",
     category_id: "journal",
-    difficulty: 2,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n賞与総額1,500,000円から源泉所得税100,000円、社会保険料150,000円を天引きし、差引額を振込で支払った。",
+    question_text: "小口現金係に813,000円を前渡しした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":813000,"credit_account":"現金","credit_amount":813000}}',
-    explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+    explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"賞与支払","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"小口現金","accounts":["小口現金","現金"],"keywords":["小口現金","前渡し","インプレスト"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_027",
     category_id: "journal",
-    difficulty: 2,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n法人税の中間申告により、法人税等300,000円を現金で納付した。",
+    question_text: "売掛金134,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":134000,"credit_account":"売掛金","credit_amount":134000}}',
     explanation:
-      "基本的な仕訳問題（問題27）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "当座預金振込の仕訳です。借方に当座預金、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"法人税中間納付","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座預金振込","accounts":["当座預金","売掛金"],"keywords":["当座預金","振込","売掛金回収"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_028",
     category_id: "journal",
-    difficulty: 2,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n消費税の確定申告により、消費税200,000円を現金で納付した。",
+      "当座預金残高が不足したため、買掛金572,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":572000,"credit_account":"当座借越","credit_amount":572000}}',
     explanation:
-      "基本的な仕訳問題（問題28）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "当座借越の仕訳です。借方に買掛金、貸方に当座借越を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"消費税納付","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座借越","accounts":["買掛金","当座借越"],"keywords":["当座借越","残高不足","買掛金支払"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_029",
     category_id: "journal",
-    difficulty: 2,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n従業員への前月分給料500,000円が未払いとなっていたため、当月初めに現金で支払った。",
+      "現金実査の結果、現金の実際有高が127,000円であったが、帳簿残高は254,000円であった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":127000,"credit_account":"現金過不足","credit_amount":127000}}',
     explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+      "現金過不足の仕訳です。借方に現金、貸方に現金過不足を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"未払給料支払","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_030",
     category_id: "journal",
-    difficulty: 2,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n備品600,000円を購入し、代金は現金で支払った。",
+    question_text: "小口現金係に390,000円を前渡しした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":390000,"credit_account":"現金","credit_amount":390000}}',
-    explanation:
-      "基本的な仕訳問題（問題30）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"fixed_assets","pattern":"固定資産取得","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"小口現金","accounts":["小口現金","現金"],"keywords":["小口現金","前渡し","インプレスト"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_031",
     category_id: "journal",
-    difficulty: 2,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n建物5,000,000円を取得し、登記料50,000円、仲介手数料100,000円を現金で支払った。",
+    question_text: "売掛金634,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":634000,"credit_account":"売掛金","credit_amount":634000}}',
     explanation:
-      "基本的な仕訳問題（問題31）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "当座預金振込の仕訳です。借方に当座預金、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"fixed_assets","pattern":"固定資産付随費用","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座預金振込","accounts":["当座預金","売掛金"],"keywords":["当座預金","振込","売掛金回収"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_032",
     category_id: "journal",
-    difficulty: 2,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、建物（取得原価3,000,000円、残存価額10％、耐用年数30年）について定額法により減価償却を行う。",
+      "当座預金残高が不足したため、買掛金595,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":595000,"credit_account":"当座借越","credit_amount":595000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "当座借越の仕訳です。借方に買掛金、貸方に当座借越を記入します。",
+    difficulty: 2,
     tags_json:
-      '{"subcategory":"fixed_assets","pattern":"減価償却（定額法）","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座借越","accounts":["買掛金","当座借越"],"keywords":["当座借越","残高不足","買掛金支払"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_033",
     category_id: "journal",
-    difficulty: 3,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n備品（取得原価400,000円、減価償却累計額250,000円）を100,000円で売却し、代金は現金で受け取った。",
+      "現金実査の結果、現金の実際有高が227,000円であったが、帳簿残高は136,000円であった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":227000,"credit_account":"現金過不足","credit_amount":227000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "現金過不足の仕訳です。借方に現金、貸方に現金過不足を記入します。",
+    difficulty: 3,
     tags_json:
-      '{"subcategory":"fixed_assets","pattern":"固定資産売却損","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_034",
     category_id: "journal",
-    difficulty: 3,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n車両（取得原価800,000円、減価償却累計額600,000円）を300,000円で売却し、代金は月末に受け取ることにした。",
+    question_text: "小口現金係に671,000円を前渡しした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":671000,"credit_account":"現金","credit_amount":671000}}',
-    explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+    explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
+    difficulty: 3,
     tags_json:
-      '{"subcategory":"fixed_assets","pattern":"固定資産売却益","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"小口現金","accounts":["小口現金","現金"],"keywords":["小口現金","前渡し","インプレスト"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_035",
     category_id: "journal",
-    difficulty: 3,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n不要となった機械（取得原価500,000円、減価償却累計額500,000円）を除却し、処分費用10,000円を現金で支払った。",
+    question_text: "売掛金981,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":981000,"credit_account":"売掛金","credit_amount":981000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "当座預金振込の仕訳です。借方に当座預金、貸方に売掛金を記入します。",
+    difficulty: 3,
     tags_json:
-      '{"subcategory":"fixed_assets","pattern":"固定資産除却","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座預金振込","accounts":["当座預金","売掛金"],"keywords":["当座預金","振込","売掛金回収"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_036",
     category_id: "journal",
-    difficulty: 3,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n火災により建物（取得原価2,000,000円、減価償却累計額800,000円）が焼失した。",
+      "当座預金残高が不足したため、買掛金22,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":22000,"credit_account":"当座借越","credit_amount":22000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "当座借越の仕訳です。借方に買掛金、貸方に当座借越を記入します。",
+    difficulty: 3,
     tags_json:
-      '{"subcategory":"fixed_assets","pattern":"災害損失","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座借越","accounts":["買掛金","当座借越"],"keywords":["当座借越","残高不足","買掛金支払"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_037",
     category_id: "journal",
-    difficulty: 3,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、売掛金残高500,000円に対して2％の貸倒引当金を差額補充法により設定する。なお、貸倒引当金の残高は3,000円である。",
+      "現金実査の結果、現金の実際有高が229,000円であったが、帳簿残高は185,000円であった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":229000,"credit_account":"現金過不足","credit_amount":229000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "現金過不足の仕訳です。借方に現金、貸方に現金過不足を記入します。",
+    difficulty: 3,
     tags_json:
-      '{"subcategory":"year_end_adj","pattern":"貸倒引当金設定","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_038",
     category_id: "journal",
-    difficulty: 3,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n前期に貸倒処理した売掛金20,000円が当期に回収され、現金で受け取った。",
+    question_text: "小口現金係に515,000円を前渡しした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":515000,"credit_account":"現金","credit_amount":515000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
+    difficulty: 3,
     tags_json:
-      '{"subcategory":"year_end_adj","pattern":"償却債権取立益","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"小口現金","accounts":["小口現金","現金"],"keywords":["小口現金","前渡し","インプレスト"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_039",
     category_id: "journal",
-    difficulty: 3,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、向こう1年分の保険料120,000円のうち、翌期分80,000円を前払費用に振り替える。",
+    question_text: "売掛金992,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":992000,"credit_account":"売掛金","credit_amount":992000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "当座預金振込の仕訳です。借方に当座預金、貸方に売掛金を記入します。",
+    difficulty: 3,
     tags_json:
-      '{"subcategory":"year_end_adj","pattern":"前払費用","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座預金振込","accounts":["当座預金","売掛金"],"keywords":["当座預金","振込","売掛金回収"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_040",
     category_id: "journal",
-    difficulty: 3,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、当期の家賃収入360,000円のうち、翌期分30,000円が含まれているため、前受収益に振り替える。",
+      "当座預金残高が不足したため、買掛金622,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":622000,"credit_account":"当座借越","credit_amount":622000}}',
     explanation:
-      "基本的な仕訳問題（問題40）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "当座借越の仕訳です。借方に買掛金、貸方に当座借越を記入します。",
+    difficulty: 3,
     tags_json:
-      '{"subcategory":"year_end_adj","pattern":"前受収益","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"当座借越","accounts":["買掛金","当座借越"],"keywords":["当座借越","残高不足","買掛金支払"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_041",
     category_id: "journal",
-    difficulty: 3,
     question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、当月分の給料400,000円が未払いとなっているため、未払費用を計上する。",
+      "現金実査の結果、現金の実際有高が315,000円であったが、帳簿残高は755,000円であった。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":315000,"credit_account":"現金過不足","credit_amount":315000}}',
     explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+      "現金過不足の仕訳です。借方に現金、貸方に現金過不足を記入します。",
+    difficulty: 3,
     tags_json:
-      '{"subcategory":"year_end_adj","pattern":"未払費用","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_042",
     category_id: "journal",
-    difficulty: 3,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、貸付金100,000円に対する利息1,000円が未収となっているため、未収収益を計上する。",
+    question_text: "小口現金係に999,000円を前渡しした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":999000,"credit_account":"現金","credit_amount":999000}}',
-    explanation:
-      "基本的な仕訳問題（問題42）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
+    difficulty: 3,
     tags_json:
-      '{"subcategory":"year_end_adj","pattern":"未収収益","examSection":1}',
+      '{"subcategory":"cash_deposit","pattern":"小口現金","accounts":["小口現金","現金"],"keywords":["小口現金","前渡し","インプレスト"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_043",
     category_id: "journal",
-    difficulty: 1,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n決算において、消耗品の未使用高が25,000円あったため、貯蔵品に振り替える。",
+    question_text: "商品47,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":47000,"credit_account":"買掛金","credit_amount":47000}}',
-    explanation:
-      "基本的な仕訳問題（問題43）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"year_end_adj","pattern":"消耗品棚卸","examSection":1}',
+      '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_044",
     category_id: "journal",
-    difficulty: 1,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n商品800,000円を仕入れ、代金のうち300,000円は現金で支払い、残額は約束手形を振り出した。",
+    question_text: "商品を928,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":928000,"credit_account":"売上","credit_amount":928000}}',
-    explanation:
-      "約束手形の振出処理。将来の現金支払義務として処理します。\\n\\n⚠️ 間違えやすいポイント：手形は満期日まで現金化できません。支払手形は負債（貸方）。小切手と混同しない（小切手は即座に現金化可能）。不渡時の処理も覚えておきましょう。",
+    explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"merchandise_trade","pattern":"複合仕訳","examSection":1}',
+      '{"subcategory":"sales_purchase","pattern":"商品売上","accounts":["現金","売上"],"keywords":["売上","現金売上","販売"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_045",
     category_id: "journal",
-    difficulty: 1,
-    question_text:
-      "【仕訳問題】次の取引について仕訳しなさい。\n\n得意先の売掛金50,000円が貸倒れとなった。なお、貸倒引当金の残高は30,000円である。",
+    question_text: "仕入れた商品のうち548,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":548000,"credit_account":"仕入","credit_amount":548000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
+    difficulty: 1,
     tags_json:
-      '{"subcategory":"year_end_adj","pattern":"貸倒処理","examSection":1}',
+      '{"subcategory":"sales_purchase","pattern":"仕入戻し","accounts":["買掛金","仕入"],"keywords":["仕入戻し","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
     updated_at: "2025-08-07T00:31:25.367Z",
   },
   {
     id: "Q_J_046",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売上げた商品のうち68,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":68000,"credit_account":"売掛金","credit_amount":68000}}',
-    explanation:
-      "商品売上の三分法処理。収益の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「売上」「繰越商品」を使用。分記法・総記法と混同しない。売上返品→「売上」減少。運賃負担の処理も要注意。",
+    explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"売上戻り","accounts":["売上","売掛金"],"keywords":["売上戻り","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -817,14 +746,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_047",
     category_id: "journal",
-    difficulty: 1,
     question_text: "商品591,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":591000,"credit_account":"買掛金","credit_amount":591000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -833,14 +761,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_048",
     category_id: "journal",
-    difficulty: 1,
     question_text: "商品を578,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":578000,"credit_account":"売上","credit_amount":578000}}',
-    explanation:
-      "基本的な仕訳問題（問題48）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品売上","accounts":["現金","売上"],"keywords":["売上","現金売上","販売"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -849,14 +776,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_049",
     category_id: "journal",
-    difficulty: 1,
     question_text: "仕入れた商品のうち924,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":924000,"credit_account":"仕入","credit_amount":924000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"仕入戻し","accounts":["買掛金","仕入"],"keywords":["仕入戻し","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -865,14 +791,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_050",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売上げた商品のうち776,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":776000,"credit_account":"売掛金","credit_amount":776000}}',
-    explanation:
-      "商品売上の三分法処理。収益の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「売上」「繰越商品」を使用。分記法・総記法と混同しない。売上返品→「売上」減少。運賃負担の処理も要注意。",
+    explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"売上戻り","accounts":["売上","売掛金"],"keywords":["売上戻り","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -881,14 +806,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_051",
     category_id: "journal",
-    difficulty: 1,
     question_text: "商品219,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":219000,"credit_account":"買掛金","credit_amount":219000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -897,14 +821,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_052",
     category_id: "journal",
-    difficulty: 1,
     question_text: "商品を822,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":822000,"credit_account":"売上","credit_amount":822000}}',
-    explanation:
-      "基本的な仕訳問題（問題52）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品売上","accounts":["現金","売上"],"keywords":["売上","現金売上","販売"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -913,14 +836,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_053",
     category_id: "journal",
-    difficulty: 1,
     question_text: "仕入れた商品のうち950,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":950000,"credit_account":"仕入","credit_amount":950000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"仕入戻し","accounts":["買掛金","仕入"],"keywords":["仕入戻し","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -929,14 +851,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_054",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売上げた商品のうち898,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":898000,"credit_account":"売掛金","credit_amount":898000}}',
-    explanation:
-      "商品売上の三分法処理。収益の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「売上」「繰越商品」を使用。分記法・総記法と混同しない。売上返品→「売上」減少。運賃負担の処理も要注意。",
+    explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"売上戻り","accounts":["売上","売掛金"],"keywords":["売上戻り","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -945,14 +866,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_055",
     category_id: "journal",
-    difficulty: 1,
     question_text: "商品867,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":867000,"credit_account":"買掛金","credit_amount":867000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -961,14 +881,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_056",
     category_id: "journal",
-    difficulty: 1,
     question_text: "商品を876,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":876000,"credit_account":"売上","credit_amount":876000}}',
-    explanation:
-      "基本的な仕訳問題（問題56）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品売上","accounts":["現金","売上"],"keywords":["売上","現金売上","販売"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -977,14 +896,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_057",
     category_id: "journal",
-    difficulty: 1,
     question_text: "仕入れた商品のうち804,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":804000,"credit_account":"仕入","credit_amount":804000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"仕入戻し","accounts":["買掛金","仕入"],"keywords":["仕入戻し","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -993,14 +911,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_058",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売上げた商品のうち189,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":189000,"credit_account":"売掛金","credit_amount":189000}}',
-    explanation:
-      "商品売上の三分法処理。収益の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「売上」「繰越商品」を使用。分記法・総記法と混同しない。売上返品→「売上」減少。運賃負担の処理も要注意。",
+    explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"売上戻り","accounts":["売上","売掛金"],"keywords":["売上戻り","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -1009,14 +926,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_059",
     category_id: "journal",
-    difficulty: 2,
     question_text: "商品770,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":770000,"credit_account":"買掛金","credit_amount":770000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -1025,14 +941,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_060",
     category_id: "journal",
-    difficulty: 2,
     question_text: "商品を92,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":92000,"credit_account":"売上","credit_amount":92000}}',
-    explanation:
-      "基本的な仕訳問題（問題60）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品売上","accounts":["現金","売上"],"keywords":["売上","現金売上","販売"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -1041,14 +956,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_061",
     category_id: "journal",
-    difficulty: 2,
     question_text: "仕入れた商品のうち201,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":201000,"credit_account":"仕入","credit_amount":201000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"仕入戻し","accounts":["買掛金","仕入"],"keywords":["仕入戻し","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -1057,14 +971,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_062",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売上げた商品のうち909,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":909000,"credit_account":"売掛金","credit_amount":909000}}',
-    explanation:
-      "商品売上の三分法処理。収益の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「売上」「繰越商品」を使用。分記法・総記法と混同しない。売上返品→「売上」減少。運賃負担の処理も要注意。",
+    explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"売上戻り","accounts":["売上","売掛金"],"keywords":["売上戻り","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -1073,14 +986,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_063",
     category_id: "journal",
-    difficulty: 2,
     question_text: "商品445,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":445000,"credit_account":"買掛金","credit_amount":445000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.367Z",
@@ -1089,14 +1001,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_064",
     category_id: "journal",
-    difficulty: 2,
     question_text: "商品を328,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":328000,"credit_account":"売上","credit_amount":328000}}',
-    explanation:
-      "基本的な仕訳問題（問題64）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品売上","accounts":["現金","売上"],"keywords":["売上","現金売上","販売"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1105,14 +1016,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_065",
     category_id: "journal",
-    difficulty: 2,
     question_text: "仕入れた商品のうち582,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":582000,"credit_account":"仕入","credit_amount":582000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"仕入戻し","accounts":["買掛金","仕入"],"keywords":["仕入戻し","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1121,14 +1031,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_066",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売上げた商品のうち108,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":108000,"credit_account":"売掛金","credit_amount":108000}}',
-    explanation:
-      "商品売上の三分法処理。収益の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「売上」「繰越商品」を使用。分記法・総記法と混同しない。売上返品→「売上」減少。運賃負担の処理も要注意。",
+    explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"売上戻り","accounts":["売上","売掛金"],"keywords":["売上戻り","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1137,14 +1046,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_067",
     category_id: "journal",
-    difficulty: 2,
     question_text: "商品612,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":612000,"credit_account":"買掛金","credit_amount":612000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1153,14 +1061,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_068",
     category_id: "journal",
-    difficulty: 2,
     question_text: "商品を235,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":235000,"credit_account":"売上","credit_amount":235000}}',
-    explanation:
-      "基本的な仕訳問題（問題68）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品売上","accounts":["現金","売上"],"keywords":["売上","現金売上","販売"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1169,14 +1076,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_069",
     category_id: "journal",
-    difficulty: 2,
     question_text: "仕入れた商品のうち786,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":786000,"credit_account":"仕入","credit_amount":786000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"仕入戻し","accounts":["買掛金","仕入"],"keywords":["仕入戻し","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1185,14 +1091,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_070",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売上げた商品のうち695,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":695000,"credit_account":"売掛金","credit_amount":695000}}',
-    explanation:
-      "商品売上の三分法処理。収益の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「売上」「繰越商品」を使用。分記法・総記法と混同しない。売上返品→「売上」減少。運賃負担の処理も要注意。",
+    explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"売上戻り","accounts":["売上","売掛金"],"keywords":["売上戻り","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1201,14 +1106,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_071",
     category_id: "journal",
-    difficulty: 2,
     question_text: "商品924,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":924000,"credit_account":"買掛金","credit_amount":924000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1217,14 +1121,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_072",
     category_id: "journal",
-    difficulty: 2,
     question_text: "商品を172,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":172000,"credit_account":"売上","credit_amount":172000}}',
-    explanation:
-      "基本的な仕訳問題（問題72）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品売上","accounts":["現金","売上"],"keywords":["売上","現金売上","販売"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1233,14 +1136,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_073",
     category_id: "journal",
-    difficulty: 2,
     question_text: "仕入れた商品のうち860,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":860000,"credit_account":"仕入","credit_amount":860000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"仕入戻し","accounts":["買掛金","仕入"],"keywords":["仕入戻し","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1249,14 +1151,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_074",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売上げた商品のうち146,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":146000,"credit_account":"売掛金","credit_amount":146000}}',
-    explanation:
-      "商品売上の三分法処理。収益の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「売上」「繰越商品」を使用。分記法・総記法と混同しない。売上返品→「売上」減少。運賃負担の処理も要注意。",
+    explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"売上戻り","accounts":["売上","売掛金"],"keywords":["売上戻り","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1265,14 +1166,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_075",
     category_id: "journal",
-    difficulty: 2,
     question_text: "商品19,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":19000,"credit_account":"買掛金","credit_amount":19000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1281,14 +1181,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_076",
     category_id: "journal",
-    difficulty: 2,
     question_text: "商品を132,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":132000,"credit_account":"売上","credit_amount":132000}}',
-    explanation:
-      "基本的な仕訳問題（問題76）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品売上","accounts":["現金","売上"],"keywords":["売上","現金売上","販売"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1297,14 +1196,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_077",
     category_id: "journal",
-    difficulty: 3,
     question_text: "仕入れた商品のうち824,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":824000,"credit_account":"仕入","credit_amount":824000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"仕入戻し","accounts":["買掛金","仕入"],"keywords":["仕入戻し","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1313,14 +1211,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_078",
     category_id: "journal",
-    difficulty: 3,
     question_text: "売上げた商品のうち775,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":775000,"credit_account":"売掛金","credit_amount":775000}}',
-    explanation:
-      "商品売上の三分法処理。収益の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「売上」「繰越商品」を使用。分記法・総記法と混同しない。売上返品→「売上」減少。運賃負担の処理も要注意。",
+    explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"売上戻り","accounts":["売上","売掛金"],"keywords":["売上戻り","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1329,14 +1226,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_079",
     category_id: "journal",
-    difficulty: 3,
     question_text: "商品113,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":113000,"credit_account":"買掛金","credit_amount":113000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1345,14 +1241,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_080",
     category_id: "journal",
-    difficulty: 3,
     question_text: "商品を833,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":833000,"credit_account":"売上","credit_amount":833000}}',
-    explanation:
-      "基本的な仕訳問題（問題80）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品売上","accounts":["現金","売上"],"keywords":["売上","現金売上","販売"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1361,14 +1256,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_081",
     category_id: "journal",
-    difficulty: 3,
     question_text: "仕入れた商品のうち872,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":872000,"credit_account":"仕入","credit_amount":872000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"仕入戻し","accounts":["買掛金","仕入"],"keywords":["仕入戻し","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1377,14 +1271,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_082",
     category_id: "journal",
-    difficulty: 3,
     question_text: "売上げた商品のうち263,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":263000,"credit_account":"売掛金","credit_amount":263000}}',
-    explanation:
-      "商品売上の三分法処理。収益の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「売上」「繰越商品」を使用。分記法・総記法と混同しない。売上返品→「売上」減少。運賃負担の処理も要注意。",
+    explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"売上戻り","accounts":["売上","売掛金"],"keywords":["売上戻り","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1393,14 +1286,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_083",
     category_id: "journal",
-    difficulty: 3,
     question_text: "商品286,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":286000,"credit_account":"買掛金","credit_amount":286000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1409,14 +1301,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_084",
     category_id: "journal",
-    difficulty: 3,
     question_text: "商品を800,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":800000,"credit_account":"売上","credit_amount":800000}}',
-    explanation:
-      "基本的な仕訳問題（問題84）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品売上","accounts":["現金","売上"],"keywords":["売上","現金売上","販売"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1425,14 +1316,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_085",
     category_id: "journal",
-    difficulty: 3,
     question_text: "仕入れた商品のうち84,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":84000,"credit_account":"仕入","credit_amount":84000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"仕入戻し","accounts":["買掛金","仕入"],"keywords":["仕入戻し","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1441,14 +1331,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_086",
     category_id: "journal",
-    difficulty: 3,
     question_text: "売上げた商品のうち390,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":390000,"credit_account":"売掛金","credit_amount":390000}}',
-    explanation:
-      "商品売上の三分法処理。収益の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「売上」「繰越商品」を使用。分記法・総記法と混同しない。売上返品→「売上」減少。運賃負担の処理も要注意。",
+    explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"売上戻り","accounts":["売上","売掛金"],"keywords":["売上戻り","返品","品違い"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1457,14 +1346,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_087",
     category_id: "journal",
-    difficulty: 3,
     question_text: "商品150,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":150000,"credit_account":"買掛金","credit_amount":150000}}',
-    explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+    explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"sales_purchase","pattern":"商品仕入","accounts":["仕入","買掛金"],"keywords":["仕入","買掛金","掛け仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1473,14 +1361,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_088",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売掛金855,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":855000,"credit_account":"売掛金","credit_amount":855000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"売掛金回収","accounts":["現金","売掛金"],"keywords":["売掛金","回収","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1489,14 +1376,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_089",
     category_id: "journal",
-    difficulty: 1,
     question_text: "買掛金696,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":696000,"credit_account":"当座預金","credit_amount":696000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "買掛金支払の仕訳です。借方に買掛金、貸方に当座預金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"買掛金支払","accounts":["買掛金","当座預金"],"keywords":["買掛金","支払","小切手"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1505,14 +1392,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_090",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売掛金526,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":526000,"credit_account":"売掛金","credit_amount":526000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形受取の仕訳です。借方に受取手形、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形受取","accounts":["受取手形","売掛金"],"keywords":["受取手形","約束手形","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1521,14 +1408,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_091",
     category_id: "journal",
-    difficulty: 1,
     question_text: "買掛金387,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":387000,"credit_account":"支払手形","credit_amount":387000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形支払の仕訳です。借方に買掛金、貸方に支払手形を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形支払","accounts":["買掛金","支払手形"],"keywords":["支払手形","約束手形","買掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1537,14 +1424,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_092",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売掛金898,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":898000,"credit_account":"売掛金","credit_amount":898000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"売掛金回収","accounts":["現金","売掛金"],"keywords":["売掛金","回収","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1553,14 +1439,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_093",
     category_id: "journal",
-    difficulty: 1,
     question_text: "買掛金106,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":106000,"credit_account":"当座預金","credit_amount":106000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "買掛金支払の仕訳です。借方に買掛金、貸方に当座預金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"買掛金支払","accounts":["買掛金","当座預金"],"keywords":["買掛金","支払","小切手"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1569,14 +1455,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_094",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売掛金935,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":935000,"credit_account":"売掛金","credit_amount":935000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形受取の仕訳です。借方に受取手形、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形受取","accounts":["受取手形","売掛金"],"keywords":["受取手形","約束手形","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1585,14 +1471,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_095",
     category_id: "journal",
-    difficulty: 1,
     question_text: "買掛金169,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":169000,"credit_account":"支払手形","credit_amount":169000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形支払の仕訳です。借方に買掛金、貸方に支払手形を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形支払","accounts":["買掛金","支払手形"],"keywords":["支払手形","約束手形","買掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1601,14 +1487,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_096",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売掛金86,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":86000,"credit_account":"売掛金","credit_amount":86000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"売掛金回収","accounts":["現金","売掛金"],"keywords":["売掛金","回収","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1617,14 +1502,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_097",
     category_id: "journal",
-    difficulty: 1,
     question_text: "買掛金606,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":606000,"credit_account":"当座預金","credit_amount":606000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "買掛金支払の仕訳です。借方に買掛金、貸方に当座預金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"買掛金支払","accounts":["買掛金","当座預金"],"keywords":["買掛金","支払","小切手"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1633,14 +1518,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_098",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売掛金69,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":69000,"credit_account":"売掛金","credit_amount":69000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形受取の仕訳です。借方に受取手形、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形受取","accounts":["受取手形","売掛金"],"keywords":["受取手形","約束手形","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1649,14 +1534,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_099",
     category_id: "journal",
-    difficulty: 1,
     question_text: "買掛金489,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":489000,"credit_account":"支払手形","credit_amount":489000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形支払の仕訳です。借方に買掛金、貸方に支払手形を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形支払","accounts":["買掛金","支払手形"],"keywords":["支払手形","約束手形","買掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1665,14 +1550,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_100",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売掛金773,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":773000,"credit_account":"売掛金","credit_amount":773000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"売掛金回収","accounts":["現金","売掛金"],"keywords":["売掛金","回収","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1681,14 +1565,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_101",
     category_id: "journal",
-    difficulty: 1,
     question_text: "買掛金897,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":897000,"credit_account":"当座預金","credit_amount":897000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "買掛金支払の仕訳です。借方に買掛金、貸方に当座預金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"買掛金支払","accounts":["買掛金","当座預金"],"keywords":["買掛金","支払","小切手"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1697,14 +1581,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_102",
     category_id: "journal",
-    difficulty: 1,
     question_text: "売掛金744,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":744000,"credit_account":"売掛金","credit_amount":744000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形受取の仕訳です。借方に受取手形、貸方に売掛金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形受取","accounts":["受取手形","売掛金"],"keywords":["受取手形","約束手形","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1713,14 +1597,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_103",
     category_id: "journal",
-    difficulty: 2,
     question_text: "買掛金535,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":535000,"credit_account":"支払手形","credit_amount":535000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形支払の仕訳です。借方に買掛金、貸方に支払手形を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形支払","accounts":["買掛金","支払手形"],"keywords":["支払手形","約束手形","買掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1729,14 +1613,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_104",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売掛金610,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":610000,"credit_account":"売掛金","credit_amount":610000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"売掛金回収","accounts":["現金","売掛金"],"keywords":["売掛金","回収","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1745,14 +1628,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_105",
     category_id: "journal",
-    difficulty: 2,
     question_text: "買掛金675,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":675000,"credit_account":"当座預金","credit_amount":675000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "買掛金支払の仕訳です。借方に買掛金、貸方に当座預金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"買掛金支払","accounts":["買掛金","当座預金"],"keywords":["買掛金","支払","小切手"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1761,14 +1644,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_106",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売掛金823,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":823000,"credit_account":"売掛金","credit_amount":823000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形受取の仕訳です。借方に受取手形、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形受取","accounts":["受取手形","売掛金"],"keywords":["受取手形","約束手形","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1777,14 +1660,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_107",
     category_id: "journal",
-    difficulty: 2,
     question_text: "買掛金698,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":698000,"credit_account":"支払手形","credit_amount":698000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形支払の仕訳です。借方に買掛金、貸方に支払手形を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形支払","accounts":["買掛金","支払手形"],"keywords":["支払手形","約束手形","買掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1793,14 +1676,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_108",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売掛金362,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":362000,"credit_account":"売掛金","credit_amount":362000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"売掛金回収","accounts":["現金","売掛金"],"keywords":["売掛金","回収","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1809,14 +1691,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_109",
     category_id: "journal",
-    difficulty: 2,
     question_text: "買掛金708,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":708000,"credit_account":"当座預金","credit_amount":708000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "買掛金支払の仕訳です。借方に買掛金、貸方に当座預金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"買掛金支払","accounts":["買掛金","当座預金"],"keywords":["買掛金","支払","小切手"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1825,14 +1707,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_110",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売掛金859,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":859000,"credit_account":"売掛金","credit_amount":859000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形受取の仕訳です。借方に受取手形、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形受取","accounts":["受取手形","売掛金"],"keywords":["受取手形","約束手形","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1841,14 +1723,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_111",
     category_id: "journal",
-    difficulty: 2,
     question_text: "買掛金88,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":88000,"credit_account":"支払手形","credit_amount":88000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形支払の仕訳です。借方に買掛金、貸方に支払手形を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形支払","accounts":["買掛金","支払手形"],"keywords":["支払手形","約束手形","買掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1857,14 +1739,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_112",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売掛金7,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":7000,"credit_account":"売掛金","credit_amount":7000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"売掛金回収","accounts":["現金","売掛金"],"keywords":["売掛金","回収","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1873,14 +1754,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_113",
     category_id: "journal",
-    difficulty: 2,
     question_text: "買掛金639,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":639000,"credit_account":"当座預金","credit_amount":639000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "買掛金支払の仕訳です。借方に買掛金、貸方に当座預金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"買掛金支払","accounts":["買掛金","当座預金"],"keywords":["買掛金","支払","小切手"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1889,14 +1770,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_114",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売掛金420,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":420000,"credit_account":"売掛金","credit_amount":420000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形受取の仕訳です。借方に受取手形、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形受取","accounts":["受取手形","売掛金"],"keywords":["受取手形","約束手形","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1905,14 +1786,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_115",
     category_id: "journal",
-    difficulty: 2,
     question_text: "買掛金249,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":249000,"credit_account":"支払手形","credit_amount":249000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形支払の仕訳です。借方に買掛金、貸方に支払手形を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形支払","accounts":["買掛金","支払手形"],"keywords":["支払手形","約束手形","買掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1921,14 +1802,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_116",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売掛金814,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":814000,"credit_account":"売掛金","credit_amount":814000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"売掛金回収","accounts":["現金","売掛金"],"keywords":["売掛金","回収","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1937,14 +1817,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_117",
     category_id: "journal",
-    difficulty: 2,
     question_text: "買掛金111,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":111000,"credit_account":"当座預金","credit_amount":111000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "買掛金支払の仕訳です。借方に買掛金、貸方に当座預金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"買掛金支払","accounts":["買掛金","当座預金"],"keywords":["買掛金","支払","小切手"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1953,14 +1833,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_118",
     category_id: "journal",
-    difficulty: 2,
     question_text: "売掛金201,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":201000,"credit_account":"売掛金","credit_amount":201000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形受取の仕訳です。借方に受取手形、貸方に売掛金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形受取","accounts":["受取手形","売掛金"],"keywords":["受取手形","約束手形","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1969,14 +1849,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_119",
     category_id: "journal",
-    difficulty: 3,
     question_text: "買掛金248,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":248000,"credit_account":"支払手形","credit_amount":248000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形支払の仕訳です。借方に買掛金、貸方に支払手形を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形支払","accounts":["買掛金","支払手形"],"keywords":["支払手形","約束手形","買掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -1985,14 +1865,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_120",
     category_id: "journal",
-    difficulty: 3,
     question_text: "売掛金712,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":712000,"credit_account":"売掛金","credit_amount":712000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"売掛金回収","accounts":["現金","売掛金"],"keywords":["売掛金","回収","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2001,14 +1880,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_121",
     category_id: "journal",
-    difficulty: 3,
     question_text: "買掛金314,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":314000,"credit_account":"当座預金","credit_amount":314000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "買掛金支払の仕訳です。借方に買掛金、貸方に当座預金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"買掛金支払","accounts":["買掛金","当座預金"],"keywords":["買掛金","支払","小切手"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2017,14 +1896,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_122",
     category_id: "journal",
-    difficulty: 3,
     question_text: "売掛金190,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":190000,"credit_account":"売掛金","credit_amount":190000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形受取の仕訳です。借方に受取手形、貸方に売掛金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形受取","accounts":["受取手形","売掛金"],"keywords":["受取手形","約束手形","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2033,14 +1912,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_123",
     category_id: "journal",
-    difficulty: 3,
     question_text: "買掛金85,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":85000,"credit_account":"支払手形","credit_amount":85000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形支払の仕訳です。借方に買掛金、貸方に支払手形を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形支払","accounts":["買掛金","支払手形"],"keywords":["支払手形","約束手形","買掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2049,14 +1928,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_124",
     category_id: "journal",
-    difficulty: 3,
     question_text: "売掛金608,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":608000,"credit_account":"売掛金","credit_amount":608000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"売掛金回収","accounts":["現金","売掛金"],"keywords":["売掛金","回収","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2065,14 +1943,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_125",
     category_id: "journal",
-    difficulty: 3,
     question_text: "買掛金975,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":975000,"credit_account":"当座預金","credit_amount":975000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "買掛金支払の仕訳です。借方に買掛金、貸方に当座預金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"買掛金支払","accounts":["買掛金","当座預金"],"keywords":["買掛金","支払","小切手"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2081,14 +1959,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_126",
     category_id: "journal",
-    difficulty: 3,
     question_text: "売掛金472,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":472000,"credit_account":"売掛金","credit_amount":472000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形受取の仕訳です。借方に受取手形、貸方に売掛金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形受取","accounts":["受取手形","売掛金"],"keywords":["受取手形","約束手形","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2097,14 +1975,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_127",
     category_id: "journal",
-    difficulty: 3,
     question_text: "買掛金275,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":275000,"credit_account":"支払手形","credit_amount":275000}}',
     explanation:
-      "買掛金の処理。商品仕入による債務の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：買掛金は負債科目。発生時は貸方、支払時は借方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "手形支払の仕訳です。借方に買掛金、貸方に支払手形を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"手形支払","accounts":["買掛金","支払手形"],"keywords":["支払手形","約束手形","買掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2113,14 +1991,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_128",
     category_id: "journal",
-    difficulty: 3,
     question_text: "売掛金50,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":50000,"credit_account":"売掛金","credit_amount":50000}}',
-    explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+    explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"receivable_payable","pattern":"売掛金回収","accounts":["現金","売掛金"],"keywords":["売掛金","回収","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2129,15 +2006,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_129",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "従業員に給料563,000円を支払った。なお、源泉所得税146,000円を差し引いた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":563000,"credit_account":"現金","credit_amount":563000}}',
-    explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2146,15 +2022,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_130",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "社会保険料584,000円（会社負担181,000円、従業員負担18,100円）を現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":584000,"credit_account":"預り金","credit_amount":584000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2163,14 +2039,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_131",
     category_id: "journal",
-    difficulty: 1,
     question_text: "固定資産税973,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":973000,"credit_account":"現金","credit_amount":973000}}',
-    explanation:
-      "基本的な仕訳問題（問題131）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"租税公課","accounts":["租税公課","現金"],"keywords":["固定資産税","租税公課","納付"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2179,14 +2054,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_132",
     category_id: "journal",
-    difficulty: 1,
     question_text: "法人税等33,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":33000,"credit_account":"当座預金","credit_amount":33000}}',
     explanation:
-      "基本的な仕訳問題（問題132）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "法人税等の仕訳です。借方に法人税等、貸方に当座預金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2195,15 +2070,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_133",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "従業員に給料176,000円を支払った。なお、源泉所得税817,000円を差し引いた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":176000,"credit_account":"現金","credit_amount":176000}}',
-    explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2212,15 +2086,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_134",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "社会保険料59,000円（会社負担387,000円、従業員負担38,700円）を現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":59000,"credit_account":"預り金","credit_amount":59000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2229,14 +2103,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_135",
     category_id: "journal",
-    difficulty: 1,
     question_text: "固定資産税729,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":729000,"credit_account":"現金","credit_amount":729000}}',
-    explanation:
-      "基本的な仕訳問題（問題135）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"租税公課","accounts":["租税公課","現金"],"keywords":["固定資産税","租税公課","納付"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2245,14 +2118,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_136",
     category_id: "journal",
-    difficulty: 1,
     question_text: "法人税等699,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":699000,"credit_account":"当座預金","credit_amount":699000}}',
     explanation:
-      "基本的な仕訳問題（問題136）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "法人税等の仕訳です。借方に法人税等、貸方に当座預金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2261,15 +2134,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_137",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "従業員に給料573,000円を支払った。なお、源泉所得税151,000円を差し引いた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":573000,"credit_account":"現金","credit_amount":573000}}',
-    explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2278,15 +2150,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_138",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "社会保険料994,000円（会社負担248,000円、従業員負担24,800円）を現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":994000,"credit_account":"預り金","credit_amount":994000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2295,14 +2167,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_139",
     category_id: "journal",
-    difficulty: 1,
     question_text: "固定資産税314,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":314000,"credit_account":"現金","credit_amount":314000}}',
-    explanation:
-      "基本的な仕訳問題（問題139）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"租税公課","accounts":["租税公課","現金"],"keywords":["固定資産税","租税公課","納付"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2311,14 +2182,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_140",
     category_id: "journal",
-    difficulty: 1,
     question_text: "法人税等314,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":314000,"credit_account":"当座預金","credit_amount":314000}}',
     explanation:
-      "基本的な仕訳問題（問題140）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "法人税等の仕訳です。借方に法人税等、貸方に当座預金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2327,15 +2198,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_141",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "従業員に給料809,000円を支払った。なお、源泉所得税941,000円を差し引いた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":809000,"credit_account":"現金","credit_amount":809000}}',
-    explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2344,15 +2214,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_142",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "社会保険料330,000円（会社負担169,000円、従業員負担16,900円）を現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":330000,"credit_account":"預り金","credit_amount":330000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2361,14 +2231,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_143",
     category_id: "journal",
-    difficulty: 1,
     question_text: "固定資産税435,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":435000,"credit_account":"現金","credit_amount":435000}}',
-    explanation:
-      "基本的な仕訳問題（問題143）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"租税公課","accounts":["租税公課","現金"],"keywords":["固定資産税","租税公課","納付"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2377,14 +2246,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_144",
     category_id: "journal",
-    difficulty: 2,
     question_text: "法人税等163,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":163000,"credit_account":"当座預金","credit_amount":163000}}',
     explanation:
-      "基本的な仕訳問題（問題144）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "法人税等の仕訳です。借方に法人税等、貸方に当座預金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2393,15 +2262,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_145",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "従業員に給料919,000円を支払った。なお、源泉所得税824,000円を差し引いた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":919000,"credit_account":"現金","credit_amount":919000}}',
-    explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2410,15 +2278,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_146",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "社会保険料691,000円（会社負担357,000円、従業員負担35,700円）を現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":691000,"credit_account":"預り金","credit_amount":691000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2427,14 +2295,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_147",
     category_id: "journal",
-    difficulty: 2,
     question_text: "固定資産税783,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":783000,"credit_account":"現金","credit_amount":783000}}',
-    explanation:
-      "基本的な仕訳問題（問題147）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"租税公課","accounts":["租税公課","現金"],"keywords":["固定資産税","租税公課","納付"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2443,14 +2310,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_148",
     category_id: "journal",
-    difficulty: 2,
     question_text: "法人税等550,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":550000,"credit_account":"当座預金","credit_amount":550000}}',
     explanation:
-      "基本的な仕訳問題（問題148）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "法人税等の仕訳です。借方に法人税等、貸方に当座預金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2459,15 +2326,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_149",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "従業員に給料223,000円を支払った。なお、源泉所得税504,000円を差し引いた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":223000,"credit_account":"現金","credit_amount":223000}}',
-    explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2476,15 +2342,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_150",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "社会保険料435,000円（会社負担119,000円、従業員負担11,900円）を現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":435000,"credit_account":"預り金","credit_amount":435000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2493,14 +2359,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_151",
     category_id: "journal",
-    difficulty: 2,
     question_text: "固定資産税54,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":54000,"credit_account":"現金","credit_amount":54000}}',
-    explanation:
-      "基本的な仕訳問題（問題151）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"租税公課","accounts":["租税公課","現金"],"keywords":["固定資産税","租税公課","納付"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2509,14 +2374,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_152",
     category_id: "journal",
-    difficulty: 2,
     question_text: "法人税等310,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":310000,"credit_account":"当座預金","credit_amount":310000}}',
     explanation:
-      "基本的な仕訳問題（問題152）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "法人税等の仕訳です。借方に法人税等、貸方に当座預金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2525,15 +2390,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_153",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "従業員に給料512,000円を支払った。なお、源泉所得税193,000円を差し引いた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":512000,"credit_account":"現金","credit_amount":512000}}',
-    explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2542,15 +2406,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_154",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "社会保険料999,000円（会社負担228,000円、従業員負担22,800円）を現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":999000,"credit_account":"預り金","credit_amount":999000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2559,14 +2423,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_155",
     category_id: "journal",
-    difficulty: 2,
     question_text: "固定資産税947,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":947000,"credit_account":"現金","credit_amount":947000}}',
-    explanation:
-      "基本的な仕訳問題（問題155）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"租税公課","accounts":["租税公課","現金"],"keywords":["固定資産税","租税公課","納付"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2575,14 +2438,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_156",
     category_id: "journal",
-    difficulty: 2,
     question_text: "法人税等497,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":497000,"credit_account":"当座預金","credit_amount":497000}}',
     explanation:
-      "基本的な仕訳問題（問題156）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "法人税等の仕訳です。借方に法人税等、貸方に当座預金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2591,15 +2454,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_157",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "従業員に給料77,000円を支払った。なお、源泉所得税752,000円を差し引いた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":77000,"credit_account":"現金","credit_amount":77000}}',
-    explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2608,15 +2470,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_158",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "社会保険料543,000円（会社負担159,000円、従業員負担15,900円）を現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":543000,"credit_account":"預り金","credit_amount":543000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2625,14 +2487,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_159",
     category_id: "journal",
-    difficulty: 2,
     question_text: "固定資産税540,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":540000,"credit_account":"現金","credit_amount":540000}}',
-    explanation:
-      "基本的な仕訳問題（問題159）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"租税公課","accounts":["租税公課","現金"],"keywords":["固定資産税","租税公課","納付"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2641,14 +2502,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_160",
     category_id: "journal",
-    difficulty: 2,
     question_text: "法人税等847,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":847000,"credit_account":"当座預金","credit_amount":847000}}',
     explanation:
-      "基本的な仕訳問題（問題160）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "法人税等の仕訳です。借方に法人税等、貸方に当座預金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2657,15 +2518,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_161",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "従業員に給料604,000円を支払った。なお、源泉所得税633,000円を差し引いた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":604000,"credit_account":"現金","credit_amount":604000}}',
-    explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2674,15 +2534,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_162",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "社会保険料157,000円（会社負担740,000円、従業員負担74,000円）を現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":157000,"credit_account":"預り金","credit_amount":157000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2691,14 +2551,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_163",
     category_id: "journal",
-    difficulty: 3,
     question_text: "固定資産税462,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":462000,"credit_account":"現金","credit_amount":462000}}',
-    explanation:
-      "基本的な仕訳問題（問題163）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"租税公課","accounts":["租税公課","現金"],"keywords":["固定資産税","租税公課","納付"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2707,14 +2566,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_164",
     category_id: "journal",
-    difficulty: 3,
     question_text: "法人税等814,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":814000,"credit_account":"当座預金","credit_amount":814000}}',
     explanation:
-      "基本的な仕訳問題（問題164）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "法人税等の仕訳です。借方に法人税等、貸方に当座預金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2723,15 +2582,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_165",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "従業員に給料292,000円を支払った。なお、源泉所得税238,000円を差し引いた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":292000,"credit_account":"現金","credit_amount":292000}}',
-    explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2740,15 +2598,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_166",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "社会保険料701,000円（会社負担348,000円、従業員負担34,800円）を現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":701000,"credit_account":"預り金","credit_amount":701000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2757,14 +2615,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_167",
     category_id: "journal",
-    difficulty: 3,
     question_text: "固定資産税18,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":18000,"credit_account":"現金","credit_amount":18000}}',
-    explanation:
-      "基本的な仕訳問題（問題167）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"租税公課","accounts":["租税公課","現金"],"keywords":["固定資産税","租税公課","納付"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2773,14 +2630,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_168",
     category_id: "journal",
-    difficulty: 3,
     question_text: "法人税等111,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":111000,"credit_account":"当座預金","credit_amount":111000}}',
     explanation:
-      "基本的な仕訳問題（問題168）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "法人税等の仕訳です。借方に法人税等、貸方に当座預金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2789,15 +2646,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_169",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "従業員に給料598,000円を支払った。なお、源泉所得税819,000円を差し引いた。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":598000,"credit_account":"現金","credit_amount":598000}}',
-    explanation:
-      "給料支払いの処理。総支給額の費用計上と源泉税等の預り金処理を行います。\\n\\n⚠️ 間違えやすいポイント：「給料」は総支給額で費用計上。源泉税・住民税・社会保険料は「預り金」（負債）。手取額のみを「給料」にしない。未払給料と給料の区別も重要。",
+    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2806,15 +2662,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_170",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "社会保険料39,000円（会社負担500,000円、従業員負担50,000円）を現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":39000,"credit_account":"預り金","credit_amount":39000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2823,14 +2679,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_171",
     category_id: "journal",
-    difficulty: 1,
     question_text: "備品507,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":507000,"credit_account":"現金","credit_amount":507000}}',
-    explanation:
-      "基本的な仕訳問題（問題171）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産購入","accounts":["備品","現金"],"keywords":["備品","固定資産","購入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2839,14 +2694,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_172",
     category_id: "journal",
-    difficulty: 1,
     question_text: "決算において、建物の減価償却費273,000円を計上する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":273000,"credit_account":"建物減価償却累計額","credit_amount":273000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "減価償却の仕訳です。借方に減価償却費、貸方に建物減価償却累計額を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"減価償却","accounts":["減価償却費","建物減価償却累計額"],"keywords":["減価償却","決算","建物"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2855,15 +2710,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_173",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "帳簿価額702,000円の車両を943,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":943000,"credit_account":"車両","credit_amount":943000}}',
-    explanation:
-      "基本的な仕訳問題（問題173）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産売却","accounts":["現金","車両","固定資産売却益"],"keywords":["固定資産売却","車両","売却益"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2872,15 +2726,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_174",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "使用不能となった備品（取得原価536,000円、減価償却累計額633,000円）を除却した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":536000,"credit_account":"固定資産除却損","credit_amount":536000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "固定資産除却の仕訳です。借方に備品減価償却累計額、貸方に固定資産除却損を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産除却","accounts":["備品減価償却累計額","固定資産除却損","備品"],"keywords":["除却","備品","除却損"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2889,14 +2743,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_175",
     category_id: "journal",
-    difficulty: 1,
     question_text: "備品536,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":536000,"credit_account":"現金","credit_amount":536000}}',
-    explanation:
-      "基本的な仕訳問題（問題175）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産購入","accounts":["備品","現金"],"keywords":["備品","固定資産","購入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2905,14 +2758,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_176",
     category_id: "journal",
-    difficulty: 1,
     question_text: "決算において、建物の減価償却費413,000円を計上する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":413000,"credit_account":"建物減価償却累計額","credit_amount":413000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "減価償却の仕訳です。借方に減価償却費、貸方に建物減価償却累計額を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"減価償却","accounts":["減価償却費","建物減価償却累計額"],"keywords":["減価償却","決算","建物"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2921,15 +2774,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_177",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "帳簿価額823,000円の車両を435,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":435000,"credit_account":"車両","credit_amount":435000}}',
-    explanation:
-      "基本的な仕訳問題（問題177）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産売却","accounts":["現金","車両","固定資産売却益"],"keywords":["固定資産売却","車両","売却益"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2938,15 +2790,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_178",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "使用不能となった備品（取得原価89,000円、減価償却累計額822,000円）を除却した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":89000,"credit_account":"固定資産除却損","credit_amount":89000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "固定資産除却の仕訳です。借方に備品減価償却累計額、貸方に固定資産除却損を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産除却","accounts":["備品減価償却累計額","固定資産除却損","備品"],"keywords":["除却","備品","除却損"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2955,14 +2807,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_179",
     category_id: "journal",
-    difficulty: 1,
     question_text: "備品25,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":25000,"credit_account":"現金","credit_amount":25000}}',
-    explanation:
-      "基本的な仕訳問題（問題179）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産購入","accounts":["備品","現金"],"keywords":["備品","固定資産","購入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2971,14 +2822,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_180",
     category_id: "journal",
-    difficulty: 1,
     question_text: "決算において、建物の減価償却費966,000円を計上する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":966000,"credit_account":"建物減価償却累計額","credit_amount":966000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "減価償却の仕訳です。借方に減価償却費、貸方に建物減価償却累計額を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"減価償却","accounts":["減価償却費","建物減価償却累計額"],"keywords":["減価償却","決算","建物"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -2987,15 +2838,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_181",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "帳簿価額315,000円の車両を604,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":604000,"credit_account":"車両","credit_amount":604000}}',
-    explanation:
-      "基本的な仕訳問題（問題181）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産売却","accounts":["現金","車両","固定資産売却益"],"keywords":["固定資産売却","車両","売却益"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3004,15 +2854,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_182",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "使用不能となった備品（取得原価30,000円、減価償却累計額717,000円）を除却した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":30000,"credit_account":"固定資産除却損","credit_amount":30000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "固定資産除却の仕訳です。借方に備品減価償却累計額、貸方に固定資産除却損を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産除却","accounts":["備品減価償却累計額","固定資産除却損","備品"],"keywords":["除却","備品","除却損"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3021,14 +2871,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_183",
     category_id: "journal",
-    difficulty: 1,
     question_text: "備品425,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":425000,"credit_account":"現金","credit_amount":425000}}',
-    explanation:
-      "基本的な仕訳問題（問題183）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産購入","accounts":["備品","現金"],"keywords":["備品","固定資産","購入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3037,14 +2886,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_184",
     category_id: "journal",
-    difficulty: 1,
     question_text: "決算において、建物の減価償却費713,000円を計上する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":713000,"credit_account":"建物減価償却累計額","credit_amount":713000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "減価償却の仕訳です。借方に減価償却費、貸方に建物減価償却累計額を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"減価償却","accounts":["減価償却費","建物減価償却累計額"],"keywords":["減価償却","決算","建物"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3053,15 +2902,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_185",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "帳簿価額751,000円の車両を96,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":96000,"credit_account":"車両","credit_amount":96000}}',
-    explanation:
-      "基本的な仕訳問題（問題185）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産売却","accounts":["現金","車両","固定資産売却益"],"keywords":["固定資産売却","車両","売却益"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3070,15 +2918,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_186",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "使用不能となった備品（取得原価92,000円、減価償却累計額472,000円）を除却した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":92000,"credit_account":"固定資産除却損","credit_amount":92000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "固定資産除却の仕訳です。借方に備品減価償却累計額、貸方に固定資産除却損を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産除却","accounts":["備品減価償却累計額","固定資産除却損","備品"],"keywords":["除却","備品","除却損"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3087,14 +2935,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_187",
     category_id: "journal",
-    difficulty: 2,
     question_text: "備品910,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":910000,"credit_account":"現金","credit_amount":910000}}',
-    explanation:
-      "基本的な仕訳問題（問題187）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産購入","accounts":["備品","現金"],"keywords":["備品","固定資産","購入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3103,14 +2950,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_188",
     category_id: "journal",
-    difficulty: 2,
     question_text: "決算において、建物の減価償却費93,000円を計上する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":93000,"credit_account":"建物減価償却累計額","credit_amount":93000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "減価償却の仕訳です。借方に減価償却費、貸方に建物減価償却累計額を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"減価償却","accounts":["減価償却費","建物減価償却累計額"],"keywords":["減価償却","決算","建物"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3119,15 +2966,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_189",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "帳簿価額984,000円の車両を4,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":4000,"credit_account":"車両","credit_amount":4000}}',
-    explanation:
-      "基本的な仕訳問題（問題189）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産売却","accounts":["現金","車両","固定資産売却益"],"keywords":["固定資産売却","車両","売却益"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3136,15 +2982,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_190",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "使用不能となった備品（取得原価305,000円、減価償却累計額440,000円）を除却した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":305000,"credit_account":"固定資産除却損","credit_amount":305000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "固定資産除却の仕訳です。借方に備品減価償却累計額、貸方に固定資産除却損を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産除却","accounts":["備品減価償却累計額","固定資産除却損","備品"],"keywords":["除却","備品","除却損"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3153,14 +2999,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_191",
     category_id: "journal",
-    difficulty: 2,
     question_text: "備品656,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":656000,"credit_account":"現金","credit_amount":656000}}',
-    explanation:
-      "基本的な仕訳問題（問題191）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産購入","accounts":["備品","現金"],"keywords":["備品","固定資産","購入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3169,14 +3014,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_192",
     category_id: "journal",
-    difficulty: 2,
     question_text: "決算において、建物の減価償却費655,000円を計上する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":655000,"credit_account":"建物減価償却累計額","credit_amount":655000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "減価償却の仕訳です。借方に減価償却費、貸方に建物減価償却累計額を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"減価償却","accounts":["減価償却費","建物減価償却累計額"],"keywords":["減価償却","決算","建物"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3185,15 +3030,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_193",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "帳簿価額806,000円の車両を360,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":360000,"credit_account":"車両","credit_amount":360000}}',
-    explanation:
-      "基本的な仕訳問題（問題193）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産売却","accounts":["現金","車両","固定資産売却益"],"keywords":["固定資産売却","車両","売却益"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3202,15 +3046,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_194",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "使用不能となった備品（取得原価539,000円、減価償却累計額836,000円）を除却した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":539000,"credit_account":"固定資産除却損","credit_amount":539000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "固定資産除却の仕訳です。借方に備品減価償却累計額、貸方に固定資産除却損を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産除却","accounts":["備品減価償却累計額","固定資産除却損","備品"],"keywords":["除却","備品","除却損"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3219,14 +3063,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_195",
     category_id: "journal",
-    difficulty: 2,
     question_text: "備品324,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":324000,"credit_account":"現金","credit_amount":324000}}',
-    explanation:
-      "基本的な仕訳問題（問題195）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産購入","accounts":["備品","現金"],"keywords":["備品","固定資産","購入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3235,14 +3078,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_196",
     category_id: "journal",
-    difficulty: 2,
     question_text: "決算において、建物の減価償却費112,000円を計上する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":112000,"credit_account":"建物減価償却累計額","credit_amount":112000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "減価償却の仕訳です。借方に減価償却費、貸方に建物減価償却累計額を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"減価償却","accounts":["減価償却費","建物減価償却累計額"],"keywords":["減価償却","決算","建物"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3251,15 +3094,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_197",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "帳簿価額603,000円の車両を767,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":767000,"credit_account":"車両","credit_amount":767000}}',
-    explanation:
-      "基本的な仕訳問題（問題197）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産売却","accounts":["現金","車両","固定資産売却益"],"keywords":["固定資産売却","車両","売却益"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3268,15 +3110,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_198",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "使用不能となった備品（取得原価71,000円、減価償却累計額831,000円）を除却した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":71000,"credit_account":"固定資産除却損","credit_amount":71000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "固定資産除却の仕訳です。借方に備品減価償却累計額、貸方に固定資産除却損を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産除却","accounts":["備品減価償却累計額","固定資産除却損","備品"],"keywords":["除却","備品","除却損"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3285,14 +3127,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_199",
     category_id: "journal",
-    difficulty: 2,
     question_text: "備品633,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":633000,"credit_account":"現金","credit_amount":633000}}',
-    explanation:
-      "基本的な仕訳問題（問題199）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産購入","accounts":["備品","現金"],"keywords":["備品","固定資産","購入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3301,14 +3142,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_200",
     category_id: "journal",
-    difficulty: 2,
     question_text: "決算において、建物の減価償却費670,000円を計上する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":670000,"credit_account":"建物減価償却累計額","credit_amount":670000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "減価償却の仕訳です。借方に減価償却費、貸方に建物減価償却累計額を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"減価償却","accounts":["減価償却費","建物減価償却累計額"],"keywords":["減価償却","決算","建物"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3317,15 +3158,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_201",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "帳簿価額580,000円の車両を613,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":613000,"credit_account":"車両","credit_amount":613000}}',
-    explanation:
-      "基本的な仕訳問題（問題201）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産売却","accounts":["現金","車両","固定資産売却益"],"keywords":["固定資産売却","車両","売却益"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3334,15 +3174,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_202",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "使用不能となった備品（取得原価431,000円、減価償却累計額989,000円）を除却した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":431000,"credit_account":"固定資産除却損","credit_amount":431000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "固定資産除却の仕訳です。借方に備品減価償却累計額、貸方に固定資産除却損を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産除却","accounts":["備品減価償却累計額","固定資産除却損","備品"],"keywords":["除却","備品","除却損"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3351,14 +3191,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_203",
     category_id: "journal",
-    difficulty: 3,
     question_text: "備品504,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":504000,"credit_account":"現金","credit_amount":504000}}',
-    explanation:
-      "基本的な仕訳問題（問題203）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産購入","accounts":["備品","現金"],"keywords":["備品","固定資産","購入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3367,14 +3206,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_204",
     category_id: "journal",
-    difficulty: 3,
     question_text: "決算において、建物の減価償却費668,000円を計上する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":668000,"credit_account":"建物減価償却累計額","credit_amount":668000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "減価償却の仕訳です。借方に減価償却費、貸方に建物減価償却累計額を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"減価償却","accounts":["減価償却費","建物減価償却累計額"],"keywords":["減価償却","決算","建物"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3383,15 +3222,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_205",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "帳簿価額529,000円の車両を310,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":310000,"credit_account":"車両","credit_amount":310000}}',
-    explanation:
-      "基本的な仕訳問題（問題205）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産売却","accounts":["現金","車両","固定資産売却益"],"keywords":["固定資産売却","車両","売却益"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3400,15 +3238,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_206",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "使用不能となった備品（取得原価719,000円、減価償却累計額191,000円）を除却した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":719000,"credit_account":"固定資産除却損","credit_amount":719000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "固定資産除却の仕訳です。借方に備品減価償却累計額、貸方に固定資産除却損を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産除却","accounts":["備品減価償却累計額","固定資産除却損","備品"],"keywords":["除却","備品","除却損"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3417,14 +3255,13 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_207",
     category_id: "journal",
-    difficulty: 3,
     question_text: "備品862,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":862000,"credit_account":"現金","credit_amount":862000}}',
-    explanation:
-      "基本的な仕訳問題（問題207）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産購入","accounts":["備品","現金"],"keywords":["備品","固定資産","購入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3433,14 +3270,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_208",
     category_id: "journal",
-    difficulty: 3,
     question_text: "決算において、建物の減価償却費563,000円を計上する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":563000,"credit_account":"建物減価償却累計額","credit_amount":563000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "減価償却の仕訳です。借方に減価償却費、貸方に建物減価償却累計額を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"減価償却","accounts":["減価償却費","建物減価償却累計額"],"keywords":["減価償却","決算","建物"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3449,15 +3286,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_209",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "帳簿価額142,000円の車両を521,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":521000,"credit_account":"車両","credit_amount":521000}}',
-    explanation:
-      "基本的な仕訳問題（問題209）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+    explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産売却","accounts":["現金","車両","固定資産売却益"],"keywords":["固定資産売却","車両","売却益"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3466,15 +3302,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_210",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "使用不能となった備品（取得原価269,000円、減価償却累計額390,000円）を除却した。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":269000,"credit_account":"固定資産除却損","credit_amount":269000}}',
     explanation:
-      "固定資産の減価償却処理。使用期間に応じた価値減少を費用として計上します。\\n\\n⚠️ 間違えやすいポイント：間接法では「減価償却累計額」（資産のマイナス勘定）を使用。直接法と混同しない。定額法・定率法の計算式も要確認。月割計算時の端数処理に注意。",
+      "固定資産除却の仕訳です。借方に備品減価償却累計額、貸方に固定資産除却損を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"fixed_asset","pattern":"固定資産除却","accounts":["備品減価償却累計額","固定資産除却損","備品"],"keywords":["除却","備品","除却損"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3483,15 +3319,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_211",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "決算において、売掛金668,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":668000,"credit_account":"貸倒引当金","credit_amount":668000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "貸倒引当金設定の仕訳です。借方に貸倒引当金繰入、貸方に貸倒引当金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"貸倒引当金設定","accounts":["貸倒引当金繰入","貸倒引当金"],"keywords":["貸倒引当金","決算","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
@@ -3500,15 +3336,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_212",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "期首商品棚卸高417,000円、当期商品仕入高318,000円、期末商品棚卸高31,800円である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":417000,"credit_account":"繰越商品","credit_amount":417000}}',
     explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+      "売上原価算定の仕訳です。借方に仕入、貸方に繰越商品を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"売上原価算定","accounts":["仕入","繰越商品"],"keywords":["売上原価","棚卸","仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3517,14 +3353,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_213",
     category_id: "journal",
-    difficulty: 1,
     question_text: "支払保険料712,000円のうち、275,000円は次期分である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":275000,"credit_account":"保険料","credit_amount":275000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "前払費用の仕訳です。借方に前払費用、貸方に保険料を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"前払費用","accounts":["前払費用","保険料"],"keywords":["前払費用","保険料","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3533,14 +3369,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_214",
     category_id: "journal",
-    difficulty: 1,
     question_text: "当期の支払利息166,000円が未払いである。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":166000,"credit_account":"未払費用","credit_amount":166000}}',
     explanation:
-      "基本的な仕訳問題（問題214）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "未払費用の仕訳です。借方に支払利息、貸方に未払費用を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"未払費用","accounts":["支払利息","未払費用"],"keywords":["未払費用","支払利息","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3549,15 +3385,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_215",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "決算において、売掛金716,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":716000,"credit_account":"貸倒引当金","credit_amount":716000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "貸倒引当金設定の仕訳です。借方に貸倒引当金繰入、貸方に貸倒引当金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"貸倒引当金設定","accounts":["貸倒引当金繰入","貸倒引当金"],"keywords":["貸倒引当金","決算","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3566,15 +3402,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_216",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "期首商品棚卸高75,000円、当期商品仕入高12,000円、期末商品棚卸高1,200円である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":75000,"credit_account":"繰越商品","credit_amount":75000}}',
     explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+      "売上原価算定の仕訳です。借方に仕入、貸方に繰越商品を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"売上原価算定","accounts":["仕入","繰越商品"],"keywords":["売上原価","棚卸","仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3583,14 +3419,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_217",
     category_id: "journal",
-    difficulty: 1,
     question_text: "支払保険料405,000円のうち、90,000円は次期分である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":90000,"credit_account":"保険料","credit_amount":90000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "前払費用の仕訳です。借方に前払費用、貸方に保険料を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"前払費用","accounts":["前払費用","保険料"],"keywords":["前払費用","保険料","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3599,14 +3435,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_218",
     category_id: "journal",
-    difficulty: 1,
     question_text: "当期の支払利息435,000円が未払いである。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":435000,"credit_account":"未払費用","credit_amount":435000}}',
     explanation:
-      "基本的な仕訳問題（問題218）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "未払費用の仕訳です。借方に支払利息、貸方に未払費用を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"未払費用","accounts":["支払利息","未払費用"],"keywords":["未払費用","支払利息","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3615,15 +3451,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_219",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "決算において、売掛金573,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":573000,"credit_account":"貸倒引当金","credit_amount":573000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "貸倒引当金設定の仕訳です。借方に貸倒引当金繰入、貸方に貸倒引当金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"貸倒引当金設定","accounts":["貸倒引当金繰入","貸倒引当金"],"keywords":["貸倒引当金","決算","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3632,15 +3468,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_220",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "期首商品棚卸高207,000円、当期商品仕入高898,000円、期末商品棚卸高89,800円である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":207000,"credit_account":"繰越商品","credit_amount":207000}}',
     explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+      "売上原価算定の仕訳です。借方に仕入、貸方に繰越商品を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"売上原価算定","accounts":["仕入","繰越商品"],"keywords":["売上原価","棚卸","仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3649,14 +3485,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_221",
     category_id: "journal",
-    difficulty: 1,
     question_text: "支払保険料557,000円のうち、304,000円は次期分である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":304000,"credit_account":"保険料","credit_amount":304000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "前払費用の仕訳です。借方に前払費用、貸方に保険料を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"前払費用","accounts":["前払費用","保険料"],"keywords":["前払費用","保険料","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3665,14 +3501,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_222",
     category_id: "journal",
-    difficulty: 1,
     question_text: "当期の支払利息859,000円が未払いである。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":859000,"credit_account":"未払費用","credit_amount":859000}}',
     explanation:
-      "基本的な仕訳問題（問題222）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "未払費用の仕訳です。借方に支払利息、貸方に未払費用を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"未払費用","accounts":["支払利息","未払費用"],"keywords":["未払費用","支払利息","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3681,15 +3517,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_223",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "決算において、売掛金240,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":240000,"credit_account":"貸倒引当金","credit_amount":240000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "貸倒引当金設定の仕訳です。借方に貸倒引当金繰入、貸方に貸倒引当金を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"貸倒引当金設定","accounts":["貸倒引当金繰入","貸倒引当金"],"keywords":["貸倒引当金","決算","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3698,15 +3534,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_224",
     category_id: "journal",
-    difficulty: 1,
     question_text:
       "期首商品棚卸高963,000円、当期商品仕入高231,000円、期末商品棚卸高23,100円である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":963000,"credit_account":"繰越商品","credit_amount":963000}}',
     explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+      "売上原価算定の仕訳です。借方に仕入、貸方に繰越商品を記入します。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"adjustment","pattern":"売上原価算定","accounts":["仕入","繰越商品"],"keywords":["売上原価","棚卸","仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3715,14 +3551,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_225",
     category_id: "journal",
-    difficulty: 2,
     question_text: "支払保険料742,000円のうち、209,000円は次期分である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":209000,"credit_account":"保険料","credit_amount":209000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "前払費用の仕訳です。借方に前払費用、貸方に保険料を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"前払費用","accounts":["前払費用","保険料"],"keywords":["前払費用","保険料","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3731,14 +3567,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_226",
     category_id: "journal",
-    difficulty: 2,
     question_text: "当期の支払利息692,000円が未払いである。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":692000,"credit_account":"未払費用","credit_amount":692000}}',
     explanation:
-      "基本的な仕訳問題（問題226）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "未払費用の仕訳です。借方に支払利息、貸方に未払費用を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"未払費用","accounts":["支払利息","未払費用"],"keywords":["未払費用","支払利息","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3747,15 +3583,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_227",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "決算において、売掛金724,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":724000,"credit_account":"貸倒引当金","credit_amount":724000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "貸倒引当金設定の仕訳です。借方に貸倒引当金繰入、貸方に貸倒引当金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"貸倒引当金設定","accounts":["貸倒引当金繰入","貸倒引当金"],"keywords":["貸倒引当金","決算","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3764,15 +3600,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_228",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "期首商品棚卸高48,000円、当期商品仕入高967,000円、期末商品棚卸高96,700円である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":48000,"credit_account":"繰越商品","credit_amount":48000}}',
     explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+      "売上原価算定の仕訳です。借方に仕入、貸方に繰越商品を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"売上原価算定","accounts":["仕入","繰越商品"],"keywords":["売上原価","棚卸","仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3781,14 +3617,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_229",
     category_id: "journal",
-    difficulty: 2,
     question_text: "支払保険料488,000円のうち、321,000円は次期分である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":321000,"credit_account":"保険料","credit_amount":321000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "前払費用の仕訳です。借方に前払費用、貸方に保険料を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"前払費用","accounts":["前払費用","保険料"],"keywords":["前払費用","保険料","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3797,14 +3633,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_230",
     category_id: "journal",
-    difficulty: 2,
     question_text: "当期の支払利息938,000円が未払いである。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":938000,"credit_account":"未払費用","credit_amount":938000}}',
     explanation:
-      "基本的な仕訳問題（問題230）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "未払費用の仕訳です。借方に支払利息、貸方に未払費用を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"未払費用","accounts":["支払利息","未払費用"],"keywords":["未払費用","支払利息","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3813,15 +3649,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_231",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "決算において、売掛金862,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":862000,"credit_account":"貸倒引当金","credit_amount":862000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "貸倒引当金設定の仕訳です。借方に貸倒引当金繰入、貸方に貸倒引当金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"貸倒引当金設定","accounts":["貸倒引当金繰入","貸倒引当金"],"keywords":["貸倒引当金","決算","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3830,15 +3666,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_232",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "期首商品棚卸高425,000円、当期商品仕入高143,000円、期末商品棚卸高14,300円である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":425000,"credit_account":"繰越商品","credit_amount":425000}}',
     explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+      "売上原価算定の仕訳です。借方に仕入、貸方に繰越商品を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"売上原価算定","accounts":["仕入","繰越商品"],"keywords":["売上原価","棚卸","仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3847,14 +3683,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_233",
     category_id: "journal",
-    difficulty: 2,
     question_text: "支払保険料132,000円のうち、628,000円は次期分である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":132000,"credit_account":"保険料","credit_amount":132000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "前払費用の仕訳です。借方に前払費用、貸方に保険料を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"前払費用","accounts":["前払費用","保険料"],"keywords":["前払費用","保険料","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3863,14 +3699,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_234",
     category_id: "journal",
-    difficulty: 2,
     question_text: "当期の支払利息265,000円が未払いである。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":265000,"credit_account":"未払費用","credit_amount":265000}}',
     explanation:
-      "基本的な仕訳問題（問題234）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "未払費用の仕訳です。借方に支払利息、貸方に未払費用を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"未払費用","accounts":["支払利息","未払費用"],"keywords":["未払費用","支払利息","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3879,15 +3715,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_235",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "決算において、売掛金183,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":183000,"credit_account":"貸倒引当金","credit_amount":183000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "貸倒引当金設定の仕訳です。借方に貸倒引当金繰入、貸方に貸倒引当金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"貸倒引当金設定","accounts":["貸倒引当金繰入","貸倒引当金"],"keywords":["貸倒引当金","決算","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3896,15 +3732,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_236",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "期首商品棚卸高268,000円、当期商品仕入高182,000円、期末商品棚卸高18,200円である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":268000,"credit_account":"繰越商品","credit_amount":268000}}',
     explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+      "売上原価算定の仕訳です。借方に仕入、貸方に繰越商品を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"売上原価算定","accounts":["仕入","繰越商品"],"keywords":["売上原価","棚卸","仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3913,14 +3749,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_237",
     category_id: "journal",
-    difficulty: 2,
     question_text: "支払保険料213,000円のうち、450,000円は次期分である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":213000,"credit_account":"保険料","credit_amount":213000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "前払費用の仕訳です。借方に前払費用、貸方に保険料を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"前払費用","accounts":["前払費用","保険料"],"keywords":["前払費用","保険料","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3929,14 +3765,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_238",
     category_id: "journal",
-    difficulty: 2,
     question_text: "当期の支払利息658,000円が未払いである。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":658000,"credit_account":"未払費用","credit_amount":658000}}',
     explanation:
-      "基本的な仕訳問題（問題238）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "未払費用の仕訳です。借方に支払利息、貸方に未払費用を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"未払費用","accounts":["支払利息","未払費用"],"keywords":["未払費用","支払利息","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3945,15 +3781,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_239",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "決算において、売掛金998,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":998000,"credit_account":"貸倒引当金","credit_amount":998000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "貸倒引当金設定の仕訳です。借方に貸倒引当金繰入、貸方に貸倒引当金を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"貸倒引当金設定","accounts":["貸倒引当金繰入","貸倒引当金"],"keywords":["貸倒引当金","決算","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3962,15 +3798,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_240",
     category_id: "journal",
-    difficulty: 2,
     question_text:
       "期首商品棚卸高134,000円、当期商品仕入高585,000円、期末商品棚卸高58,500円である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":134000,"credit_account":"繰越商品","credit_amount":134000}}',
     explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+      "売上原価算定の仕訳です。借方に仕入、貸方に繰越商品を記入します。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"adjustment","pattern":"売上原価算定","accounts":["仕入","繰越商品"],"keywords":["売上原価","棚卸","仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3979,14 +3815,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_241",
     category_id: "journal",
-    difficulty: 3,
     question_text: "支払保険料882,000円のうち、150,000円は次期分である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":882000,"credit_account":"保険料","credit_amount":882000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "前払費用の仕訳です。借方に前払費用、貸方に保険料を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"adjustment","pattern":"前払費用","accounts":["前払費用","保険料"],"keywords":["前払費用","保険料","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -3995,14 +3831,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_242",
     category_id: "journal",
-    difficulty: 3,
     question_text: "当期の支払利息488,000円が未払いである。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":488000,"credit_account":"未払費用","credit_amount":488000}}',
     explanation:
-      "基本的な仕訳問題（問題242）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "未払費用の仕訳です。借方に支払利息、貸方に未払費用を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"adjustment","pattern":"未払費用","accounts":["支払利息","未払費用"],"keywords":["未払費用","支払利息","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4011,15 +3847,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_243",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "決算において、売掛金1,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":1000,"credit_account":"貸倒引当金","credit_amount":1000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "貸倒引当金設定の仕訳です。借方に貸倒引当金繰入、貸方に貸倒引当金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"adjustment","pattern":"貸倒引当金設定","accounts":["貸倒引当金繰入","貸倒引当金"],"keywords":["貸倒引当金","決算","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4028,15 +3864,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_244",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "期首商品棚卸高254,000円、当期商品仕入高326,000円、期末商品棚卸高32,600円である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":254000,"credit_account":"繰越商品","credit_amount":254000}}',
     explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+      "売上原価算定の仕訳です。借方に仕入、貸方に繰越商品を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"adjustment","pattern":"売上原価算定","accounts":["仕入","繰越商品"],"keywords":["売上原価","棚卸","仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4045,14 +3881,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_245",
     category_id: "journal",
-    difficulty: 3,
     question_text: "支払保険料828,000円のうち、690,000円は次期分である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":828000,"credit_account":"保険料","credit_amount":828000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "前払費用の仕訳です。借方に前払費用、貸方に保険料を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"adjustment","pattern":"前払費用","accounts":["前払費用","保険料"],"keywords":["前払費用","保険料","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4061,14 +3897,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_246",
     category_id: "journal",
-    difficulty: 3,
     question_text: "当期の支払利息49,000円が未払いである。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":49000,"credit_account":"未払費用","credit_amount":49000}}',
     explanation:
-      "基本的な仕訳問題（問題246）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "未払費用の仕訳です。借方に支払利息、貸方に未払費用を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"adjustment","pattern":"未払費用","accounts":["支払利息","未払費用"],"keywords":["未払費用","支払利息","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4077,15 +3913,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_247",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "決算において、売掛金568,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":568000,"credit_account":"貸倒引当金","credit_amount":568000}}',
     explanation:
-      "売掛金の処理。商品売上による債権の発生・消滅を記録します。\\n\\n⚠️ 間違えやすいポイント：売掛金は資産科目。発生時は借方、回収時は貸方。「未収金」「未払金」との区別も重要（商品売買以外の取引）。",
+      "貸倒引当金設定の仕訳です。借方に貸倒引当金繰入、貸方に貸倒引当金を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"adjustment","pattern":"貸倒引当金設定","accounts":["貸倒引当金繰入","貸倒引当金"],"keywords":["貸倒引当金","決算","売掛金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4094,15 +3930,15 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_248",
     category_id: "journal",
-    difficulty: 3,
     question_text:
       "期首商品棚卸高284,000円、当期商品仕入高683,000円、期末商品棚卸高68,300円である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":284000,"credit_account":"繰越商品","credit_amount":284000}}',
     explanation:
-      "商品仕入の三分法処理。費用の計上と債権・債務の管理を行います。\\n\\n⚠️ 間違えやすいポイント：三分法では「仕入」「繰越商品」を使用。分記法・総記法と混同しない。仕入返品→「仕入」減少。運賃負担の処理も要注意。",
+      "売上原価算定の仕訳です。借方に仕入、貸方に繰越商品を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"adjustment","pattern":"売上原価算定","accounts":["仕入","繰越商品"],"keywords":["売上原価","棚卸","仕入"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4111,14 +3947,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_249",
     category_id: "journal",
-    difficulty: 3,
     question_text: "支払保険料143,000円のうち、659,000円は次期分である。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":143000,"credit_account":"保険料","credit_amount":143000}}',
     explanation:
-      "保険料支払いの処理。期間に応じた費用配分と経過勘定の設定を行います。\\n\\n⚠️ 間違えやすいポイント：「保険料」（費用）と「前払保険料」（資産）の区別。決算時の未経過分は前払処理。保険期間と会計期間のズレに注意。「支払保険料」と表記されることも。",
+      "前払費用の仕訳です。借方に前払費用、貸方に保険料を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"adjustment","pattern":"前払費用","accounts":["前払費用","保険料"],"keywords":["前払費用","保険料","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4127,14 +3963,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_250",
     category_id: "journal",
-    difficulty: 3,
     question_text: "当期の支払利息446,000円が未払いである。",
     answer_template_json:
-      '{"type":"journal_entry","entries":[{"label":"借方","fields":[{"name":"debit_account","label":"勘定科目","type":"select","required":true},{"name":"debit_amount","label":"金額","type":"number","required":true}]},{"label":"貸方","fields":[{"name":"credit_account","label":"勘定科目","type":"select","required":true},{"name":"credit_amount","label":"金額","type":"number","required":true}]}],"allowMultipleEntries":true,"maxEntries":5}',
+      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":446000,"credit_account":"未払費用","credit_amount":446000}}',
     explanation:
-      "基本的な仕訳問題（問題250）。取引内容を正確に読み取り適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：勘定科目名の選択ミス（類似科目に注意）、借方・貸方の判定ミス、金額の転記ミス。問題文の「〜とした」「〜を行った」等の表現から何の仕訳かを正確に読み取る。",
+      "未払費用の仕訳です。借方に支払利息、貸方に未払費用を記入します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"adjustment","pattern":"未払費用","accounts":["支払利息","未払費用"],"keywords":["未払費用","支払利息","決算整理"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4143,15 +3979,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_001",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【現金勘定記入問題】\n\n2025年10月の現金勘定への記入を行い、残高を計算してください。\n\n【前月繰越残高】\n現金：337,541円\n\n【10月の取引】\n10月5日 現金売上：276,641円（増加）\n10月10日 給料支払：215,025円（減少）\n10月15日 売掛金回収：184,924円（増加）\n10月20日 買掛金支払：241,381円（減少）\n10月28日 現金実査による過不足判明：8,502円（不足）\n\n【現金過不足の処理】\n月末に現金実査を行い、過不足を確認して適切に処理してください。\n\n【作成指示】\n1. 現金勘定へ各取引を記入\n2. 借方・貸方の合計を計算\n3. 月末残高を算出\n4. 現金過不足がある場合は適切に処理",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"ledger_account","account_name":"現金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"総勘定元帳転記","amount":490000}]},"credit":0,"balance":{"entries":[{"description":"総勘定元帳転記","amount":490000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_001）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":490000}]}}',
+    explanation: "総勘定元帳転記に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4160,15 +3995,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_002",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【売掛金勘定記入問題】\n\n2025年1月の売掛金勘定への記入を行い、残高を計算してください。\n\n【前月繰越残高】\n売掛金：564,069円\n\n【1月の取引】\n1月3日 掛売上：190,909円\n1月8日 現金回収：51,829円\n1月15日 掛売上：179,338円\n1月22日 手形回収：111,922円\n1月28日 貸倒れ発生：35,813円\n\n【貸倒処理】\n貸倒れが発生した場合は、貸倒引当金を優先充当し、不足分は貸倒損失として処理してください。\n（貸倒引当金残高：30,000円）\n\n【作成指示】\n1. 売掛金勘定へ各取引を記入\n2. 発生と回収を適切に処理\n3. 貸倒れの処理を行う\n4. 月末残高を算出",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"ledger_account","account_name":"売掛金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"総勘定元帳転記","amount":417000}]},"credit":0,"balance":{"entries":[{"description":"総勘定元帳転記","amount":417000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_002）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":417000}]}}',
+    explanation: "総勘定元帳転記に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4177,15 +4011,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_003",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【商品勘定記入問題（三分法）】\n\n2025年10月の商品売買取引を三分法により記帳し、売上原価を算定してください。\n\n【期首商品棚卸高】\n914,556円\n\n【当月の取引】\n・当月仕入高：1,404,670円\n・当月売上高：1,826,071円\n\n【期末商品棚卸高】\n558,925円\n\n【作成指示】\n1. 仕入勘定、売上勘定、繰越商品勘定を作成\n2. 三分法による商品売買の記帳\n3. 売上原価の算定（期首＋仕入－期末）\n4. 売上総利益の計算",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"ledger_account","account_name":"商品","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"総勘定元帳転記","amount":986000}]},"credit":0,"balance":{"entries":[{"description":"総勘定元帳転記","amount":986000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_003）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":986000}]}}',
+    explanation: "総勘定元帳転記に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4194,15 +4027,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_004",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【建物勘定・減価償却累計額勘定記入問題】\n\n2025年3月末決算において、建物の減価償却を行い、関連勘定への記入を行ってください。\n\n【建物情報】\n・取得原価：4,960,026円\n・耐用年数：20年\n・償却方法：定額法（残存価額なし）\n・使用年数：19年経過\n\n【前期末の状況】\n・建物勘定残高：4,960,026円\n・減価償却累計額：4,464,018円\n\n【作成指示】\n1. 当期の減価償却費を計算\n2. 建物減価償却累計額勘定への記入\n3. 減価償却費勘定への記入\n4. 建物の帳簿価額を算出",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"ledger_account","account_name":"建物・減価償却累計額","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"総勘定元帳転記","amount":59000}]},"credit":0,"balance":{"entries":[{"description":"総勘定元帳転記","amount":59000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_004）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":59000}]}}',
+    explanation: "総勘定元帳転記に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4211,15 +4043,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_005",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【買掛金勘定記入問題】\n\n2025年11月の買掛金勘定への記入を行い、残高を計算してください。\n\n【前月繰越残高】\n買掛金：523,589円\n\n【11月の取引】\n11月7日 掛仕入：393,285円\n11月14日 現金支払：227,553円\n11月21日 買掛金相殺：66,069円\n\n【作成指示】\n1. 買掛金勘定へ各取引を記入\n2. 関連勘定との連動を確認\n3. 月末残高を算出\n4. 必要に応じて関連勘定（支払利息等）も作成",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"ledger_account","account_name":"買掛金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"総勘定元帳転記","amount":685000}]},"credit":0,"balance":{"entries":[{"description":"総勘定元帳転記","amount":685000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_005）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":685000}]}}',
+    explanation: "総勘定元帳転記に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4228,15 +4059,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_006",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【借入金勘定・支払利息勘定記入問題】\n\n2025年3月の借入金勘定への記入を行い、残高を計算してください。\n\n【前月繰越残高】\n借入金：725,963円\n\n【3月の取引】\n3月7日 借入金返済（元本）：227,258円\n3月14日 支払利息：20,524円\n3月21日 追加借入：135,870円\n\n【作成指示】\n1. 借入金勘定へ各取引を記入\n2. 関連勘定との連動を確認\n3. 月末残高を算出\n4. 必要に応じて関連勘定（支払利息等）も作成",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"ledger_account","account_name":"借入金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"総勘定元帳転記","amount":354000}]},"credit":0,"balance":{"entries":[{"description":"総勘定元帳転記","amount":354000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_006）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":354000}]}}',
+    explanation: "総勘定元帳転記に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4245,15 +4075,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_007",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【貸倒引当金勘定記入問題】\n\n2025年8月の貸倒引当金勘定への記入を行い、残高を計算してください。\n\n【前月繰越残高】\n貸倒引当金：111,039円\n\n【8月の取引】\n8月7日 貸倒れ発生（充当）：17,606円\n8月14日 決算時繰入：44,781円\n8月21日 戻入益：11,908円\n\n【作成指示】\n1. 貸倒引当金勘定へ各取引を記入\n2. 関連勘定との連動を確認\n3. 月末残高を算出\n4. 必要に応じて関連勘定（支払利息等）も作成",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"ledger_account","account_name":"貸倒引当金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"総勘定元帳転記","amount":37000}]},"credit":0,"balance":{"entries":[{"description":"総勘定元帳転記","amount":37000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_007）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":37000}]}}',
+    explanation: "総勘定元帳転記に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4262,15 +4091,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_008",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【売上勘定・仕入勘定の対応関係】\n\n2025年6月の売上勘定と仕入勘定の記入を行ってください。\n\n【6月の取引】\n・現金売上：397,450.8円\n・掛売上：596,176.2円\n・現金仕入：260,123.1円\n・掛仕入：606,953.9円\n\n【作成指示】\n1. 売上勘定と仕入勘定を作成\n2. 現金取引と掛取引を区別して記入\n3. 各勘定の月末残高を算出\n4. 売上総利益を計算（売上－仕入）",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"ledger_account","account_name":"資本金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"総勘定元帳転記","amount":765000}]},"credit":0,"balance":{"entries":[{"description":"総勘定元帳転記","amount":765000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_008）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":765000}]}}',
+    explanation: "総勘定元帳転記に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4279,15 +4107,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_009",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【給料勘定・未払費用の期間配分記入】\n\n2025年11月の給料勘定と未払費用の記入を行ってください。\n\n【給料情報】\n・月額給料：321,134円\n・支払日：毎月25日（当月分）\n・決算日：11月末\n\n【11月の処理】\n・11月25日：当月給料支払\n・11月末：未払給料の計上（26日～月末分）\n\n【作成指示】\n1. 給料勘定への記入\n2. 未払給料の日割計算\n3. 未払費用勘定への記入\n4. 期間配分の適切な処理",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"ledger_account","account_name":"減価償却費","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"総勘定元帳転記","amount":101000}]},"credit":0,"balance":{"entries":[{"description":"総勘定元帳転記","amount":101000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_009）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":101000}]}}',
+    explanation: "総勘定元帳転記に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4296,15 +4123,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_010",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【諸口勘定を含む複合仕訳の転記処理】\n\n2025年5月の諸口勘定を含む複合仕訳の転記を行ってください。\n\n【複合仕訳の例】\n5月10日の取引：\n（借方）\n・仕入 300,000円\n・支払手数料 5,000円\n（貸方）\n・現金 100,000円\n・買掛金 200,000円\n・未払金 5,000円\n\n【作成指示】\n1. 各勘定への個別転記\n2. 諸口勘定の使用方法を説明\n3. 相手勘定が複数ある場合の処理\n4. 転記の正確性を確認",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"ledger_account","account_name":"給料","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"総勘定元帳転記","amount":449000}]},"credit":0,"balance":{"entries":[{"description":"総勘定元帳転記","amount":449000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_010）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":449000}]}}',
+    explanation: "総勘定元帳転記に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4313,15 +4139,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_011",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【現金出納帳記入問題】\n\n2025年6月の現金出納帳を作成してください。\n\n収入・支出・残高記入を含む詳細な記帳を行います。\n\n【前月繰越】\n333,931円\n\n【当月の取引】\n複数の収入・支出取引（詳細は問題文参照）\n\n【作成指示】\n1. 日付順に記帳\n2. 摘要欄の適切な記入\n3. 収入・支出・残高の計算\n4. 月末締切処理",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"subsidiary_book","book_type":"現金出納帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"売掛金元帳","amount":394000}]},"credit":0,"balance":{"entries":[{"description":"売掛金元帳","amount":394000}]}}]}',
-    explanation:
-      "現金出納帳への記入処理。現金の収入・支出を時系列で記録し、現金残高を管理します。\\n\\n⚠️ 間違えやすいポイント：収入（借方取引）と支出（貸方取引）の区別、残高の累計計算ミス、摘要の記載不備。現金以外の取引（振替等）は記入しない。",
+      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":394000}]}}',
+    explanation: "売掛金元帳に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"subsidiary_ledger","pattern":"売掛金元帳","accounts":[],"keywords":["売掛金元帳","補助簿","得意先"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4330,15 +4155,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_012",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【当座預金出納帳記入問題】\n\n2025年3月の当座預金出納帳を作成してください。\n\n預入・引出・残高管理を含む詳細な記帳を行います。\n\n【前月繰越】\n455,377円\n\n【当月の取引】\n複数の収入・支出取引（詳細は問題文参照）\n\n【作成指示】\n1. 日付順に記帳\n2. 摘要欄の適切な記入\n3. 収入・支出・残高の計算\n4. 月末締切処理",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"subsidiary_book","book_type":"当座預金出納帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"売掛金元帳","amount":167000}]},"credit":0,"balance":{"entries":[{"description":"売掛金元帳","amount":167000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_012）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":167000}]}}',
+    explanation: "売掛金元帳に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"subsidiary_ledger","pattern":"売掛金元帳","accounts":[],"keywords":["売掛金元帳","補助簿","得意先"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4347,15 +4171,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_013",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【小口現金出納帳記入問題】\n\n2025年4月の小口現金出納帳を作成してください。\n\n補給・支払・精算を含む詳細な記帳を行います。\n\n【前月繰越】\n100,326円\n\n【当月の取引】\n複数の収入・支出取引（詳細は問題文参照）\n\n【作成指示】\n1. 日付順に記帳\n2. 摘要欄の適切な記入\n3. 収入・支出・残高の計算\n4. 月末締切処理",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"subsidiary_book","book_type":"小口現金出納帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"売掛金元帳","amount":598000}]},"credit":0,"balance":{"entries":[{"description":"売掛金元帳","amount":598000}]}}]}',
-    explanation:
-      "現金出納帳への記入処理。現金の収入・支出を時系列で記録し、現金残高を管理します。\\n\\n⚠️ 間違えやすいポイント：収入（借方取引）と支出（貸方取引）の区別、残高の累計計算ミス、摘要の記載不備。現金以外の取引（振替等）は記入しない。",
+      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":598000}]}}',
+    explanation: "売掛金元帳に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"subsidiary_ledger","pattern":"売掛金元帳","accounts":[],"keywords":["売掛金元帳","補助簿","得意先"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4364,15 +4187,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_014",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【普通預金通帳記入問題】\n\n2025年2月の普通預金通帳を作成してください。\n\n記帳・利息計算を含む詳細な記帳を行います。\n\n【前月繰越】\n408,537円\n\n【当月の取引】\n複数の収入・支出取引（詳細は問題文参照）\n\n【作成指示】\n1. 日付順に記帳\n2. 摘要欄の適切な記入\n3. 収入・支出・残高の計算\n4. 月末締切処理",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"subsidiary_book","book_type":"普通預金通帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"売掛金元帳","amount":358000}]},"credit":0,"balance":{"entries":[{"description":"売掛金元帳","amount":358000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_014）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":358000}]}}',
+    explanation: "売掛金元帳に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"subsidiary_ledger","pattern":"売掛金元帳","accounts":[],"keywords":["売掛金元帳","補助簿","得意先"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4381,15 +4203,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_015",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【仕入帳記入問題】\n\n2025年9月の仕入帳を作成してください。\n\n日付・仕入先・品名・金額記入を行います。\n\n【記入項目】\n・日付\n・取引先/品名\n・数量・単価・金額\n・残高計算\n\n【作成指示】\n1. 取引順に記帳\n2. 単価計算方法の適用\n3. 残高の継続的管理\n4. 月末棚卸との照合",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"subsidiary_book","book_type":"仕入帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"売掛金元帳","amount":638000}]},"credit":0,"balance":{"entries":[{"description":"売掛金元帳","amount":638000}]}}]}',
-    explanation:
-      "仕入帳への記入処理。仕入先別の掛仕入を記録し、買掛金の詳細を管理します。\\n\\n⚠️ 間違えやすいポイント：現金仕入は記入しない（掛仕入のみ）、返品・値引きの△表示を忘れる、仕入先名の記載ミス、引取運賃等の付帯費用の処理。",
+      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":638000}]}}',
+    explanation: "売掛金元帳に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"subsidiary_ledger","pattern":"売掛金元帳","accounts":[],"keywords":["売掛金元帳","補助簿","得意先"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4398,15 +4219,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_016",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【売上帳記入問題】\n\n2025年2月の売上帳を作成してください。\n\n日付・得意先・品名・金額記入を行います。\n\n【記入項目】\n・日付\n・取引先/品名\n・数量・単価・金額\n・残高計算\n\n【作成指示】\n1. 取引順に記帳\n2. 単価計算方法の適用\n3. 残高の継続的管理\n4. 月末棚卸との照合",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"subsidiary_book","book_type":"売上帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"売掛金元帳","amount":135000}]},"credit":0,"balance":{"entries":[{"description":"売掛金元帳","amount":135000}]}}]}',
-    explanation:
-      "売上帳への記入処理。得意先別の掛売上を記録し、売掛金の詳細を管理します。\\n\\n⚠️ 間違えやすいポイント：現金売上は記入しない（掛売上のみ）、返品・値引きの△表示を忘れる、得意先名の記載ミス、合計金額の計算間違い。",
+      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":135000}]}}',
+    explanation: "売掛金元帳に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"subsidiary_ledger","pattern":"売掛金元帳","accounts":[],"keywords":["売掛金元帳","補助簿","得意先"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4415,15 +4235,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_017",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【商品有高帳（先入先出法）記入問題】\n\n2025年10月の商品有高帳（先入先出法）を作成してください。\n\n単価・残高計算を行います。\n\n【記入項目】\n・日付\n・取引先/品名\n・数量・単価・金額\n・残高計算\n\n【作成指示】\n1. 取引順に記帳\n2. 単価計算方法の適用\n3. 残高の継続的管理\n4. 月末棚卸との照合",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"subsidiary_book","book_type":"商品有高帳（先入先出法）","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"売掛金元帳","amount":335000}]},"credit":0,"balance":{"entries":[{"description":"売掛金元帳","amount":335000}]}}]}',
-    explanation:
-      "商品有高帳への記入処理。商品の受入・払出・残高を継続記録し、在庫を管理します。\\n\\n⚠️ 間違えやすいポイント：先入先出法と移動平均法の計算違い、払出単価の算定ミス、数量と金額の不一致、期末商品棚卸高との照合不備。",
+      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":335000}]}}',
+    explanation: "売掛金元帳に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"subsidiary_ledger","pattern":"売掛金元帳","accounts":[],"keywords":["売掛金元帳","補助簿","得意先"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4432,15 +4251,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_018",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【商品有高帳（移動平均法）記入問題】\n\n2025年6月の商品有高帳（移動平均法）を作成してください。\n\n単価・残高計算を行います。\n\n【記入項目】\n・日付\n・取引先/品名\n・数量・単価・金額\n・残高計算\n\n【作成指示】\n1. 取引順に記帳\n2. 単価計算方法の適用\n3. 残高の継続的管理\n4. 月末棚卸との照合",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"subsidiary_book","book_type":"商品有高帳（移動平均法）","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"売掛金元帳","amount":815000}]},"credit":0,"balance":{"entries":[{"description":"売掛金元帳","amount":815000}]}}]}',
-    explanation:
-      "商品有高帳への記入処理。商品の受入・払出・残高を継続記録し、在庫を管理します。\\n\\n⚠️ 間違えやすいポイント：先入先出法と移動平均法の計算違い、払出単価の算定ミス、数量と金額の不一致、期末商品棚卸高との照合不備。",
+      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":815000}]}}',
+    explanation: "売掛金元帳に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"subsidiary_ledger","pattern":"売掛金元帳","accounts":[],"keywords":["売掛金元帳","補助簿","得意先"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4449,15 +4267,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_019",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【売掛金元帳・買掛金元帳記入問題】\n\n2025年2月の売掛金元帳・買掛金元帳を作成してください。\n\n残高管理を含む詳細な記帳を行います。\n\n【作成指示】\n1. 得意先別・仕入先別の管理\n2. 発生・回収・支払の記録\n3. 手形期日の管理\n4. 残高の確認と照合",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"subsidiary_book","book_type":"売掛金元帳・買掛金元帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"売掛金元帳","amount":607000}]},"credit":0,"balance":{"entries":[{"description":"売掛金元帳","amount":607000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_019）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":607000}]}}',
+    explanation: "売掛金元帳に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"subsidiary_ledger","pattern":"売掛金元帳","accounts":[],"keywords":["売掛金元帳","補助簿","得意先"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4466,15 +4283,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_020",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【受取手形記入帳・支払手形記入帳記入問題】\n\n2025年1月の受取手形記入帳・支払手形記入帳を作成してください。\n\n期日管理を含む詳細な記帳を行います。\n\n【作成指示】\n1. 得意先別・仕入先別の管理\n2. 発生・回収・支払の記録\n3. 手形期日の管理\n4. 残高の確認と照合",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"subsidiary_book","book_type":"受取手形記入帳・支払手形記入帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"売掛金元帳","amount":173000}]},"credit":0,"balance":{"entries":[{"description":"売掛金元帳","amount":173000}]}}]}',
-    explanation:
-      "受取手形記入帳への記入処理。約束手形の受取から決済まで管理し、手形の流れを追跡します。\\n\\n⚠️ 間違えやすいポイント：振出人と支払人の混同、満期日の計算ミス、決済・不渡りの記載漏れ、裏書・割引時の処理不備。",
+      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":173000}]}}',
+    explanation: "売掛金元帳に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"subsidiary_ledger","pattern":"売掛金元帳","accounts":[],"keywords":["売掛金元帳","補助簿","得意先"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4483,15 +4299,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_021",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【3伝票制：入金伝票による現金収入取引】\n\n2025年5月の取引を3伝票制により記録してください。\n\n【取引内容】\n27日：取引金額 627,660円\n20日：取引金額 386,900円\n1日：取引金額 319,066円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"voucher","voucher_type":"入金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"入金伝票","amount":115000}]},"credit":0,"balance":{"entries":[{"description":"入金伝票","amount":115000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_021）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":115000}]}}',
+    explanation: "入金伝票に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4500,15 +4315,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_022",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【3伝票制：出金伝票による現金支出取引】\n\n2025年2月の取引を3伝票制により記録してください。\n\n【取引内容】\n24日：取引金額 682,448円\n15日：取引金額 572,665円\n8日：取引金額 666,219円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"voucher","voucher_type":"入金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"入金伝票","amount":740000}]},"credit":0,"balance":{"entries":[{"description":"入金伝票","amount":740000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_022）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":740000}]}}',
+    explanation: "入金伝票に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4517,15 +4331,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_023",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【3伝票制：振替伝票による現金以外取引】\n\n2025年8月の取引を3伝票制により記録してください。\n\n【取引内容】\n3日：取引金額 301,530円\n7日：取引金額 280,539円\n12日：取引金額 406,302円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"voucher","voucher_type":"出金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"入金伝票","amount":32000}]},"credit":0,"balance":{"entries":[{"description":"入金伝票","amount":32000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_023）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":32000}]}}',
+    explanation: "入金伝票に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4534,15 +4347,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_024",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【3伝票制：掛け取引の振替伝票記入】\n\n2025年9月の取引を3伝票制により記録してください。\n\n【取引内容】\n27日：取引金額 85,665円\n24日：取引金額 191,383円\n11日：取引金額 151,791円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"voucher","voucher_type":"出金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"入金伝票","amount":196000}]},"credit":0,"balance":{"entries":[{"description":"入金伝票","amount":196000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_024）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":196000}]}}',
+    explanation: "入金伝票に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4551,15 +4363,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_025",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【3伝票制：一部現金取引の伝票分割】\n\n2025年5月の取引を3伝票制により記録してください。\n\n【取引内容】\n13日：取引金額 252,840円\n27日：取引金額 235,649円\n28日：取引金額 248,951円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"voucher","voucher_type":"振替伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"入金伝票","amount":313000}]},"credit":0,"balance":{"entries":[{"description":"入金伝票","amount":313000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_025）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":313000}]}}',
+    explanation: "入金伝票に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4568,15 +4379,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_026",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【3伝票制：3伝票から仕訳日計表への集計】\n\n2025年11月の取引を3伝票制により記録してください。\n\n【取引内容】\n28日：取引金額 159,981円\n12日：取引金額 300,530円\n4日：取引金額 125,950円\n\n【作成指示】\n1. 適切な伝票の選択\n2. 伝票への記入方法\n3. 一部現金取引の処理\n4. 伝票から帳簿への転記",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"voucher","voucher_type":"振替伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"入金伝票","amount":974000}]},"credit":0,"balance":{"entries":[{"description":"入金伝票","amount":974000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_026）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":974000}]}}',
+    explanation: "入金伝票に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4585,15 +4395,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_027",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【5伝票制：売上伝票による売上取引専用記録】\n\n2025年11月の取引を5伝票制により記録してください。\n\n【取引内容】\n22日：取引金額 526,373円\n7日：取引金額 705,035円\n18日：取引金額 296,150円\n\n【作成指示】\n1. 5伝票制の特徴理解\n2. 売上・仕入専用伝票の使用\n3. 他の伝票との使い分け\n4. 総勘定元帳への正確な転記",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"voucher","voucher_type":"仕訳伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"入金伝票","amount":996000}]},"credit":0,"balance":{"entries":[{"description":"入金伝票","amount":996000}]}}]}',
-    explanation:
-      "総勘定元帳への転記処理。仕訳帳から勘定科目別に分類転記し、各勘定の残高を管理します。\\n\\n⚠️ 間違えやすいポイント：転記の借方・貸方を間違える、摘要欄に相手勘定科目を記載し忘れ、日付の転記ミス、残高の計算間違い。「元丁」欄の記載も忘れずに。",
+      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":996000}]}}',
+    explanation: "入金伝票に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4602,15 +4411,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_028",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【5伝票制：仕入伝票による仕入取引専用記録】\n\n2025年4月の取引を5伝票制により記録してください。\n\n【取引内容】\n17日：取引金額 178,273円\n11日：取引金額 197,758円\n28日：取引金額 155,282円\n\n【作成指示】\n1. 5伝票制の特徴理解\n2. 売上・仕入専用伝票の使用\n3. 他の伝票との使い分け\n4. 総勘定元帳への正確な転記",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"voucher","voucher_type":"仕訳伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"入金伝票","amount":442000}]},"credit":0,"balance":{"entries":[{"description":"入金伝票","amount":442000}]}}]}',
-    explanation:
-      "総勘定元帳への転記処理。仕訳帳から勘定科目別に分類転記し、各勘定の残高を管理します。\\n\\n⚠️ 間違えやすいポイント：転記の借方・貸方を間違える、摘要欄に相手勘定科目を記載し忘れ、日付の転記ミス、残高の計算間違い。「元丁」欄の記載も忘れずに。",
+      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":442000}]}}',
+    explanation: "入金伝票に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4619,15 +4427,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_029",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【5伝票制：5伝票制での取引分類・適用判定】\n\n2025年4月の取引を5伝票制により記録してください。\n\n【取引内容】\n25日：取引金額 611,082円\n25日：取引金額 739,173円\n8日：取引金額 436,244円\n\n【作成指示】\n1. 5伝票制の特徴理解\n2. 売上・仕入専用伝票の使用\n3. 他の伝票との使い分け\n4. 総勘定元帳への正確な転記",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"voucher","voucher_type":"5伝票制","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"入金伝票","amount":885000}]},"credit":0,"balance":{"entries":[{"description":"入金伝票","amount":885000}]}}]}',
-    explanation:
-      "総勘定元帳への転記処理。仕訳帳から勘定科目別に分類転記し、各勘定の残高を管理します。\\n\\n⚠️ 間違えやすいポイント：転記の借方・貸方を間違える、摘要欄に相手勘定科目を記載し忘れ、日付の転記ミス、残高の計算間違い。「元丁」欄の記載も忘れずに。",
+      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":885000}]}}',
+    explanation: "入金伝票に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4636,15 +4443,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_030",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【5伝票制：5伝票から総勘定元帳への転記】\n\n2025年8月の取引を5伝票制により記録してください。\n\n【取引内容】\n8日：取引金額 605,681円\n8日：取引金額 700,622円\n4日：取引金額 764,578円\n\n【作成指示】\n1. 5伝票制の特徴理解\n2. 売上・仕入専用伝票の使用\n3. 他の伝票との使い分け\n4. 総勘定元帳への正確な転記",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"voucher","voucher_type":"5伝票制","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"入金伝票","amount":850000}]},"credit":0,"balance":{"entries":[{"description":"入金伝票","amount":850000}]}}]}',
-    explanation:
-      "総勘定元帳への転記処理。仕訳帳から勘定科目別に分類転記し、各勘定の残高を管理します。\\n\\n⚠️ 間違えやすいポイント：転記の借方・貸方を間違える、摘要欄に相手勘定科目を記載し忘れ、日付の転記ミス、残高の計算間違い。「元丁」欄の記載も忘れずに。",
+      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":850000}]}}',
+    explanation: "入金伝票に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4653,15 +4459,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_031",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【理論問題：簿記の基本原理と記帳体系】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n簿記の基本原理と記帳体系に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 貸借平均\nB. 負債\nC. 商業簿記\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"簿記理論","amount":552000}]},"credit":0,"balance":{"entries":[{"description":"簿記理論","amount":552000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_031）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":552000}]}}',
+    explanation: "簿記理論に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4670,15 +4475,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_032",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【理論問題：仕訳の原則と借方・貸方の理解】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n仕訳の原則と借方・貸方の理解に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 単式簿記\nC. 収益\nD. 収益\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"簿記理論","amount":397000}]},"credit":0,"balance":{"entries":[{"description":"簿記理論","amount":397000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_032）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":397000}]}}',
+    explanation: "簿記理論に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4687,15 +4491,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_033",
     category_id: "ledger",
-    difficulty: 1,
     question_text:
       "【理論問題：帳簿組織と補助簿の役割】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n帳簿組織と補助簿の役割に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 貸方\nC. 貸借対照\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"簿記理論","amount":374000}]},"credit":0,"balance":{"entries":[{"description":"簿記理論","amount":374000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_033）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":374000}]}}',
+    explanation: "簿記理論に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4704,15 +4507,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_034",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【理論問題：伝票制度の種類と特徴】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n伝票制度の種類と特徴に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 資産\nB. 単式簿記\nC. 商業簿記\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"簿記理論","amount":592000}]},"credit":0,"balance":{"entries":[{"description":"簿記理論","amount":592000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_034）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":592000}]}}',
+    explanation: "簿記理論に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4721,15 +4523,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_035",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【理論問題：試算表の種類と作成目的】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n試算表の種類と作成目的に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 資産\nB. 損益計算\nC. 貸借対照\nD. 試算表\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"簿記理論","amount":660000}]},"credit":0,"balance":{"entries":[{"description":"簿記理論","amount":660000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_035）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":660000}]}}',
+    explanation: "簿記理論に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4738,15 +4539,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_036",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【理論問題：決算整理の意義と手続き】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n決算整理の意義と手続きに関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 損益計算\nC. 貸借対照\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"簿記理論","amount":754000}]},"credit":0,"balance":{"entries":[{"description":"簿記理論","amount":754000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_036）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":754000}]}}',
+    explanation: "簿記理論に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4755,15 +4555,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_037",
     category_id: "ledger",
-    difficulty: 2,
     question_text:
       "【理論問題：財務諸表の構成要素】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n財務諸表の構成要素に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 複式簿記\nB. 負債\nC. 収益\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"簿記理論","amount":123000}]},"credit":0,"balance":{"entries":[{"description":"簿記理論","amount":123000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_037）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":123000}]}}',
+    explanation: "簿記理論に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4772,15 +4571,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_038",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【理論問題：勘定科目の分類と体系】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n勘定科目の分類と体系に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 負債\nC. 商業簿記\nD. 試算表\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"簿記理論","amount":524000}]},"credit":0,"balance":{"entries":[{"description":"簿記理論","amount":524000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_038）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":524000}]}}',
+    explanation: "簿記理論に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4789,15 +4587,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_039",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【理論問題：簿記上の取引の定義】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n簿記上の取引の定義に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 資産\nB. 負債\nC. 商業簿記\nD. 試算表\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"簿記理論","amount":525000}]},"credit":0,"balance":{"entries":[{"description":"簿記理論","amount":525000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_039）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":525000}]}}',
+    explanation: "簿記理論に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4806,15 +4603,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_L_040",
     category_id: "ledger",
-    difficulty: 3,
     question_text:
       "【理論問題：複式簿記の特徴と利点】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n複式簿記の特徴と利点に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 貸借平均\nB. 負債\nC. 商業簿記\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"date","required":true},{"name":"description","label":"摘要","type":"text","required":true},{"name":"debit","label":"借方","type":"number","required":false},{"name":"credit","label":"貸方","type":"number","required":false},{"name":"balance","label":"残高","type":"number","required":false}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"entries":[{"date":"2025-08-11","description":"ledgerEntry","debit":{"entries":[{"description":"簿記理論","amount":681000}]},"credit":0,"balance":{"entries":[{"description":"簿記理論","amount":681000}]}}]}',
-    explanation:
-      "帳簿記入問題（Q_L_040）。各種帳簿の特性と記入ルールを理解し、適切に処理してください。\\n\\n⚠️ 間違えやすいポイント：主要簿と補助簿の区別、各帳簿の記入ルール違い、転記・記入の方向性ミス、残高計算の誤り。帳簿間の整合性確保も重要。",
+      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":681000}]}}',
+    explanation: "簿記理論に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4823,15 +4619,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_001",
     category_id: "trial_balance",
-    difficulty: 1,
     question_text:
       "【決算整理後試算表作成問題】\n\n2025年9月の取引および決算整理事項から、決算整理後試算表を作成し、貸借対照表と損益計算書を作成してください。\n\n【期中取引】\n9月2日 前払金 867,000 / 現金 867,000 （前払金支払）\n9月4日 水道光熱費 833,000 / 現金 833,000 （水道光熱費支払）\n9月4日 現金 256,000 / 資本金 256,000 （資本金受入）\n9月9日 消耗品費 384,000 / 現金 384,000 （消耗品購入）\n9月9日 借入金 447,000 / 現金 447,000 （借入金返済）\n9月10日 仕入 851,000 / 買掛金 851,000 （商品仕入）\n9月15日 借入金 105,000 / 現金 105,000 （借入金返済）\n9月17日 現金 167,000 / 売上 167,000 （商品売上）\n\n【決算整理事項】\n・貸倒引当金設定：貸倒引当金繰入 934,000 / 貸倒引当金 934,000\n・減価償却：減価償却費 331,000 / 減価償却累計額 331,000\n・前払費用計上：前払費用 709,000 / 保険料 709,000\n\n【作成指示】\n1. 上記取引を仕訳する\n2. 決算整理仕訳を行う\n3. 決算整理後試算表を作成する\n4. 貸借対照表と損益計算書を作成する",
     answer_template_json:
-      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","商品","備品","買掛金","借入金","資本金","売上","仕入"],"totals":true}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "損益計算書の作成。収益・費用を適切に分類し、段階利益（売上総利益・営業利益等）を算出します。\\n\\n⚠️ 間違えやすいポイント：収益・費用の分類ミス、売上原価の算定間違い、営業外損益の区分不備、特別損益の判定ミス。当期純利益の計算確認は必須。",
+      '{"entries":[{"accountName":"前払金","debitAmount":867000,"creditAmount":0},{"accountName":"現金","debitAmount":0,"creditAmount":2213000},{"accountName":"水道光熱費","debitAmount":833000,"creditAmount":0},{"accountName":"資本金","debitAmount":0,"creditAmount":256000},{"accountName":"消耗品費","debitAmount":384000,"creditAmount":0},{"accountName":"借入金","debitAmount":552000,"creditAmount":0},{"accountName":"仕入","debitAmount":851000,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":851000},{"accountName":"売上","debitAmount":0,"creditAmount":167000},{"accountName":"・貸倒引当金設定：貸倒引当金繰入","debitAmount":934000,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":934000},{"accountName":"・減価償却：減価償却費","debitAmount":331000,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":331000},{"accountName":"・前払費用計上：前払費用","debitAmount":709000,"creditAmount":0},{"accountName":"保険料","debitAmount":0,"creditAmount":709000}]}',
+    explanation: "財務諸表作成に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"financial_statement","pattern":"財務諸表作成","accounts":[],"keywords":["財務諸表","貸借対照表","損益計算書"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4840,15 +4635,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_002",
     category_id: "trial_balance",
-    difficulty: 2,
     question_text:
       "【決算整理後試算表作成問題】\n\n2025年10月の取引および決算整理事項から、決算整理後試算表を作成し、貸借対照表と損益計算書を作成してください。\n\n【期中取引】\n10月1日 現金 757,000 / 資本金 757,000 （資本金受入）\n10月4日 前払金 353,000 / 現金 353,000 （前払金支払）\n10月5日 現金 624,000 / 前受金 624,000 （前受金受取）\n10月8日 仕入 970,000 / 買掛金 970,000 （商品仕入）\n10月12日 水道光熱費 229,000 / 現金 229,000 （水道光熱費支払）\n10月23日 売掛金 941,000 / 売上 941,000 （掛売上）\n10月27日 現金 857,000 / 売掛金 857,000 （売掛金回収）\n10月27日 商品 806,000 / 買掛金 806,000 （商品仕入）\n\n【決算整理事項】\n・貸倒引当金設定：貸倒引当金繰入 590,000 / 貸倒引当金 590,000\n・減価償却：減価償却費 386,000 / 減価償却累計額 386,000\n\n【作成指示】\n1. 上記取引を仕訳する\n2. 決算整理仕訳を行う\n3. 決算整理後試算表を作成する\n4. 貸借対照表と損益計算書を作成する",
     answer_template_json:
-      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","商品","備品","買掛金","借入金","資本金","売上","仕入"],"totals":true}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "損益計算書の作成。収益・費用を適切に分類し、段階利益（売上総利益・営業利益等）を算出します。\\n\\n⚠️ 間違えやすいポイント：収益・費用の分類ミス、売上原価の算定間違い、営業外損益の区分不備、特別損益の判定ミス。当期純利益の計算確認は必須。",
+      '{"entries":[{"accountName":"現金","debitAmount":1656000,"creditAmount":0},{"accountName":"資本金","debitAmount":0,"creditAmount":757000},{"accountName":"前払金","debitAmount":353000,"creditAmount":0},{"accountName":"前受金","debitAmount":0,"creditAmount":624000},{"accountName":"仕入","debitAmount":970000,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":1776000},{"accountName":"水道光熱費","debitAmount":229000,"creditAmount":0},{"accountName":"売掛金","debitAmount":84000,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":941000},{"accountName":"商品","debitAmount":806000,"creditAmount":0},{"accountName":"・貸倒引当金設定：貸倒引当金繰入","debitAmount":590000,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":590000},{"accountName":"・減価償却：減価償却費","debitAmount":386000,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":386000}]}',
+    explanation: "財務諸表作成に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"financial_statement","pattern":"財務諸表作成","accounts":[],"keywords":["財務諸表","貸借対照表","損益計算書"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4857,15 +4651,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_003",
     category_id: "trial_balance",
-    difficulty: 2,
     question_text:
       "【決算整理後試算表作成問題】\n\n2025年12月の取引および決算整理事項から、決算整理後試算表を作成し、貸借対照表と損益計算書を作成してください。\n\n【期中取引】\n12月16日 水道光熱費 517,000 / 現金 517,000 （水道光熱費支払）\n12月17日 旅費交通費 847,000 / 現金 847,000 （交通費支払）\n12月19日 広告宣伝費 631,000 / 現金 631,000 （広告費支払）\n12月20日 消耗品費 399,000 / 現金 399,000 （消耗品購入）\n12月20日 水道光熱費 832,000 / 現金 832,000 （水道光熱費支払）\n12月22日 仕入 140,000 / 買掛金 140,000 （商品仕入）\n12月22日 広告宣伝費 836,000 / 現金 836,000 （広告費支払）\n12月27日 広告宣伝費 189,000 / 現金 189,000 （広告費支払）\n\n【決算整理事項】\n・貸倒引当金設定：貸倒引当金繰入 185,000 / 貸倒引当金 185,000\n・減価償却：減価償却費 426,000 / 減価償却累計額 426,000\n・前払費用計上：前払費用 341,000 / 保険料 341,000\n\n【作成指示】\n1. 上記取引を仕訳する\n2. 決算整理仕訳を行う\n3. 決算整理後試算表を作成する\n4. 貸借対照表と損益計算書を作成する",
     answer_template_json:
-      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","商品","備品","買掛金","借入金","資本金","売上","仕入"],"totals":true}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "損益計算書の作成。収益・費用を適切に分類し、段階利益（売上総利益・営業利益等）を算出します。\\n\\n⚠️ 間違えやすいポイント：収益・費用の分類ミス、売上原価の算定間違い、営業外損益の区分不備、特別損益の判定ミス。当期純利益の計算確認は必須。",
+      '{"entries":[{"accountName":"水道光熱費","debitAmount":1349000,"creditAmount":0},{"accountName":"現金","debitAmount":0,"creditAmount":4251000},{"accountName":"旅費交通費","debitAmount":847000,"creditAmount":0},{"accountName":"広告宣伝費","debitAmount":1656000,"creditAmount":0},{"accountName":"消耗品費","debitAmount":399000,"creditAmount":0},{"accountName":"仕入","debitAmount":140000,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":140000},{"accountName":"・貸倒引当金設定：貸倒引当金繰入","debitAmount":185000,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":185000},{"accountName":"・減価償却：減価償却費","debitAmount":426000,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":426000},{"accountName":"・前払費用計上：前払費用","debitAmount":341000,"creditAmount":0},{"accountName":"保険料","debitAmount":0,"creditAmount":341000}]}',
+    explanation: "財務諸表作成に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"financial_statement","pattern":"財務諸表作成","accounts":[],"keywords":["財務諸表","貸借対照表","損益計算書"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4874,15 +4667,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_004",
     category_id: "trial_balance",
-    difficulty: 3,
     question_text:
       "【決算整理後試算表作成問題】\n\n2025年9月の取引および決算整理事項から、決算整理後試算表を作成し、貸借対照表と損益計算書を作成してください。\n\n【期中取引】\n9月9日 前払金 674,000 / 現金 674,000 （前払金支払）\n9月10日 商品 245,000 / 買掛金 245,000 （商品仕入）\n9月21日 借入金 798,000 / 現金 798,000 （借入金返済）\n9月21日 給料 786,000 / 現金 786,000 （給料支払）\n9月22日 水道光熱費 917,000 / 現金 917,000 （水道光熱費支払）\n9月23日 仕入 645,000 / 買掛金 645,000 （商品仕入）\n9月27日 現金 214,000 / 資本金 214,000 （資本金受入）\n9月28日 現金 372,000 / 前受金 372,000 （前受金受取）\n\n【決算整理事項】\n・貸倒引当金設定：貸倒引当金繰入 630,000 / 貸倒引当金 630,000\n・減価償却：減価償却費 818,000 / 減価償却累計額 818,000\n・前払費用計上：前払費用 104,000 / 保険料 104,000\n\n【作成指示】\n1. 上記取引を仕訳する\n2. 決算整理仕訳を行う\n3. 決算整理後試算表を作成する\n4. 貸借対照表と損益計算書を作成する",
     answer_template_json:
-      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","商品","備品","買掛金","借入金","資本金","売上","仕入"],"totals":true}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "損益計算書の作成。収益・費用を適切に分類し、段階利益（売上総利益・営業利益等）を算出します。\\n\\n⚠️ 間違えやすいポイント：収益・費用の分類ミス、売上原価の算定間違い、営業外損益の区分不備、特別損益の判定ミス。当期純利益の計算確認は必須。",
+      '{"entries":[{"accountName":"前払金","debitAmount":674000,"creditAmount":0},{"accountName":"現金","debitAmount":0,"creditAmount":2589000},{"accountName":"商品","debitAmount":245000,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":890000},{"accountName":"借入金","debitAmount":798000,"creditAmount":0},{"accountName":"給料","debitAmount":786000,"creditAmount":0},{"accountName":"水道光熱費","debitAmount":917000,"creditAmount":0},{"accountName":"仕入","debitAmount":645000,"creditAmount":0},{"accountName":"資本金","debitAmount":0,"creditAmount":214000},{"accountName":"前受金","debitAmount":0,"creditAmount":372000},{"accountName":"・貸倒引当金設定：貸倒引当金繰入","debitAmount":630000,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":630000},{"accountName":"・減価償却：減価償却費","debitAmount":818000,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":818000},{"accountName":"・前払費用計上：前払費用","debitAmount":104000,"creditAmount":0},{"accountName":"保険料","debitAmount":0,"creditAmount":104000}]}',
+    explanation: "財務諸表作成に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"financial_statement","pattern":"財務諸表作成","accounts":[],"keywords":["財務諸表","貸借対照表","損益計算書"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4891,15 +4683,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_005",
     category_id: "trial_balance",
-    difficulty: 1,
     question_text:
       "【8桁精算表作成問題】\n\n2025年1月末の決算整理前試算表と決算整理事項から、8桁精算表を作成してください。\n\n【決算整理前試算表】\n現金（借方）：213,000円\n小口現金（貸方）：311,000円\n当座預金（貸方）：399,000円\n普通預金（貸方）：471,000円\n受取手形（貸方）：697,000円\n売掛金（借方）：528,000円\n商品（借方）：369,000円\n繰越商品（貸方）：433,000円\n仕入（借方）：324,000円\n売上（貸方）：156,000円\n支払手形（貸方）：149,000円\n買掛金（貸方）：759,000円\n\n【決算整理事項】\n・貸倒引当金設定：935,000円\n・減価償却：268,000円\n\n【作成指示】\n1. 決算整理前試算表の残高を転記\n2. 決算整理仕訳を記入\n3. 決算整理後試算表を作成\n4. 損益計算書欄と貸借対照表欄を完成させる",
     answer_template_json:
-      '{"type":"worksheet","columns":["試算表借方","試算表貸方","修正借方","修正貸方","損益借方","損益貸方","貸借借方","貸借貸方"],"accounts":["現金","売掛金","商品","備品","買掛金","資本金","売上","仕入","給料","家賃"]}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "精算表の作成。試算表に決算整理を加えて修正し、損益計算書・貸借対照表の基礎を作成します。\\n\\n⚠️ 間違えやすいポイント：修正記入欄の借方・貸方間違い、損益・貸借への振分けミス、決算整理仕訳の理解不足、勘定科目名の変更（未払○○→未払費用等）忘れ。",
+      '{"entries":[{"accountName":"現金","debitAmount":213000,"creditAmount":0},{"accountName":"小口現金","debitAmount":0,"creditAmount":311000},{"accountName":"当座預金","debitAmount":0,"creditAmount":399000},{"accountName":"普通預金","debitAmount":0,"creditAmount":471000},{"accountName":"受取手形","debitAmount":0,"creditAmount":697000},{"accountName":"売掛金","debitAmount":528000,"creditAmount":0},{"accountName":"商品","debitAmount":369000,"creditAmount":0},{"accountName":"繰越商品","debitAmount":0,"creditAmount":433000},{"accountName":"仕入","debitAmount":324000,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":156000},{"accountName":"支払手形","debitAmount":0,"creditAmount":149000},{"accountName":"買掛金","debitAmount":0,"creditAmount":759000},{"accountName":"貸倒引当金繰入","debitAmount":935000,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":935000},{"accountName":"減価償却費","debitAmount":268000,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":268000},{"accountName":"調整勘定","debitAmount":1941000,"creditAmount":0}]}',
+    explanation: "精算表作成に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"worksheet","pattern":"精算表作成","accounts":[],"keywords":["精算表","8桁","決算整理"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4908,15 +4699,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_006",
     category_id: "trial_balance",
-    difficulty: 2,
     question_text:
       "【8桁精算表作成問題】\n\n2025年5月末の決算整理前試算表と決算整理事項から、8桁精算表を作成してください。\n\n【決算整理前試算表】\n現金（借方）：680,000円\n小口現金（貸方）：423,000円\n当座預金（貸方）：854,000円\n普通預金（貸方）：344,000円\n受取手形（貸方）：382,000円\n売掛金（借方）：943,000円\n商品（借方）：953,000円\n繰越商品（貸方）：447,000円\n仕入（借方）：241,000円\n売上（貸方）：933,000円\n支払手形（貸方）：488,000円\n買掛金（貸方）：565,000円\n\n【決算整理事項】\n・貸倒引当金設定：728,000円\n・減価償却：536,000円\n・前払費用計上：875,000円\n\n【作成指示】\n1. 決算整理前試算表の残高を転記\n2. 決算整理仕訳を記入\n3. 決算整理後試算表を作成\n4. 損益計算書欄と貸借対照表欄を完成させる",
     answer_template_json:
-      '{"type":"worksheet","columns":["試算表借方","試算表貸方","修正借方","修正貸方","損益借方","損益貸方","貸借借方","貸借貸方"],"accounts":["現金","売掛金","商品","備品","買掛金","資本金","売上","仕入","給料","家賃"]}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "精算表の作成。試算表に決算整理を加えて修正し、損益計算書・貸借対照表の基礎を作成します。\\n\\n⚠️ 間違えやすいポイント：修正記入欄の借方・貸方間違い、損益・貸借への振分けミス、決算整理仕訳の理解不足、勘定科目名の変更（未払○○→未払費用等）忘れ。",
+      '{"entries":[{"accountName":"現金","debitAmount":680000,"creditAmount":0},{"accountName":"小口現金","debitAmount":0,"creditAmount":423000},{"accountName":"当座預金","debitAmount":0,"creditAmount":854000},{"accountName":"普通預金","debitAmount":0,"creditAmount":344000},{"accountName":"受取手形","debitAmount":0,"creditAmount":382000},{"accountName":"売掛金","debitAmount":943000,"creditAmount":0},{"accountName":"商品","debitAmount":953000,"creditAmount":0},{"accountName":"繰越商品","debitAmount":0,"creditAmount":447000},{"accountName":"仕入","debitAmount":241000,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":933000},{"accountName":"支払手形","debitAmount":0,"creditAmount":488000},{"accountName":"買掛金","debitAmount":0,"creditAmount":565000},{"accountName":"貸倒引当金繰入","debitAmount":728000,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":728000},{"accountName":"減価償却費","debitAmount":536000,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":536000},{"accountName":"調整勘定","debitAmount":1619000,"creditAmount":0}]}',
+    explanation: "精算表作成に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"worksheet","pattern":"精算表作成","accounts":[],"keywords":["精算表","8桁","決算整理"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4925,15 +4715,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_007",
     category_id: "trial_balance",
-    difficulty: 2,
     question_text:
       "【8桁精算表作成問題】\n\n2025年9月末の決算整理前試算表と決算整理事項から、8桁精算表を作成してください。\n\n【決算整理前試算表】\n現金（借方）：992,000円\n小口現金（貸方）：488,000円\n当座預金（貸方）：242,000円\n普通預金（貸方）：979,000円\n受取手形（貸方）：854,000円\n売掛金（借方）：841,000円\n商品（借方）：594,000円\n繰越商品（貸方）：960,000円\n仕入（借方）：650,000円\n売上（貸方）：363,000円\n支払手形（貸方）：540,000円\n買掛金（貸方）：679,000円\n\n【決算整理事項】\n・貸倒引当金設定：947,000円\n・減価償却：744,000円\n・前払費用計上：153,000円\n\n【作成指示】\n1. 決算整理前試算表の残高を転記\n2. 決算整理仕訳を記入\n3. 決算整理後試算表を作成\n4. 損益計算書欄と貸借対照表欄を完成させる",
     answer_template_json:
-      '{"type":"worksheet","columns":["試算表借方","試算表貸方","修正借方","修正貸方","損益借方","損益貸方","貸借借方","貸借貸方"],"accounts":["現金","売掛金","商品","備品","買掛金","資本金","売上","仕入","給料","家賃"]}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "精算表の作成。試算表に決算整理を加えて修正し、損益計算書・貸借対照表の基礎を作成します。\\n\\n⚠️ 間違えやすいポイント：修正記入欄の借方・貸方間違い、損益・貸借への振分けミス、決算整理仕訳の理解不足、勘定科目名の変更（未払○○→未払費用等）忘れ。",
+      '{"entries":[{"accountName":"現金","debitAmount":992000,"creditAmount":0},{"accountName":"小口現金","debitAmount":0,"creditAmount":488000},{"accountName":"当座預金","debitAmount":0,"creditAmount":242000},{"accountName":"普通預金","debitAmount":0,"creditAmount":979000},{"accountName":"受取手形","debitAmount":0,"creditAmount":854000},{"accountName":"売掛金","debitAmount":841000,"creditAmount":0},{"accountName":"商品","debitAmount":594000,"creditAmount":0},{"accountName":"繰越商品","debitAmount":0,"creditAmount":960000},{"accountName":"仕入","debitAmount":650000,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":363000},{"accountName":"支払手形","debitAmount":0,"creditAmount":540000},{"accountName":"買掛金","debitAmount":0,"creditAmount":679000},{"accountName":"貸倒引当金繰入","debitAmount":947000,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":947000},{"accountName":"減価償却費","debitAmount":744000,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":744000},{"accountName":"調整勘定","debitAmount":2028000,"creditAmount":0}]}',
+    explanation: "精算表作成に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"worksheet","pattern":"精算表作成","accounts":[],"keywords":["精算表","8桁","決算整理"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4942,15 +4731,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_008",
     category_id: "trial_balance",
-    difficulty: 3,
     question_text:
       "【8桁精算表作成問題】\n\n2025年11月末の決算整理前試算表と決算整理事項から、8桁精算表を作成してください。\n\n【決算整理前試算表】\n現金（借方）：863,000円\n小口現金（貸方）：875,000円\n当座預金（貸方）：508,000円\n普通預金（貸方）：488,000円\n受取手形（貸方）：310,000円\n売掛金（借方）：797,000円\n商品（借方）：977,000円\n繰越商品（貸方）：328,000円\n仕入（借方）：636,000円\n売上（貸方）：624,000円\n支払手形（貸方）：741,000円\n買掛金（貸方）：972,000円\n\n【決算整理事項】\n・貸倒引当金設定：693,000円\n・減価償却：178,000円\n・前払費用計上：263,000円\n\n【作成指示】\n1. 決算整理前試算表の残高を転記\n2. 決算整理仕訳を記入\n3. 決算整理後試算表を作成\n4. 損益計算書欄と貸借対照表欄を完成させる",
     answer_template_json:
-      '{"type":"worksheet","columns":["試算表借方","試算表貸方","修正借方","修正貸方","損益借方","損益貸方","貸借借方","貸借貸方"],"accounts":["現金","売掛金","商品","備品","買掛金","資本金","売上","仕入","給料","家賃"]}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "精算表の作成。試算表に決算整理を加えて修正し、損益計算書・貸借対照表の基礎を作成します。\\n\\n⚠️ 間違えやすいポイント：修正記入欄の借方・貸方間違い、損益・貸借への振分けミス、決算整理仕訳の理解不足、勘定科目名の変更（未払○○→未払費用等）忘れ。",
+      '{"entries":[{"accountName":"現金","debitAmount":863000,"creditAmount":0},{"accountName":"小口現金","debitAmount":0,"creditAmount":875000},{"accountName":"当座預金","debitAmount":0,"creditAmount":508000},{"accountName":"普通預金","debitAmount":0,"creditAmount":488000},{"accountName":"受取手形","debitAmount":0,"creditAmount":310000},{"accountName":"売掛金","debitAmount":797000,"creditAmount":0},{"accountName":"商品","debitAmount":977000,"creditAmount":0},{"accountName":"繰越商品","debitAmount":0,"creditAmount":328000},{"accountName":"仕入","debitAmount":636000,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":624000},{"accountName":"支払手形","debitAmount":0,"creditAmount":741000},{"accountName":"買掛金","debitAmount":0,"creditAmount":972000},{"accountName":"貸倒引当金繰入","debitAmount":693000,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":693000},{"accountName":"減価償却費","debitAmount":178000,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":178000},{"accountName":"調整勘定","debitAmount":1573000,"creditAmount":0}]}',
+    explanation: "精算表作成に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"worksheet","pattern":"精算表作成","accounts":[],"keywords":["精算表","8桁","決算整理"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4959,15 +4747,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_009",
     category_id: "trial_balance",
-    difficulty: 1,
     question_text:
       "【合計試算表作成問題】\n\n2025年2月の期首残高と期中取引から、2月末の合計試算表を作成してください。\n\n【期首残高】\n現金：525,000円（借方残高）\n商品：151,000円（借方残高）\n売掛金：473,000円（借方残高）\n買掛金：798,000円（貸方残高）\n資本金：796,000円（貸方残高）\n\n【期中取引】\n2月1日 現金 414,000 / 借入金 414,000 （借入）\n2月2日 給料 784,000 / 現金 784,000 （給料支払）\n2月6日 売掛金 591,000 / 売上 591,000 （掛売上）\n2月7日 仕入 923,000 / 買掛金 923,000 （商品仕入）\n2月10日 前払金 274,000 / 現金 274,000 （前払金支払）\n2月12日 買掛金 461,000 / 現金 461,000 （買掛金支払）\n2月13日 現金 405,000 / 売上 405,000 （商品売上）\n2月21日 水道光熱費 196,000 / 現金 196,000 （水道光熱費支払）\n2月27日 借入金 663,000 / 現金 663,000 （借入金返済）\n2月27日 現金 705,000 / 前受金 705,000 （前受金受取）\n\n【作成指示】\n1. 各勘定科目の借方合計と貸方合計を計算\n2. 合計試算表を作成\n3. 借方合計と貸方合計が一致することを確認\n4. 各勘定科目の残高を算出",
     answer_template_json:
-      '{"type":"financial_statement","sections":["資産","負債","純資産"],"items":[{"name":"流動資産","section":"資産"},{"name":"固定資産","section":"資産"},{"name":"流動負債","section":"負債"},{"name":"固定負債","section":"負債"},{"name":"資本金","section":"純資産"}]}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "合計試算表の作成。各勘定科目の期中借方合計・貸方合計を集計し、仕訳の正確性を検証します。\\n\\n⚠️ 間違えやすいポイント：借方合計と貸方合計の不一致、勘定科目の分類ミス、集計の計算間違い、期中取引の計上漏れ。試算表の貸借平均が成立しない場合は計算見直し。",
+      '{"entries":[{"accountName":"現金","debitAmount":0,"creditAmount":854000},{"accountName":"借入金","debitAmount":249000,"creditAmount":0},{"accountName":"給料","debitAmount":784000,"creditAmount":0},{"accountName":"売掛金","debitAmount":591000,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":996000},{"accountName":"仕入","debitAmount":923000,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":462000},{"accountName":"前払金","debitAmount":274000,"creditAmount":0},{"accountName":"水道光熱費","debitAmount":196000,"creditAmount":0},{"accountName":"前受金","debitAmount":0,"creditAmount":705000}]}',
+    explanation: "合計試算表に関する問題です。",
+    difficulty: 1,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"合計試算表","accounts":[],"keywords":["合計試算表","期中取引","集計"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4976,15 +4763,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_010",
     category_id: "trial_balance",
-    difficulty: 2,
     question_text:
       "【合計試算表作成問題】\n\n2025年2月の期首残高と期中取引から、2月末の合計試算表を作成してください。\n\n【期首残高】\n現金：192,000円（借方残高）\n商品：283,000円（借方残高）\n売掛金：727,000円（借方残高）\n買掛金：318,000円（貸方残高）\n資本金：476,000円（貸方残高）\n\n【期中取引】\n2月1日 現金 504,000 / 売上 504,000 （商品売上）\n2月2日 仕入 983,000 / 買掛金 983,000 （商品仕入）\n2月5日 現金 744,000 / 借入金 744,000 （借入）\n2月16日 現金 445,000 / 売掛金 445,000 （売掛金回収）\n2月17日 通信費 628,000 / 現金 628,000 （通信費支払）\n2月22日 消耗品費 624,000 / 現金 624,000 （消耗品購入）\n2月24日 仕入 946,000 / 買掛金 946,000 （商品仕入）\n2月25日 広告宣伝費 933,000 / 現金 933,000 （広告費支払）\n2月26日 現金 756,000 / 借入金 756,000 （借入）\n2月28日 借入金 932,000 / 現金 932,000 （借入金返済）\n\n【作成指示】\n1. 各勘定科目の借方合計と貸方合計を計算\n2. 合計試算表を作成\n3. 借方合計と貸方合計が一致することを確認\n4. 各勘定科目の残高を算出",
     answer_template_json:
-      '{"type":"financial_statement","sections":["資産","負債","純資産"],"items":[{"name":"流動資産","section":"資産"},{"name":"固定資産","section":"資産"},{"name":"流動負債","section":"負債"},{"name":"固定負債","section":"負債"},{"name":"資本金","section":"純資産"}]}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "合計試算表の作成。各勘定科目の期中借方合計・貸方合計を集計し、仕訳の正確性を検証します。\\n\\n⚠️ 間違えやすいポイント：借方合計と貸方合計の不一致、勘定科目の分類ミス、集計の計算間違い、期中取引の計上漏れ。試算表の貸借平均が成立しない場合は計算見直し。",
+      '{"entries":[{"accountName":"現金","debitAmount":0,"creditAmount":668000},{"accountName":"売上","debitAmount":0,"creditAmount":504000},{"accountName":"仕入","debitAmount":1929000,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":1929000},{"accountName":"借入金","debitAmount":0,"creditAmount":568000},{"accountName":"売掛金","debitAmount":0,"creditAmount":445000},{"accountName":"通信費","debitAmount":628000,"creditAmount":0},{"accountName":"消耗品費","debitAmount":624000,"creditAmount":0},{"accountName":"広告宣伝費","debitAmount":933000,"creditAmount":0}]}',
+    explanation: "合計試算表に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"合計試算表","accounts":[],"keywords":["合計試算表","期中取引","集計"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -4993,15 +4779,14 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_011",
     category_id: "trial_balance",
-    difficulty: 2,
     question_text:
       "【合計試算表作成問題】\n\n2025年4月の期首残高と期中取引から、4月末の合計試算表を作成してください。\n\n【期首残高】\n現金：667,000円（借方残高）\n商品：282,000円（借方残高）\n売掛金：201,000円（借方残高）\n買掛金：624,000円（貸方残高）\n資本金：264,000円（貸方残高）\n\n【期中取引】\n4月9日 前払金 772,000 / 現金 772,000 （前払金支払）\n4月10日 買掛金 809,000 / 現金 809,000 （買掛金支払）\n4月10日 通信費 176,000 / 現金 176,000 （通信費支払）\n4月18日 現金 383,000 / 前受金 383,000 （前受金受取）\n4月18日 旅費交通費 401,000 / 現金 401,000 （交通費支払）\n4月21日 売掛金 593,000 / 売上 593,000 （掛売上）\n4月22日 消耗品費 580,000 / 現金 580,000 （消耗品購入）\n4月24日 消耗品費 763,000 / 現金 763,000 （消耗品購入）\n4月27日 通信費 567,000 / 現金 567,000 （通信費支払）\n4月27日 現金 143,000 / 売上 143,000 （商品売上）\n\n【作成指示】\n1. 各勘定科目の借方合計と貸方合計を計算\n2. 合計試算表を作成\n3. 借方合計と貸方合計が一致することを確認\n4. 各勘定科目の残高を算出",
     answer_template_json:
-      '{"type":"financial_statement","sections":["資産","負債","純資産"],"items":[{"name":"流動資産","section":"資産"},{"name":"固定資産","section":"資産"},{"name":"流動負債","section":"負債"},{"name":"固定負債","section":"負債"},{"name":"資本金","section":"純資産"}]}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "合計試算表の作成。各勘定科目の期中借方合計・貸方合計を集計し、仕訳の正確性を検証します。\\n\\n⚠️ 間違えやすいポイント：借方合計と貸方合計の不一致、勘定科目の分類ミス、集計の計算間違い、期中取引の計上漏れ。試算表の貸借平均が成立しない場合は計算見直し。",
+      '{"entries":[{"accountName":"前払金","debitAmount":772000,"creditAmount":0},{"accountName":"現金","debitAmount":0,"creditAmount":3542000},{"accountName":"買掛金","debitAmount":809000,"creditAmount":0},{"accountName":"通信費","debitAmount":743000,"creditAmount":0},{"accountName":"前受金","debitAmount":0,"creditAmount":383000},{"accountName":"旅費交通費","debitAmount":401000,"creditAmount":0},{"accountName":"売掛金","debitAmount":593000,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":736000},{"accountName":"消耗品費","debitAmount":1343000,"creditAmount":0}]}',
+    explanation: "合計試算表に関する問題です。",
+    difficulty: 2,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"合計試算表","accounts":[],"keywords":["合計試算表","期中取引","集計"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
@@ -5010,18 +4795,33 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_T_012",
     category_id: "trial_balance",
-    difficulty: 3,
     question_text:
       "【合計試算表作成問題】\n\n2025年1月の期首残高と期中取引から、1月末の合計試算表を作成してください。\n\n【期首残高】\n現金：707,000円（借方残高）\n商品：429,000円（借方残高）\n売掛金：167,000円（借方残高）\n買掛金：931,000円（貸方残高）\n資本金：919,000円（貸方残高）\n\n【期中取引】\n1月3日 水道光熱費 619,000 / 現金 619,000 （水道光熱費支払）\n1月3日 給料 661,000 / 現金 661,000 （給料支払）\n1月7日 商品 177,000 / 買掛金 177,000 （商品仕入）\n1月11日 消耗品費 392,000 / 現金 392,000 （消耗品購入）\n1月13日 現金 950,000 / 売掛金 950,000 （売掛金回収）\n1月14日 借入金 875,000 / 現金 875,000 （借入金返済）\n1月22日 借入金 754,000 / 現金 754,000 （借入金返済）\n1月24日 家賃 493,000 / 現金 493,000 （家賃支払）\n1月24日 給料 747,000 / 現金 747,000 （給料支払）\n1月25日 現金 637,000 / 売掛金 637,000 （売掛金回収）\n\n【作成指示】\n1. 各勘定科目の借方合計と貸方合計を計算\n2. 合計試算表を作成\n3. 借方合計と貸方合計が一致することを確認\n4. 各勘定科目の残高を算出",
     answer_template_json:
-      '{"type":"financial_statement","sections":["資産","負債","純資産"],"items":[{"name":"流動資産","section":"資産"},{"name":"固定資産","section":"資産"},{"name":"流動負債","section":"負債"},{"name":"固定負債","section":"負債"},{"name":"資本金","section":"純資産"}]}',
+      '{"type":"trial_balance","columns":["借方","貸方"],"accounts":["現金","当座預金","売掛金","受取手形","商品","前払金","建物","備品","土地","買掛金","支払手形","借入金","前受金","資本金","繰越利益剰余金","売上","受取利息","仕入","給料","支払利息","減価償却費","租税公課"],"totals":true}',
     correct_answer_json:
-      '{"entries":[{"account":"balances","debit":0,"credit":0}]}',
-    explanation:
-      "合計試算表の作成。各勘定科目の期中借方合計・貸方合計を集計し、仕訳の正確性を検証します。\\n\\n⚠️ 間違えやすいポイント：借方合計と貸方合計の不一致、勘定科目の分類ミス、集計の計算間違い、期中取引の計上漏れ。試算表の貸借平均が成立しない場合は計算見直し。",
+      '{"entries":[{"accountName":"水道光熱費","debitAmount":619000,"creditAmount":0},{"accountName":"現金","debitAmount":0,"creditAmount":2954000},{"accountName":"給料","debitAmount":1408000,"creditAmount":0},{"accountName":"商品","debitAmount":177000,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":177000},{"accountName":"消耗品費","debitAmount":392000,"creditAmount":0},{"accountName":"売掛金","debitAmount":0,"creditAmount":1587000},{"accountName":"借入金","debitAmount":1629000,"creditAmount":0},{"accountName":"家賃","debitAmount":493000,"creditAmount":0}]}',
+    explanation: "合計試算表に関する問題です。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"合計試算表","accounts":[],"keywords":["合計試算表","期中取引","集計"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
     updated_at: "2025-08-07T00:31:25.369Z",
   },
 ];
+
+export const questionStatistics = {
+  totalQuestions: 302,
+  byCategory: {
+    journal: 250,
+    ledger: 40,
+    trial_balance: 12,
+  },
+  byDifficulty: {
+    "1": 104,
+    "2": 122,
+    "3": 76,
+    "4": 0,
+    "5": 0,
+  },
+};
