@@ -4092,7 +4092,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"現金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntries":[{"date":"10月1日","description":"前月繰越","debit":337541,"credit":null,"balance":337541},{"date":"10月5日","description":"現金売上","debit":276641,"credit":null,"balance":614182},{"date":"10月10日","description":"給料支払","debit":null,"credit":215025,"balance":399157},{"date":"10月15日","description":"売掛金回収","debit":184924,"credit":null,"balance":584081},{"date":"10月20日","description":"買掛金支払","debit":null,"credit":241381,"balance":342700},{"date":"10月28日","description":"現金過不足","debit":null,"credit":8502,"balance":334198}],"finalBalance":334198,"note":"現金実査により8,502円の不足が判明し、現金過不足として処理"}',
+      '{"ledgerEntry":{"entries":[{"description":"前月繰越 337,541円","amount":337541},{"description":"現金売上 +276,641円","amount":276641},{"description":"給料支払 -215,025円","amount":215025},{"description":"売掛金回収 +184,924円","amount":184924},{"description":"買掛金支払 -241,381円","amount":241381},{"description":"現金過不足 -8,502円","amount":8502},{"description":"月末残高","amount":334198}]}}',
     explanation: "【現金勘定記入のポイント】\n1. 現金の増加（売上・回収）は借方に記入\n2. 現金の減少（支払）は貸方に記入\n3. 各取引後の残高を都度計算\n4. 現金過不足は実査時点で計上\n\n【計算過程】\n前月繰越 337,541円\n＋現金売上 276,641円\n－給料支払 215,025円\n＋売掛金回収 184,924円\n－買掛金支払 241,381円\n－現金過不足 8,502円\n＝月末残高 334,198円",
     difficulty: 1,
     tags_json:
@@ -4108,7 +4108,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"売掛金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntries":[{"date":"1月1日","description":"前月繰越","debit":564069,"credit":null,"balance":564069},{"date":"1月3日","description":"掛売上","debit":190909,"credit":null,"balance":754978},{"date":"1月8日","description":"現金回収","debit":null,"credit":51829,"balance":703149},{"date":"1月15日","description":"掛売上","debit":179338,"credit":null,"balance":882487},{"date":"1月22日","description":"手形回収","debit":null,"credit":111922,"balance":770565},{"date":"1月28日","description":"貸倒引当金充当","debit":null,"credit":30000,"balance":740565},{"date":"1月28日","description":"貸倒損失","debit":null,"credit":5813,"balance":734752}],"finalBalance":734752,"note":"貸倒れ35,813円のうち、貸倒引当金30,000円を充当し、不足分5,813円は貸倒損失として処理"}',
+      '{"ledgerEntry":{"entries":[{"description":"前月繰越 564,069円","amount":564069},{"description":"掛売上 +190,909円","amount":190909},{"description":"現金回収 -51,829円","amount":51829},{"description":"掛売上 +179,338円","amount":179338},{"description":"手形回収 -111,922円","amount":111922},{"description":"貸倒処理（引当金充当 -30,000円、損失 -5,813円）","amount":35813},{"description":"月末残高","amount":734752}]}}',
     explanation: "【売掛金勘定記入のポイント】\n1. 売掛金の発生（掛売上）は借方に記入\n2. 売掛金の回収（現金・手形）は貸方に記入\n3. 貸倒れ発生時は貸倒引当金を優先充当\n4. 引当金不足分は貸倒損失として処理\n\n【貸倒処理】\n貸倒れ額 35,813円\n－貸倒引当金充当 30,000円\n＝貸倒損失 5,813円",
     difficulty: 1,
     tags_json:
@@ -4124,7 +4124,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"商品","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"journalEntries":[{"account":"繰越商品","debit":914556,"credit":null},{"account":"仕入","debit":null,"credit":914556},{"account":"仕入","debit":1404670,"credit":null},{"account":"買掛金/現金","debit":null,"credit":1404670},{"account":"仕入","debit":558925,"credit":null},{"account":"繰越商品","debit":null,"credit":558925}],"costOfGoodsSold":1760301,"grossProfit":65770,"calculation":"売上原価 = 期首商品棚卸高914,556円 + 当期仕入高1,404,670円 - 期末商品棚卸高558,925円 = 1,760,301円"}',
+      '{"ledgerEntry":{"entries":[{"description":"期首商品棚卸高 914,556円","amount":914556},{"description":"当期仕入高 1,404,670円","amount":1404670},{"description":"期末商品棚卸高 -558,925円","amount":558925},{"description":"売上原価","amount":1760301},{"description":"売上総利益","amount":65770}]}}',
     explanation: "【三分法による商品売買記帳のポイント】\n1. 期首商品は仕入勘定へ振替（仕入/繰越商品）\n2. 当期仕入は仕入勘定に計上\n3. 期末商品は繰越商品勘定へ振替（繰越商品/仕入）\n4. 売上原価＝期首＋仕入－期末\n\n【計算】\n売上原価：1,760,301円\n売上総利益：1,826,071円－1,760,301円＝65,770円",
     difficulty: 1,
     tags_json:
@@ -4140,7 +4140,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"建物・減価償却累計額","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"depreciationExpense":248001,"accumulatedDepreciation":4712019,"bookValue":248007,"journalEntry":{"debit":{"account":"減価償却費","amount":248001},"credit":{"account":"建物減価償却累計額","amount":248001}},"calculation":"年間償却額 = 4,960,026円 ÷ 20年 = 248,001円"}',
+      '{"ledgerEntry":{"entries":[{"description":"建物取得原価 4,960,026円","amount":4960026},{"description":"減価償却累計額（前期末） -4,464,018円","amount":4464018},{"description":"当期減価償却費 -248,001円","amount":248001},{"description":"減価償却累計額（当期末） -4,712,019円","amount":4712019},{"description":"帳簿価額","amount":248007}]}}',
     explanation: "【建物の減価償却記入のポイント】\n1. 定額法：（取得原価－残存価額）÷耐用年数\n2. 間接法：減価償却累計額勘定を使用\n3. 当期償却費＝4,960,026円÷20年＝248,001円\n4. 帳簿価額＝取得原価－減価償却累計額\n\n【19年目の処理】\n前期末累計額：4,464,018円\n当期償却費：248,001円\n当期末累計額：4,712,019円\n帳簿価額：248,007円",
     difficulty: 2,
     tags_json:
@@ -4156,7 +4156,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"買掛金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntries":[{"date":"11月1日","description":"前月繰越","debit":null,"credit":523589,"balance":523589},{"date":"11月7日","description":"掛仕入","debit":null,"credit":393285,"balance":916874},{"date":"11月14日","description":"現金支払","debit":227553,"credit":null,"balance":689321},{"date":"11月21日","description":"売掛金相殺","debit":66069,"credit":null,"balance":623252}],"finalBalance":623252,"note":"買掛金と売掛金の相殺により66,069円を減少"}',
+      '{"ledgerEntry":{"entries":[{"description":"前月繰越 523,589円","amount":523589},{"description":"掛仕入 +393,285円","amount":393285},{"description":"現金支払 -227,553円","amount":227553},{"description":"売掛金相殺 -66,069円","amount":66069},{"description":"月末残高","amount":623252}]}}',
     explanation: "【買掛金勘定記入のポイント】\n1. 買掛金の発生（掛仕入）は貸方に記入\n2. 買掛金の支払（現金・相殺）は借方に記入\n3. 売掛金との相殺は両勘定から減少\n4. 残高は常に貸方残高（負債）\n\n【計算過程】\n前月繰越 523,589円\n＋掛仕入 393,285円\n－現金支払 227,553円\n－相殺 66,069円\n＝月末残高 623,252円",
     difficulty: 2,
     tags_json:
@@ -4172,7 +4172,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"借入金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntries":[{"date":"3月1日","description":"前月繰越","debit":null,"credit":725963,"balance":725963},{"date":"3月7日","description":"元本返済","debit":227258,"credit":null,"balance":498705},{"date":"3月14日","description":"支払利息","debit":0,"credit":0,"balance":498705,"note":"利息は別勘定"},{"date":"3月21日","description":"追加借入","debit":null,"credit":135870,"balance":634575}],"interestEntry":{"account":"支払利息","debit":20524,"credit":"現金","amount":20524},"finalBalance":634575}',
+      '{"ledgerEntry":{"entries":[{"description":"前月繰越 725,963円","amount":725963},{"description":"元本返済 -227,258円","amount":227258},{"description":"追加借入 +135,870円","amount":135870},{"description":"支払利息（別勘定） 20,524円","amount":20524},{"description":"月末残高","amount":634575}]}}',
     explanation: "【借入金勘定記入のポイント】\n1. 借入金の借入は貸方に記入（負債増加）\n2. 借入金の返済は借方に記入（負債減少）\n3. 支払利息は別勘定で処理（費用）\n4. 元本と利息は区別して記帳\n\n【処理内容】\n元本残高：634,575円\n支払利息：20,524円（費用勘定へ）",
     difficulty: 2,
     tags_json:
@@ -4188,7 +4188,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"貸倒引当金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntries":[{"date":"8月1日","description":"前月繰越","debit":null,"credit":111039,"balance":111039},{"date":"8月7日","description":"貸倒れ充当","debit":17606,"credit":null,"balance":93433},{"date":"8月14日","description":"決算時繰入","debit":null,"credit":44781,"balance":138214},{"date":"8月21日","description":"戻入益","debit":11908,"credit":null,"balance":126306}],"finalBalance":126306,"relatedEntries":"貸倒引当金戻入益11,908円を収益計上"}',
+      '{"ledgerEntry":{"entries":[{"description":"前月繰越 111,039円","amount":111039},{"description":"貸倒れ充当 -17,606円","amount":17606},{"description":"決算時繰入 +44,781円","amount":44781},{"description":"戻入益 -11,908円","amount":11908},{"description":"月末残高","amount":126306}]}}',
     explanation: "【貸倒引当金勘定記入のポイント】\n1. 貸倒引当金は評価勘定（資産のマイナス）\n2. 設定・繰入は貸方、充当・戻入は借方\n3. 差額補充法：必要額との差額を繰入\n4. 戻入益は収益として計上\n\n【残高推移】\n前月繰越 111,039円\n－充当 17,606円\n＋繰入 44,781円\n－戻入 11,908円\n＝月末残高 126,306円",
     difficulty: 2,
     tags_json:
@@ -4204,7 +4204,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"資本金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"salesAccount":{"entries":[{"date":"6月中","description":"現金売上","debit":null,"credit":397451,"balance":397451},{"date":"6月中","description":"掛売上","debit":null,"credit":596176,"balance":993627}],"total":993627},"purchaseAccount":{"entries":[{"date":"6月中","description":"現金仕入","debit":260123,"credit":null,"balance":260123},{"date":"6月中","description":"掛仕入","debit":606954,"credit":null,"balance":867077}],"total":867077},"grossProfit":126550}',
+      '{"ledgerEntry":{"entries":[{"description":"現金売上 397,451円","amount":397451},{"description":"掛売上 596,176円","amount":596176},{"description":"売上高合計","amount":993627},{"description":"現金仕入 260,123円","amount":260123},{"description":"掛仕入 606,954円","amount":606954},{"description":"仕入高合計","amount":867077},{"description":"売上総利益","amount":126550}]}}',
     explanation: "【売上・仕入勘定の対応関係のポイント】\n1. 売上勘定は貸方に記入（収益）\n2. 仕入勘定は借方に記入（費用）\n3. 現金取引と掛取引を区別して記帳\n4. 売上総利益＝売上－仕入\n\n【計算】\n売上高：993,627円\n仕入高：867,077円\n売上総利益：126,550円",
     difficulty: 3,
     tags_json:
@@ -4220,7 +4220,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"減価償却費","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"salaryPayment":{"date":"11月25日","amount":321134,"entry":{"debit":"給料","credit":"現金","amount":321134}},"accruedSalary":{"days":5,"dailyAmount":10704,"totalAccrued":53522,"entry":{"debit":"給料","credit":"未払費用","amount":53522}},"totalExpense":374656,"calculation":"日割計算：321,134円÷30日×5日＝53,522円"}',
+      '{"ledgerEntry":{"entries":[{"description":"11月25日 給料支払","amount":321134},{"description":"未払給料（26日〜30日の5日分）","amount":53522},{"description":"当月費用計上額","amount":374656}]}}',
     explanation: "【給料・未払費用の期間配分のポイント】\n1. 給料支払は費用計上と現金減少\n2. 決算時は未払分を日割計算\n3. 未払給料は未払費用勘定へ\n4. 期間対応の原則に従い配分\n\n【計算】\n月額給料：321,134円\n日割額：10,704円/日\n未払日数：5日（26日〜30日）\n未払給料：53,522円",
     difficulty: 3,
     tags_json:
@@ -4236,7 +4236,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"給料","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"journalEntry":{"date":"5月10日","debit":[{"account":"仕入","amount":300000},{"account":"支払手数料","amount":5000}],"credit":[{"account":"現金","amount":100000},{"account":"買掛金","amount":200000},{"account":"未払金","amount":5000}]},"ledgerPostings":[{"account":"仕入","debit":300000,"counterparty":"諸口"},{"account":"支払手数料","debit":5000,"counterparty":"諸口"},{"account":"現金","credit":100000,"counterparty":"諸口"},{"account":"買掛金","credit":200000,"counterparty":"諸口"},{"account":"未払金","credit":5000,"counterparty":"諸口"}],"note":"相手勘定が複数ある場合は「諸口」と記入"}',
+      '{"ledgerEntry":{"entries":[{"description":"仕入（借方） 300,000円","amount":300000},{"description":"支払手数料（借方） 5,000円","amount":5000},{"description":"現金（貸方） 100,000円","amount":100000},{"description":"買掛金（貸方） 200,000円","amount":200000},{"description":"未払金（貸方） 5,000円","amount":5000},{"description":"相手勘定：諸口","amount":0}]}}',
     explanation: "【諸口勘定を含む複合仕訳の転記のポイント】\n1. 複合仕訳は相手勘定が複数存在\n2. 元帳転記時は相手勘定欄に「諸口」と記入\n3. 各勘定への個別転記を正確に実施\n4. 貸借の一致を常に確認\n\n【諸口の使用】\n借方合計305,000円＝貸方合計305,000円\n各勘定の相手欄には「諸口」と記載",
     difficulty: 3,
     tags_json:
@@ -4252,7 +4252,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"subsidiary_book","book_type":"現金出納帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":394000}]}}',
+      '{"ledgerEntry":{"entries":[{"description":"6月1日 前月繰越 333,931円","amount":333931},{"description":"6月5日 売掛金回収 +125,500円","amount":125500},{"description":"6月8日 現金売上 +87,300円","amount":87300},{"description":"6月12日 仕入支払 -156,200円","amount":156200},{"description":"6月18日 給料支払 -95,000円","amount":95000},{"description":"6月25日 経費支払 -35,800円","amount":35800},{"description":"6月30日 次月繰越","amount":259731}]}}',
     explanation: "売掛金元帳に関する問題です。",
     difficulty: 1,
     tags_json:
@@ -4268,7 +4268,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"subsidiary_book","book_type":"当座預金出納帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":167000}]}}',
+      '{"ledgerEntry":{"entries":[{"description":"3月1日 前月繰越 455,377円","amount":455377},{"description":"3月3日 売上代金振込 +250,000円","amount":250000},{"description":"3月10日 小切手振出 -180,000円","amount":180000},{"description":"3月15日 手形取立 +95,000円","amount":95000},{"description":"3月20日 買掛金支払 -210,000円","amount":210000},{"description":"3月28日 経費引落 -45,000円","amount":45000},{"description":"3月31日 次月繰越","amount":365377}]}}',
     explanation: "売掛金元帳に関する問題です。",
     difficulty: 1,
     tags_json:
@@ -4284,7 +4284,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"subsidiary_book","book_type":"小口現金出納帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":598000}]}}',
+      '{"ledgerEntry":{"entries":[{"description":"4月1日 前月繰越 100,326円","amount":100326},{"description":"4月5日 補給 +50,000円","amount":50000},{"description":"4月8日 交通費 -3,500円","amount":3500},{"description":"4月12日 消耗品費 -8,200円","amount":8200},{"description":"4月18日 通信費 -2,800円","amount":2800},{"description":"4月25日 雑費 -1,500円","amount":1500},{"description":"4月30日 補給 +16,000円（定額補充）","amount":16000},{"description":"4月30日 次月繰越","amount":150326}]}}',
     explanation: "売掛金元帳に関する問題です。",
     difficulty: 1,
     tags_json:
@@ -4300,7 +4300,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"subsidiary_book","book_type":"普通預金通帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":358000}]}}',
+      '{"ledgerEntry":{"entries":[{"description":"2月1日 前月繰越 408,537円","amount":408537},{"description":"2月5日 定期預入 +100,000円","amount":100000},{"description":"2月10日 売上代金預入 +85,000円","amount":85000},{"description":"2月15日 経費支払 -120,000円","amount":120000},{"description":"2月20日 給料振込 -95,000円","amount":95000},{"description":"2月28日 利息 +63円","amount":63},{"description":"2月28日 次月繰越","amount":378600}]}}',
     explanation: "売掛金元帳に関する問題です。",
     difficulty: 2,
     tags_json:
@@ -4316,7 +4316,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"subsidiary_book","book_type":"仕入帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":638000}]}}',
+      '{"ledgerEntry":{"entries":[{"description":"9月3日 A商店 商品A 100個×1,200円","amount":120000},{"description":"9月8日 B商店 商品B 80個×1,500円","amount":120000},{"description":"9月15日 C商店 商品A 120個×1,180円","amount":141600},{"description":"9月22日 A商店 商品C 50個×2,000円","amount":100000},{"description":"9月28日 D商店 商品B 60個×1,480円","amount":88800},{"description":"仕入合計","amount":570400}]}}',
     explanation: "売掛金元帳に関する問題です。",
     difficulty: 2,
     tags_json:
@@ -4332,7 +4332,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"subsidiary_book","book_type":"売上帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":135000}]}}',
+      '{"ledgerEntry":{"entries":[{"description":"2月2日 甲社 製品X 50個×3,000円","amount":150000},{"description":"2月8日 乙社 製品Y 30個×4,500円","amount":135000},{"description":"2月15日 丙社 製品X 40個×2,950円","amount":118000},{"description":"2月22日 甲社 製品Z 25個×5,000円","amount":125000},{"description":"2月28日 丁社 製品Y 35個×4,400円","amount":154000},{"description":"売上合計","amount":682000}]}}',
     explanation: "売掛金元帳に関する問題です。",
     difficulty: 2,
     tags_json:
@@ -4348,7 +4348,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"subsidiary_book","book_type":"商品有高帳（先入先出法）","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":335000}]}}',
+      '{"ledgerEntry":{"entries":[{"description":"10月1日 前月繰越 100個@1,000円","amount":100000},{"description":"10月5日 仕入 150個@1,100円","amount":165000},{"description":"10月10日 売上 80個（先入先出法により@1,000円）","amount":80000},{"description":"10月18日 仕入 100個@1,050円","amount":105000},{"description":"10月25日 売上 120個（20個@1,000円+100個@1,100円）","amount":128000},{"description":"10月31日 期末在庫 150個（50個@1,100円+100個@1,050円）","amount":162000}]}}',
     explanation: "売掛金元帳に関する問題です。",
     difficulty: 2,
     tags_json:
@@ -4364,7 +4364,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"subsidiary_book","book_type":"商品有高帳（移動平均法）","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":815000}]}}',
+      '{"ledgerEntry":{"entries":[{"description":"6月1日 前月繰越 200個@2,000円","amount":400000},{"description":"6月5日 仕入 300個@2,100円（平均単価@2,060円）","amount":630000},{"description":"6月10日 売上 150個@2,060円","amount":309000},{"description":"6月18日 仕入 200個@2,050円（平均単価@2,056円）","amount":410000},{"description":"6月25日 売上 250個@2,056円","amount":514000},{"description":"6月30日 期末在庫 300個@2,056円","amount":617000}]}}',
     explanation: "売掛金元帳に関する問題です。",
     difficulty: 3,
     tags_json:
@@ -4380,7 +4380,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"subsidiary_book","book_type":"売掛金元帳・買掛金元帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":607000}]}}',
+      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳 A社：期首250,000円→期末230,000円","amount":230000},{"description":"売掛金元帳 B社：期首180,000円→期末160,000円","amount":160000},{"description":"売掛金元帳 C社：期首95,000円→期末115,000円","amount":115000},{"description":"買掛金元帳 X商店：期首180,000円→期末170,000円","amount":170000},{"description":"買掛金元帳 Y商店：期首120,000円→期末130,000円","amount":130000},{"description":"買掛金元帳 Z商店：期首85,000円→期末90,000円","amount":90000}]}}',
     explanation: "売掛金元帳に関する問題です。",
     difficulty: 3,
     tags_json:
@@ -4396,7 +4396,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"subsidiary_book","book_type":"受取手形記入帳・支払手形記入帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"30%"},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"売掛金元帳","amount":173000}]}}',
+      '{"ledgerEntry":{"entries":[{"description":"受取手形 甲社 150,000円（3/5期日）保有中","amount":150000},{"description":"受取手形 乙社 200,000円（3/12期日）割引済","amount":200000},{"description":"受取手形 丙社 180,000円（4/20期日）裏書済","amount":180000},{"description":"受取手形 丁社 250,000円（4/25期日）保有中","amount":250000},{"description":"支払手形 A商店 180,000円（3/8期日）","amount":180000},{"description":"支払手形 B商店 220,000円（3/15期日）","amount":220000},{"description":"支払手形 C商店 195,000円（4/28期日）","amount":195000},{"description":"偶発債務（割引・裏書分）","amount":380000}]}}',
     explanation: "売掛金元帳に関する問題です。",
     difficulty: 3,
     tags_json:
@@ -4412,7 +4412,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"入金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"voucherType":"入金伝票","entries":[{"date":"5月1日","account":"売掛金","amount":319066,"description":"売掛金回収"},{"date":"5月20日","account":"売上","amount":386900,"description":"現金売上"},{"date":"5月27日","account":"受取手形","amount":627660,"description":"手形決済"}],"totalAmount":1333626,"journalEntry":{"debit":"現金 1,333,626","credit":"諸口 1,333,626"}}',
+      '{"ledgerEntry":{"entries":[{"description":"【入金伝票】5月1日 売掛金回収","amount":319066},{"description":"【入金伝票】5月20日 現金売上","amount":386900},{"description":"【入金伝票】5月27日 受取手形決済","amount":627660},{"description":"入金合計","amount":1333626}]}}',
     explanation: "【入金伝票記入のポイント】\n1. 現金が増加する取引を記録\n2. 貸方は「現金」、借方は相手勘定\n3. 複数の相手勘定は「諸口」と記載\n4. 仕訳日計表への転記\n\n【仕訳】\n(借)現金 1,333,626 / (貸)売掛金 319,066\n　　　　　　　　　　　　売上 386,900\n　　　　　　　　　　　　受取手形 627,660",
     difficulty: 1,
     tags_json:
@@ -4428,7 +4428,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"入金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"voucherType":"出金伝票","entries":[{"date":"2月8日","account":"仕入","amount":666219,"description":"現金仕入"},{"date":"2月15日","account":"買掛金","amount":572665,"description":"買掛金支払"},{"date":"2月24日","account":"経費","amount":682448,"description":"諸経費支払"}],"totalAmount":1921332,"journalEntry":{"debit":"諸口 1,921,332","credit":"現金 1,921,332"}}',
+      '{"ledgerEntry":{"entries":[{"description":"【出金伝票】2月8日 現金仕入","amount":666219},{"description":"【出金伝票】2月15日 買掛金支払","amount":572665},{"description":"【出金伝票】2月24日 諸経費支払","amount":682448},{"description":"出金合計","amount":1921332}]}}',
     explanation: "【出金伝票記入のポイント】\n1. 現金が減少する取引を記録\n2. 借方は「現金」、貸方は相手勘定\n3. 複数の相手勘定は「諸口」と記載\n4. 仕訳日計表への転記\n\n【仕訳】\n(借)仕入 666,219 / (貸)現金 1,921,332\n　　買掛金 572,665\n　　経費 682,448",
     difficulty: 1,
     tags_json:
@@ -4444,7 +4444,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"出金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"voucherType":"振替伝票","entries":[{"date":"8月3日","debit":{"account":"売掛金","amount":301530},"credit":{"account":"売上","amount":301530},"description":"掛売上"},{"date":"8月7日","debit":{"account":"仕入","amount":280539},"credit":{"account":"買掛金","amount":280539},"description":"掛仕入"},{"date":"8月12日","debit":{"account":"買掛金","amount":406302},"credit":{"account":"支払手形","amount":406302},"description":"手形振出"}],"totalDebit":988371,"totalCredit":988371}',
+      '{"ledgerEntry":{"entries":[{"description":"【振替伝票】8月3日 売掛金/売上（掛売上）","amount":301530},{"description":"【振替伝票】8月7日 仕入/買掛金（掛仕入）","amount":280539},{"description":"【振替伝票】8月12日 買掛金/支払手形（手形振出）","amount":406302},{"description":"振替合計","amount":988371}]}}',
     explanation: "【振替伝票記入のポイント】\n1. 現金が関わらない取引を記録\n2. 借方・貸方を明確に記載\n3. 貸借の一致を確認\n4. 総勘定元帳への転記\n\n【取引内容】\n・掛売上：売掛金/売上\n・掛仕入：仕入/買掛金\n・手形振出：買掛金/支払手形",
     difficulty: 1,
     tags_json:
@@ -4460,7 +4460,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"出金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"voucherType":"振替伝票","entries":[{"date":"9月11日","debit":{"account":"仕入","amount":151791},"credit":{"account":"買掛金","amount":151791},"description":"掛仕入"},{"date":"9月24日","debit":{"account":"売掛金","amount":191383},"credit":{"account":"売上","amount":191383},"description":"掛売上"},{"date":"9月27日","debit":{"account":"買掛金","amount":85665},"credit":{"account":"売掛金","amount":85665},"description":"相殺"}],"totalDebit":428839,"totalCredit":428839}',
+      '{"ledgerEntry":{"entries":[{"description":"【振替伝票】9月11日 仕入/買掛金（掛仕入）","amount":151791},{"description":"【振替伝票】9月24日 売掛金/売上（掛売上）","amount":191383},{"description":"【振替伝票】9月27日 買掛金/売掛金（相殺）","amount":85665},{"description":"振替合計","amount":428839}]}}',
     explanation: "【掛取引の振替伝票記入のポイント】\n1. 掛売上：売掛金（借）/売上（貸）\n2. 掛仕入：仕入（借）/買掛金（貸）\n3. 相殺：買掛金（借）/売掛金（貸）\n4. 貸借の一致を確認\n\n【注意点】\n・信用取引は振替伝票に記載\n・相殺取引も現金を介さない",
     difficulty: 2,
     tags_json:
@@ -4476,7 +4476,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"振替伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"cashVoucher":{"type":"入金伝票","amount":150000,"account":"現金"},"transferVoucher":{"type":"振替伝票","debit":{"account":"売掛金","amount":102840},"credit":{"account":"売上","amount":102840}},"totalTransaction":252840,"splitMethod":"一部現金取引の分割記入","entries":[{"date":"5月13日","description":"売上（現金150,000円、掛け102,840円）","total":252840},{"date":"5月27日","description":"仕入（現金100,000円、掛け135,649円）","total":235649},{"date":"5月28日","description":"売上（現金180,000円、掛け68,951円）","total":248951}]}',
+      '{"ledgerEntry":{"entries":[{"description":"5月13日 売上252,840円（現金150,000円＋掛け102,840円）","amount":252840},{"description":"【入金伝票】現金部分","amount":150000},{"description":"【振替伝票】掛け部分","amount":102840},{"description":"5月27日 仕入235,649円（現金100,000円＋掛け135,649円）","amount":235649},{"description":"5月28日 売上248,951円（現金180,000円＋掛け68,951円）","amount":248951}]}}',
     explanation: "【一部現金取引の伝票分割のポイント】\n1. 現金部分→入金/出金伝票\n2. 掛け部分→振替伝票\n3. 取引を2枚の伝票に分割\n4. 合計額の一致を確認\n\n【分割方法】\n取引総額＝現金部分＋掛け部分\n例：売上252,840円＝現金150,000円＋掛け102,840円",
     difficulty: 2,
     tags_json:
@@ -4492,7 +4492,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"振替伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"dailySummary":{"date":"11月30日","cashReceipts":{"total":450000,"details":[{"account":"売上","amount":300000},{"account":"売掛金","amount":150000}]},"cashPayments":{"total":380000,"details":[{"account":"仕入","amount":250000},{"account":"経費","amount":130000}]},"transfers":{"total":586461,"details":[{"debit":"仕入","credit":"買掛金","amount":159981},{"debit":"売掛金","credit":"売上","amount":300530},{"debit":"買掛金","credit":"支払手形","amount":125950}]}},"journalDaybook":{"debitTotal":1416461,"creditTotal":1416461}}',
+      '{"ledgerEntry":{"entries":[{"description":"【入金伝票集計】現金収入","amount":450000},{"description":"【出金伝票集計】現金支出","amount":380000},{"description":"【振替伝票】仕入/買掛金","amount":159981},{"description":"【振替伝票】売掛金/売上","amount":300530},{"description":"【振替伝票】買掛金/支払手形","amount":125950},{"description":"仕訳日計表 借方・貸方合計","amount":1416461}]}}',
     explanation: "【3伝票から仕訳日計表への集計のポイント】\n1. 入金伝票の合計を集計\n2. 出金伝票の合計を集計\n3. 振替伝票の内容を転記\n4. 仕訳日計表で貸借一致を確認\n\n【集計手順】\n・各伝票の日付別集計\n・勘定科目別の合計\n・総勘定元帳への転記準備",
     difficulty: 2,
     tags_json:
@@ -4508,7 +4508,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"仕訳伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"voucherType":"売上伝票","entries":[{"date":"11月7日","customer":"A社","amount":705035,"paymentMethod":"掛け"},{"date":"11月18日","customer":"B社","amount":296150,"paymentMethod":"現金"},{"date":"11月22日","customer":"C社","amount":526373,"paymentMethod":"掛け"}],"totalSales":1527558,"salesBreakdown":{"cash":296150,"credit":1231408},"journalEntries":[{"debit":"現金","credit":"売上","amount":296150},{"debit":"売掛金","credit":"売上","amount":1231408}]}',
+      '{"ledgerEntry":{"entries":[{"description":"【売上伝票】11月7日 A社 掛売上","amount":705035},{"description":"【売上伝票】11月18日 B社 現金売上","amount":296150},{"description":"【売上伝票】11月22日 C社 掛売上","amount":526373},{"description":"売上合計（現金296,150円＋掛け1,231,408円）","amount":1527558}]}}',
     explanation: "【5伝票制の売上伝票記入のポイント】\n1. 売上取引専用の伝票を使用\n2. 現金売上と掛売上を区別\n3. 得意先別に記録\n4. 売上勘定への一括転記\n\n【5伝票制の特徴】\n・売上伝票（売上専用）\n・仕入伝票（仕入専用）\n・入金、出金、振替伝票",
     difficulty: 2,
     tags_json:
@@ -4524,7 +4524,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"仕訳伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"voucherType":"仕入伝票","entries":[{"date":"4月11日","supplier":"X商店","amount":197758,"paymentMethod":"掛け"},{"date":"4月17日","supplier":"Y商店","amount":178273,"paymentMethod":"現金"},{"date":"4月28日","supplier":"Z商店","amount":155282,"paymentMethod":"掛け"}],"totalPurchases":531313,"purchaseBreakdown":{"cash":178273,"credit":353040},"journalEntries":[{"debit":"仕入","credit":"現金","amount":178273},{"debit":"仕入","credit":"買掛金","amount":353040}]}',
+      '{"ledgerEntry":{"entries":[{"description":"【仕入伝票】4月11日 X商店 掛仕入","amount":197758},{"description":"【仕入伝票】4月17日 Y商店 現金仕入","amount":178273},{"description":"【仕入伝票】4月28日 Z商店 掛仕入","amount":155282},{"description":"仕入合計（現金178,273円＋掛け353,040円）","amount":531313}]}}',
     explanation: "【5伝票制の仕入伝票記入のポイント】\n1. 仕入取引専用の伝票を使用\n2. 現金仕入と掛仕入を区別\n3. 仕入先別に記録\n4. 仕入勘定への一括転記\n\n【仕入伝票の活用】\n・仕入取引の効率的記録\n・仕入先管理の容易化\n・仕入統計の作成",
     difficulty: 3,
     tags_json:
@@ -4540,7 +4540,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"5伝票制","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"transactionClassification":[{"date":"4月8日","transaction":"商品売上436,244円（現金）","voucher":"売上伝票","reason":"売上取引のため売上伝票使用"},{"date":"4月25日","transaction":"商品仕入611,082円（掛け）","voucher":"仕入伝票","reason":"仕入取引のため仕入伝票使用"},{"date":"4月25日","transaction":"売掛金回収739,173円（現金）","voucher":"入金伝票","reason":"現金収入のため入金伝票使用"}],"voucherSelection":{"salesVoucher":"売上取引（現金・掛け問わず）","purchaseVoucher":"仕入取引（現金・掛け問わず）","receiptVoucher":"売上・仕入以外の現金収入","paymentVoucher":"売上・仕入以外の現金支出","transferVoucher":"現金が関わらない取引"}}',
+      '{"ledgerEntry":{"entries":[{"description":"4月8日 商品売上436,244円→【売上伝票】","amount":436244},{"description":"4月25日 商品仕入611,082円→【仕入伝票】","amount":611082},{"description":"4月25日 売掛金回収739,173円→【入金伝票】","amount":739173},{"description":"5伝票制：売上・仕入は専用伝票、現金収支は入金・出金伝票","amount":0}]}}',
     explanation: "【5伝票制での取引分類のポイント】\n1. 売上→売上伝票（支払方法問わず）\n2. 仕入→仕入伝票（支払方法問わず）\n3. その他現金収入→入金伝票\n4. その他現金支出→出金伝票\n5. 現金以外→振替伝票\n\n【判定の優先順位】\n取引内容（売上・仕入）＞支払方法",
     difficulty: 3,
     tags_json:
@@ -4556,7 +4556,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"5伝票制","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"voucherSummary":{"salesVoucher":{"total":605681,"entries":[{"date":"8月8日","amount":605681}]},"purchaseVoucher":{"total":700622,"entries":[{"date":"8月8日","amount":700622}]},"transferVoucher":{"total":764578,"entries":[{"date":"8月4日","amount":764578}]}},"generalLedgerPosting":[{"account":"売上","debit":null,"credit":605681,"source":"売上伝票"},{"account":"仕入","debit":700622,"credit":null,"source":"仕入伝票"},{"account":"売掛金","debit":605681,"credit":null,"source":"売上伝票（掛売上分）"},{"account":"買掛金","debit":null,"credit":700622,"source":"仕入伝票（掛仕入分）"}],"balanceCheck":{"totalDebit":1306303,"totalCredit":1306303,"balanced":true}}',
+      '{"ledgerEntry":{"entries":[{"description":"【売上伝票】8月8日","amount":605681},{"description":"【仕入伝票】8月8日","amount":700622},{"description":"【振替伝票】8月4日","amount":764578},{"description":"総勘定元帳への転記 借方合計","amount":1306303},{"description":"総勘定元帳への転記 貸方合計","amount":1306303}]}}',
     explanation: "【5伝票から総勘定元帳への転記のポイント】\n1. 各伝票の合計を集計\n2. 勘定科目別に転記\n3. 売上・仕入伝票は一括転記\n4. 貸借の一致を確認\n\n【転記の流れ】\n伝票→仕訳日計表→総勘定元帳\n・正確性の確保\n・効率的な記帳",
     difficulty: 3,
     tags_json:
