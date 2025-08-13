@@ -4092,8 +4092,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"現金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":490000}]}}',
-    explanation: "総勘定元帳転記に関する問題です。",
+      '{"ledgerEntries":[{"date":"10月1日","description":"前月繰越","debit":337541,"credit":null,"balance":337541},{"date":"10月5日","description":"現金売上","debit":276641,"credit":null,"balance":614182},{"date":"10月10日","description":"給料支払","debit":null,"credit":215025,"balance":399157},{"date":"10月15日","description":"売掛金回収","debit":184924,"credit":null,"balance":584081},{"date":"10月20日","description":"買掛金支払","debit":null,"credit":241381,"balance":342700},{"date":"10月28日","description":"現金過不足","debit":null,"credit":8502,"balance":334198}],"finalBalance":334198,"note":"現金実査により8,502円の不足が判明し、現金過不足として処理"}',
+    explanation: "【現金勘定記入のポイント】\n1. 現金の増加（売上・回収）は借方に記入\n2. 現金の減少（支払）は貸方に記入\n3. 各取引後の残高を都度計算\n4. 現金過不足は実査時点で計上\n\n【計算過程】\n前月繰越 337,541円\n＋現金売上 276,641円\n－給料支払 215,025円\n＋売掛金回収 184,924円\n－買掛金支払 241,381円\n－現金過不足 8,502円\n＝月末残高 334,198円",
     difficulty: 1,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
@@ -4108,8 +4108,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"売掛金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":417000}]}}',
-    explanation: "総勘定元帳転記に関する問題です。",
+      '{"ledgerEntries":[{"date":"1月1日","description":"前月繰越","debit":564069,"credit":null,"balance":564069},{"date":"1月3日","description":"掛売上","debit":190909,"credit":null,"balance":754978},{"date":"1月8日","description":"現金回収","debit":null,"credit":51829,"balance":703149},{"date":"1月15日","description":"掛売上","debit":179338,"credit":null,"balance":882487},{"date":"1月22日","description":"手形回収","debit":null,"credit":111922,"balance":770565},{"date":"1月28日","description":"貸倒引当金充当","debit":null,"credit":30000,"balance":740565},{"date":"1月28日","description":"貸倒損失","debit":null,"credit":5813,"balance":734752}],"finalBalance":734752,"note":"貸倒れ35,813円のうち、貸倒引当金30,000円を充当し、不足分5,813円は貸倒損失として処理"}',
+    explanation: "【売掛金勘定記入のポイント】\n1. 売掛金の発生（掛売上）は借方に記入\n2. 売掛金の回収（現金・手形）は貸方に記入\n3. 貸倒れ発生時は貸倒引当金を優先充当\n4. 引当金不足分は貸倒損失として処理\n\n【貸倒処理】\n貸倒れ額 35,813円\n－貸倒引当金充当 30,000円\n＝貸倒損失 5,813円",
     difficulty: 1,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
@@ -4124,8 +4124,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"商品","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":986000}]}}',
-    explanation: "総勘定元帳転記に関する問題です。",
+      '{"journalEntries":[{"account":"繰越商品","debit":914556,"credit":null},{"account":"仕入","debit":null,"credit":914556},{"account":"仕入","debit":1404670,"credit":null},{"account":"買掛金/現金","debit":null,"credit":1404670},{"account":"仕入","debit":558925,"credit":null},{"account":"繰越商品","debit":null,"credit":558925}],"costOfGoodsSold":1760301,"grossProfit":65770,"calculation":"売上原価 = 期首商品棚卸高914,556円 + 当期仕入高1,404,670円 - 期末商品棚卸高558,925円 = 1,760,301円"}',
+    explanation: "【三分法による商品売買記帳のポイント】\n1. 期首商品は仕入勘定へ振替（仕入/繰越商品）\n2. 当期仕入は仕入勘定に計上\n3. 期末商品は繰越商品勘定へ振替（繰越商品/仕入）\n4. 売上原価＝期首＋仕入－期末\n\n【計算】\n売上原価：1,760,301円\n売上総利益：1,826,071円－1,760,301円＝65,770円",
     difficulty: 1,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
@@ -4140,8 +4140,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"建物・減価償却累計額","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":59000}]}}',
-    explanation: "総勘定元帳転記に関する問題です。",
+      '{"depreciationExpense":248001,"accumulatedDepreciation":4712019,"bookValue":248007,"journalEntry":{"debit":{"account":"減価償却費","amount":248001},"credit":{"account":"建物減価償却累計額","amount":248001}},"calculation":"年間償却額 = 4,960,026円 ÷ 20年 = 248,001円"}',
+    explanation: "【建物の減価償却記入のポイント】\n1. 定額法：（取得原価－残存価額）÷耐用年数\n2. 間接法：減価償却累計額勘定を使用\n3. 当期償却費＝4,960,026円÷20年＝248,001円\n4. 帳簿価額＝取得原価－減価償却累計額\n\n【19年目の処理】\n前期末累計額：4,464,018円\n当期償却費：248,001円\n当期末累計額：4,712,019円\n帳簿価額：248,007円",
     difficulty: 2,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
@@ -4156,8 +4156,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"買掛金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":685000}]}}',
-    explanation: "総勘定元帳転記に関する問題です。",
+      '{"ledgerEntries":[{"date":"11月1日","description":"前月繰越","debit":null,"credit":523589,"balance":523589},{"date":"11月7日","description":"掛仕入","debit":null,"credit":393285,"balance":916874},{"date":"11月14日","description":"現金支払","debit":227553,"credit":null,"balance":689321},{"date":"11月21日","description":"売掛金相殺","debit":66069,"credit":null,"balance":623252}],"finalBalance":623252,"note":"買掛金と売掛金の相殺により66,069円を減少"}',
+    explanation: "【買掛金勘定記入のポイント】\n1. 買掛金の発生（掛仕入）は貸方に記入\n2. 買掛金の支払（現金・相殺）は借方に記入\n3. 売掛金との相殺は両勘定から減少\n4. 残高は常に貸方残高（負債）\n\n【計算過程】\n前月繰越 523,589円\n＋掛仕入 393,285円\n－現金支払 227,553円\n－相殺 66,069円\n＝月末残高 623,252円",
     difficulty: 2,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
@@ -4172,8 +4172,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"借入金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":354000}]}}',
-    explanation: "総勘定元帳転記に関する問題です。",
+      '{"ledgerEntries":[{"date":"3月1日","description":"前月繰越","debit":null,"credit":725963,"balance":725963},{"date":"3月7日","description":"元本返済","debit":227258,"credit":null,"balance":498705},{"date":"3月14日","description":"支払利息","debit":0,"credit":0,"balance":498705,"note":"利息は別勘定"},{"date":"3月21日","description":"追加借入","debit":null,"credit":135870,"balance":634575}],"interestEntry":{"account":"支払利息","debit":20524,"credit":"現金","amount":20524},"finalBalance":634575}',
+    explanation: "【借入金勘定記入のポイント】\n1. 借入金の借入は貸方に記入（負債増加）\n2. 借入金の返済は借方に記入（負債減少）\n3. 支払利息は別勘定で処理（費用）\n4. 元本と利息は区別して記帳\n\n【処理内容】\n元本残高：634,575円\n支払利息：20,524円（費用勘定へ）",
     difficulty: 2,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
@@ -4188,8 +4188,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"貸倒引当金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":37000}]}}',
-    explanation: "総勘定元帳転記に関する問題です。",
+      '{"ledgerEntries":[{"date":"8月1日","description":"前月繰越","debit":null,"credit":111039,"balance":111039},{"date":"8月7日","description":"貸倒れ充当","debit":17606,"credit":null,"balance":93433},{"date":"8月14日","description":"決算時繰入","debit":null,"credit":44781,"balance":138214},{"date":"8月21日","description":"戻入益","debit":11908,"credit":null,"balance":126306}],"finalBalance":126306,"relatedEntries":"貸倒引当金戻入益11,908円を収益計上"}',
+    explanation: "【貸倒引当金勘定記入のポイント】\n1. 貸倒引当金は評価勘定（資産のマイナス）\n2. 設定・繰入は貸方、充当・戻入は借方\n3. 差額補充法：必要額との差額を繰入\n4. 戻入益は収益として計上\n\n【残高推移】\n前月繰越 111,039円\n－充当 17,606円\n＋繰入 44,781円\n－戻入 11,908円\n＝月末残高 126,306円",
     difficulty: 2,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
@@ -4204,8 +4204,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"資本金","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":765000}]}}',
-    explanation: "総勘定元帳転記に関する問題です。",
+      '{"salesAccount":{"entries":[{"date":"6月中","description":"現金売上","debit":null,"credit":397451,"balance":397451},{"date":"6月中","description":"掛売上","debit":null,"credit":596176,"balance":993627}],"total":993627},"purchaseAccount":{"entries":[{"date":"6月中","description":"現金仕入","debit":260123,"credit":null,"balance":260123},{"date":"6月中","description":"掛仕入","debit":606954,"credit":null,"balance":867077}],"total":867077},"grossProfit":126550}',
+    explanation: "【売上・仕入勘定の対応関係のポイント】\n1. 売上勘定は貸方に記入（収益）\n2. 仕入勘定は借方に記入（費用）\n3. 現金取引と掛取引を区別して記帳\n4. 売上総利益＝売上－仕入\n\n【計算】\n売上高：993,627円\n仕入高：867,077円\n売上総利益：126,550円",
     difficulty: 3,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
@@ -4220,8 +4220,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"減価償却費","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":101000}]}}',
-    explanation: "総勘定元帳転記に関する問題です。",
+      '{"salaryPayment":{"date":"11月25日","amount":321134,"entry":{"debit":"給料","credit":"現金","amount":321134}},"accruedSalary":{"days":5,"dailyAmount":10704,"totalAccrued":53522,"entry":{"debit":"給料","credit":"未払費用","amount":53522}},"totalExpense":374656,"calculation":"日割計算：321,134円÷30日×5日＝53,522円"}',
+    explanation: "【給料・未払費用の期間配分のポイント】\n1. 給料支払は費用計上と現金減少\n2. 決算時は未払分を日割計算\n3. 未払給料は未払費用勘定へ\n4. 期間対応の原則に従い配分\n\n【計算】\n月額給料：321,134円\n日割額：10,704円/日\n未払日数：5日（26日〜30日）\n未払給料：53,522円",
     difficulty: 3,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
@@ -4236,8 +4236,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"ledger_account","account_name":"給料","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"text","width":"25%"},{"name":"ref","label":"元丁","type":"text","width":"10%"},{"name":"debit","label":"借方","type":"number","width":"20%"},{"name":"credit","label":"貸方","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"10%"}],"allowMultipleEntries":true,"maxEntries":15}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"総勘定元帳転記","amount":449000}]}}',
-    explanation: "総勘定元帳転記に関する問題です。",
+      '{"journalEntry":{"date":"5月10日","debit":[{"account":"仕入","amount":300000},{"account":"支払手数料","amount":5000}],"credit":[{"account":"現金","amount":100000},{"account":"買掛金","amount":200000},{"account":"未払金","amount":5000}]},"ledgerPostings":[{"account":"仕入","debit":300000,"counterparty":"諸口"},{"account":"支払手数料","debit":5000,"counterparty":"諸口"},{"account":"現金","credit":100000,"counterparty":"諸口"},{"account":"買掛金","credit":200000,"counterparty":"諸口"},{"account":"未払金","credit":5000,"counterparty":"諸口"}],"note":"相手勘定が複数ある場合は「諸口」と記入"}',
+    explanation: "【諸口勘定を含む複合仕訳の転記のポイント】\n1. 複合仕訳は相手勘定が複数存在\n2. 元帳転記時は相手勘定欄に「諸口」と記入\n3. 各勘定への個別転記を正確に実施\n4. 貸借の一致を常に確認\n\n【諸口の使用】\n借方合計305,000円＝貸方合計305,000円\n各勘定の相手欄には「諸口」と記載",
     difficulty: 3,
     tags_json:
       '{"subcategory":"general_ledger","pattern":"総勘定元帳転記","accounts":[],"keywords":["総勘定元帳","転記","仕訳帳"],"examSection":2}',
@@ -4412,8 +4412,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"入金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":115000}]}}',
-    explanation: "入金伝票に関する問題です。",
+      '{"voucherType":"入金伝票","entries":[{"date":"5月1日","account":"売掛金","amount":319066,"description":"売掛金回収"},{"date":"5月20日","account":"売上","amount":386900,"description":"現金売上"},{"date":"5月27日","account":"受取手形","amount":627660,"description":"手形決済"}],"totalAmount":1333626,"journalEntry":{"debit":"現金 1,333,626","credit":"諸口 1,333,626"}}',
+    explanation: "【入金伝票記入のポイント】\n1. 現金が増加する取引を記録\n2. 貸方は「現金」、借方は相手勘定\n3. 複数の相手勘定は「諸口」と記載\n4. 仕訳日計表への転記\n\n【仕訳】\n(借)現金 1,333,626 / (貸)売掛金 319,066\n　　　　　　　　　　　　売上 386,900\n　　　　　　　　　　　　受取手形 627,660",
     difficulty: 1,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
@@ -4428,8 +4428,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"入金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":740000}]}}',
-    explanation: "入金伝票に関する問題です。",
+      '{"voucherType":"出金伝票","entries":[{"date":"2月8日","account":"仕入","amount":666219,"description":"現金仕入"},{"date":"2月15日","account":"買掛金","amount":572665,"description":"買掛金支払"},{"date":"2月24日","account":"経費","amount":682448,"description":"諸経費支払"}],"totalAmount":1921332,"journalEntry":{"debit":"諸口 1,921,332","credit":"現金 1,921,332"}}',
+    explanation: "【出金伝票記入のポイント】\n1. 現金が減少する取引を記録\n2. 借方は「現金」、貸方は相手勘定\n3. 複数の相手勘定は「諸口」と記載\n4. 仕訳日計表への転記\n\n【仕訳】\n(借)仕入 666,219 / (貸)現金 1,921,332\n　　買掛金 572,665\n　　経費 682,448",
     difficulty: 1,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
@@ -4444,8 +4444,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"出金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":32000}]}}',
-    explanation: "入金伝票に関する問題です。",
+      '{"voucherType":"振替伝票","entries":[{"date":"8月3日","debit":{"account":"売掛金","amount":301530},"credit":{"account":"売上","amount":301530},"description":"掛売上"},{"date":"8月7日","debit":{"account":"仕入","amount":280539},"credit":{"account":"買掛金","amount":280539},"description":"掛仕入"},{"date":"8月12日","debit":{"account":"買掛金","amount":406302},"credit":{"account":"支払手形","amount":406302},"description":"手形振出"}],"totalDebit":988371,"totalCredit":988371}',
+    explanation: "【振替伝票記入のポイント】\n1. 現金が関わらない取引を記録\n2. 借方・貸方を明確に記載\n3. 貸借の一致を確認\n4. 総勘定元帳への転記\n\n【取引内容】\n・掛売上：売掛金/売上\n・掛仕入：仕入/買掛金\n・手形振出：買掛金/支払手形",
     difficulty: 1,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
@@ -4460,8 +4460,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"出金伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":196000}]}}',
-    explanation: "入金伝票に関する問題です。",
+      '{"voucherType":"振替伝票","entries":[{"date":"9月11日","debit":{"account":"仕入","amount":151791},"credit":{"account":"買掛金","amount":151791},"description":"掛仕入"},{"date":"9月24日","debit":{"account":"売掛金","amount":191383},"credit":{"account":"売上","amount":191383},"description":"掛売上"},{"date":"9月27日","debit":{"account":"買掛金","amount":85665},"credit":{"account":"売掛金","amount":85665},"description":"相殺"}],"totalDebit":428839,"totalCredit":428839}',
+    explanation: "【掛取引の振替伝票記入のポイント】\n1. 掛売上：売掛金（借）/売上（貸）\n2. 掛仕入：仕入（借）/買掛金（貸）\n3. 相殺：買掛金（借）/売掛金（貸）\n4. 貸借の一致を確認\n\n【注意点】\n・信用取引は振替伝票に記載\n・相殺取引も現金を介さない",
     difficulty: 2,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
@@ -4476,8 +4476,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"振替伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":313000}]}}',
-    explanation: "入金伝票に関する問題です。",
+      '{"cashVoucher":{"type":"入金伝票","amount":150000,"account":"現金"},"transferVoucher":{"type":"振替伝票","debit":{"account":"売掛金","amount":102840},"credit":{"account":"売上","amount":102840}},"totalTransaction":252840,"splitMethod":"一部現金取引の分割記入","entries":[{"date":"5月13日","description":"売上（現金150,000円、掛け102,840円）","total":252840},{"date":"5月27日","description":"仕入（現金100,000円、掛け135,649円）","total":235649},{"date":"5月28日","description":"売上（現金180,000円、掛け68,951円）","total":248951}]}',
+    explanation: "【一部現金取引の伝票分割のポイント】\n1. 現金部分→入金/出金伝票\n2. 掛け部分→振替伝票\n3. 取引を2枚の伝票に分割\n4. 合計額の一致を確認\n\n【分割方法】\n取引総額＝現金部分＋掛け部分\n例：売上252,840円＝現金150,000円＋掛け102,840円",
     difficulty: 2,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
@@ -4492,8 +4492,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"振替伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":974000}]}}',
-    explanation: "入金伝票に関する問題です。",
+      '{"dailySummary":{"date":"11月30日","cashReceipts":{"total":450000,"details":[{"account":"売上","amount":300000},{"account":"売掛金","amount":150000}]},"cashPayments":{"total":380000,"details":[{"account":"仕入","amount":250000},{"account":"経費","amount":130000}]},"transfers":{"total":586461,"details":[{"debit":"仕入","credit":"買掛金","amount":159981},{"debit":"売掛金","credit":"売上","amount":300530},{"debit":"買掛金","credit":"支払手形","amount":125950}]}},"journalDaybook":{"debitTotal":1416461,"creditTotal":1416461}}',
+    explanation: "【3伝票から仕訳日計表への集計のポイント】\n1. 入金伝票の合計を集計\n2. 出金伝票の合計を集計\n3. 振替伝票の内容を転記\n4. 仕訳日計表で貸借一致を確認\n\n【集計手順】\n・各伝票の日付別集計\n・勘定科目別の合計\n・総勘定元帳への転記準備",
     difficulty: 2,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
@@ -4508,8 +4508,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"仕訳伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":996000}]}}',
-    explanation: "入金伝票に関する問題です。",
+      '{"voucherType":"売上伝票","entries":[{"date":"11月7日","customer":"A社","amount":705035,"paymentMethod":"掛け"},{"date":"11月18日","customer":"B社","amount":296150,"paymentMethod":"現金"},{"date":"11月22日","customer":"C社","amount":526373,"paymentMethod":"掛け"}],"totalSales":1527558,"salesBreakdown":{"cash":296150,"credit":1231408},"journalEntries":[{"debit":"現金","credit":"売上","amount":296150},{"debit":"売掛金","credit":"売上","amount":1231408}]}',
+    explanation: "【5伝票制の売上伝票記入のポイント】\n1. 売上取引専用の伝票を使用\n2. 現金売上と掛売上を区別\n3. 得意先別に記録\n4. 売上勘定への一括転記\n\n【5伝票制の特徴】\n・売上伝票（売上専用）\n・仕入伝票（仕入専用）\n・入金、出金、振替伝票",
     difficulty: 2,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
@@ -4524,8 +4524,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"仕訳伝票","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":442000}]}}',
-    explanation: "入金伝票に関する問題です。",
+      '{"voucherType":"仕入伝票","entries":[{"date":"4月11日","supplier":"X商店","amount":197758,"paymentMethod":"掛け"},{"date":"4月17日","supplier":"Y商店","amount":178273,"paymentMethod":"現金"},{"date":"4月28日","supplier":"Z商店","amount":155282,"paymentMethod":"掛け"}],"totalPurchases":531313,"purchaseBreakdown":{"cash":178273,"credit":353040},"journalEntries":[{"debit":"仕入","credit":"現金","amount":178273},{"debit":"仕入","credit":"買掛金","amount":353040}]}',
+    explanation: "【5伝票制の仕入伝票記入のポイント】\n1. 仕入取引専用の伝票を使用\n2. 現金仕入と掛仕入を区別\n3. 仕入先別に記録\n4. 仕入勘定への一括転記\n\n【仕入伝票の活用】\n・仕入取引の効率的記録\n・仕入先管理の容易化\n・仕入統計の作成",
     difficulty: 3,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
@@ -4540,8 +4540,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"5伝票制","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":885000}]}}',
-    explanation: "入金伝票に関する問題です。",
+      '{"transactionClassification":[{"date":"4月8日","transaction":"商品売上436,244円（現金）","voucher":"売上伝票","reason":"売上取引のため売上伝票使用"},{"date":"4月25日","transaction":"商品仕入611,082円（掛け）","voucher":"仕入伝票","reason":"仕入取引のため仕入伝票使用"},{"date":"4月25日","transaction":"売掛金回収739,173円（現金）","voucher":"入金伝票","reason":"現金収入のため入金伝票使用"}],"voucherSelection":{"salesVoucher":"売上取引（現金・掛け問わず）","purchaseVoucher":"仕入取引（現金・掛け問わず）","receiptVoucher":"売上・仕入以外の現金収入","paymentVoucher":"売上・仕入以外の現金支出","transferVoucher":"現金が関わらない取引"}}',
+    explanation: "【5伝票制での取引分類のポイント】\n1. 売上→売上伝票（支払方法問わず）\n2. 仕入→仕入伝票（支払方法問わず）\n3. その他現金収入→入金伝票\n4. その他現金支出→出金伝票\n5. 現金以外→振替伝票\n\n【判定の優先順位】\n取引内容（売上・仕入）＞支払方法",
     difficulty: 3,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
@@ -4556,8 +4556,8 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"voucher","voucher_type":"5伝票制","fields":[{"name":"date","label":"日付","type":"text","required":true},{"name":"account","label":"勘定科目","type":"select","required":true},{"name":"amount","label":"金額","type":"number","required":true},{"name":"description","label":"摘要","type":"text","required":false}],"allowMultipleEntries":true,"maxEntries":5}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"入金伝票","amount":850000}]}}',
-    explanation: "入金伝票に関する問題です。",
+      '{"voucherSummary":{"salesVoucher":{"total":605681,"entries":[{"date":"8月8日","amount":605681}]},"purchaseVoucher":{"total":700622,"entries":[{"date":"8月8日","amount":700622}]},"transferVoucher":{"total":764578,"entries":[{"date":"8月4日","amount":764578}]}},"generalLedgerPosting":[{"account":"売上","debit":null,"credit":605681,"source":"売上伝票"},{"account":"仕入","debit":700622,"credit":null,"source":"仕入伝票"},{"account":"売掛金","debit":605681,"credit":null,"source":"売上伝票（掛売上分）"},{"account":"買掛金","debit":null,"credit":700622,"source":"仕入伝票（掛仕入分）"}],"balanceCheck":{"totalDebit":1306303,"totalCredit":1306303,"balanced":true}}',
+    explanation: "【5伝票から総勘定元帳への転記のポイント】\n1. 各伝票の合計を集計\n2. 勘定科目別に転記\n3. 売上・仕入伝票は一括転記\n4. 貸借の一致を確認\n\n【転記の流れ】\n伝票→仕訳日計表→総勘定元帳\n・正確性の確保\n・効率的な記帳",
     difficulty: 3,
     tags_json:
       '{"subcategory":"voucher","pattern":"入金伝票","accounts":[],"keywords":["入金伝票","現金売上","3伝票制"],"examSection":2}',
@@ -4568,12 +4568,12 @@ export const masterQuestions: Question[] = [
     id: "Q_L_031",
     category_id: "ledger",
     question_text:
-      "【理論問題：簿記の基本原理と記帳体系】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n簿記の基本原理と記帳体系に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 貸借平均\nB. 負債\nC. 商業簿記\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+      "【理論問題：簿記の基本原理と記帳体系】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n簿記は（ア）簿記の原理に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 複式\nB. 借方\nC. 貸方\nD. 貸借平均の原理\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"answers": {"a": "C", "b": "A", "c": "B", "d": "D"}}',
-    explanation: "簿記理論に関する問題です。",
+      '{"answers":{"a":"A","b":"B","c":"C","d":"D"},"correctText":{"a":"複式","b":"借方","c":"貸方","d":"貸借平均の原理"}}',
+    explanation: "【複式簿記の基本原理】\n1. 複式簿記：すべての取引を二面的に記録\n2. 借方と貸方：左側（借方）と右側（貸方）への記入\n3. 貸借平均の原理：借方合計＝貸方合計\n4. 記録の検証可能性を確保\n\n【重要性】\n複式簿記により、財産状態と経営成績を同時に把握可能",
     difficulty: 1,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
@@ -4584,12 +4584,12 @@ export const masterQuestions: Question[] = [
     id: "Q_L_032",
     category_id: "ledger",
     question_text:
-      "【理論問題：仕訳の原則と借方・貸方の理解】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n仕訳の原則と借方・貸方の理解に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 単式簿記\nC. 収益\nD. 収益\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+      "【理論問題：仕訳の原則と借方・貸方の理解】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n資産の増加は（ア）に、負債の増加は（イ）に記入する。\n収益の発生は（ウ）に、費用の発生は（エ）に記入する。\n\n【選択肢】\nA. 借方\nB. 貸方\nC. 借方\nD. 貸方\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
-    explanation: "簿記理論に関する問題です。",
+      '{"answers":{"a":"A","b":"B","c":"D","d":"C"},"correctText":{"a":"借方","b":"貸方","c":"貸方","d":"借方"}}',
+    explanation: "【仕訳の原則】\n1. 資産の増加→借方（左）\n2. 負債の増加→貸方（右）\n3. 純資産の増加→貸方（右）\n4. 収益の発生→貸方（右）\n5. 費用の発生→借方（左）\n\n【覚え方】\n「資産・費用は借方」「負債・純資産・収益は貸方」",
     difficulty: 1,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
@@ -4600,12 +4600,12 @@ export const masterQuestions: Question[] = [
     id: "Q_L_033",
     category_id: "ledger",
     question_text:
-      "【理論問題：帳簿組織と補助簿の役割】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n帳簿組織と補助簿の役割に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 貸方\nC. 貸借対照\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+      "【理論問題：帳簿組織と補助簿の役割】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n（ア）は、すべての取引を仕訳帳に記入し、（イ）に転記する主要簿である。\n一方、（ウ）や（エ）などの補助簿は、特定の取引を詳細に記録する。\n\n【選択肢】\nA. 仕訳帳\nB. 総勘定元帳\nC. 現金出納帳\nD. 売掛金元帳\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
-    explanation: "簿記理論に関する問題です。",
+      '{"answers":{"a":"A","b":"B","c":"C","d":"D"},"correctText":{"a":"仕訳帳","b":"総勘定元帳","c":"現金出納帳","d":"売掛金元帳"}}',
+    explanation: "【帳簿組織の体系】\n1. 主要簿：仕訳帳・総勘定元帳\n2. 補助簿：補助記入帳・補助元帳\n3. 補助記入帳：現金出納帳、売上帳、仕入帳等\n4. 補助元帳：売掛金元帳、買掛金元帳等\n\n【役割分担】\n主要簿で全体を把握、補助簿で詳細を管理",
     difficulty: 1,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
@@ -4616,12 +4616,12 @@ export const masterQuestions: Question[] = [
     id: "Q_L_034",
     category_id: "ledger",
     question_text:
-      "【理論問題：伝票制度の種類と特徴】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n伝票制度の種類と特徴に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 資産\nB. 単式簿記\nC. 商業簿記\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+      "【理論問題：伝票制度の種類と特徴】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n3伝票制では、（ア）伝票、（イ）伝票、振替伝票の3種類を使用する。\n5伝票制では、さらに（ウ）伝票と（エ）伝票が追加される。\n\n【選択肢】\nA. 入金\nB. 出金\nC. 売上\nD. 仕入\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
-    explanation: "簿記理論に関する問題です。",
+      '{"answers":{"a":"A","b":"B","c":"C","d":"D"},"correctText":{"a":"入金","b":"出金","c":"売上","d":"仕入"}}',
+    explanation: "【伝票制度の比較】\n■3伝票制\n・入金伝票：現金収入\n・出金伝票：現金支出\n・振替伝票：現金以外\n\n■5伝票制\n・上記3種類＋売上伝票＋仕入伝票\n・売上と仕入を専用伝票で効率化",
     difficulty: 2,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
@@ -4632,12 +4632,12 @@ export const masterQuestions: Question[] = [
     id: "Q_L_035",
     category_id: "ledger",
     question_text:
-      "【理論問題：試算表の種類と作成目的】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n試算表の種類と作成目的に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 資産\nB. 損益計算\nC. 貸借対照\nD. 試算表\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+      "【理論問題：試算表の種類と作成目的】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n（ア）試算表は借方合計と貸方合計を表示し、（イ）試算表は借方残高と貸方残高を表示する。\n（ウ）試算表は両者を組み合わせたもので、最も情報量が多い。\n試算表の主な目的は（エ）の検証である。\n\n【選択肢】\nA. 合計\nB. 残高\nC. 合計残高\nD. 転記の正確性\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
-    explanation: "簿記理論に関する問題です。",
+      '{"answers":{"a":"A","b":"B","c":"C","d":"D"},"correctText":{"a":"合計","b":"残高","c":"合計残高","d":"転記の正確性"}}',
+    explanation: "【試算表の種類と特徴】\n1. 合計試算表：各勘定の借方・貸方合計を表示\n2. 残高試算表：各勘定の残高のみ表示\n3. 合計残高試算表：合計と残高の両方を表示\n\n【作成目的】\n・転記の正確性検証\n・貸借平均の確認\n・財務諸表作成の準備",
     difficulty: 2,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
@@ -4648,12 +4648,12 @@ export const masterQuestions: Question[] = [
     id: "Q_L_036",
     category_id: "ledger",
     question_text:
-      "【理論問題：決算整理の意義と手続き】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n決算整理の意義と手続きに関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 損益計算\nC. 貸借対照\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+      "【理論問題：決算整理の意義と手続き】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n決算整理では、（ア）の原則に従い収益と費用を適切な期間に配分する。\n（イ）は次期に繰り越す商品の金額を、（ウ）は使用により価値が減少した固定資産の金額を調整する。\n（エ）は回収不能と見込まれる債権に対して設定する。\n\n【選択肢】\nA. 発生主義\nB. 棚卸\nC. 減価償却\nD. 貸倒引当金\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
-    explanation: "簿記理論に関する問題です。",
+      '{"answers":{"a":"A","b":"B","c":"C","d":"D"},"correctText":{"a":"発生主義","b":"棚卸","c":"減価償却","d":"貸倒引当金"}}',
+    explanation: "【主要な決算整理事項】\n1. 発生主義の適用：収益・費用の期間配分\n2. 商品棚卸：期末商品の評価\n3. 減価償却：固定資産の価値減少\n4. 貸倒引当金：債権の回収リスク評価\n5. 経過勘定：前払・未払・前受・未収の調整",
     difficulty: 2,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
@@ -4664,12 +4664,12 @@ export const masterQuestions: Question[] = [
     id: "Q_L_037",
     category_id: "ledger",
     question_text:
-      "【理論問題：財務諸表の構成要素】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n財務諸表の構成要素に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 複式簿記\nB. 負債\nC. 収益\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+      "【理論問題：財務諸表の構成要素】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n貸借対照表は（ア）、負債、純資産から構成され、企業の財政状態を表す。\n損益計算書は（イ）から（ウ）を差し引いて当期純利益を算定する。\n（エ）は期中の純資産の変動を示す計算書である。\n\n【選択肢】\nA. 資産\nB. 収益\nC. 費用\nD. 株主資本等変動計算書\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
-    explanation: "簿記理論に関する問題です。",
+      '{"answers":{"a":"A","b":"B","c":"C","d":"D"},"correctText":{"a":"資産","b":"収益","c":"費用","d":"株主資本等変動計算書"}}',
+    explanation: "【財務諸表の体系】\n■貸借対照表（B/S）\n・資産＝負債＋純資産\n・財政状態を表示\n\n■損益計算書（P/L）\n・収益－費用＝当期純利益\n・経営成績を表示\n\n■株主資本等変動計算書\n・純資産の変動内容を詳細表示",
     difficulty: 2,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
@@ -4680,12 +4680,12 @@ export const masterQuestions: Question[] = [
     id: "Q_L_038",
     category_id: "ledger",
     question_text:
-      "【理論問題：勘定科目の分類と体系】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n勘定科目の分類と体系に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 借方\nB. 負債\nC. 商業簿記\nD. 試算表\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+      "【理論問題：勘定科目の分類と体系】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n勘定科目は大きく5つに分類される。\n貸借対照表項目は（ア）、（イ）、純資産の3つ、\n損益計算書項目は（ウ）と（エ）の2つである。\n\n【選択肢】\nA. 資産\nB. 負債\nC. 収益\nD. 費用\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
-    explanation: "簿記理論に関する問題です。",
+      '{"answers":{"a":"A","b":"B","c":"C","d":"D"},"correctText":{"a":"資産","b":"負債","c":"収益","d":"費用"}}',
+    explanation: "【勘定科目の5分類】\n■貸借対照表項目\n1. 資産：現金、売掛金、建物等\n2. 負債：買掛金、借入金等\n3. 純資産：資本金、利益剰余金等\n\n■損益計算書項目\n4. 収益：売上、受取利息等\n5. 費用：仕入、給料、減価償却費等",
     difficulty: 3,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
@@ -4696,12 +4696,12 @@ export const masterQuestions: Question[] = [
     id: "Q_L_039",
     category_id: "ledger",
     question_text:
-      "【理論問題：簿記上の取引の定義】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n簿記上の取引の定義に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 資産\nB. 負債\nC. 商業簿記\nD. 試算表\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+      "【理論問題：簿記上の取引の定義】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n簿記上の取引とは、企業の（ア）に増減をもたらす事象をいう。\n契約の締結は簿記上の取引に（イ）。\n火災による商品の焼失は簿記上の取引に（ウ）。\n簿記上の取引は必ず（エ）の原因となる。\n\n【選択肢】\nA. 資産・負債・純資産\nB. 該当しない\nC. 該当する\nD. 仕訳\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
-    explanation: "簿記理論に関する問題です。",
+      '{"answers":{"a":"A","b":"B","c":"C","d":"D"},"correctText":{"a":"資産・負債・純資産","b":"該当しない","c":"該当する","d":"仕訳"}}',
+    explanation: "【簿記上の取引の要件】\n1. 資産・負債・純資産の増減が発生\n2. 金額で測定可能\n3. 企業の経済活動に関連\n\n【判定例】\n・商品売買→取引（○）\n・契約締結のみ→取引（×）\n・火災損失→取引（○）\n・商談→取引（×）",
     difficulty: 3,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
@@ -4712,12 +4712,12 @@ export const masterQuestions: Question[] = [
     id: "Q_L_040",
     category_id: "ledger",
     question_text:
-      "【理論問題：複式簿記の特徴と利点】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n複式簿記の特徴と利点に関する以下の説明について、空欄（ア）～（エ）に入る適切な語句を選んでください。\n\n簿記は（ア）に基づいて、すべての取引を（イ）と（ウ）の2つの側面から記録する。\nこの方法により、常に（エ）が保たれ、記録の正確性を検証できる。\n\n【選択肢】\nA. 貸借平均\nB. 負債\nC. 商業簿記\nD. 工業簿記\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
+      "【理論問題：複式簿記の特徴と利点】\n\n以下の説明文の空欄に入る適切な語句を選択してください。\n\n複式簿記の最大の特徴は、（ア）と（イ）を同時に把握できることである。\nまた、（ウ）により記録の正確性を自己検証でき、\n（エ）の作成により利害関係者への情報提供が可能となる。\n\n【選択肢】\nA. 財政状態\nB. 経営成績\nC. 貸借平均の原理\nD. 財務諸表\n\n【解答形式】\n各空欄に対して、最も適切な選択肢を選んでください。",
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
-    explanation: "簿記理論に関する問題です。",
+      '{"answers":{"a":"A","b":"B","c":"C","d":"D"},"correctText":{"a":"財政状態","b":"経営成績","c":"貸借平均の原理","d":"財務諸表"}}',
+    explanation: "【複式簿記の利点】\n1. 財政状態の把握：貸借対照表で資産・負債・純資産を表示\n2. 経営成績の把握：損益計算書で収益・費用・利益を表示\n3. 自己検証機能：貸借平均により誤りを発見\n4. 情報提供機能：財務諸表により利害関係者へ報告\n\n【単式簿記との違い】\n単式簿記は現金の収支のみ記録、複式簿記は全取引を二面的に記録",
     difficulty: 3,
     tags_json:
       '{"subcategory":"theory","pattern":"簿記理論","accounts":[],"keywords":["5要素","理論","勘定科目"],"examSection":2}',
