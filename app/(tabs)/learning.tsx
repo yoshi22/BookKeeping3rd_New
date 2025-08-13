@@ -19,6 +19,7 @@ export default function LearningScreen() {
     journal: 0,
     ledger: 0,
     trial_balance: 0,
+    financial_statement: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -77,7 +78,12 @@ export default function LearningScreen() {
         console.log("[Learning] 問題数取得成功:", counts);
         setQuestionCounts(counts);
         // データがない場合のデフォルト値を設定
-        if (!counts.journal && !counts.ledger && !counts.trial_balance) {
+        if (
+          !counts.journal &&
+          !counts.ledger &&
+          !counts.trial_balance &&
+          !counts.financial_statement
+        ) {
           console.warn(
             "[Learning] 問題データが存在しません。デフォルト値を設定します。",
           );
@@ -85,6 +91,7 @@ export default function LearningScreen() {
             journal: 0,
             ledger: 0,
             trial_balance: 0,
+            financial_statement: 0,
           });
         }
       } catch (error) {
@@ -94,6 +101,7 @@ export default function LearningScreen() {
           journal: 0,
           ledger: 0,
           trial_balance: 0,
+          financial_statement: 0,
         });
         // エラー時でもローディング状態を解除
         setLoading(false);
@@ -133,7 +141,7 @@ export default function LearningScreen() {
               style={[styles.categoryCard, { borderLeftColor: "#ff6b35" }]}
               onPress={() => {
                 // 第一問から順次進行（Q_J_001から開始）
-                router.push('/question/Q_J_001?sessionType=learning');
+                router.push("/question/Q_J_001?sessionType=learning");
               }}
             >
               <View style={styles.categoryHeader}>
@@ -145,10 +153,7 @@ export default function LearningScreen() {
                   </Text>
                 </View>
                 <View
-                  style={[
-                    styles.pointsBadge,
-                    { backgroundColor: "#ff6b35" },
-                  ]}
+                  style={[styles.pointsBadge, { backgroundColor: "#ff6b35" }]}
                 >
                   <Text style={styles.pointsText}>302問</Text>
                 </View>
@@ -167,15 +172,13 @@ export default function LearningScreen() {
                   🎯 problemsStrategy.md準拠の完全版問題集
                 </Text>
                 <Text style={styles.categoryProgress}>
-                  全{Object.values(questionCounts).reduce((a, b) => a + b, 0)}問の順次学習
+                  全{Object.values(questionCounts).reduce((a, b) => a + b, 0)}
+                  問の順次学習
                 </Text>
               </View>
 
               <View
-                style={[
-                  styles.categoryAction,
-                  { backgroundColor: "#ff6b35" },
-                ]}
+                style={[styles.categoryAction, { backgroundColor: "#ff6b35" }]}
               >
                 <Text style={styles.actionText}>開始</Text>
               </View>
@@ -183,64 +186,67 @@ export default function LearningScreen() {
 
             {/* 既存のカテゴリ別学習 */}
             {categories.map((category) => (
-            <TouchableOpacity
-              key={category.id}
-              style={[styles.categoryCard, { borderLeftColor: category.color }]}
-              onPress={() => {
-                // カテゴリ詳細画面に遷移
-                router.push(`/category/${category.id}`);
-              }}
-            >
-              <View style={styles.categoryHeader}>
-                <Text style={styles.categoryIcon}>{category.icon}</Text>
-                <View style={styles.categoryTitleContainer}>
-                  <Text style={styles.categoryName}>{category.name}</Text>
-                  <Text style={styles.categorySubtitle}>
-                    {category.subtitle}
+              <TouchableOpacity
+                key={category.id}
+                style={[
+                  styles.categoryCard,
+                  { borderLeftColor: category.color },
+                ]}
+                onPress={() => {
+                  // カテゴリ詳細画面に遷移
+                  router.push(`/category/${category.id}`);
+                }}
+              >
+                <View style={styles.categoryHeader}>
+                  <Text style={styles.categoryIcon}>{category.icon}</Text>
+                  <View style={styles.categoryTitleContainer}>
+                    <Text style={styles.categoryName}>{category.name}</Text>
+                    <Text style={styles.categorySubtitle}>
+                      {category.subtitle}
+                    </Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.pointsBadge,
+                      { backgroundColor: category.color },
+                    ]}
+                  >
+                    <Text style={styles.pointsText}>{category.points}</Text>
+                  </View>
+                </View>
+
+                <View style={styles.categoryInfo}>
+                  <Text style={styles.categoryDescription}>
+                    {category.description}
+                  </Text>
+                  <View style={styles.examInfo}>
+                    <Text style={styles.examInfoText}>
+                      🎯 本試験: {category.examCount} • ⏱ {category.examTime}
+                    </Text>
+                  </View>
+                  <Text style={styles.categoryDetails}>
+                    📚 {category.details}
+                  </Text>
+                  <Text style={styles.categoryProgress}>
+                    練習問題: 全{category.totalQuestions}問 • 学習進捗:{" "}
+                    {Math.round(
+                      (category.completedQuestions / category.totalQuestions) *
+                        100,
+                    ) || 0}
+                    %
                   </Text>
                 </View>
+
                 <View
                   style={[
-                    styles.pointsBadge,
+                    styles.categoryAction,
                     { backgroundColor: category.color },
                   ]}
                 >
-                  <Text style={styles.pointsText}>{category.points}</Text>
+                  <Text style={styles.actionText}>選択</Text>
                 </View>
-              </View>
-
-              <View style={styles.categoryInfo}>
-                <Text style={styles.categoryDescription}>
-                  {category.description}
-                </Text>
-                <View style={styles.examInfo}>
-                  <Text style={styles.examInfoText}>
-                    🎯 本試験: {category.examCount} • ⏱ {category.examTime}
-                  </Text>
-                </View>
-                <Text style={styles.categoryDetails}>
-                  📚 {category.details}
-                </Text>
-                <Text style={styles.categoryProgress}>
-                  練習問題: 全{category.totalQuestions}問 • 学習進捗:{" "}
-                  {Math.round(
-                    (category.completedQuestions / category.totalQuestions) *
-                      100,
-                  ) || 0}
-                  %
-                </Text>
-              </View>
-
-              <View
-                style={[
-                  styles.categoryAction,
-                  { backgroundColor: category.color },
-                ]}
-              >
-                <Text style={styles.actionText}>選択</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+              </TouchableOpacity>
+            ))}
           </>
         )}
       </View>

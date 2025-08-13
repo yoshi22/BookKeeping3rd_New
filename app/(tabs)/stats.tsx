@@ -9,7 +9,7 @@ import {
   RefreshControl,
 } from "react-native";
 import { router } from "expo-router";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 import {
   statisticsService,
   OverallStatistics,
@@ -35,6 +35,7 @@ export default function StatsScreen() {
     journal: { icon: "📝", color: "#2f95dc" },
     ledger: { icon: "📋", color: "#ff6b35" },
     trial_balance: { icon: "📊", color: "#4cd964" },
+    financial_statement: { icon: "📈", color: "#9c27b0" },
   };
 
   // データベース初期化確認
@@ -118,16 +119,18 @@ export default function StatsScreen() {
   // 画面がフォーカスされたときに最新データを再取得
   useFocusEffect(
     useCallback(() => {
-      console.log('[StatsScreen] 画面フォーカス - 最新統計データを取得');
+      console.log("[StatsScreen] 画面フォーカス - 最新統計データを取得");
       // キャッシュをクリアして最新のデータを取得
       try {
-        const { statisticsCache } = require('../../src/services/statistics-cache');
+        const {
+          statisticsCache,
+        } = require("../../src/services/statistics-cache");
         statisticsCache.clearAll();
       } catch (error) {
-        console.warn('[StatsScreen] キャッシュクリアに失敗:', error);
+        console.warn("[StatsScreen] キャッシュクリアに失敗:", error);
       }
       loadStatistics();
-    }, [])
+    }, []),
   );
 
   // リフレッシュ処理
@@ -283,19 +286,38 @@ export default function StatsScreen() {
                   />
                 </View>
                 <Text style={styles.progressText}>
-                  {Math.min(category.answeredQuestions, category.totalQuestions)}/{category.totalQuestions}問
+                  {Math.min(
+                    category.answeredQuestions,
+                    category.totalQuestions,
+                  )}
+                  /{category.totalQuestions}問
                 </Text>
               </View>
 
               <View style={styles.categoryDetails}>
                 <Text style={styles.detailText}>
-                  正解: {Math.min(category.correctAnswers, category.answeredQuestions)}問
+                  正解:{" "}
+                  {Math.min(
+                    category.correctAnswers,
+                    category.answeredQuestions,
+                  )}
+                  問
                 </Text>
                 <Text style={styles.detailText}>
-                  不正解: {Math.max(0, category.answeredQuestions - category.correctAnswers)}問
+                  不正解:{" "}
+                  {Math.max(
+                    0,
+                    category.answeredQuestions - category.correctAnswers,
+                  )}
+                  問
                 </Text>
                 <Text style={styles.detailText}>
-                  未回答: {Math.max(0, category.totalQuestions - category.answeredQuestions)}問
+                  未回答:{" "}
+                  {Math.max(
+                    0,
+                    category.totalQuestions - category.answeredQuestions,
+                  )}
+                  問
                 </Text>
               </View>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -11,9 +11,11 @@ import {
   Modal,
   FlatList,
   ActivityIndicator,
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { TextInput } from "react-native";
 import { useTheme } from "../context/ThemeContext";
 import {
   answerService,
@@ -21,6 +23,7 @@ import {
   SubmitAnswerResponse,
 } from "../services/answer-service";
 import { SessionType } from "../types/database";
+import NumericPad from "./ui/NumericPad";
 
 export interface JournalEntry {
   account: string;
@@ -109,6 +112,10 @@ export default function JournalEntryForm({
 }: JournalEntryFormProps) {
   const { theme } = useTheme();
 
+  // 入力フィールドへの参照
+  const debitRefs = useRef<{ [key: string]: TextInput | null }>({});
+  const creditRefs = useRef<{ [key: string]: TextInput | null }>({});
+
   const [debits, setDebits] = useState<JournalEntry[]>([
     { account: "", amount: 0 },
   ]);
@@ -120,6 +127,14 @@ export default function JournalEntryForm({
     type: "debit" | "credit";
     index: number;
   } | null>(null);
+
+  // 数字パッド関連の状態
+  const [numericPadVisible, setNumericPadVisible] = useState(false);
+  const [currentAmountEdit, setCurrentAmountEdit] = useState<{
+    type: "debit" | "credit";
+    index: number;
+  } | null>(null);
+  const [tempAmount, setTempAmount] = useState("");
 
   const addDebitRow = () => {
     if (debits.length < 4) {
@@ -215,6 +230,32 @@ export default function JournalEntryForm({
     }
     setModalVisible(false);
     setCurrentSelection(null);
+  };
+
+  // 数字パッドを開く
+  const openNumericPad = (type: "debit" | "credit", index: number) => {
+    const currentValue =
+      type === "debit"
+        ? debits[index].amount.toString()
+        : credits[index].amount.toString();
+    setTempAmount(currentValue === "0" ? "" : currentValue);
+    setCurrentAmountEdit({ type, index });
+    setNumericPadVisible(true);
+  };
+
+  // 数字パッドから値を確定
+  const confirmAmount = () => {
+    if (currentAmountEdit) {
+      const amount = parseInt(tempAmount) || 0;
+      if (currentAmountEdit.type === "debit") {
+        updateDebit(currentAmountEdit.index, "amount", amount);
+      } else {
+        updateCredit(currentAmountEdit.index, "amount", amount);
+      }
+    }
+    setNumericPadVisible(false);
+    setCurrentAmountEdit(null);
+    setTempAmount("");
   };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -348,17 +389,19 @@ export default function JournalEntryForm({
                 </TouchableOpacity>
 
                 <View style={styles.amountRow}>
-                  <TextInput
+                  <TouchableOpacity
                     style={[
                       styles.amountInput,
                       debits.length > 1 ? styles.amountInputWithButton : {},
                     ]}
-                    value={debit.amount > 0 ? debit.amount.toString() : ""}
-                    onChangeText={(text) => updateDebit(index, "amount", text)}
-                    placeholder="金額"
-                    keyboardType="numeric"
-                    textAlign="right"
-                  />
+                    onPress={() => openNumericPad("debit", index)}
+                  >
+                    <Text style={styles.amountText}>
+                      {debit.amount > 0
+                        ? debit.amount.toLocaleString()
+                        : "金額を入力"}
+                    </Text>
+                  </TouchableOpacity>
 
                   {debits.length > 1 && (
                     <TouchableOpacity
@@ -394,17 +437,19 @@ export default function JournalEntryForm({
                 </TouchableOpacity>
 
                 <View style={styles.amountRow}>
-                  <TextInput
+                  <TouchableOpacity
                     style={[
                       styles.amountInput,
                       credits.length > 1 ? styles.amountInputWithButton : {},
                     ]}
-                    value={credit.amount > 0 ? credit.amount.toString() : ""}
-                    onChangeText={(text) => updateCredit(index, "amount", text)}
-                    placeholder="金額"
-                    keyboardType="numeric"
-                    textAlign="right"
-                  />
+                    onPress={() => openNumericPad("credit", index)}
+                  >
+                    <Text style={styles.amountText}>
+                      {credit.amount > 0
+                        ? credit.amount.toLocaleString()
+                        : "金額を入力"}
+                    </Text>
+                  </TouchableOpacity>
 
                   {credits.length > 1 && (
                     <TouchableOpacity
@@ -503,6 +548,17 @@ export default function JournalEntryForm({
           </View>
         </View>
       </Modal>
+
+      {/* 数字パッド */}
+      <NumericPad
+        visible={numericPadVisible}
+        value={tempAmount}
+        onValueChange={setTempAmount}
+        onClose={confirmAmount}
+        placeholder="金額を入力"
+        label="金額入力"
+        maxLength={10}
+      />
     </ScrollView>
   );
 }
@@ -633,6 +689,10 @@ const createStyles = (theme: any) =>
       borderRadius: 4,
       paddingHorizontal: 12,
       backgroundColor: theme.colors.background,
+      justifyContent: "center",
+      alignItems: "flex-end",
+    },
+    amountText: {
       color: theme.colors.text,
       fontSize: 18,
       fontWeight: "600",

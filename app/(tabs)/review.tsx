@@ -8,7 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { router } from "expo-router";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 import { reviewService } from "../../src/services/review-service";
 import { ReviewStatistics } from "../../src/data/repositories/review-item-repository";
 import { Screen } from "../../src/components/layout/ResponsiveLayout";
@@ -160,6 +160,13 @@ export default function ReviewScreen() {
               mastered: 0,
               averagePriority: 0,
             },
+            financial_statement: {
+              total: 0,
+              needsReview: 0,
+              priorityReview: 0,
+              mastered: 0,
+              averagePriority: 0,
+            },
           },
           lastUpdated: new Date().toISOString(),
         };
@@ -279,6 +286,13 @@ export default function ReviewScreen() {
             mastered: 0,
             averagePriority: 0,
           },
+          financial_statement: {
+            total: 0,
+            needsReview: 0,
+            priorityReview: 0,
+            mastered: 0,
+            averagePriority: 0,
+          },
         },
         lastUpdated: new Date().toISOString(),
       });
@@ -329,16 +343,18 @@ export default function ReviewScreen() {
   // 画面がフォーカスされたときに最新データを再取得
   useFocusEffect(
     useCallback(() => {
-      console.log('[ReviewScreen] 画面フォーカス - 最新データを取得');
+      console.log("[ReviewScreen] 画面フォーカス - 最新データを取得");
       // キャッシュをクリアして最新のデータを取得
       try {
-        const { statisticsCache } = require('../../src/services/statistics-cache');
+        const {
+          statisticsCache,
+        } = require("../../src/services/statistics-cache");
         statisticsCache.clearAll();
       } catch (error) {
-        console.warn('[ReviewScreen] キャッシュクリアに失敗:', error);
+        console.warn("[ReviewScreen] キャッシュクリアに失敗:", error);
       }
       loadReviewData();
-    }, [])
+    }, []),
   );
 
   // 復習セッション開始

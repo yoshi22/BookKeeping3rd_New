@@ -81,6 +81,12 @@ export default function AnswerResultDialog({
       return correctAnswer; // ExplanationPanelで適切に処理されるため、そのまま返す
     }
 
+    // financialStatements形式（Q_T_001のような財務諸表問題）
+    if (correctAnswer.financialStatements) {
+      // ExplanationPanelで適切に処理されるよう、そのまま返す
+      return correctAnswer;
+    }
+
     // 古い形式（後方互換性のため残す）
     if (correctAnswer.trialBalance) {
       const formatted: Record<string, any> = {};

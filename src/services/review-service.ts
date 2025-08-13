@@ -76,6 +76,7 @@ export class ReviewService {
       journal: 5, // 仕訳は基本なので少し高め
       ledger: 3, // 帳簿は中程度
       trial_balance: 8, // 試算表は重要なので高め
+      financial_statement: 10, // 財務諸表は最重要
     },
     maxPriorityScore: 100,
   };
@@ -242,11 +243,13 @@ export class ReviewService {
       // 復習アイテムが変更された場合は統計キャッシュをクリア
       if (result.action !== "no_change") {
         try {
-          const { statisticsCache } = require('./statistics-cache');
-          statisticsCache.clearAll();  
-          console.log('[ReviewService] 復習アイテム変更により統計キャッシュをクリア');
+          const { statisticsCache } = require("./statistics-cache");
+          statisticsCache.clearAll();
+          console.log(
+            "[ReviewService] 復習アイテム変更により統計キャッシュをクリア",
+          );
         } catch (error) {
-          console.warn('[ReviewService] 統計キャッシュクリアに失敗:', error);
+          console.warn("[ReviewService] 統計キャッシュクリアに失敗:", error);
         }
       }
 
@@ -433,6 +436,7 @@ export class ReviewService {
         journal: "仕訳",
         ledger: "帳簿",
         trial_balance: "試算表",
+        financial_statement: "財務諸表",
       };
 
       for (const [category, categoryStats] of Object.entries(

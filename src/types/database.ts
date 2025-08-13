@@ -24,7 +24,7 @@ export interface Transaction {
     sql: string,
     params?: any[],
     success?: (tx: Transaction, results: any) => void,
-    error?: (tx: Transaction, error: any) => void
+    error?: (tx: Transaction, error: any) => void,
   ): void;
 }
 
@@ -33,61 +33,65 @@ export interface Database {
   transaction(
     fn: (tx: Transaction) => void,
     error?: (error: any) => void,
-    success?: () => void
+    success?: () => void,
   ): void;
-  
+
   executeSql(
     sql: string,
     params?: any[],
     success?: (results: any) => void,
-    error?: (error: any) => void
+    error?: (error: any) => void,
   ): void;
-  
-  close(
-    success?: () => void,
-    error?: (error: any) => void
-  ): void;
+
+  close(success?: () => void, error?: (error: any) => void): void;
 }
 
 // 問題カテゴリ型（新コンテンツ構成対応）
-export type QuestionCategory = 'journal' | 'ledger' | 'trial_balance';
+export type QuestionCategory =
+  | "journal"
+  | "ledger"
+  | "trial_balance"
+  | "financial_statement";
 
 // problemsStrategy.mdに基づく詳細分類
-export type JournalSubcategory = 
-  | 'cash_deposit'      // 現金・預金取引
-  | 'merchandise_trade' // 商品売買取引
-  | 'receivables_debts' // 債権・債務
-  | 'salary_tax'        // 給与・税金
-  | 'fixed_assets'      // 固定資産
-  | 'year_end_adj';     // 決算整理
+export type JournalSubcategory =
+  | "cash_deposit" // 現金・預金取引
+  | "merchandise_trade" // 商品売買取引
+  | "receivables_debts" // 債権・債務
+  | "salary_tax" // 給与・税金
+  | "fixed_assets" // 固定資産
+  | "year_end_adj"; // 決算整理
 
-export type LedgerSubcategory = 
-  | 'account_posting'   // 勘定記入問題
-  | 'subsidiary_books'  // 補助簿記入問題
-  | 'voucher_entry'     // 伝票記入問題
-  | 'theory_selection'; // 理論・選択問題
+export type LedgerSubcategory =
+  | "account_posting" // 勘定記入問題
+  | "subsidiary_books" // 補助簿記入問題
+  | "voucher_entry" // 伝票記入問題
+  | "theory_selection"; // 理論・選択問題
 
-export type TrialBalanceSubcategory = 
-  | 'financial_statements' // 財務諸表作成
-  | 'worksheet'            // 精算表作成
-  | 'trial_balance';       // 試算表作成
+export type TrialBalanceSubcategory =
+  | "financial_statements" // 財務諸表作成
+  | "worksheet" // 精算表作成
+  | "trial_balance"; // 試算表作成
 
-export type QuestionSubcategory = JournalSubcategory | LedgerSubcategory | TrialBalanceSubcategory;
+export type QuestionSubcategory =
+  | JournalSubcategory
+  | LedgerSubcategory
+  | TrialBalanceSubcategory;
 
 // CBT解答形式型
-export type CBTAnswerFormat = 'dropdown_input' | 'number_input' | 'text_input';
+export type CBTAnswerFormat = "dropdown_input" | "number_input" | "text_input";
 
 // 問題難易度型
 export type QuestionDifficulty = 1 | 2 | 3 | 4 | 5;
 
 // セッション種別型
-export type SessionType = 'learning' | 'review' | 'mock_exam';
+export type SessionType = "learning" | "review" | "mock_exam";
 
 // 復習ステータス型
-export type ReviewStatus = 'needs_review' | 'priority_review' | 'mastered';
+export type ReviewStatus = "needs_review" | "priority_review" | "mastered";
 
 // ログレベル型
-export type LogLevel = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR';
+export type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR";
 
 // データベース設定型
 export interface DatabaseConfig {
@@ -101,7 +105,7 @@ export interface DatabaseConfig {
 // エラー型
 export interface DatabaseError extends Error {
   code?: string;
-  severity?: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  severity?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
   context?: Record<string, any>;
   recoverable?: boolean;
 }
@@ -109,13 +113,13 @@ export interface DatabaseError extends Error {
 // CBT解答データ構造（JSON格納用）
 export interface CBTAnswerData {
   questionType: QuestionCategory;
-  
+
   // 仕訳問題の解答
   journalEntry?: {
     debit: { account: string; amount: number };
     credit: { account: string; amount: number };
   };
-  
+
   // 帳簿問題の解答
   ledgerEntry?: {
     entries: Array<{
@@ -124,10 +128,24 @@ export interface CBTAnswerData {
       amount?: number;
     }>;
   };
-  
+
   // 試算表問題の解答
   trialBalance?: {
     balances: Record<string, number>;
+  };
+
+  // 財務諸表問題の解答
+  financialStatements?: {
+    balanceSheet: {
+      assets: Array<{ accountName: string; amount: number }>;
+      liabilities: Array<{ accountName: string; amount: number }>;
+      equity: Array<{ accountName: string; amount: number }>;
+    };
+    incomeStatement: {
+      revenues: Array<{ accountName: string; amount: number }>;
+      expenses: Array<{ accountName: string; amount: number }>;
+      netIncome: number;
+    };
   };
 }
 
@@ -136,7 +154,7 @@ export interface ValidationErrorData {
   field: string;
   code: string;
   message: string;
-  severity: 'ERROR' | 'WARNING';
+  severity: "ERROR" | "WARNING";
 }
 
 // 模試詳細結果（JSON格納用）
@@ -146,7 +164,7 @@ export interface MockExamDetailedResults {
   completedAt: string;
   timeLimit: number; // 分
   actualDuration: number; // 秒
-  
+
   // セクション別結果
   sectionResults: Array<{
     sectionNumber: 1 | 2 | 3;
@@ -155,12 +173,12 @@ export interface MockExamDetailedResults {
     maxScore: number;
     questions: MockExamQuestionResult[];
   }>;
-  
+
   // 全体統計
   totalCorrect: number;
   totalQuestions: number;
   accuracyRate: number;
-  
+
   // 合格判定
   passJudgment: {
     isPassed: boolean;
@@ -194,11 +212,14 @@ export interface MigrationInfo {
 
 // データベース統計情報型
 export interface DatabaseStats {
-  tables: Record<string, {
-    rowCount: number;
-    sizeBytes: number;
-    lastModified: string;
-  }>;
+  tables: Record<
+    string,
+    {
+      rowCount: number;
+      sizeBytes: number;
+      lastModified: string;
+    }
+  >;
   totalSize: number;
   version: string;
   lastBackup?: string;

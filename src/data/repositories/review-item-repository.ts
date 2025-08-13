@@ -75,6 +75,7 @@ export interface ReviewStatistics {
     journal: ReviewCategoryStats;
     ledger: ReviewCategoryStats;
     trial_balance: ReviewCategoryStats;
+    financial_statement: ReviewCategoryStats;
   };
 
   lastUpdated: string;
@@ -386,6 +387,13 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
           averagePriority: 0,
         },
         trial_balance: {
+          total: 0,
+          needsReview: 0,
+          priorityReview: 0,
+          mastered: 0,
+          averagePriority: 0,
+        },
+        financial_statement: {
           total: 0,
           needsReview: 0,
           priorityReview: 0,

@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useTheme } from "../../context/ThemeContext";
+import CorrectAnswerExample from "../CorrectAnswerExample";
 
 export interface ExplanationModalProps {
   visible: boolean;
@@ -17,6 +18,7 @@ export interface ExplanationModalProps {
   correctAnswer?: any;
   userAnswer?: any;
   isCorrect?: boolean;
+  questionType?: "journal" | "ledger" | "trial_balance";
 }
 
 export default function ExplanationModal({
@@ -27,6 +29,7 @@ export default function ExplanationModal({
   correctAnswer,
   userAnswer,
   isCorrect,
+  questionType,
 }: ExplanationModalProps) {
   const { theme } = useTheme();
 
@@ -129,11 +132,19 @@ export default function ExplanationModal({
               <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
                 正解
               </Text>
-              <Text
-                style={[styles.answerText, { color: theme.colors.success }]}
-              >
-                {formatAnswer(correctAnswer)}
-              </Text>
+              {questionType ? (
+                <CorrectAnswerExample
+                  questionType={questionType}
+                  correctAnswer={correctAnswer}
+                  show={true}
+                />
+              ) : (
+                <Text
+                  style={[styles.answerText, { color: theme.colors.success }]}
+                >
+                  {formatAnswer(correctAnswer)}
+                </Text>
+              )}
             </View>
           )}
 
@@ -214,6 +225,11 @@ function formatAnswer(answer: any): string {
   if (typeof answer === "object") {
     try {
       // For journal entries
+      if (answer.journalEntry) {
+        const entry = answer.journalEntry;
+        return `借方: ${entry.debit_account} ${entry.debit_amount}円 / 貸方: ${entry.credit_account} ${entry.credit_amount}円`;
+      }
+
       if (answer.debits && answer.credits) {
         const debitText = answer.debits
           .map((d: any) => `借方: ${d.account} ${d.amount}円`)
@@ -225,29 +241,133 @@ function formatAnswer(answer: any): string {
       }
 
       // For ledger entries
-      if (answer.entries && Array.isArray(answer.entries)) {
-        return answer.entries
+      if (answer.ledgerEntry && answer.ledgerEntry.entries) {
+        return answer.ledgerEntry.entries
           .map(
             (entry: any) =>
-              `${entry.date} ${entry.description} 借方:${entry.debitAccount} ${entry.debitAmount}円 貸方:${entry.creditAccount} ${entry.creditAmount}円`,
+              `${entry.date || ""} ${entry.description || ""} 借方:${entry.debitAmount || 0}円 貸方:${entry.creditAmount || 0}円`,
           )
           .join("\n");
+      }
+
+      if (answer.entries && Array.isArray(answer.entries)) {
+        // Check if it's a ledger entry format
+        if (answer.entries[0]?.date !== undefined) {
+          return answer.entries
+            .map(
+              (entry: any) =>
+                `${entry.date} ${entry.description} 借方:${entry.debitAccount} ${entry.debitAmount}円 貸方:${entry.creditAccount} ${entry.creditAmount}円`,
+            )
+            .join("\n");
+        }
+        // Check if it's a trial balance entry format
+        if (answer.entries[0]?.accountName) {
+          return answer.entries
+            .map(
+              (entry: any) =>
+                `${entry.accountName}: 借方${entry.debitAmount}円 貸方${entry.creditAmount}円`,
+            )
+            .join("\n");
+        }
+      }
+
+      // For financial statements format (Q_T_001など)
+      if (answer.financialStatements) {
+        const entries = [];
+        const fs = answer.financialStatements;
+
+        // 貸借対照表の資産（借方）
+        if (fs.balanceSheet?.assets) {
+          for (const asset of fs.balanceSheet.assets) {
+            if (asset.amount > 0) {
+              entries.push(
+                `${asset.accountName}: 借方${asset.amount.toLocaleString()}円`,
+              );
+            }
+          }
+        }
+
+        // 貸借対照表の負債（貸方）
+        if (fs.balanceSheet?.liabilities) {
+          for (const liability of fs.balanceSheet.liabilities) {
+            if (liability.amount > 0) {
+              entries.push(
+                `${liability.accountName}: 貸方${liability.amount.toLocaleString()}円`,
+              );
+            }
+          }
+        }
+
+        // 貸借対照表の純資産（貸方、当期純損失は借方）
+        if (fs.balanceSheet?.equity) {
+          for (const equity of fs.balanceSheet.equity) {
+            if (equity.amount > 0) {
+              if (equity.accountName === "当期純損失") {
+                entries.push(
+                  `${equity.accountName}: 借方${equity.amount.toLocaleString()}円`,
+                );
+              } else {
+                entries.push(
+                  `${equity.accountName}: 貸方${equity.amount.toLocaleString()}円`,
+                );
+              }
+            }
+          }
+        }
+
+        // 損益計算書の収益（貸方）
+        if (fs.incomeStatement?.revenues) {
+          for (const revenue of fs.incomeStatement.revenues) {
+            if (revenue.amount > 0) {
+              const accountName =
+                revenue.accountName === "売上高" ? "売上" : revenue.accountName;
+              entries.push(
+                `${accountName}: 貸方${revenue.amount.toLocaleString()}円`,
+              );
+            }
+          }
+        }
+
+        // 損益計算書の費用（借方）
+        if (fs.incomeStatement?.expenses) {
+          for (const expense of fs.incomeStatement.expenses) {
+            if (expense.amount > 0) {
+              entries.push(
+                `${expense.accountName}: 借方${expense.amount.toLocaleString()}円`,
+              );
+            }
+          }
+        }
+
+        return entries.join("\n");
       }
 
       // For trial balance
-      if (answer.entries && answer.entries[0]?.accountName) {
-        return answer.entries
-          .map(
-            (entry: any) =>
-              `${entry.accountName}: 借方${entry.debitAmount}円 貸方${entry.creditAmount}円`,
-          )
+      if (answer.trialBalance?.balances) {
+        return Object.entries(answer.trialBalance.balances)
+          .map(([account, amount]) => {
+            const value = amount as number;
+            if (value > 0) {
+              return `${account}: 借方${value.toLocaleString()}円`;
+            } else if (value < 0) {
+              return `${account}: 貸方${Math.abs(value).toLocaleString()}円`;
+            }
+            return `${account}: 0円`;
+          })
           .join("\n");
       }
 
-      // Fallback to JSON
+      // Fallback - avoid showing [object Object]
+      // Try to show a meaningful representation
+      const keys = Object.keys(answer);
+      if (keys.length > 0) {
+        // Don't show raw object, return a message instead
+        return "（詳細は解説をご確認ください）";
+      }
+
       return JSON.stringify(answer, null, 2);
     } catch (e) {
-      return String(answer);
+      return "（表示エラー）";
     }
   }
 

@@ -656,6 +656,17 @@ export class AnswerService {
       });
     }
 
+    // Handle financialStatements format (Q_T_001など)
+    const financialStatements = (correctAnswer as any).financialStatements;
+    if (financialStatements) {
+      console.log("[DEBUG] Using financialStatements format");
+      // 財務諸表形式の場合は、entriesに変換
+      const convertedEntries = this.convertFinancialStatementsToEntries(financialStatements);
+      if (convertedEntries && convertedEntries.length > 0) {
+        return this.compareTrialBalanceEntries(convertedEntries, answerData);
+      }
+    }
+
     // Handle new format: { entries: [...] }
     const correctEntries = (correctAnswer as any).entries;
     if (!correctEntries || !Array.isArray(correctEntries)) {
@@ -735,6 +746,146 @@ export class AnswerService {
     }
 
     return balances;
+  }
+
+  /**
+   * 財務諸表形式のデータを試算表エントリ形式に変換
+   */
+  private convertFinancialStatementsToEntries(
+    financialStatements: any
+  ): Array<{ accountName: string; debitAmount: number; creditAmount: number }> {
+    const entries: Array<{ accountName: string; debitAmount: number; creditAmount: number }> = [];
+    
+    // 貸借対照表の資産（借方）
+    if (financialStatements.balanceSheet?.assets) {
+      for (const asset of financialStatements.balanceSheet.assets) {
+        if (asset.amount > 0) {
+          entries.push({
+            accountName: asset.accountName,
+            debitAmount: asset.amount,
+            creditAmount: 0,
+          });
+        }
+      }
+    }
+    
+    // 貸借対照表の負債（貸方）
+    if (financialStatements.balanceSheet?.liabilities) {
+      for (const liability of financialStatements.balanceSheet.liabilities) {
+        if (liability.amount > 0) {
+          entries.push({
+            accountName: liability.accountName,
+            debitAmount: 0,
+            creditAmount: liability.amount,
+          });
+        }
+      }
+    }
+    
+    // 貸借対照表の純資産（貸方）
+    if (financialStatements.balanceSheet?.equity) {
+      for (const equity of financialStatements.balanceSheet.equity) {
+        // 当期純損失は借方
+        if (equity.accountName === "当期純損失" && equity.amount > 0) {
+          entries.push({
+            accountName: equity.accountName,
+            debitAmount: equity.amount,
+            creditAmount: 0,
+          });
+        } else if (equity.amount > 0) {
+          entries.push({
+            accountName: equity.accountName,
+            debitAmount: 0,
+            creditAmount: equity.amount,
+          });
+        }
+      }
+    }
+    
+    // 損益計算書の収益（貸方）
+    if (financialStatements.incomeStatement?.revenues) {
+      for (const revenue of financialStatements.incomeStatement.revenues) {
+        if (revenue.amount > 0) {
+          entries.push({
+            accountName: revenue.accountName === "売上高" ? "売上" : revenue.accountName,
+            debitAmount: 0,
+            creditAmount: revenue.amount,
+          });
+        }
+      }
+    }
+    
+    // 損益計算書の費用（借方）
+    if (financialStatements.incomeStatement?.expenses) {
+      for (const expense of financialStatements.incomeStatement.expenses) {
+        // 保険料が0の場合はスキップ
+        if (expense.amount > 0) {
+          entries.push({
+            accountName: expense.accountName,
+            debitAmount: expense.amount,
+            creditAmount: 0,
+          });
+        }
+      }
+    }
+    
+    console.log("[DEBUG] convertFinancialStatementsToEntries - 変換結果:", entries);
+    return entries;
+  }
+
+  /**
+   * 試算表エントリの比較
+   */
+  private compareTrialBalanceEntries(
+    correctEntries: Array<{ accountName: string; debitAmount: number; creditAmount: number }>,
+    answerData: CBTAnswerData
+  ): boolean {
+    const data = answerData as any;
+    const userEntries = data.entries;
+    
+    if (!userEntries || !Array.isArray(userEntries)) {
+      console.error("[DEBUG] No valid entries found in user answer");
+      return false;
+    }
+    
+    console.log("[DEBUG] Comparing entries:", {
+      correctEntries: correctEntries.length,
+      userEntries: userEntries.length,
+    });
+    
+    // Convert both arrays to account balance maps for comparison
+    const correctBalances = this.convertTrialBalanceEntriesToBalances(correctEntries);
+    const userBalances = this.convertTrialBalanceEntriesToBalances(userEntries);
+    
+    console.log("[DEBUG] Balance comparison:", {
+      correctBalances,
+      userBalances,
+    });
+    
+    // Compare all accounts
+    const allAccounts = new Set([
+      ...Object.keys(correctBalances),
+      ...Object.keys(userBalances),
+    ]);
+    
+    for (const account of allAccounts) {
+      const correctBalance = correctBalances[account] || { debit: 0, credit: 0 };
+      const userBalance = userBalances[account] || { debit: 0, credit: 0 };
+      
+      if (
+        correctBalance.debit !== userBalance.debit ||
+        correctBalance.credit !== userBalance.credit
+      ) {
+        console.log(`[DEBUG] Mismatch for account ${account}:`, {
+          correct: correctBalance,
+          user: userBalance,
+        });
+        return false;
+      }
+    }
+    
+    console.log("[DEBUG] All trial balance entries match");
+    return true;
   }
 
   /**

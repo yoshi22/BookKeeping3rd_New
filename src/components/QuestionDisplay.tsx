@@ -13,6 +13,7 @@ import VoucherEntryForm from "./VoucherEntryForm";
 import TrialBalanceForm, {
   TrialBalanceEntry,
 } from "./mock-exam/TrialBalanceForm";
+import FinancialStatementForm from "./FinancialStatementForm";
 import QuestionText from "./QuestionText";
 import ExplanationPanel from "./ExplanationPanel";
 import {
@@ -111,6 +112,16 @@ interface TrialBalanceFormWrapperProps {
   correctAnswer?: Record<string, any>;
 }
 
+interface FinancialStatementFormWrapperProps {
+  questionId: string;
+  sessionType?: SessionType;
+  sessionId?: string;
+  startTime?: number;
+  onSubmitAnswer?: (response: SubmitAnswerResponse) => void;
+  explanation?: string;
+  correctAnswer?: Record<string, any>;
+}
+
 function TrialBalanceFormWrapper({
   questionId,
   sessionType = "learning",
@@ -162,6 +173,108 @@ function TrialBalanceFormWrapper({
 
   return (
     <TrialBalanceForm
+      onSubmit={handleSubmit}
+      questionNumber={1}
+      totalQuestions={1}
+      timeRemaining="--:--"
+      explanation={explanation}
+      correctAnswer={correctAnswer}
+    />
+  );
+}
+
+function FinancialStatementFormWrapper({
+  questionId,
+  sessionType = "learning",
+  sessionId,
+  startTime = Date.now(),
+  onSubmitAnswer,
+  explanation,
+  correctAnswer,
+}: FinancialStatementFormWrapperProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (data: {
+    balanceSheet: {
+      assets: any[];
+      liabilities: any[];
+      equity: any[];
+    };
+    incomeStatement: {
+      revenues: any[];
+      expenses: any[];
+      netIncome: number;
+    };
+  }) => {
+    if (isSubmitting) return;
+
+    try {
+      setIsSubmitting(true);
+
+      // Convert financial statement data to the format expected by answer service
+      const answerData = {
+        questionType: "financial_statement" as const,
+        financialStatements: {
+          balanceSheet: {
+            assets: data.balanceSheet.assets.map((entry) => ({
+              accountName: entry.accountName,
+              amount: entry.amount,
+            })),
+            liabilities: data.balanceSheet.liabilities.map((entry) => ({
+              accountName: entry.accountName,
+              amount: entry.amount,
+            })),
+            equity: data.balanceSheet.equity.map((entry) => ({
+              accountName: entry.accountName,
+              amount: entry.amount,
+            })),
+          },
+          incomeStatement: {
+            revenues: data.incomeStatement.revenues.map((entry) => ({
+              accountName: entry.accountName,
+              amount: entry.amount,
+            })),
+            expenses: data.incomeStatement.expenses.map((entry) => ({
+              accountName: entry.accountName,
+              amount: entry.amount,
+            })),
+            netIncome: data.incomeStatement.netIncome,
+          },
+        },
+      };
+
+      // Create and send the answer request
+      const submitRequest: SubmitAnswerRequest = {
+        questionId,
+        answerData,
+        sessionType,
+        sessionId,
+        startTime,
+      };
+
+      const response = await answerService.submitAnswer(submitRequest);
+
+      if (onSubmitAnswer) {
+        onSubmitAnswer(response);
+      } else {
+        Alert.alert(
+          response.isCorrect ? "正解！" : "不正解",
+          response.isCorrect
+            ? "正解です。よくできました！"
+            : "不正解です。解説を確認して復習しましょう。",
+          [{ text: "OK" }],
+        );
+      }
+    } catch (error) {
+      console.error("[FinancialStatementFormWrapper] 解答送信エラー:", error);
+      Alert.alert("エラー", "解答の送信に失敗しました");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <FinancialStatementForm
       onSubmit={handleSubmit}
       questionNumber={1}
       totalQuestions={1}
@@ -236,9 +349,15 @@ export default function QuestionDisplay({
   // Determine if should use VoucherEntryForm for voucher entry questions
   const shouldUseVoucherEntryForm = answerTemplate?.type === "voucher_entry";
 
+  // Determine if should use FinancialStatementForm for financial statement questions
+  const shouldUseFinancialStatementForm =
+    answerTemplate?.type === "financial_statement";
+
   // Determine if should use TrialBalanceForm for trial balance questions
   const shouldUseTrialBalanceForm =
-    answerTemplate?.type === "trial_balance" || questionId.startsWith("Q_T_");
+    answerTemplate?.type === "trial_balance" ||
+    (questionId.startsWith("Q_T_") &&
+      answerTemplate?.type !== "financial_statement");
 
   return (
     <View style={styles.container}>
@@ -282,6 +401,16 @@ export default function QuestionDisplay({
           startTime={startTime}
           onSubmitAnswer={onSubmitAnswer}
           showSubmitButton={true}
+        />
+      ) : shouldUseFinancialStatementForm ? (
+        <FinancialStatementFormWrapper
+          questionId={questionId}
+          sessionType={sessionType}
+          sessionId={sessionId}
+          startTime={startTime}
+          onSubmitAnswer={onSubmitAnswer}
+          explanation={explanation}
+          correctAnswer={correctAnswer}
         />
       ) : shouldUseTrialBalanceForm ? (
         <TrialBalanceFormWrapper

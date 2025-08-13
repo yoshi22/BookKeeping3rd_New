@@ -79,6 +79,16 @@ export default function CategoryDetailScreen() {
       points: "35点",
       examInfo: "本試験: 1問 • 25-30分",
     },
+    financial_statement: {
+      id: "financial_statement" as QuestionCategory,
+      name: "財務諸表",
+      subtitle: "財務諸表作成問題",
+      description: "貸借対照表・損益計算書の作成",
+      icon: "📈",
+      color: "#9c27b0",
+      points: "35点",
+      examInfo: "財務諸表作成問題",
+    },
   };
 
   const currentCategory =
@@ -147,6 +157,20 @@ export default function CategoryDetailScreen() {
       },
       { type: "worksheet", name: "精算表作成", icon: "📋", count: 4 },
       { type: "trial_balance", name: "試算表作成", icon: "📝", count: 4 },
+    ],
+    financial_statement: [
+      {
+        type: "balance_sheet",
+        name: "貸借対照表作成",
+        icon: "📊",
+        count: 1,
+      },
+      {
+        type: "income_statement",
+        name: "損益計算書作成",
+        icon: "📈",
+        count: 1,
+      },
     ],
   };
 

@@ -33,6 +33,7 @@ export interface TrialBalanceFormProps {
   userAnswer?: any;
   isCorrect?: boolean;
   showExplanation?: boolean;
+  questionText?: string;
 }
 
 const ACCOUNT_OPTIONS = [
@@ -108,6 +109,7 @@ export default function TrialBalanceForm({
   userAnswer,
   isCorrect,
   showExplanation,
+  questionText,
 }: TrialBalanceFormProps) {
   const { theme } = useTheme();
   const [explanationModalVisible, setExplanationModalVisible] = useState(false);
@@ -668,9 +670,11 @@ export default function TrialBalanceForm({
         visible={explanationModalVisible}
         onClose={() => setExplanationModalVisible(false)}
         explanation={explanation || ""}
+        questionText={questionText || ""}
         correctAnswer={correctAnswer}
         userAnswer={userAnswer}
         isCorrect={isCorrect}
+        questionType="trial_balance"
       />
     </ScrollView>
   );

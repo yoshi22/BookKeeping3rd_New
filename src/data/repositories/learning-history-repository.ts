@@ -327,6 +327,12 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
           accuracyRate: 0,
           averageAnswerTime: 0,
         },
+        financial_statement: {
+          totalAnswers: 0,
+          correctAnswers: 0,
+          accuracyRate: 0,
+          averageAnswerTime: 0,
+        },
       };
 
       categoryStatsResult.rows.forEach((row) => {
@@ -443,9 +449,11 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
   /**
    * ユニークな問題数を取得（カテゴリ別）
    */
-  public async getUniqueAnsweredQuestions(options: {
-    category?: QuestionCategory;
-  } = {}): Promise<{
+  public async getUniqueAnsweredQuestions(
+    options: {
+      category?: QuestionCategory;
+    } = {},
+  ): Promise<{
     totalUniqueQuestions: number;
     correctUniqueQuestions: number;
     categoryBreakdown: {
@@ -501,6 +509,7 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         journal: { totalUnique: 0, correctUnique: 0 },
         ledger: { totalUnique: 0, correctUnique: 0 },
         trial_balance: { totalUnique: 0, correctUnique: 0 },
+        financial_statement: { totalUnique: 0, correctUnique: 0 },
       };
 
       categoryResult.rows.forEach((row) => {
@@ -519,11 +528,17 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         categoryBreakdown,
       };
 
-      console.log('[LearningHistoryRepository] getUniqueAnsweredQuestions result:', result);
+      console.log(
+        "[LearningHistoryRepository] getUniqueAnsweredQuestions result:",
+        result,
+      );
 
       return result;
     } catch (error) {
-      console.error("[LearningHistoryRepository] getUniqueAnsweredQuestions エラー:", error);
+      console.error(
+        "[LearningHistoryRepository] getUniqueAnsweredQuestions エラー:",
+        error,
+      );
       throw error;
     }
   }

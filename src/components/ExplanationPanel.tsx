@@ -60,7 +60,6 @@ export default function ExplanationPanel({
   const renderCorrectAnswer = () => {
     if (!correctAnswer) return null;
 
-    
     // 伝票問題の場合（vouchers配列）
     if (correctAnswer.vouchers && Array.isArray(correctAnswer.vouchers)) {
       const vouchers = correctAnswer.vouchers;
@@ -70,43 +69,64 @@ export default function ExplanationPanel({
           {vouchers.map((voucher: any, vIndex: number) => (
             <View key={vIndex} style={styles.voucherBox}>
               <Text style={styles.voucherTitle}>{voucher.type}</Text>
-              {voucher.entries && voucher.entries.map((entry: any, eIndex: number) => (
-                <View key={eIndex} style={styles.voucherEntry}>
-                  {entry.date && (
-                    <Text style={styles.entryText}>日付: {entry.date}</Text>
-                  )}
-                  {entry.account && (
-                    <Text style={styles.entryText}>勘定科目: {entry.account}</Text>
-                  )}
-                  {entry.amount !== undefined && (
-                    <Text style={styles.entryText}>金額: {formatAnswerValue(entry.amount)}円</Text>
-                  )}
-                  {entry.debit_account && (
-                    <Text style={styles.entryText}>借方科目: {entry.debit_account}</Text>
-                  )}
-                  {entry.debit_amount !== undefined && (
-                    <Text style={styles.entryText}>借方金額: {formatAnswerValue(entry.debit_amount)}円</Text>
-                  )}
-                  {entry.credit_account && (
-                    <Text style={styles.entryText}>貸方科目: {entry.credit_account}</Text>
-                  )}
-                  {entry.credit_amount !== undefined && (
-                    <Text style={styles.entryText}>貸方金額: {formatAnswerValue(entry.credit_amount)}円</Text>
-                  )}
-                  {entry.description && (
-                    <Text style={styles.entryText}>摘要: {entry.description}</Text>
-                  )}
-                  {entry.customer && (
-                    <Text style={styles.entryText}>得意先: {entry.customer}</Text>
-                  )}
-                  {entry.supplier && (
-                    <Text style={styles.entryText}>仕入先: {entry.supplier}</Text>
-                  )}
-                  {entry.payment_type && (
-                    <Text style={styles.entryText}>取引区分: {entry.payment_type}</Text>
-                  )}
-                </View>
-              ))}
+              {voucher.entries &&
+                voucher.entries.map((entry: any, eIndex: number) => (
+                  <View key={eIndex} style={styles.voucherEntry}>
+                    {entry.date && (
+                      <Text style={styles.entryText}>日付: {entry.date}</Text>
+                    )}
+                    {entry.account && (
+                      <Text style={styles.entryText}>
+                        勘定科目: {entry.account}
+                      </Text>
+                    )}
+                    {entry.amount !== undefined && (
+                      <Text style={styles.entryText}>
+                        金額: {formatAnswerValue(entry.amount)}円
+                      </Text>
+                    )}
+                    {entry.debit_account && (
+                      <Text style={styles.entryText}>
+                        借方科目: {entry.debit_account}
+                      </Text>
+                    )}
+                    {entry.debit_amount !== undefined && (
+                      <Text style={styles.entryText}>
+                        借方金額: {formatAnswerValue(entry.debit_amount)}円
+                      </Text>
+                    )}
+                    {entry.credit_account && (
+                      <Text style={styles.entryText}>
+                        貸方科目: {entry.credit_account}
+                      </Text>
+                    )}
+                    {entry.credit_amount !== undefined && (
+                      <Text style={styles.entryText}>
+                        貸方金額: {formatAnswerValue(entry.credit_amount)}円
+                      </Text>
+                    )}
+                    {entry.description && (
+                      <Text style={styles.entryText}>
+                        摘要: {entry.description}
+                      </Text>
+                    )}
+                    {entry.customer && (
+                      <Text style={styles.entryText}>
+                        得意先: {entry.customer}
+                      </Text>
+                    )}
+                    {entry.supplier && (
+                      <Text style={styles.entryText}>
+                        仕入先: {entry.supplier}
+                      </Text>
+                    )}
+                    {entry.payment_type && (
+                      <Text style={styles.entryText}>
+                        取引区分: {entry.payment_type}
+                      </Text>
+                    )}
+                  </View>
+                ))}
             </View>
           ))}
         </View>
@@ -114,7 +134,10 @@ export default function ExplanationPanel({
     }
 
     // 選択問題の場合（single_choice/multiple_choice）
-    if (correctAnswer.selected !== undefined || correctAnswer.selected_options !== undefined) {
+    if (
+      correctAnswer.selected !== undefined ||
+      correctAnswer.selected_options !== undefined
+    ) {
       return (
         <View style={styles.correctAnswerSection}>
           <Text style={styles.correctAnswerTitle}>正答</Text>
@@ -132,7 +155,6 @@ export default function ExplanationPanel({
         </View>
       );
     }
-
 
     // 帳簿問題（複数エントリ）の場合
     if (correctAnswer.ledgerEntry?.entries) {
@@ -167,50 +189,352 @@ export default function ExplanationPanel({
       );
     }
 
-    // 新形式の帳簿問題（entries直接配列）の場合
+    // 新形式の帳簿問題・試算表問題（entries直接配列）の場合
     if (correctAnswer.entries && Array.isArray(correctAnswer.entries)) {
       const entries = correctAnswer.entries;
+
+      // 試算表問題の判定（accountName, debitAmount, creditAmountを持つ）
+      const isTrialBalance =
+        entries.length > 0 &&
+        entries[0].accountName !== undefined &&
+        (entries[0].debitAmount !== undefined ||
+          entries[0].creditAmount !== undefined);
+
+      if (isTrialBalance) {
+        // 試算表の表示
+        return (
+          <View style={styles.correctAnswerSection}>
+            <Text style={styles.correctAnswerTitle}>正答</Text>
+            <View style={styles.trialBalanceBox}>
+              <View style={styles.trialBalanceHeader}>
+                <Text style={[styles.trialHeaderText, { flex: 2 }]}>
+                  勘定科目
+                </Text>
+                <Text style={[styles.trialHeaderText, { flex: 1 }]}>借方</Text>
+                <Text style={[styles.trialHeaderText, { flex: 1 }]}>貸方</Text>
+              </View>
+              {entries.map((entry: any, index: number) => (
+                <View key={index} style={styles.trialBalanceRow}>
+                  <Text style={[styles.trialCellText, { flex: 2 }]}>
+                    {entry.accountName}
+                  </Text>
+                  <Text style={[styles.trialCellAmount, { flex: 1 }]}>
+                    {entry.debitAmount > 0
+                      ? formatAnswerValue(entry.debitAmount)
+                      : ""}
+                  </Text>
+                  <Text style={[styles.trialCellAmount, { flex: 1 }]}>
+                    {entry.creditAmount > 0
+                      ? formatAnswerValue(entry.creditAmount)
+                      : ""}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        );
+      } else {
+        // 帳簿問題の表示
+        return (
+          <View style={styles.correctAnswerSection}>
+            <Text style={styles.correctAnswerTitle}>正答</Text>
+            <View style={styles.ledgerTableBox}>
+              <View style={styles.ledgerTableHeader}>
+                <Text style={styles.ledgerHeaderText}>日付</Text>
+                <Text style={styles.ledgerHeaderText}>摘要</Text>
+                <Text style={styles.ledgerHeaderText}>借方</Text>
+                <Text style={styles.ledgerHeaderText}>貸方</Text>
+                <Text style={styles.ledgerHeaderText}>残高</Text>
+              </View>
+              {entries.map((entry: any, index: number) => {
+                // debitとbalanceがネストされている場合の処理
+                const debitValue =
+                  typeof entry.debit === "object" && entry.debit?.entries
+                    ? entry.debit.entries[0]?.amount || 0
+                    : entry.debit || 0;
+                const creditValue = entry.credit || 0;
+                const balanceValue =
+                  typeof entry.balance === "object" && entry.balance?.entries
+                    ? entry.balance.entries[0]?.amount || 0
+                    : entry.balance || 0;
+
+                return (
+                  <View key={index} style={styles.ledgerTableRow}>
+                    <Text style={styles.ledgerCellText}>
+                      {entry.date || ""}
+                    </Text>
+                    <Text style={styles.ledgerCellText}>
+                      {entry.description || ""}
+                    </Text>
+                    <Text style={styles.ledgerCellAmount}>
+                      {debitValue > 0 ? formatAnswerValue(debitValue) : ""}
+                    </Text>
+                    <Text style={styles.ledgerCellAmount}>
+                      {creditValue > 0 ? formatAnswerValue(creditValue) : ""}
+                    </Text>
+                    <Text style={styles.ledgerCellAmount}>
+                      {balanceValue > 0 ? formatAnswerValue(balanceValue) : ""}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+        );
+      }
+    }
+
+    // 財務諸表形式（Q_T_001のような問題）
+    if (correctAnswer.financialStatements) {
+      const fs = correctAnswer.financialStatements;
+
       return (
         <View style={styles.correctAnswerSection}>
           <Text style={styles.correctAnswerTitle}>正答</Text>
-          <View style={styles.ledgerTableBox}>
-            <View style={styles.ledgerTableHeader}>
-              <Text style={styles.ledgerHeaderText}>日付</Text>
-              <Text style={styles.ledgerHeaderText}>摘要</Text>
-              <Text style={styles.ledgerHeaderText}>借方</Text>
-              <Text style={styles.ledgerHeaderText}>貸方</Text>
-              <Text style={styles.ledgerHeaderText}>残高</Text>
-            </View>
-            {entries.map((entry: any, index: number) => {
-              // debitとbalanceがネストされている場合の処理
-              const debitValue =
-                typeof entry.debit === "object" && entry.debit?.entries
-                  ? entry.debit.entries[0]?.amount || 0
-                  : entry.debit || 0;
-              const creditValue = entry.credit || 0;
-              const balanceValue =
-                typeof entry.balance === "object" && entry.balance?.entries
-                  ? entry.balance.entries[0]?.amount || 0
-                  : entry.balance || 0;
 
-              return (
-                <View key={index} style={styles.ledgerTableRow}>
-                  <Text style={styles.ledgerCellText}>{entry.date || ""}</Text>
-                  <Text style={styles.ledgerCellText}>
-                    {entry.description || ""}
-                  </Text>
-                  <Text style={styles.ledgerCellAmount}>
-                    {debitValue > 0 ? formatAnswerValue(debitValue) : ""}
-                  </Text>
-                  <Text style={styles.ledgerCellAmount}>
-                    {creditValue > 0 ? formatAnswerValue(creditValue) : ""}
-                  </Text>
-                  <Text style={styles.ledgerCellAmount}>
-                    {balanceValue > 0 ? formatAnswerValue(balanceValue) : ""}
+          {/* 貸借対照表 */}
+          <View style={styles.financialStatementContainer}>
+            <Text style={styles.financialStatementTitle}>貸借対照表</Text>
+            <View style={styles.balanceSheetBox}>
+              {/* 左側：資産の部 */}
+              <View style={styles.balanceSheetColumn}>
+                <View style={styles.balanceSheetSectionHeader}>
+                  <Text style={styles.balanceSheetSectionTitle}>資産の部</Text>
+                </View>
+                {fs.balanceSheet?.assets &&
+                  fs.balanceSheet.assets.map(
+                    (asset: any, index: number) =>
+                      asset.amount > 0 && (
+                        <View
+                          key={`asset-${index}`}
+                          style={styles.balanceSheetRow}
+                        >
+                          <Text style={styles.balanceSheetAccountName}>
+                            {asset.accountName}
+                          </Text>
+                          <Text style={styles.balanceSheetAmount}>
+                            {formatAnswerValue(asset.amount)}
+                          </Text>
+                        </View>
+                      ),
+                  )}
+                <View style={styles.balanceSheetTotalRow}>
+                  <Text style={styles.balanceSheetTotalLabel}>資産合計</Text>
+                  <Text style={styles.balanceSheetTotalAmount}>
+                    {formatAnswerValue(
+                      fs.balanceSheet?.assets?.reduce(
+                        (sum: number, item: any) => sum + (item.amount || 0),
+                        0,
+                      ) || 0,
+                    )}
                   </Text>
                 </View>
-              );
-            })}
+              </View>
+
+              {/* 右側：負債・純資産の部 */}
+              <View style={styles.balanceSheetColumn}>
+                <View style={styles.balanceSheetSectionHeader}>
+                  <Text style={styles.balanceSheetSectionTitle}>負債の部</Text>
+                </View>
+                {fs.balanceSheet?.liabilities &&
+                  fs.balanceSheet.liabilities.map(
+                    (liability: any, index: number) =>
+                      liability.amount > 0 && (
+                        <View
+                          key={`liability-${index}`}
+                          style={styles.balanceSheetRow}
+                        >
+                          <Text style={styles.balanceSheetAccountName}>
+                            {liability.accountName}
+                          </Text>
+                          <Text style={styles.balanceSheetAmount}>
+                            {formatAnswerValue(liability.amount)}
+                          </Text>
+                        </View>
+                      ),
+                  )}
+                <View style={styles.balanceSheetTotalRow}>
+                  <Text style={styles.balanceSheetTotalLabel}>負債合計</Text>
+                  <Text style={styles.balanceSheetTotalAmount}>
+                    {formatAnswerValue(
+                      fs.balanceSheet?.liabilities?.reduce(
+                        (sum: number, item: any) => sum + (item.amount || 0),
+                        0,
+                      ) || 0,
+                    )}
+                  </Text>
+                </View>
+
+                <View
+                  style={[styles.balanceSheetSectionHeader, { marginTop: 8 }]}
+                >
+                  <Text style={styles.balanceSheetSectionTitle}>
+                    純資産の部
+                  </Text>
+                </View>
+                {fs.balanceSheet?.equity &&
+                  fs.balanceSheet.equity.map(
+                    (equity: any, index: number) =>
+                      equity.amount > 0 && (
+                        <View
+                          key={`equity-${index}`}
+                          style={styles.balanceSheetRow}
+                        >
+                          <Text style={styles.balanceSheetAccountName}>
+                            {equity.accountName}
+                          </Text>
+                          <Text style={styles.balanceSheetAmount}>
+                            {equity.accountName === "当期純損失" ? "△" : ""}
+                            {formatAnswerValue(equity.amount)}
+                          </Text>
+                        </View>
+                      ),
+                  )}
+                <View style={styles.balanceSheetTotalRow}>
+                  <Text style={styles.balanceSheetTotalLabel}>純資産合計</Text>
+                  <Text style={styles.balanceSheetTotalAmount}>
+                    {formatAnswerValue(
+                      fs.balanceSheet?.equity?.reduce(
+                        (sum: number, item: any) => {
+                          if (item.accountName === "当期純損失") {
+                            return sum - (item.amount || 0);
+                          }
+                          return sum + (item.amount || 0);
+                        },
+                        0,
+                      ) || 0,
+                    )}
+                  </Text>
+                </View>
+                <View style={styles.balanceSheetTotalRow}>
+                  <Text style={styles.balanceSheetTotalLabel}>
+                    負債・純資産合計
+                  </Text>
+                  <Text style={styles.balanceSheetTotalAmount}>
+                    {formatAnswerValue(
+                      (fs.balanceSheet?.liabilities?.reduce(
+                        (sum: number, item: any) => sum + (item.amount || 0),
+                        0,
+                      ) || 0) +
+                        (fs.balanceSheet?.equity?.reduce(
+                          (sum: number, item: any) => {
+                            if (item.accountName === "当期純損失") {
+                              return sum - (item.amount || 0);
+                            }
+                            return sum + (item.amount || 0);
+                          },
+                          0,
+                        ) || 0),
+                    )}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          {/* 損益計算書 */}
+          <View style={[styles.financialStatementContainer, { marginTop: 16 }]}>
+            <Text style={styles.financialStatementTitle}>損益計算書</Text>
+            <View style={styles.incomeStatementBox}>
+              {/* 収益の部 */}
+              <View style={styles.incomeStatementSection}>
+                <Text style={styles.incomeStatementSectionTitle}>
+                  【収益の部】
+                </Text>
+                {fs.incomeStatement?.revenues &&
+                  fs.incomeStatement.revenues.map(
+                    (revenue: any, index: number) =>
+                      revenue.amount > 0 && (
+                        <View
+                          key={`revenue-${index}`}
+                          style={styles.incomeStatementRow}
+                        >
+                          <Text style={styles.incomeStatementAccountName}>
+                            {revenue.accountName}
+                          </Text>
+                          <Text style={styles.incomeStatementAmount}>
+                            {formatAnswerValue(revenue.amount)}
+                          </Text>
+                        </View>
+                      ),
+                  )}
+                <View style={styles.incomeStatementSubtotalRow}>
+                  <Text style={styles.incomeStatementSubtotalLabel}>
+                    収益合計
+                  </Text>
+                  <Text style={styles.incomeStatementSubtotalAmount}>
+                    {formatAnswerValue(
+                      fs.incomeStatement?.revenues?.reduce(
+                        (sum: number, item: any) => sum + (item.amount || 0),
+                        0,
+                      ) || 0,
+                    )}
+                  </Text>
+                </View>
+              </View>
+
+              {/* 費用の部 */}
+              <View style={[styles.incomeStatementSection, { marginTop: 12 }]}>
+                <Text style={styles.incomeStatementSectionTitle}>
+                  【費用の部】
+                </Text>
+                {fs.incomeStatement?.expenses &&
+                  fs.incomeStatement.expenses.map(
+                    (expense: any, index: number) =>
+                      expense.amount > 0 && (
+                        <View
+                          key={`expense-${index}`}
+                          style={styles.incomeStatementRow}
+                        >
+                          <Text style={styles.incomeStatementAccountName}>
+                            {expense.accountName}
+                          </Text>
+                          <Text style={styles.incomeStatementAmount}>
+                            {formatAnswerValue(expense.amount)}
+                          </Text>
+                        </View>
+                      ),
+                  )}
+                <View style={styles.incomeStatementSubtotalRow}>
+                  <Text style={styles.incomeStatementSubtotalLabel}>
+                    費用合計
+                  </Text>
+                  <Text style={styles.incomeStatementSubtotalAmount}>
+                    {formatAnswerValue(
+                      fs.incomeStatement?.expenses?.reduce(
+                        (sum: number, item: any) => sum + (item.amount || 0),
+                        0,
+                      ) || 0,
+                    )}
+                  </Text>
+                </View>
+              </View>
+
+              {/* 当期純利益/損失 */}
+              <View style={styles.incomeStatementResultRow}>
+                <Text style={styles.incomeStatementResultLabel}>
+                  {(fs.incomeStatement?.netIncome || 0) >= 0
+                    ? "当期純利益"
+                    : "当期純損失"}
+                </Text>
+                <Text
+                  style={[
+                    styles.incomeStatementResultAmount,
+                    {
+                      color:
+                        (fs.incomeStatement?.netIncome || 0) >= 0
+                          ? "#4caf50"
+                          : "#f44336",
+                    },
+                  ]}
+                >
+                  {(fs.incomeStatement?.netIncome || 0) < 0 ? "△" : ""}
+                  {formatAnswerValue(
+                    Math.abs(fs.incomeStatement?.netIncome || 0),
+                  )}
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
       );
@@ -688,6 +1012,44 @@ const styles = StyleSheet.create({
     textAlign: "right",
     fontWeight: "500",
   },
+  // 試算表用のスタイル
+  trialBalanceBox: {
+    backgroundColor: "#e8f5e8",
+    borderColor: "#4caf50",
+    borderWidth: 2,
+    borderRadius: 8,
+    overflow: "hidden",
+  },
+  trialBalanceHeader: {
+    flexDirection: "row",
+    backgroundColor: "#4caf50",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  trialBalanceRow: {
+    flexDirection: "row",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
+  },
+  trialHeaderText: {
+    fontSize: 13,
+    fontWeight: "bold",
+    color: "white",
+    textAlign: "center",
+  },
+  trialCellText: {
+    fontSize: 12,
+    color: "#333",
+    textAlign: "left",
+  },
+  trialCellAmount: {
+    fontSize: 12,
+    color: "#333",
+    textAlign: "right",
+    fontWeight: "500",
+  },
 
   voucherBox: {
     backgroundColor: "#f9f9f9",
@@ -721,5 +1083,206 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#333",
+  },
+  // 財務諸表用のスタイル
+  financialStatementContainer: {
+    marginBottom: 20,
+  },
+  financialStatementTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 12,
+    textAlign: "center",
+  },
+  balanceSheetBox: {
+    flexDirection: "row",
+    borderWidth: 2,
+    borderColor: "#4caf50",
+    borderRadius: 8,
+    overflow: "hidden",
+    backgroundColor: "#f8fff8",
+  },
+  balanceSheetColumn: {
+    flex: 1,
+    padding: 12,
+  },
+  balanceSheetDivider: {
+    width: 2,
+    backgroundColor: "#4caf50",
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#2e7d32",
+    marginBottom: 8,
+    paddingBottom: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: "#c8e6c9",
+  },
+  accountRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 4,
+  },
+  accountName: {
+    fontSize: 13,
+    color: "#333",
+  },
+  accountAmount: {
+    fontSize: 13,
+    color: "#333",
+    fontWeight: "500",
+  },
+  totalRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 6,
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: "#c8e6c9",
+  },
+  totalLabel: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#2e7d32",
+  },
+  totalAmount: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#2e7d32",
+  },
+  incomeStatementBox: {
+    borderWidth: 2,
+    borderColor: "#4caf50",
+    borderRadius: 8,
+    overflow: "hidden",
+    backgroundColor: "#f8fff8",
+    padding: 12,
+  },
+  netIncomeRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 8,
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 2,
+    borderTopColor: "#4caf50",
+  },
+  netIncomeLabel: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#2e7d32",
+  },
+  netIncomeAmount: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#2e7d32",
+  },
+  // Additional balance sheet styles
+  balanceSheetSectionHeader: {
+    paddingBottom: 4,
+    marginBottom: 8,
+  },
+  balanceSheetSectionTitle: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#2e7d32",
+  },
+  balanceSheetRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 4,
+  },
+  balanceSheetAccountName: {
+    fontSize: 13,
+    color: "#333",
+  },
+  balanceSheetAmount: {
+    fontSize: 13,
+    color: "#333",
+    fontWeight: "500",
+  },
+  balanceSheetTotalRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 6,
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: "#c8e6c9",
+  },
+  balanceSheetTotalLabel: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#2e7d32",
+  },
+  balanceSheetTotalAmount: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#2e7d32",
+  },
+  // Additional income statement styles
+  incomeStatementSection: {
+    marginBottom: 12,
+  },
+  incomeStatementSectionTitle: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#2e7d32",
+    marginBottom: 8,
+  },
+  incomeStatementRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 4,
+  },
+  incomeStatementAccountName: {
+    fontSize: 13,
+    color: "#333",
+  },
+  incomeStatementAmount: {
+    fontSize: 13,
+    color: "#333",
+    fontWeight: "500",
+  },
+  incomeStatementSubtotalRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 6,
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: "#c8e6c9",
+  },
+  incomeStatementSubtotalLabel: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#2e7d32",
+  },
+  incomeStatementSubtotalAmount: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#2e7d32",
+  },
+  incomeStatementResultRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 8,
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 2,
+    borderTopColor: "#4caf50",
+  },
+  incomeStatementResultLabel: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#2e7d32",
+  },
+  incomeStatementResultAmount: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#2e7d32",
   },
 });
