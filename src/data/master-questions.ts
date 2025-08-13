@@ -7,7 +7,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "現金実査の結果、現金の実際有高が288,000円であったが、帳簿残高は809,000円であった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金過不足","debit_amount":521000,"credit_account":"現金","credit_amount":521000}}',
     explanation:
@@ -23,7 +23,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "小口現金係に565,000円を前渡しした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":565000,"credit_account":"現金","credit_amount":565000}}',
     explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
@@ -38,7 +38,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金567,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":567000,"credit_account":"売掛金","credit_amount":567000}}',
     explanation:
@@ -55,7 +55,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "当座預金残高が不足したため、買掛金104,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":104000,"credit_account":"当座借越","credit_amount":104000}}',
     explanation:
@@ -72,7 +72,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "現金実査の結果、現金の実際有高が475,000円であったが、帳簿残高は665,000円であった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金過不足","debit_amount":190000,"credit_account":"現金","credit_amount":190000}}',
     explanation:
@@ -88,7 +88,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "小口現金係に241,000円を前渡しした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":241000,"credit_account":"現金","credit_amount":241000}}',
     explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
@@ -103,7 +103,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金263,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":263000,"credit_account":"売掛金","credit_amount":263000}}',
     explanation:
@@ -120,7 +120,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "当座預金残高が不足したため、買掛金382,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":382000,"credit_account":"当座借越","credit_amount":382000}}',
     explanation:
@@ -137,7 +137,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "現金実査の結果、現金の実際有高が69,000円であったが、帳簿残高は318,000円であった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金過不足","debit_amount":249000,"credit_account":"現金","credit_amount":249000}}',
     explanation:
@@ -153,7 +153,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "小口現金係に244,000円を前渡しした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":244000,"credit_account":"現金","credit_amount":244000}}',
     explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
@@ -168,7 +168,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金501,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":501000,"credit_account":"売掛金","credit_amount":501000}}',
     explanation:
@@ -185,7 +185,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "当座預金残高が不足したため、買掛金811,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":811000,"credit_account":"当座借越","credit_amount":811000}}',
     explanation:
@@ -202,7 +202,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "現金実査の結果、現金の実際有高が581,000円であったが、帳簿残高は296,000円であった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":285000,"credit_account":"現金過不足","credit_amount":285000}}',
     explanation:
@@ -218,7 +218,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "小口現金係に587,000円を前渡しした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":587000,"credit_account":"現金","credit_amount":587000}}',
     explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
@@ -233,7 +233,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金695,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":695000,"credit_account":"売掛金","credit_amount":695000}}',
     explanation:
@@ -250,7 +250,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "当座預金残高が不足したため、買掛金532,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":532000,"credit_account":"当座借越","credit_amount":532000}}',
     explanation:
@@ -267,7 +267,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "現金実査の結果、現金の実際有高が346,000円であったが、帳簿残高は601,000円であった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金過不足","debit_amount":255000,"credit_account":"現金","credit_amount":255000}}',
     explanation:
@@ -283,7 +283,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "小口現金係に500,000円を前渡しした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":500000,"credit_account":"現金","credit_amount":500000}}',
     explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
@@ -298,7 +298,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金904,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":904000,"credit_account":"売掛金","credit_amount":904000}}',
     explanation:
@@ -315,7 +315,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "当座預金残高が不足したため、買掛金904,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":904000,"credit_account":"当座借越","credit_amount":904000}}',
     explanation:
@@ -332,7 +332,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "現金実査の結果、現金の実際有高が643,000円であったが、帳簿残高は51,000円であった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":592000,"credit_account":"現金過不足","credit_amount":592000}}',
     explanation:
@@ -348,7 +348,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "小口現金係に537,000円を前渡しした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":537000,"credit_account":"現金","credit_amount":537000}}',
     explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
@@ -363,7 +363,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金970,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":970000,"credit_account":"売掛金","credit_amount":970000}}',
     explanation:
@@ -380,7 +380,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "当座預金残高が不足したため、買掛金500,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":500000,"credit_account":"当座借越","credit_amount":500000}}',
     explanation:
@@ -397,7 +397,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "現金実査の結果、現金の実際有高が665,000円であったが、帳簿残高は278,000円であった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":665000,"credit_account":"現金過不足","credit_amount":665000}}',
     explanation:
@@ -413,7 +413,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "小口現金係に813,000円を前渡しした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":813000,"credit_account":"現金","credit_amount":813000}}',
     explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
@@ -428,7 +428,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金134,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":134000,"credit_account":"売掛金","credit_amount":134000}}',
     explanation:
@@ -445,7 +445,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "当座預金残高が不足したため、買掛金572,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":572000,"credit_account":"当座借越","credit_amount":572000}}',
     explanation:
@@ -462,7 +462,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "現金実査の結果、現金の実際有高が127,000円であったが、帳簿残高は254,000円であった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":127000,"credit_account":"現金過不足","credit_amount":127000}}',
     explanation:
@@ -478,7 +478,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "小口現金係に390,000円を前渡しした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":390000,"credit_account":"現金","credit_amount":390000}}',
     explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
@@ -493,7 +493,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金634,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":634000,"credit_account":"売掛金","credit_amount":634000}}',
     explanation:
@@ -510,7 +510,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "当座預金残高が不足したため、買掛金595,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":595000,"credit_account":"当座借越","credit_amount":595000}}',
     explanation:
@@ -527,7 +527,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "現金実査の結果、現金の実際有高が227,000円であったが、帳簿残高は136,000円であった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":227000,"credit_account":"現金過不足","credit_amount":227000}}',
     explanation:
@@ -543,7 +543,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "小口現金係に671,000円を前渡しした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":671000,"credit_account":"現金","credit_amount":671000}}',
     explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
@@ -558,7 +558,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金981,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":981000,"credit_account":"売掛金","credit_amount":981000}}',
     explanation:
@@ -575,7 +575,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "当座預金残高が不足したため、買掛金22,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":22000,"credit_account":"当座借越","credit_amount":22000}}',
     explanation:
@@ -592,7 +592,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "現金実査の結果、現金の実際有高が229,000円であったが、帳簿残高は185,000円であった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":229000,"credit_account":"現金過不足","credit_amount":229000}}',
     explanation:
@@ -608,7 +608,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "小口現金係に515,000円を前渡しした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":515000,"credit_account":"現金","credit_amount":515000}}',
     explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
@@ -623,7 +623,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金992,000円が当座預金口座に振り込まれた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"当座預金","debit_amount":992000,"credit_account":"売掛金","credit_amount":992000}}',
     explanation:
@@ -640,7 +640,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "当座預金残高が不足したため、買掛金622,000円の支払いで当座借越となった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":622000,"credit_account":"当座借越","credit_amount":622000}}',
     explanation:
@@ -657,7 +657,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "現金実査の結果、現金の実際有高が315,000円であったが、帳簿残高は755,000円であった。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":315000,"credit_account":"現金過不足","credit_amount":315000}}',
     explanation:
@@ -673,7 +673,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "小口現金係に999,000円を前渡しした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"小口現金","debit_amount":999000,"credit_account":"現金","credit_amount":999000}}',
     explanation: "小口現金の仕訳です。借方に小口現金、貸方に現金を記入します。",
@@ -688,7 +688,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品47,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":47000,"credit_account":"買掛金","credit_amount":47000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -703,7 +703,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品を928,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":928000,"credit_account":"売上","credit_amount":928000}}',
     explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
@@ -718,7 +718,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "仕入れた商品のうち548,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":548000,"credit_account":"仕入","credit_amount":548000}}',
     explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
@@ -733,7 +733,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売上げた商品のうち68,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":68000,"credit_account":"売掛金","credit_amount":68000}}',
     explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
@@ -748,7 +748,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品591,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":591000,"credit_account":"買掛金","credit_amount":591000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -763,7 +763,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品を578,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":578000,"credit_account":"売上","credit_amount":578000}}',
     explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
@@ -778,7 +778,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "仕入れた商品のうち924,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":924000,"credit_account":"仕入","credit_amount":924000}}',
     explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
@@ -793,7 +793,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売上げた商品のうち776,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":776000,"credit_account":"売掛金","credit_amount":776000}}',
     explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
@@ -808,7 +808,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品219,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":219000,"credit_account":"買掛金","credit_amount":219000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -823,7 +823,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品を822,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":822000,"credit_account":"売上","credit_amount":822000}}',
     explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
@@ -838,7 +838,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "仕入れた商品のうち950,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":950000,"credit_account":"仕入","credit_amount":950000}}',
     explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
@@ -853,7 +853,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売上げた商品のうち898,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":898000,"credit_account":"売掛金","credit_amount":898000}}',
     explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
@@ -868,7 +868,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品867,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":867000,"credit_account":"買掛金","credit_amount":867000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -883,7 +883,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品を876,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":876000,"credit_account":"売上","credit_amount":876000}}',
     explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
@@ -898,7 +898,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "仕入れた商品のうち804,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":804000,"credit_account":"仕入","credit_amount":804000}}',
     explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
@@ -913,7 +913,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売上げた商品のうち189,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":189000,"credit_account":"売掛金","credit_amount":189000}}',
     explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
@@ -928,7 +928,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品770,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":770000,"credit_account":"買掛金","credit_amount":770000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -943,7 +943,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品を92,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":92000,"credit_account":"売上","credit_amount":92000}}',
     explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
@@ -958,7 +958,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "仕入れた商品のうち201,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":201000,"credit_account":"仕入","credit_amount":201000}}',
     explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
@@ -973,7 +973,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売上げた商品のうち909,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":909000,"credit_account":"売掛金","credit_amount":909000}}',
     explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
@@ -988,7 +988,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品445,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":445000,"credit_account":"買掛金","credit_amount":445000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -1003,7 +1003,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品を328,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":328000,"credit_account":"売上","credit_amount":328000}}',
     explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
@@ -1018,7 +1018,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "仕入れた商品のうち582,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":582000,"credit_account":"仕入","credit_amount":582000}}',
     explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
@@ -1033,7 +1033,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売上げた商品のうち108,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":108000,"credit_account":"売掛金","credit_amount":108000}}',
     explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
@@ -1048,7 +1048,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品612,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":612000,"credit_account":"買掛金","credit_amount":612000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -1063,7 +1063,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品を235,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":235000,"credit_account":"売上","credit_amount":235000}}',
     explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
@@ -1078,7 +1078,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "仕入れた商品のうち786,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":786000,"credit_account":"仕入","credit_amount":786000}}',
     explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
@@ -1093,7 +1093,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売上げた商品のうち695,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":695000,"credit_account":"売掛金","credit_amount":695000}}',
     explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
@@ -1108,7 +1108,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品924,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":924000,"credit_account":"買掛金","credit_amount":924000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -1123,7 +1123,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品を172,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":172000,"credit_account":"売上","credit_amount":172000}}',
     explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
@@ -1138,7 +1138,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "仕入れた商品のうち860,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":860000,"credit_account":"仕入","credit_amount":860000}}',
     explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
@@ -1153,7 +1153,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売上げた商品のうち146,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":146000,"credit_account":"売掛金","credit_amount":146000}}',
     explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
@@ -1168,7 +1168,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品19,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":19000,"credit_account":"買掛金","credit_amount":19000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -1183,7 +1183,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品を132,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":132000,"credit_account":"売上","credit_amount":132000}}',
     explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
@@ -1198,7 +1198,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "仕入れた商品のうち824,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":824000,"credit_account":"仕入","credit_amount":824000}}',
     explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
@@ -1213,7 +1213,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売上げた商品のうち775,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":775000,"credit_account":"売掛金","credit_amount":775000}}',
     explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
@@ -1228,7 +1228,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品113,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":113000,"credit_account":"買掛金","credit_amount":113000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -1243,7 +1243,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品を833,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":833000,"credit_account":"売上","credit_amount":833000}}',
     explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
@@ -1258,7 +1258,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "仕入れた商品のうち872,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":872000,"credit_account":"仕入","credit_amount":872000}}',
     explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
@@ -1273,7 +1273,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売上げた商品のうち263,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":263000,"credit_account":"売掛金","credit_amount":263000}}',
     explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
@@ -1288,7 +1288,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品286,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":286000,"credit_account":"買掛金","credit_amount":286000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -1303,7 +1303,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品を800,000円で販売し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":800000,"credit_account":"売上","credit_amount":800000}}',
     explanation: "商品売上の仕訳です。借方に現金、貸方に売上を記入します。",
@@ -1318,7 +1318,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "仕入れた商品のうち84,000円分を品違いのため返品した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":84000,"credit_account":"仕入","credit_amount":84000}}',
     explanation: "仕入戻しの仕訳です。借方に買掛金、貸方に仕入を記入します。",
@@ -1333,7 +1333,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売上げた商品のうち390,000円分が品違いのため返品された。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"売上","debit_amount":390000,"credit_account":"売掛金","credit_amount":390000}}',
     explanation: "売上戻りの仕訳です。借方に売上、貸方に売掛金を記入します。",
@@ -1348,7 +1348,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "商品150,000円を仕入れ、代金は掛けとした。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":150000,"credit_account":"買掛金","credit_amount":150000}}',
     explanation: "商品仕入の仕訳です。借方に仕入、貸方に買掛金を記入します。",
@@ -1363,7 +1363,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金855,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":855000,"credit_account":"売掛金","credit_amount":855000}}',
     explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
@@ -1378,7 +1378,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金696,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":696000,"credit_account":"当座預金","credit_amount":696000}}',
     explanation:
@@ -1394,7 +1394,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金526,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":526000,"credit_account":"売掛金","credit_amount":526000}}',
     explanation:
@@ -1410,7 +1410,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金387,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":387000,"credit_account":"支払手形","credit_amount":387000}}',
     explanation:
@@ -1426,7 +1426,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金898,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":898000,"credit_account":"売掛金","credit_amount":898000}}',
     explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
@@ -1441,7 +1441,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金106,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":106000,"credit_account":"当座預金","credit_amount":106000}}',
     explanation:
@@ -1457,7 +1457,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金935,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":935000,"credit_account":"売掛金","credit_amount":935000}}',
     explanation:
@@ -1473,7 +1473,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金169,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":169000,"credit_account":"支払手形","credit_amount":169000}}',
     explanation:
@@ -1489,7 +1489,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金86,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":86000,"credit_account":"売掛金","credit_amount":86000}}',
     explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
@@ -1504,7 +1504,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金606,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":606000,"credit_account":"当座預金","credit_amount":606000}}',
     explanation:
@@ -1520,7 +1520,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金69,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":69000,"credit_account":"売掛金","credit_amount":69000}}',
     explanation:
@@ -1536,7 +1536,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金489,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":489000,"credit_account":"支払手形","credit_amount":489000}}',
     explanation:
@@ -1552,7 +1552,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金773,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":773000,"credit_account":"売掛金","credit_amount":773000}}',
     explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
@@ -1567,7 +1567,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金897,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":897000,"credit_account":"当座預金","credit_amount":897000}}',
     explanation:
@@ -1583,7 +1583,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金744,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":744000,"credit_account":"売掛金","credit_amount":744000}}',
     explanation:
@@ -1599,7 +1599,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金535,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":535000,"credit_account":"支払手形","credit_amount":535000}}',
     explanation:
@@ -1615,7 +1615,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金610,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":610000,"credit_account":"売掛金","credit_amount":610000}}',
     explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
@@ -1630,7 +1630,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金675,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":675000,"credit_account":"当座預金","credit_amount":675000}}',
     explanation:
@@ -1646,7 +1646,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金823,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":823000,"credit_account":"売掛金","credit_amount":823000}}',
     explanation:
@@ -1662,7 +1662,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金698,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":698000,"credit_account":"支払手形","credit_amount":698000}}',
     explanation:
@@ -1678,7 +1678,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金362,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":362000,"credit_account":"売掛金","credit_amount":362000}}',
     explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
@@ -1693,7 +1693,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金708,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":708000,"credit_account":"当座預金","credit_amount":708000}}',
     explanation:
@@ -1709,7 +1709,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金859,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":859000,"credit_account":"売掛金","credit_amount":859000}}',
     explanation:
@@ -1725,7 +1725,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金88,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":88000,"credit_account":"支払手形","credit_amount":88000}}',
     explanation:
@@ -1741,7 +1741,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金7,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":7000,"credit_account":"売掛金","credit_amount":7000}}',
     explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
@@ -1756,7 +1756,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金639,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":639000,"credit_account":"当座預金","credit_amount":639000}}',
     explanation:
@@ -1772,7 +1772,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金420,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":420000,"credit_account":"売掛金","credit_amount":420000}}',
     explanation:
@@ -1788,7 +1788,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金249,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":249000,"credit_account":"支払手形","credit_amount":249000}}',
     explanation:
@@ -1804,7 +1804,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金814,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":814000,"credit_account":"売掛金","credit_amount":814000}}',
     explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
@@ -1819,7 +1819,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金111,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":111000,"credit_account":"当座預金","credit_amount":111000}}',
     explanation:
@@ -1835,7 +1835,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金201,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":201000,"credit_account":"売掛金","credit_amount":201000}}',
     explanation:
@@ -1851,7 +1851,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金248,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":248000,"credit_account":"支払手形","credit_amount":248000}}',
     explanation:
@@ -1867,7 +1867,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金712,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":712000,"credit_account":"売掛金","credit_amount":712000}}',
     explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
@@ -1882,7 +1882,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金314,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":314000,"credit_account":"当座預金","credit_amount":314000}}',
     explanation:
@@ -1898,7 +1898,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金190,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":190000,"credit_account":"売掛金","credit_amount":190000}}',
     explanation:
@@ -1914,7 +1914,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金85,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":85000,"credit_account":"支払手形","credit_amount":85000}}',
     explanation:
@@ -1930,7 +1930,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金608,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":608000,"credit_account":"売掛金","credit_amount":608000}}',
     explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
@@ -1945,7 +1945,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金975,000円を小切手を振り出して支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":975000,"credit_account":"当座預金","credit_amount":975000}}',
     explanation:
@@ -1961,7 +1961,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金472,000円の代金として約束手形を受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"受取手形","debit_amount":472000,"credit_account":"売掛金","credit_amount":472000}}',
     explanation:
@@ -1977,7 +1977,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "買掛金275,000円の支払いのため約束手形を振り出した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"買掛金","debit_amount":275000,"credit_account":"支払手形","credit_amount":275000}}',
     explanation:
@@ -1993,7 +1993,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "売掛金50,000円を現金で回収した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":50000,"credit_account":"売掛金","credit_amount":50000}}',
     explanation: "売掛金回収の仕訳です。借方に現金、貸方に売掛金を記入します。",
@@ -2009,7 +2009,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "従業員に給料563,000円を支払った。なお、源泉所得税146,000円を差し引いた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":563000,"credit_account":"現金","credit_amount":563000}}',
     explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
@@ -2025,7 +2025,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "社会保険料584,000円（会社負担181,000円、従業員負担18,100円）を現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":584000,"credit_account":"預り金","credit_amount":584000}}',
     explanation:
@@ -2041,7 +2041,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "固定資産税973,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":973000,"credit_account":"現金","credit_amount":973000}}',
     explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
@@ -2056,7 +2056,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "法人税等33,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":33000,"credit_account":"当座預金","credit_amount":33000}}',
     explanation:
@@ -2073,7 +2073,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "従業員に給料176,000円を支払った。なお、源泉所得税817,000円を差し引いた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":176000,"credit_account":"現金","credit_amount":176000}}',
     explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
@@ -2089,7 +2089,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "社会保険料59,000円（会社負担387,000円、従業員負担38,700円）を現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":59000,"credit_account":"預り金","credit_amount":59000}}',
     explanation:
@@ -2105,7 +2105,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "固定資産税729,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":729000,"credit_account":"現金","credit_amount":729000}}',
     explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
@@ -2120,7 +2120,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "法人税等699,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":699000,"credit_account":"当座預金","credit_amount":699000}}',
     explanation:
@@ -2137,7 +2137,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "従業員に給料573,000円を支払った。なお、源泉所得税151,000円を差し引いた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":573000,"credit_account":"現金","credit_amount":573000}}',
     explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
@@ -2153,7 +2153,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "社会保険料994,000円（会社負担248,000円、従業員負担24,800円）を現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":994000,"credit_account":"預り金","credit_amount":994000}}',
     explanation:
@@ -2169,7 +2169,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "固定資産税314,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":314000,"credit_account":"現金","credit_amount":314000}}',
     explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
@@ -2184,7 +2184,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "法人税等314,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":314000,"credit_account":"当座預金","credit_amount":314000}}',
     explanation:
@@ -2201,7 +2201,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "従業員に給料809,000円を支払った。なお、源泉所得税941,000円を差し引いた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":809000,"credit_account":"現金","credit_amount":809000}}',
     explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
@@ -2217,7 +2217,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "社会保険料330,000円（会社負担169,000円、従業員負担16,900円）を現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":330000,"credit_account":"預り金","credit_amount":330000}}',
     explanation:
@@ -2233,7 +2233,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "固定資産税435,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":435000,"credit_account":"現金","credit_amount":435000}}',
     explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
@@ -2248,7 +2248,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "法人税等163,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":163000,"credit_account":"当座預金","credit_amount":163000}}',
     explanation:
@@ -2265,7 +2265,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "従業員に給料919,000円を支払った。なお、源泉所得税824,000円を差し引いた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":919000,"credit_account":"現金","credit_amount":919000}}',
     explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
@@ -2281,7 +2281,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "社会保険料691,000円（会社負担357,000円、従業員負担35,700円）を現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":691000,"credit_account":"預り金","credit_amount":691000}}',
     explanation:
@@ -2297,7 +2297,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "固定資産税783,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":783000,"credit_account":"現金","credit_amount":783000}}',
     explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
@@ -2312,7 +2312,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "法人税等550,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":550000,"credit_account":"当座預金","credit_amount":550000}}',
     explanation:
@@ -2329,7 +2329,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "従業員に給料223,000円を支払った。なお、源泉所得税504,000円を差し引いた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":223000,"credit_account":"現金","credit_amount":223000}}',
     explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
@@ -2345,7 +2345,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "社会保険料435,000円（会社負担119,000円、従業員負担11,900円）を現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":435000,"credit_account":"預り金","credit_amount":435000}}',
     explanation:
@@ -2361,7 +2361,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "固定資産税54,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":54000,"credit_account":"現金","credit_amount":54000}}',
     explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
@@ -2376,7 +2376,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "法人税等310,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":310000,"credit_account":"当座預金","credit_amount":310000}}',
     explanation:
@@ -2391,12 +2391,12 @@ export const masterQuestions: Question[] = [
     id: "Q_J_153",
     category_id: "journal",
     question_text:
-      "従業員に給料512,000円を支払った。なお、源泉所得税193,000円を差し引いた。",
+      "従業員に給料512,000円を支払った。なお、源泉所得税48,000円を差し引いて現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"給料","debit_amount":512000,"credit_account":"現金","credit_amount":512000}}',
-    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+      '{"journalEntry":{"entries":[{"debit_account":"給料","debit_amount":512000,"credit_account":"現金","credit_amount":464000},{"debit_account":"","debit_amount":0,"credit_account":"預り金","credit_amount":48000}]}}',
+    explanation: "給料支払で源泉所得税を差し引いた複合仕訳です。借方：給料512,000円、貸方：現金464,000円・預り金48,000円",
     difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
@@ -2407,13 +2407,13 @@ export const masterQuestions: Question[] = [
     id: "Q_J_154",
     category_id: "journal",
     question_text:
-      "社会保険料999,000円（会社負担228,000円、従業員負担22,800円）を現金で支払った。",
+      "社会保険料250,800円（会社負担228,000円、従業員負担22,800円）を現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"法定福利費","debit_amount":999000,"credit_account":"預り金","credit_amount":999000}}',
+      '{"journalEntry":{"entries":[{"debit_account":"法定福利費","debit_amount":228000,"credit_account":"現金","credit_amount":250800},{"debit_account":"預り金","debit_amount":22800,"credit_account":"","credit_amount":0}]}}',
     explanation:
-      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+      "社会保険料の現金支払です。借方：法定福利費228,000円・預り金22,800円、貸方：現金250,800円",
     difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
@@ -2425,7 +2425,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "固定資産税947,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":947000,"credit_account":"現金","credit_amount":947000}}',
     explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
@@ -2440,7 +2440,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "法人税等497,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":497000,"credit_account":"当座預金","credit_amount":497000}}',
     explanation:
@@ -2455,12 +2455,12 @@ export const masterQuestions: Question[] = [
     id: "Q_J_157",
     category_id: "journal",
     question_text:
-      "従業員に給料77,000円を支払った。なお、源泉所得税752,000円を差し引いた。",
+      "従業員に給料377,000円を支払った。なお、源泉所得税52,000円を差し引いて現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"給料","debit_amount":77000,"credit_account":"現金","credit_amount":77000}}',
-    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+      '{"journalEntry":{"entries":[{"debit_account":"給料","debit_amount":377000,"credit_account":"現金","credit_amount":325000},{"debit_account":"","debit_amount":0,"credit_account":"預り金","credit_amount":52000}]}}',
+    explanation: "給料支払で源泉所得税を差し引いた複合仕訳です。借方：給料377,000円、貸方：現金325,000円・預り金52,000円",
     difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
@@ -2471,13 +2471,13 @@ export const masterQuestions: Question[] = [
     id: "Q_J_158",
     category_id: "journal",
     question_text:
-      "社会保険料543,000円（会社負担159,000円、従業員負担15,900円）を現金で支払った。",
+      "社会保険料174,900円（会社負担159,000円、従業員負担15,900円）を現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"法定福利費","debit_amount":543000,"credit_account":"預り金","credit_amount":543000}}',
+      '{"journalEntry":{"entries":[{"debit_account":"法定福利費","debit_amount":159000,"credit_account":"現金","credit_amount":174900},{"debit_account":"預り金","debit_amount":15900,"credit_account":"","credit_amount":0}]}}',
     explanation:
-      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+      "社会保険料の現金支払です。借方：法定福利費159,000円・預り金15,900円、貸方：現金174,900円",
     difficulty: 2,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
@@ -2489,7 +2489,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "固定資産税540,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":540000,"credit_account":"現金","credit_amount":540000}}',
     explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
@@ -2504,7 +2504,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "法人税等847,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":847000,"credit_account":"当座預金","credit_amount":847000}}',
     explanation:
@@ -2519,12 +2519,12 @@ export const masterQuestions: Question[] = [
     id: "Q_J_161",
     category_id: "journal",
     question_text:
-      "従業員に給料604,000円を支払った。なお、源泉所得税633,000円を差し引いた。",
+      "従業員に給料604,000円を支払った。なお、源泉所得税63,000円を差し引いて現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"給料","debit_amount":604000,"credit_account":"現金","credit_amount":604000}}',
-    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+      '{"journalEntry":{"entries":[{"debit_account":"給料","debit_amount":604000,"credit_account":"現金","credit_amount":541000},{"debit_account":"","debit_amount":0,"credit_account":"預り金","credit_amount":63000}]}}',
+    explanation: "給料支払で源泉所得税を差し引いた複合仕訳です。借方：給料604,000円、貸方：現金541,000円・預り金63,000円",
     difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
@@ -2535,13 +2535,13 @@ export const masterQuestions: Question[] = [
     id: "Q_J_162",
     category_id: "journal",
     question_text:
-      "社会保険料157,000円（会社負担740,000円、従業員負担74,000円）を現金で支払った。",
+      "社会保険料814,000円（会社負担740,000円、従業員負担74,000円）を現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"法定福利費","debit_amount":157000,"credit_account":"預り金","credit_amount":157000}}',
+      '{"journalEntry":{"entries":[{"debit_account":"法定福利費","debit_amount":740000,"credit_account":"現金","credit_amount":814000},{"debit_account":"預り金","debit_amount":74000,"credit_account":"","credit_amount":0}]}}',
     explanation:
-      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+      "社会保険料の現金支払です。借方：法定福利費740,000円・預り金74,000円、貸方：現金814,000円",
     difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
@@ -2553,7 +2553,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "固定資産税462,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":462000,"credit_account":"現金","credit_amount":462000}}',
     explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
@@ -2568,7 +2568,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "法人税等814,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":814000,"credit_account":"当座預金","credit_amount":814000}}',
     explanation:
@@ -2583,12 +2583,12 @@ export const masterQuestions: Question[] = [
     id: "Q_J_165",
     category_id: "journal",
     question_text:
-      "従業員に給料292,000円を支払った。なお、源泉所得税238,000円を差し引いた。",
+      "従業員に給料292,000円を支払った。なお、源泉所得税38,000円を差し引いて現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"給料","debit_amount":292000,"credit_account":"現金","credit_amount":292000}}',
-    explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
+      '{"journalEntry":{"entries":[{"debit_account":"給料","debit_amount":292000,"credit_account":"現金","credit_amount":254000},{"debit_account":"","debit_amount":0,"credit_account":"預り金","credit_amount":38000}]}}',
+    explanation: "給料支払で源泉所得税を差し引いた複合仕訳です。借方：給料292,000円、貸方：現金254,000円・預り金38,000円",
     difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
@@ -2599,13 +2599,13 @@ export const masterQuestions: Question[] = [
     id: "Q_J_166",
     category_id: "journal",
     question_text:
-      "社会保険料701,000円（会社負担348,000円、従業員負担34,800円）を現金で支払った。",
+      "社会保険料382,800円（会社負担348,000円、従業員負担34,800円）を現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"法定福利費","debit_amount":701000,"credit_account":"預り金","credit_amount":701000}}',
+      '{"journalEntry":{"entries":[{"debit_account":"法定福利費","debit_amount":348000,"credit_account":"現金","credit_amount":382800},{"debit_account":"預り金","debit_amount":34800,"credit_account":"","credit_amount":0}]}}',
     explanation:
-      "社会保険料の仕訳です。借方に法定福利費、貸方に預り金を記入します。",
+      "社会保険料の現金支払です。借方：法定福利費348,000円・預り金34,800円、貸方：現金382,800円",
     difficulty: 3,
     tags_json:
       '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
@@ -2617,7 +2617,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "固定資産税18,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"租税公課","debit_amount":18000,"credit_account":"現金","credit_amount":18000}}',
     explanation: "租税公課の仕訳です。借方に租税公課、貸方に現金を記入します。",
@@ -2632,7 +2632,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "法人税等111,000円を当座預金から納付した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法人税等","debit_amount":111000,"credit_account":"当座預金","credit_amount":111000}}',
     explanation:
@@ -2649,7 +2649,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "従業員に給料598,000円を支払った。なお、源泉所得税819,000円を差し引いた。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"給料","debit_amount":598000,"credit_account":"現金","credit_amount":598000}}',
     explanation: "給料支払の仕訳です。借方に給料、貸方に現金を記入します。",
@@ -2665,7 +2665,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "社会保険料39,000円（会社負担500,000円、従業員負担50,000円）を現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"法定福利費","debit_amount":39000,"credit_account":"預り金","credit_amount":39000}}',
     explanation:
@@ -2681,7 +2681,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "備品507,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":507000,"credit_account":"現金","credit_amount":507000}}',
     explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
@@ -2696,7 +2696,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "決算において、建物の減価償却費273,000円を計上する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":273000,"credit_account":"建物減価償却累計額","credit_amount":273000}}',
     explanation:
@@ -2713,7 +2713,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "帳簿価額702,000円の車両を943,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":943000,"credit_account":"車両","credit_amount":943000}}',
     explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
@@ -2729,7 +2729,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "使用不能となった備品（取得原価536,000円、減価償却累計額633,000円）を除却した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":536000,"credit_account":"固定資産除却損","credit_amount":536000}}',
     explanation:
@@ -2745,7 +2745,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "備品536,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":536000,"credit_account":"現金","credit_amount":536000}}',
     explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
@@ -2760,7 +2760,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "決算において、建物の減価償却費413,000円を計上する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":413000,"credit_account":"建物減価償却累計額","credit_amount":413000}}',
     explanation:
@@ -2777,7 +2777,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "帳簿価額823,000円の車両を435,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":435000,"credit_account":"車両","credit_amount":435000}}',
     explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
@@ -2793,7 +2793,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "使用不能となった備品（取得原価89,000円、減価償却累計額822,000円）を除却した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":89000,"credit_account":"固定資産除却損","credit_amount":89000}}',
     explanation:
@@ -2809,7 +2809,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "備品25,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":25000,"credit_account":"現金","credit_amount":25000}}',
     explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
@@ -2824,7 +2824,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "決算において、建物の減価償却費966,000円を計上する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":966000,"credit_account":"建物減価償却累計額","credit_amount":966000}}',
     explanation:
@@ -2841,7 +2841,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "帳簿価額315,000円の車両を604,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":604000,"credit_account":"車両","credit_amount":604000}}',
     explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
@@ -2857,7 +2857,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "使用不能となった備品（取得原価30,000円、減価償却累計額717,000円）を除却した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":30000,"credit_account":"固定資産除却損","credit_amount":30000}}',
     explanation:
@@ -2873,7 +2873,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "備品425,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":425000,"credit_account":"現金","credit_amount":425000}}',
     explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
@@ -2888,7 +2888,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "決算において、建物の減価償却費713,000円を計上する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":713000,"credit_account":"建物減価償却累計額","credit_amount":713000}}',
     explanation:
@@ -2905,7 +2905,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "帳簿価額751,000円の車両を96,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":96000,"credit_account":"車両","credit_amount":96000}}',
     explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
@@ -2921,7 +2921,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "使用不能となった備品（取得原価92,000円、減価償却累計額472,000円）を除却した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":92000,"credit_account":"固定資産除却損","credit_amount":92000}}',
     explanation:
@@ -2937,7 +2937,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "備品910,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":910000,"credit_account":"現金","credit_amount":910000}}',
     explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
@@ -2952,7 +2952,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "決算において、建物の減価償却費93,000円を計上する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":93000,"credit_account":"建物減価償却累計額","credit_amount":93000}}',
     explanation:
@@ -2969,7 +2969,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "帳簿価額984,000円の車両を4,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":4000,"credit_account":"車両","credit_amount":4000}}',
     explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
@@ -2985,7 +2985,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "使用不能となった備品（取得原価305,000円、減価償却累計額440,000円）を除却した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":305000,"credit_account":"固定資産除却損","credit_amount":305000}}',
     explanation:
@@ -3001,7 +3001,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "備品656,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":656000,"credit_account":"現金","credit_amount":656000}}',
     explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
@@ -3016,7 +3016,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "決算において、建物の減価償却費655,000円を計上する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":655000,"credit_account":"建物減価償却累計額","credit_amount":655000}}',
     explanation:
@@ -3033,7 +3033,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "帳簿価額806,000円の車両を360,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":360000,"credit_account":"車両","credit_amount":360000}}',
     explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
@@ -3049,7 +3049,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "使用不能となった備品（取得原価539,000円、減価償却累計額836,000円）を除却した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":539000,"credit_account":"固定資産除却損","credit_amount":539000}}',
     explanation:
@@ -3065,7 +3065,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "備品324,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":324000,"credit_account":"現金","credit_amount":324000}}',
     explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
@@ -3080,7 +3080,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "決算において、建物の減価償却費112,000円を計上する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":112000,"credit_account":"建物減価償却累計額","credit_amount":112000}}',
     explanation:
@@ -3097,7 +3097,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "帳簿価額603,000円の車両を767,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":767000,"credit_account":"車両","credit_amount":767000}}',
     explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
@@ -3113,7 +3113,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "使用不能となった備品（取得原価71,000円、減価償却累計額831,000円）を除却した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":71000,"credit_account":"固定資産除却損","credit_amount":71000}}',
     explanation:
@@ -3129,7 +3129,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "備品633,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":633000,"credit_account":"現金","credit_amount":633000}}',
     explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
@@ -3144,7 +3144,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "決算において、建物の減価償却費670,000円を計上する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":670000,"credit_account":"建物減価償却累計額","credit_amount":670000}}',
     explanation:
@@ -3161,7 +3161,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "帳簿価額580,000円の車両を613,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":613000,"credit_account":"車両","credit_amount":613000}}',
     explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
@@ -3177,7 +3177,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "使用不能となった備品（取得原価431,000円、減価償却累計額989,000円）を除却した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":431000,"credit_account":"固定資産除却損","credit_amount":431000}}',
     explanation:
@@ -3193,7 +3193,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "備品504,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":504000,"credit_account":"現金","credit_amount":504000}}',
     explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
@@ -3208,7 +3208,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "決算において、建物の減価償却費668,000円を計上する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":668000,"credit_account":"建物減価償却累計額","credit_amount":668000}}',
     explanation:
@@ -3225,7 +3225,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "帳簿価額529,000円の車両を310,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":310000,"credit_account":"車両","credit_amount":310000}}',
     explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
@@ -3241,7 +3241,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "使用不能となった備品（取得原価719,000円、減価償却累計額191,000円）を除却した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":719000,"credit_account":"固定資産除却損","credit_amount":719000}}',
     explanation:
@@ -3257,7 +3257,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "備品862,000円を購入し、代金は現金で支払った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品","debit_amount":862000,"credit_account":"現金","credit_amount":862000}}',
     explanation: "固定資産購入の仕訳です。借方に備品、貸方に現金を記入します。",
@@ -3272,7 +3272,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "決算において、建物の減価償却費563,000円を計上する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"減価償却費","debit_amount":563000,"credit_account":"建物減価償却累計額","credit_amount":563000}}',
     explanation:
@@ -3289,7 +3289,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "帳簿価額142,000円の車両を521,000円で売却し、代金は現金で受け取った。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"現金","debit_amount":521000,"credit_account":"車両","credit_amount":521000}}',
     explanation: "固定資産売却の仕訳です。借方に現金、貸方に車両を記入します。",
@@ -3305,7 +3305,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "使用不能となった備品（取得原価269,000円、減価償却累計額390,000円）を除却した。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"備品減価償却累計額","debit_amount":269000,"credit_account":"固定資産除却損","credit_amount":269000}}',
     explanation:
@@ -3322,7 +3322,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "決算において、売掛金668,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":668000,"credit_account":"貸倒引当金","credit_amount":668000}}',
     explanation:
@@ -3339,7 +3339,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "期首商品棚卸高417,000円、当期商品仕入高318,000円、期末商品棚卸高31,800円である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":417000,"credit_account":"繰越商品","credit_amount":417000}}',
     explanation:
@@ -3355,7 +3355,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "支払保険料712,000円のうち、275,000円は次期分である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":275000,"credit_account":"保険料","credit_amount":275000}}',
     explanation:
@@ -3371,7 +3371,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "当期の支払利息166,000円が未払いである。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":166000,"credit_account":"未払費用","credit_amount":166000}}',
     explanation:
@@ -3388,7 +3388,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "決算において、売掛金716,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":716000,"credit_account":"貸倒引当金","credit_amount":716000}}',
     explanation:
@@ -3405,7 +3405,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "期首商品棚卸高75,000円、当期商品仕入高12,000円、期末商品棚卸高1,200円である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":75000,"credit_account":"繰越商品","credit_amount":75000}}',
     explanation:
@@ -3421,7 +3421,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "支払保険料405,000円のうち、90,000円は次期分である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":90000,"credit_account":"保険料","credit_amount":90000}}',
     explanation:
@@ -3437,7 +3437,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "当期の支払利息435,000円が未払いである。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":435000,"credit_account":"未払費用","credit_amount":435000}}',
     explanation:
@@ -3454,7 +3454,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "決算において、売掛金573,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":573000,"credit_account":"貸倒引当金","credit_amount":573000}}',
     explanation:
@@ -3471,7 +3471,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "期首商品棚卸高207,000円、当期商品仕入高898,000円、期末商品棚卸高89,800円である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":207000,"credit_account":"繰越商品","credit_amount":207000}}',
     explanation:
@@ -3487,7 +3487,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "支払保険料557,000円のうち、304,000円は次期分である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":304000,"credit_account":"保険料","credit_amount":304000}}',
     explanation:
@@ -3503,7 +3503,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "当期の支払利息859,000円が未払いである。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":859000,"credit_account":"未払費用","credit_amount":859000}}',
     explanation:
@@ -3520,7 +3520,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "決算において、売掛金240,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":240000,"credit_account":"貸倒引当金","credit_amount":240000}}',
     explanation:
@@ -3537,7 +3537,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "期首商品棚卸高963,000円、当期商品仕入高231,000円、期末商品棚卸高23,100円である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":963000,"credit_account":"繰越商品","credit_amount":963000}}',
     explanation:
@@ -3553,7 +3553,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "支払保険料742,000円のうち、209,000円は次期分である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":209000,"credit_account":"保険料","credit_amount":209000}}',
     explanation:
@@ -3569,7 +3569,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "当期の支払利息692,000円が未払いである。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":692000,"credit_account":"未払費用","credit_amount":692000}}',
     explanation:
@@ -3586,7 +3586,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "決算において、売掛金724,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":724000,"credit_account":"貸倒引当金","credit_amount":724000}}',
     explanation:
@@ -3603,7 +3603,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "期首商品棚卸高48,000円、当期商品仕入高967,000円、期末商品棚卸高96,700円である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":48000,"credit_account":"繰越商品","credit_amount":48000}}',
     explanation:
@@ -3619,7 +3619,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "支払保険料488,000円のうち、321,000円は次期分である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":321000,"credit_account":"保険料","credit_amount":321000}}',
     explanation:
@@ -3635,7 +3635,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "当期の支払利息938,000円が未払いである。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":938000,"credit_account":"未払費用","credit_amount":938000}}',
     explanation:
@@ -3652,7 +3652,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "決算において、売掛金862,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":862000,"credit_account":"貸倒引当金","credit_amount":862000}}',
     explanation:
@@ -3669,7 +3669,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "期首商品棚卸高425,000円、当期商品仕入高143,000円、期末商品棚卸高14,300円である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":425000,"credit_account":"繰越商品","credit_amount":425000}}',
     explanation:
@@ -3685,7 +3685,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "支払保険料132,000円のうち、628,000円は次期分である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":132000,"credit_account":"保険料","credit_amount":132000}}',
     explanation:
@@ -3701,7 +3701,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "当期の支払利息265,000円が未払いである。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":265000,"credit_account":"未払費用","credit_amount":265000}}',
     explanation:
@@ -3718,7 +3718,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "決算において、売掛金183,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":183000,"credit_account":"貸倒引当金","credit_amount":183000}}',
     explanation:
@@ -3735,7 +3735,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "期首商品棚卸高268,000円、当期商品仕入高182,000円、期末商品棚卸高18,200円である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":268000,"credit_account":"繰越商品","credit_amount":268000}}',
     explanation:
@@ -3751,7 +3751,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "支払保険料213,000円のうち、450,000円は次期分である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":213000,"credit_account":"保険料","credit_amount":213000}}',
     explanation:
@@ -3767,7 +3767,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "当期の支払利息658,000円が未払いである。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":658000,"credit_account":"未払費用","credit_amount":658000}}',
     explanation:
@@ -3784,7 +3784,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "決算において、売掛金998,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":998000,"credit_account":"貸倒引当金","credit_amount":998000}}',
     explanation:
@@ -3801,7 +3801,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "期首商品棚卸高134,000円、当期商品仕入高585,000円、期末商品棚卸高58,500円である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":134000,"credit_account":"繰越商品","credit_amount":134000}}',
     explanation:
@@ -3817,7 +3817,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "支払保険料882,000円のうち、150,000円は次期分である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":882000,"credit_account":"保険料","credit_amount":882000}}',
     explanation:
@@ -3833,7 +3833,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "当期の支払利息488,000円が未払いである。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":488000,"credit_account":"未払費用","credit_amount":488000}}',
     explanation:
@@ -3850,7 +3850,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "決算において、売掛金1,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":1000,"credit_account":"貸倒引当金","credit_amount":1000}}',
     explanation:
@@ -3867,7 +3867,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "期首商品棚卸高254,000円、当期商品仕入高326,000円、期末商品棚卸高32,600円である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":254000,"credit_account":"繰越商品","credit_amount":254000}}',
     explanation:
@@ -3883,7 +3883,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "支払保険料828,000円のうち、690,000円は次期分である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":828000,"credit_account":"保険料","credit_amount":828000}}',
     explanation:
@@ -3899,7 +3899,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "当期の支払利息49,000円が未払いである。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":49000,"credit_account":"未払費用","credit_amount":49000}}',
     explanation:
@@ -3916,7 +3916,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "決算において、売掛金568,000円に対して2%の貸倒引当金を設定する。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"貸倒引当金繰入","debit_amount":568000,"credit_account":"貸倒引当金","credit_amount":568000}}',
     explanation:
@@ -3933,7 +3933,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "期首商品棚卸高284,000円、当期商品仕入高683,000円、期末商品棚卸高68,300円である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"仕入","debit_amount":284000,"credit_account":"繰越商品","credit_amount":284000}}',
     explanation:
@@ -3949,7 +3949,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "支払保険料143,000円のうち、659,000円は次期分である。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"前払費用","debit_amount":143000,"credit_account":"保険料","credit_amount":143000}}',
     explanation:
@@ -3965,7 +3965,7 @@ export const masterQuestions: Question[] = [
     category_id: "journal",
     question_text: "当期の支払利息446,000円が未払いである。",
     answer_template_json:
-      '{"type":"ledger_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
+      '{"type":"journal_entry","fields":[{"name":"date","label":"日付","type":"text","required":true,"placeholder":"例: 10/5"},{"name":"description","label":"摘要","type":"text","required":true,"placeholder":"例: 現金売上"},{"name":"debit_amount","label":"借方金額","type":"number","required":false,"format":"currency"},{"name":"credit_amount","label":"貸方金額","type":"number","required":false,"format":"currency"},{"name":"balance","label":"残高","type":"number","required":true,"format":"currency"}],"allowMultipleEntries":true,"maxEntries":10}',
     correct_answer_json:
       '{"journalEntry":{"debit_account":"支払利息","debit_amount":446000,"credit_account":"未払費用","credit_amount":446000}}',
     explanation:
@@ -4464,7 +4464,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":552000}]}}',
+      '{"answers": {"a": "C", "b": "A", "c": "B", "d": "D"}}',
     explanation: "簿記理論に関する問題です。",
     difficulty: 1,
     tags_json:
@@ -4480,7 +4480,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":397000}]}}',
+      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
     explanation: "簿記理論に関する問題です。",
     difficulty: 1,
     tags_json:
@@ -4496,7 +4496,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":374000}]}}',
+      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
     explanation: "簿記理論に関する問題です。",
     difficulty: 1,
     tags_json:
@@ -4512,7 +4512,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":592000}]}}',
+      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
     explanation: "簿記理論に関する問題です。",
     difficulty: 2,
     tags_json:
@@ -4528,7 +4528,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":660000}]}}',
+      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
     explanation: "簿記理論に関する問題です。",
     difficulty: 2,
     tags_json:
@@ -4544,7 +4544,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":754000}]}}',
+      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
     explanation: "簿記理論に関する問題です。",
     difficulty: 2,
     tags_json:
@@ -4560,7 +4560,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":123000}]}}',
+      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
     explanation: "簿記理論に関する問題です。",
     difficulty: 2,
     tags_json:
@@ -4576,7 +4576,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":524000}]}}',
+      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
     explanation: "簿記理論に関する問題です。",
     difficulty: 3,
     tags_json:
@@ -4592,7 +4592,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":525000}]}}',
+      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
     explanation: "簿記理論に関する問題です。",
     difficulty: 3,
     tags_json:
@@ -4608,7 +4608,7 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"type":"multiple_choice","questions":[{"id":"a","label":"（ア）","options":["A","B","C","D"]},{"id":"b","label":"（イ）","options":["A","B","C","D"]},{"id":"c","label":"（ウ）","options":["A","B","C","D"]},{"id":"d","label":"（エ）","options":["A","B","C","D"]}]}',
     correct_answer_json:
-      '{"ledgerEntry":{"entries":[{"description":"簿記理論","amount":681000}]}}',
+      '{"answers": {"a": "B", "b": "A", "c": "C", "d": "D"}}',
     explanation: "簿記理論に関する問題です。",
     difficulty: 3,
     tags_json:
