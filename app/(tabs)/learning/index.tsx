@@ -120,7 +120,12 @@ export default function LearningScreen() {
   }, []);
 
   return (
-    <Screen safeArea={true} scrollable={true} statusBarStyle="dark-content">
+    <Screen
+      safeArea={true}
+      scrollable={true}
+      statusBarStyle="dark-content"
+      testID="learning-screen"
+    >
       {/* アプリタイトル（ヘッダー代替） */}
       <View style={styles.headerSection}>
         <Text style={styles.appTitle}>学習</Text>
@@ -151,6 +156,8 @@ export default function LearningScreen() {
                   "/(tabs)/learning/question/Q_J_001?sessionType=learning",
                 );
               }}
+              testID="learning-all-questions-button"
+              accessibilityLabel="全問題順次進行を開始"
             >
               <View style={styles.categoryHeader}>
                 <Text style={styles.categoryIcon}>🎯</Text>
@@ -204,6 +211,8 @@ export default function LearningScreen() {
                   // カテゴリ詳細画面に遷移
                   router.push(`/(tabs)/learning/category/${category.id}`);
                 }}
+                testID={`category-${category.id}`}
+                accessibilityLabel={`${category.name} ${category.subtitle}を開始`}
               >
                 <View style={styles.categoryHeader}>
                   <Text style={styles.categoryIcon}>{category.icon}</Text>
@@ -266,6 +275,8 @@ export default function LearningScreen() {
           onPress={() => {
             router.push("/mock-exam");
           }}
+          testID="learning-mock-exam-button"
+          accessibilityLabel="CBT形式模擬試験を開始"
         >
           <Text style={styles.mockExamIcon}>🎯</Text>
           <View style={styles.mockExamInfo}>

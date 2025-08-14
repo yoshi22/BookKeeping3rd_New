@@ -12,7 +12,12 @@ import { confirmResetDatabase } from "../../src/utils/reset-database";
 
 export default function SettingsScreen() {
   return (
-    <Screen safeArea={true} scrollable={true} statusBarStyle="dark-content">
+    <Screen
+      safeArea={true}
+      scrollable={true}
+      statusBarStyle="dark-content"
+      testID="settings-screen"
+    >
       {/* アプリタイトル（ヘッダー代替） */}
       <View style={styles.headerSection}>
         <Text style={styles.appTitle}>設定</Text>
@@ -109,6 +114,8 @@ export default function SettingsScreen() {
             <TouchableOpacity
               style={styles.resetButton}
               onPress={confirmResetDatabase}
+              testID="settings-reset-database-button"
+              accessibilityLabel="データベースをリセット"
             >
               <Ionicons name="refresh" size={20} color="white" />
               <Text style={styles.resetButtonText}>データベースをリセット</Text>

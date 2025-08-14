@@ -166,7 +166,11 @@ export default function StatsScreen() {
   // ローディング表示
   if (loading) {
     return (
-      <Screen safeArea={true} statusBarStyle="dark-content">
+      <Screen
+        safeArea={true}
+        statusBarStyle="dark-content"
+        testID="stats-screen-loading"
+      >
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>統計データを読み込み中...</Text>
         </View>
@@ -175,7 +179,12 @@ export default function StatsScreen() {
   }
 
   return (
-    <Screen safeArea={true} scrollable={true} statusBarStyle="dark-content">
+    <Screen
+      safeArea={true}
+      scrollable={true}
+      statusBarStyle="dark-content"
+      testID="stats-screen"
+    >
       {/* アプリタイトル（ヘッダー代替） */}
       <View style={styles.headerSection}>
         <Text style={styles.appTitle}>学習統計</Text>
@@ -359,6 +368,8 @@ export default function StatsScreen() {
           <TouchableOpacity
             style={styles.startButton}
             onPress={() => router.push("/(tabs)/learning")}
+            testID="stats-start-learning-button"
+            accessibilityLabel="学習を始める"
           >
             <Text style={styles.startButtonText}>学習を始める</Text>
           </TouchableOpacity>

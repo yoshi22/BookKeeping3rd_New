@@ -9,11 +9,11 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { MockExam } from "../src/types/models";
-import { MockExamRepository } from "../src/data/repositories/mock-exam-repository";
-import { Screen } from "../src/components/layout/ResponsiveLayout";
+import { MockExam } from "../../src/types/models";
+import { MockExamRepository } from "../../src/data/repositories/mock-exam-repository";
+import { Screen } from "../../src/components/layout/ResponsiveLayout";
 
-export default function MockExamScreen() {
+export default function MockExamTabScreen() {
   const router = useRouter();
   const [mockExams, setMockExams] = useState<MockExam[]>([]);
   const [loading, setLoading] = useState(true);
@@ -39,7 +39,7 @@ export default function MockExamScreen() {
   const startMockExam = (exam: MockExam) => {
     Alert.alert(
       "模試開始確認",
-      `${exam.name}を開始しますか？\n\n制限時間: ${exam.time_limit_minutes}分\n合格基準: ${exam.passing_score}点以上`,
+      `${exam.name}を開始しますか？\\n\\n制限時間: ${exam.time_limit_minutes}分\\n合格基準: ${exam.passing_score}点以上`,
       [
         { text: "キャンセル", style: "cancel" },
         {
@@ -57,32 +57,28 @@ export default function MockExamScreen() {
 
   return (
     <Screen testID="mock-exam-screen">
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => router.back()}
-            testID="mock-exam-back-button"
-            accessibilityLabel="戻る"
-          >
-            <Text style={styles.backButtonText}>← 戻る</Text>
-          </TouchableOpacity>
-          <Text style={styles.title}>模擬試験</Text>
-        </View>
+      {/* アプリタイトル（ヘッダー代替） */}
+      <View style={styles.headerSection}>
+        <Text style={styles.appTitle}>模擬試験</Text>
+      </View>
 
-        <ScrollView style={styles.content}>
-          <Text style={styles.description}>
-            本試験形式のCBT模擬試験で実力をチェックしましょう。
-            制限時間内に全問題に取り組んでください。
-          </Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>模擬試験</Text>
+        <Text style={styles.subtitle}>
+          本試験形式のCBT模擬試験で実力をチェックしましょう。
+          制限時間内に全問題に取り組んでください。
+        </Text>
+      </View>
 
-          {loading ? (
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#2f95dc" />
-              <Text style={styles.loadingText}>模試データを読み込み中...</Text>
-            </View>
-          ) : (
-            mockExams.map((exam) => {
+      <ScrollView style={styles.content}>
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#2f95dc" />
+            <Text style={styles.loadingText}>模試データを読み込み中...</Text>
+          </View>
+        ) : (
+          <View testID="mock-exam-list">
+            {mockExams.map((exam) => {
               let structure;
               try {
                 structure = JSON.parse(exam.structure_json);
@@ -98,12 +94,15 @@ export default function MockExamScreen() {
                 (structure.section2?.count || 0) +
                 (structure.section3?.count || 0);
 
+              // Format exam ID as 3-digit string for testID
+              const examIdFormatted = exam.id.toString().padStart(3, "0");
+
               return (
                 <TouchableOpacity
                   key={exam.id}
                   style={styles.examCard}
                   onPress={() => startMockExam(exam)}
-                  testID={`mock-exam-card-${exam.id}`}
+                  testID={`mock-exam-${examIdFormatted}`}
                   accessibilityLabel={`${exam.name}模試を開始`}
                 >
                   <View style={styles.examInfo}>
@@ -131,49 +130,61 @@ export default function MockExamScreen() {
                   </View>
                 </TouchableOpacity>
               );
-            })
-          )}
-        </ScrollView>
-      </View>
+            })}
+          </View>
+        )}
+      </ScrollView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
+  headerSection: {
+    position: "absolute",
+    top: 20,
+    left: 0,
+    right: 0,
+    alignItems: "center",
+    paddingHorizontal: 20,
+    zIndex: 1,
+  },
+  appTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#2f95dc",
+    textAlign: "center",
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
     padding: 20,
-    paddingTop: 60,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  backButton: {
-    marginRight: 16,
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: "#2f95dc",
+    alignItems: "center",
+    paddingTop: 60, // ヘッダータイトル分のスペース
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
-    color: "#333",
+    marginBottom: 10,
+    color: "#2f95dc",
+  },
+  subtitle: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#666",
+    lineHeight: 24,
   },
   content: {
     flex: 1,
     padding: 20,
   },
-  description: {
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 40,
+  },
+  loadingText: {
+    marginTop: 16,
     fontSize: 16,
     color: "#666",
-    marginBottom: 24,
-    lineHeight: 24,
   },
   examCard: {
     backgroundColor: "#fff",
@@ -225,16 +236,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 40,
-  },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: "#666",
   },
 });

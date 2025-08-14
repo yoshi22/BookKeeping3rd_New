@@ -453,7 +453,11 @@ export default function ReviewScreen() {
 
   if (loading) {
     return (
-      <Screen safeArea={true} statusBarStyle="dark-content">
+      <Screen
+        safeArea={true}
+        statusBarStyle="dark-content"
+        testID="review-screen-loading"
+      >
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>復習データを読み込み中...</Text>
         </View>
@@ -462,7 +466,12 @@ export default function ReviewScreen() {
   }
 
   return (
-    <Screen safeArea={true} scrollable={true} statusBarStyle="dark-content">
+    <Screen
+      safeArea={true}
+      scrollable={true}
+      statusBarStyle="dark-content"
+      testID="review-screen"
+    >
       {/* アプリタイトル（ヘッダー代替） */}
       <View style={styles.headerSection}>
         <Text style={styles.appTitle}>復習</Text>
@@ -500,6 +509,8 @@ export default function ReviewScreen() {
             <TouchableOpacity
               style={styles.primaryButton}
               onPress={() => startReviewSession(true)}
+              testID="review-priority-button"
+              accessibilityLabel="重点復習を開始"
             >
               <Text style={styles.buttonIcon}>🎯</Text>
               <Text style={styles.buttonTitle}>重点復習開始</Text>
@@ -511,6 +522,8 @@ export default function ReviewScreen() {
             <TouchableOpacity
               style={styles.secondaryButton}
               onPress={() => startReviewSession(false)}
+              testID="review-all-button"
+              accessibilityLabel="全て復習を開始"
             >
               <Text style={styles.buttonIcon}>🔄</Text>
               <Text style={styles.buttonTitle}>全て復習</Text>
@@ -527,6 +540,8 @@ export default function ReviewScreen() {
                 key={category.id}
                 style={styles.categoryCard}
                 onPress={() => startCategoryReview(category.id)}
+                testID={`review-category-${category.id}-button`}
+                accessibilityLabel={`${category.name}の復習を開始`}
               >
                 <Text style={styles.categoryIcon}>{category.icon}</Text>
                 <View style={styles.categoryInfo}>
@@ -570,6 +585,8 @@ export default function ReviewScreen() {
           <TouchableOpacity
             style={styles.startLearningButton}
             onPress={() => router.push("/(tabs)/learning")}
+            testID="review-start-learning-button"
+            accessibilityLabel="学習を始める"
           >
             <Text style={styles.startLearningText}>学習を始める</Text>
           </TouchableOpacity>

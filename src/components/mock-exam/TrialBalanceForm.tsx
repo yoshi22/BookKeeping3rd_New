@@ -30,8 +30,6 @@ export interface TrialBalanceFormProps extends MockExamFormProps {
   onSubmit: (entries: TrialBalanceEntry[]) => void;
 }
 
-
-
 export default function TrialBalanceForm({
   onSubmit,
   onNext,
@@ -149,8 +147,6 @@ export default function TrialBalanceForm({
     }
   };
 
-
-
   const getTotalDebit = (): number => {
     return entries.reduce((sum, entry) => sum + entry.debitAmount, 0);
   };
@@ -200,6 +196,7 @@ export default function TrialBalanceForm({
   return (
     <ScrollView
       style={[styles.container, { backgroundColor: theme.colors.background }]}
+      testID="trial-balance-form"
     >
       {/* 試算表フォーム */}
       <View
@@ -327,6 +324,8 @@ export default function TrialBalanceForm({
                 placeholderTextColor={theme.colors.textSecondary}
                 editable={true}
                 multiline={false}
+                testID={`debit-balance-input-${index}`}
+                accessibilityLabel={`借方残高入力 ${index + 1}`}
               />
             </View>
 
@@ -362,6 +361,8 @@ export default function TrialBalanceForm({
                 placeholderTextColor={theme.colors.textSecondary}
                 editable={true}
                 multiline={false}
+                testID={`credit-balance-input-${index}`}
+                accessibilityLabel={`貸方残高入力 ${index + 1}`}
               />
             </View>
           </View>
@@ -440,8 +441,8 @@ export default function TrialBalanceForm({
             <Text
               style={[styles.differenceText, { color: theme.colors.error }]}
             >
-              差額:{" "}
-              {formatAmount(Math.abs(getTotalDebit() - getTotalCredit()))}円
+              差額: {formatAmount(Math.abs(getTotalDebit() - getTotalCredit()))}
+              円
             </Text>
           )}
         </View>
@@ -455,6 +456,8 @@ export default function TrialBalanceForm({
             styles.submitButton,
             { backgroundColor: theme.colors.primary },
           ]}
+          testID="submit-answer-button"
+          accessibilityLabel="解答を確認"
         >
           <Text
             style={[
@@ -576,7 +579,9 @@ export default function TrialBalanceForm({
             </View>
 
             <FlatList
-              data={STANDARD_ACCOUNT_OPTIONS.filter((account) => account.value !== "")}
+              data={STANDARD_ACCOUNT_OPTIONS.filter(
+                (account) => account.value !== "",
+              )}
               keyExtractor={(item) => item.value}
               renderItem={({ item }) => (
                 <TouchableOpacity

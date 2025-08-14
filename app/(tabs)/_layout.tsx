@@ -67,6 +67,7 @@ function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="home" color={color} focused={focused} />
           ),
+          tabBarTestID: "tab-home",
         }}
       />
       <Tabs.Screen
@@ -77,6 +78,7 @@ function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="book" color={color} focused={focused} />
           ),
+          tabBarTestID: "tab-learning",
         }}
       />
       <Tabs.Screen
@@ -87,6 +89,7 @@ function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="refresh" color={color} focused={focused} />
           ),
+          tabBarTestID: "tab-review",
         }}
       />
       <Tabs.Screen
@@ -97,6 +100,18 @@ function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="bar-chart" color={color} focused={focused} />
           ),
+          tabBarTestID: "tab-stats",
+        }}
+      />
+      <Tabs.Screen
+        name="mock-exam"
+        options={{
+          title: "模試",
+          headerShown: false, // ヘッダー非表示
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="test" color={color} focused={focused} />
+          ),
+          tabBarTestID: "tab-mock-exam",
         }}
       />
       <Tabs.Screen
@@ -107,6 +122,7 @@ function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="settings" color={color} focused={focused} />
           ),
+          tabBarTestID: "tab-settings",
         }}
       />
     </Tabs>
@@ -121,6 +137,7 @@ function TabBarIcon(props: { name: string; color: string; focused: boolean }) {
     book: "📚",
     refresh: "🔄",
     "bar-chart": "📊",
+    test: "📝",
     settings: "⚙️",
   };
 

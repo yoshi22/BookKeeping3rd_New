@@ -302,7 +302,7 @@ export default function JournalEntryForm({
   const styles = createStyles(theme);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} testID="journal-entry-form">
       {/* 問題文 */}
       <View style={styles.questionContainer}>
         <Text style={styles.questionText}>{questionText}</Text>
@@ -323,6 +323,12 @@ export default function JournalEntryForm({
                 <TouchableOpacity
                   style={styles.accountPickerContainer}
                   onPress={() => showAccountSelector("debit", index)}
+                  testID={
+                    index === 0
+                      ? "debit-account-dropdown"
+                      : `debit-account-dropdown-${index}`
+                  }
+                  accessibilityLabel={`借方勘定科目選択 ${index + 1}`}
                 >
                   <Text style={styles.accountPickerText}>
                     {debit.account || "勘定科目を選択"}
@@ -337,6 +343,12 @@ export default function JournalEntryForm({
                       debits.length > 1 ? styles.amountInputWithButton : {},
                     ]}
                     onPress={() => openNumericPad("debit", index)}
+                    testID={
+                      index === 0
+                        ? "debit-amount-input"
+                        : `debit-amount-input-${index}`
+                    }
+                    accessibilityLabel={`借方金額入力 ${index + 1}`}
                   >
                     <Text style={styles.amountText}>
                       {debit.amount > 0
@@ -371,6 +383,12 @@ export default function JournalEntryForm({
                 <TouchableOpacity
                   style={styles.accountPickerContainer}
                   onPress={() => showAccountSelector("credit", index)}
+                  testID={
+                    index === 0
+                      ? "credit-account-dropdown"
+                      : `credit-account-dropdown-${index}`
+                  }
+                  accessibilityLabel={`貸方勘定科目選択 ${index + 1}`}
                 >
                   <Text style={styles.accountPickerText}>
                     {credit.account || "勘定科目を選択"}
@@ -385,6 +403,12 @@ export default function JournalEntryForm({
                       credits.length > 1 ? styles.amountInputWithButton : {},
                     ]}
                     onPress={() => openNumericPad("credit", index)}
+                    testID={
+                      index === 0
+                        ? "credit-amount-input"
+                        : `credit-amount-input-${index}`
+                    }
+                    accessibilityLabel={`貸方金額入力 ${index + 1}`}
                   >
                     <Text style={styles.amountText}>
                       {credit.amount > 0
@@ -446,6 +470,8 @@ export default function JournalEntryForm({
             ]}
             onPress={validateAndSubmit}
             disabled={formState.isSubmitting}
+            testID="submit-answer-button"
+            accessibilityLabel="解答を送信"
           >
             {formState.isSubmitting ? (
               <ActivityIndicator color="white" />

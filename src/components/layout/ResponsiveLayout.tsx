@@ -285,6 +285,7 @@ interface ScreenProps {
   safeArea?: boolean;
   statusBarStyle?: "light-content" | "dark-content";
   style?: ViewStyle;
+  testID?: string;
 }
 
 export function Screen({
@@ -293,6 +294,7 @@ export function Screen({
   safeArea = true,
   statusBarStyle,
   style,
+  testID,
 }: ScreenProps) {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();

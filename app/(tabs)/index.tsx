@@ -20,7 +20,12 @@ export default function HomeScreen() {
   const { theme } = useTheme();
 
   return (
-    <Screen safeArea={true} statusBarStyle="dark-content" scrollable={true}>
+    <Screen
+      safeArea={true}
+      statusBarStyle="dark-content"
+      scrollable={true}
+      testID="home-screen"
+    >
       <Container style={styles.container}>
         <Flex
           align="center"
@@ -56,6 +61,8 @@ export default function HomeScreen() {
                 { backgroundColor: theme.colors.surface },
               ]}
               onPress={() => router.push("/learning")}
+              testID="home-learning-button"
+              accessibilityLabel="学習を開始"
             >
               <Text style={styles.menuIcon}>📚</Text>
               <Text
@@ -82,6 +89,8 @@ export default function HomeScreen() {
                 { backgroundColor: theme.colors.surface },
               ]}
               onPress={() => router.push("/review")}
+              testID="home-review-button"
+              accessibilityLabel="復習を開始"
             >
               <Text style={styles.menuIcon}>🔄</Text>
               <Text
@@ -108,6 +117,8 @@ export default function HomeScreen() {
                 { backgroundColor: theme.colors.surface },
               ]}
               onPress={() => router.push("/stats")}
+              testID="home-stats-button"
+              accessibilityLabel="学習統計を確認"
             >
               <Text style={styles.menuIcon}>📊</Text>
               <Text
@@ -134,6 +145,8 @@ export default function HomeScreen() {
                 { backgroundColor: theme.colors.surface },
               ]}
               onPress={() => router.push("/mock-exam")}
+              testID="home-mock-exam-button"
+              accessibilityLabel="CBT模擬試験を開始"
             >
               <Text style={styles.menuIcon}>🎯</Text>
               <Text
@@ -160,6 +173,8 @@ export default function HomeScreen() {
                 { backgroundColor: theme.colors.surface },
               ]}
               onPress={() => router.push("/test-journal")}
+              testID="home-test-journal-button"
+              accessibilityLabel="仕訳フォームテストを開始"
             >
               <Text style={styles.menuIcon}>🧪</Text>
               <Text

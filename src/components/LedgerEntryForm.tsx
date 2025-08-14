@@ -203,6 +203,12 @@ export default function LedgerEntryForm({
             onChangeText={(value) => updateEntry(index, "description", value)}
             placeholder="例: 売掛金回収"
             placeholderTextColor="#999"
+            testID={
+              index === 0
+                ? "description-dropdown"
+                : `description-dropdown-${index}`
+            }
+            accessibilityLabel={`摘要入力 ${index + 1}`}
           />
         </View>
 
@@ -240,7 +246,7 @@ export default function LedgerEntryForm({
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} testID="ledger-entry-form">
       <View style={styles.titleContainer}>
         <Text style={styles.title}>帳簿転記</Text>
         <TouchableOpacity
@@ -276,6 +282,8 @@ export default function LedgerEntryForm({
           ]}
           onPress={handleSubmitAnswer}
           disabled={formState.isSubmitting}
+          testID="submit-answer-button"
+          accessibilityLabel="解答を送信"
         >
           {formState.isSubmitting ? (
             <View style={styles.submitButtonContent}>

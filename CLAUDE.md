@@ -304,9 +304,25 @@ src/
    ```
 
 3. **アクセシビリティID・TestID の利用**:
+
    ```bash
    # 開発時に設定されたテストIDを使用
    mobile_click_on_element_by_id "learning_start_button"
+
+   # このアプリで使用可能な具体的なtestID例:
+   # ホーム画面ボタン
+   mcp__xcodebuild__tap --simulatorUuid "UUID" --testID "home-learning-button"
+   mcp__xcodebuild__tap --simulatorUuid "UUID" --testID "home-review-button"
+   mcp__xcodebuild__tap --simulatorUuid "UUID" --testID "home-stats-button"
+
+   # 学習・復習画面ボタン
+   mcp__xcodebuild__tap --simulatorUuid "UUID" --testID "learning-all-questions-button"
+   mcp__xcodebuild__tap --simulatorUuid "UUID" --testID "review-priority-button"
+   mcp__xcodebuild__tap --simulatorUuid "UUID" --testID "review-all-button"
+
+   # フォーム要素
+   mcp__xcodebuild__tap --simulatorUuid "UUID" --testID "debit-account-dropdown-0"
+   mcp__xcodebuild__tap --simulatorUuid "UUID" --testID "submit-answer-button"
    ```
 
 ### 許可される操作
