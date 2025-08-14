@@ -94,15 +94,9 @@ export default function LearningQuestionScreen() {
           const filteredIds = filteredQuestions.split(",");
           const questionRepository = new QuestionRepository();
 
-          // フィルター済み問題IDから問題を取得
-          const questionsData = await Promise.all(
-            filteredIds.map(async (questionId) => {
-              return await questionRepository.findById(questionId.trim());
-            }),
-          );
-
-          // nullでない問題のみを抽出
-          questions = questionsData.filter((q) => q !== null) as Question[];
+          // フィルター済み問題IDから問題を取得（バッチクエリ使用でパフォーマンス向上）
+          const cleanFilteredIds = filteredIds.map((id) => id.trim());
+          questions = await questionRepository.findByIds(cleanFilteredIds);
           console.log(
             `[LearningQuestionScreen] フィルター済み問題: ${questions.length}件`,
           );

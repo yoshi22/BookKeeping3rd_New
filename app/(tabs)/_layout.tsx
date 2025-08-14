@@ -1,5 +1,4 @@
 import { Tabs } from "expo-router";
-import React from "react";
 import { Text, View, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemeProvider, useTheme } from "../../src/context/ThemeContext";
@@ -67,7 +66,6 @@ function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="home" color={color} focused={focused} />
           ),
-          tabBarTestID: "tab-home",
         }}
       />
       <Tabs.Screen
@@ -78,7 +76,6 @@ function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="book" color={color} focused={focused} />
           ),
-          tabBarTestID: "tab-learning",
         }}
       />
       <Tabs.Screen
@@ -89,7 +86,6 @@ function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="refresh" color={color} focused={focused} />
           ),
-          tabBarTestID: "tab-review",
         }}
       />
       <Tabs.Screen
@@ -100,7 +96,6 @@ function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="bar-chart" color={color} focused={focused} />
           ),
-          tabBarTestID: "tab-stats",
         }}
       />
       <Tabs.Screen
@@ -111,7 +106,6 @@ function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="test" color={color} focused={focused} />
           ),
-          tabBarTestID: "tab-mock-exam",
         }}
       />
       <Tabs.Screen
@@ -122,7 +116,6 @@ function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="settings" color={color} focused={focused} />
           ),
-          tabBarTestID: "tab-settings",
         }}
       />
     </Tabs>

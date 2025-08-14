@@ -39,7 +39,7 @@ export default function MockExamTabScreen() {
   const startMockExam = (exam: MockExam) => {
     Alert.alert(
       "模試開始確認",
-      `${exam.name}を開始しますか？\\n\\n制限時間: ${exam.time_limit_minutes}分\\n合格基準: ${exam.passing_score}点以上`,
+      `${exam.name}を開始しますか？\n\n制限時間: ${exam.time_limit_minutes}分\n合格基準: ${exam.passing_score}点以上`,
       [
         { text: "キャンセル", style: "cancel" },
         {
@@ -57,15 +57,10 @@ export default function MockExamTabScreen() {
 
   return (
     <Screen testID="mock-exam-screen">
-      {/* アプリタイトル（ヘッダー代替） */}
-      <View style={styles.headerSection}>
-        <Text style={styles.appTitle}>模擬試験</Text>
-      </View>
-
       <View style={styles.header}>
         <Text style={styles.title}>模擬試験</Text>
         <Text style={styles.subtitle}>
-          本試験形式のCBT模擬試験で実力をチェックしましょう。
+          本試験形式のCBT模擬試験で実力をチェックしましょう。{"\n"}
           制限時間内に全問題に取り組んでください。
         </Text>
       </View>
@@ -139,25 +134,9 @@ export default function MockExamTabScreen() {
 }
 
 const styles = StyleSheet.create({
-  headerSection: {
-    position: "absolute",
-    top: 20,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    paddingHorizontal: 20,
-    zIndex: 1,
-  },
-  appTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#2f95dc",
-    textAlign: "center",
-  },
   header: {
     padding: 20,
     alignItems: "center",
-    paddingTop: 60, // ヘッダータイトル分のスペース
   },
   title: {
     fontSize: 24,
