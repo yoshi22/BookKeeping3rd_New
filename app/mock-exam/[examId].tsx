@@ -464,9 +464,17 @@ export default function MockExamExecutionScreen() {
           title: `模試 - 問${currentQuestionIndex + 1}`,
           headerStyle: { backgroundColor: theme.colors.primary },
           headerTintColor: theme.colors.background,
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontSize: 18,
+            fontWeight: "600",
+          },
           headerLeft: () => (
-            <TouchableOpacity onPress={handleExitExam}>
-              <Text style={{ color: theme.colors.background, marginLeft: 16 }}>
+            <TouchableOpacity
+              onPress={handleExitExam}
+              style={styles.exitButton}
+            >
+              <Text style={{ color: theme.colors.background, fontSize: 16 }}>
                 中断
               </Text>
             </TouchableOpacity>
@@ -483,7 +491,7 @@ export default function MockExamExecutionScreen() {
         }}
       />
 
-      <Screen>
+      <Screen safeArea={false}>
         <View style={styles.container}>{renderQuestionForm()}</View>
       </Screen>
     </>
@@ -497,6 +505,11 @@ const styles = StyleSheet.create({
   centered: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  exitButton: {
+    marginLeft: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
   },
   timerContainer: {
     marginRight: 16,

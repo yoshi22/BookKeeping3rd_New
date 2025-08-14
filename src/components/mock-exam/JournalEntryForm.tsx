@@ -224,16 +224,6 @@ export default function JournalEntryForm({
 
   return (
     <ScrollView style={styles.container}>
-      {/* ヘッダー */}
-      <View style={styles.header}>
-        <Text style={styles.questionInfo}>
-          第1問 問{questionNumber}/{totalQuestions}
-        </Text>
-        {timeRemaining && (
-          <Text style={styles.timeRemaining}>残り時間: {timeRemaining}</Text>
-        )}
-      </View>
-
       {/* 問題文 */}
       <View style={styles.questionContainer}>
         <Text style={styles.questionText}>{questionText}</Text>
@@ -450,25 +440,6 @@ const createStyles = (theme: any) =>
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
-    },
-    header: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: 16,
-      backgroundColor: theme.colors.surface,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.colors.border,
-    },
-    questionInfo: {
-      fontSize: 18,
-      fontWeight: "bold",
-      color: theme.colors.text,
-    },
-    timeRemaining: {
-      fontSize: 16,
-      color: theme.colors.primary,
-      fontWeight: "600",
     },
     questionContainer: {
       padding: 20,

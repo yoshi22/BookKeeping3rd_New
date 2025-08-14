@@ -227,16 +227,6 @@ export default function LedgerEntryForm({
       <View
         style={[styles.questionCard, { backgroundColor: theme.colors.surface }]}
       >
-        <Text
-          style={[styles.questionNumber, { color: theme.colors.textSecondary }]}
-        >
-          第2問 問{questionNumber}/{totalQuestions}
-        </Text>
-        <Text
-          style={[styles.remainingTime, { color: theme.colors.textSecondary }]}
-        >
-          残り時間: {timeRemaining}
-        </Text>
         <Text style={[styles.questionText, { color: theme.colors.text }]}>
           {questionText}
         </Text>
@@ -684,15 +674,6 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     marginBottom: 20,
-  },
-  questionNumber: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 4,
-  },
-  remainingTime: {
-    fontSize: 14,
-    marginBottom: 12,
   },
   questionText: {
     fontSize: 18,
