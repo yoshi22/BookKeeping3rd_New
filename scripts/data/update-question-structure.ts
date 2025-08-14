@@ -3,7 +3,7 @@
  * problemsStrategy.mdに基づく詳細分類・順序制御・タグ付けを実行
  */
 
-import { databaseService } from "../src/data/database";
+import { databaseService } from "../../src/data/database";
 import fs from "fs";
 import path from "path";
 
