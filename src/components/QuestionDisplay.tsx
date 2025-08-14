@@ -360,6 +360,19 @@ export default function QuestionDisplay({
       answerTemplate?.allowMultipleEntries) ||
     (questionId.startsWith("Q_J_") && answerTemplate?.type === "journal_entry");
 
+  // Debug logging for Q_J_001
+  if (questionId === "Q_J_001") {
+    console.log("[QuestionDisplay] Q_J_001 Debug Info:", {
+      questionId,
+      answerTemplateType: answerTemplate?.type,
+      shouldUseJournalEntryForm,
+      shouldUseLedgerEntryForm: answerTemplate?.type === "ledger_entry" ||
+        (questionId.startsWith("Q_L_") &&
+          isMultiEntryLedgerQuestion(questionId, questionText)),
+      answerTemplate: answerTemplate
+    });
+  }
+
   // Determine if should use ChoiceAnswerForm for choice questions (traditional single dropdown)
   const shouldUseChoiceForm =
     (answerTemplate?.type === "single_choice" ||
@@ -490,6 +503,16 @@ export default function QuestionDisplay({
           explanation={explanation}
           correctAnswer={correctAnswer}
         />
+      ) : shouldUseJournalEntryForm ? (
+        <JournalEntryForm
+          questionId={questionId}
+          questionText={questionText}
+          sessionType={sessionType}
+          sessionId={sessionId}
+          startTime={startTime}
+          onSubmitAnswer={onSubmitAnswer}
+          showSubmitButton={true}
+        />
       ) : shouldUseLedgerEntryFormWithDropdown ? (
         <LedgerEntryFormWithDropdown
           questionId={questionId}
@@ -510,16 +533,6 @@ export default function QuestionDisplay({
           onSubmitAnswer={onSubmitAnswer}
           showSubmitButton={true}
           expectedEntries={getExpectedEntryCount(questionText)}
-        />
-      ) : shouldUseJournalEntryForm ? (
-        <JournalEntryForm
-          questionId={questionId}
-          questionText={questionText}
-          sessionType={sessionType}
-          sessionId={sessionId}
-          startTime={startTime}
-          onSubmitAnswer={onSubmitAnswer}
-          showSubmitButton={true}
         />
       ) : answerFields.length > 0 && onAnswerChange ? (
         <AnswerForm

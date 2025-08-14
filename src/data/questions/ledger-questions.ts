@@ -254,10 +254,11 @@ export const ledgerQuestions: Question[] = [
       '{"type":"subsidiary_book","book_type":"仕入帳","columns":[{"name":"date","label":"日付","type":"text","width":"15%"},{"name":"description","label":"摘要","type":"dropdown","width":"30%","options":["前月繰越","次月繰越","損益","売上","売上返品","売上値引","受取利息","受取手数料","仕入","仕入返品","仕入値引","給料","支払家賃","水道光熱費","支払利息","通信費","消耗品費","旅費交通費","現金","当座預金","売掛金","受取手形","商品","備品","建物","土地","前払費用","未収収益","買掛金","支払手形","借入金","未払費用","前受収益","貸倒引当金","貸倒引当金繰入","貸倒引当金戻入","振出","受取","裏書譲渡","決済","満期決済","仕入先","得意先","諸口"]},{"name":"receipt","label":"収入","type":"number","width":"20%"},{"name":"payment","label":"支出","type":"number","width":"20%"},{"name":"balance","label":"残高","type":"number","width":"15%"}],"allowMultipleEntries":true,"maxEntries":20}',
     correct_answer_json:
       '{"entries":[{"date":"10/3","description":"買掛金","ref":"","balance":234500,"receipt":234500,"payment":0},{"date":"10/10","description":"買掛金","ref":"","balance":402300,"receipt":167800,"payment":0},{"date":"10/18","description":"買掛金","ref":"","balance":491500,"receipt":89200,"payment":0},{"date":"10/25","description":"現金","ref":"","balance":537100,"receipt":45600,"payment":0}]}',
-    explanation: "売掛金元帳に関する問題です。",
+    explanation:
+      "仕入帳記入に関する問題です。\n\n【仕入帳の基本】\n・商品の仕入取引を日付順に記録\n・仕入先別に管理することも可能\n・買掛金・現金の支払区分を明確化\n\n【記帳のポイント】\n・日付、摘要、金額を正確に記入\n・残高は累計で計算\n・月末に合計金額を確認\n\n【注意点】\n・仕入返品や仕入値引は控除項目として処理\n・消費税込み価格での記録が一般的",
     difficulty: 2,
     tags_json:
-      '{"subcategory":"subsidiary_ledger","pattern":"売掛金元帳","accounts":[],"keywords":["売掛金元帳","補助簿","得意先"],"examSection":2}',
+      '{"subcategory":"subsidiary_ledger","pattern":"仕入帳","accounts":[],"keywords":["仕入帳","補助簿","買掛金","仕入取引"],"examSection":2}',
     created_at: "2025-08-07T00:31:25.369Z",
     updated_at: "2025-08-07T00:31:25.369Z",
   },

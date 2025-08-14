@@ -92,11 +92,24 @@ async function loadSampleData(): Promise<void> {
       await import("../questions");
     const SAMPLE_DATA_VERSION = "2025-08-10-master-questions";
 
-    // 開発環境での強制更新フラグ
-    const forceUpdate =
-      process.env.NODE_ENV === "development" &&
-      (process.env.FORCE_UPDATE_QUESTIONS === "true" ||
-        process.env.EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS === "true");
+    // 開発環境での強制更新フラグ（React Native環境対応）
+    console.log("[Database] 環境変数チェック:", {
+      __DEV__,
+      FORCE_UPDATE_QUESTIONS: process.env.FORCE_UPDATE_QUESTIONS,
+      EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS:
+        process.env.EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS,
+    });
+
+    // 一時的に強制更新を無効化（復習リスト保持のため）
+    const forceUpdate = false;
+
+    // 元のロジック（デバッグ用）
+    // const forceUpdate =
+    //   __DEV__ &&
+    //   (process.env.FORCE_UPDATE_QUESTIONS === "true" ||
+    //     process.env.EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS === "true");
+
+    console.log("[Database] forceUpdate フラグ:", forceUpdate);
 
     // 現在のデータバージョンを取得
     let currentVersion = null;
@@ -116,6 +129,12 @@ async function loadSampleData(): Promise<void> {
     // バージョンチェック
     const needsUpdate = currentVersion !== SAMPLE_DATA_VERSION;
 
+    console.log("[Database] バージョンチェック結果:", {
+      currentVersion,
+      SAMPLE_DATA_VERSION,
+      needsUpdate,
+    });
+
     if (needsUpdate) {
       console.log(`[Database] データバージョンが更新されています`);
       console.log(`[Database] 現在: ${currentVersion || "なし"}`);
@@ -128,11 +147,17 @@ async function loadSampleData(): Promise<void> {
     );
 
     if (existingCount.rows[0]?.count > 0) {
+      console.log("[Database] 削除条件チェック:", {
+        forceUpdate,
+        needsUpdate,
+        shouldDelete: forceUpdate || needsUpdate,
+      });
+
       if (forceUpdate || needsUpdate) {
         console.log(
           forceUpdate
             ? "[Database] 強制更新モード: 既存の問題データを削除します"
-            : "[Database] データバージョンが更新されたため、既存データを更新します",
+            : "[Database] データバージョンが更新されたため、問題データのみを更新します",
         );
 
         // 関連データを安全な順序で削除（外部キー制約を考慮）
@@ -142,11 +167,20 @@ async function loadSampleData(): Promise<void> {
           console.log("[Database] 外部キー制約を一時無効化");
 
           // 2. 依存関係のある順序で削除
-          await databaseService.executeSql("DELETE FROM learning_history");
-          console.log("[Database] learning_history テーブル削除完了");
+          // 強制更新時のみユーザーデータを削除、通常のバージョン更新時は保持
+          if (forceUpdate) {
+            await databaseService.executeSql("DELETE FROM learning_history");
+            console.log(
+              "[Database] learning_history テーブル削除完了（強制更新）",
+            );
 
-          await databaseService.executeSql("DELETE FROM review_items");
-          console.log("[Database] review_items テーブル削除完了");
+            await databaseService.executeSql("DELETE FROM review_items");
+            console.log("[Database] review_items テーブル削除完了（強制更新）");
+          } else {
+            console.log(
+              "[Database] ユーザーデータ（learning_history, review_items）は保持します",
+            );
+          }
 
           await databaseService.executeSql("DELETE FROM mock_exam_results");
           console.log("[Database] mock_exam_results テーブル削除完了");

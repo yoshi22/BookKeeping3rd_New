@@ -411,9 +411,9 @@ export const journalQuestions: Question[] = [
     answer_template_json:
       '{"type":"journal_entry","journalEntry":{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"現金","debit_amount":665000,"credit_account":"現金過不足","credit_amount":665000}}',
+      '{"journalEntry":{"debit_account":"現金","debit_amount":387000,"credit_account":"現金過不足","credit_amount":387000}}',
     explanation:
-      "現金の実際有高と帳簿残高に差額が生じた場合に使用する勘定科目です。\n\n【間違えやすいポイント】\n・実際有高 < 帳簿残高 → 現金が不足（借方：現金過不足／貸方：現金）\n・実際有高 > 帳簿残高 → 現金が過剰（借方：現金／貸方：現金過不足）\n\n【覚え方のコツ】\n「実際に数えたら帳簿より少ない」→「現金が減った」→「貸方に現金」\n\n【仕訳】\n借方：現金 665,000円\n貸方：現金過不足 665,000円",
+      "現金の実際有高と帳簿残高に差額が生じた場合に使用する勘定科目です。\n\n【計算】\n実際有高665,000円 - 帳簿残高278,000円 = 387,000円（現金過剰）\n\n【間違えやすいポイント】\n・実際有高 < 帳簿残高 → 現金が不足（借方：現金過不足／貸方：現金）\n・実際有高 > 帳簿残高 → 現金が過剰（借方：現金／貸方：現金過不足）\n\n【覚え方のコツ】\n「実際に数えたら帳簿より多い」→「現金が増えた」→「借方に現金」\n\n【仕訳】\n借方：現金 387,000円\n貸方：現金過不足 387,000円",
     difficulty: 2,
     tags_json:
       '{"subcategory":"cash_deposit","pattern":"現金過不足","accounts":["現金","現金過不足"],"keywords":["現金実査","実際有高","帳簿残高"],"examSection":1}',

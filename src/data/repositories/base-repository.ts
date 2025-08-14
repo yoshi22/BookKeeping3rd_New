@@ -153,22 +153,91 @@ export abstract class BaseRepository<T> {
       const values = Object.values(data);
 
       const sql = `INSERT INTO ${this.tableName} (${columns.join(", ")}) VALUES (${placeholders})`;
+      console.log(`[${this.constructor.name}] INSERT実行:`, { sql, values });
+
       const result = await databaseService.executeSql(sql, values);
+      console.log(`[${this.constructor.name}] INSERT結果:`, {
+        insertId: result.insertId,
+        rowsAffected: result.rowsAffected,
+      });
 
-      // 挿入されたレコードを取得して返す
-      const insertedId = result.insertId || (data as any).id;
-      const insertedRecord = await this.findById(insertedId);
+      // ID取得の改善: 複数の方法でINSERT後のレコードを取得
+      let insertedRecord: T | null = null;
 
-      if (!insertedRecord) {
-        throw new Error(
-          `Failed to retrieve inserted record with id: ${insertedId}`,
+      // 方法1: lastInsertRowIdが利用可能な場合
+      if (result.insertId) {
+        console.log(
+          `[${this.constructor.name}] 方法1: insertIdで検索 (${result.insertId})`,
         );
+        insertedRecord = await this.findById(result.insertId);
+        if (insertedRecord) {
+          console.log(`[${this.constructor.name}] 方法1成功:`, insertedRecord);
+        }
       }
 
-      console.log(`[${this.constructor.name}] レコード作成完了:`, insertedId);
+      // 方法2: ユニークキーで検索（review_itemsの場合question_id）
+      if (!insertedRecord && this.tableName === "review_items") {
+        const questionId = (data as any).question_id;
+        if (questionId) {
+          console.log(
+            `[${this.constructor.name}] 方法2: question_idで検索 (${questionId})`,
+          );
+          const records = await this.findWhere({ question_id: questionId });
+          insertedRecord = records[0] || null;
+          if (insertedRecord) {
+            console.log(
+              `[${this.constructor.name}] 方法2成功:`,
+              insertedRecord,
+            );
+          }
+        }
+      }
+
+      // 方法3: 最新レコードを取得（created_atまたはupdated_atがある場合）
+      if (
+        !insertedRecord &&
+        ((data as any).created_at || (data as any).updated_at)
+      ) {
+        console.log(`[${this.constructor.name}] 方法3: 最新レコードで検索`);
+        const latestSql = `SELECT * FROM ${this.tableName} ORDER BY 
+          ${(data as any).created_at ? "created_at" : "updated_at"} DESC LIMIT 1`;
+        const latestResult = await databaseService.executeSql<T>(latestSql);
+        insertedRecord = latestResult.rows[0] || null;
+        if (insertedRecord) {
+          console.log(`[${this.constructor.name}] 方法3成功:`, insertedRecord);
+        }
+      }
+
+      // 方法4: 最後のIDで検索
+      if (!insertedRecord) {
+        console.log(`[${this.constructor.name}] 方法4: 最新IDで検索`);
+        const maxIdSql = `SELECT * FROM ${this.tableName} ORDER BY id DESC LIMIT 1`;
+        const maxIdResult = await databaseService.executeSql<T>(maxIdSql);
+        insertedRecord = maxIdResult.rows[0] || null;
+        if (insertedRecord) {
+          console.log(`[${this.constructor.name}] 方法4成功:`, insertedRecord);
+        }
+      }
+
+      if (!insertedRecord) {
+        const errorMessage = `Failed to retrieve inserted record. INSERT result: ${JSON.stringify(result)}`;
+        console.error(`[${this.constructor.name}] ${errorMessage}`);
+        throw new Error(errorMessage);
+      }
+
+      console.log(`[${this.constructor.name}] レコード作成完了:`, {
+        id: (insertedRecord as any).id,
+        tableName: this.tableName,
+      });
       return insertedRecord;
     } catch (error) {
       console.error(`[${this.constructor.name}] create エラー:`, error);
+      console.error(`[${this.constructor.name}] Error details:`, {
+        message: error instanceof Error ? error.message : error,
+        stack: error instanceof Error ? error.stack : undefined,
+        tableName: this.tableName,
+        data: data,
+      });
       throw error;
     }
   }
