@@ -3,7 +3,7 @@
  * 3伝票制・5伝票制に対応した伝票入力システム
  */
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -72,6 +72,14 @@ export default function VoucherEntryForm({
     null,
   );
 
+  // voucherTypesをrefで保持して確実にアクセスできるようにする
+  const voucherTypesRef = useRef<VoucherType[]>(voucherTypes);
+  
+  // voucherTypesが変更されたらrefを更新
+  useEffect(() => {
+    voucherTypesRef.current = voucherTypes;
+  }, [voucherTypes]);
+
   // モーダル選択のための状態
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedEntryIndex, setSelectedEntryIndex] = useState<number | null>(
@@ -84,12 +92,41 @@ export default function VoucherEntryForm({
     "[VoucherEntryForm] voucherTypes received:",
     JSON.stringify(voucherTypes, null, 2),
   );
+  console.log(
+    "[VoucherEntryForm] voucherTypes length:",
+    voucherTypes?.length || 0,
+  );
+  if (voucherTypes && voucherTypes.length > 0) {
+    console.log(
+      "[VoucherEntryForm] First voucher type:",
+      voucherTypes[0].type,
+      "Fields count:",
+      voucherTypes[0].fields?.length || 0,
+    );
+    if (voucherTypes[0].fields && voucherTypes[0].fields.length > 0) {
+      voucherTypes[0].fields.forEach((field, index) => {
+        console.log(
+          `[VoucherEntryForm] Field ${index}:`,
+          field.name,
+          field.type,
+          "Options:",
+          field.options?.length || 0,
+          field.options,
+        );
+      });
+    }
+  }
 
   // 新しい伝票エントリを追加
   const addVoucherEntry = (voucherType: string) => {
+    console.log("[VoucherEntryForm] addVoucherEntry called with:", voucherType);
     const newEntry: VoucherEntry = { type: voucherType };
     setEntries([...entries, newEntry]);
     setActiveVoucherType(voucherType);
+    // モーダルが自動的に開かないようにする
+    setIsModalVisible(false);
+    setSelectedEntryIndex(null);
+    setSelectedField(null);
   };
 
   // 伝票エントリを更新
@@ -107,6 +144,11 @@ export default function VoucherEntryForm({
 
   // 選択モーダルを開く
   const openSelectModal = (entryIndex: number, field: VoucherField) => {
+    console.log("[VoucherEntryForm] openSelectModal called:", {
+      entryIndex,
+      fieldName: field.name,
+      fieldLabel: field.label,
+    });
     setSelectedEntryIndex(entryIndex);
     setSelectedField(field);
     setIsModalVisible(true);
@@ -114,6 +156,11 @@ export default function VoucherEntryForm({
 
   // 選択モーダルで選択肢を選ぶ
   const handleOptionSelect = (option: string) => {
+    console.log("[VoucherEntryForm] handleOptionSelect called:", {
+      option,
+      selectedEntryIndex,
+      selectedFieldName: selectedField?.name,
+    });
     if (selectedEntryIndex !== null && selectedField) {
       updateEntry(selectedEntryIndex, selectedField.name, option);
       setIsModalVisible(false);
@@ -131,13 +178,36 @@ export default function VoucherEntryForm({
 
       if (entries.length === 0) {
         Alert.alert("入力エラー", "少なくとも1つの伝票を入力してください");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // voucherTypesの存在確認（refから取得）
+      const currentVoucherTypes = voucherTypesRef.current;
+      console.log("[VoucherEntryForm] handleSubmitAnswer - voucherTypes check:", {
+        propVoucherTypes: voucherTypes,
+        refVoucherTypes: currentVoucherTypes,
+        propIsArray: Array.isArray(voucherTypes),
+        refIsArray: Array.isArray(currentVoucherTypes),
+        propLength: voucherTypes?.length,
+        refLength: currentVoucherTypes?.length,
+        entries: entries.length
+      });
+      
+      if (!currentVoucherTypes || !Array.isArray(currentVoucherTypes)) {
+        console.error(
+          "[VoucherEntryForm] voucherTypes is undefined or not an array:",
+          { prop: voucherTypes, ref: currentVoucherTypes },
+        );
+        Alert.alert("エラー", "伝票定義が見つかりません");
+        setIsSubmitting(false);
         return;
       }
 
       // 各伝票の必須フィールドチェック
       for (let i = 0; i < entries.length; i++) {
         const entry = entries[i];
-        const voucherType = voucherTypes.find((v) => v.type === entry.type);
+        const voucherType = currentVoucherTypes.find((v) => v.type === entry.type);
 
         if (voucherType) {
           const missingFields = voucherType.fields
@@ -152,6 +222,7 @@ export default function VoucherEntryForm({
               "入力エラー",
               `${entry.type}の以下の項目は必須です：\n${missingFields.join("\n")}`,
             );
+            setIsSubmitting(false);
             return;
           }
         }
@@ -167,12 +238,12 @@ export default function VoucherEntryForm({
       });
 
       // 解答データを構築
+      // 単一の伝票タイプの場合はシンプルな形式で送信
+      const groupedVoucherTypes = Object.keys(groupedVouchers);
       const voucherAnswer = {
-        questionType: "ledger" as const,
-        vouchers: Object.keys(groupedVouchers).map((type) => ({
-          type,
-          entries: groupedVouchers[type],
-        })),
+        questionType: "voucher_entry" as const,
+        voucher_type: groupedVoucherTypes[0], // 最初の伝票タイプ（通常は1種類のみ）
+        voucherEntries: groupedVouchers[groupedVoucherTypes[0]] || [],
       };
 
       const timeTaken = Math.floor((Date.now() - startTime) / 1000);
@@ -235,7 +306,13 @@ export default function VoucherEntryForm({
         {field.type === "select" && field.options ? (
           <TouchableOpacity
             style={[styles.selectButton, !value && styles.selectButtonEmpty]}
-            onPress={() => openSelectModal(index, field)}
+            onPress={() => {
+              console.log(
+                "[VoucherEntryForm] Select button pressed for field:",
+                field.name,
+              );
+              openSelectModal(index, field);
+            }}
           >
             <Text style={[styles.selectText, !value && styles.placeholderText]}>
               {value || "選択してください"}
@@ -332,9 +409,23 @@ export default function VoucherEntryForm({
           style={[
             styles.submitButton,
             isSubmitting && styles.submitButtonDisabled,
+            entries.length === 0 && styles.submitButtonDisabled,
           ]}
-          onPress={handleSubmitAnswer}
-          disabled={isSubmitting}
+          onPress={() => {
+            console.log(
+              "[VoucherEntryForm] Submit button pressed, entries:",
+              entries,
+            );
+            if (entries.length > 0) {
+              handleSubmitAnswer();
+            } else {
+              Alert.alert(
+                "入力エラー",
+                "少なくとも1つの伝票を入力してください",
+              );
+            }
+          }}
+          disabled={isSubmitting || entries.length === 0}
         >
           {isSubmitting ? (
             <View style={styles.submitButtonContent}>
@@ -591,7 +682,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 12,
     width: "90%",
-    maxHeight: "70%",
+    maxHeight: "95%",
+    minHeight: "50%",
     overflow: "hidden",
   },
   modalHeader: {
@@ -617,6 +709,7 @@ const styles = StyleSheet.create({
   modalContent: {
     flex: 1,
     padding: 20,
+    maxHeight: "70%",
   },
   optionItem: {
     padding: 15,

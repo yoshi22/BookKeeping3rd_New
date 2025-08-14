@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import JournalEntryForm, { JournalEntry } from "./JournalEntryForm";
+import JournalEntryForm from "./JournalEntryForm";
+import { JournalEntry } from "../shared/FormTypes";
 import { Screen } from "../layout/ResponsiveLayout";
 
 const SAMPLE_QUESTION = `商品300,000円を仕入れ、代金のうち200,000円は掛けとし、50,000円は約束手形を振り出し、残額は現金で支払った。

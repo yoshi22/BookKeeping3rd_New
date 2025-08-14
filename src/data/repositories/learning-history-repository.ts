@@ -41,6 +41,9 @@ export interface LearningStatistics {
     journal: CategoryStats;
     ledger: CategoryStats;
     trial_balance: CategoryStats;
+    financial_statement: CategoryStats;
+    voucher_entry: CategoryStats;
+    multiple_blank_choice: CategoryStats;
   };
 
   // セッション種別統計
@@ -333,6 +336,18 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
           accuracyRate: 0,
           averageAnswerTime: 0,
         },
+        voucher_entry: {
+          totalAnswers: 0,
+          correctAnswers: 0,
+          accuracyRate: 0,
+          averageAnswerTime: 0,
+        },
+        multiple_blank_choice: {
+          totalAnswers: 0,
+          correctAnswers: 0,
+          accuracyRate: 0,
+          averageAnswerTime: 0,
+        },
       };
 
       categoryStatsResult.rows.forEach((row) => {
@@ -510,6 +525,8 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         ledger: { totalUnique: 0, correctUnique: 0 },
         trial_balance: { totalUnique: 0, correctUnique: 0 },
         financial_statement: { totalUnique: 0, correctUnique: 0 },
+        voucher_entry: { totalUnique: 0, correctUnique: 0 },
+        multiple_blank_choice: { totalUnique: 0, correctUnique: 0 },
       };
 
       categoryResult.rows.forEach((row) => {

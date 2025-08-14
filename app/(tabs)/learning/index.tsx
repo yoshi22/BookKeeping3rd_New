@@ -20,6 +20,8 @@ export default function LearningScreen() {
     ledger: 0,
     trial_balance: 0,
     financial_statement: 0,
+    voucher_entry: 0,
+    multiple_blank_choice: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -92,6 +94,8 @@ export default function LearningScreen() {
             ledger: 0,
             trial_balance: 0,
             financial_statement: 0,
+            voucher_entry: 0,
+            multiple_blank_choice: 0,
           });
         }
       } catch (error) {
@@ -102,6 +106,8 @@ export default function LearningScreen() {
           ledger: 0,
           trial_balance: 0,
           financial_statement: 0,
+          voucher_entry: 0,
+          multiple_blank_choice: 0,
         });
         // エラー時でもローディング状態を解除
         setLoading(false);

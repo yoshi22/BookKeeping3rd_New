@@ -52,3 +52,6 @@ build-test/
 *.tmp
 *.log
 test-questions.db
+
+# Serena cache files (Claude Code)
+.serena/cache/

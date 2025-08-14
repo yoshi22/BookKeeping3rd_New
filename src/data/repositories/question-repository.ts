@@ -27,12 +27,7 @@ export interface QuestionFilter extends QueryFilter {
  */
 export interface QuestionStats {
   totalQuestions: number;
-  categoryBreakdown: {
-    journal: number;
-    ledger: number;
-    trial_balance: number;
-    financial_statement: number;
-  };
+  categoryBreakdown: Record<QuestionCategory, number>;
   difficultyBreakdown: Record<QuestionDifficulty, number>;
   averageDifficulty: number;
 }
@@ -525,11 +520,13 @@ export class QuestionRepository extends BaseRepository<Question> {
         "SELECT category_id, COUNT(*) as count FROM questions GROUP BY category_id",
       );
 
-      const categoryBreakdown = {
+      const categoryBreakdown: Record<QuestionCategory, number> = {
         journal: 0,
         ledger: 0,
         trial_balance: 0,
         financial_statement: 0,
+        voucher_entry: 0,
+        multiple_blank_choice: 0,
       };
 
       categoryResult.rows.forEach((row) => {
@@ -596,6 +593,8 @@ export class QuestionRepository extends BaseRepository<Question> {
         ledger: 0,
         trial_balance: 0,
         financial_statement: 0,
+        voucher_entry: 0,
+        multiple_blank_choice: 0,
       };
 
       categoryResult.rows.forEach((row) => {
@@ -800,11 +799,13 @@ export class QuestionRepository extends BaseRepository<Question> {
     actualCounts: Record<QuestionCategory, number>;
   }> {
     try {
-      const expectedCounts = {
+      const expectedCounts: Record<QuestionCategory, number> = {
         journal: 250,
         ledger: 40,
         trial_balance: 12,
         financial_statement: 2,
+        voucher_entry: 0,
+        multiple_blank_choice: 0,
       };
 
       const stats = await this.getStats();
@@ -834,6 +835,8 @@ export class QuestionRepository extends BaseRepository<Question> {
           ledger: "Q_L_",
           trial_balance: "Q_T_",
           financial_statement: "Q_F_",
+          voucher_entry: "Q_V_",
+          multiple_blank_choice: "Q_M_",
         }[row.category_id];
 
         if (!row.id.startsWith(expectedPrefix)) {
@@ -892,11 +895,13 @@ export class QuestionRepository extends BaseRepository<Question> {
           }
 
           // カテゴリとテンプレートタイプの整合性チェック
-          const expectedTypes = {
+          const expectedTypes: Record<QuestionCategory, string> = {
             journal: "journal_entry",
             ledger: "ledger_entry",
             trial_balance: "trial_balance",
             financial_statement: "financial_statement",
+            voucher_entry: "voucher_entry",
+            multiple_blank_choice: "multiple_blank_choice",
           };
 
           if (template.type !== expectedTypes[question.category_id]) {

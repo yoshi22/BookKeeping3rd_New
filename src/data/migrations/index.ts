@@ -88,8 +88,8 @@ async function loadSampleData(): Promise<void> {
     console.log("[Database] サンプルデータ読み込み開始");
 
     const { databaseService } = await import("../database");
-    const { masterQuestions: allSampleQuestions, questionStatistics } =
-      await import("../master-questions");
+    const { allQuestions: allSampleQuestions, questionStatistics } =
+      await import("../questions");
     const SAMPLE_DATA_VERSION = "2025-08-10-master-questions";
 
     // 開発環境での強制更新フラグ

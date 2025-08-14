@@ -94,7 +94,7 @@ export default function CorrectAnswerExample({
         <Text style={styles.exampleTitle}>📝 正解例</Text>
         {entriesArray.map((entry: any, index: number) => {
           // 借方金額または貸方金額がある勘定科目のみ表示
-          if (entry.debitAmount > 0) {
+          if (entry.debitAmount > 0 && entry.accountName) {
             return (
               <View
                 key={`${entry.accountName}-${index}`}
@@ -108,7 +108,7 @@ export default function CorrectAnswerExample({
                 </Text>
               </View>
             );
-          } else if (entry.creditAmount > 0) {
+          } else if (entry.creditAmount > 0 && entry.accountName) {
             return (
               <View
                 key={`${entry.accountName}-${index}`}
@@ -158,7 +158,18 @@ export default function CorrectAnswerExample({
       return null;
     }
 
-    return renderEntriesFromArray(entries);
+    // Filter and transform entries to ensure required properties
+    const validEntries = entries.filter(entry => 
+      entry.accountName && 
+      typeof entry.debitAmount === 'number' && 
+      typeof entry.creditAmount === 'number'
+    ).map(entry => ({
+      accountName: entry.accountName!,
+      debitAmount: entry.debitAmount!,
+      creditAmount: entry.creditAmount!
+    }));
+    
+    return renderEntriesFromArray(validEntries);
   };
 
   /**
@@ -180,7 +191,7 @@ export default function CorrectAnswerExample({
     // 貸借対照表の資産（借方）
     if (financialStatements.balanceSheet?.assets) {
       for (const asset of financialStatements.balanceSheet.assets) {
-        if (asset.amount > 0) {
+        if (asset.amount > 0 && asset.accountName) {
           entries.push({
             accountName: asset.accountName,
             debitAmount: asset.amount,
@@ -193,7 +204,7 @@ export default function CorrectAnswerExample({
     // 貸借対照表の負債（貸方）
     if (financialStatements.balanceSheet?.liabilities) {
       for (const liability of financialStatements.balanceSheet.liabilities) {
-        if (liability.amount > 0) {
+        if (liability.amount > 0 && liability.accountName) {
           entries.push({
             accountName: liability.accountName,
             debitAmount: 0,
@@ -213,7 +224,7 @@ export default function CorrectAnswerExample({
             debitAmount: equity.amount,
             creditAmount: 0,
           });
-        } else if (equity.amount > 0) {
+        } else if (equity.amount > 0 && equity.accountName) {
           entries.push({
             accountName: equity.accountName,
             debitAmount: 0,
@@ -226,7 +237,7 @@ export default function CorrectAnswerExample({
     // 損益計算書の収益（貸方）
     if (financialStatements.incomeStatement?.revenues) {
       for (const revenue of financialStatements.incomeStatement.revenues) {
-        if (revenue.amount > 0) {
+        if (revenue.amount > 0 && revenue.accountName) {
           entries.push({
             accountName:
               revenue.accountName === "売上高" ? "売上" : revenue.accountName,
@@ -241,7 +252,7 @@ export default function CorrectAnswerExample({
     if (financialStatements.incomeStatement?.expenses) {
       for (const expense of financialStatements.incomeStatement.expenses) {
         // 保険料が0の場合はスキップ
-        if (expense.amount > 0) {
+        if (expense.amount > 0 && expense.accountName) {
           entries.push({
             accountName: expense.accountName,
             debitAmount: expense.amount,

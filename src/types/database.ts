@@ -51,7 +51,9 @@ export type QuestionCategory =
   | "journal"
   | "ledger"
   | "trial_balance"
-  | "financial_statement";
+  | "financial_statement"
+  | "voucher_entry"
+  | "multiple_blank_choice";
 
 // problemsStrategy.mdに基づく詳細分類
 export type JournalSubcategory =
@@ -120,12 +122,23 @@ export interface CBTAnswerData {
     credit: { account: string; amount: number };
   };
 
-  // 帳簿問題の解答
+  // 帳簿問題の解答 - LedgerEntry配列を直接格納
   ledgerEntry?: {
     entries: Array<{
       account?: string;
       description?: string;
       amount?: number;
+      date?: string;
+      debitAccount?: string;
+      debitAmount?: number;
+      creditAccount?: string;
+      creditAmount?: number;
+      receipt_amount?: number;
+      payment_amount?: number;
+      ref?: string;
+      receipt?: number;
+      payment?: number;
+      balance?: number;
     }>;
   };
 
@@ -133,6 +146,13 @@ export interface CBTAnswerData {
   trialBalance?: {
     balances: Record<string, number>;
   };
+
+  // 試算表問題の解答（配列形式） - TrialBalanceEntry配列を直接格納
+  entries?: Array<{
+    accountName: string;
+    debitAmount: number;
+    creditAmount: number;
+  }>;
 
   // 財務諸表問題の解答
   financialStatements?: {
@@ -147,6 +167,23 @@ export interface CBTAnswerData {
       netIncome: number;
     };
   };
+
+  // 伝票記入問題の解答 - より具体的な型定義
+  voucher_type?: string;
+  voucherEntries?: Array<{
+    type: string;
+    date?: string;
+    account?: string;
+    amount?: number;
+    description?: string;
+    debit_account?: string;
+    debit_amount?: number;
+    credit_account?: string;
+    credit_amount?: number;
+  }>;
+
+  // 複数空欄選択問題の解答
+  answers?: Record<string, string>;
 }
 
 // 検証エラー情報（JSON格納用）

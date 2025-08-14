@@ -188,6 +188,20 @@ export class AnswerService {
     try {
       const template = JSON.parse(question.answer_template_json);
 
+      // 伝票問題の場合は専用バリデーションを使用
+      if (template.type === "voucher_entry") {
+        return this.validateVoucherAnswer(answerData, template);
+      }
+
+      // 複数空欄選択問題の場合は専用バリデーションを使用
+      if (
+        template.type === "multiple_choice" &&
+        template.questions &&
+        Array.isArray(template.questions)
+      ) {
+        return this.validateMultipleBlankChoiceAnswer(answerData, template);
+      }
+
       // 必須フィールドチェック
       template.fields?.forEach((field: any) => {
         const value = (answerData as any)[field.name];
@@ -242,6 +256,132 @@ export class AnswerService {
   }
 
   /**
+   * 伝票問題専用バリデーション
+   */
+  private validateVoucherAnswer(
+    answerData: CBTAnswerData,
+    template: any,
+  ): string[] {
+    const errors: string[] = [];
+    const data = answerData as any;
+
+    console.log("[AnswerService] 伝票バリデーション開始:", { data, template });
+
+    // 基本構造チェック
+    if (!data.voucher_type) {
+      errors.push("伝票タイプが選択されていません");
+    }
+
+    if (!data.entries || !Array.isArray(data.entries)) {
+      errors.push("伝票エントリが正しく入力されていません");
+      return errors;
+    }
+
+    if (data.entries.length === 0) {
+      errors.push("少なくとも1つの伝票エントリを入力してください");
+      return errors;
+    }
+
+    // 各エントリの必須フィールドチェック
+    data.entries.forEach((entry: any, index: number) => {
+      template.fields?.forEach((field: any) => {
+        const value = entry[field.name];
+        if (
+          field.required &&
+          (value === null || value === undefined || value === "")
+        ) {
+          errors.push(
+            `${index + 1}番目のエントリ: ${field.label}は必須項目です`,
+          );
+        }
+      });
+
+      // 金額の妥当性チェック
+      if (entry.amount !== undefined) {
+        if (typeof entry.amount !== "number" || isNaN(entry.amount)) {
+          errors.push(
+            `${index + 1}番目のエントリ: 金額は有効な数値を入力してください`,
+          );
+        } else if (entry.amount <= 0) {
+          errors.push(
+            `${index + 1}番目のエントリ: 金額は0より大きい値を入力してください`,
+          );
+        }
+      }
+    });
+
+    console.log("[AnswerService] 伝票バリデーション完了:", { errors });
+    return errors;
+  }
+
+  /**
+   * 複数空欄選択問題専用バリデーション
+   */
+  private validateMultipleBlankChoiceAnswer(
+    answerData: CBTAnswerData,
+    template: any,
+  ): string[] {
+    const errors: string[] = [];
+    const data = answerData as any;
+
+    console.log(
+      "[AnswerService] Multiple blank choice validation - answerData:",
+      data,
+    );
+    console.log(
+      "[AnswerService] Multiple blank choice validation - template:",
+      template,
+    );
+
+    // Check if answer data has the expected structure
+    if (!data.answers || typeof data.answers !== "object") {
+      errors.push("解答データの形式が正しくありません");
+      return errors;
+    }
+
+    // Check if template has questions array
+    if (
+      !template.questions ||
+      !Array.isArray(template.questions) ||
+      template.questions.length === 0
+    ) {
+      errors.push("問題定義が正しくありません");
+      return errors;
+    }
+
+    const userAnswers = data.answers;
+    const requiredQuestions = template.questions;
+
+    // Check if all required blanks are answered
+    for (const question of requiredQuestions) {
+      const questionId = question.id;
+      const questionLabel = question.label;
+
+      if (!userAnswers.hasOwnProperty(questionId)) {
+        errors.push(`${questionLabel}が未回答です`);
+      } else {
+        const userAnswer = userAnswers[questionId];
+
+        // Check if answer is not empty
+        if (!userAnswer || typeof userAnswer !== "string") {
+          errors.push(`${questionLabel}の回答が正しくありません`);
+        }
+
+        // Check if answer is a valid option (A, B, C, D, etc.)
+        if (userAnswer && !/^[A-Z]$/.test(userAnswer)) {
+          errors.push(`${questionLabel}の回答は選択肢から選択してください`);
+        }
+      }
+    }
+
+    console.log(
+      "[AnswerService] Multiple blank choice validation errors:",
+      errors,
+    );
+    return errors;
+  }
+
+  /**
    * 正解判定ロジック
    */
   public isAnswerCorrect(
@@ -266,12 +406,13 @@ export class AnswerService {
         parsedCorrectAnswer: correctAnswer,
       });
 
-      // First check if it's a choice question based on answer template
+      // First check answer template for question type
       try {
         const answerTemplate = JSON.parse(question.answer_template_json);
         if (
           answerTemplate?.type === "single_choice" ||
-          answerTemplate?.type === "multiple_choice"
+          (answerTemplate?.type === "multiple_choice" &&
+            !answerTemplate?.questions)
         ) {
           console.log(
             `[DEBUG] isAnswerCorrect - choice問題として処理: ${answerTemplate.type}`,
@@ -282,6 +423,25 @@ export class AnswerService {
             correctAnswer,
             answerTemplate.type,
           );
+        } else if (
+          answerTemplate?.type === "multiple_choice" &&
+          answerTemplate?.questions &&
+          Array.isArray(answerTemplate.questions)
+        ) {
+          console.log(
+            "[DEBUG] isAnswerCorrect - multiple_blank_choice問題として処理",
+            question.id,
+          );
+          return this.isMultipleBlankChoiceAnswerCorrect(
+            answerData,
+            correctAnswer,
+          );
+        } else if (answerTemplate?.type === "voucher_entry") {
+          console.log(
+            "[DEBUG] isAnswerCorrect - voucher_entry問題として処理",
+            question.id,
+          );
+          return this.isVoucherAnswerCorrect(answerData, correctAnswer);
         }
       } catch (templateError) {
         console.warn(
@@ -661,7 +821,8 @@ export class AnswerService {
     if (financialStatements) {
       console.log("[DEBUG] Using financialStatements format");
       // 財務諸表形式の場合は、entriesに変換
-      const convertedEntries = this.convertFinancialStatementsToEntries(financialStatements);
+      const convertedEntries =
+        this.convertFinancialStatementsToEntries(financialStatements);
       if (convertedEntries && convertedEntries.length > 0) {
         return this.compareTrialBalanceEntries(convertedEntries, answerData);
       }
@@ -752,10 +913,14 @@ export class AnswerService {
    * 財務諸表形式のデータを試算表エントリ形式に変換
    */
   private convertFinancialStatementsToEntries(
-    financialStatements: any
+    financialStatements: any,
   ): Array<{ accountName: string; debitAmount: number; creditAmount: number }> {
-    const entries: Array<{ accountName: string; debitAmount: number; creditAmount: number }> = [];
-    
+    const entries: Array<{
+      accountName: string;
+      debitAmount: number;
+      creditAmount: number;
+    }> = [];
+
     // 貸借対照表の資産（借方）
     if (financialStatements.balanceSheet?.assets) {
       for (const asset of financialStatements.balanceSheet.assets) {
@@ -768,7 +933,7 @@ export class AnswerService {
         }
       }
     }
-    
+
     // 貸借対照表の負債（貸方）
     if (financialStatements.balanceSheet?.liabilities) {
       for (const liability of financialStatements.balanceSheet.liabilities) {
@@ -781,7 +946,7 @@ export class AnswerService {
         }
       }
     }
-    
+
     // 貸借対照表の純資産（貸方）
     if (financialStatements.balanceSheet?.equity) {
       for (const equity of financialStatements.balanceSheet.equity) {
@@ -801,20 +966,21 @@ export class AnswerService {
         }
       }
     }
-    
+
     // 損益計算書の収益（貸方）
     if (financialStatements.incomeStatement?.revenues) {
       for (const revenue of financialStatements.incomeStatement.revenues) {
         if (revenue.amount > 0) {
           entries.push({
-            accountName: revenue.accountName === "売上高" ? "売上" : revenue.accountName,
+            accountName:
+              revenue.accountName === "売上高" ? "売上" : revenue.accountName,
             debitAmount: 0,
             creditAmount: revenue.amount,
           });
         }
       }
     }
-    
+
     // 損益計算書の費用（借方）
     if (financialStatements.incomeStatement?.expenses) {
       for (const expense of financialStatements.incomeStatement.expenses) {
@@ -828,8 +994,11 @@ export class AnswerService {
         }
       }
     }
-    
-    console.log("[DEBUG] convertFinancialStatementsToEntries - 変換結果:", entries);
+
+    console.log(
+      "[DEBUG] convertFinancialStatementsToEntries - 変換結果:",
+      entries,
+    );
     return entries;
   }
 
@@ -837,41 +1006,49 @@ export class AnswerService {
    * 試算表エントリの比較
    */
   private compareTrialBalanceEntries(
-    correctEntries: Array<{ accountName: string; debitAmount: number; creditAmount: number }>,
-    answerData: CBTAnswerData
+    correctEntries: Array<{
+      accountName: string;
+      debitAmount: number;
+      creditAmount: number;
+    }>,
+    answerData: CBTAnswerData,
   ): boolean {
     const data = answerData as any;
     const userEntries = data.entries;
-    
+
     if (!userEntries || !Array.isArray(userEntries)) {
       console.error("[DEBUG] No valid entries found in user answer");
       return false;
     }
-    
+
     console.log("[DEBUG] Comparing entries:", {
       correctEntries: correctEntries.length,
       userEntries: userEntries.length,
     });
-    
+
     // Convert both arrays to account balance maps for comparison
-    const correctBalances = this.convertTrialBalanceEntriesToBalances(correctEntries);
+    const correctBalances =
+      this.convertTrialBalanceEntriesToBalances(correctEntries);
     const userBalances = this.convertTrialBalanceEntriesToBalances(userEntries);
-    
+
     console.log("[DEBUG] Balance comparison:", {
       correctBalances,
       userBalances,
     });
-    
+
     // Compare all accounts
     const allAccounts = new Set([
       ...Object.keys(correctBalances),
       ...Object.keys(userBalances),
     ]);
-    
+
     for (const account of allAccounts) {
-      const correctBalance = correctBalances[account] || { debit: 0, credit: 0 };
+      const correctBalance = correctBalances[account] || {
+        debit: 0,
+        credit: 0,
+      };
       const userBalance = userBalances[account] || { debit: 0, credit: 0 };
-      
+
       if (
         correctBalance.debit !== userBalance.debit ||
         correctBalance.credit !== userBalance.credit
@@ -883,8 +1060,128 @@ export class AnswerService {
         return false;
       }
     }
-    
+
     console.log("[DEBUG] All trial balance entries match");
+    return true;
+  }
+
+  /**
+   * 伝票問題の正解判定
+   */
+  private isVoucherAnswerCorrect(
+    answerData: CBTAnswerData,
+    correctAnswer: QuestionCorrectAnswer,
+  ): boolean {
+    const data = answerData as any;
+    console.log("[DEBUG] isVoucherAnswerCorrect - 開始");
+    console.log(
+      "[DEBUG] Voucher validation - answerData:",
+      JSON.stringify(data, null, 2),
+    );
+    console.log(
+      "[DEBUG] Voucher validation - correctAnswer:",
+      JSON.stringify(correctAnswer, null, 2),
+    );
+
+    // 正答データのentriesと比較
+    const correctVoucherType = (correctAnswer as any).voucher_type;
+    const correctEntries = (correctAnswer as any).entries;
+
+    if (!correctEntries || !Array.isArray(correctEntries)) {
+      console.error("[DEBUG] 正答データのentriesが見つかりません", {
+        correctAnswer: correctAnswer,
+        correctEntries: correctEntries,
+      });
+      return false;
+    }
+
+    // ユーザーの解答データ
+    const userVoucherType = data.voucher_type;
+    const userEntries = data.entries;
+
+    console.log("[DEBUG] データ構造確認:", {
+      userVoucherType: userVoucherType,
+      correctVoucherType: correctVoucherType,
+      userEntriesLength: userEntries?.length,
+      correctEntriesLength: correctEntries?.length,
+    });
+
+    if (!userEntries || !Array.isArray(userEntries)) {
+      console.error("[DEBUG] ユーザー解答のentriesが見つかりません", {
+        data: data,
+        userEntries: userEntries,
+        dataKeys: Object.keys(data),
+      });
+      return false;
+    }
+
+    // 伝票タイプの確認
+    if (correctVoucherType && userVoucherType !== correctVoucherType) {
+      console.log(
+        `[DEBUG] 伝票タイプが異なります: user='${userVoucherType}', correct='${correctVoucherType}'`,
+      );
+      return false;
+    }
+
+    // エントリ数の確認
+    if (userEntries.length !== correctEntries.length) {
+      console.log(
+        `[DEBUG] エントリ数が異なります: user=${userEntries.length}, correct=${correctEntries.length}`,
+      );
+      return false;
+    }
+
+    // 各エントリの照合
+    for (let i = 0; i < correctEntries.length; i++) {
+      const correctEntry = correctEntries[i];
+
+      console.log(`[DEBUG] エントリ ${i + 1} の照合開始:`, {
+        correctEntry: correctEntry,
+        userEntriesForMatching: userEntries,
+      });
+
+      // 同じデータを持つエントリを探す
+      const matchingEntry = userEntries.find((userEntry: any) => {
+        const dateMatch =
+          !correctEntry.date ||
+          userEntry.date === correctEntry.date ||
+          userEntry.date === correctEntry.date.replace(/\//g, "/");
+
+        const accountMatch =
+          !correctEntry.account || userEntry.account === correctEntry.account;
+
+        const amountMatch =
+          correctEntry.amount === undefined ||
+          Number(userEntry.amount) === Number(correctEntry.amount);
+
+        const descriptionMatch =
+          !correctEntry.description ||
+          userEntry.description === correctEntry.description;
+
+        console.log(`[DEBUG] エントリ照合詳細 (${i + 1}):`, {
+          userEntry: userEntry,
+          correctEntry: correctEntry,
+          dateMatch: dateMatch,
+          accountMatch: accountMatch,
+          amountMatch: amountMatch,
+          descriptionMatch: descriptionMatch,
+          overallMatch:
+            dateMatch && accountMatch && amountMatch && descriptionMatch,
+        });
+
+        return dateMatch && accountMatch && amountMatch && descriptionMatch;
+      });
+
+      if (!matchingEntry) {
+        console.log(`[DEBUG] 一致するエントリが見つかりません (${i + 1}):`, {
+          correctEntry: correctEntry,
+          searchedUserEntries: userEntries,
+        });
+        return false;
+      }
+    }
+
+    console.log("[DEBUG] 全ての伝票エントリが一致しました");
     return true;
   }
 
@@ -959,6 +1256,80 @@ export class AnswerService {
     }
 
     return false;
+  }
+
+  /**
+   * 複数空欄選択問題の正解判定
+   */
+  private isMultipleBlankChoiceAnswerCorrect(
+    answerData: CBTAnswerData,
+    correctAnswer: QuestionCorrectAnswer,
+  ): boolean {
+    const data = answerData as any;
+
+    console.log(
+      "[AnswerService] Multiple blank choice validation - answerData:",
+      data,
+    );
+    console.log(
+      "[AnswerService] Multiple blank choice validation - correctAnswer:",
+      correctAnswer,
+    );
+
+    // Check if answer data has the expected structure
+    if (!data.answers || typeof data.answers !== "object") {
+      console.error(
+        "[AnswerService] Multiple blank choice validation: answers object missing or invalid",
+      );
+      return false;
+    }
+
+    const userAnswers = data.answers;
+    const correctAnswers = (correctAnswer as any).answers;
+
+    if (!correctAnswers || typeof correctAnswers !== "object") {
+      console.error(
+        "[AnswerService] Multiple blank choice validation: correct answers object missing or invalid",
+      );
+      return false;
+    }
+
+    // Check if all required blanks are answered
+    const correctAnswerKeys = Object.keys(correctAnswers);
+    const userAnswerKeys = Object.keys(userAnswers);
+
+    console.log(
+      "[AnswerService] Multiple blank choice validation comparison:",
+      {
+        userAnswerKeys,
+        correctAnswerKeys,
+        userAnswers,
+        correctAnswers,
+      },
+    );
+
+    // Check if user answered all required blanks
+    for (const key of correctAnswerKeys) {
+      if (!(key in userAnswers)) {
+        console.log(`[AnswerService] Missing answer for blank: ${key}`);
+        return false;
+      }
+    }
+
+    // Check if all answers are correct
+    for (const key of correctAnswerKeys) {
+      if (userAnswers[key] !== correctAnswers[key]) {
+        console.log(
+          `[AnswerService] Incorrect answer for blank ${key}: got '${userAnswers[key]}', expected '${correctAnswers[key]}'`,
+        );
+        return false;
+      }
+    }
+
+    console.log(
+      "[AnswerService] Multiple blank choice validation: all answers correct",
+    );
+    return true;
   }
 
   /**

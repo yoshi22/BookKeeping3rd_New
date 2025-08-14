@@ -60,6 +60,64 @@ export default function ExplanationPanel({
   const renderCorrectAnswer = () => {
     if (!correctAnswer) return null;
 
+    // 伝票問題の場合（voucher_typeフィールドがある場合）
+    if (correctAnswer.voucher_type) {
+      // 単一の伝票タイプの場合
+      return (
+        <View style={styles.correctAnswerSection}>
+          <Text style={styles.correctAnswerTitle}>正答</Text>
+          <View style={styles.voucherBox}>
+            <Text style={styles.voucherTitle}>
+              {correctAnswer.voucher_type}
+            </Text>
+            {correctAnswer.entries &&
+              correctAnswer.entries.map((entry: any, eIndex: number) => (
+                <View key={eIndex} style={styles.voucherEntry}>
+                  {entry.date && (
+                    <Text style={styles.entryText}>日付: {entry.date}</Text>
+                  )}
+                  {entry.account && (
+                    <Text style={styles.entryText}>
+                      勘定科目: {entry.account}
+                    </Text>
+                  )}
+                  {entry.amount !== undefined && (
+                    <Text style={styles.entryText}>
+                      金額: {formatAnswerValue(entry.amount)}円
+                    </Text>
+                  )}
+                  {entry.debit_account && (
+                    <Text style={styles.entryText}>
+                      借方科目: {entry.debit_account}
+                    </Text>
+                  )}
+                  {entry.debit_amount !== undefined && (
+                    <Text style={styles.entryText}>
+                      借方金額: {formatAnswerValue(entry.debit_amount)}円
+                    </Text>
+                  )}
+                  {entry.credit_account && (
+                    <Text style={styles.entryText}>
+                      貸方科目: {entry.credit_account}
+                    </Text>
+                  )}
+                  {entry.credit_amount !== undefined && (
+                    <Text style={styles.entryText}>
+                      貸方金額: {formatAnswerValue(entry.credit_amount)}円
+                    </Text>
+                  )}
+                  {entry.description && (
+                    <Text style={styles.entryText}>
+                      摘要: {entry.description}
+                    </Text>
+                  )}
+                </View>
+              ))}
+          </View>
+        </View>
+      );
+    }
+
     // 伝票問題の場合（vouchers配列）
     if (correctAnswer.vouchers && Array.isArray(correctAnswer.vouchers)) {
       const vouchers = correctAnswer.vouchers;
@@ -133,6 +191,40 @@ export default function ExplanationPanel({
       );
     }
 
+    // 複数空欄選択問題の場合（multiple_blank_choice）
+    if (
+      correctAnswer.answers &&
+      correctAnswer.correctText &&
+      typeof correctAnswer.answers === "object" &&
+      typeof correctAnswer.correctText === "object"
+    ) {
+      return (
+        <View style={styles.correctAnswerSection}>
+          <Text style={styles.correctAnswerTitle}>正答</Text>
+          <View style={styles.multipleBlankAnswerBox}>
+            {Object.entries(correctAnswer.answers).map(([key, value]) => {
+              const blankLabel =
+                key === "a"
+                  ? "（ア）"
+                  : key === "b"
+                    ? "（イ）"
+                    : key === "c"
+                      ? "（ウ）"
+                      : key === "d"
+                        ? "（エ）"
+                        : `（${key.toUpperCase()}）`;
+              const correctText = correctAnswer.correctText[key];
+              return (
+                <Text key={key} style={styles.blankAnswerText}>
+                  {blankLabel} {value}. {correctText}
+                </Text>
+              );
+            })}
+          </View>
+        </View>
+      );
+    }
+
     // 選択問題の場合（single_choice/multiple_choice）
     if (
       correctAnswer.selected !== undefined ||
@@ -170,16 +262,23 @@ export default function ExplanationPanel({
                 摘要: {entry.description || "N/A"}
               </Text>
               <Text style={styles.entryText}>
-                借方金額:{" "}
+                収入金額:{" "}
                 {formatAnswerValue(
-                  entry.debitAmount || entry.debit_amount || entry.amount || 0,
+                  entry.receipt ||
+                    entry.debitAmount ||
+                    entry.debit_amount ||
+                    entry.amount ||
+                    0,
                 )}
                 円
               </Text>
               <Text style={styles.entryText}>
-                貸方金額:{" "}
+                支出金額:{" "}
                 {formatAnswerValue(
-                  entry.creditAmount || entry.credit_amount || 0,
+                  entry.payment ||
+                    entry.creditAmount ||
+                    entry.credit_amount ||
+                    0,
                 )}
                 円
               </Text>
@@ -190,7 +289,12 @@ export default function ExplanationPanel({
     }
 
     // 新形式の帳簿問題・試算表問題（entries直接配列）の場合
-    if (correctAnswer.entries && Array.isArray(correctAnswer.entries)) {
+    // ただし、voucher_typeがある場合は除外（伝票問題として処理済み）
+    if (
+      correctAnswer.entries &&
+      Array.isArray(correctAnswer.entries) &&
+      !correctAnswer.voucher_type
+    ) {
       const entries = correctAnswer.entries;
 
       // 試算表問題の判定（accountName, debitAmount, creditAmountを持つ）
@@ -242,17 +346,20 @@ export default function ExplanationPanel({
               <View style={styles.ledgerTableHeader}>
                 <Text style={styles.ledgerHeaderText}>日付</Text>
                 <Text style={styles.ledgerHeaderText}>摘要</Text>
-                <Text style={styles.ledgerHeaderText}>借方</Text>
-                <Text style={styles.ledgerHeaderText}>貸方</Text>
+                <Text style={styles.ledgerHeaderText}>収入</Text>
+                <Text style={styles.ledgerHeaderText}>支出</Text>
                 <Text style={styles.ledgerHeaderText}>残高</Text>
               </View>
               {entries.map((entry: any, index: number) => {
-                // debitとbalanceがネストされている場合の処理
-                const debitValue =
-                  typeof entry.debit === "object" && entry.debit?.entries
-                    ? entry.debit.entries[0]?.amount || 0
-                    : entry.debit || 0;
-                const creditValue = entry.credit || 0;
+                // receiptとpaymentを使用した新形式の処理
+                const receiptValue =
+                  typeof entry.receipt === "object" && entry.receipt?.entries
+                    ? entry.receipt.entries[0]?.amount || 0
+                    : entry.receipt || entry.debit || 0;
+                const paymentValue =
+                  typeof entry.payment === "object" && entry.payment?.entries
+                    ? entry.payment.entries[0]?.amount || 0
+                    : entry.payment || entry.credit || 0;
                 const balanceValue =
                   typeof entry.balance === "object" && entry.balance?.entries
                     ? entry.balance.entries[0]?.amount || 0
@@ -267,10 +374,10 @@ export default function ExplanationPanel({
                       {entry.description || ""}
                     </Text>
                     <Text style={styles.ledgerCellAmount}>
-                      {debitValue > 0 ? formatAnswerValue(debitValue) : ""}
+                      {receiptValue > 0 ? formatAnswerValue(receiptValue) : ""}
                     </Text>
                     <Text style={styles.ledgerCellAmount}>
-                      {creditValue > 0 ? formatAnswerValue(creditValue) : ""}
+                      {paymentValue > 0 ? formatAnswerValue(paymentValue) : ""}
                     </Text>
                     <Text style={styles.ledgerCellAmount}>
                       {balanceValue > 0 ? formatAnswerValue(balanceValue) : ""}
@@ -661,10 +768,18 @@ export default function ExplanationPanel({
                     摘要: {entry.description || "N/A"}
                   </Text>
                   <Text style={styles.entryText}>
-                    借方金額: {formatAnswerValue(entry.debit_amount || 0)}円
+                    収入金額:{" "}
+                    {formatAnswerValue(
+                      entry.receipt_amount || entry.debit_amount || 0,
+                    )}
+                    円
                   </Text>
                   <Text style={styles.entryText}>
-                    貸方金額: {formatAnswerValue(entry.credit_amount || 0)}円
+                    支出金額:{" "}
+                    {formatAnswerValue(
+                      entry.payment_amount || entry.credit_amount || 0,
+                    )}
+                    円
                   </Text>
                 </View>
               ))
@@ -1083,6 +1198,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#333",
+  },
+  multipleBlankAnswerBox: {
+    backgroundColor: "#f0f8ff",
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#4a90e2",
+  },
+  blankAnswerText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+    marginBottom: 6,
+    lineHeight: 22,
   },
   // 財務諸表用のスタイル
   financialStatementContainer: {

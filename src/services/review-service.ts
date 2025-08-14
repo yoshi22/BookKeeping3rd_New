@@ -77,7 +77,9 @@ export class ReviewService {
       ledger: 3, // 帳簿は中程度
       trial_balance: 8, // 試算表は重要なので高め
       financial_statement: 10, // 財務諸表は最重要
-    },
+      voucher_entry: 4, // 伝票記入は中程度
+      multiple_blank_choice: 6, // 複数空欄選択は少し高め
+    } as Record<QuestionCategory, number>,
     maxPriorityScore: 100,
   };
 
@@ -432,11 +434,13 @@ export class ReviewService {
       console.log("[ReviewService] 統計データに基づく分析:", stats);
       const analysis = [];
 
-      const categoryNames = {
+      const categoryNames: Record<QuestionCategory, string> = {
         journal: "仕訳",
         ledger: "帳簿",
         trial_balance: "試算表",
         financial_statement: "財務諸表",
+        voucher_entry: "伝票記入",
+        multiple_blank_choice: "複数空欄選択",
       };
 
       for (const [category, categoryStats] of Object.entries(

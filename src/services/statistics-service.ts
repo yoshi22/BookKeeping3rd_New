@@ -217,11 +217,13 @@ export class StatisticsService {
         "trial_balance",
         "financial_statement",
       ];
-      const categoryNames = {
+      const categoryNames: Record<QuestionCategory, string> = {
         journal: "仕訳",
         ledger: "帳簿",
         trial_balance: "試算表",
         financial_statement: "財務諸表",
+        voucher_entry: "伝票記入",
+        multiple_blank_choice: "複数空欄選択",
       };
 
       const statistics: CategoryStatistics[] = [];
@@ -326,7 +328,9 @@ export class StatisticsService {
             ledger: { answered: 0, correct: 0 },
             trial_balance: { answered: 0, correct: 0 },
             financial_statement: { answered: 0, correct: 0 },
-          },
+            voucher_entry: { answered: 0, correct: 0 },
+            multiple_blank_choice: { answered: 0, correct: 0 },
+          } as Record<QuestionCategory, { answered: number; correct: number }>,
         });
       }
 
@@ -496,11 +500,13 @@ export class StatisticsService {
     );
 
     // デフォルト値（仕様書ベース）
-    const defaults = {
+    const defaults: Record<QuestionCategory, number> = {
       journal: 250,
       ledger: 40,
       trial_balance: 12,
       financial_statement: 2,
+      voucher_entry: 0,
+      multiple_blank_choice: 0,
     };
     return result.rows[0]?.count || defaults[category];
   }
@@ -665,6 +671,8 @@ export class StatisticsService {
       "ledger",
       "trial_balance",
       "financial_statement",
+      "voucher_entry",
+      "multiple_blank_choice",
     ];
 
     for (const category of categories) {

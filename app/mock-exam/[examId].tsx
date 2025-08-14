@@ -18,10 +18,10 @@ import {
   MockExamSession,
 } from "../../src/services/mock-exam-service";
 import JournalEntryForm from "../../src/components/mock-exam/JournalEntryForm";
-import { JournalEntry } from "../../src/components/mock-exam/JournalEntryForm";
 import LedgerEntryForm from "../../src/components/mock-exam/LedgerEntryForm";
-import { LedgerEntry } from "../../src/components/mock-exam/LedgerEntryForm";
 import TrialBalanceForm from "../../src/components/mock-exam/TrialBalanceForm";
+import { JournalEntry } from "../../src/components/shared/FormTypes";
+import { LedgerEntry } from "../../src/components/mock-exam/LedgerEntryForm";
 import { TrialBalanceEntry } from "../../src/components/mock-exam/TrialBalanceForm";
 
 interface MockExamAnswer {
@@ -192,7 +192,14 @@ export default function MockExamExecutionScreen() {
     const currentQuestion = session.questions[currentQuestionIndex];
     const answerData = {
       questionType: "ledger" as const,
-      entries,
+      ledgerEntry: {
+        entries: entries.map((entry) => ({
+          date: entry.date,
+          description: entry.description,
+          receipt_amount: entry.debitAmount, // Map debitAmount to receipt_amount
+          payment_amount: entry.creditAmount, // Map creditAmount to payment_amount
+        })),
+      },
     };
 
     try {
@@ -237,7 +244,11 @@ export default function MockExamExecutionScreen() {
     const currentQuestion = session.questions[currentQuestionIndex];
     const answerData = {
       questionType: "trial_balance" as const,
-      entries,
+      entries: entries.map((entry) => ({
+        accountName: entry.accountName,
+        debitAmount: entry.debitAmount,
+        creditAmount: entry.creditAmount,
+      })),
     };
 
     try {

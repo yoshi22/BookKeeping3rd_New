@@ -22,21 +22,17 @@ import {
   SubmitAnswerResponse,
 } from "../services/answer-service";
 import { SessionType } from "../types/database";
+import {
+  LedgerEntry,
+  BaseFormProps,
+  FormState,
+  createInitialFormState,
+  validateDate,
+  validateDescription,
+  createSubmitAnswerRequest,
+} from "./shared";
 
-interface LedgerEntry {
-  date: string;
-  description: string;
-  debit_amount: number;
-  credit_amount: number;
-}
-
-interface LedgerEntryFormProps {
-  questionId: string;
-  sessionType?: SessionType;
-  sessionId?: string;
-  startTime?: number;
-  onSubmitAnswer?: (response: SubmitAnswerResponse) => void;
-  showSubmitButton?: boolean;
+interface LedgerEntryFormProps extends BaseFormProps {
   expectedEntries?: number; // 期待されるエントリ数
 }
 
@@ -50,16 +46,18 @@ export default function LedgerEntryForm({
   expectedEntries = 1,
 }: LedgerEntryFormProps) {
   const [entries, setEntries] = useState<LedgerEntry[]>([
-    { date: "", description: "", debit_amount: 0, credit_amount: 0 },
+    { date: "", description: "", receipt_amount: 0, payment_amount: 0 },
   ]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formState, setFormState] = useState<FormState>(
+    createInitialFormState(),
+  );
   const [showGuide, setShowGuide] = useState(false);
 
   // エントリを追加
   const addEntry = () => {
     setEntries([
       ...entries,
-      { date: "", description: "", debit_amount: 0, credit_amount: 0 },
+      { date: "", description: "", receipt_amount: 0, payment_amount: 0 },
     ]);
   };
 
@@ -81,18 +79,18 @@ export default function LedgerEntryForm({
 
   // 解答送信処理
   const handleSubmitAnswer = async () => {
-    if (isSubmitting) return;
+    if (formState.isSubmitting) return;
 
     try {
-      setIsSubmitting(true);
+      setFormState({ ...formState, isSubmitting: true });
 
       // 空のエントリを除外
       const validEntries = entries.filter(
         (entry) =>
           entry.date.trim() ||
           entry.description.trim() ||
-          entry.debit_amount > 0 ||
-          entry.credit_amount > 0,
+          entry.receipt_amount > 0 ||
+          entry.payment_amount > 0,
       );
 
       if (validEntries.length === 0) {
@@ -100,45 +98,44 @@ export default function LedgerEntryForm({
         return;
       }
 
-      // 必須フィールドチェック
-      const incompleteEntries = validEntries.filter(
-        (entry) => !entry.date.trim() || !entry.description.trim(),
-      );
+      // バリデーション
+      for (const entry of validEntries) {
+        const dateError = validateDate(entry.date);
+        if (dateError) {
+          Alert.alert("入力エラー", dateError);
+          return;
+        }
 
-      if (incompleteEntries.length > 0) {
-        Alert.alert(
-          "入力エラー",
-          "全てのエントリに日付と摘要を入力してください",
-        );
-        return;
-      }
+        const descError = validateDescription(entry.description);
+        if (descError) {
+          Alert.alert("入力エラー", descError);
+          return;
+        }
 
-      // 金額チェック（借方または貸方のどちらかは必須）
-      const invalidEntries = validEntries.filter(
-        (entry) => entry.debit_amount === 0 && entry.credit_amount === 0,
-      );
-
-      if (invalidEntries.length > 0) {
-        Alert.alert(
-          "入力エラー",
-          "各エントリで借方金額または貸方金額のいずれかを入力してください",
-        );
-        return;
+        if (entry.receipt_amount === 0 && entry.payment_amount === 0) {
+          Alert.alert(
+            "入力エラー",
+            "各エントリで収入金額または支出金額のいずれかを入力してください",
+          );
+          return;
+        }
       }
 
       // 複数エントリ形式で解答データを構築
       const answerData = {
         questionType: "ledger" as const,
-        entries: validEntries,
+        ledgerEntry: {
+          entries: validEntries,
+        },
       };
 
-      const request: SubmitAnswerRequest = {
+      const request = createSubmitAnswerRequest(
         questionId,
         answerData,
         sessionType,
         sessionId,
         startTime,
-      };
+      );
 
       const response = await answerService.submitAnswer(request);
 
@@ -161,7 +158,7 @@ export default function LedgerEntryForm({
         "解答の送信に失敗しました。もう一度お試しください。",
       );
     } finally {
-      setIsSubmitting(false);
+      setFormState({ ...formState, isSubmitting: false });
     }
   };
 
@@ -209,31 +206,33 @@ export default function LedgerEntryForm({
           />
         </View>
 
-        {/* 借方金額フィールド */}
+        {/* 収入金額フィールド */}
         <View style={styles.fieldContainer}>
-          <Text style={styles.fieldLabel}>借方金額</Text>
+          <Text style={styles.fieldLabel}>収入金額</Text>
           <NumberInput
             label=""
-            value={entry.debit_amount}
-            onChange={(value) => updateEntry(index, "debit_amount", value || 0)}
-            required={false}
-            format="currency"
-            placeholder="借方の場合のみ入力"
-          />
-        </View>
-
-        {/* 貸方金額フィールド */}
-        <View style={styles.fieldContainer}>
-          <Text style={styles.fieldLabel}>貸方金額</Text>
-          <NumberInput
-            label=""
-            value={entry.credit_amount}
+            value={entry.receipt_amount}
             onChange={(value) =>
-              updateEntry(index, "credit_amount", value || 0)
+              updateEntry(index, "receipt_amount", value || 0)
             }
             required={false}
             format="currency"
-            placeholder="貸方の場合のみ入力"
+            placeholder="収入の場合のみ入力"
+          />
+        </View>
+
+        {/* 支出金額フィールド */}
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldLabel}>支出金額</Text>
+          <NumberInput
+            label=""
+            value={entry.payment_amount}
+            onChange={(value) =>
+              updateEntry(index, "payment_amount", value || 0)
+            }
+            required={false}
+            format="currency"
+            placeholder="支出の場合のみ入力"
           />
         </View>
       </View>
@@ -273,12 +272,12 @@ export default function LedgerEntryForm({
         <TouchableOpacity
           style={[
             styles.submitButton,
-            isSubmitting && styles.submitButtonDisabled,
+            formState.isSubmitting && styles.submitButtonDisabled,
           ]}
           onPress={handleSubmitAnswer}
-          disabled={isSubmitting}
+          disabled={formState.isSubmitting}
         >
-          {isSubmitting ? (
+          {formState.isSubmitting ? (
             <View style={styles.submitButtonContent}>
               <ActivityIndicator
                 size="small"

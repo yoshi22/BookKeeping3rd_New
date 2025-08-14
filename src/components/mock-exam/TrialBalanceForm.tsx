@@ -14,6 +14,11 @@ import {
 } from "react-native";
 import { useTheme } from "../../context/ThemeContext";
 import ExplanationModal from "./ExplanationModal";
+import {
+  MockExamFormProps,
+  STANDARD_ACCOUNT_OPTIONS,
+  formatAmount,
+} from "../shared";
 
 export interface TrialBalanceEntry {
   accountName: string;
@@ -21,81 +26,11 @@ export interface TrialBalanceEntry {
   creditAmount: number;
 }
 
-export interface TrialBalanceFormProps {
+export interface TrialBalanceFormProps extends MockExamFormProps {
   onSubmit: (entries: TrialBalanceEntry[]) => void;
-  onNext?: () => void;
-  onPrevious?: () => void;
-  questionNumber: number;
-  totalQuestions: number;
-  timeRemaining: string;
-  explanation?: string;
-  correctAnswer?: any;
-  userAnswer?: any;
-  isCorrect?: boolean;
-  showExplanation?: boolean;
-  questionText?: string;
 }
 
-const ACCOUNT_OPTIONS = [
-  { label: "勘定科目を選択", value: "" },
-  // 資産
-  { label: "現金", value: "現金" },
-  { label: "現金過不足", value: "現金過不足" },
-  { label: "当座預金", value: "当座預金" },
-  { label: "当座借越", value: "当座借越" },
-  { label: "普通預金", value: "普通預金" },
-  { label: "小口現金", value: "小口現金" },
-  { label: "売掛金", value: "売掛金" },
-  { label: "受取手形", value: "受取手形" },
-  { label: "商品", value: "商品" },
-  { label: "前払金", value: "前払金" },
-  { label: "前払費用", value: "前払費用" },
-  { label: "仮払金", value: "仮払金" },
-  { label: "貸付金", value: "貸付金" },
-  { label: "建物", value: "建物" },
-  { label: "備品", value: "備品" },
-  { label: "土地", value: "土地" },
-  { label: "車両運搬具", value: "車両運搬具" },
-  { label: "投資有価証券", value: "投資有価証券" },
-  // 負債
-  { label: "買掛金", value: "買掛金" },
-  { label: "支払手形", value: "支払手形" },
-  { label: "前受金", value: "前受金" },
-  { label: "前受収益", value: "前受収益" },
-  { label: "仮受金", value: "仮受金" },
-  { label: "未払金", value: "未払金" },
-  { label: "未払費用", value: "未払費用" },
-  { label: "借入金", value: "借入金" },
-  { label: "預り金", value: "預り金" },
-  { label: "貸倒引当金", value: "貸倒引当金" },
-  { label: "減価償却累計額", value: "減価償却累計額" },
-  // 純資産
-  { label: "資本金", value: "資本金" },
-  { label: "繰越利益剰余金", value: "繰越利益剰余金" },
-  { label: "引出金", value: "引出金" },
-  // 収益
-  { label: "売上", value: "売上" },
-  { label: "受取利息", value: "受取利息" },
-  { label: "受取手数料", value: "受取手数料" },
-  { label: "受取配当金", value: "受取配当金" },
-  { label: "固定資産売却益", value: "固定資産売却益" },
-  { label: "雑収入", value: "雑収入" },
-  // 費用
-  { label: "仕入", value: "仕入" },
-  { label: "給料", value: "給料" },
-  { label: "支払利息", value: "支払利息" },
-  { label: "支払手数料", value: "支払手数料" },
-  { label: "減価償却費", value: "減価償却費" },
-  { label: "貸倒引当金繰入", value: "貸倒引当金繰入" },
-  { label: "租税公課", value: "租税公課" },
-  { label: "水道光熱費", value: "水道光熱費" },
-  { label: "通信費", value: "通信費" },
-  { label: "旅費交通費", value: "旅費交通費" },
-  { label: "消耗品費", value: "消耗品費" },
-  { label: "修繕費", value: "修繕費" },
-  { label: "固定資産売却損", value: "固定資産売却損" },
-  { label: "雑損失", value: "雑損失" },
-];
+
 
 export default function TrialBalanceForm({
   onSubmit,
@@ -201,7 +136,7 @@ export default function TrialBalanceForm({
     if (totalDebit !== totalCredit) {
       Alert.alert(
         "確認",
-        `借方合計(${formatCurrency(totalDebit)}円)と貸方合計(${formatCurrency(
+        `借方合計(${formatAmount(totalDebit)}円)と貸方合計(${formatAmount(
           totalCredit,
         )}円)が一致しませんが、このまま解答しますか？`,
         [
@@ -214,9 +149,7 @@ export default function TrialBalanceForm({
     }
   };
 
-  const formatCurrency = (amount: number): string => {
-    return amount.toLocaleString("ja-JP");
-  };
+
 
   const getTotalDebit = (): number => {
     return entries.reduce((sum, entry) => sum + entry.debitAmount, 0);
@@ -232,7 +165,7 @@ export default function TrialBalanceForm({
 
   const showAccountSelector = (index: number) => {
     if (Platform.OS === "ios") {
-      const options = ACCOUNT_OPTIONS.map((option) => option.label);
+      const options = STANDARD_ACCOUNT_OPTIONS.map((option) => option.label);
       ActionSheetIOS.showActionSheetWithOptions(
         {
           title: "勘定科目を選択",
@@ -241,7 +174,7 @@ export default function TrialBalanceForm({
         },
         (buttonIndex) => {
           if (buttonIndex > 0) {
-            const selectedAccount = ACCOUNT_OPTIONS[buttonIndex - 1];
+            const selectedAccount = STANDARD_ACCOUNT_OPTIONS[buttonIndex - 1];
             updateEntry(index, "accountName", selectedAccount.value);
           }
         },
@@ -475,7 +408,7 @@ export default function TrialBalanceForm({
               },
             ]}
           >
-            {formatCurrency(getTotalDebit())}
+            {formatAmount(getTotalDebit())}
           </Text>
           <Text
             style={[
@@ -485,7 +418,7 @@ export default function TrialBalanceForm({
               },
             ]}
           >
-            {formatCurrency(getTotalCredit())}
+            {formatAmount(getTotalCredit())}
           </Text>
         </View>
 
@@ -508,7 +441,7 @@ export default function TrialBalanceForm({
               style={[styles.differenceText, { color: theme.colors.error }]}
             >
               差額:{" "}
-              {formatCurrency(Math.abs(getTotalDebit() - getTotalCredit()))}円
+              {formatAmount(Math.abs(getTotalDebit() - getTotalCredit()))}円
             </Text>
           )}
         </View>
@@ -643,7 +576,7 @@ export default function TrialBalanceForm({
             </View>
 
             <FlatList
-              data={ACCOUNT_OPTIONS.filter((account) => account.value !== "")}
+              data={STANDARD_ACCOUNT_OPTIONS.filter((account) => account.value !== "")}
               keyExtractor={(item) => item.value}
               renderItem={({ item }) => (
                 <TouchableOpacity

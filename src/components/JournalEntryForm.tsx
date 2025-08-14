@@ -24,82 +24,21 @@ import {
 } from "../services/answer-service";
 import { SessionType } from "../types/database";
 import NumericPad from "./ui/NumericPad";
+import {
+  JournalEntry,
+  BaseFormProps,
+  FormState,
+  STANDARD_ACCOUNT_OPTIONS,
+  validateAmount,
+  formatAmount,
+  createSubmitAnswerRequest,
+  createInitialFormState,
+  removeDuplicateEntries,
+} from "./shared";
 
-export interface JournalEntry {
-  account: string;
-  amount: number;
-}
-
-export interface JournalEntryFormProps {
-  questionId: string;
+export interface JournalEntryFormProps extends BaseFormProps {
   questionText: string;
-  sessionType?: SessionType;
-  sessionId?: string;
-  startTime?: number;
-  onSubmitAnswer?: (response: SubmitAnswerResponse) => void;
-  showSubmitButton?: boolean;
 }
-
-const ACCOUNT_OPTIONS = [
-  { label: "勘定科目を選択", value: "" },
-  // 資産
-  { label: "現金", value: "現金" },
-  { label: "現金過不足", value: "現金過不足" },
-  { label: "当座預金", value: "当座預金" },
-  { label: "当座借越", value: "当座借越" },
-  { label: "普通預金", value: "普通預金" },
-  { label: "小口現金", value: "小口現金" },
-  { label: "売掛金", value: "売掛金" },
-  { label: "受取手形", value: "受取手形" },
-  { label: "商品", value: "商品" },
-  { label: "前払金", value: "前払金" },
-  { label: "前払費用", value: "前払費用" },
-  { label: "仮払金", value: "仮払金" },
-  { label: "貸付金", value: "貸付金" },
-  { label: "建物", value: "建物" },
-  { label: "備品", value: "備品" },
-  { label: "土地", value: "土地" },
-  { label: "車両運搬具", value: "車両運搬具" },
-  { label: "投資有価証券", value: "投資有価証券" },
-  // 負債
-  { label: "買掛金", value: "買掛金" },
-  { label: "支払手形", value: "支払手形" },
-  { label: "前受金", value: "前受金" },
-  { label: "前受収益", value: "前受収益" },
-  { label: "仮受金", value: "仮受金" },
-  { label: "未払金", value: "未払金" },
-  { label: "未払費用", value: "未払費用" },
-  { label: "借入金", value: "借入金" },
-  { label: "預り金", value: "預り金" },
-  { label: "貸倒引当金", value: "貸倒引当金" },
-  { label: "減価償却累計額", value: "減価償却累計額" },
-  // 純資産
-  { label: "資本金", value: "資本金" },
-  { label: "繰越利益剰余金", value: "繰越利益剰余金" },
-  { label: "引出金", value: "引出金" },
-  // 収益
-  { label: "売上", value: "売上" },
-  { label: "受取利息", value: "受取利息" },
-  { label: "受取手数料", value: "受取手数料" },
-  { label: "受取配当金", value: "受取配当金" },
-  { label: "固定資産売却益", value: "固定資産売却益" },
-  { label: "雑収入", value: "雑収入" },
-  // 費用
-  { label: "仕入", value: "仕入" },
-  { label: "給料", value: "給料" },
-  { label: "支払利息", value: "支払利息" },
-  { label: "支払手数料", value: "支払手数料" },
-  { label: "減価償却費", value: "減価償却費" },
-  { label: "貸倒引当金繰入", value: "貸倒引当金繰入" },
-  { label: "租税公課", value: "租税公課" },
-  { label: "水道光熱費", value: "水道光熱費" },
-  { label: "通信費", value: "通信費" },
-  { label: "旅費交通費", value: "旅費交通費" },
-  { label: "消耗品費", value: "消耗品費" },
-  { label: "修繕費", value: "修繕費" },
-  { label: "固定資産売却損", value: "固定資産売却損" },
-  { label: "雑損失", value: "雑損失" },
-];
 
 export default function JournalEntryForm({
   questionId,
@@ -111,6 +50,9 @@ export default function JournalEntryForm({
   showSubmitButton = true,
 }: JournalEntryFormProps) {
   const { theme } = useTheme();
+  const [formState, setFormState] = useState<FormState>(
+    createInitialFormState(),
+  );
 
   // 入力フィールドへの参照
   const debitRefs = useRef<{ [key: string]: TextInput | null }>({});
@@ -192,7 +134,7 @@ export default function JournalEntryForm({
 
   const showAccountSelector = (type: "debit" | "credit", index: number) => {
     if (Platform.OS === "ios") {
-      const options = ACCOUNT_OPTIONS.map((option) => option.label);
+      const options = STANDARD_ACCOUNT_OPTIONS.map((option) => option.label);
       ActionSheetIOS.showActionSheetWithOptions(
         {
           title: "勘定科目を選択",
@@ -201,7 +143,7 @@ export default function JournalEntryForm({
         },
         (buttonIndex) => {
           if (buttonIndex > 0) {
-            const selectedAccount = ACCOUNT_OPTIONS[buttonIndex - 1];
+            const selectedAccount = STANDARD_ACCOUNT_OPTIONS[buttonIndex - 1];
             if (type === "debit") {
               updateDebit(index, "account", selectedAccount.value);
             } else {
@@ -258,10 +200,8 @@ export default function JournalEntryForm({
     setTempAmount("");
   };
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const validateAndSubmit = async () => {
-    if (isSubmitting) return;
+    if (formState.isSubmitting) return;
 
     // 借方の合計を計算
     const debitTotal = debits
@@ -284,31 +224,7 @@ export default function JournalEntryForm({
     if (debitTotal !== creditTotal) {
       Alert.alert(
         "仕訳エラー",
-        `借方合計（${debitTotal.toLocaleString()}円）と貸方合計（${creditTotal.toLocaleString()}円）が一致しません。`,
-      );
-      return;
-    }
-
-    // 同一勘定科目の重複チェック（借方）
-    const debitAccounts = debits
-      .filter((entry) => entry.account && entry.amount > 0)
-      .map((entry) => entry.account);
-    if (debitAccounts.length !== new Set(debitAccounts).size) {
-      Alert.alert(
-        "入力エラー",
-        "借方に同一の勘定科目を複数回使用することはできません。",
-      );
-      return;
-    }
-
-    // 同一勘定科目の重複チェック（貸方）
-    const creditAccounts = credits
-      .filter((entry) => entry.account && entry.amount > 0)
-      .map((entry) => entry.account);
-    if (creditAccounts.length !== new Set(creditAccounts).size) {
-      Alert.alert(
-        "入力エラー",
-        "貸方に同一の勘定科目を複数回使用することはできません。",
+        `借方合計（${formatAmount(debitTotal)}円）と貸方合計（${formatAmount(creditTotal)}円）が一致しません。`,
       );
       return;
     }
@@ -321,8 +237,34 @@ export default function JournalEntryForm({
       (entry) => entry.account && entry.amount > 0,
     );
 
+    // 重複チェック
+    const uniqueDebits = removeDuplicateEntries(
+      validDebits,
+      (entry) => entry.account,
+    );
+    const uniqueCredits = removeDuplicateEntries(
+      validCredits,
+      (entry) => entry.account,
+    );
+
+    if (uniqueDebits.length !== validDebits.length) {
+      Alert.alert(
+        "入力エラー",
+        "借方に同一の勘定科目を複数回使用することはできません。",
+      );
+      return;
+    }
+
+    if (uniqueCredits.length !== validCredits.length) {
+      Alert.alert(
+        "入力エラー",
+        "貸方に同一の勘定科目を複数回使用することはできません。",
+      );
+      return;
+    }
+
     try {
-      setIsSubmitting(true);
+      setFormState({ ...formState, isSubmitting: true });
 
       // 解答データを準備（新しい配列形式）
       const answerData = {
@@ -332,15 +274,15 @@ export default function JournalEntryForm({
       };
 
       // 解答送信
-      const submitRequest: SubmitAnswerRequest = {
+      const request = createSubmitAnswerRequest(
         questionId,
         answerData,
         sessionType,
         sessionId,
         startTime,
-      };
+      );
 
-      const response = await answerService.submitAnswer(submitRequest);
+      const response = await answerService.submitAnswer(request);
 
       if (onSubmitAnswer) {
         onSubmitAnswer(response);
@@ -349,12 +291,12 @@ export default function JournalEntryForm({
       console.error("[JournalEntryForm] 解答送信エラー:", error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
-      setIsSubmitting(false);
+      setFormState({ ...formState, isSubmitting: false });
     }
   };
 
-  const formatAmount = (amount: number) => {
-    return amount > 0 ? amount.toLocaleString() : "";
+  const formatAmountDisplay = (amount: number) => {
+    return amount > 0 ? formatAmount(amount) : "";
   };
 
   const styles = createStyles(theme);
@@ -477,7 +419,7 @@ export default function JournalEntryForm({
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>借方合計:</Text>
           <Text style={styles.totalAmount}>
-            {formatAmount(
+            {formatAmountDisplay(
               debits.reduce((sum, entry) => sum + (entry.amount || 0), 0),
             )}
             円
@@ -486,7 +428,7 @@ export default function JournalEntryForm({
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>貸方合計:</Text>
           <Text style={styles.totalAmount}>
-            {formatAmount(
+            {formatAmountDisplay(
               credits.reduce((sum, entry) => sum + (entry.amount || 0), 0),
             )}
             円
@@ -500,12 +442,12 @@ export default function JournalEntryForm({
           <TouchableOpacity
             style={[
               styles.submitButton,
-              isSubmitting && styles.submitButtonDisabled,
+              formState.isSubmitting && styles.submitButtonDisabled,
             ]}
             onPress={validateAndSubmit}
-            disabled={isSubmitting}
+            disabled={formState.isSubmitting}
           >
-            {isSubmitting ? (
+            {formState.isSubmitting ? (
               <ActivityIndicator color="white" />
             ) : (
               <Text style={styles.submitButtonText}>解答を送信</Text>
@@ -534,7 +476,9 @@ export default function JournalEntryForm({
             </View>
 
             <FlatList
-              data={ACCOUNT_OPTIONS.filter((account) => account.value !== "")} // 空の選択肢を除外
+              data={STANDARD_ACCOUNT_OPTIONS.filter(
+                (account) => account.value !== "",
+              )} // 空の選択肢を除外
               keyExtractor={(item) => item.value}
               renderItem={({ item }) => (
                 <TouchableOpacity

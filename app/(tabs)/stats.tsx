@@ -36,6 +36,8 @@ export default function StatsScreen() {
     ledger: { icon: "📋", color: "#ff6b35" },
     trial_balance: { icon: "📊", color: "#4cd964" },
     financial_statement: { icon: "📈", color: "#9c27b0" },
+    voucher_entry: { icon: "📄", color: "#795548" },
+    multiple_blank_choice: { icon: "✅", color: "#607d8b" },
   };
 
   // データベース初期化確認

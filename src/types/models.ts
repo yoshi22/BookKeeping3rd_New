@@ -217,6 +217,9 @@ export interface QuestionCorrectAnswer {
     credit_amount: number;
   };
 
+  // 伝票問題の正解
+  voucher_type?: string; // 入金伝票、出金伝票、振替伝票など
+
   // 帳簿問題の正解
   ledgerEntry?: {
     entries: Array<{
@@ -231,11 +234,28 @@ export interface QuestionCorrectAnswer {
     balances: Record<string, number>;
   };
 
-  // 試算表問題の別形式（エントリー配列）
+  // 試算表問題の別形式（エントリー配列）と伝票問題のエントリー
   entries?: Array<{
-    accountName: string;
-    debitAmount: number;
-    creditAmount: number;
+    // 試算表用
+    accountName?: string;
+    debitAmount?: number;
+    creditAmount?: number;
+    // 帳簿用
+    date?: string;
+    description?: string;
+    debit?: number;
+    credit?: number;
+    balance?: number;
+    // 伝票用
+    account?: string;
+    amount?: number;
+    debit_account?: string;
+    debit_amount?: number;
+    credit_account?: string;
+    credit_amount?: number;
+    customer?: string;
+    supplier?: string;
+    payment_type?: string;
   }>;
 
   // 財務諸表形式（複雑な試算表問題用）

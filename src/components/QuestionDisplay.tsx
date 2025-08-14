@@ -7,8 +7,10 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import AnswerForm from "./AnswerForm";
 import LedgerEntryForm from "./LedgerEntryForm";
+import LedgerEntryFormWithDropdown from "./LedgerEntryFormWithDropdown";
 import JournalEntryForm from "./JournalEntryForm";
 import ChoiceAnswerForm from "./ChoiceAnswerForm";
+import MultipleBlankChoiceForm from "./MultipleBlankChoiceForm";
 import VoucherEntryForm from "./VoucherEntryForm";
 import TrialBalanceForm, {
   TrialBalanceEntry,
@@ -63,8 +65,9 @@ interface AnswerField {
 interface VoucherField {
   name: string;
   label: string;
-  type: "date" | "text" | "number";
+  type: "date" | "text" | "number" | "select";
   required: boolean;
+  options?: string[];
 }
 
 interface VoucherType {
@@ -74,11 +77,17 @@ interface VoucherType {
 
 interface AnswerTemplate {
   type?: string;
+  voucher_type?: string;
   allowMultipleEntries?: boolean;
   maxEntries?: number;
   fields?: AnswerField[];
   options?: string[];
   vouchers?: VoucherType[];
+  questions?: Array<{
+    id: string;
+    label: string;
+    options: string[];
+  }>;
 }
 
 interface QuestionDisplayProps {
@@ -104,6 +113,7 @@ interface QuestionDisplayProps {
 // Wrapper component for TrialBalanceForm to integrate with answer service
 interface TrialBalanceFormWrapperProps {
   questionId: string;
+  questionText: string;
   sessionType?: SessionType;
   sessionId?: string;
   startTime?: number;
@@ -124,6 +134,7 @@ interface FinancialStatementFormWrapperProps {
 
 function TrialBalanceFormWrapper({
   questionId,
+  questionText,
   sessionType = "learning",
   sessionId,
   startTime = Date.now(),
@@ -173,6 +184,7 @@ function TrialBalanceFormWrapper({
 
   return (
     <TrialBalanceForm
+      questionText={questionText}
       onSubmit={handleSubmit}
       questionNumber={1}
       totalQuestions={1}
@@ -335,19 +347,41 @@ export default function QuestionDisplay({
     (questionId.startsWith("Q_L_") &&
       isMultiEntryLedgerQuestion(questionId, questionText));
 
+  // Q_L_001〜Q_L_020は新しいプルダウン対応フォームを使用
+  const shouldUseLedgerEntryFormWithDropdown =
+    answerTemplate?.type === "ledger_account" ||
+    (questionId.startsWith("Q_L_") &&
+      parseInt(questionId.split("_")[2]) >= 1 &&
+      parseInt(questionId.split("_")[2]) <= 20);
+
   // Determine if should use enhanced journal entry form for complex journal entries
   const shouldUseJournalEntryForm =
     (answerTemplate?.type === "journal_entry" &&
       answerTemplate?.allowMultipleEntries) ||
     (questionId.startsWith("Q_J_") && answerTemplate?.type === "journal_entry");
 
-  // Determine if should use ChoiceAnswerForm for choice questions
+  // Determine if should use ChoiceAnswerForm for choice questions (traditional single dropdown)
   const shouldUseChoiceForm =
-    answerTemplate?.type === "single_choice" ||
-    answerTemplate?.type === "multiple_choice";
+    (answerTemplate?.type === "single_choice" ||
+      answerTemplate?.type === "multiple_choice") &&
+    !answerTemplate?.questions; // No questions array means traditional choice
+
+  // Determine if should use MultipleBlankChoiceForm for multiple blank questions
+  const shouldUseMultipleBlankChoiceForm =
+    answerTemplate?.type === "multiple_choice" &&
+    answerTemplate?.questions && // Has questions array
+    Array.isArray(answerTemplate.questions);
 
   // Determine if should use VoucherEntryForm for voucher entry questions
   const shouldUseVoucherEntryForm = answerTemplate?.type === "voucher_entry";
+
+  // Debug: Log answerTemplate for voucher questions
+  if (questionId.startsWith("Q_L_02") && answerTemplate) {
+    console.log(
+      "[QuestionDisplay] answerTemplate for voucher:",
+      answerTemplate,
+    );
+  }
 
   // Determine if should use FinancialStatementForm for financial statement questions
   const shouldUseFinancialStatementForm =
@@ -392,10 +426,43 @@ export default function QuestionDisplay({
           onSubmitAnswer={onSubmitAnswer}
           showSubmitButton={true}
         />
+      ) : shouldUseMultipleBlankChoiceForm ? (
+        <MultipleBlankChoiceForm
+          questionId={questionId}
+          questions={answerTemplate?.questions || []}
+          options={answerTemplate?.options || []}
+          sessionType={sessionType}
+          sessionId={sessionId}
+          startTime={startTime}
+          onSubmitAnswer={onSubmitAnswer}
+          showSubmitButton={true}
+        />
       ) : shouldUseVoucherEntryForm ? (
         <VoucherEntryForm
           questionId={questionId}
-          voucherTypes={answerTemplate?.vouchers || []}
+          voucherTypes={
+            answerTemplate?.fields
+              ? [
+                  {
+                    type: answerTemplate.voucher_type || "伝票",
+                    fields: answerTemplate.fields.map((field) => ({
+                      name: field.name,
+                      label: field.label,
+                      type:
+                        field.type === "dropdown"
+                          ? ("select" as const)
+                          : (field.type as
+                              | "date"
+                              | "text"
+                              | "number"
+                              | "select"),
+                      required: field.required || false,
+                      options: field.options,
+                    })),
+                  },
+                ]
+              : []
+          }
           sessionType={sessionType}
           sessionId={sessionId}
           startTime={startTime}
@@ -415,12 +482,24 @@ export default function QuestionDisplay({
       ) : shouldUseTrialBalanceForm ? (
         <TrialBalanceFormWrapper
           questionId={questionId}
+          questionText={questionText}
           sessionType={sessionType}
           sessionId={sessionId}
           startTime={startTime}
           onSubmitAnswer={onSubmitAnswer}
           explanation={explanation}
           correctAnswer={correctAnswer}
+        />
+      ) : shouldUseLedgerEntryFormWithDropdown ? (
+        <LedgerEntryFormWithDropdown
+          questionId={questionId}
+          sessionType={sessionType}
+          sessionId={sessionId}
+          startTime={startTime}
+          onSubmitAnswer={onSubmitAnswer}
+          showSubmitButton={true}
+          expectedEntries={getExpectedEntryCount(questionText)}
+          answerTemplate={answerTemplate}
         />
       ) : shouldUseLedgerEntryForm ? (
         <LedgerEntryForm

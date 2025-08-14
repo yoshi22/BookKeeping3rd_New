@@ -89,6 +89,26 @@ export default function CategoryDetailScreen() {
       points: "35点",
       examInfo: "財務諸表作成問題",
     },
+    voucher_entry: {
+      id: "voucher_entry" as QuestionCategory,
+      name: "伝票記入",
+      subtitle: "伝票記入問題",
+      description: "3伝票制・5伝票制による記入",
+      icon: "📄",
+      color: "#795548",
+      points: "20点",
+      examInfo: "伝票記入問題",
+    },
+    multiple_blank_choice: {
+      id: "multiple_blank_choice" as QuestionCategory,
+      name: "複数空欄選択",
+      subtitle: "複数空欄選択問題",
+      description: "複数の空欄を選択肢から選ぶ問題",
+      icon: "✅",
+      color: "#607d8b",
+      points: "20点",
+      examInfo: "複数空欄選択問題",
+    },
   };
 
   const currentCategory =
@@ -170,6 +190,28 @@ export default function CategoryDetailScreen() {
         name: "損益計算書作成",
         icon: "📈",
         count: 1,
+      },
+    ],
+    voucher_entry: [
+      {
+        type: "3_voucher_system",
+        name: "3伝票制",
+        icon: "📄",
+        count: 5,
+      },
+      {
+        type: "5_voucher_system",
+        name: "5伝票制",
+        icon: "📋",
+        count: 5,
+      },
+    ],
+    multiple_blank_choice: [
+      {
+        type: "multiple_choice",
+        name: "複数空欄選択",
+        icon: "✅",
+        count: 10,
       },
     ],
   };

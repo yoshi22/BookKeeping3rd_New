@@ -71,12 +71,7 @@ export interface ReviewStatistics {
     low: number;
   };
 
-  categoryBreakdown: {
-    journal: ReviewCategoryStats;
-    ledger: ReviewCategoryStats;
-    trial_balance: ReviewCategoryStats;
-    financial_statement: ReviewCategoryStats;
-  };
+  categoryBreakdown: Record<QuestionCategory, ReviewCategoryStats>;
 
   lastUpdated: string;
 }
@@ -371,7 +366,7 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
         categoryStatsQuery,
         [],
       );
-      const categoryBreakdown = {
+      const categoryBreakdown: Record<QuestionCategory, ReviewCategoryStats> = {
         journal: {
           total: 0,
           needsReview: 0,
@@ -394,6 +389,20 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
           averagePriority: 0,
         },
         financial_statement: {
+          total: 0,
+          needsReview: 0,
+          priorityReview: 0,
+          mastered: 0,
+          averagePriority: 0,
+        },
+        voucher_entry: {
+          total: 0,
+          needsReview: 0,
+          priorityReview: 0,
+          mastered: 0,
+          averagePriority: 0,
+        },
+        multiple_blank_choice: {
           total: 0,
           needsReview: 0,
           priorityReview: 0,
