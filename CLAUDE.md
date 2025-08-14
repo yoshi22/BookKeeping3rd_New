@@ -35,10 +35,7 @@ npm start                 # 開発サーバー起動
 
 ```bash
 # プロジェクト把握
-node scripts/scan.js   # プロジェクト概要をクイックスキャン (/scan コマンド)
-
-# 問題データ修正
-node scripts/add-question-categories.js   # problemsStrategy.mdに基づく問題分類の追加
+node scripts/utilities/scan.js   # プロジェクト概要をクイックスキャン (/scan コマンド)
 
 # 開発
 npm start              # Expo開発サーバー起動
@@ -71,14 +68,14 @@ npx detox build --configuration android.emu.debug # Android E2Eテスト用ビ�
 npx detox test --configuration android.emu.debug  # Android E2Eテスト実行
 
 # デバッグ・ユーティリティ
-node scripts/test-database.js              # データベース接続テスト
-node scripts/test-review-system.js         # 復習システム単体テスト
-node scripts/test-answer-service.js        # 解答サービステスト
-node scripts/test-mock-exam-system.js      # 模試システムテスト
-node scripts/test-statistics-system.js     # 統計システムテスト
-node scripts/insert-sample-questions.js    # サンプル問題データ投入
-node scripts/web-smoke-test.js             # Web版スモークテスト
-scripts/ensure-english.sh                  # 入力言語を英語に切り替え（macOS）
+node scripts/testing/test-database.js              # データベース接続テスト
+node scripts/testing/test-review-system.js         # 復習システム単体テスト
+node scripts/testing/test-answer-service.js        # 解答サービステスト
+node scripts/testing/test-mock-exam-system.js      # 模試システムテスト
+node scripts/testing/test-statistics-system.js     # 統計システムテスト
+node scripts/data/insert-sample-questions.js       # サンプル問題データ投入
+node scripts/testing/web-smoke-test.js             # Web版スモークテスト
+scripts/utilities/ensure-english.sh                # 入力言語を英語に切り替え（macOS）
 ```
 
 ## コードアーキテクチャ
@@ -100,9 +97,19 @@ scripts/ensure-english.sh                  # 入力言語を英語に切り替�
 │   ├── types/        # TypeScript型定義
 │   ├── theme/        # デザインシステム
 │   └── utils/        # ユーティリティ・ヘルパー
-├── __tests__/        # 単体・統合テスト
+├── scripts/         # 開発・テスト用スクリプト
+│   ├── testing/     # テスト関連スクリプト
+│   ├── data/        # データ生成・操作スクリプト
+│   ├── utilities/   # ユーティリティスクリプト
+│   ├── dev-tools/   # 開発ツール
+│   └── data-tools/  # データ操作ツール
+├── __tests__/       # 単体・統合テスト
 ├── e2e/             # Detox E2Eテスト
 └── docs/            # プロジェクト文書
+    ├── analysis/        # 分析レポート
+    ├── development-logs/ # 開発ログ
+    ├── engineering/     # エンジニアリング文書
+    └── architecture/    # アーキテクチャ設計
 ```
 
 ### src/層構造
@@ -367,7 +374,15 @@ src/
 
 ## よくある問題とトラブルシューティング
 
-**復習タブに問題が表示されない:**
+**復習タブに問題が表示されない: ✅ 解決済み（2025-08-14）**
+
+**修正内容:**
+
+- データベース強制更新による復習データ削除問題を修正
+- `src/data/migrations/index.ts`でforceUpdateフラグをfalseに固定
+- ユーザーデータ（learning_history, review_items）の保護を実装
+
+**過去のデバッグ手順（参考）:**
 
 1. `review_items` テーブルのデータを確認: 直接SQLクエリでデバッグ
 2. `answer-service.ts` → `review-service.ts` → `review-item-repository.ts` の順でデバッグログを確認
@@ -437,7 +452,17 @@ src/
 ### 最新の修正履歴
 
 最新の修正内容は `docs/development-logs/` ディレクトリを参照してください。
-例: `docs/development-logs/2025-08-11-question-data-fixes.md`
+
+**2025-08-14 重要な修正:**
+
+- **復習リスト表示問題の完全修復**: データベース強制更新によるユーザーデータ削除問題を解決
+- **コードベース構造整理**: ドキュメントとスクリプトファイルの論理的再配置を実行
+- **環境変数問題の回避**: `forceUpdate`フラグを一時的にハードコード化
+
+**過去の修正例:**
+
+- `docs/development-logs/2025-08-13-answer-format-japanese-fix.md`
+- `docs/development-logs/2025-08-13-subsidiary-book-format-fix.md`
 
 ## 最終バリデーション
 
