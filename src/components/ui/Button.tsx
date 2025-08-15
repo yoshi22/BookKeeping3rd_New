@@ -2,7 +2,7 @@
  * 統一ボタンコンポーネント
  * 簿記3級問題集アプリ - Step 5.1: UIコンポーネント改善
  *
- * レスポンシブ・アクセシブル・テーマ対応のボタン
+ * レスポンシブ・アクセシブル・テーマ対応・ハプティック対応のボタン
  */
 
 import React from "react";
@@ -15,8 +15,18 @@ import {
   TextStyle,
   ActivityIndicator,
   View,
+  Animated,
 } from "react-native";
 import { useTheme, useThemedStyles } from "../../context/ThemeContext";
+import {
+  useHapticFeedback,
+  LearningHapticContext,
+} from "../../hooks/useHapticFeedback";
+import { useAnimations } from "../../hooks/useAnimations";
+import {
+  useAccessibility,
+  useFocusManagement,
+} from "../../hooks/useAccessibility";
 
 export type ButtonVariant =
   | "primary"
@@ -37,6 +47,16 @@ interface ButtonProps extends Omit<TouchableOpacityProps, "style"> {
   iconPosition?: "left" | "right";
   style?: ViewStyle;
   textStyle?: TextStyle;
+  // ハプティックフィードバック設定
+  hapticFeedback?: LearningHapticContext | false;
+  enableHaptics?: boolean;
+  // アニメーション設定
+  enableAnimations?: boolean;
+  animatePress?: boolean;
+  // アクセシビリティ設定（Phase 1）
+  accessibilityHint?: string;
+  focusable?: boolean;
+  elementId?: string; // フォーカス管理用
 }
 
 export function Button({
@@ -51,16 +71,64 @@ export function Button({
   style,
   textStyle,
   onPress,
+  hapticFeedback = "button_press",
+  enableHaptics = true,
+  enableAnimations = true,
+  animatePress = true,
+  accessibilityHint,
+  focusable = true,
+  elementId,
   ...props
 }: ButtonProps) {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
+  const { learningFeedback } = useHapticFeedback();
+  const { useScaleAnimation } = useAnimations();
+  const { scale, pulseScale } = useScaleAnimation();
+
+  // アクセシビリティフック（Phase 1）
+  const {
+    isScreenReaderEnabled,
+    isReduceMotionEnabled,
+    getAccessibilityProps,
+    announceForScreenReader,
+  } = useAccessibility();
+
+  const { getFocusStyle, setFocus, clearFocus } = useFocusManagement();
 
   const isDisabled = disabled || loading;
 
-  const handlePress = (event: any) => {
+  const handlePress = async (event: any) => {
     if (!isDisabled && onPress) {
+      // アニメーション実行（Reduce Motion対応）
+      if (enableAnimations && animatePress && !isReduceMotionEnabled) {
+        pulseScale().start();
+      }
+
+      // ハプティックフィードバック実行
+      if (enableHaptics && hapticFeedback !== false) {
+        await learningFeedback(hapticFeedback);
+      }
+
+      // スクリーンリーダー用フィードバック
+      if (isScreenReaderEnabled && variant === "primary") {
+        announceForScreenReader(`${title}ボタンを押しました`);
+      }
+
       onPress(event);
+    }
+  };
+
+  // フォーカス管理
+  const handleFocus = () => {
+    if (elementId) {
+      setFocus(elementId);
+    }
+  };
+
+  const handleBlur = () => {
+    if (elementId) {
+      clearFocus();
     }
   };
 
@@ -73,7 +141,10 @@ export function Button({
       isDisabled && styles.disabled,
     ];
 
-    return StyleSheet.flatten([baseStyle, style]);
+    // フォーカス状態の追加（Phase 1アクセシビリティ）
+    const focusStyle = elementId ? getFocusStyle(elementId) : {};
+
+    return StyleSheet.flatten([baseStyle, focusStyle, style]);
   };
 
   const getTextStyle = (): any => {
@@ -121,20 +192,33 @@ export function Button({
     return <Text style={getTextStyle()}>{title}</Text>;
   };
 
+  // アクセシビリティプロパティの生成（Phase 1）
+  const accessibilityProps = getAccessibilityProps(
+    title,
+    accessibilityHint || (loading ? "読み込み中" : undefined),
+    "button",
+  );
+
   return (
-    <TouchableOpacity
-      style={getButtonStyle()}
-      onPress={handlePress}
-      disabled={isDisabled}
-      accessible={true}
-      accessibilityRole="button"
-      accessibilityLabel={title}
-      accessibilityHint={loading ? "読み込み中" : undefined}
-      accessibilityState={{ disabled: isDisabled, busy: loading }}
-      {...props}
-    >
-      {renderContent()}
-    </TouchableOpacity>
+    <Animated.View style={{ transform: [{ scale }] }}>
+      <TouchableOpacity
+        style={getButtonStyle()}
+        onPress={handlePress}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        disabled={isDisabled}
+        focusable={focusable && !isDisabled}
+        accessibilityState={{
+          disabled: isDisabled,
+          busy: loading,
+          selected: false,
+        }}
+        {...accessibilityProps}
+        {...props}
+      >
+        {renderContent()}
+      </TouchableOpacity>
+    </Animated.View>
   );
 }
 
@@ -258,35 +342,98 @@ const createStyles = (theme: any) =>
   });
 
 /**
- * 特定用途向けのボタンコンポーネント
+ * 特定用途向けのボタンコンポーネント（ハプティック対応）
  */
 
 // 解答送信ボタン
-export function SubmitButton(props: Omit<ButtonProps, "variant">) {
-  return <Button variant="primary" size="large" fullWidth {...props} />;
+export function SubmitButton(
+  props: Omit<ButtonProps, "variant" | "hapticFeedback">,
+) {
+  return (
+    <Button
+      variant="primary"
+      size="large"
+      fullWidth
+      hapticFeedback="question_submit"
+      accessibilityHint="解答を送信します"
+      elementId="submit-button"
+      {...props}
+    />
+  );
 }
 
 // 次の問題ボタン
-export function NextQuestionButton(props: Omit<ButtonProps, "variant">) {
-  return <Button variant="secondary" {...props} />;
+export function NextQuestionButton(
+  props: Omit<ButtonProps, "variant" | "hapticFeedback">,
+) {
+  return (
+    <Button
+      variant="secondary"
+      hapticFeedback="navigation"
+      accessibilityHint="次の問題に進みます"
+      elementId="next-question-button"
+      {...props}
+    />
+  );
 }
 
 // 復習開始ボタン
-export function ReviewButton(props: Omit<ButtonProps, "variant">) {
-  return <Button variant="outline" {...props} />;
+export function ReviewButton(
+  props: Omit<ButtonProps, "variant" | "hapticFeedback">,
+) {
+  return (
+    <Button
+      variant="outline"
+      hapticFeedback="navigation"
+      accessibilityHint="復習を開始します"
+      elementId="review-button"
+      {...props}
+    />
+  );
 }
 
 // 模試開始ボタン
-export function MockExamButton(props: Omit<ButtonProps, "variant">) {
-  return <Button variant="primary" size="large" {...props} />;
+export function MockExamButton(
+  props: Omit<ButtonProps, "variant" | "hapticFeedback">,
+) {
+  return (
+    <Button
+      variant="primary"
+      size="large"
+      hapticFeedback="navigation"
+      accessibilityHint="模擬試験を開始します"
+      elementId="mock-exam-button"
+      {...props}
+    />
+  );
 }
 
 // キャンセルボタン
-export function CancelButton(props: Omit<ButtonProps, "variant">) {
-  return <Button variant="ghost" {...props} />;
+export function CancelButton(
+  props: Omit<ButtonProps, "variant" | "hapticFeedback">,
+) {
+  return (
+    <Button
+      variant="ghost"
+      hapticFeedback={false} // キャンセルボタンはハプティック無効
+      accessibilityHint="操作をキャンセルします"
+      elementId="cancel-button"
+      {...props}
+    />
+  );
 }
 
 // 削除ボタン
-export function DeleteButton(props: Omit<ButtonProps, "variant">) {
-  return <Button variant="danger" {...props} />;
+export function DeleteButton(
+  props: Omit<ButtonProps, "variant" | "hapticFeedback">,
+) {
+  return (
+    <Button
+      variant="danger"
+      hapticFeedback="form_validation" // 警告的なフィードバック
+      accessibilityHint="注意: このアクションは元に戻せません"
+      elementId="delete-button"
+      {...props}
+    />
+  );
 }

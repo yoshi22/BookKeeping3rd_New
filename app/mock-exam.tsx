@@ -12,8 +12,20 @@ import { useRouter } from "expo-router";
 import { MockExam } from "../src/types/models";
 import { MockExamRepository } from "../src/data/repositories/mock-exam-repository";
 import { Screen } from "../src/components/layout/ResponsiveLayout";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+} from "../src/context/ThemeContext";
 
 export default function MockExamScreen() {
+  // Phase 4: ダークモード対応のテーマシステム
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
+
   const router = useRouter();
   const [mockExams, setMockExams] = useState<MockExam[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,7 +68,7 @@ export default function MockExamScreen() {
   };
 
   return (
-    <Screen testID="mock-exam-screen">
+    <Screen testID="mock-exam-screen" statusBarStyle={getStatusBarStyle()}>
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
@@ -78,7 +90,7 @@ export default function MockExamScreen() {
 
           {loading ? (
             <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#2f95dc" />
+              <ActivityIndicator size="large" color={theme.colors.primary} />
               <Text style={styles.loadingText}>模試データを読み込み中...</Text>
             </View>
           ) : (
@@ -139,102 +151,98 @@ export default function MockExamScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 20,
-    paddingTop: 60,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  backButton: {
-    marginRight: 16,
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: "#2f95dc",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-  },
-  description: {
-    fontSize: 16,
-    color: "#666",
-    marginBottom: 24,
-    lineHeight: 24,
-  },
-  examCard: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    padding: 20,
-    marginBottom: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
+const createStyles = (
+  theme: typeof import("../src/context/ThemeContext").Theme,
+) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  examInfo: {
-    flex: 1,
-  },
-  examName: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 8,
-  },
-  examDescription: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 12,
-  },
-  examDetails: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  examDetail: {
-    fontSize: 12,
-    color: "#888",
-    marginRight: 16,
-    marginBottom: 4,
-  },
-  startButton: {
-    backgroundColor: "#2f95dc",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
-  },
-  startButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 40,
-  },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: "#666",
-  },
-});
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 20,
+      paddingTop: 60,
+      backgroundColor: theme.colors.surface,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    backButton: {
+      marginRight: 16,
+    },
+    backButtonText: {
+      fontSize: 16,
+      color: theme.colors.primary,
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    content: {
+      flex: 1,
+      padding: 20,
+    },
+    description: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+      marginBottom: 24,
+      lineHeight: 24,
+    },
+    examCard: {
+      backgroundColor: theme.colors.card,
+      borderRadius: 12,
+      padding: 20,
+      marginBottom: 16,
+      flexDirection: "row",
+      alignItems: "center",
+      ...theme.shadows.medium,
+    },
+    examInfo: {
+      flex: 1,
+    },
+    examName: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 8,
+    },
+    examDescription: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginBottom: 12,
+    },
+    examDetails: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+    },
+    examDetail: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginRight: 16,
+      marginBottom: 4,
+    },
+    startButton: {
+      backgroundColor: theme.colors.primary,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      borderRadius: 8,
+    },
+    startButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      paddingVertical: 40,
+    },
+    loadingText: {
+      marginTop: 16,
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+  });

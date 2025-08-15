@@ -14,6 +14,10 @@ import {
   TouchableOpacityProps,
 } from "react-native";
 import { useTheme, useThemedStyles } from "../../context/ThemeContext";
+import {
+  useAccessibility,
+  useFocusManagement,
+} from "../../hooks/useAccessibility";
 
 export type CardVariant = "default" | "elevated" | "outlined" | "filled";
 export type CardSize = "small" | "medium" | "large";
@@ -23,6 +27,10 @@ interface BaseCardProps {
   variant?: CardVariant;
   size?: CardSize;
   style?: ViewStyle;
+  // アクセシビリティ設定（Phase 1）
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
+  elementId?: string; // フォーカス管理用
 }
 
 interface StaticCardProps extends BaseCardProps {
@@ -44,26 +52,58 @@ export function Card({
   size = "medium",
   style,
   onPress,
+  accessibilityLabel,
+  accessibilityHint,
+  elementId,
   ...props
 }: CardProps) {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
 
+  // アクセシビリティフック（Phase 1）
+  const { getAccessibilityProps } = useAccessibility();
+  const { getFocusStyle, setFocus, clearFocus } = useFocusManagement();
+
+  // フォーカス状態の追加
+  const focusStyle = elementId ? getFocusStyle(elementId) : {};
+
   const cardStyle = [
     styles.card,
     styles[`card_${variant}`],
     styles[`card_${size}`],
+    focusStyle,
     style,
   ];
+
+  // フォーカス管理
+  const handleFocus = () => {
+    if (elementId) {
+      setFocus(elementId);
+    }
+  };
+
+  const handleBlur = () => {
+    if (elementId) {
+      clearFocus();
+    }
+  };
+
+  // アクセシビリティプロパティの生成
+  const accessibilityProps = getAccessibilityProps(
+    accessibilityLabel || "カード",
+    accessibilityHint,
+    onPress ? "button" : "text",
+  );
 
   if (onPress) {
     return (
       <TouchableOpacity
-        style={cardStyle}
+        style={[cardStyle, { minHeight: 44 }]} // タッチターゲット44pt確保
         onPress={onPress}
-        accessible={true}
-        accessibilityRole="button"
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         activeOpacity={0.8}
+        {...accessibilityProps}
         {...props}
       >
         {children}
@@ -72,7 +112,7 @@ export function Card({
   }
 
   return (
-    <View style={cardStyle} accessible={true}>
+    <View style={cardStyle} {...accessibilityProps}>
       {children}
     </View>
   );
@@ -228,12 +268,26 @@ export function QuestionCard({
     borderLeftColor: categoryColor,
   };
 
+  const getCategoryName = () => {
+    switch (category) {
+      case "journal":
+        return "仕訳";
+      case "ledger":
+        return "帳簿";
+      case "trial-balance":
+        return "試算表";
+      default:
+        return category;
+    }
+  };
+
   return (
     <Card
       style={cardStyle}
       onPress={onPress}
-      accessible={true}
-      accessibilityLabel={`${category}問題 ${questionId}`}
+      accessibilityLabel={`${getCategoryName()}問題 ${questionId}`}
+      accessibilityHint={onPress ? "この問題を開始します" : undefined}
+      elementId={`question-card-${questionId}`}
       {...props}
     >
       {children}
@@ -268,6 +322,17 @@ export function StatCard({
     }
   };
 
+  const getTrendDescription = () => {
+    switch (trend) {
+      case "up":
+        return "上昇傾向";
+      case "down":
+        return "下降傾向";
+      default:
+        return "安定";
+    }
+  };
+
   const cardStyle = {
     borderTopWidth: 3,
     borderTopColor: getTrendColor(),
@@ -277,8 +342,9 @@ export function StatCard({
     <Card
       variant="elevated"
       style={cardStyle}
-      accessible={true}
       accessibilityLabel={`${label}: ${value}`}
+      accessibilityHint={trend ? `傾向: ${getTrendDescription()}` : undefined}
+      elementId={`stat-card-${label.replace(/\s+/g, "-")}`}
       {...props}
     >
       {children}
@@ -308,6 +374,12 @@ export function ProgressCard({
     return theme.colors.error;
   };
 
+  const getProgressStatus = () => {
+    if (progress >= 80) return "優秀";
+    if (progress >= 60) return "良好";
+    return "要改善";
+  };
+
   const cardStyle = {
     borderWidth: 2,
     borderColor: getProgressColor(),
@@ -316,9 +388,9 @@ export function ProgressCard({
   return (
     <Card
       style={cardStyle}
-      accessible={true}
-      accessibilityLabel={`${title} 進捗率 ${progress}%`}
+      accessibilityLabel={`${title} 進捗率 ${progress}% ${getProgressStatus()}`}
       accessibilityHint={subtitle}
+      elementId={`progress-card-${title.replace(/\s+/g, "-")}`}
       {...props}
     >
       {children}

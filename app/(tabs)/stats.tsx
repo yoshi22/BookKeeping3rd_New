@@ -18,8 +18,20 @@ import {
 } from "../../src/services/statistics-service";
 import { Screen } from "../../src/components/layout/ResponsiveLayout";
 import { setupDatabase } from "../../src/data/migrations";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+} from "../../src/context/ThemeContext";
 
 export default function StatsScreen() {
+  // Phase 4: ダークモード対応のテーマシステム
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
+
   const [overallStats, setOverallStats] = useState<OverallStatistics | null>(
     null,
   );
@@ -168,7 +180,7 @@ export default function StatsScreen() {
     return (
       <Screen
         safeArea={true}
-        statusBarStyle="dark-content"
+        statusBarStyle={getStatusBarStyle()}
         testID="stats-screen-loading"
       >
         <View style={styles.loadingContainer}>
@@ -182,7 +194,7 @@ export default function StatsScreen() {
     <Screen
       safeArea={true}
       scrollable={true}
-      statusBarStyle="dark-content"
+      statusBarStyle={getStatusBarStyle()}
       testID="stats-screen"
     >
       {/* アプリタイトル（ヘッダー代替） */}
@@ -379,276 +391,263 @@ export default function StatsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  headerSection: {
-    position: "absolute",
-    top: 20,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    paddingHorizontal: 20,
-    zIndex: 1,
-  },
-  appTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#2f95dc",
-    textAlign: "center",
-  },
-  header: {
-    padding: 20,
-    alignItems: "center",
-    paddingTop: 60, // ヘッダータイトル分のスペース
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#2f95dc",
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: "center",
-    color: "#666",
-  },
-  overallStatsContainer: {
-    padding: 20,
-  },
-  statRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 15,
-  },
-  mainStatCard: {
-    backgroundColor: "white",
-    flex: 1,
-    marginHorizontal: 5,
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  mainStatNumber: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "#2f95dc",
-  },
-  mainStatLabel: {
-    fontSize: 14,
-    color: "#666",
-    marginTop: 5,
-  },
-  subStatCard: {
-    backgroundColor: "white",
-    flex: 1,
-    marginHorizontal: 2,
-    padding: 15,
-    borderRadius: 8,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 3,
-  },
-  subStatNumber: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  subStatLabel: {
-    fontSize: 11,
-    color: "#666",
-    marginTop: 3,
-    textAlign: "center",
-  },
-  categoryStatsContainer: {
-    padding: 20,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 15,
-    color: "#333",
-  },
-  categoryStatCard: {
-    backgroundColor: "white",
-    padding: 20,
-    marginBottom: 15,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  categoryHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  categoryIcon: {
-    fontSize: 24,
-    marginRight: 10,
-  },
-  categoryName: {
-    fontSize: 18,
-    fontWeight: "bold",
-    flex: 1,
-    color: "#333",
-  },
-  categoryAccuracy: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#2f95dc",
-  },
-  progressBarContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  progressBarBg: {
-    flex: 1,
-    height: 8,
-    backgroundColor: "#e0e0e0",
-    borderRadius: 4,
-    marginRight: 10,
-  },
-  progressBarFill: {
-    height: 8,
-    borderRadius: 4,
-  },
-  progressText: {
-    fontSize: 14,
-    color: "#666",
-    minWidth: 60,
-  },
-  categoryDetails: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  detailText: {
-    fontSize: 12,
-    color: "#666",
-    flex: 1,
-    textAlign: "center",
-  },
-  emptyState: {
-    alignItems: "center",
-    padding: 40,
-  },
-  emptyIcon: {
-    fontSize: 64,
-    marginBottom: 20,
-  },
-  emptyTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 15,
-    color: "#333",
-  },
-  emptySubtitle: {
-    fontSize: 16,
-    color: "#666",
-    textAlign: "center",
-    marginBottom: 30,
-    lineHeight: 24,
-  },
-  startButton: {
-    backgroundColor: "#2f95dc",
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-    borderRadius: 25,
-  },
-  startButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 40,
-  },
-  loadingText: {
-    fontSize: 16,
-    color: "#666",
-  },
-  goalsContainer: {
-    padding: 20,
-  },
-  goalCard: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  goalHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  goalTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  goalProgress: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#2f95dc",
-  },
-  goalProgressBar: {
-    height: 8,
-    backgroundColor: "#e0e0e0",
-    borderRadius: 4,
-    marginBottom: 10,
-  },
-  goalProgressFill: {
-    height: 8,
-    backgroundColor: "#4cd964",
-    borderRadius: 4,
-  },
-  goalSubtext: {
-    fontSize: 14,
-    color: "#666",
-    textAlign: "center",
-  },
-  additionalStats: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 15,
-    paddingTop: 15,
-    borderTopWidth: 1,
-    borderTopColor: "#e0e0e0",
-  },
-  additionalStatItem: {
-    alignItems: "center",
-    flex: 1,
-  },
-  additionalStatLabel: {
-    fontSize: 12,
-    color: "#666",
-    marginBottom: 5,
-  },
-  additionalStatValue: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#333",
-  },
-});
+const createStyles = (
+  theme: typeof import("../../src/context/ThemeContext").Theme,
+) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    headerSection: {
+      position: "absolute",
+      top: 20,
+      left: 0,
+      right: 0,
+      alignItems: "center",
+      paddingHorizontal: 20,
+      zIndex: 1,
+    },
+    appTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+      textAlign: "center",
+    },
+    header: {
+      padding: 20,
+      alignItems: "center",
+      paddingTop: 60, // ヘッダータイトル分のスペース
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "bold",
+      marginBottom: 10,
+      color: theme.colors.primary,
+    },
+    subtitle: {
+      fontSize: 16,
+      textAlign: "center",
+      color: theme.colors.textSecondary,
+    },
+    overallStatsContainer: {
+      padding: 20,
+    },
+    statRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 15,
+    },
+    mainStatCard: {
+      backgroundColor: theme.colors.card,
+      flex: 1,
+      marginHorizontal: 5,
+      padding: 20,
+      borderRadius: 10,
+      alignItems: "center",
+      ...theme.shadows.medium,
+    },
+    mainStatNumber: {
+      fontSize: 32,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+    },
+    mainStatLabel: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginTop: 5,
+    },
+    subStatCard: {
+      backgroundColor: theme.colors.card,
+      flex: 1,
+      marginHorizontal: 2,
+      padding: 15,
+      borderRadius: 8,
+      alignItems: "center",
+      ...theme.shadows.small,
+    },
+    subStatNumber: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    subStatLabel: {
+      fontSize: 11,
+      color: theme.colors.textSecondary,
+      marginTop: 3,
+      textAlign: "center",
+    },
+    categoryStatsContainer: {
+      padding: 20,
+    },
+    sectionTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 15,
+      color: theme.colors.text,
+    },
+    categoryStatCard: {
+      backgroundColor: theme.colors.card,
+      padding: 20,
+      marginBottom: 15,
+      borderRadius: 10,
+      ...theme.shadows.medium,
+    },
+    categoryHeader: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 15,
+    },
+    categoryIcon: {
+      fontSize: 24,
+      marginRight: 10,
+    },
+    categoryName: {
+      fontSize: 18,
+      fontWeight: "bold",
+      flex: 1,
+      color: theme.colors.text,
+    },
+    categoryAccuracy: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+    },
+    progressBarContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 10,
+    },
+    progressBarBg: {
+      flex: 1,
+      height: 8,
+      backgroundColor: theme.colors.borderLight,
+      borderRadius: 4,
+      marginRight: 10,
+    },
+    progressBarFill: {
+      height: 8,
+      borderRadius: 4,
+    },
+    progressText: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      minWidth: 60,
+    },
+    categoryDetails: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 10,
+    },
+    detailText: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      flex: 1,
+      textAlign: "center",
+    },
+    emptyState: {
+      alignItems: "center",
+      padding: 40,
+    },
+    emptyIcon: {
+      fontSize: 64,
+      marginBottom: 20,
+    },
+    emptyTitle: {
+      fontSize: 20,
+      fontWeight: "bold",
+      marginBottom: 15,
+      color: theme.colors.text,
+    },
+    emptySubtitle: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+      textAlign: "center",
+      marginBottom: 30,
+      lineHeight: 24,
+    },
+    startButton: {
+      backgroundColor: theme.colors.primary,
+      paddingHorizontal: 30,
+      paddingVertical: 15,
+      borderRadius: 25,
+    },
+    startButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 40,
+    },
+    loadingText: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+    goalsContainer: {
+      padding: 20,
+    },
+    goalCard: {
+      backgroundColor: theme.colors.card,
+      padding: 20,
+      borderRadius: 10,
+      ...theme.shadows.medium,
+    },
+    goalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 15,
+    },
+    goalTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    goalProgress: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+    },
+    goalProgressBar: {
+      height: 8,
+      backgroundColor: theme.colors.borderLight,
+      borderRadius: 4,
+      marginBottom: 10,
+    },
+    goalProgressFill: {
+      height: 8,
+      backgroundColor: theme.colors.success,
+      borderRadius: 4,
+    },
+    goalSubtext: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      textAlign: "center",
+    },
+    additionalStats: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginTop: 15,
+      paddingTop: 15,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.borderLight,
+    },
+    additionalStatItem: {
+      alignItems: "center",
+      flex: 1,
+    },
+    additionalStatLabel: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginBottom: 5,
+    },
+    additionalStatValue: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+  });

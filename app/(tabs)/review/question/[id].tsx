@@ -23,8 +23,20 @@ import { SessionType } from "../../../../src/types/database";
 import { QuestionRepository } from "../../../../src/data/repositories/question-repository";
 import type { Question } from "../../../../src/types/models";
 import { reviewService } from "../../../../src/services/review-service";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+} from "../../../../src/context/ThemeContext";
 
 export default function ReviewQuestionScreen() {
+  // Phase 4: ダークモード対応のテーマシステム
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
+
   const { id, sessionId, sessionType, filteredQuestions } =
     useLocalSearchParams();
   const router = useRouter();
@@ -213,7 +225,7 @@ export default function ReviewQuestionScreen() {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#2f95dc" />
+        <ActivityIndicator size="large" color={theme.colors.primary} />
         <Text style={styles.loadingText}>復習問題を読み込み中...</Text>
       </View>
     );
@@ -391,41 +403,44 @@ export default function ReviewQuestionScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f5f5",
-  },
-  loadingText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: "#666",
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f5f5",
-    padding: 20,
-  },
-  errorText: {
-    fontSize: 16,
-    color: "#d32f2f",
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  backButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-  },
-  backButtonText: {
-    color: "#2f95dc",
-    fontSize: 16,
-  },
-});
+const createStyles = (
+  theme: typeof import("../../../../src/context/ThemeContext").Theme,
+) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: theme.colors.background,
+    },
+    loadingText: {
+      marginTop: 10,
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+    errorContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: theme.colors.background,
+      padding: 20,
+    },
+    errorText: {
+      fontSize: 16,
+      color: theme.colors.error,
+      textAlign: "center",
+      marginBottom: 20,
+    },
+    backButton: {
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+    },
+    backButtonText: {
+      color: theme.colors.primary,
+      fontSize: 16,
+    },
+  });

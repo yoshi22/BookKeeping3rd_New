@@ -10,6 +10,26 @@ import { useRouter } from "expo-router";
 import { Screen } from "../../../src/components/layout/ResponsiveLayout";
 import { QuestionRepository } from "../../../src/data/repositories/question-repository";
 import type { QuestionCategory } from "../../../src/types/models";
+import { WithScreenTransition } from "../../../src/hooks/useScreenTransitions";
+import {
+  LinearProgress,
+  SkeletonLoader,
+  LearningProgress,
+} from "../../../src/hooks/useProgressIndicators";
+import {
+  useTabletLayout,
+  ResponsiveContainer,
+  ResponsiveGrid,
+  ResponsiveGridItem,
+  OrientationAwareView,
+  RotationAwareContainer,
+} from "../../../src/hooks/useTabletLayout";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+} from "../../../src/context/ThemeContext";
 
 export default function LearningScreen() {
   const router = useRouter();
@@ -24,6 +44,24 @@ export default function LearningScreen() {
     multiple_blank_choice: 0,
   });
   const [loading, setLoading] = useState(true);
+
+  // Phase 4: ダークモード対応のテーマシステム
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+
+  // タブレットレイアウト対応（オリエンテーション対応）
+  const {
+    deviceInfo,
+    responsiveStyles,
+    getValueByDevice,
+    shouldUseMasterDetail,
+    getOrientationSpecificValue,
+    getOrientationLayout,
+  } = useTabletLayout();
+
+  // Phase 4: テーマに応じたスタイル生成
+  const styles = useThemedStyles(createStyles);
 
   const categories = [
     {
@@ -120,387 +158,582 @@ export default function LearningScreen() {
   }, []);
 
   return (
-    <Screen
-      safeArea={true}
-      scrollable={true}
-      statusBarStyle="dark-content"
-      testID="learning-screen"
+    <WithScreenTransition
+      transitionType="fadeIn"
+      transitionConfig={{ duration: 300 }}
     >
-      {/* アプリタイトル（ヘッダー代替） */}
-      <View style={styles.headerSection}>
-        <Text style={styles.appTitle}>学習</Text>
-      </View>
-
-      <View style={styles.header}>
-        <Text style={styles.title}>📚 学習モード</Text>
-        <Text style={styles.subtitle}>段階的学習で簿記3級を完全攻略</Text>
-        <Text style={styles.totalQuestions}>
-          全{Object.values(questionCounts).reduce((a, b) => a + b, 0)}
-          問の豊富な問題で実力アップ
-        </Text>
-      </View>
-
-      <View style={styles.categoriesContainer}>
-        {loading ? (
-          <View style={styles.loadingContainer}>
-            <Text style={styles.loadingText}>問題数を読み込み中...</Text>
-          </View>
-        ) : (
-          <>
-            {/* 全302問順次進行ボタン（problemsStrategy.md対応） */}
-            <TouchableOpacity
-              style={[styles.categoryCard, { borderLeftColor: "#ff6b35" }]}
-              onPress={() => {
-                // 第一問から順次進行（Q_J_001から開始）
-                router.push(
-                  "/(tabs)/learning/question/Q_J_001?sessionType=learning",
-                );
+      <Screen
+        safeArea={true}
+        scrollable={true}
+        statusBarStyle={getStatusBarStyle()}
+        testID="learning-screen"
+      >
+        <RotationAwareContainer animationDuration={250}>
+          <ResponsiveContainer>
+            {/* アプリタイトル（ヘッダー代替） */}
+            <OrientationAwareView
+              style={styles.headerSection}
+              portraitStyle={{
+                paddingHorizontal: getValueByDevice({
+                  phone: 20,
+                  tablet: 40,
+                  desktop: 60,
+                  default: 20,
+                }),
               }}
-              testID="learning-all-questions-button"
-              accessibilityLabel="全問題順次進行を開始"
+              landscapeStyle={{
+                paddingHorizontal: getValueByDevice({
+                  phone: 16,
+                  tablet: 32,
+                  desktop: 48,
+                  default: 16,
+                }),
+              }}
             >
-              <View style={styles.categoryHeader}>
-                <Text style={styles.categoryIcon}>🎯</Text>
-                <View style={styles.categoryTitleContainer}>
-                  <Text style={styles.categoryName}>全問題順次進行</Text>
-                  <Text style={styles.categorySubtitle}>
-                    302問完全制覇モード
-                  </Text>
-                </View>
-                <View
-                  style={[styles.pointsBadge, { backgroundColor: "#ff6b35" }]}
-                >
-                  <Text style={styles.pointsText}>302問</Text>
-                </View>
-              </View>
-
-              <View style={styles.categoryInfo}>
-                <Text style={styles.categoryDescription}>
-                  第1問→第2問→第3問の全302問を順次進行
-                </Text>
-                <View style={styles.examInfo}>
-                  <Text style={styles.examInfoText}>
-                    📚 仕訳250問 • 📋 帳簿40問 • 📊 決算書12問
-                  </Text>
-                </View>
-                <Text style={styles.categoryDetails}>
-                  🎯 problemsStrategy.md準拠の完全版問題集
-                </Text>
-                <Text style={styles.categoryProgress}>
-                  全{Object.values(questionCounts).reduce((a, b) => a + b, 0)}
-                  問の順次学習
-                </Text>
-              </View>
-
-              <View
-                style={[styles.categoryAction, { backgroundColor: "#ff6b35" }]}
-              >
-                <Text style={styles.actionText}>開始</Text>
-              </View>
-            </TouchableOpacity>
-
-            {/* 既存のカテゴリ別学習 */}
-            {categories.map((category) => (
-              <TouchableOpacity
-                key={category.id}
+              <Text
                 style={[
-                  styles.categoryCard,
-                  { borderLeftColor: category.color },
+                  styles.appTitle,
+                  {
+                    fontSize: getValueByDevice({
+                      phone: 18,
+                      tablet: 22,
+                      desktop: 24,
+                      default: 18,
+                    }),
+                  },
+                ]}
+              >
+                学習
+              </Text>
+            </OrientationAwareView>
+
+            <View
+              style={[
+                styles.header,
+                {
+                  paddingHorizontal: getValueByDevice({
+                    phone: 20,
+                    tablet: 40,
+                    desktop: 60,
+                    default: 20,
+                  }),
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.title,
+                  {
+                    fontSize: getValueByDevice({
+                      phone: 24,
+                      tablet: 28,
+                      desktop: 32,
+                      default: 24,
+                    }),
+                  },
+                ]}
+              >
+                📚 学習モード
+              </Text>
+              <Text
+                style={[
+                  styles.subtitle,
+                  {
+                    fontSize: getValueByDevice({
+                      phone: 16,
+                      tablet: 18,
+                      desktop: 20,
+                      default: 16,
+                    }),
+                  },
+                ]}
+              >
+                段階的学習で簿記3級を完全攻略
+              </Text>
+              <Text style={styles.totalQuestions}>
+                全{Object.values(questionCounts).reduce((a, b) => a + b, 0)}
+                問の豊富な問題で実力アップ
+              </Text>
+            </View>
+
+            <View
+              style={[
+                styles.categoriesContainer,
+                {
+                  paddingHorizontal: getValueByDevice({
+                    phone: 20,
+                    tablet: 40,
+                    desktop: 60,
+                    default: 20,
+                  }),
+                },
+              ]}
+            >
+              {loading ? (
+                <ResponsiveGrid>
+                  {Array(4)
+                    .fill(0)
+                    .map((_, index) => (
+                      <ResponsiveGridItem key={index}>
+                        <SkeletonLoader
+                          width="100%"
+                          height={deviceInfo.isTablet ? 140 : 120}
+                          borderRadius={10}
+                          backgroundColor={theme.colors.borderLight}
+                          shimmerColor={dynamicColors.adaptive.divider}
+                        />
+                      </ResponsiveGridItem>
+                    ))}
+                </ResponsiveGrid>
+              ) : (
+                <ResponsiveGrid>
+                  {/* 全302問順次進行ボタン（problemsStrategy.md対応） */}
+                  <ResponsiveGridItem>
+                    <TouchableOpacity
+                      style={[
+                        styles.categoryCard,
+                        {
+                          borderLeftColor: "#ff6b35",
+                          minHeight: deviceInfo.isTablet ? 200 : 160,
+                        },
+                      ]}
+                      onPress={() => {
+                        // 第一問から順次進行（Q_J_001から開始）
+                        router.push(
+                          "/(tabs)/learning/question/Q_J_001?sessionType=learning",
+                        );
+                      }}
+                      testID="learning-all-questions-button"
+                      accessibilityLabel="全問題順次進行を開始"
+                    >
+                      <View style={styles.categoryHeader}>
+                        <Text
+                          style={[
+                            styles.categoryIcon,
+                            { fontSize: deviceInfo.isTablet ? 36 : 30 },
+                          ]}
+                        >
+                          🎯
+                        </Text>
+                        <View style={styles.categoryTitleContainer}>
+                          <Text
+                            style={[
+                              styles.categoryName,
+                              { fontSize: deviceInfo.isTablet ? 20 : 18 },
+                            ]}
+                          >
+                            全問題順次進行
+                          </Text>
+                          <Text style={styles.categorySubtitle}>
+                            302問完全制覇モード
+                          </Text>
+                        </View>
+                        <View
+                          style={[
+                            styles.pointsBadge,
+                            { backgroundColor: "#ff6b35" },
+                          ]}
+                        >
+                          <Text style={styles.pointsText}>302問</Text>
+                        </View>
+                      </View>
+
+                      <View style={styles.categoryInfo}>
+                        <Text style={styles.categoryDescription}>
+                          第1問→第2問→第3問の全302問を順次進行
+                        </Text>
+                        <View style={styles.examInfo}>
+                          <Text style={styles.examInfoText}>
+                            📚 仕訳250問 • 📋 帳簿40問 • 📊 決算書12問
+                          </Text>
+                        </View>
+                        <Text style={styles.categoryDetails}>
+                          🎯 problemsStrategy.md準拠の完全版問題集
+                        </Text>
+                        <Text style={styles.categoryProgress}>
+                          全
+                          {Object.values(questionCounts).reduce(
+                            (a, b) => a + b,
+                            0,
+                          )}
+                          問の順次学習
+                        </Text>
+                      </View>
+
+                      <View
+                        style={[
+                          styles.categoryAction,
+                          { backgroundColor: "#ff6b35" },
+                        ]}
+                      >
+                        <Text style={styles.actionText}>開始</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </ResponsiveGridItem>
+
+                  {/* 既存のカテゴリ別学習 */}
+                  {categories.map((category) => (
+                    <ResponsiveGridItem key={category.id}>
+                      <TouchableOpacity
+                        style={[
+                          styles.categoryCard,
+                          {
+                            borderLeftColor: category.color,
+                            minHeight: deviceInfo.isTablet ? 200 : 160,
+                          },
+                        ]}
+                        onPress={() => {
+                          // カテゴリ詳細画面に遷移
+                          router.push(
+                            `/(tabs)/learning/category/${category.id}`,
+                          );
+                        }}
+                        testID={`category-${category.id}`}
+                        accessibilityLabel={`${category.name} ${category.subtitle}を開始`}
+                      >
+                        <View style={styles.categoryHeader}>
+                          <Text
+                            style={[
+                              styles.categoryIcon,
+                              { fontSize: deviceInfo.isTablet ? 36 : 30 },
+                            ]}
+                          >
+                            {category.icon}
+                          </Text>
+                          <View style={styles.categoryTitleContainer}>
+                            <Text
+                              style={[
+                                styles.categoryName,
+                                { fontSize: deviceInfo.isTablet ? 20 : 18 },
+                              ]}
+                            >
+                              {category.name}
+                            </Text>
+                            <Text style={styles.categorySubtitle}>
+                              {category.subtitle}
+                            </Text>
+                          </View>
+                          <View
+                            style={[
+                              styles.pointsBadge,
+                              { backgroundColor: category.color },
+                            ]}
+                          >
+                            <Text style={styles.pointsText}>
+                              {category.points}
+                            </Text>
+                          </View>
+                        </View>
+
+                        <View style={styles.categoryInfo}>
+                          <Text style={styles.categoryDescription}>
+                            {category.description}
+                          </Text>
+                          <View style={styles.examInfo}>
+                            <Text style={styles.examInfoText}>
+                              🎯 本試験: {category.examCount} • ⏱{" "}
+                              {category.examTime}
+                            </Text>
+                          </View>
+                          <Text style={styles.categoryDetails}>
+                            📚 {category.details}
+                          </Text>
+
+                          {/* プログレスバー追加 */}
+                          <View style={styles.progressContainer}>
+                            <LinearProgress
+                              progress={
+                                Math.round(
+                                  (category.completedQuestions /
+                                    category.totalQuestions) *
+                                    100,
+                                ) || 0
+                              }
+                              color={category.color}
+                              backgroundColor={theme.colors.borderLight}
+                              height={6}
+                              borderRadius={3}
+                              animated={true}
+                              label={`練習問題 ${category.completedQuestions}/${category.totalQuestions}問完了`}
+                              showPercentage={true}
+                            />
+                          </View>
+                        </View>
+
+                        <View
+                          style={[
+                            styles.categoryAction,
+                            { backgroundColor: category.color },
+                          ]}
+                        >
+                          <Text style={styles.actionText}>選択</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </ResponsiveGridItem>
+                  ))}
+                </ResponsiveGrid>
+              )}
+            </View>
+
+            <View
+              style={[
+                styles.mockExamSection,
+                {
+                  paddingHorizontal: getValueByDevice({
+                    phone: 20,
+                    tablet: 40,
+                    desktop: 60,
+                    default: 20,
+                  }),
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.sectionTitle,
+                  { fontSize: deviceInfo.isTablet ? 20 : 18 },
+                ]}
+              >
+                🎯 実力チェック
+              </Text>
+              <TouchableOpacity
+                style={[
+                  styles.mockExamButton,
+                  { minHeight: deviceInfo.isTablet ? 120 : 100 },
                 ]}
                 onPress={() => {
-                  // カテゴリ詳細画面に遷移
-                  router.push(`/(tabs)/learning/category/${category.id}`);
+                  router.push("/mock-exam");
                 }}
-                testID={`category-${category.id}`}
-                accessibilityLabel={`${category.name} ${category.subtitle}を開始`}
+                testID="learning-mock-exam-button"
+                accessibilityLabel="CBT形式模擬試験を開始"
               >
-                <View style={styles.categoryHeader}>
-                  <Text style={styles.categoryIcon}>{category.icon}</Text>
-                  <View style={styles.categoryTitleContainer}>
-                    <Text style={styles.categoryName}>{category.name}</Text>
-                    <Text style={styles.categorySubtitle}>
-                      {category.subtitle}
-                    </Text>
-                  </View>
-                  <View
-                    style={[
-                      styles.pointsBadge,
-                      { backgroundColor: category.color },
-                    ]}
-                  >
-                    <Text style={styles.pointsText}>{category.points}</Text>
-                  </View>
-                </View>
-
-                <View style={styles.categoryInfo}>
-                  <Text style={styles.categoryDescription}>
-                    {category.description}
-                  </Text>
-                  <View style={styles.examInfo}>
-                    <Text style={styles.examInfoText}>
-                      🎯 本試験: {category.examCount} • ⏱ {category.examTime}
-                    </Text>
-                  </View>
-                  <Text style={styles.categoryDetails}>
-                    📚 {category.details}
-                  </Text>
-                  <Text style={styles.categoryProgress}>
-                    練習問題: 全{category.totalQuestions}問 • 学習進捗:{" "}
-                    {Math.round(
-                      (category.completedQuestions / category.totalQuestions) *
-                        100,
-                    ) || 0}
-                    %
-                  </Text>
-                </View>
-
-                <View
+                <Text
                   style={[
-                    styles.categoryAction,
-                    { backgroundColor: category.color },
+                    styles.mockExamIcon,
+                    { fontSize: deviceInfo.isTablet ? 36 : 30 },
                   ]}
                 >
-                  <Text style={styles.actionText}>選択</Text>
+                  🎯
+                </Text>
+                <View style={styles.mockExamInfo}>
+                  <Text
+                    style={[
+                      styles.mockExamTitle,
+                      { fontSize: deviceInfo.isTablet ? 18 : 16 },
+                    ]}
+                  >
+                    CBT形式模擬試験
+                  </Text>
+                  <Text style={styles.mockExamSubtitle}>
+                    本試験同等の60分制限・5セット用意
+                  </Text>
+                  <Text style={styles.mockExamDetail}>
+                    第1問（仕訳15問45点）• 第2問（補助簿等2問20点）•
+                    第3問（決算書1問35点）
+                  </Text>
+                </View>
+                <View style={styles.examAction}>
+                  <Text style={styles.examActionText}>開始</Text>
                 </View>
               </TouchableOpacity>
-            ))}
-          </>
-        )}
-      </View>
-
-      <View style={styles.mockExamSection}>
-        <Text style={styles.sectionTitle}>🎯 実力チェック</Text>
-        <TouchableOpacity
-          style={styles.mockExamButton}
-          onPress={() => {
-            router.push("/mock-exam");
-          }}
-          testID="learning-mock-exam-button"
-          accessibilityLabel="CBT形式模擬試験を開始"
-        >
-          <Text style={styles.mockExamIcon}>🎯</Text>
-          <View style={styles.mockExamInfo}>
-            <Text style={styles.mockExamTitle}>CBT形式模擬試験</Text>
-            <Text style={styles.mockExamSubtitle}>
-              本試験同等の60分制限・5セット用意
-            </Text>
-            <Text style={styles.mockExamDetail}>
-              第1問（仕訳15問45点）• 第2問（補助簿等2問20点）•
-              第3問（決算書1問35点）
-            </Text>
-          </View>
-          <View style={styles.examAction}>
-            <Text style={styles.examActionText}>開始</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    </Screen>
+            </View>
+          </ResponsiveContainer>
+        </RotationAwareContainer>
+      </Screen>
+    </WithScreenTransition>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  headerSection: {
-    position: "absolute",
-    top: 20,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    paddingHorizontal: 20,
-    zIndex: 1,
-  },
-  appTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#2f95dc",
-    textAlign: "center",
-  },
-  header: {
-    padding: 20,
-    alignItems: "center",
-    paddingTop: 40, // ヘッダータイトル分のスペースを削減
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#2f95dc",
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: "center",
-    color: "#666",
-    marginBottom: 8,
-  },
-  totalQuestions: {
-    fontSize: 14,
-    textAlign: "center",
-    color: "#999",
-    fontStyle: "italic",
-  },
-  categoriesContainer: {
-    padding: 20,
-  },
-  categoryCard: {
-    backgroundColor: "white",
-    padding: 15,
-    marginBottom: 15,
-    borderRadius: 10,
-    borderLeftWidth: 4,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
+// Phase 4: ダークモード対応のスタイル生成関数
+const createStyles = (
+  theme: typeof import("../../../src/context/ThemeContext").Theme,
+) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  categoryHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  categoryIcon: {
-    fontSize: 30,
-    marginRight: 10,
-  },
-  categoryTitleContainer: {
-    flex: 1,
-  },
-  categoryName: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  categorySubtitle: {
-    fontSize: 14,
-    color: "#666",
-    marginTop: 2,
-  },
-  pointsBadge: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 15,
-  },
-  pointsText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 14,
-  },
-  categoryInfo: {
-    marginLeft: 40,
-  },
-  categoryDescription: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 5,
-  },
-  examInfo: {
-    marginBottom: 5,
-  },
-  examInfoText: {
-    fontSize: 12,
-    color: "#666",
-  },
-  categoryDetails: {
-    fontSize: 12,
-    color: "#999",
-    marginBottom: 5,
-  },
-  categoryProgress: {
-    fontSize: 12,
-    color: "#666",
-  },
-  categoryAction: {
-    position: "absolute",
-    right: 15,
-    bottom: 15,
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 5,
-  },
-  actionText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 12,
-    color: "#333",
-  },
-  mockExamSection: {
-    padding: 20,
-  },
-  mockExamButton: {
-    backgroundColor: "white",
-    padding: 15,
-    borderRadius: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    borderLeftWidth: 4,
-    borderLeftColor: "#ff6b35",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
+    headerSection: {
+      position: "absolute",
+      top: 20,
+      left: 0,
+      right: 0,
+      alignItems: "center",
+      paddingHorizontal: 20,
+      zIndex: 1,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  mockExamIcon: {
-    fontSize: 30,
-    marginRight: 15,
-  },
-  mockExamInfo: {
-    flex: 1,
-  },
-  mockExamTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 4,
-  },
-  mockExamSubtitle: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 3,
-  },
-  mockExamDetail: {
-    fontSize: 12,
-    color: "#999",
-  },
-  examAction: {
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    backgroundColor: "#ff6b35",
-    borderRadius: 5,
-  },
-  examActionText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-  loadingContainer: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
+    appTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+      textAlign: "center",
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  loadingText: {
-    fontSize: 16,
-    color: "#666",
-  },
-});
+    header: {
+      padding: 20,
+      alignItems: "center",
+      paddingTop: 40,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "bold",
+      marginBottom: 10,
+      color: theme.colors.primary,
+    },
+    subtitle: {
+      fontSize: 16,
+      textAlign: "center",
+      color: theme.colors.textSecondary,
+      marginBottom: 8,
+    },
+    totalQuestions: {
+      fontSize: 14,
+      textAlign: "center",
+      color: theme.colors.textSecondary,
+      fontStyle: "italic",
+    },
+    categoriesContainer: {
+      padding: 20,
+    },
+    categoryCard: {
+      backgroundColor: theme.colors.surface,
+      padding: 15,
+      marginBottom: 15,
+      borderRadius: 10,
+      borderLeftWidth: 4,
+      ...theme.shadows.medium,
+    },
+    categoryHeader: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 10,
+    },
+    categoryIcon: {
+      fontSize: 30,
+      marginRight: 10,
+    },
+    categoryTitleContainer: {
+      flex: 1,
+    },
+    categoryName: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    categorySubtitle: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginTop: 2,
+    },
+    pointsBadge: {
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 15,
+    },
+    pointsText: {
+      color: "white",
+      fontWeight: "bold",
+      fontSize: 14,
+    },
+    categoryInfo: {
+      marginLeft: 40,
+    },
+    categoryDescription: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginBottom: 5,
+    },
+    examInfo: {
+      marginBottom: 5,
+    },
+    examInfoText: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+    },
+    categoryDetails: {
+      fontSize: 12,
+      color: theme.colors.textDisabled,
+      marginBottom: 5,
+    },
+    categoryProgress: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+    },
+    progressContainer: {
+      marginTop: 8,
+      marginBottom: 5,
+    },
+    categoryAction: {
+      position: "absolute",
+      right: 15,
+      bottom: 15,
+      paddingHorizontal: 15,
+      paddingVertical: 8,
+      borderRadius: 5,
+    },
+    actionText: {
+      color: "white",
+      fontWeight: "bold",
+    },
+    sectionTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 12,
+      color: theme.colors.text,
+    },
+    mockExamSection: {
+      padding: 20,
+    },
+    mockExamButton: {
+      backgroundColor: theme.colors.surface,
+      padding: 15,
+      borderRadius: 10,
+      flexDirection: "row",
+      alignItems: "center",
+      borderLeftWidth: 4,
+      borderLeftColor: "#ff6b35",
+      ...theme.shadows.medium,
+    },
+    mockExamIcon: {
+      fontSize: 30,
+      marginRight: 15,
+    },
+    mockExamInfo: {
+      flex: 1,
+    },
+    mockExamTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 4,
+    },
+    mockExamSubtitle: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginBottom: 3,
+    },
+    mockExamDetail: {
+      fontSize: 12,
+      color: theme.colors.textDisabled,
+    },
+    examAction: {
+      paddingHorizontal: 15,
+      paddingVertical: 8,
+      backgroundColor: "#ff6b35",
+      borderRadius: 5,
+    },
+    examActionText: {
+      color: "white",
+      fontWeight: "bold",
+    },
+    loadingContainer: {
+      backgroundColor: theme.colors.surface,
+      padding: 20,
+      borderRadius: 10,
+      alignItems: "center",
+      ...theme.shadows.medium,
+    },
+    loadingText: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+  });
