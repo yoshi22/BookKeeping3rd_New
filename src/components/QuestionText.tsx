@@ -13,8 +13,11 @@ import {
   type Theme,
 } from "../context/ThemeContext";
 
-// Q_J_001重複レンダリング防止用グローバル状態
-let activeQuestionTextInstances = new Set<string>();
+// レンダリング状態追跡用のグローバルMap - より確実な重複防止
+const renderingInstances = new Map<
+  string,
+  { count: number; renderedAt: number }
+>();
 
 interface QuestionTextProps {
   questionText: string;
@@ -35,57 +38,64 @@ export default function QuestionText({
   const dynamicColors = useDynamicColors();
   const styles = useThemedStyles(createStyles);
 
-  // 重複レンダリング防止
+  // 重複レンダリング防止 - 改善版
   const instanceIdRef = useRef<string>();
   const shouldRender = useRef<boolean>(true);
+  const renderAttemptTime = useRef<number>(Date.now());
 
-  useEffect(() => {
-    if (questionId) {
-      // コンポーネントインスタンスの一意ID生成
-      instanceIdRef.current = Math.random().toString(36).substr(2, 9);
-      const instanceKey = `${questionId}-${instanceIdRef.current}`;
+  // より堅牢な重複防止: 時間ベースとカウントベースの組み合わせ
+  if (questionId && !instanceIdRef.current) {
+    const now = Date.now();
+    const existing = renderingInstances.get(questionId);
 
-      // 既に同じ問題IDがアクティブかチェック
-      const isAlreadyActive = Array.from(activeQuestionTextInstances).some(
-        (key) => key.startsWith(`${questionId}-`),
+    if (existing && now - existing.renderedAt < 100) {
+      // 100ms以内の再レンダリングは重複とみなす
+      existing.count += 1;
+      console.warn(
+        `[QuestionText] 重複検出 (${existing.count}回目) - レンダリングをスキップ: ${questionId}`,
+        { timeDiff: now - existing.renderedAt, existingCount: existing.count },
       );
-
-      if (isAlreadyActive && questionId === "Q_J_001") {
-        console.log(
-          `[QuestionText] Q_J_001 重複検出 - レンダリングをスキップ:`,
-          {
-            instanceId: instanceIdRef.current,
-            activeInstances: Array.from(activeQuestionTextInstances),
-          },
-        );
-        shouldRender.current = false;
-        return;
-      }
-
-      // アクティブなインスタンスとして登録
-      activeQuestionTextInstances.add(instanceKey);
+      shouldRender.current = false;
+    } else {
+      // 新しいインスタンスまたは十分時間が経過した再レンダリング
+      instanceIdRef.current = Math.random().toString(36).substr(2, 9);
+      renderAttemptTime.current = now;
+      renderingInstances.set(questionId, { count: 1, renderedAt: now });
       shouldRender.current = true;
 
-      if (questionId === "Q_J_001") {
-        console.log(`[QuestionText] Q_J_001 インスタンス登録:`, {
-          instanceId: instanceIdRef.current,
-          instanceKey,
-          activeInstances: Array.from(activeQuestionTextInstances),
-        });
-      }
-
-      // クリーンアップ関数
-      return () => {
-        activeQuestionTextInstances.delete(instanceKey);
-        if (questionId === "Q_J_001") {
-          console.log(`[QuestionText] Q_J_001 インスタンス削除:`, {
-            instanceId: instanceIdRef.current,
-            instanceKey,
-            remainingInstances: Array.from(activeQuestionTextInstances),
-          });
-        }
-      };
+      console.log(`[QuestionText] インスタンス登録: ${questionId}`, {
+        instanceId: instanceIdRef.current,
+        isFirstRender: !existing,
+        totalInstances: renderingInstances.size,
+      });
     }
+  }
+
+  useEffect(() => {
+    // クリーンアップのみ - インスタンス削除
+    return () => {
+      if (questionId && instanceIdRef.current) {
+        // 遅延削除: 即座に削除せず、少し待ってから削除して安定性を向上
+        setTimeout(() => {
+          const existing = renderingInstances.get(questionId);
+          if (existing && existing.count <= 1) {
+            renderingInstances.delete(questionId);
+            console.log(`[QuestionText] インスタンス削除: ${questionId}`, {
+              instanceId: instanceIdRef.current,
+              remainingInstances: renderingInstances.size,
+            });
+          } else if (existing) {
+            existing.count -= 1;
+            console.log(
+              `[QuestionText] インスタンスカウント減少: ${questionId}`,
+              {
+                remainingCount: existing.count,
+              },
+            );
+          }
+        }, 50);
+      }
+    };
   }, [questionId]);
 
   // 重複の場合は何もレンダリングしない
@@ -197,22 +207,6 @@ export default function QuestionText({
   const isTrialBalance = isTrialBalanceProblem(questionText, questionId);
   const { journalEntries } = formatJournalEntries(questionText);
 
-  // Q_J_001のデバッグログ - コンポーネントライフサイクル追跡
-  if (questionId === "Q_J_001") {
-    const componentId = Math.random().toString(36).substr(2, 9);
-    console.log("[QuestionText] Q_J_001 Mount:", {
-      componentId,
-      questionId,
-      isTrialBalance,
-      journalEntriesLength: journalEntries.length,
-      questionTextLength: questionText.length,
-      renderPath:
-        isTrialBalance && journalEntries.length > 0
-          ? "trial_balance_path"
-          : "normal_path",
-    });
-  }
-
   // 仕訳を2列で表示するコンポーネント
   const renderJournalEntriesTable = () => (
     <View style={styles.journalTable}>
@@ -242,7 +236,6 @@ export default function QuestionText({
       {/* 問題ヘッダー */}
       <View style={styles.header}>
         <Text style={styles.title}>問題</Text>
-        {questionId && <Text style={styles.questionId}>{questionId}</Text>}
         {showDifficulty && difficultyInfo && (
           <View style={styles.difficultyContainer}>
             <Text

@@ -295,7 +295,7 @@ const UnifiedLedgerEntryForm = React.memo(function UnifiedLedgerEntryForm({
         }
       }
     } catch (error) {
-      logger.error("[UnifiedLedgerEntryForm] 解答送信エラー:", error  as Error);
+      logger.error("[UnifiedLedgerEntryForm] 解答送信エラー:", error as Error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setFormState({ ...formState, isSubmitting: false });
@@ -592,11 +592,6 @@ const UnifiedLedgerEntryForm = React.memo(function UnifiedLedgerEntryForm({
           )}
         </View>
       )}
-
-      {/* Question text */}
-      <View style={styles.questionCard}>
-        <Text style={styles.questionText}>{questionText}</Text>
-      </View>
 
       {/* Form content */}
       {mode === "learning"

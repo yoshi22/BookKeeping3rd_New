@@ -331,7 +331,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
         }
       }
     } catch (error) {
-      logger.error("[UnifiedJournalEntryForm] 解答送信エラー:", error  as Error);
+      logger.error("[UnifiedJournalEntryForm] 解答送信エラー:", error as Error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setFormState({ ...formState, isSubmitting: false });
@@ -410,11 +410,6 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
           )}
         </View>
       )}
-
-      {/* Question text */}
-      <View style={styles.questionContainer}>
-        <Text style={styles.questionText}>{questionText}</Text>
-      </View>
 
       {/* Journal table */}
       <View style={styles.journalTable}>
