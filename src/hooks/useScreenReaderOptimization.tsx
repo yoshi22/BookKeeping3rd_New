@@ -43,7 +43,7 @@ export interface AnnouncementOptions {
 }
 
 export function useScreenReaderOptimization() {
-  const { isScreenReaderEnabled, isVoiceOverRunning } = useAccessibility();
+  const { isScreenReaderEnabled } = useAccessibility();
 
   const elementsRef = useRef<Map<string, ScreenReaderElement>>(new Map());
   const contextRef = useRef<ScreenReaderContext | null>(null);
@@ -156,7 +156,7 @@ export function useScreenReaderOptimization() {
         trial_balance: "試算表問題",
       };
 
-      const difficultyNames = {
+      const difficultyNames: Record<number, string> = {
         1: "基礎",
         2: "標準",
         3: "応用",
@@ -474,7 +474,7 @@ export function useScreenReaderOptimization() {
     // 状態
     isNavigating,
     isScreenReaderEnabled,
-    isVoiceOverRunning,
+    isVoiceOverRunning: isScreenReaderEnabled, // iOS VoiceOver状態は isScreenReaderEnabled で代替
 
     // ユーティリティ
     context: contextRef.current,

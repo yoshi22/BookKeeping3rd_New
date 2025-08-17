@@ -12,12 +12,7 @@ import { useRouter } from "expo-router";
 import { MockExam } from "../src/types/models";
 import { MockExamRepository } from "../src/data/repositories/mock-exam-repository";
 import { Screen } from "../src/components/layout/ResponsiveLayout";
-import {
-  useTheme,
-  useThemedStyles,
-  useColors,
-  useDynamicColors,
-} from "../src/context/ThemeContext";
+import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../src/context/ThemeContext";
 
 export default function MockExamScreen() {
   // Phase 4: ダークモード対応のテーマシステム
@@ -152,7 +147,7 @@ export default function MockExamScreen() {
 }
 
 const createStyles = (
-  theme: typeof import("../src/context/ThemeContext").Theme,
+  theme: Theme,
 ) =>
   StyleSheet.create({
     container: {

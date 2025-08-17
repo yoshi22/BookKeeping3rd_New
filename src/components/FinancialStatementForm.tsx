@@ -12,7 +12,7 @@ import {
   Modal,
   FlatList,
 } from "react-native";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 
 export interface FinancialStatementEntry {
   accountName: string;
@@ -122,6 +122,7 @@ export default function FinancialStatementForm({
   questionText,
 }: FinancialStatementFormProps) {
   const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
 
   // 貸借対照表のエントリ
   const [assets, setAssets] = useState<FinancialStatementEntry[]>([
@@ -632,196 +633,197 @@ export default function FinancialStatementForm({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  mainTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 20,
-  },
-  sectionCard: {
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 16,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 12,
-  },
-  entryRow: {
-    flexDirection: "row",
-    paddingVertical: 8,
-    paddingHorizontal: 4,
-    borderBottomWidth: 1,
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  accountCell: {
-    flex: 2,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  accountPickerContainer: {
-    flex: 1,
-    minHeight: 44,
-    borderWidth: 1,
-    borderRadius: 6,
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 12,
-    flexDirection: "row",
-    marginRight: 8,
-  },
-  accountPickerText: {
-    fontSize: 14,
-    flex: 1,
-  },
-  accountPickerArrow: {
-    fontSize: 12,
-    marginLeft: 8,
-  },
-  removeButton: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  removeButtonText: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-  amountCell: {
-    flex: 1,
-    paddingHorizontal: 4,
-  },
-  amountInput: {
-    borderWidth: 1,
-    borderRadius: 6,
-    padding: 12,
-    fontSize: 16,
-    textAlign: "right",
-    minHeight: 44,
-  },
-  addButton: {
-    marginTop: 12,
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    alignItems: "center",
-  },
-  addButtonText: {
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  totalRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginTop: 12,
-    borderRadius: 8,
-  },
-  totalLabel: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  totalAmount: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  balanceCheckCard: {
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 16,
-    borderWidth: 2,
-    alignItems: "center",
-  },
-  balanceText: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 8,
-  },
-  balanceDetail: {
-    fontSize: 14,
-    marginBottom: 4,
-  },
-  netIncomeCard: {
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 20,
-    borderWidth: 2,
-    alignItems: "center",
-  },
-  netIncomeTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  netIncomeAmount: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  submitButton: {
-    padding: 16,
-    borderRadius: 8,
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  submitButtonText: {
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  // Modal styles
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "flex-end",
-  },
-  modalContent: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    maxHeight: "80%",
-  },
-  modalHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 20,
-    borderBottomWidth: 1,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  modalCloseButton: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalCloseText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  modalItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-  },
-  modalItemText: {
-    fontSize: 16,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 16,
+    },
+    mainTitle: {
+      fontSize: 24,
+      fontWeight: "bold",
+      textAlign: "center",
+      marginVertical: 20,
+    },
+    sectionCard: {
+      padding: 16,
+      borderRadius: 12,
+      marginBottom: 16,
+      elevation: 2,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.22,
+      shadowRadius: 2.22,
+    },
+    sectionTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 12,
+    },
+    entryRow: {
+      flexDirection: "row",
+      paddingVertical: 8,
+      paddingHorizontal: 4,
+      borderBottomWidth: 1,
+      alignItems: "center",
+      marginBottom: 8,
+    },
+    accountCell: {
+      flex: 2,
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    accountPickerContainer: {
+      flex: 1,
+      minHeight: 44,
+      borderWidth: 1,
+      borderRadius: 6,
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 12,
+      flexDirection: "row",
+      marginRight: 8,
+    },
+    accountPickerText: {
+      fontSize: 14,
+      flex: 1,
+    },
+    accountPickerArrow: {
+      fontSize: 12,
+      marginLeft: 8,
+    },
+    removeButton: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    removeButtonText: {
+      color: theme.colors.surface,
+      fontSize: 14,
+      fontWeight: "bold",
+    },
+    amountCell: {
+      flex: 1,
+      paddingHorizontal: 4,
+    },
+    amountInput: {
+      borderWidth: 1,
+      borderRadius: 6,
+      padding: 12,
+      fontSize: 16,
+      textAlign: "right",
+      minHeight: 44,
+    },
+    addButton: {
+      marginTop: 12,
+      padding: 12,
+      borderRadius: 8,
+      borderWidth: 1,
+      alignItems: "center",
+    },
+    addButtonText: {
+      fontSize: 14,
+      fontWeight: "600",
+    },
+    totalRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+      marginTop: 12,
+      borderRadius: 8,
+    },
+    totalLabel: {
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    totalAmount: {
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    balanceCheckCard: {
+      padding: 16,
+      borderRadius: 12,
+      marginBottom: 16,
+      borderWidth: 2,
+      alignItems: "center",
+    },
+    balanceText: {
+      fontSize: 16,
+      fontWeight: "600",
+      marginBottom: 8,
+    },
+    balanceDetail: {
+      fontSize: 14,
+      marginBottom: 4,
+    },
+    netIncomeCard: {
+      padding: 16,
+      borderRadius: 12,
+      marginBottom: 20,
+      borderWidth: 2,
+      alignItems: "center",
+    },
+    netIncomeTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 8,
+    },
+    netIncomeAmount: {
+      fontSize: 24,
+      fontWeight: "bold",
+    },
+    submitButton: {
+      padding: 16,
+      borderRadius: 8,
+      alignItems: "center",
+      marginBottom: 20,
+    },
+    submitButtonText: {
+      fontSize: 18,
+      fontWeight: "600",
+    },
+    // Modal styles
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: theme.colors.background + "80",
+      justifyContent: "flex-end",
+    },
+    modalContent: {
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      maxHeight: "80%",
+    },
+    modalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 20,
+      borderBottomWidth: 1,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "600",
+    },
+    modalCloseButton: {
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalCloseText: {
+      color: theme.colors.surface,
+      fontSize: 18,
+      fontWeight: "bold",
+    },
+    modalItem: {
+      padding: 15,
+      borderBottomWidth: 1,
+    },
+    modalItemText: {
+      fontSize: 16,
+    },
+  });

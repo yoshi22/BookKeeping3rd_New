@@ -7,7 +7,7 @@ import {
   Modal,
   ScrollView,
 } from "react-native";
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme, type Theme } from "../../context/ThemeContext";
 import CorrectAnswerExample from "../CorrectAnswerExample";
 
 export interface ExplanationModalProps {

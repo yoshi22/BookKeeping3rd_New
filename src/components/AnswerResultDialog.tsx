@@ -13,6 +13,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
+import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 import { SubmitAnswerResponse } from "../services/answer-service";
 import ExplanationPanel from "./ExplanationPanel";
 
@@ -35,6 +36,9 @@ export default function AnswerResultDialog({
   showNextButton = true,
   showReviewButton = true,
 }: AnswerResultDialogProps) {
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
+
   if (!result) return null;
 
   const formatAnswerTime = (timeMs: number): string => {
@@ -191,120 +195,121 @@ export default function AnswerResultDialog({
 
 const { height: screenHeight } = Dimensions.get("window");
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  header: {
-    paddingTop: 50,
-    paddingBottom: 20,
-    paddingHorizontal: 20,
-  },
-  correctHeader: {
-    backgroundColor: "#4caf50",
-  },
-  incorrectHeader: {
-    backgroundColor: "#f44336",
-  },
-  headerContent: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  resultIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 15,
-  },
-  correctIcon: {
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-  },
-  incorrectIcon: {
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-  },
-  resultIconText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "white",
-  },
-  headerTextContainer: {
-    flex: 1,
-  },
-  resultTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "white",
-    marginBottom: 4,
-  },
-  resultSubtitle: {
-    fontSize: 14,
-    color: "rgba(255, 255, 255, 0.8)",
-  },
-  closeButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  closeButtonText: {
-    fontSize: 18,
-    color: "white",
-    fontWeight: "bold",
-  },
-  content: {
-    flex: 1,
-    paddingTop: 10,
-  },
-  errorSection: {
-    backgroundColor: "#fff3cd",
-    margin: 15,
-    padding: 15,
-    borderRadius: 8,
-    borderLeftWidth: 4,
-    borderLeftColor: "#ffc107",
-  },
-  errorTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#856404",
-    marginBottom: 8,
-  },
-  errorText: {
-    fontSize: 14,
-    color: "#856404",
-    marginBottom: 4,
-  },
-  actionButtons: {
-    flexDirection: "row",
-    padding: 20,
-    paddingBottom: 40,
-    gap: 12,
-  },
-  actionButton: {
-    flex: 1,
-    padding: 15,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  reviewButton: {
-    backgroundColor: "#ff9800",
-  },
-  nextButton: {
-    backgroundColor: "#2196f3",
-  },
-  reviewButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  nextButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    header: {
+      paddingTop: 50,
+      paddingBottom: 20,
+      paddingHorizontal: 20,
+    },
+    correctHeader: {
+      backgroundColor: theme.colors.success,
+    },
+    incorrectHeader: {
+      backgroundColor: theme.colors.error,
+    },
+    headerContent: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    resultIcon: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      justifyContent: "center",
+      alignItems: "center",
+      marginRight: 15,
+    },
+    correctIcon: {
+      backgroundColor: theme.colors.surface + "40",
+    },
+    incorrectIcon: {
+      backgroundColor: theme.colors.surface + "40",
+    },
+    resultIconText: {
+      fontSize: 20,
+      fontWeight: "bold",
+      color: theme.colors.surface,
+    },
+    headerTextContainer: {
+      flex: 1,
+    },
+    resultTitle: {
+      fontSize: 24,
+      fontWeight: "bold",
+      color: theme.colors.surface,
+      marginBottom: 4,
+    },
+    resultSubtitle: {
+      fontSize: 14,
+      color: theme.colors.surface + "CC",
+    },
+    closeButton: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: theme.colors.surface + "40",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    closeButtonText: {
+      fontSize: 18,
+      color: theme.colors.surface,
+      fontWeight: "bold",
+    },
+    content: {
+      flex: 1,
+      paddingTop: 10,
+    },
+    errorSection: {
+      backgroundColor: theme.colors.warningBackground,
+      margin: 15,
+      padding: 15,
+      borderRadius: 8,
+      borderLeftWidth: 4,
+      borderLeftColor: theme.colors.warning,
+    },
+    errorTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 8,
+    },
+    errorText: {
+      fontSize: 14,
+      color: theme.colors.text,
+      marginBottom: 4,
+    },
+    actionButtons: {
+      flexDirection: "row",
+      padding: 20,
+      paddingBottom: 40,
+      gap: 12,
+    },
+    actionButton: {
+      flex: 1,
+      padding: 15,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    reviewButton: {
+      backgroundColor: theme.colors.warning,
+    },
+    nextButton: {
+      backgroundColor: theme.colors.primary,
+    },
+    reviewButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    nextButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+  });

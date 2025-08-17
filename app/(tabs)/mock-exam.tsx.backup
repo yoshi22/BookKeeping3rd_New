@@ -17,12 +17,7 @@ import {
   SkeletonLoader,
   StepIndicator,
 } from "../../src/hooks/useProgressIndicators";
-import {
-  useTheme,
-  useThemedStyles,
-  useColors,
-  useDynamicColors,
-} from "../../src/context/ThemeContext";
+import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../../src/context/ThemeContext";
 
 export default function MockExamTabScreen() {
   // Phase 4: ダークモード対応のテーマシステム
@@ -196,7 +191,7 @@ export default function MockExamTabScreen() {
 }
 
 const createStyles = (
-  theme: typeof import("../../src/context/ThemeContext").Theme,
+  theme: Theme,
 ) =>
   StyleSheet.create({
     header: {

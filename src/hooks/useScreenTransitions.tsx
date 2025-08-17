@@ -3,8 +3,8 @@
  * Expo Router用のカスタム画面遷移アニメーション
  */
 
-import { useRef, useCallback } from "react";
-import { Animated, Dimensions, Platform } from "react-native";
+import React, { useRef, useCallback, useEffect } from "react";
+import { Animated, Dimensions, Platform, Easing } from "react-native";
 import { useAccessibility } from "./useAccessibility";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -51,7 +51,7 @@ export function useScreenTransitions(): ScreenTransitionAnimations {
   // デフォルト設定
   const defaultConfig: TransitionConfig = {
     duration: isReduceMotionEnabled ? 150 : 300,
-    easing: Animated.Bezier(0.25, 0.46, 0.45, 0.94), // easeOutQuart
+    easing: Easing.bezier(0.25, 0.46, 0.45, 0.94), // easeOutQuart
     delay: 0,
   };
 
@@ -181,7 +181,7 @@ export function useScreenTransitions(): ScreenTransitionAnimations {
       await scaleIn({
         ...config,
         duration: isReduceMotionEnabled ? 200 : 600,
-        easing: Animated.Bezier(0.175, 0.885, 0.32, 1.275), // easeOutBack
+        easing: Easing.bezier(0.175, 0.885, 0.32, 1.275), // easeOutBack
       });
     },
     [scaleIn, isReduceMotionEnabled],
@@ -223,8 +223,6 @@ export function useScreenTransitions(): ScreenTransitionAnimations {
 /**
  * ページトランジション用の高次コンポーネント
  */
-import React, { useEffect } from "react";
-import { Animated } from "react-native";
 
 interface WithScreenTransitionProps {
   transitionType?:

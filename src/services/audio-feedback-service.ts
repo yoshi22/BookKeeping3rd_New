@@ -253,9 +253,9 @@ export class AudioFeedbackService {
    */
   private async generateToneSound(
     soundId: string,
-  ): Promise<Audio.Sound | null> {
+  ): Promise<Audio.Sound | undefined> {
     const soundDef = this.soundEffects.find((s) => s.id === soundId);
-    if (!soundDef?.frequency) return null;
+    if (!soundDef?.frequency) return undefined;
 
     try {
       // Web Audio APIによるトーン生成（Web環境）
@@ -292,17 +292,17 @@ export class AudioFeedbackService {
         const dataURL = this.bufferToDataURL(buffer);
 
         this.synthesizedSounds.set(soundId, dataURL);
-        return null; // Web環境では Audio.Sound を使用しない
+        return undefined; // Web環境では Audio.Sound を使用しない
       }
 
       // ネイティブ環境では外部ライブラリまたは事前録音された音声ファイルを使用
-      return null;
+      return undefined;
     } catch (error) {
       console.warn(
         `[AudioFeedbackService] トーン生成エラー (${soundId}):`,
         error,
       );
-      return null;
+      return undefined;
     }
   }
 
@@ -345,7 +345,7 @@ export class AudioFeedbackService {
           // Web環境での再生
           const dataURL = this.synthesizedSounds.get(soundId);
           if (dataURL) {
-            const audio = new Audio(dataURL);
+            const audio = new (globalThis as any).Audio(dataURL);
             audio.volume = volume;
             await audio.play();
           }

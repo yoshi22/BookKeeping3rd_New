@@ -18,7 +18,7 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { useTheme, useResponsiveTheme } from "../../context/ThemeContext";
+import { useTheme, useResponsiveTheme, type Theme } from "../../context/ThemeContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 

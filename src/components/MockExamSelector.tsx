@@ -13,6 +13,7 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native";
+import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 import { MockExam, MockExamResult } from "../types/models";
 import { MockExamService } from "../services/mock-exam-service";
 
@@ -31,6 +32,8 @@ export const MockExamSelector: React.FC<MockExamSelectorProps> = ({
   onExamSelected,
   onViewResults,
 }) => {
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
   const [mockExams, setMockExams] = useState<MockExamItemData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -203,7 +206,7 @@ export const MockExamSelector: React.FC<MockExamSelectorProps> = ({
   if (loading) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
+        <ActivityIndicator size="large" color={theme.colors.primary} />
         <Text style={styles.loadingText}>模試情報を読み込み中...</Text>
       </View>
     );
@@ -240,169 +243,166 @@ export const MockExamSelector: React.FC<MockExamSelectorProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f9fa",
-  },
-  centerContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  header: {
-    padding: 20,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e9ecef",
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#212529",
-    marginBottom: 4,
-  },
-  headerSubtitle: {
-    fontSize: 14,
-    color: "#6c757d",
-  },
-  listContainer: {
-    padding: 16,
-  },
-  examCard: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    padding: 20,
-    marginBottom: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  examHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  examTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#212529",
-    flex: 1,
-  },
-  difficultyBadge: {
-    backgroundColor: "#e3f2fd",
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  difficultyText: {
-    fontSize: 12,
-    color: "#1976d2",
-    fontWeight: "600",
-  },
-  examDescription: {
-    fontSize: 14,
-    color: "#6c757d",
-    marginBottom: 16,
-    lineHeight: 20,
-  },
-  examStats: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 16,
-  },
-  statItem: {
-    flex: 1,
-    alignItems: "center",
-  },
-  statLabel: {
-    fontSize: 12,
-    color: "#6c757d",
-    marginBottom: 4,
-  },
-  statValue: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#212529",
-  },
-  passedScore: {
-    color: "#28a745",
-  },
-  failedScore: {
-    color: "#dc3545",
-  },
-  lastResultContainer: {
-    backgroundColor: "#f8f9fa",
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 16,
-  },
-  lastResultLabel: {
-    fontSize: 12,
-    color: "#6c757d",
-    marginBottom: 4,
-  },
-  lastResultScore: {
-    fontSize: 14,
-    fontWeight: "600",
-    marginBottom: 2,
-  },
-  lastResultDate: {
-    fontSize: 12,
-    color: "#6c757d",
-  },
-  actionButtons: {
-    flexDirection: "row",
-    gap: 12,
-  },
-  startButton: {
-    flex: 1,
-    backgroundColor: "#007AFF",
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  startButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  resultsButton: {
-    flex: 1,
-    backgroundColor: "#6c757d",
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  resultsButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  loadingText: {
-    marginTop: 12,
-    fontSize: 16,
-    color: "#6c757d",
-  },
-  errorText: {
-    fontSize: 16,
-    color: "#dc3545",
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  retryButton: {
-    backgroundColor: "#007AFF",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 8,
-  },
-  retryButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.backgroundSecondary,
+    },
+    centerContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
+    },
+    header: {
+      padding: 20,
+      backgroundColor: theme.colors.surface,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    headerTitle: {
+      fontSize: 24,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 4,
+    },
+    headerSubtitle: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+    },
+    listContainer: {
+      padding: 16,
+    },
+    examCard: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 12,
+      padding: 20,
+      marginBottom: 16,
+      ...theme.shadows.medium,
+    },
+    examHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 8,
+    },
+    examTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      flex: 1,
+    },
+    difficultyBadge: {
+      backgroundColor: theme.colors.primary + "20",
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 12,
+    },
+    difficultyText: {
+      fontSize: 12,
+      color: theme.colors.primary,
+      fontWeight: "600",
+    },
+    examDescription: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginBottom: 16,
+      lineHeight: 20,
+    },
+    examStats: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 16,
+    },
+    statItem: {
+      flex: 1,
+      alignItems: "center",
+    },
+    statLabel: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginBottom: 4,
+    },
+    statValue: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: theme.colors.text,
+    },
+    passedScore: {
+      color: theme.colors.success,
+    },
+    failedScore: {
+      color: theme.colors.error,
+    },
+    lastResultContainer: {
+      backgroundColor: theme.colors.backgroundSecondary,
+      padding: 12,
+      borderRadius: 8,
+      marginBottom: 16,
+    },
+    lastResultLabel: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginBottom: 4,
+    },
+    lastResultScore: {
+      fontSize: 14,
+      fontWeight: "600",
+      marginBottom: 2,
+    },
+    lastResultDate: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+    },
+    actionButtons: {
+      flexDirection: "row",
+      gap: 12,
+    },
+    startButton: {
+      flex: 1,
+      backgroundColor: theme.colors.primary,
+      paddingVertical: 12,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    startButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "600",
+    },
+    resultsButton: {
+      flex: 1,
+      backgroundColor: theme.colors.textSecondary,
+      paddingVertical: 12,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    resultsButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "600",
+    },
+    loadingText: {
+      marginTop: 12,
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+    errorText: {
+      fontSize: 16,
+      color: theme.colors.error,
+      textAlign: "center",
+      marginBottom: 20,
+    },
+    retryButton: {
+      backgroundColor: theme.colors.primary,
+      paddingHorizontal: 24,
+      paddingVertical: 12,
+      borderRadius: 8,
+    },
+    retryButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "600",
+    },
+  });

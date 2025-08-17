@@ -4,20 +4,19 @@
  */
 
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
-  Modal,
-  FlatList,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { Screen } from "../../../../src/components/layout/ResponsiveLayout";
 import { QuestionRepository } from "../../../../src/data/repositories/question-repository";
 import { LearningHistoryRepository } from "../../../../src/data/repositories/learning-history-repository";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useCategoryColors,
+  useLearningColors,
+  type Theme,
+} from "../../../../src/context/ThemeContext";
 import type {
   Question,
   QuestionCategory,
@@ -45,7 +44,13 @@ export default function CategoryDetailScreen() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showFilters, setShowFilters] = useState(false);
+  // テーマシステムの取得
+  const { theme } = useTheme();
+  const categoryColors = useCategoryColors();
+  const learningColors = useLearningColors();
+
+  // テーマ対応スタイル生成
+  const styles = useThemedStyles(createStyles);
 
   // カテゴリ情報の定義
   const categoryConfig = {
@@ -55,7 +60,7 @@ export default function CategoryDetailScreen() {
       subtitle: "仕訳問題",
       description: "基本的な仕訳から応用仕訳まで",
       icon: "📝",
-      color: "#4CAF50",
+      color: categoryColors.journal,
       points: "45点",
       examInfo: "本試験: 15問 • 15-20分",
     },
@@ -65,7 +70,7 @@ export default function CategoryDetailScreen() {
       subtitle: "補助簿・勘定記入・伝票",
       description: "帳簿記入と勘定の理解",
       icon: "📋",
-      color: "#FF9800",
+      color: categoryColors.ledger,
       points: "20点",
       examInfo: "本試験: 2問 • 15-20分",
     },
@@ -75,7 +80,7 @@ export default function CategoryDetailScreen() {
       subtitle: "決算書作成",
       description: "財務諸表・精算表・試算表の作成",
       icon: "📊",
-      color: "#2196F3",
+      color: categoryColors.trialBalance,
       points: "35点",
       examInfo: "本試験: 1問 • 25-30分",
     },
@@ -85,7 +90,7 @@ export default function CategoryDetailScreen() {
       subtitle: "財務諸表作成問題",
       description: "貸借対照表・損益計算書の作成",
       icon: "📈",
-      color: "#9c27b0",
+      color: theme.colors.secondary,
       points: "35点",
       examInfo: "財務諸表作成問題",
     },
@@ -95,7 +100,7 @@ export default function CategoryDetailScreen() {
       subtitle: "伝票記入問題",
       description: "3伝票制・5伝票制による記入",
       icon: "📄",
-      color: "#795548",
+      color: theme.colors.textSecondary,
       points: "20点",
       examInfo: "伝票記入問題",
     },
@@ -105,7 +110,7 @@ export default function CategoryDetailScreen() {
       subtitle: "複数空欄選択問題",
       description: "複数の空欄を選択肢から選ぶ問題",
       icon: "✅",
-      color: "#607d8b",
+      color: theme.colors.info,
       points: "20点",
       examInfo: "複数空欄選択問題",
     },
@@ -120,21 +125,21 @@ export default function CategoryDetailScreen() {
       level: 1 as QuestionDifficulty,
       name: "基礎",
       description: "基本的な問題・基礎レベル",
-      color: "#4CAF50",
+      color: learningColors.completed,
       icon: "⭐",
     },
     {
       level: 2 as QuestionDifficulty,
       name: "標準",
       description: "標準的な問題・中級レベル",
-      color: "#FF9800",
+      color: theme.colors.warning,
       icon: "⭐⭐",
     },
     {
       level: 3 as QuestionDifficulty,
       name: "応用",
       description: "応用問題・上級レベル",
-      color: "#F44336",
+      color: theme.colors.error,
       icon: "⭐⭐⭐",
     },
   ];
@@ -281,7 +286,7 @@ export default function CategoryDetailScreen() {
       name: "第1問：仕訳問題",
       description: "基本的な仕訳15問（各3点）",
       icon: "📝",
-      color: "#4CAF50",
+      color: categoryColors.journal,
       examInfo: "本試験：15問・45点・20分",
       levels: [
         {
@@ -305,7 +310,7 @@ export default function CategoryDetailScreen() {
       name: "第2問：帳簿・補助簿",
       description: "帳簿記入・補助簿・伝票処理",
       icon: "📋",
-      color: "#FF9800",
+      color: categoryColors.ledger,
       examInfo: "本試験：2問・20点・20分",
       levels: [
         {
@@ -329,7 +334,7 @@ export default function CategoryDetailScreen() {
       name: "第3問：決算書作成",
       description: "財務諸表・精算表・試算表",
       icon: "📊",
-      color: "#2196F3",
+      color: categoryColors.trialBalance,
       examInfo: "本試験：1問・35点・20分",
       levels: [
         {
@@ -903,13 +908,13 @@ export default function CategoryDetailScreen() {
   const getDifficultyColor = (difficulty: number) => {
     switch (difficulty) {
       case 1:
-        return "#4CAF50"; // 基礎 - 緑
+        return learningColors.completed; // 基礎 - 緑
       case 2:
-        return "#FF9800"; // 標準 - オレンジ
+        return theme.colors.warning; // 標準 - オレンジ
       case 3:
-        return "#F44336"; // 応用 - 赤
+        return theme.colors.error; // 応用 - 赤
       default:
-        return "#757575"; // その他 - グレー
+        return theme.colors.textSecondary; // その他 - グレー
     }
   };
 
@@ -1021,7 +1026,9 @@ export default function CategoryDetailScreen() {
                   styles.difficultyCard,
                   {
                     borderColor: option.color,
-                    backgroundColor: isSelected ? option.color : "white",
+                    backgroundColor: isSelected
+                      ? option.color
+                      : theme.colors.surface,
                   },
                 ]}
                 onPress={() => toggleDifficultyFilter(option.level)}
@@ -1029,7 +1036,7 @@ export default function CategoryDetailScreen() {
                 <Text
                   style={[
                     styles.difficultyName,
-                    { color: isSelected ? "white" : option.color },
+                    { color: isSelected ? theme.colors.surface : option.color },
                   ]}
                 >
                   {option.name}
@@ -1038,7 +1045,11 @@ export default function CategoryDetailScreen() {
                 <Text
                   style={[
                     styles.difficultyCount,
-                    { color: isSelected ? "white" : "#666" },
+                    {
+                      color: isSelected
+                        ? theme.colors.surface
+                        : theme.colors.textSecondary,
+                    },
                   ]}
                 >
                   {levelQuestions.length}問
@@ -1046,7 +1057,11 @@ export default function CategoryDetailScreen() {
                 <Text
                   style={[
                     styles.difficultyDescription,
-                    { color: isSelected ? "white" : "#999" },
+                    {
+                      color: isSelected
+                        ? theme.colors.surface
+                        : theme.colors.textDisabled,
+                    },
                   ]}
                 >
                   {option.description}
@@ -1075,8 +1090,12 @@ export default function CategoryDetailScreen() {
                 style={[
                   styles.questionTypeCard,
                   {
-                    borderColor: isSelected ? "#2196F3" : "#ddd",
-                    backgroundColor: isSelected ? "#2196F3" : "white",
+                    borderColor: isSelected
+                      ? theme.colors.primary
+                      : theme.colors.border,
+                    backgroundColor: isSelected
+                      ? theme.colors.primary
+                      : theme.colors.surface,
                   },
                 ]}
                 onPress={() => toggleQuestionTypeFilter(option.type)}
@@ -1084,7 +1103,11 @@ export default function CategoryDetailScreen() {
                 <Text
                   style={[
                     styles.questionTypeName,
-                    { color: isSelected ? "white" : "#333" },
+                    {
+                      color: isSelected
+                        ? theme.colors.surface
+                        : theme.colors.text,
+                    },
                   ]}
                 >
                   {option.name}
@@ -1093,7 +1116,11 @@ export default function CategoryDetailScreen() {
                 <Text
                   style={[
                     styles.questionTypeCount,
-                    { color: isSelected ? "white" : "#666" },
+                    {
+                      color: isSelected
+                        ? theme.colors.surface
+                        : theme.colors.textSecondary,
+                    },
                   ]}
                 >
                   {typeQuestions.length}問
@@ -1114,35 +1141,35 @@ export default function CategoryDetailScreen() {
               name: "すべて",
               description: "全ての問題を表示",
               icon: "📚",
-              color: "#757575",
+              color: theme.colors.textSecondary,
             },
             {
               status: "unstudied" as const,
               name: "未学習",
               description: "まだ解いたことのない問題",
               icon: "🆕",
-              color: "#4CAF50",
+              color: theme.colors.success,
             },
             {
               status: "incorrect" as const,
               name: "間違い経験",
               description: "過去に間違えた問題",
               icon: "❌",
-              color: "#F44336",
+              color: theme.colors.error,
             },
             {
               status: "recent_incorrect" as const,
               name: "弱点克服",
               description: "間違いが多い問題順",
               icon: "🔥",
-              color: "#FF5722",
+              color: learningColors.needsReview,
             },
             {
               status: "needs_review" as const,
               name: "復習推奨",
               description: "間違いがあり最近解いていない",
               icon: "🔄",
-              color: "#FF9800",
+              color: theme.colors.warning,
             },
           ].map((option) => {
             const isSelected = filters.learningStatus === option.status;
@@ -1155,7 +1182,9 @@ export default function CategoryDetailScreen() {
                   styles.learningStatusCard,
                   {
                     borderColor: option.color,
-                    backgroundColor: isSelected ? option.color : "white",
+                    backgroundColor: isSelected
+                      ? option.color
+                      : theme.colors.surface,
                   },
                 ]}
                 onPress={() =>
@@ -1166,7 +1195,7 @@ export default function CategoryDetailScreen() {
                 <Text
                   style={[
                     styles.statusName,
-                    { color: isSelected ? "white" : option.color },
+                    { color: isSelected ? theme.colors.surface : option.color },
                   ]}
                 >
                   {option.name}
@@ -1175,7 +1204,11 @@ export default function CategoryDetailScreen() {
                 <Text
                   style={[
                     styles.statusCount,
-                    { color: isSelected ? "white" : "#666" },
+                    {
+                      color: isSelected
+                        ? theme.colors.surface
+                        : theme.colors.textSecondary,
+                    },
                   ]}
                 >
                   {statusQuestions}問
@@ -1183,7 +1216,11 @@ export default function CategoryDetailScreen() {
                 <Text
                   style={[
                     styles.statusDescription,
-                    { color: isSelected ? "white" : "#999" },
+                    {
+                      color: isSelected
+                        ? theme.colors.surface
+                        : theme.colors.textDisabled,
+                    },
                   ]}
                 >
                   {option.description}
@@ -1197,7 +1234,11 @@ export default function CategoryDetailScreen() {
         <TouchableOpacity
           style={[
             styles.excludeRecentOption,
-            { backgroundColor: filters.excludeRecent ? "#2196F3" : "white" },
+            {
+              backgroundColor: filters.excludeRecent
+                ? theme.colors.primary
+                : theme.colors.surface,
+            },
           ]}
           onPress={() =>
             setFilters({ ...filters, excludeRecent: !filters.excludeRecent })
@@ -1206,7 +1247,11 @@ export default function CategoryDetailScreen() {
           <Text
             style={[
               styles.excludeRecentText,
-              { color: filters.excludeRecent ? "white" : "#333" },
+              {
+                color: filters.excludeRecent
+                  ? theme.colors.surface
+                  : theme.colors.text,
+              },
             ]}
           >
             🕒 最近解いた問題を除外する (7日以内)
@@ -1215,7 +1260,11 @@ export default function CategoryDetailScreen() {
           <Text
             style={[
               styles.excludeRecentCount,
-              { color: filters.excludeRecent ? "white" : "#666" },
+              {
+                color: filters.excludeRecent
+                  ? theme.colors.surface
+                  : theme.colors.textSecondary,
+              },
             ]}
           >
             除外対象: {learningStats.recentQuestions.size}問
@@ -1278,14 +1327,20 @@ export default function CategoryDetailScreen() {
               <View style={styles.questionStatus}>
                 {!learningStats.answeredQuestions.has(question.id) && (
                   <View
-                    style={[styles.statusBadge, { backgroundColor: "#4CAF50" }]}
+                    style={[
+                      styles.statusBadge,
+                      { backgroundColor: theme.colors.success },
+                    ]}
                   >
                     <Text style={styles.statusBadgeText}>未学習</Text>
                   </View>
                 )}
                 {learningStats.incorrectQuestions.has(question.id) && (
                   <View
-                    style={[styles.statusBadge, { backgroundColor: "#F44336" }]}
+                    style={[
+                      styles.statusBadge,
+                      { backgroundColor: theme.colors.error },
+                    ]}
                   >
                     <Text style={styles.statusBadgeText}>
                       間違い{learningStats.incorrectQuestions.get(question.id)}
@@ -1295,7 +1350,10 @@ export default function CategoryDetailScreen() {
                 )}
                 {learningStats.recentQuestions.has(question.id) && (
                   <View
-                    style={[styles.statusBadge, { backgroundColor: "#FF9800" }]}
+                    style={[
+                      styles.statusBadge,
+                      { backgroundColor: theme.colors.warning },
+                    ]}
                   >
                     <Text style={styles.statusBadgeText}>最近解答</Text>
                   </View>
@@ -1318,341 +1376,319 @@ export default function CategoryDetailScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  loadingText: {
-    fontSize: 16,
-    color: "#666",
-  },
-  header: {
-    padding: 20,
-    alignItems: "center",
-    position: "relative",
-  },
-  backButton: {
-    position: "absolute",
-    top: 20,
-    left: 20,
-    zIndex: 1,
-  },
-  backButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  categoryIcon: {
-    fontSize: 48,
-    marginBottom: 10,
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "white",
-    marginBottom: 5,
-  },
-  headerSubtitle: {
-    fontSize: 16,
-    color: "white",
-    opacity: 0.9,
-    marginBottom: 10,
-  },
-  questionCount: {
-    fontSize: 14,
-    color: "white",
-    opacity: 0.8,
-  },
-  examInfo: {
-    fontSize: 13,
-    color: "white",
-    opacity: 0.9,
-    marginTop: 5,
-    textAlign: "center",
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 12,
-    color: "#333",
-  },
-  difficultyGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  difficultyCard: {
-    width: "48%",
-    borderRadius: 10,
-    padding: 15,
-    alignItems: "center",
-    marginBottom: 10,
-    borderWidth: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 3,
-  },
-  difficultyName: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 4,
-    textAlign: "center",
-  },
-  difficultyCount: {
-    fontSize: 14,
-    marginBottom: 4,
-    textAlign: "center",
-  },
-  difficultyDescription: {
-    fontSize: 12,
-    textAlign: "center",
-    lineHeight: 16,
-  },
-  questionTypeGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  questionTypeCard: {
-    width: "48%",
-    borderRadius: 10,
-    padding: 12,
-    alignItems: "center",
-    marginBottom: 10,
-    borderWidth: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 3,
-  },
-  questionTypeName: {
-    fontSize: 14,
-    fontWeight: "bold",
-    marginBottom: 4,
-    textAlign: "center",
-  },
-  questionTypeCount: {
-    fontSize: 12,
-    marginBottom: 4,
-    textAlign: "center",
-  },
-  questionTypeDescription: {
-    fontSize: 10,
-    textAlign: "center",
-    lineHeight: 14,
-  },
-  filtersContainer: {
-    padding: 20,
-    paddingTop: 0,
-  },
-  learningStatusGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    marginBottom: 15,
-  },
-  learningStatusCard: {
-    width: "48%",
-    borderRadius: 10,
-    padding: 12,
-    alignItems: "center",
-    marginBottom: 10,
-    borderWidth: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 3,
-  },
-  statusIcon: {
-    fontSize: 20,
-    marginBottom: 4,
-  },
-  statusName: {
-    fontSize: 14,
-    fontWeight: "bold",
-    marginBottom: 4,
-    textAlign: "center",
-  },
-  statusCount: {
-    fontSize: 12,
-    marginBottom: 4,
-    textAlign: "center",
-  },
-  statusDescription: {
-    fontSize: 10,
-    textAlign: "center",
-    lineHeight: 14,
-  },
-  excludeRecentOption: {
-    borderRadius: 10,
-    padding: 12,
-    borderWidth: 2,
-    borderColor: "#2196F3",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 3,
-  },
-  excludeRecentText: {
-    fontSize: 14,
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  excludeRecentCount: {
-    fontSize: 12,
-  },
-  questionsContainer: {
-    padding: 20,
-    paddingTop: 0,
-  },
-  questionListHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  questionStats: {
-    alignItems: "flex-end",
-  },
-  questionStatsText: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 5,
-  },
-  showAllButton: {
-    backgroundColor: "#2196F3",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 15,
-  },
-  showAllButtonText: {
-    color: "white",
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  questionCard: {
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 2,
-  },
-  questionHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  questionId: {
-    fontSize: 12,
-    color: "#666",
-    fontWeight: "bold",
-  },
-  questionTitle: {
-    fontSize: 14,
-    color: "#333",
-    fontWeight: "bold",
-    flex: 1,
-    marginRight: 8,
-  },
-  tagContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    flex: 1,
-    gap: 4,
-    marginRight: 8,
-  },
-  tagBadge: {
-    backgroundColor: "#f0f0f0",
-    borderRadius: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderWidth: 1,
-    borderColor: "#e0e0e0",
-  },
-  tagText: {
-    fontSize: 11,
-    color: "#666",
-    fontWeight: "600",
-  },
-  difficultyBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  difficultyText: {
-    fontSize: 10,
-    color: "white",
-    fontWeight: "bold",
-  },
-  questionText: {
-    fontSize: 14,
-    color: "#333",
-    lineHeight: 20,
-  },
-  showMoreButton: {
-    backgroundColor: "#f5f5f5",
-    borderRadius: 10,
-    padding: 15,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  showMoreText: {
-    fontSize: 14,
-    color: "#666",
-  },
-  noQuestionsContainer: {
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 30,
-    margin: 20,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 2,
-  },
-  noQuestionsText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#666",
-    marginBottom: 8,
-    textAlign: "center",
-  },
-  noQuestionsSubtext: {
-    fontSize: 14,
-    color: "#999",
-    textAlign: "center",
-  },
-  questionStatus: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginTop: 8,
-    gap: 4,
-  },
-  statusBadge: {
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 8,
-    marginRight: 4,
-    marginBottom: 4,
-  },
-  statusBadgeText: {
-    fontSize: 10,
-    color: "white",
-    fontWeight: "bold",
-  },
-});
+// テーマ対応スタイル生成関数
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    loadingContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
+    },
+    loadingText: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+    header: {
+      padding: 20,
+      alignItems: "center",
+      position: "relative",
+    },
+    backButton: {
+      position: "absolute",
+      top: 20,
+      left: 20,
+      zIndex: 1,
+    },
+    backButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    categoryIcon: {
+      fontSize: 48,
+      marginBottom: 10,
+    },
+    headerTitle: {
+      fontSize: 24,
+      fontWeight: "bold",
+      color: theme.colors.surface,
+      marginBottom: 5,
+    },
+    headerSubtitle: {
+      fontSize: 16,
+      color: theme.colors.surface,
+      opacity: 0.9,
+      marginBottom: 10,
+    },
+    questionCount: {
+      fontSize: 14,
+      color: theme.colors.surface,
+      opacity: 0.8,
+    },
+    examInfo: {
+      fontSize: 13,
+      color: theme.colors.surface,
+      opacity: 0.9,
+      marginTop: 5,
+      textAlign: "center",
+    },
+    sectionTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 12,
+      color: theme.colors.text,
+    },
+    difficultyGrid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+    },
+    difficultyCard: {
+      width: "48%",
+      borderRadius: 10,
+      padding: 15,
+      alignItems: "center",
+      marginBottom: 10,
+      borderWidth: 2,
+      ...theme.shadows.medium,
+    },
+    difficultyName: {
+      fontSize: 16,
+      fontWeight: "bold",
+      marginBottom: 4,
+      textAlign: "center",
+    },
+    difficultyCount: {
+      fontSize: 14,
+      marginBottom: 4,
+      textAlign: "center",
+    },
+    difficultyDescription: {
+      fontSize: 12,
+      textAlign: "center",
+      lineHeight: 16,
+    },
+    questionTypeGrid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+    },
+    questionTypeCard: {
+      width: "48%",
+      borderRadius: 10,
+      padding: 12,
+      alignItems: "center",
+      marginBottom: 10,
+      borderWidth: 2,
+      ...theme.shadows.medium,
+    },
+    questionTypeName: {
+      fontSize: 14,
+      fontWeight: "bold",
+      marginBottom: 4,
+      textAlign: "center",
+    },
+    questionTypeCount: {
+      fontSize: 12,
+      marginBottom: 4,
+      textAlign: "center",
+    },
+    questionTypeDescription: {
+      fontSize: 10,
+      textAlign: "center",
+      lineHeight: 14,
+    },
+    filtersContainer: {
+      padding: 20,
+      paddingTop: 0,
+    },
+    learningStatusGrid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+      marginBottom: 15,
+    },
+    learningStatusCard: {
+      width: "48%",
+      borderRadius: 10,
+      padding: 12,
+      alignItems: "center",
+      marginBottom: 10,
+      borderWidth: 2,
+      ...theme.shadows.medium,
+    },
+    statusIcon: {
+      fontSize: 20,
+      marginBottom: 4,
+    },
+    statusName: {
+      fontSize: 14,
+      fontWeight: "bold",
+      marginBottom: 4,
+      textAlign: "center",
+    },
+    statusCount: {
+      fontSize: 12,
+      marginBottom: 4,
+      textAlign: "center",
+    },
+    statusDescription: {
+      fontSize: 10,
+      textAlign: "center",
+      lineHeight: 14,
+    },
+    excludeRecentOption: {
+      borderRadius: 10,
+      padding: 12,
+      borderWidth: 2,
+      borderColor: theme.colors.primary,
+      ...theme.shadows.medium,
+    },
+    excludeRecentText: {
+      fontSize: 14,
+      fontWeight: "bold",
+      marginBottom: 4,
+    },
+    excludeRecentCount: {
+      fontSize: 12,
+    },
+    questionsContainer: {
+      padding: 20,
+      paddingTop: 0,
+    },
+    questionListHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 15,
+    },
+    questionStats: {
+      alignItems: "flex-end",
+    },
+    questionStatsText: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginBottom: 5,
+    },
+    showAllButton: {
+      backgroundColor: theme.colors.primary,
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 15,
+    },
+    showAllButtonText: {
+      color: theme.colors.surface,
+      fontSize: 12,
+      fontWeight: "bold",
+    },
+    questionCard: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 10,
+      padding: 15,
+      marginBottom: 10,
+      ...theme.shadows.small,
+    },
+    questionHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 8,
+    },
+    questionId: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      fontWeight: "bold",
+    },
+    questionTitle: {
+      fontSize: 14,
+      color: theme.colors.text,
+      fontWeight: "bold",
+      flex: 1,
+      marginRight: 8,
+    },
+    tagContainer: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      flex: 1,
+      gap: 4,
+      marginRight: 8,
+    },
+    tagBadge: {
+      backgroundColor: theme.colors.borderLight,
+      borderRadius: 12,
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    tagText: {
+      fontSize: 11,
+      color: theme.colors.textSecondary,
+      fontWeight: "600",
+    },
+    difficultyBadge: {
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 12,
+    },
+    difficultyText: {
+      fontSize: 10,
+      color: theme.colors.surface,
+      fontWeight: "bold",
+    },
+    questionText: {
+      fontSize: 14,
+      color: theme.colors.text,
+      lineHeight: 20,
+    },
+    showMoreButton: {
+      backgroundColor: theme.colors.card,
+      borderRadius: 10,
+      padding: 15,
+      alignItems: "center",
+      marginTop: 10,
+    },
+    showMoreText: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+    },
+    noQuestionsContainer: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 10,
+      padding: 30,
+      margin: 20,
+      alignItems: "center",
+      ...theme.shadows.small,
+    },
+    noQuestionsText: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.textSecondary,
+      marginBottom: 8,
+      textAlign: "center",
+    },
+    noQuestionsSubtext: {
+      fontSize: 14,
+      color: theme.colors.textDisabled,
+      textAlign: "center",
+    },
+    questionStatus: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      marginTop: 8,
+      gap: 4,
+    },
+    statusBadge: {
+      paddingHorizontal: 6,
+      paddingVertical: 2,
+      borderRadius: 8,
+      marginRight: 4,
+      marginBottom: 4,
+    },
+    statusBadgeText: {
+      fontSize: 10,
+      color: theme.colors.surface,
+      fontWeight: "bold",
+    },
+  });

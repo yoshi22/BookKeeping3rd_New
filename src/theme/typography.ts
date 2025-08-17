@@ -8,21 +8,24 @@
 
 import { TextStyle, Platform } from "react-native";
 
+// Font weight type compatible with React Native
+export type FontWeight =
+  | "normal"
+  | "bold"
+  | "100"
+  | "200"
+  | "300"
+  | "400"
+  | "500"
+  | "600"
+  | "700"
+  | "800"
+  | "900";
+
 export interface TypographyVariant {
   fontSize: number;
   lineHeight: number;
-  fontWeight:
-    | "normal"
-    | "bold"
-    | "100"
-    | "200"
-    | "300"
-    | "400"
-    | "500"
-    | "600"
-    | "700"
-    | "800"
-    | "900";
+  fontWeight: FontWeight;
   letterSpacing?: number;
 }
 
@@ -212,7 +215,7 @@ export const japaneseFontFamily = {
 /**
  * プラットフォーム最適化フォント取得
  */
-export const getOptimizedFont = (weight: string = "400") => {
+export const getOptimizedFont = (weight: FontWeight = "400") => {
   if (Platform.OS === "ios") {
     return {
       fontFamily: japaneseFontFamily.ios.primary,
@@ -259,7 +262,7 @@ export class TypographyUtils {
    */
   static getCustomTextStyle(
     variant: keyof typeof typography,
-    customWeight?: string,
+    customWeight?: FontWeight,
     customSpacing?: number,
   ): TextStyle {
     const typographyVariant = typography[variant];

@@ -14,6 +14,7 @@ import {
   ScrollView,
   Modal,
 } from "react-native";
+import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../context/ThemeContext";
 import {
   answerService,
   SubmitAnswerRequest,
@@ -42,6 +43,12 @@ export default function ChoiceAnswerForm({
   onSubmitAnswer,
   showSubmitButton = true,
 }: ChoiceAnswerFormProps) {
+  // Theme system integration for dark mode support
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
+
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -264,7 +271,7 @@ export default function ChoiceAnswerForm({
             <View style={styles.submitButtonContent}>
               <ActivityIndicator
                 size="small"
-                color="white"
+                color={theme.colors.surface}
                 style={styles.loader}
               />
               <Text style={styles.submitButtonText}>送信中...</Text>
@@ -278,199 +285,193 @@ export default function ChoiceAnswerForm({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    margin: 15,
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 15,
-  },
-  dropdownButton: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 16,
-    borderWidth: 2,
-    borderColor: "#e0e0e0",
-    borderRadius: 8,
-    backgroundColor: "white",
-    marginBottom: 20,
-  },
-  dropdownButtonText: {
-    fontSize: 16,
-    color: "#666",
-    flex: 1,
-  },
-  dropdownButtonTextSelected: {
-    color: "#2196F3",
-    fontWeight: "500",
-  },
-  dropdownArrow: {
-    fontSize: 16,
-    color: "#666",
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  dropdownModal: {
-    backgroundColor: "white",
-    borderRadius: 12,
-    padding: 20,
-    margin: 20,
-    maxHeight: "70%",
-    width: "90%",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 10,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 15,
-    textAlign: "center",
-  },
-  modalOptionsContainer: {
-    maxHeight: 300,
-  },
-  modalOptionButton: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f0f0f0",
-  },
-  modalOptionButtonSelected: {
-    backgroundColor: "#e3f2fd",
-  },
-  modalOptionContent: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-  },
-  modalOptionNumber: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#666",
-    marginRight: 8,
-    minWidth: 20,
-  },
-  modalOptionText: {
-    fontSize: 16,
-    color: "#333",
-    flex: 1,
-    lineHeight: 22,
-  },
-  modalOptionTextSelected: {
-    color: "#1976D2",
-    fontWeight: "500",
-  },
-  modalCloseButton: {
-    backgroundColor: "#2196F3",
-    padding: 15,
-    borderRadius: 8,
-    marginTop: 15,
-    alignItems: "center",
-  },
-  modalCloseButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  optionsContainer: {
-    maxHeight: 400,
-  },
-  optionButton: {
-    marginBottom: 12,
-    padding: 16,
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: "#e0e0e0",
-    backgroundColor: "white",
-  },
-  optionButtonSelected: {
-    borderColor: "#2196F3",
-    backgroundColor: "#e3f2fd",
-  },
-  optionContent: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-  },
-  checkbox: {
-    width: 24,
-    height: 24,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: "#999",
-    marginRight: 12,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  checkboxRadio: {
-    borderRadius: 12,
-  },
-  checkboxSelected: {
-    borderColor: "#2196F3",
-    backgroundColor: "#2196F3",
-  },
-  checkmark: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  optionNumber: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#666",
-    marginRight: 8,
-    minWidth: 20,
-  },
-  optionNumberSelected: {
-    color: "#2196F3",
-  },
-  optionText: {
-    fontSize: 16,
-    color: "#333",
-    flex: 1,
-    lineHeight: 22,
-  },
-  optionTextSelected: {
-    color: "#1976D2",
-    fontWeight: "500",
-  },
-  submitButton: {
-    backgroundColor: "#2196F3",
-    padding: 15,
-    borderRadius: 8,
-    marginTop: 20,
-    alignItems: "center",
-  },
-  submitButtonDisabled: {
-    backgroundColor: "#9E9E9E",
-  },
-  submitButtonContent: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  submitButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  loader: {
-    marginRight: 8,
-  },
-});
+// Theme-aware styles function for dark mode support
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.surface,
+      margin: 15,
+      padding: 20,
+      borderRadius: 10,
+      ...theme.shadows.medium,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 15,
+    },
+    dropdownButton: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 16,
+      borderWidth: 2,
+      borderColor: theme.colors.borderLight,
+      borderRadius: 8,
+      backgroundColor: theme.colors.surface,
+      marginBottom: 20,
+    },
+    dropdownButtonText: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+      flex: 1,
+    },
+    dropdownButtonTextSelected: {
+      color: theme.colors.primary,
+      fontWeight: "500",
+    },
+    dropdownArrow: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: theme.colors.background + "80",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    dropdownModal: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 12,
+      padding: 20,
+      margin: 20,
+      maxHeight: "70%",
+      width: "90%",
+      ...theme.shadows.medium,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 15,
+      textAlign: "center",
+    },
+    modalOptionsContainer: {
+      maxHeight: 300,
+    },
+    modalOptionButton: {
+      padding: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+    },
+    modalOptionButtonSelected: {
+      backgroundColor: theme.colors.infoBackground,
+    },
+    modalOptionContent: {
+      flexDirection: "row",
+      alignItems: "flex-start",
+    },
+    modalOptionNumber: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.textSecondary,
+      marginRight: 8,
+      minWidth: 20,
+    },
+    modalOptionText: {
+      fontSize: 16,
+      color: theme.colors.text,
+      flex: 1,
+      lineHeight: 22,
+    },
+    modalOptionTextSelected: {
+      color: theme.colors.primary,
+      fontWeight: "500",
+    },
+    modalCloseButton: {
+      backgroundColor: theme.colors.primary,
+      padding: 15,
+      borderRadius: 8,
+      marginTop: 15,
+      alignItems: "center",
+    },
+    modalCloseButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    optionsContainer: {
+      maxHeight: 400,
+    },
+    optionButton: {
+      marginBottom: 12,
+      padding: 16,
+      borderRadius: 8,
+      borderWidth: 2,
+      borderColor: theme.colors.borderLight,
+      backgroundColor: theme.colors.surface,
+    },
+    optionButtonSelected: {
+      borderColor: theme.colors.primary,
+      backgroundColor: theme.colors.infoBackground,
+    },
+    optionContent: {
+      flexDirection: "row",
+      alignItems: "flex-start",
+    },
+    checkbox: {
+      width: 24,
+      height: 24,
+      borderRadius: 4,
+      borderWidth: 2,
+      borderColor: theme.colors.textSecondary,
+      marginRight: 12,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    checkboxRadio: {
+      borderRadius: 12,
+    },
+    checkboxSelected: {
+      borderColor: theme.colors.primary,
+      backgroundColor: theme.colors.primary,
+    },
+    checkmark: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    optionNumber: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.textSecondary,
+      marginRight: 8,
+      minWidth: 20,
+    },
+    optionNumberSelected: {
+      color: theme.colors.primary,
+    },
+    optionText: {
+      fontSize: 16,
+      color: theme.colors.text,
+      flex: 1,
+      lineHeight: 22,
+    },
+    optionTextSelected: {
+      color: theme.colors.primary,
+      fontWeight: "500",
+    },
+    submitButton: {
+      backgroundColor: theme.colors.primary,
+      padding: 15,
+      borderRadius: 8,
+      marginTop: 20,
+      alignItems: "center",
+    },
+    submitButtonDisabled: {
+      backgroundColor: theme.colors.textDisabled,
+    },
+    submitButtonContent: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    submitButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    loader: {
+      marginRight: 8,
+    },
+  });

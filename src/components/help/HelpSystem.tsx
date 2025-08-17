@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { useTheme, useThemedStyles } from '../../context/ThemeContext';
+import { useTheme, useThemedStyles, type Theme } from "../../context/ThemeContext";
 import { Typography, Heading } from '../ui/Typography';
 import { Button } from '../ui/Button';
 import { Card, CardContent, CardHeader, CardActions } from '../ui/Card';

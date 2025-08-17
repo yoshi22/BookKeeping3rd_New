@@ -72,6 +72,31 @@ export interface MockExamFormProps {
 }
 
 /**
+ * 統合フォームプロパティ - 学習モードと模試モードの両方をサポート
+ */
+export interface UnifiedFormProps extends BaseFormProps {
+  questionText: string;
+
+  // 模試モード固有（オプション）
+  questionNumber?: number;
+  totalQuestions?: number;
+  timeRemaining?: string;
+  explanation?: string;
+  correctAnswer?: any;
+  userAnswer?: any;
+  isCorrect?: boolean;
+  showExplanation?: boolean;
+  onNext?: () => void;
+  onPrevious?: () => void;
+
+  // 統合モード切り替え
+  mode?: "learning" | "mock_exam";
+
+  // 模試モード用の直接送信コールバック
+  onDirectSubmit?: (data: any) => void;
+}
+
+/**
  * 勘定科目オプション
  */
 export interface AccountOption {

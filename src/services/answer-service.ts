@@ -71,23 +71,14 @@ export class AnswerService {
         question,
       );
 
-      console.log(`[DEBUG] submitAnswer - バリデーション結果`, {
-        questionId: request.questionId,
-        validationErrors: validationErrors,
-        answerData: request.answerData,
-      });
+      // バリデーション結果をチェック
 
       // 4. 正解判定
       const isCorrect =
         validationErrors.length === 0 &&
         this.isAnswerCorrect(request.answerData, question);
 
-      console.log(`[DEBUG] submitAnswer - 正解判定結果`, {
-        questionId: request.questionId,
-        validationErrorsLength: validationErrors.length,
-        isCorrect: isCorrect,
-        validationPassed: validationErrors.length === 0,
-      });
+      // 正解判定完了
 
       // 5. セッションID生成（未提供の場合）
       const sessionId = request.sessionId || uuidv4();

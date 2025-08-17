@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useRouter, Stack } from "expo-router";
 import { Screen } from "../../src/components/layout/ResponsiveLayout";
-import { useTheme } from "../../src/context/ThemeContext";
+import { useTheme, type Theme } from "../../src/context/ThemeContext";
 import { MockExamRepository } from "../../src/data/repositories/mock-exam-repository";
 import { QuestionRepository } from "../../src/data/repositories/question-repository";
 import { MockExam, Question } from "../../src/types/models";
@@ -17,11 +17,11 @@ import {
   MockExamService,
   MockExamSession,
 } from "../../src/services/mock-exam-service";
-import JournalEntryForm from "../../src/components/mock-exam/JournalEntryForm";
-import LedgerEntryForm from "../../src/components/mock-exam/LedgerEntryForm";
+import UnifiedJournalEntryForm from "../../src/components/unified/JournalEntryForm";
+import UnifiedLedgerEntryForm from "../../src/components/unified/LedgerEntryForm";
 import TrialBalanceForm from "../../src/components/mock-exam/TrialBalanceForm";
 import { JournalEntry } from "../../src/components/shared/FormTypes";
-import { LedgerEntry } from "../../src/components/mock-exam/LedgerEntryForm";
+import { MockExamLedgerEntry } from "../../src/components/unified/LedgerEntryForm";
 import { TrialBalanceEntry } from "../../src/components/mock-exam/TrialBalanceForm";
 
 interface MockExamAnswer {
@@ -132,10 +132,10 @@ export default function MockExamExecutionScreen() {
     return `${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
   };
 
-  const handleJournalSubmit = async (
-    debits: JournalEntry[],
-    credits: JournalEntry[],
-  ) => {
+  const handleJournalSubmit = async (data: {
+    debits: JournalEntry[];
+    credits: JournalEntry[];
+  }) => {
     if (!session || !session.questions[currentQuestionIndex]) return;
 
     const currentTime = Date.now();
@@ -146,8 +146,8 @@ export default function MockExamExecutionScreen() {
     const currentQuestion = session.questions[currentQuestionIndex];
     const answerData = {
       questionType: "journal" as const,
-      debits,
-      credits,
+      debits: data.debits,
+      credits: data.credits,
     };
 
     try {
@@ -181,7 +181,7 @@ export default function MockExamExecutionScreen() {
     }
   };
 
-  const handleLedgerSubmit = async (entries: LedgerEntry[]) => {
+  const handleLedgerSubmit = async (entries: MockExamLedgerEntry[]) => {
     if (!session || !session.questions[currentQuestionIndex]) return;
 
     const currentTime = Date.now();
@@ -433,11 +433,21 @@ export default function MockExamExecutionScreen() {
     switch (questionType) {
       case "journal":
         return (
-          <JournalEntryForm {...commonProps} onSubmit={handleJournalSubmit} />
+          <UnifiedJournalEntryForm
+            {...commonProps}
+            onDirectSubmit={handleJournalSubmit}
+            mode="mock_exam"
+            questionId={currentQuestion.question_id || currentQuestion.id}
+          />
         );
       case "ledger":
         return (
-          <LedgerEntryForm {...commonProps} onSubmit={handleLedgerSubmit} />
+          <UnifiedLedgerEntryForm
+            {...commonProps}
+            onDirectSubmit={handleLedgerSubmit}
+            mode="mock_exam"
+            questionId={currentQuestion.question_id || currentQuestion.id}
+          />
         );
       case "trial_balance":
         return (

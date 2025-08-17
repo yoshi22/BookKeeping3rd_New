@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from "react-native";
-import { useTheme, useThemedStyles } from "../../context/ThemeContext";
+import { useTheme, useThemedStyles, type Theme } from "../../context/ThemeContext";
 import {
   useAccessibility,
   useFocusManagement,

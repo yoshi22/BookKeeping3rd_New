@@ -3,9 +3,19 @@
  * iPad・Androidタブレット対応のレスポンシブレイアウト
  */
 
-import { useState, useEffect, useCallback, useRef } from "react";
-import { Dimensions, Platform, Animated } from "react-native";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import {
+  Dimensions,
+  Platform,
+  Animated,
+  View,
+  ViewStyle,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { useAccessibility } from "./useAccessibility";
+import { useTheme, type Theme } from "../context/ThemeContext";
 
 export interface DeviceInfo {
   isTablet: boolean;
@@ -26,25 +36,25 @@ export interface TabletLayoutConfig {
     lg: number; // 1366px - デスクトップ
     xl: number; // 1920px - 大画面デスクトップ
   };
-  
+
   // タブレット判定閾値
   tabletMinWidth: number;
   tabletMinHeight: number;
-  
+
   // コンテンツ幅制限
   maxContentWidth: {
     phone: number;
     tablet: number;
     desktop: number;
   };
-  
+
   // サイドバー設定
   sidebar: {
     minWidth: number;
     maxWidth: number;
     collapsedWidth: number;
   };
-  
+
   // グリッド設定
   grid: {
     columns: {
@@ -103,56 +113,68 @@ const defaultConfig: TabletLayoutConfig = {
   },
 };
 
+// デバイス情報計算関数（コンポーネント外部に移動）
+const calculateDeviceInfo = (
+  dimensions: { width: number; height: number },
+  config: TabletLayoutConfig,
+): DeviceInfo => {
+  const { width, height } = dimensions;
+  const isLandscape = width > height;
+  const densityPixelRatio = Dimensions.get("screen").scale;
+
+  // タブレット判定
+  const isTablet =
+    width >= config.tabletMinWidth && height >= config.tabletMinHeight;
+
+  // デバイスタイプ判定
+  let deviceType: DeviceInfo["deviceType"] = "phone";
+  if (width >= config.breakpoints.lg) {
+    deviceType = "desktop";
+  } else if (isTablet) {
+    deviceType = "tablet";
+  }
+
+  // ブレークポイント判定
+  let breakpoint: DeviceInfo["breakpoint"] = "xs";
+  if (width >= config.breakpoints.xl) {
+    breakpoint = "xl";
+  } else if (width >= config.breakpoints.lg) {
+    breakpoint = "lg";
+  } else if (width >= config.breakpoints.md) {
+    breakpoint = "md";
+  } else if (width >= config.breakpoints.sm) {
+    breakpoint = "sm";
+  }
+
+  return {
+    isTablet,
+    isLandscape,
+    screenWidth: width,
+    screenHeight: height,
+    deviceType,
+    breakpoint,
+    densityPixelRatio,
+  };
+};
+
 export function useTabletLayout(config: Partial<TabletLayoutConfig> = {}) {
   const finalConfig = { ...defaultConfig, ...config };
-  const [deviceInfo, setDeviceInfo] = useState<DeviceInfo>(() => 
-    getDeviceInfo(Dimensions.get("window"), finalConfig)
+  const [deviceInfo, setDeviceInfo] = useState<DeviceInfo>(() =>
+    calculateDeviceInfo(Dimensions.get("window"), finalConfig),
   );
   const { isReduceMotionEnabled } = useAccessibility();
+  const { theme } = useTheme();
 
-  // デバイス情報計算
-  const getDeviceInfo = useCallback((
-    dimensions: { width: number; height: number },
-    config: TabletLayoutConfig
-  ): DeviceInfo => {
-    const { width, height } = dimensions;
-    const isLandscape = width > height;
-    const densityPixelRatio = Dimensions.get("screen").scale;
-
-    // タブレット判定
-    const isTablet = width >= config.tabletMinWidth && 
-                    height >= config.tabletMinHeight;
-
-    // デバイスタイプ判定
-    let deviceType: DeviceInfo["deviceType"] = "phone";
-    if (width >= config.breakpoints.lg) {
-      deviceType = "desktop";
-    } else if (isTablet) {
-      deviceType = "tablet";
-    }
-
-    // ブレークポイント判定
-    let breakpoint: DeviceInfo["breakpoint"] = "xs";
-    if (width >= config.breakpoints.xl) {
-      breakpoint = "xl";
-    } else if (width >= config.breakpoints.lg) {
-      breakpoint = "lg";
-    } else if (width >= config.breakpoints.md) {
-      breakpoint = "md";
-    } else if (width >= config.breakpoints.sm) {
-      breakpoint = "sm";
-    }
-
-    return {
-      isTablet,
-      isLandscape,
-      screenWidth: width,
-      screenHeight: height,
-      deviceType,
-      breakpoint,
-      densityPixelRatio,
-    };
-  }, []);
+  // デバイス情報計算（コールバック版）
+  const getDeviceInfo = useCallback(
+    (
+      dimensions: { width: number; height: number },
+      config: TabletLayoutConfig,
+    ): DeviceInfo => {
+      return calculateDeviceInfo(dimensions, config);
+    },
+    [],
+  );
 
   // 画面サイズ変更の監視（オリエンテーション対応）
   useEffect(() => {
@@ -179,42 +201,49 @@ export function useTabletLayout(config: Partial<TabletLayoutConfig> = {}) {
     return {
       container: {
         flex: 1,
-        flexDirection: deviceType === "tablet" && isLandscape ? "row" : "column",
+        flexDirection:
+          deviceType === "tablet" && isLandscape ? "row" : "column",
         maxWidth: deviceType !== "phone" ? maxWidth : undefined,
         alignSelf: deviceType !== "phone" ? "center" : undefined,
         width: "100%",
       },
-      
+
       content: {
         flex: 1,
         paddingHorizontal: deviceType === "phone" ? 16 : 24,
         paddingVertical: deviceType === "phone" ? 16 : 20,
-        maxWidth: deviceType === "phone" ? undefined : maxWidth - (isLandscape ? finalConfig.sidebar.maxWidth : 0),
+        maxWidth:
+          deviceType === "phone"
+            ? undefined
+            : maxWidth - (isLandscape ? finalConfig.sidebar.maxWidth : 0),
       },
-      
+
       sidebar: {
-        width: deviceType === "tablet" && isLandscape 
-          ? finalConfig.sidebar.maxWidth 
-          : deviceType === "desktop" 
-            ? finalConfig.sidebar.maxWidth 
+        width:
+          deviceType === "tablet" && isLandscape
+            ? finalConfig.sidebar.maxWidth
+            : deviceType === "desktop"
+              ? finalConfig.sidebar.maxWidth
+              : 0,
+        minWidth:
+          deviceType === "tablet" && isLandscape
+            ? finalConfig.sidebar.minWidth
             : 0,
-        minWidth: deviceType === "tablet" && isLandscape 
-          ? finalConfig.sidebar.minWidth 
-          : 0,
-        backgroundColor: "#FFFFFF",
-        borderRightWidth: deviceType === "tablet" || deviceType === "desktop" ? 1 : 0,
-        borderRightColor: "#E0E0E0",
+        backgroundColor: theme.colors.surface,
+        borderRightWidth:
+          deviceType === "tablet" || deviceType === "desktop" ? 1 : 0,
+        borderRightColor: theme.colors.border,
         paddingVertical: 20,
         paddingHorizontal: 16,
       },
-      
+
       grid: {
         flexDirection: "row",
         flexWrap: "wrap" as "wrap",
         marginHorizontal: -gutterSize / 2,
         justifyContent: gridColumns === 1 ? "center" : "flex-start",
       },
-      
+
       spacing: {
         xs: 4,
         sm: 8,
@@ -223,7 +252,7 @@ export function useTabletLayout(config: Partial<TabletLayoutConfig> = {}) {
         xl: deviceType === "phone" ? 20 : 32,
         xxl: deviceType === "phone" ? 24 : 40,
       },
-      
+
       typography: {
         scale: deviceType === "phone" ? 1 : deviceType === "tablet" ? 1.1 : 1.2,
         lineHeight: deviceType === "phone" ? 1.4 : 1.5,
@@ -233,50 +262,57 @@ export function useTabletLayout(config: Partial<TabletLayoutConfig> = {}) {
   }, [deviceInfo, finalConfig]);
 
   // グリッドアイテムスタイル生成
-  const getGridItemStyle = useCallback((
-    span: number = 1,
-    offset: number = 0
-  ) => {
-    const { deviceType } = deviceInfo;
-    const gridColumns = finalConfig.grid.columns[deviceType];
-    const gutterSize = finalConfig.grid.gutter[deviceType];
-    const itemWidth = (100 / gridColumns) * span;
-    const offsetWidth = (100 / gridColumns) * offset;
+  const getGridItemStyle = useCallback(
+    (span: number = 1, offset: number = 0) => {
+      const { deviceType } = deviceInfo;
+      const gridColumns = finalConfig.grid.columns[deviceType];
+      const gutterSize = finalConfig.grid.gutter[deviceType];
+      const itemWidth = (100 / gridColumns) * span;
+      const offsetWidth = (100 / gridColumns) * offset;
 
-    return {
-      width: `${itemWidth}%` as any,
-      marginLeft: offset > 0 ? `${offsetWidth}%` as any : 0,
-      paddingHorizontal: gutterSize / 2,
-      marginBottom: gutterSize,
-    };
-  }, [deviceInfo, finalConfig]);
+      return {
+        width: `${itemWidth}%` as any,
+        marginLeft: offset > 0 ? (`${offsetWidth}%` as any) : 0,
+        paddingHorizontal: gutterSize / 2,
+        marginBottom: gutterSize,
+      };
+    },
+    [deviceInfo, finalConfig],
+  );
 
   // ブレークポイント判定ヘルパー
-  const isBreakpoint = useCallback((
-    breakpoint: keyof TabletLayoutConfig["breakpoints"]
-  ): boolean => {
-    return deviceInfo.screenWidth >= finalConfig.breakpoints[breakpoint];
-  }, [deviceInfo.screenWidth, finalConfig.breakpoints]);
+  const isBreakpoint = useCallback(
+    (breakpoint: keyof TabletLayoutConfig["breakpoints"]): boolean => {
+      return deviceInfo.screenWidth >= finalConfig.breakpoints[breakpoint];
+    },
+    [deviceInfo.screenWidth, finalConfig.breakpoints],
+  );
 
   // 条件付きスタイル適用
-  const whenBreakpoint = useCallback(<T>(
-    breakpoint: keyof TabletLayoutConfig["breakpoints"],
-    trueValue: T,
-    falseValue?: T
-  ): T | undefined => {
-    return isBreakpoint(breakpoint) ? trueValue : falseValue;
-  }, [isBreakpoint]);
+  const whenBreakpoint = useCallback(
+    <T extends any>(
+      breakpoint: keyof TabletLayoutConfig["breakpoints"],
+      trueValue: T,
+      falseValue?: T,
+    ): T | undefined => {
+      return isBreakpoint(breakpoint) ? trueValue : falseValue;
+    },
+    [isBreakpoint],
+  );
 
   // デバイス別値取得
-  const getValueByDevice = useCallback(<T>(values: {
-    phone?: T;
-    tablet?: T;
-    desktop?: T;
-    default: T;
-  }): T => {
-    const { deviceType } = deviceInfo;
-    return values[deviceType] ?? values.default;
-  }, [deviceInfo]);
+  const getValueByDevice = useCallback(
+    <T extends any>(values: {
+      phone?: T;
+      tablet?: T;
+      desktop?: T;
+      default: T;
+    }): T => {
+      const { deviceType } = deviceInfo;
+      return values[deviceType] ?? values.default;
+    },
+    [deviceInfo],
+  );
 
   // マスター・ディテールレイアウト判定
   const shouldUseMasterDetail = useCallback((): boolean => {
@@ -285,72 +321,75 @@ export function useTabletLayout(config: Partial<TabletLayoutConfig> = {}) {
 
   // Split View判定
   const shouldUseSplitView = useCallback((): boolean => {
-    return (deviceInfo.deviceType === "tablet" && deviceInfo.isLandscape) ||
-           deviceInfo.deviceType === "desktop";
+    return (
+      (deviceInfo.deviceType === "tablet" && deviceInfo.isLandscape) ||
+      deviceInfo.deviceType === "desktop"
+    );
   }, [deviceInfo]);
 
   // 画面密度による調整値取得
-  const getDensityAdjustedValue = useCallback((baseValue: number): number => {
-    const { densityPixelRatio } = deviceInfo;
-    if (densityPixelRatio <= 1) return baseValue;
-    if (densityPixelRatio <= 2) return baseValue * 1.1;
-    if (densityPixelRatio <= 3) return baseValue * 1.2;
-    return baseValue * 1.3;
-  }, [deviceInfo.densityPixelRatio]);
+  const getDensityAdjustedValue = useCallback(
+    (baseValue: number): number => {
+      const { densityPixelRatio } = deviceInfo;
+      if (densityPixelRatio <= 1) return baseValue;
+      if (densityPixelRatio <= 2) return baseValue * 1.1;
+      if (densityPixelRatio <= 3) return baseValue * 1.2;
+      return baseValue * 1.3;
+    },
+    [deviceInfo.densityPixelRatio],
+  );
 
   // オリエンテーション対応ヘルパー
-  const getOrientationSpecificValue = useCallback(<T>(values: {
-    portrait?: T;
-    landscape?: T;
-    default: T;
-  }): T => {
-    const { isLandscape } = deviceInfo;
-    if (isLandscape && values.landscape !== undefined) {
-      return values.landscape;
-    }
-    if (!isLandscape && values.portrait !== undefined) {
-      return values.portrait;
-    }
-    return values.default;
-  }, [deviceInfo]);
+  const getOrientationSpecificValue = useCallback(
+    <T extends any>(values: { portrait?: T; landscape?: T; default: T }): T => {
+      const { isLandscape } = deviceInfo;
+      if (isLandscape && values.landscape !== undefined) {
+        return values.landscape;
+      }
+      if (!isLandscape && values.portrait !== undefined) {
+        return values.portrait;
+      }
+      return values.default;
+    },
+    [deviceInfo],
+  );
 
   // オリエンテーション変更時のコンテンツ配置取得
   const getOrientationLayout = useCallback(() => {
     const { isTablet, isLandscape, screenWidth, screenHeight } = deviceInfo;
-    
+
     return {
       // メインコンテンツの配置
       contentDirection: isTablet && isLandscape ? "row" : "column",
-      
+
       // サイドバーの表示条件
       shouldShowSidebar: isTablet && isLandscape,
-      
+
       // コンテンツ幅の調整
-      contentWidth: isTablet && isLandscape 
-        ? screenWidth - finalConfig.sidebar.maxWidth 
-        : screenWidth,
-      
+      contentWidth:
+        isTablet && isLandscape
+          ? screenWidth - finalConfig.sidebar.maxWidth
+          : screenWidth,
+
       // ナビゲーションの配置
       navigationPosition: isTablet && isLandscape ? "side" : "bottom",
-      
+
       // カードレイアウトの列数
-      cardColumns: isTablet 
-        ? (isLandscape ? 3 : 2)
-        : 1,
-      
+      cardColumns: isTablet ? (isLandscape ? 3 : 2) : 1,
+
       // スペーシングの調整
       spacing: {
         horizontal: isTablet ? 24 : 16,
         vertical: isTablet ? 20 : 16,
         grid: isTablet ? (isLandscape ? 32 : 24) : 16,
-      }
+      },
     };
   }, [deviceInfo, finalConfig]);
 
   // Safe Area対応のパディング取得
   const getOrientationSafePadding = useCallback(() => {
     const { isLandscape } = deviceInfo;
-    
+
     return {
       top: 0, // Safe Area Provider が管理
       bottom: 0, // Safe Area Provider が管理
@@ -379,8 +418,6 @@ export function useTabletLayout(config: Partial<TabletLayoutConfig> = {}) {
 /**
  * レスポンシブレイアウトコンポーネント
  */
-import React from "react";
-import { View, ViewStyle, Text, TouchableOpacity, ScrollView } from "react-native";
 
 export interface ResponsiveContainerProps {
   children: React.ReactNode;
@@ -401,13 +438,13 @@ export const ResponsiveContainer: React.FC<ResponsiveContainerProps> = ({
   enableSplitView = true,
   enableMasterDetail = true,
 }) => {
-  const { 
-    responsiveStyles, 
-    shouldUseSplitView, 
+  const {
+    responsiveStyles,
+    shouldUseSplitView,
     shouldUseMasterDetail,
     deviceInfo,
     getOrientationLayout,
-    getOrientationSafePadding
+    getOrientationSafePadding,
   } = useTabletLayout();
 
   const useSplitLayout = enableSplitView && shouldUseSplitView();
@@ -427,20 +464,20 @@ export const ResponsiveContainer: React.FC<ResponsiveContainerProps> = ({
     return (
       <View style={[containerStyle, style]}>
         {/* サイドバー */}
-        <View style={[responsiveStyles.sidebar, sidebarStyle]}>
-          {sidebar}
-        </View>
-        
+        <View style={[responsiveStyles.sidebar, sidebarStyle]}>{sidebar}</View>
+
         {/* メインコンテンツ */}
-        <View style={[
-          responsiveStyles.content, 
-          { 
-            width: orientationLayout.contentWidth,
-            paddingHorizontal: orientationLayout.spacing.horizontal,
-            paddingVertical: orientationLayout.spacing.vertical,
-          },
-          contentStyle
-        ]}>
+        <View
+          style={[
+            responsiveStyles.content,
+            {
+              width: orientationLayout.contentWidth,
+              paddingHorizontal: orientationLayout.spacing.horizontal,
+              paddingVertical: orientationLayout.spacing.vertical,
+            },
+            contentStyle,
+          ]}
+        >
           {children}
         </View>
       </View>
@@ -450,14 +487,16 @@ export const ResponsiveContainer: React.FC<ResponsiveContainerProps> = ({
   // モバイルレイアウト（オリエンテーション対応）
   return (
     <View style={[containerStyle, style]}>
-      <View style={[
-        responsiveStyles.content,
-        {
-          paddingHorizontal: orientationLayout.spacing.horizontal,
-          paddingVertical: orientationLayout.spacing.vertical,
-        },
-        contentStyle
-      ]}>
+      <View
+        style={[
+          responsiveStyles.content,
+          {
+            paddingHorizontal: orientationLayout.spacing.horizontal,
+            paddingVertical: orientationLayout.spacing.vertical,
+          },
+          contentStyle,
+        ]}
+      >
         {children}
       </View>
     </View>
@@ -482,13 +521,15 @@ export const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
   const orientationLayout = getOrientationLayout();
 
   return (
-    <View style={[
-      responsiveStyles.grid, 
-      { 
-        marginHorizontal: -orientationLayout.spacing.grid / 2,
-      },
-      style
-    ]}>
+    <View
+      style={[
+        responsiveStyles.grid,
+        {
+          marginHorizontal: -orientationLayout.spacing.grid / 2,
+        },
+        style,
+      ]}
+    >
       {children}
     </View>
   );
@@ -502,19 +543,21 @@ export const ResponsiveGridItem: React.FC<ResponsiveGridProps> = ({
 }) => {
   const { getGridItemStyle, getOrientationLayout } = useTabletLayout();
   const orientationLayout = getOrientationLayout();
-  
+
   // オリエンテーション対応のスパン計算
   const effectiveSpan = Math.min(itemSpan, orientationLayout.cardColumns);
 
   return (
-    <View style={[
-      getGridItemStyle(effectiveSpan, itemOffset),
-      {
-        paddingHorizontal: orientationLayout.spacing.grid / 2,
-        marginBottom: orientationLayout.spacing.grid,
-      },
-      style
-    ]}>
+    <View
+      style={[
+        getGridItemStyle(effectiveSpan, itemOffset),
+        {
+          paddingHorizontal: orientationLayout.spacing.grid / 2,
+          marginBottom: orientationLayout.spacing.grid,
+        },
+        style,
+      ]}
+    >
       {children}
     </View>
   );
@@ -541,10 +584,10 @@ export const OrientationAwareView: React.FC<OrientationAwareViewProps> = ({
   phoneStyle,
 }) => {
   const { deviceInfo, getOrientationSpecificValue } = useTabletLayout();
-  
+
   // デバイスタイプ別スタイル
   const deviceStyle = deviceInfo.isTablet ? tabletStyle : phoneStyle;
-  
+
   // オリエンテーション別スタイル
   const orientationStyle = getOrientationSpecificValue({
     portrait: portraitStyle,
@@ -552,11 +595,7 @@ export const OrientationAwareView: React.FC<OrientationAwareViewProps> = ({
     default: {},
   });
 
-  return (
-    <View style={[style, deviceStyle, orientationStyle]}>
-      {children}
-    </View>
-  );
+  return <View style={[style, deviceStyle, orientationStyle]}>{children}</View>;
 };
 
 /**
@@ -583,7 +622,7 @@ export const RotationAwareContainer: React.FC<RotationAwareContainerProps> = ({
   // オリエンテーション変更時のアニメーション
   React.useEffect(() => {
     if (!animateOnRotation) return;
-    
+
     if (previousOrientation.current !== deviceInfo.isLandscape) {
       // フェードアウト→フェードイン
       Animated.sequence([
@@ -598,7 +637,7 @@ export const RotationAwareContainer: React.FC<RotationAwareContainerProps> = ({
           useNativeDriver: true,
         }),
       ]).start();
-      
+
       previousOrientation.current = deviceInfo.isLandscape;
     }
   }, [deviceInfo.isLandscape, fadeAnim, animationDuration, animateOnRotation]);
@@ -636,67 +675,77 @@ export const MasterDetailContainer: React.FC<MasterDetailContainerProps> = ({
   enableSplitView = true,
   showMasterInPortrait = false,
 }) => {
-  const { 
-    deviceInfo, 
-    shouldUseSplitView, 
+  const {
+    deviceInfo,
+    shouldUseSplitView,
     getOrientationLayout,
-    config: { sidebar }
+    config: { sidebar },
   } = useTabletLayout();
-  
+  const { theme } = useTheme();
+
   const orientationLayout = getOrientationLayout();
-  const shouldShowSplit = enableSplitView && 
+  const shouldShowSplit =
+    enableSplitView &&
     (shouldUseSplitView() || (showMasterInPortrait && deviceInfo.isTablet));
-  
+
   const finalMasterWidth = masterWidth || sidebar.maxWidth;
 
   if (shouldShowSplit && masterComponent) {
     return (
-      <View style={[
-        {
-          flex: 1,
-          flexDirection: "row",
-        },
-        style
-      ]}>
-        {/* Master Panel */}
-        <View style={[
+      <View
+        style={[
           {
-            width: finalMasterWidth,
-            borderRightWidth: 1,
-            borderRightColor: "#E0E0E0",
-            backgroundColor: "#FAFAFA",
+            flex: 1,
+            flexDirection: "row",
           },
-          masterStyle
-        ]}>
+          style,
+        ]}
+      >
+        {/* Master Panel */}
+        <View
+          style={[
+            {
+              width: finalMasterWidth,
+              borderRightWidth: 1,
+              borderRightColor: theme.colors.border,
+              backgroundColor: theme.colors.background,
+            },
+            masterStyle,
+          ]}
+        >
           {masterTitle && (
-            <View style={{
-              padding: 16,
-              borderBottomWidth: 1,
-              borderBottomColor: "#E0E0E0",
-              backgroundColor: "#FFFFFF",
-            }}>
-              <Text style={{
-                fontSize: 18,
-                fontWeight: "600",
-                color: "#333",
-              }}>
+            <View
+              style={{
+                padding: 16,
+                borderBottomWidth: 1,
+                borderBottomColor: theme.colors.border,
+                backgroundColor: theme.colors.surface,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: "600",
+                  color: theme.colors.text,
+                }}
+              >
                 {masterTitle}
               </Text>
             </View>
           )}
-          <View style={{ flex: 1 }}>
-            {masterComponent}
-          </View>
+          <View style={{ flex: 1 }}>{masterComponent}</View>
         </View>
-        
+
         {/* Detail Panel */}
-        <View style={[
-          {
-            flex: 1,
-            backgroundColor: "#FFFFFF",
-          },
-          detailStyle
-        ]}>
+        <View
+          style={[
+            {
+              flex: 1,
+              backgroundColor: theme.colors.surface,
+            },
+            detailStyle,
+          ]}
+        >
           {children}
         </View>
       </View>
@@ -704,11 +753,7 @@ export const MasterDetailContainer: React.FC<MasterDetailContainerProps> = ({
   }
 
   // モバイルレイアウト（シングルペイン）
-  return (
-    <View style={[{ flex: 1 }, style]}>
-      {children}
-    </View>
-  );
+  return <View style={[{ flex: 1 }, style]}>{children}</View>;
 };
 
 /**
@@ -732,25 +777,30 @@ export const SplitViewNavigation: React.FC<SplitViewNavigationProps> = ({
   style,
 }) => {
   const { deviceInfo, shouldUseSplitView } = useTabletLayout();
-  
+  const { theme } = useTheme();
+
   const shouldShowSideNav = shouldUseSplitView() && navigationItems.length > 0;
 
   if (shouldShowSideNav) {
     return (
-      <View style={[
-        {
-          flex: 1,
-          flexDirection: "row",
-        },
-        style
-      ]}>
+      <View
+        style={[
+          {
+            flex: 1,
+            flexDirection: "row",
+          },
+          style,
+        ]}
+      >
         {/* Side Navigation */}
-        <View style={{
-          width: 280,
-          backgroundColor: "#F8F9FA",
-          borderRightWidth: 1,
-          borderRightColor: "#E0E0E0",
-        }}>
+        <View
+          style={{
+            width: 280,
+            backgroundColor: theme.colors.background,
+            borderRightWidth: 1,
+            borderRightColor: theme.colors.border,
+          }}
+        >
           <ScrollView style={{ flex: 1 }}>
             {navigationItems.map((item) => (
               <TouchableOpacity
@@ -759,48 +809,50 @@ export const SplitViewNavigation: React.FC<SplitViewNavigationProps> = ({
                   flexDirection: "row",
                   alignItems: "center",
                   padding: 16,
-                  backgroundColor: item.active ? "#E3F2FD" : "transparent",
+                  backgroundColor: item.active
+                    ? theme.colors.primaryLight
+                    : "transparent",
                   borderLeftWidth: item.active ? 4 : 0,
-                  borderLeftColor: "#2196F3",
+                  borderLeftColor: theme.colors.primary,
                 }}
                 onPress={item.onPress}
                 accessibilityLabel={item.title}
                 accessibilityRole="button"
               >
                 {item.icon && (
-                  <Text style={{
-                    fontSize: 20,
-                    marginRight: 12,
-                  }}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      marginRight: 12,
+                    }}
+                  >
                     {item.icon}
                   </Text>
                 )}
-                <Text style={{
-                  fontSize: 16,
-                  color: item.active ? "#1976D2" : "#333",
-                  fontWeight: item.active ? "600" : "normal",
-                }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: item.active
+                      ? theme.colors.primary
+                      : theme.colors.text,
+                    fontWeight: item.active ? "600" : "normal",
+                  }}
+                >
                   {item.title}
                 </Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
-        
+
         {/* Content Area */}
-        <View style={{ flex: 1 }}>
-          {children}
-        </View>
+        <View style={{ flex: 1 }}>{children}</View>
       </View>
     );
   }
 
   // モバイルレイアウト
-  return (
-    <View style={[{ flex: 1 }, style]}>
-      {children}
-    </View>
-  );
+  return <View style={[{ flex: 1 }, style]}>{children}</View>;
 };
 
 ResponsiveContainer.displayName = "ResponsiveContainer";

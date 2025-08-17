@@ -18,12 +18,7 @@ import {
 } from "../../src/services/statistics-service";
 import { Screen } from "../../src/components/layout/ResponsiveLayout";
 import { setupDatabase } from "../../src/data/migrations";
-import {
-  useTheme,
-  useThemedStyles,
-  useColors,
-  useDynamicColors,
-} from "../../src/context/ThemeContext";
+import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../../src/context/ThemeContext";
 
 export default function StatsScreen() {
   // Phase 4: ダークモード対応のテーマシステム
@@ -44,12 +39,12 @@ export default function StatsScreen() {
 
   // カテゴリ表示設定
   const categoryDisplayConfig = {
-    journal: { icon: "📝", color: "#2f95dc" },
-    ledger: { icon: "📋", color: "#ff6b35" },
-    trial_balance: { icon: "📊", color: "#4cd964" },
-    financial_statement: { icon: "📈", color: "#9c27b0" },
-    voucher_entry: { icon: "📄", color: "#795548" },
-    multiple_blank_choice: { icon: "✅", color: "#607d8b" },
+    journal: { icon: "📝", color: theme.categoryColors.journal },
+    ledger: { icon: "📋", color: theme.categoryColors.ledger },
+    trial_balance: { icon: "📊", color: theme.categoryColors.trialBalance },
+    financial_statement: { icon: "📈", color: theme.colors.secondary },
+    voucher_entry: { icon: "📄", color: theme.colors.warning },
+    multiple_blank_choice: { icon: "✅", color: theme.colors.info },
   };
 
   // データベース初期化確認
@@ -392,7 +387,7 @@ export default function StatsScreen() {
 }
 
 const createStyles = (
-  theme: typeof import("../../src/context/ThemeContext").Theme,
+  theme: Theme,
 ) =>
   StyleSheet.create({
     container: {

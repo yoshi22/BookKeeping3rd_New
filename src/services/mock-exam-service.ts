@@ -29,6 +29,7 @@ export interface MockExamSession {
   currentQuestionIndex: number;
   questions: Array<Question & MockExamQuestion>;
   answers: Map<string, CBTAnswerData>;
+  answerTimes: Map<string, number>; // 各問題の解答時間（秒）
   sectionProgress: {
     section1: { completed: number; total: number };
     section2: { completed: number; total: number };
@@ -129,6 +130,7 @@ export class MockExamService {
         currentQuestionIndex: 0,
         questions: examQuestions,
         answers: new Map(),
+        answerTimes: new Map(),
         sectionProgress,
       };
 
@@ -282,7 +284,7 @@ export class MockExamService {
         isCorrect,
         userAnswer,
         correctAnswer: JSON.parse(question.correct_answer_json),
-        answerTime: 0, // TODO: 実際の解答時間を記録
+        answerTime: session.answerTimes.get(question.question_id) || 0, // 解答時間記録
       });
     }
 

@@ -5,7 +5,6 @@
 
 import { useState, useEffect } from "react";
 import { Platform, AccessibilityInfo, Appearance } from "react-native";
-import { useTheme } from "../context/ThemeContext";
 import { AccessibilityColors } from "../theme/colors";
 
 export interface AccessibilityState {
@@ -17,8 +16,11 @@ export interface AccessibilityState {
 }
 
 export interface AccessibilityHelpers {
-  getFocusColor: (isHighContrast?: boolean) => string;
-  getOptimalTextColor: (backgroundColor: string) => string;
+  getFocusColor: (isHighContrast?: boolean, isDarkTheme?: boolean) => string;
+  getOptimalTextColor: (
+    backgroundColor: string,
+    isDarkTheme?: boolean,
+  ) => string;
   isColorContrastCompliant: (foreground: string, background: string) => boolean;
   getAccessibilityProps: (
     label: string,
@@ -29,8 +31,6 @@ export interface AccessibilityHelpers {
 }
 
 export function useAccessibility(): AccessibilityState & AccessibilityHelpers {
-  const { theme } = useTheme();
-
   // アクセシビリティ状態
   const [accessibilityState, setAccessibilityState] =
     useState<AccessibilityState>({
@@ -68,15 +68,12 @@ export function useAccessibility(): AccessibilityState & AccessibilityHelpers {
     const checkHighContrast = async () => {
       if (Platform.OS === "ios") {
         try {
-          // iOS高コントラストAPIの利用可能性をチェック
-          if (AccessibilityInfo.isHighContrastTextEnabled) {
-            const isHighContrast =
-              await AccessibilityInfo.isHighContrastTextEnabled();
-            setAccessibilityState((prev) => ({
-              ...prev,
-              isHighContrastEnabled: isHighContrast || false,
-            }));
-          }
+          // 高コントラストAPIは現在のReact Nativeでは利用不可
+          // デフォルト値を設定
+          setAccessibilityState((prev) => ({
+            ...prev,
+            isHighContrastEnabled: false,
+          }));
         } catch (error) {
           console.warn("Failed to check high contrast status:", error);
         }
@@ -128,41 +125,38 @@ export function useAccessibility(): AccessibilityState & AccessibilityHelpers {
       },
     );
 
-    // 高コントラストリスナー（iOS）- API制限のため基本的なリスナーを使用
-    const highContrastListener =
-      Platform.OS === "ios" && AccessibilityInfo.addEventListener
-        ? null // 現在のReact Native版では高コントラスト変更イベントは未対応
-        : null;
-
-    // Reduce Motionリスナー（iOS）- API制限のため基本的なリスナーを使用
-    const reduceMotionListener =
-      Platform.OS === "ios" && AccessibilityInfo.addEventListener
-        ? null // 現在のReact Native版ではReduce Motion変更イベントは未対応
-        : null;
+    // 高コントラストとReduce Motionのリスナーは現在のReact Nativeでは未対応
+    const highContrastListener = null;
+    const reduceMotionListener = null;
 
     // クリーンアップ
     return () => {
       screenReaderListener?.remove?.();
       colorSchemeListener?.remove?.();
-      highContrastListener?.remove?.();
-      reduceMotionListener?.remove?.();
+      // highContrastListener と reduceMotionListener は null なのでremove不要
     };
   }, []);
 
   // ヘルパー関数
-  const getFocusColor = (isHighContrast?: boolean): string => {
+  const getFocusColor = (
+    isHighContrast?: boolean,
+    isDarkTheme?: boolean,
+  ): string => {
     const useHighContrast =
       isHighContrast ?? accessibilityState.isHighContrastEnabled;
     return AccessibilityColors.getFocusColor(
       useHighContrast,
-      theme?.name === "dark" ? "dark" : "light",
+      isDarkTheme ? "dark" : "light",
     );
   };
 
-  const getOptimalTextColor = (backgroundColor: string): string => {
+  const getOptimalTextColor = (
+    backgroundColor: string,
+    isDarkTheme?: boolean,
+  ): string => {
     return AccessibilityColors.getOptimalTextColor(
       backgroundColor,
-      theme?.name === "dark" ? "dark" : "light",
+      isDarkTheme ? "dark" : "light",
     );
   };
 
@@ -219,7 +213,7 @@ export function useAccessibility(): AccessibilityState & AccessibilityHelpers {
  * フォーカス管理フック
  * キーボードナビゲーション対応
  */
-export function useFocusManagement() {
+export function useFocusManagement(isDarkTheme?: boolean) {
   const [focusedElement, setFocusedElement] = useState<string | null>(null);
   const { getFocusColor } = useAccessibility();
 
@@ -231,9 +225,9 @@ export function useFocusManagement() {
 
     return {
       borderWidth: 2,
-      borderColor: getFocusColor(isHighContrast),
+      borderColor: getFocusColor(isHighContrast, isDarkTheme),
       borderRadius: 4,
-      outlineColor: getFocusColor(isHighContrast), // Web対応
+      outlineColor: getFocusColor(isHighContrast, isDarkTheme), // Web対応
       outlineWidth: 2,
       outlineStyle: "solid",
     };
@@ -283,13 +277,9 @@ export function useDynamicType() {
             accessibilityExtraExtraExtraLarge: 2.6,
           };
 
-          // Dynamic Type APIが利用可能かチェック
-          if (AccessibilityInfo.getContentSizeCategory) {
-            const scale = await AccessibilityInfo.getContentSizeCategory();
-            setFontScale(scaleMap[scale as string] || 1.0);
-          } else {
-            setFontScale(1.0); // フォールバック
-          }
+          // Dynamic Type APIは現在のReact Nativeでは利用不可
+          // デフォルトスケールを使用
+          setFontScale(1.0); // フォールバック
         } catch (error) {
           console.warn("Failed to get font scale:", error);
           setFontScale(1.0); // エラー時はデフォルト

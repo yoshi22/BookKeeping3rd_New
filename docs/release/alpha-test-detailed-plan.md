@@ -27,7 +27,7 @@
 
 #### 事前準備 ✅ 開発者作業
 
-- [ ] **Apple Developer Program登録** ($99/年)
+- [☑️] **Apple Developer Program登録** ($99/年)
   - Individual または Organization アカウント選択
   - 銀行・税務情報登録
   - 契約・法務条項同意

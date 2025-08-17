@@ -161,8 +161,17 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       brandColors,
       isSystemMode,
       systemTheme,
+      customVariant,
     }),
-    [themeMode, activeTheme, isDark, colors, isSystemMode, systemTheme],
+    [
+      themeMode,
+      activeTheme,
+      isDark,
+      colors,
+      isSystemMode,
+      systemTheme,
+      customVariant,
+    ],
   );
 
   // システムのカラースキーム変更を監視
@@ -258,6 +267,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  // カスタムテーマ設定（Phase 4新機能）
+  const setCustomVariant = useCallback(async (variant: CustomThemeVariant) => {
+    try {
+      setCustomVariantState(variant);
+      await AsyncStorage.setItem(CUSTOM_VARIANT_STORAGE_KEY, variant);
+    } catch (error) {
+      console.error("[ThemeProvider] カスタムテーマ設定保存エラー:", error);
+    }
+  }, []);
+
   // テーマ切り替え（Phase 4拡張：system モードを含む）
   const toggleTheme = useCallback(() => {
     const nextMode: ThemeMode =
@@ -306,6 +325,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       getStatusBarStyle,
       getOptimalTextColor,
 
+      // カスタムテーマ機能
+      customVariant,
+      setCustomVariant,
+
       // アクセシビリティ対応
       isHighContrastMode,
       setHighContrastMode,
@@ -321,6 +344,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       getThemedColor,
       getStatusBarStyle,
       getOptimalTextColor,
+      customVariant,
+      setCustomVariant,
       isHighContrastMode,
       setHighContrastMode,
     ],
@@ -433,7 +458,7 @@ export function useDynamicColors() {
  */
 export function useAccessibleStyles() {
   const { theme, isHighContrastMode, getOptimalTextColor } = useTheme();
-  const { isReduceMotionEnabled, isLargeTextEnabled } = useAccessibility();
+  const { isReduceMotionEnabled } = useAccessibility();
 
   return {
     // 高コントラストモード対応（Phase 4改善）
@@ -446,7 +471,9 @@ export function useAccessibleStyles() {
 
     // 大きなフォントサイズ対応（Phase 4改善）
     getScaledFontSize: (baseFontSize: number, scale: number = 1) => {
-      const adaptiveScale = isLargeTextEnabled ? 1.3 : 1;
+      // システムのフォントスケールは現在のReact Nativeでは直接取得困難
+      // デフォルトでは追加スケーリングなしとする
+      const adaptiveScale = 1;
       return Math.round(baseFontSize * scale * adaptiveScale);
     },
 

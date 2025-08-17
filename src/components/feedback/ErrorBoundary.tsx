@@ -1,16 +1,17 @@
 /**
  * エラーバウンダリとエラーハンドリング
  * 簿記3級問題集アプリ - Step 5.2: UX最適化
- * 
+ *
  * ユーザーフレンドリーなエラー対応システム
  */
 
-import React, { Component, ReactNode } from 'react';
-import { View, ScrollView } from 'react-native';
-import { Typography, Heading } from '../ui/Typography';
-import { Button } from '../ui/Button';
-import { Card, CardContent, CardActions } from '../ui/Card';
-import { Container } from '../layout/ResponsiveLayout';
+import React, { Component, ReactNode } from "react";
+import { View, ScrollView } from "react-native";
+import { Typography, Heading } from "../ui/Typography";
+import { Button } from "../ui/Button";
+import { Card, CardContent, CardActions } from "../ui/Card";
+import { Container } from "../layout/ResponsiveLayout";
+import { useTheme, type Theme } from "../../context/ThemeContext";
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -24,7 +25,10 @@ interface ErrorBoundaryProps {
   onError?: (error: Error, errorInfo: any) => void;
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = {
@@ -67,7 +71,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
     // 開発環境でのみコンソール出力
     if (__DEV__) {
-      console.error('ErrorBoundary caught an error:', errorLog);
+      console.error("ErrorBoundary caught an error:", errorLog);
     }
 
     // 本番環境では、ローカルストレージに保存（分析用）
@@ -76,18 +80,23 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   private saveErrorToStorage = async (errorLog: any) => {
     try {
-      const AsyncStorage = await import('@react-native-async-storage/async-storage');
-      const existingLogs = await AsyncStorage.default.getItem('error_logs');
+      const AsyncStorage = await import(
+        "@react-native-async-storage/async-storage"
+      );
+      const existingLogs = await AsyncStorage.default.getItem("error_logs");
       const logs = existingLogs ? JSON.parse(existingLogs) : [];
-      
+
       logs.push(errorLog);
-      
+
       // 最新100件のみ保持
       const recentLogs = logs.slice(-100);
-      
-      await AsyncStorage.default.setItem('error_logs', JSON.stringify(recentLogs));
+
+      await AsyncStorage.default.setItem(
+        "error_logs",
+        JSON.stringify(recentLogs),
+      );
     } catch (error) {
-      console.error('Failed to save error log:', error);
+      console.error("Failed to save error log:", error);
     }
   };
 
@@ -112,11 +121,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       }
 
       // デフォルトエラー画面
-      return <DefaultErrorScreen 
-        error={this.state.error!}
-        onReset={this.handleReset}
-        onReload={this.handleReload}
-      />;
+      return (
+        <DefaultErrorScreen
+          error={this.state.error!}
+          onReset={this.handleReset}
+          onReload={this.handleReload}
+        />
+      );
     }
 
     return this.props.children;
@@ -132,50 +143,58 @@ interface DefaultErrorScreenProps {
   onReload: () => void;
 }
 
-function DefaultErrorScreen({ error, onReset, onReload }: DefaultErrorScreenProps) {
-  const isNetworkError = error.message.includes('Network') || error.message.includes('fetch');
-  const isStorageError = error.message.includes('Storage') || error.message.includes('AsyncStorage');
-  const isRenderError = error.message.includes('render') || error.message.includes('component');
+function DefaultErrorScreen({
+  error,
+  onReset,
+  onReload,
+}: DefaultErrorScreenProps) {
+  const { theme } = useTheme();
+  const isNetworkError =
+    error.message.includes("Network") || error.message.includes("fetch");
+  const isStorageError =
+    error.message.includes("Storage") || error.message.includes("AsyncStorage");
+  const isRenderError =
+    error.message.includes("render") || error.message.includes("component");
 
   const getErrorMessage = () => {
     if (isNetworkError) {
-      return '通信エラーが発生しました。インターネット接続を確認してください。';
+      return "通信エラーが発生しました。インターネット接続を確認してください。";
     }
     if (isStorageError) {
-      return 'データの読み込みに失敗しました。アプリを再起動してください。';
+      return "データの読み込みに失敗しました。アプリを再起動してください。";
     }
     if (isRenderError) {
-      return '画面の表示に問題が発生しました。';
+      return "画面の表示に問題が発生しました。";
     }
-    return '予期しないエラーが発生しました。';
+    return "予期しないエラーが発生しました。";
   };
 
   const getErrorIcon = () => {
-    if (isNetworkError) return '🌐';
-    if (isStorageError) return '💾';
-    if (isRenderError) return '🖥️';
-    return '⚠️';
+    if (isNetworkError) return "🌐";
+    if (isStorageError) return "💾";
+    if (isRenderError) return "🖥️";
+    return "⚠️";
   };
 
   const getSuggestedActions = () => {
-    const actions = ['アプリを再試行する'];
-    
+    const actions = ["アプリを再試行する"];
+
     if (isNetworkError) {
-      actions.push('インターネット接続を確認する', 'オフライン機能を使用する');
+      actions.push("インターネット接続を確認する", "オフライン機能を使用する");
     }
     if (isStorageError) {
-      actions.push('アプリを再起動する', 'デバイスの容量を確認する');
+      actions.push("アプリを再起動する", "デバイスの容量を確認する");
     }
-    
+
     return actions;
   };
 
   return (
-    <Container style={{ flex: 1, justifyContent: 'center' }}>
+    <Container style={{ flex: 1, justifyContent: "center" }}>
       <Card variant="elevated">
         <CardContent>
           {/* エラーアイコン */}
-          <View style={{ alignItems: 'center', marginBottom: 24 }}>
+          <View style={{ alignItems: "center", marginBottom: 24 }}>
             <Typography variant="h1" align="center">
               {getErrorIcon()}
             </Typography>
@@ -187,7 +206,12 @@ function DefaultErrorScreen({ error, onReset, onReload }: DefaultErrorScreenProp
           </Heading>
 
           {/* エラーメッセージ */}
-          <Typography variant="body1" align="center" color="secondary" style={{ marginBottom: 24 }}>
+          <Typography
+            variant="body1"
+            align="center"
+            color="secondary"
+            style={{ marginBottom: 24 }}
+          >
             {getErrorMessage()}
           </Typography>
 
@@ -197,7 +221,12 @@ function DefaultErrorScreen({ error, onReset, onReload }: DefaultErrorScreenProp
               次の操作をお試しください：
             </Typography>
             {getSuggestedActions().map((action, index) => (
-              <Typography key={index} variant="body2" color="secondary" style={{ marginBottom: 4 }}>
+              <Typography
+                key={index}
+                variant="body2"
+                color="secondary"
+                style={{ marginBottom: 4 }}
+              >
                 • {action}
               </Typography>
             ))}
@@ -209,8 +238,18 @@ function DefaultErrorScreen({ error, onReset, onReload }: DefaultErrorScreenProp
               <Typography variant="caption" color="error">
                 開発モード - エラー詳細:
               </Typography>
-              <ScrollView style={{ maxHeight: 100, backgroundColor: '#f5f5f5', padding: 8, marginTop: 8 }}>
-                <Typography variant="caption" style={{ fontFamily: 'monospace' }}>
+              <ScrollView
+                style={{
+                  maxHeight: 100,
+                  backgroundColor: theme.colors.background,
+                  padding: 8,
+                  marginTop: 8,
+                }}
+              >
+                <Typography
+                  variant="caption"
+                  style={{ fontFamily: "monospace" }}
+                >
                   {error.message}
                 </Typography>
               </ScrollView>
@@ -219,11 +258,7 @@ function DefaultErrorScreen({ error, onReset, onReload }: DefaultErrorScreenProp
         </CardContent>
 
         <CardActions justify="space-between">
-          <Button
-            title="再試行"
-            variant="primary"
-            onPress={onReset}
-          />
+          <Button title="再試行" variant="primary" onPress={onReset} />
           <Button
             title="アプリ再読み込み"
             variant="outline"
@@ -242,11 +277,7 @@ function DefaultErrorScreen({ error, onReset, onReload }: DefaultErrorScreenProp
 // ネットワークエラー用
 export function NetworkErrorBoundary({ children }: { children: ReactNode }) {
   return (
-    <ErrorBoundary
-      fallback={(error) => (
-        <NetworkErrorFallback error={error} />
-      )}
-    >
+    <ErrorBoundary fallback={(error) => <NetworkErrorFallback error={error} />}>
       {children}
     </ErrorBoundary>
   );
@@ -254,11 +285,17 @@ export function NetworkErrorBoundary({ children }: { children: ReactNode }) {
 
 function NetworkErrorFallback({ error }: { error: Error }) {
   return (
-    <Container style={{ flex: 1, justifyContent: 'center' }}>
+    <Container style={{ flex: 1, justifyContent: "center" }}>
       <Card variant="outlined">
         <CardContent>
-          <Typography variant="h2" align="center">🌐</Typography>
-          <Heading level={4} align="center" style={{ marginTop: 16, marginBottom: 12 }}>
+          <Typography variant="h2" align="center">
+            🌐
+          </Typography>
+          <Heading
+            level={4}
+            align="center"
+            style={{ marginTop: 16, marginBottom: 12 }}
+          >
             接続エラー
           </Heading>
           <Typography variant="body2" align="center" color="secondary">
@@ -276,11 +313,7 @@ function NetworkErrorFallback({ error }: { error: Error }) {
 // データエラー用
 export function DataErrorBoundary({ children }: { children: ReactNode }) {
   return (
-    <ErrorBoundary
-      fallback={(error) => (
-        <DataErrorFallback error={error} />
-      )}
-    >
+    <ErrorBoundary fallback={(error) => <DataErrorFallback error={error} />}>
       {children}
     </ErrorBoundary>
   );
@@ -292,23 +325,34 @@ function DataErrorFallback({ error }: { error: Error }) {
       // データベースの再初期化
       // Database reset removed - DatabaseService not available
       // await DatabaseService.default.resetDatabase();
-      
+
       // アプリの再読み込み
       window.location.reload();
     } catch (resetError) {
-      console.error('Failed to reset data:', resetError);
+      console.error("Failed to reset data:", resetError);
     }
   };
 
   return (
-    <Container style={{ flex: 1, justifyContent: 'center' }}>
+    <Container style={{ flex: 1, justifyContent: "center" }}>
       <Card variant="outlined">
         <CardContent>
-          <Typography variant="h2" align="center">💾</Typography>
-          <Heading level={4} align="center" style={{ marginTop: 16, marginBottom: 12 }}>
+          <Typography variant="h2" align="center">
+            💾
+          </Typography>
+          <Heading
+            level={4}
+            align="center"
+            style={{ marginTop: 16, marginBottom: 12 }}
+          >
             データエラー
           </Heading>
-          <Typography variant="body2" align="center" color="secondary" style={{ marginBottom: 16 }}>
+          <Typography
+            variant="body2"
+            align="center"
+            color="secondary"
+            style={{ marginBottom: 16 }}
+          >
             学習データの読み込みに失敗しました。データを初期化して修復できます。
           </Typography>
           <Typography variant="caption" align="center" color="warning">
@@ -317,7 +361,11 @@ function DataErrorFallback({ error }: { error: Error }) {
         </CardContent>
         <CardActions justify="space-between">
           <Button title="再試行" variant="outline" />
-          <Button title="データ初期化" variant="danger" onPress={handleDataReset} />
+          <Button
+            title="データ初期化"
+            variant="danger"
+            onPress={handleDataReset}
+          />
         </CardActions>
       </Card>
     </Container>
@@ -332,23 +380,24 @@ export function useErrorHandler() {
 
   const handleError = React.useCallback((error: Error) => {
     setError(error);
-    
+
     // エラーログ
-    console.error('Error handled by useErrorHandler:', error);
+    console.error("Error handled by useErrorHandler:", error);
   }, []);
 
   const clearError = React.useCallback(() => {
     setError(null);
   }, []);
 
-  const wrapAsync = React.useCallback(<T,>(
-    asyncFn: () => Promise<T>
-  ): Promise<T | undefined> => {
-    return asyncFn().catch(error => {
-      handleError(error);
-      return undefined;
-    });
-  }, [handleError]);
+  const wrapAsync = React.useCallback(
+    <T,>(asyncFn: () => Promise<T>): Promise<T | undefined> => {
+      return asyncFn().catch((error) => {
+        handleError(error);
+        return undefined;
+      });
+    },
+    [handleError],
+  );
 
   return {
     error,

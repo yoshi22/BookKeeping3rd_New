@@ -13,6 +13,7 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
+import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 
 // 簿記3級レベルの基本勘定科目データ（仕訳問題用）
 const JOURNAL_ACCOUNT_ITEMS = [
@@ -78,6 +79,8 @@ export default function AccountDropdown({
   excludeAccounts = [],
   placeholder = "勘定科目を選択してください",
 }: AccountDropdownProps) {
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // 除外勘定科目を除いた選択可能な勘定科目リスト
@@ -231,145 +234,146 @@ export default function AccountDropdown({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 15,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: "500",
-    marginBottom: 8,
-    color: "#333",
-  },
-  required: {
-    color: "#d32f2f",
-  },
-  dropdownButton: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 12,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    backgroundColor: "white",
-    minHeight: 48,
-  },
-  dropdownButtonEmpty: {
-    borderColor: "#ccc",
-  },
-  dropdownButtonDisabled: {
-    backgroundColor: "#f5f5f5",
-    borderColor: "#e0e0e0",
-  },
-  dropdownText: {
-    fontSize: 16,
-    color: "#333",
-    flex: 1,
-  },
-  placeholderText: {
-    color: "#999",
-  },
-  dropdownArrow: {
-    fontSize: 12,
-    color: "#666",
-    marginLeft: 8,
-  },
-  excludeInfo: {
-    fontSize: 12,
-    color: "#666",
-    marginTop: 4,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContainer: {
-    backgroundColor: "white",
-    borderRadius: 12,
-    width: "98%",
-    height: "80%",
-    minHeight: "70%",
-    overflow: "hidden",
-  },
-  modalHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  closeButton: {
-    padding: 4,
-  },
-  closeButtonText: {
-    fontSize: 24,
-    color: "#666",
-  },
-  modalContent: {
-    flex: 1,
-    padding: 20,
-  },
-  categorySection: {
-    marginBottom: 24,
-  },
-  categoryTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#2f95dc",
-    marginBottom: 8,
-    paddingBottom: 4,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  accountItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 12,
-    borderRadius: 6,
-    marginBottom: 4,
-  },
-  accountItemSelected: {
-    backgroundColor: "#e3f2fd",
-    borderWidth: 1,
-    borderColor: "#2f95dc",
-  },
-  accountName: {
-    fontSize: 16,
-    color: "#333",
-    flex: 1,
-  },
-  accountNameSelected: {
-    fontWeight: "bold",
-    color: "#2f95dc",
-  },
-  accountCode: {
-    fontSize: 12,
-    color: "#666",
-    marginLeft: 8,
-  },
-  modalFooter: {
-    padding: 20,
-    borderTopWidth: 1,
-    borderTopColor: "#e0e0e0",
-  },
-  cancelButton: {
-    padding: 12,
-    borderRadius: 6,
-    backgroundColor: "#f5f5f5",
-    alignItems: "center",
-  },
-  cancelButtonText: {
-    fontSize: 16,
-    color: "#666",
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      marginBottom: 15,
+    },
+    label: {
+      fontSize: 16,
+      fontWeight: "500",
+      marginBottom: 8,
+      color: theme.colors.text,
+    },
+    required: {
+      color: theme.colors.error,
+    },
+    dropdownButton: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 12,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      borderRadius: 8,
+      backgroundColor: theme.colors.surface,
+      minHeight: 48,
+    },
+    dropdownButtonEmpty: {
+      borderColor: theme.colors.borderLight,
+    },
+    dropdownButtonDisabled: {
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderColor: theme.colors.border,
+    },
+    dropdownText: {
+      fontSize: 16,
+      color: theme.colors.text,
+      flex: 1,
+    },
+    placeholderText: {
+      color: theme.colors.textSecondary,
+    },
+    dropdownArrow: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginLeft: 8,
+    },
+    excludeInfo: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginTop: 4,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: theme.colors.background + "80",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalContainer: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 12,
+      width: "98%",
+      height: "80%",
+      minHeight: "70%",
+      overflow: "hidden",
+    },
+    modalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    closeButton: {
+      padding: 4,
+    },
+    closeButtonText: {
+      fontSize: 24,
+      color: theme.colors.textSecondary,
+    },
+    modalContent: {
+      flex: 1,
+      padding: 20,
+    },
+    categorySection: {
+      marginBottom: 24,
+    },
+    categoryTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+      marginBottom: 8,
+      paddingBottom: 4,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    accountItem: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 12,
+      borderRadius: 6,
+      marginBottom: 4,
+    },
+    accountItemSelected: {
+      backgroundColor: theme.colors.primary + "20",
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+    },
+    accountName: {
+      fontSize: 16,
+      color: theme.colors.text,
+      flex: 1,
+    },
+    accountNameSelected: {
+      fontWeight: "bold",
+      color: theme.colors.primary,
+    },
+    accountCode: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginLeft: 8,
+    },
+    modalFooter: {
+      padding: 20,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.border,
+    },
+    cancelButton: {
+      padding: 12,
+      borderRadius: 6,
+      backgroundColor: theme.colors.backgroundSecondary,
+      alignItems: "center",
+    },
+    cancelButtonText: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+  });

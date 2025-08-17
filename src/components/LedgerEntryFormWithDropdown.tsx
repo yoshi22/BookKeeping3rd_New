@@ -17,6 +17,7 @@ import {
   Modal,
   FlatList,
 } from "react-native";
+import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../context/ThemeContext";
 import NumberInput from "./NumberInput";
 import AnswerGuide from "./AnswerGuide";
 import {
@@ -67,6 +68,7 @@ const DropdownSelector = ({
   placeholder?: string;
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const styles = useThemedStyles(createStyles);
 
   const handleSelect = (selectedValue: string) => {
     onChange(selectedValue);
@@ -143,6 +145,11 @@ export default function LedgerEntryFormWithDropdown({
   expectedEntries = 1,
   answerTemplate,
 }: LedgerEntryFormProps) {
+  // Theme system integration for dark mode support
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
   // answer_templateからcolumn定義を取得
   const columns: ColumnDefinition[] = answerTemplate?.columns || [
     { name: "date", label: "日付", type: "text" },
@@ -333,7 +340,7 @@ export default function LedgerEntryFormWithDropdown({
               placeholder={
                 column.name === "date" ? "例: 4/8" : `${column.label}を入力`
               }
-              placeholderTextColor="#999"
+              placeholderTextColor={theme.colors.textDisabled}
             />
             {column.name === "date" && (
               <Text style={styles.helpText}>
@@ -407,7 +414,7 @@ export default function LedgerEntryFormWithDropdown({
             <View style={styles.submitButtonContent}>
               <ActivityIndicator
                 size="small"
-                color="white"
+                color={theme.colors.surface}
                 style={styles.loader}
               />
               <Text style={styles.submitButtonText}>送信中...</Text>
@@ -428,197 +435,198 @@ export default function LedgerEntryFormWithDropdown({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  titleContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  helpButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: "#f0f0f0",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  helpButtonText: {
-    fontSize: 16,
-  },
-  entryContainer: {
-    backgroundColor: "#f8f8f8",
-    marginHorizontal: 15,
-    marginTop: 10,
-    padding: 15,
-    borderRadius: 10,
-  },
-  entryHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  entryTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#333",
-  },
-  removeButton: {
-    fontSize: 20,
-    color: "#ff4444",
-    padding: 5,
-  },
-  fieldContainer: {
-    marginBottom: 15,
-  },
-  fieldLabel: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 5,
-  },
-  required: {
-    color: "#ff4444",
-  },
-  textInput: {
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 5,
-    padding: 12,
-    fontSize: 16,
-    color: "#333",
-  },
-  helpText: {
-    fontSize: 12,
-    color: "#999",
-    marginTop: 5,
-  },
-  dropdownButton: {
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 5,
-    padding: 12,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  dropdownButtonText: {
-    fontSize: 16,
-    color: "#333",
-    flex: 1,
-  },
-  placeholder: {
-    color: "#999",
-  },
-  dropdownArrow: {
-    fontSize: 12,
-    color: "#666",
-    marginLeft: 5,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "flex-end",
-  },
-  modalContent: {
-    backgroundColor: "white",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    maxHeight: "70%",
-  },
-  modalHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  closeButton: {
-    fontSize: 24,
-    color: "#666",
-    padding: 5,
-  },
-  optionItem: {
-    padding: 15,
-    backgroundColor: "white",
-  },
-  selectedOption: {
-    backgroundColor: "#e8f4ff",
-  },
-  optionText: {
-    fontSize: 16,
-    color: "#333",
-  },
-  selectedOptionText: {
-    color: "#007AFF",
-    fontWeight: "600",
-  },
-  separator: {
-    height: 1,
-    backgroundColor: "#f0f0f0",
-  },
-  addEntryButton: {
-    marginHorizontal: 15,
-    marginTop: 15,
-    padding: 15,
-    backgroundColor: "#f0f0f0",
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  addEntryButtonText: {
-    fontSize: 16,
-    color: "#007AFF",
-    fontWeight: "600",
-  },
-  hintContainer: {
-    marginHorizontal: 15,
-    marginTop: 15,
-    padding: 10,
-    backgroundColor: "#fff3cd",
-    borderRadius: 5,
-  },
-  hintText: {
-    fontSize: 14,
-    color: "#856404",
-  },
-  submitButton: {
-    margin: 15,
-    padding: 15,
-    backgroundColor: "#007AFF",
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  submitButtonDisabled: {
-    opacity: 0.5,
-  },
-  submitButtonContent: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  submitButtonText: {
-    fontSize: 16,
-    color: "white",
-    fontWeight: "bold",
-  },
-  loader: {
-    marginRight: 10,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    titleContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 20,
+      paddingTop: 20,
+      paddingBottom: 10,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    helpButton: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: theme.colors.infoBackground,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    helpButtonText: {
+      fontSize: 16,
+    },
+    entryContainer: {
+      backgroundColor: theme.colors.backgroundSecondary,
+      marginHorizontal: 15,
+      marginTop: 10,
+      padding: 15,
+      borderRadius: 10,
+    },
+    entryHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 15,
+    },
+    entryTitle: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+    },
+    removeButton: {
+      fontSize: 20,
+      color: theme.colors.error,
+      padding: 5,
+    },
+    fieldContainer: {
+      marginBottom: 15,
+    },
+    fieldLabel: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginBottom: 5,
+    },
+    required: {
+      color: theme.colors.error,
+    },
+    textInput: {
+      backgroundColor: theme.colors.surface,
+      borderWidth: 1,
+      borderColor: theme.colors.borderLight,
+      borderRadius: 5,
+      padding: 12,
+      fontSize: 16,
+      color: theme.colors.text,
+    },
+    helpText: {
+      fontSize: 12,
+      color: theme.colors.textDisabled,
+      marginTop: 5,
+    },
+    dropdownButton: {
+      backgroundColor: theme.colors.surface,
+      borderWidth: 1,
+      borderColor: theme.colors.borderLight,
+      borderRadius: 5,
+      padding: 12,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    dropdownButtonText: {
+      fontSize: 16,
+      color: theme.colors.text,
+      flex: 1,
+    },
+    placeholder: {
+      color: theme.colors.textDisabled,
+    },
+    dropdownArrow: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginLeft: 5,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: theme.colors.background + "80",
+      justifyContent: "flex-end",
+    },
+    modalContent: {
+      backgroundColor: theme.colors.surface,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      maxHeight: "70%",
+    },
+    modalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    closeButton: {
+      fontSize: 24,
+      color: theme.colors.textSecondary,
+      padding: 5,
+    },
+    optionItem: {
+      padding: 15,
+      backgroundColor: theme.colors.surface,
+    },
+    selectedOption: {
+      backgroundColor: theme.colors.infoBackground,
+    },
+    optionText: {
+      fontSize: 16,
+      color: theme.colors.text,
+    },
+    selectedOptionText: {
+      color: theme.colors.primary,
+      fontWeight: "600",
+    },
+    separator: {
+      height: 1,
+      backgroundColor: theme.colors.borderLight,
+    },
+    addEntryButton: {
+      marginHorizontal: 15,
+      marginTop: 15,
+      padding: 15,
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    addEntryButtonText: {
+      fontSize: 16,
+      color: theme.colors.primary,
+      fontWeight: "600",
+    },
+    hintContainer: {
+      marginHorizontal: 15,
+      marginTop: 15,
+      padding: 10,
+      backgroundColor: theme.colors.infoBackground,
+      borderRadius: 5,
+    },
+    hintText: {
+      fontSize: 14,
+      color: theme.colors.text,
+    },
+    submitButton: {
+      margin: 15,
+      padding: 15,
+      backgroundColor: theme.colors.primary,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    submitButtonDisabled: {
+      opacity: 0.5,
+    },
+    submitButtonContent: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    submitButtonText: {
+      fontSize: 16,
+      color: theme.colors.surface,
+      fontWeight: "bold",
+    },
+    loader: {
+      marginRight: 10,
+    },
+  });

@@ -11,6 +11,7 @@ import { router } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
 import { reviewService } from "../../../src/services/review-service";
 import { ReviewStatistics } from "../../../src/data/repositories/review-item-repository";
+import { statisticsService } from "../../../src/services/statistics-service";
 import { Screen } from "../../../src/components/layout/ResponsiveLayout";
 import { setupDatabase } from "../../../src/data/migrations";
 import { WithScreenTransition } from "../../../src/hooks/useScreenTransitions";
@@ -32,12 +33,16 @@ import {
   useThemedStyles,
   useColors,
   useDynamicColors,
+  type Theme,
 } from "../../../src/context/ThemeContext";
 
 export default function ReviewScreen() {
   const [reviewStats, setReviewStats] = useState<ReviewStatistics | null>(null);
   const [weaknessCategories, setWeaknessCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<"review" | "statistics">("review");
+  const [statisticsData, setStatisticsData] = useState<any>(null);
+  const [loadingStatistics, setLoadingStatistics] = useState(false);
 
   // Phase 4: ダークモード対応のテーマシステム
   const { theme, isDark, getStatusBarStyle } = useTheme();
@@ -45,9 +50,9 @@ export default function ReviewScreen() {
   const dynamicColors = useDynamicColors();
 
   // タブレットレイアウト対応（オリエンテーション対応）
-  const { 
-    deviceInfo, 
-    getValueByDevice, 
+  const {
+    deviceInfo,
+    getValueByDevice,
     shouldUseMasterDetail,
     getOrientationSpecificValue,
     getOrientationLayout,
@@ -405,6 +410,13 @@ export default function ReviewScreen() {
     loadReviewData();
   }, []);
 
+  // 統計タブが選択されたときに統計データを読み込み
+  useEffect(() => {
+    if (activeTab === "statistics" && !statisticsData) {
+      loadStatisticsData();
+    }
+  }, [activeTab]);
+
   // 画面がフォーカスされたときに最新データを再取得
   useFocusEffect(
     useCallback(() => {
@@ -421,6 +433,41 @@ export default function ReviewScreen() {
       loadReviewData();
     }, []),
   );
+
+  // 統計データ読み込み
+  const loadStatisticsData = async () => {
+    try {
+      setLoadingStatistics(true);
+      console.log("[ReviewScreen] 統計データ読み込み開始");
+
+      const stats = await statisticsService.getOverallStatistics();
+      const categoryProgress = await statisticsService.getCategoryProgress();
+      const learningTrends = await statisticsService.getLearningTrends();
+
+      setStatisticsData({
+        overall: stats,
+        categoryProgress,
+        learningTrends,
+      });
+      console.log("[ReviewScreen] 統計データ読み込み完了");
+    } catch (error) {
+      console.error("[ReviewScreen] 統計データ読み込みエラー:", error);
+      // フォールバックデータ
+      setStatisticsData({
+        overall: {
+          totalQuestions: 0,
+          totalAnswered: 0,
+          correctAnswers: 0,
+          accuracy: 0,
+          totalStudyTime: 0,
+        },
+        categoryProgress: [],
+        learningTrends: [],
+      });
+    } finally {
+      setLoadingStatistics(false);
+    }
+  };
 
   // 復習セッション開始
   const startReviewSession = async (priorityOnly: boolean = false) => {
@@ -593,202 +640,323 @@ export default function ReviewScreen() {
       >
         <ResponsiveContainer>
           {/* アプリタイトル（ヘッダー代替） */}
-          <View style={[
-            styles.headerSection,
-            { 
-              paddingHorizontal: getValueByDevice({
-                phone: 20,
-                tablet: 40,
-                desktop: 60,
-                default: 20
-              })
-            }
-          ]}>
-            <Text style={[
-              styles.appTitle,
-              { fontSize: getValueByDevice({
-                phone: 18,
-                tablet: 22,
-                desktop: 24,
-                default: 18
-              })}
-            ]}>復習</Text>
+          <View
+            style={[
+              styles.headerSection,
+              {
+                paddingHorizontal: getValueByDevice({
+                  phone: 20,
+                  tablet: 40,
+                  desktop: 60,
+                  default: 20,
+                }),
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.appTitle,
+                {
+                  fontSize: getValueByDevice({
+                    phone: 18,
+                    tablet: 22,
+                    desktop: 24,
+                    default: 18,
+                  }),
+                },
+              ]}
+            >
+              復習
+            </Text>
           </View>
 
-          <View style={[
-            styles.header,
-            { 
-              paddingHorizontal: getValueByDevice({
-                phone: 20,
-                tablet: 40,
-                desktop: 60,
-                default: 20
-              })
-            }
-          ]}>
-            <Text style={[
-              styles.title,
-              { fontSize: getValueByDevice({
-                phone: 24,
-                tablet: 28,
-                desktop: 32,
-                default: 24
-              })}
-            ]}>復習モード</Text>
-            <Text style={[
-              styles.subtitle,
-              { fontSize: getValueByDevice({
-                phone: 16,
-                tablet: 18,
-                desktop: 20,
-                default: 16
-              })}
-            ]}>間違えた問題を効率的に復習</Text>
+          <View
+            style={[
+              styles.header,
+              {
+                paddingHorizontal: getValueByDevice({
+                  phone: 20,
+                  tablet: 40,
+                  desktop: 60,
+                  default: 20,
+                }),
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.title,
+                {
+                  fontSize: getValueByDevice({
+                    phone: 24,
+                    tablet: 28,
+                    desktop: 32,
+                    default: 24,
+                  }),
+                },
+              ]}
+            >
+              📊 復習・進捗
+            </Text>
+            <Text
+              style={[
+                styles.subtitle,
+                {
+                  fontSize: getValueByDevice({
+                    phone: 16,
+                    tablet: 18,
+                    desktop: 20,
+                    default: 16,
+                  }),
+                },
+              ]}
+            >
+              復習管理と学習進捗の確認
+            </Text>
           </View>
 
-          <View style={[
-            styles.statsContainer,
-            { 
-              paddingHorizontal: getValueByDevice({
-                phone: 20,
-                tablet: 40,
-                desktop: 60,
-                default: 20
-              }),
-              flexDirection: deviceInfo.isTablet ? 'row' : 'row',
-              justifyContent: deviceInfo.isTablet ? 'space-around' : 'space-around'
-            }
-          ]}>
-            <View style={[
-              styles.statCard,
-              { 
-                minWidth: deviceInfo.isTablet ? 120 : 80,
-                padding: deviceInfo.isTablet ? 20 : 15 
-              }
-            ]}>
-              <CircularProgress
-                progress={
-                  reviewStats?.totalReviewItems
-                    ? Math.min((reviewStats.totalReviewItems / 100) * 100, 100)
-                    : 0
-                }
-                size={deviceInfo.isTablet ? 80 : 60}
-                strokeWidth={deviceInfo.isTablet ? 6 : 4}
-                color="#ff6b35"
-                showPercentage={false}
+          {/* タブナビゲーション */}
+          <View
+            style={[
+              styles.tabContainer,
+              {
+                marginHorizontal: getValueByDevice({
+                  phone: 20,
+                  tablet: 40,
+                  desktop: 60,
+                  default: 20,
+                }),
+              },
+            ]}
+          >
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                activeTab === "review" && styles.activeTabButton,
+              ]}
+              onPress={() => setActiveTab("review")}
+              testID="review-tab-button"
+            >
+              <Text
+                style={[
+                  styles.tabButtonText,
+                  activeTab === "review" && styles.activeTabButtonText,
+                ]}
               >
-                <Text style={[
-                  styles.statNumber,
-                  { fontSize: deviceInfo.isTablet ? 28 : 24 }
-                ]}>
-                  {reviewStats?.totalReviewItems || 0}
-                </Text>
-              </CircularProgress>
-              <Text style={[
-                styles.statLabel,
-                { fontSize: deviceInfo.isTablet ? 14 : 12 }
-              ]}>復習対象</Text>
-            </View>
-            <View style={[
-              styles.statCard,
-              { 
-                minWidth: deviceInfo.isTablet ? 120 : 80,
-                padding: deviceInfo.isTablet ? 20 : 15 
-              }
-            ]}>
-              <CircularProgress
-                progress={
-                  reviewStats?.priorityReviewCount
-                    ? Math.min((reviewStats.priorityReviewCount / 50) * 100, 100)
-                    : 0
-                }
-                size={deviceInfo.isTablet ? 80 : 60}
-                strokeWidth={deviceInfo.isTablet ? 6 : 4}
-                color="#ff5722"
-                showPercentage={false}
+                🔄 復習
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                activeTab === "statistics" && styles.activeTabButton,
+              ]}
+              onPress={() => setActiveTab("statistics")}
+              testID="statistics-tab-button"
+            >
+              <Text
+                style={[
+                  styles.tabButtonText,
+                  activeTab === "statistics" && styles.activeTabButtonText,
+                ]}
               >
-                <Text style={[
-                  styles.statNumber,
-                  { fontSize: deviceInfo.isTablet ? 28 : 24 }
-                ]}>
-                  {reviewStats?.priorityReviewCount || 0}
-                </Text>
-              </CircularProgress>
-              <Text style={[
-                styles.statLabel,
-                { fontSize: deviceInfo.isTablet ? 14 : 12 }
-              ]}>重点復習</Text>
-            </View>
-            <View style={[
-              styles.statCard,
-              { 
-                minWidth: deviceInfo.isTablet ? 120 : 80,
-                padding: deviceInfo.isTablet ? 20 : 15 
-              }
-            ]}>
-              <CircularProgress
-                progress={
-                  reviewStats?.masteredCount
-                    ? Math.min((reviewStats.masteredCount / 100) * 100, 100)
-                    : 0
-                }
-                size={deviceInfo.isTablet ? 80 : 60}
-                strokeWidth={deviceInfo.isTablet ? 6 : 4}
-                color="#4CAF50"
-                showPercentage={false}
-              >
-                <Text style={[
-                  styles.statNumber,
-                  { fontSize: deviceInfo.isTablet ? 28 : 24 }
-                ]}>
-                  {reviewStats?.masteredCount || 0}
-                </Text>
-              </CircularProgress>
-              <Text style={[
-                styles.statLabel,
-                { fontSize: deviceInfo.isTablet ? 14 : 12 }
-              ]}>克服済み</Text>
-            </View>
+                📈 統計
+              </Text>
+            </TouchableOpacity>
           </View>
 
-          {(reviewStats?.totalReviewItems || 0) > 0 ? (
-            <>
-              <View style={[
-                styles.actionContainer,
-                { 
+          {/* タブコンテンツ */}
+          {activeTab === "review" && (
+            <View
+              style={[
+                styles.statsContainer,
+                {
                   paddingHorizontal: getValueByDevice({
                     phone: 20,
                     tablet: 40,
                     desktop: 60,
-                    default: 20
+                    default: 20,
                   }),
-                  flexDirection: deviceInfo.isTablet ? 'row' : 'column',
-                  justifyContent: deviceInfo.isTablet ? 'space-between' : 'stretch'
-                }
-              ]}>
+                  flexDirection: deviceInfo.isTablet ? "row" : "row",
+                  justifyContent: deviceInfo.isTablet
+                    ? "space-around"
+                    : "space-around",
+                },
+              ]}
+            >
+              <View
+                style={[
+                  styles.statCard,
+                  {
+                    minWidth: deviceInfo.isTablet ? 120 : 80,
+                    padding: deviceInfo.isTablet ? 20 : 15,
+                  },
+                ]}
+              >
+                <CircularProgress
+                  progress={
+                    reviewStats?.totalReviewItems
+                      ? Math.min(
+                          (reviewStats.totalReviewItems / 100) * 100,
+                          100,
+                        )
+                      : 0
+                  }
+                  size={deviceInfo.isTablet ? 80 : 60}
+                  strokeWidth={deviceInfo.isTablet ? 6 : 4}
+                  color={theme.colors.warning}
+                  showPercentage={false}
+                >
+                  <Text
+                    style={[
+                      styles.statNumber,
+                      { fontSize: deviceInfo.isTablet ? 28 : 24 },
+                    ]}
+                  >
+                    {reviewStats?.totalReviewItems || 0}
+                  </Text>
+                </CircularProgress>
+                <Text
+                  style={[
+                    styles.statLabel,
+                    { fontSize: deviceInfo.isTablet ? 14 : 12 },
+                  ]}
+                >
+                  復習対象
+                </Text>
+              </View>
+              <View
+                style={[
+                  styles.statCard,
+                  {
+                    minWidth: deviceInfo.isTablet ? 120 : 80,
+                    padding: deviceInfo.isTablet ? 20 : 15,
+                  },
+                ]}
+              >
+                <CircularProgress
+                  progress={
+                    reviewStats?.priorityReviewCount
+                      ? Math.min(
+                          (reviewStats.priorityReviewCount / 50) * 100,
+                          100,
+                        )
+                      : 0
+                  }
+                  size={deviceInfo.isTablet ? 80 : 60}
+                  strokeWidth={deviceInfo.isTablet ? 6 : 4}
+                  color={theme.colors.error}
+                  showPercentage={false}
+                >
+                  <Text
+                    style={[
+                      styles.statNumber,
+                      { fontSize: deviceInfo.isTablet ? 28 : 24 },
+                    ]}
+                  >
+                    {reviewStats?.priorityReviewCount || 0}
+                  </Text>
+                </CircularProgress>
+                <Text
+                  style={[
+                    styles.statLabel,
+                    { fontSize: deviceInfo.isTablet ? 14 : 12 },
+                  ]}
+                >
+                  重点復習
+                </Text>
+              </View>
+              <View
+                style={[
+                  styles.statCard,
+                  {
+                    minWidth: deviceInfo.isTablet ? 120 : 80,
+                    padding: deviceInfo.isTablet ? 20 : 15,
+                  },
+                ]}
+              >
+                <CircularProgress
+                  progress={
+                    reviewStats?.masteredCount
+                      ? Math.min((reviewStats.masteredCount / 100) * 100, 100)
+                      : 0
+                  }
+                  size={deviceInfo.isTablet ? 80 : 60}
+                  strokeWidth={deviceInfo.isTablet ? 6 : 4}
+                  color={theme.colors.success}
+                  showPercentage={false}
+                >
+                  <Text
+                    style={[
+                      styles.statNumber,
+                      { fontSize: deviceInfo.isTablet ? 28 : 24 },
+                    ]}
+                  >
+                    {reviewStats?.masteredCount || 0}
+                  </Text>
+                </CircularProgress>
+                <Text
+                  style={[
+                    styles.statLabel,
+                    { fontSize: deviceInfo.isTablet ? 14 : 12 },
+                  ]}
+                >
+                  克服済み
+                </Text>
+              </View>
+            </View>
+          )}
+
+          {(reviewStats?.totalReviewItems || 0) > 0 ? (
+            <>
+              <View
+                style={[
+                  styles.actionContainer,
+                  {
+                    paddingHorizontal: getValueByDevice({
+                      phone: 20,
+                      tablet: 40,
+                      desktop: 60,
+                      default: 20,
+                    }),
+                    flexDirection: deviceInfo.isTablet ? "row" : "column",
+                    justifyContent: deviceInfo.isTablet
+                      ? "space-between"
+                      : "center",
+                  },
+                ]}
+              >
                 <TouchableOpacity
                   style={[
                     styles.primaryButton,
-                    { 
+                    {
                       marginBottom: deviceInfo.isTablet ? 0 : 15,
                       marginRight: deviceInfo.isTablet ? 10 : 0,
                       flex: deviceInfo.isTablet ? 1 : undefined,
                       minHeight: deviceInfo.isTablet ? 100 : 80,
-                      justifyContent: 'center'
-                    }
+                      justifyContent: "center",
+                    },
                   ]}
                   onPress={() => startReviewSession(true)}
                   testID="review-priority-button"
                   accessibilityLabel="重点復習を開始"
                 >
-                  <Text style={[
-                    styles.buttonIcon,
-                    { fontSize: deviceInfo.isTablet ? 28 : 24 }
-                  ]}>🎯</Text>
-                  <Text style={[
-                    styles.buttonTitle,
-                    { fontSize: deviceInfo.isTablet ? 20 : 18 }
-                  ]}>重点復習開始</Text>
+                  <Text
+                    style={[
+                      styles.buttonIcon,
+                      { fontSize: deviceInfo.isTablet ? 28 : 24 },
+                    ]}
+                  >
+                    🎯
+                  </Text>
+                  <Text
+                    style={[
+                      styles.buttonTitle,
+                      { fontSize: deviceInfo.isTablet ? 20 : 18 },
+                    ]}
+                  >
+                    重点復習開始
+                  </Text>
                   <Text style={styles.buttonSubtitle}>
                     優先度の高い{reviewStats?.priorityReviewCount || 0}問から
                   </Text>
@@ -797,74 +965,98 @@ export default function ReviewScreen() {
                 <TouchableOpacity
                   style={[
                     styles.secondaryButton,
-                    { 
+                    {
                       marginLeft: deviceInfo.isTablet ? 10 : 0,
                       flex: deviceInfo.isTablet ? 1 : undefined,
                       minHeight: deviceInfo.isTablet ? 100 : 80,
-                      justifyContent: 'center'
-                    }
+                      justifyContent: "center",
+                    },
                   ]}
                   onPress={() => startReviewSession(false)}
                   testID="review-all-button"
                   accessibilityLabel="全て復習を開始"
                 >
-                  <Text style={[
-                    styles.buttonIcon,
-                    { fontSize: deviceInfo.isTablet ? 28 : 24 }
-                  ]}>🔄</Text>
-                  <Text style={[
-                    styles.buttonTitle,
-                    { fontSize: deviceInfo.isTablet ? 20 : 18 }
-                  ]}>全て復習</Text>
+                  <Text
+                    style={[
+                      styles.buttonIcon,
+                      { fontSize: deviceInfo.isTablet ? 28 : 24 },
+                    ]}
+                  >
+                    🔄
+                  </Text>
+                  <Text
+                    style={[
+                      styles.buttonTitle,
+                      { fontSize: deviceInfo.isTablet ? 20 : 18 },
+                    ]}
+                  >
+                    全て復習
+                  </Text>
                   <Text style={styles.buttonSubtitle}>
                     復習対象{reviewStats?.totalReviewItems || 0}問全て
                   </Text>
                 </TouchableOpacity>
               </View>
 
-              <View style={[
-                styles.categoriesContainer,
-                { 
-                  paddingHorizontal: getValueByDevice({
-                    phone: 20,
-                    tablet: 40,
-                    desktop: 60,
-                    default: 20
-                  })
-                }
-              ]}>
-                <Text style={[
-                  styles.sectionTitle,
-                  { fontSize: deviceInfo.isTablet ? 20 : 18 }
-                ]}>分野別弱点</Text>
+              <View
+                style={[
+                  styles.categoriesContainer,
+                  {
+                    paddingHorizontal: getValueByDevice({
+                      phone: 20,
+                      tablet: 40,
+                      desktop: 60,
+                      default: 20,
+                    }),
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.sectionTitle,
+                    { fontSize: deviceInfo.isTablet ? 20 : 18 },
+                  ]}
+                >
+                  分野別弱点
+                </Text>
                 <ResponsiveGrid>
                   {weaknessCategories.map((category) => (
                     <ResponsiveGridItem key={category.id}>
                       <TouchableOpacity
                         style={[
                           styles.categoryCard,
-                          { 
+                          {
                             minHeight: deviceInfo.isTablet ? 140 : 120,
-                            paddingVertical: deviceInfo.isTablet ? 20 : 15
-                          }
+                            paddingVertical: deviceInfo.isTablet ? 20 : 15,
+                          },
                         ]}
                         onPress={() => startCategoryReview(category.id)}
                         testID={`review-category-${category.id}-button`}
                         accessibilityLabel={`${category.name}の復習を開始`}
                       >
-                        <Text style={[
-                          styles.categoryIcon,
-                          { fontSize: deviceInfo.isTablet ? 36 : 30 }
-                        ]}>{category.icon}</Text>
+                        <Text
+                          style={[
+                            styles.categoryIcon,
+                            { fontSize: deviceInfo.isTablet ? 36 : 30 },
+                          ]}
+                        >
+                          {category.icon}
+                        </Text>
                         <View style={styles.categoryInfo}>
-                          <Text style={[
-                            styles.categoryName,
-                            { fontSize: deviceInfo.isTablet ? 18 : 16 }
-                          ]}>{category.name}</Text>
-                          <Text style={[
-                            styles.categoryCount,
-                            { fontSize: deviceInfo.isTablet ? 16 : 14 }
-                          ]}>
+                          <Text
+                            style={[
+                              styles.categoryName,
+                              { fontSize: deviceInfo.isTablet ? 18 : 16 },
+                            ]}
+                          >
+                            {category.name}
+                          </Text>
+                          <Text
+                            style={[
+                              styles.categoryCount,
+                              { fontSize: deviceInfo.isTablet ? 16 : 14 },
+                            ]}
+                          >
                             {category.reviewCount}問復習対象
                           </Text>
                           <Text style={styles.categoryRecommendation}>
@@ -878,10 +1070,10 @@ export default function ReviewScreen() {
                                 progress={category.averagePriority}
                                 color={
                                   category.priority === "high"
-                                    ? "#ff5722"
+                                    ? theme.colors.error
                                     : category.priority === "medium"
-                                      ? "#FF9800"
-                                      : "#4CAF50"
+                                      ? theme.colors.warning
+                                      : theme.colors.success
                                 }
                                 backgroundColor={theme.colors.borderLight}
                                 height={deviceInfo.isTablet ? 6 : 4}
@@ -916,60 +1108,321 @@ export default function ReviewScreen() {
               </View>
             </>
           ) : (
-            <View style={[
-              styles.emptyState,
-              { 
-                paddingHorizontal: getValueByDevice({
-                  phone: 40,
-                  tablet: 60,
-                  desktop: 80,
-                  default: 40
-                })
-              }
-            ]}>
-              <Text style={[
-                styles.emptyIcon,
-                { fontSize: deviceInfo.isTablet ? 80 : 64 }
-              ]}>🎉</Text>
-              <Text style={[
-                styles.emptyTitle,
-                { fontSize: deviceInfo.isTablet ? 24 : 20 }
-              ]}>復習対象の問題がありません！</Text>
-              <Text style={[
-                styles.emptySubtitle,
-                { fontSize: deviceInfo.isTablet ? 18 : 16 }
-              ]}>
+            <View
+              style={[
+                styles.emptyState,
+                {
+                  paddingHorizontal: getValueByDevice({
+                    phone: 40,
+                    tablet: 60,
+                    desktop: 80,
+                    default: 40,
+                  }),
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.emptyIcon,
+                  { fontSize: deviceInfo.isTablet ? 80 : 64 },
+                ]}
+              >
+                🎉
+              </Text>
+              <Text
+                style={[
+                  styles.emptyTitle,
+                  { fontSize: deviceInfo.isTablet ? 24 : 20 },
+                ]}
+              >
+                復習対象の問題がありません！
+              </Text>
+              <Text
+                style={[
+                  styles.emptySubtitle,
+                  { fontSize: deviceInfo.isTablet ? 18 : 16 },
+                ]}
+              >
                 問題を解くと、間違えた問題が自動的に復習リストに追加されます
               </Text>
               <TouchableOpacity
                 style={[
                   styles.startLearningButton,
-                  { 
+                  {
                     paddingHorizontal: deviceInfo.isTablet ? 40 : 30,
                     paddingVertical: deviceInfo.isTablet ? 20 : 15,
-                    borderRadius: deviceInfo.isTablet ? 30 : 25
-                  }
+                    borderRadius: deviceInfo.isTablet ? 30 : 25,
+                  },
                 ]}
                 onPress={() => router.push("/(tabs)/learning")}
                 testID="review-start-learning-button"
                 accessibilityLabel="学習を始める"
               >
-                <Text style={[
-                  styles.startLearningText,
-                  { fontSize: deviceInfo.isTablet ? 18 : 16 }
-                ]}>学習を始める</Text>
+                <Text
+                  style={[
+                    styles.startLearningText,
+                    { fontSize: deviceInfo.isTablet ? 18 : 16 },
+                  ]}
+                >
+                  学習を始める
+                </Text>
               </TouchableOpacity>
             </View>
           )}
+
+          {/* 統計タブコンテンツ */}
+          {activeTab === "statistics" && (
+            <View
+              style={[
+                styles.statisticsContainer,
+                {
+                  paddingHorizontal: getValueByDevice({
+                    phone: 20,
+                    tablet: 40,
+                    desktop: 60,
+                    default: 20,
+                  }),
+                },
+              ]}
+            >
+              {loadingStatistics ? (
+                <View style={styles.loadingContainer}>
+                  <SkeletonLoader
+                    width="100%"
+                    height={120}
+                    borderRadius={12}
+                    backgroundColor={theme.colors.borderLight}
+                    shimmerColor={dynamicColors.adaptive.divider}
+                  />
+                  <SkeletonLoader
+                    width="100%"
+                    height={120}
+                    borderRadius={12}
+                    backgroundColor={theme.colors.borderLight}
+                    shimmerColor={dynamicColors.adaptive.divider}
+                  />
+                </View>
+              ) : (
+                <>
+                  {/* 全体統計 */}
+                  <View
+                    style={[
+                      styles.overallStatsCard,
+                      {
+                        marginBottom: getValueByDevice({
+                          phone: 20,
+                          tablet: 30,
+                          desktop: 40,
+                          default: 20,
+                        }),
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.sectionTitle,
+                        { fontSize: deviceInfo.isTablet ? 20 : 18 },
+                      ]}
+                    >
+                      📈 学習統計
+                    </Text>
+                    <View
+                      style={[
+                        styles.overallStatsGrid,
+                        {
+                          flexDirection: deviceInfo.isTablet ? "row" : "row",
+                          justifyContent: deviceInfo.isTablet
+                            ? "space-around"
+                            : "space-between",
+                        },
+                      ]}
+                    >
+                      <View style={styles.statItem}>
+                        <Text
+                          style={[
+                            styles.statValue,
+                            { fontSize: deviceInfo.isTablet ? 28 : 24 },
+                          ]}
+                        >
+                          {statisticsData?.overall?.totalAnswered || 0}
+                        </Text>
+                        <Text
+                          style={[
+                            styles.statLabel,
+                            { fontSize: deviceInfo.isTablet ? 14 : 12 },
+                          ]}
+                        >
+                          解答済み
+                        </Text>
+                      </View>
+                      <View style={styles.statItem}>
+                        <Text
+                          style={[
+                            styles.statValue,
+                            {
+                              fontSize: deviceInfo.isTablet ? 28 : 24,
+                              color: theme.colors.success,
+                            },
+                          ]}
+                        >
+                          {Math.round(statisticsData?.overall?.accuracy || 0)}%
+                        </Text>
+                        <Text
+                          style={[
+                            styles.statLabel,
+                            { fontSize: deviceInfo.isTablet ? 14 : 12 },
+                          ]}
+                        >
+                          正答率
+                        </Text>
+                      </View>
+                      <View style={styles.statItem}>
+                        <Text
+                          style={[
+                            styles.statValue,
+                            { fontSize: deviceInfo.isTablet ? 28 : 24 },
+                          ]}
+                        >
+                          {Math.round(
+                            (statisticsData?.overall?.totalStudyTime || 0) / 60,
+                          )}
+                        </Text>
+                        <Text
+                          style={[
+                            styles.statLabel,
+                            { fontSize: deviceInfo.isTablet ? 14 : 12 },
+                          ]}
+                        >
+                          学習時間(分)
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+
+                  {/* カテゴリ別進捗 */}
+                  <View
+                    style={[
+                      styles.categoryProgressCard,
+                      {
+                        marginBottom: getValueByDevice({
+                          phone: 20,
+                          tablet: 30,
+                          desktop: 40,
+                          default: 20,
+                        }),
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.sectionTitle,
+                        { fontSize: deviceInfo.isTablet ? 20 : 18 },
+                      ]}
+                    >
+                      📊 分野別進捗
+                    </Text>
+                    <ResponsiveGrid>
+                      {(statisticsData?.categoryProgress || []).map(
+                        (category: any, index: number) => (
+                          <ResponsiveGridItem key={category.category || index}>
+                            <View
+                              style={[
+                                styles.categoryProgressItem,
+                                {
+                                  minHeight: deviceInfo.isTablet ? 120 : 100,
+                                  padding: deviceInfo.isTablet ? 20 : 15,
+                                },
+                              ]}
+                            >
+                              <Text
+                                style={[
+                                  styles.categoryProgressIcon,
+                                  { fontSize: deviceInfo.isTablet ? 32 : 28 },
+                                ]}
+                              >
+                                {category.category === "journal"
+                                  ? "📝"
+                                  : category.category === "ledger"
+                                    ? "📋"
+                                    : "📊"}
+                              </Text>
+                              <Text
+                                style={[
+                                  styles.categoryProgressName,
+                                  { fontSize: deviceInfo.isTablet ? 16 : 14 },
+                                ]}
+                              >
+                                {category.categoryName ||
+                                  (category.category === "journal"
+                                    ? "仕訳"
+                                    : category.category === "ledger"
+                                      ? "帳簿"
+                                      : "決算書")}
+                              </Text>
+                              <Text
+                                style={[
+                                  styles.categoryProgressPercent,
+                                  { fontSize: deviceInfo.isTablet ? 18 : 16 },
+                                ]}
+                              >
+                                {Math.round(category.accuracy || 0)}%
+                              </Text>
+                              <View style={styles.categoryProgressBarContainer}>
+                                <LinearProgress
+                                  progress={category.accuracy || 0}
+                                  color={
+                                    (category.accuracy || 0) >= 80
+                                      ? theme.colors.success
+                                      : (category.accuracy || 0) >= 60
+                                        ? theme.colors.warning
+                                        : theme.colors.error
+                                  }
+                                  backgroundColor={theme.colors.borderLight}
+                                  height={deviceInfo.isTablet ? 6 : 4}
+                                  borderRadius={2}
+                                  animated={true}
+                                />
+                              </View>
+                            </View>
+                          </ResponsiveGridItem>
+                        ),
+                      )}
+                    </ResponsiveGrid>
+                  </View>
+
+                  {/* データ更新情報 */}
+                  <View style={styles.dataInfoCard}>
+                    <Text style={styles.dataInfoText}>
+                      💡 統計データは学習・復習の進行に伴って自動更新されます
+                    </Text>
+                    <TouchableOpacity
+                      style={[
+                        styles.refreshButton,
+                        { backgroundColor: theme.colors.primary },
+                      ]}
+                      onPress={() => {
+                        loadReviewData();
+                        loadStatisticsData();
+                      }}
+                      testID="refresh-statistics-button"
+                    >
+                      <Text style={styles.refreshButtonText}>
+                        🔄 データ更新
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </>
+              )}
+            </View>
+          )}
+        </ResponsiveContainer>
       </Screen>
     </WithScreenTransition>
   );
 }
 
 // Phase 4: ダークモード対応のスタイル生成関数
-const createStyles = (
-  theme: typeof import("../../../src/context/ThemeContext").Theme,
-) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -1022,7 +1475,7 @@ const createStyles = (
     statNumber: {
       fontSize: 24,
       fontWeight: "bold",
-      color: "#ff6b35",
+      color: theme.colors.warning,
     },
     statLabel: {
       fontSize: 12,
@@ -1033,7 +1486,7 @@ const createStyles = (
       padding: 20,
     },
     primaryButton: {
-      backgroundColor: "#ff6b35",
+      backgroundColor: theme.colors.warning,
       padding: 20,
       borderRadius: 10,
       alignItems: "center",
@@ -1054,12 +1507,12 @@ const createStyles = (
     buttonTitle: {
       fontSize: 18,
       fontWeight: "bold",
-      color: "white",
+      color: theme.colors.surface,
       marginBottom: 5,
     },
     buttonSubtitle: {
       fontSize: 14,
-      color: "white",
+      color: theme.colors.surface,
       textAlign: "center",
     },
     categoriesContainer: {
@@ -1103,16 +1556,16 @@ const createStyles = (
       borderRadius: 12,
     },
     highPriority: {
-      backgroundColor: "#ff4444",
+      backgroundColor: theme.colors.error,
     },
     mediumPriority: {
-      backgroundColor: "#ff9500",
+      backgroundColor: theme.colors.warning,
     },
     lowPriority: {
-      backgroundColor: "#4cd964",
+      backgroundColor: theme.colors.success,
     },
     priorityText: {
-      color: "white",
+      color: theme.colors.surface,
       fontSize: 12,
       fontWeight: "bold",
     },
@@ -1144,7 +1597,7 @@ const createStyles = (
       borderRadius: 25,
     },
     startLearningText: {
-      color: "white",
+      color: theme.colors.surface,
       fontSize: 16,
       fontWeight: "bold",
     },
@@ -1172,5 +1625,118 @@ const createStyles = (
     },
     categoryProgressContainer: {
       marginTop: 8,
+    },
+    // タブナビゲーション関連スタイル
+    tabContainer: {
+      flexDirection: "row",
+      backgroundColor: theme.colors.surface,
+      borderRadius: 25,
+      padding: 4,
+      marginBottom: 20,
+      ...theme.shadows.small,
+    },
+    tabButton: {
+      flex: 1,
+      paddingVertical: 12,
+      paddingHorizontal: 20,
+      borderRadius: 20,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    activeTabButton: {
+      backgroundColor: theme.colors.primary,
+      ...theme.shadows.small,
+    },
+    tabButtonText: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.textSecondary,
+    },
+    activeTabButtonText: {
+      color: theme.colors.surface,
+    },
+    // 統計関連スタイル
+    statisticsContainer: {
+      flex: 1,
+      paddingBottom: 20,
+    },
+    overallStatsCard: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 15,
+      padding: 20,
+      ...theme.shadows.medium,
+    },
+    overallStatsGrid: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      marginTop: 15,
+    },
+    statItem: {
+      alignItems: "center",
+      flex: 1,
+    },
+    statValue: {
+      fontSize: 24,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 5,
+    },
+    categoryProgressCard: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 15,
+      padding: 20,
+      ...theme.shadows.medium,
+    },
+    categoryProgressItem: {
+      backgroundColor: theme.colors.background,
+      borderRadius: 12,
+      padding: 15,
+      alignItems: "center",
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    categoryProgressIcon: {
+      fontSize: 28,
+      marginBottom: 8,
+    },
+    categoryProgressName: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: theme.colors.text,
+      marginBottom: 5,
+    },
+    categoryProgressPercent: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+      marginBottom: 8,
+    },
+    categoryProgressBarContainer: {
+      width: "100%",
+      marginTop: 5,
+    },
+    dataInfoCard: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 15,
+      padding: 20,
+      alignItems: "center",
+      ...theme.shadows.medium,
+    },
+    dataInfoText: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      textAlign: "center",
+      marginBottom: 15,
+      lineHeight: 20,
+    },
+    refreshButton: {
+      paddingHorizontal: 20,
+      paddingVertical: 12,
+      borderRadius: 20,
+    },
+    refreshButtonText: {
+      color: theme.colors.surface,
+      fontSize: 14,
+      fontWeight: "600",
     },
   });

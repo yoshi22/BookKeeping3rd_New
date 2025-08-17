@@ -19,6 +19,7 @@ import React, {
   ComponentType,
 } from "react";
 import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 
 /**
  * 遅延ローディング設定
@@ -44,12 +45,17 @@ export interface LazyLoadingConfig {
 /**
  * デフォルトローディングコンポーネント
  */
-const DefaultLoadingComponent = memo(() => (
-  <View style={styles.loadingContainer}>
-    <ActivityIndicator size="small" color="#2f95dc" />
-    <Text style={styles.loadingText}>読み込み中...</Text>
-  </View>
-));
+const DefaultLoadingComponent = memo(() => {
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
+
+  return (
+    <View style={styles.loadingContainer}>
+      <ActivityIndicator size="small" color={theme.colors.primary} />
+      <Text style={styles.loadingText}>読み込み中...</Text>
+    </View>
+  );
+});
 
 DefaultLoadingComponent.displayName = "DefaultLoadingComponent";
 
@@ -57,15 +63,20 @@ DefaultLoadingComponent.displayName = "DefaultLoadingComponent";
  * デフォルトエラーコンポーネント
  */
 const DefaultErrorComponent = memo<{ error: Error; retry: () => void }>(
-  ({ error, retry }) => (
-    <View style={styles.errorContainer}>
-      <Text style={styles.errorTitle}>読み込みエラー</Text>
-      <Text style={styles.errorMessage}>{error.message}</Text>
-      <Text style={styles.retryButton} onPress={retry}>
-        再試行
-      </Text>
-    </View>
-  ),
+  ({ error, retry }) => {
+    const { theme } = useTheme();
+    const styles = useThemedStyles(createStyles);
+
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorTitle}>読み込みエラー</Text>
+        <Text style={styles.errorMessage}>{error.message}</Text>
+        <Text style={styles.retryButton} onPress={retry}>
+          再試行
+        </Text>
+      </View>
+    );
+  },
 );
 
 DefaultErrorComponent.displayName = "DefaultErrorComponent";
@@ -102,6 +113,7 @@ export function createLazyComponent<P extends {} = {}>(
     const [shouldLoad, setShouldLoad] = useState(finalConfig.preload);
     const containerRef = useRef<View>(null);
     const preloadTimeoutRef = useRef<NodeJS.Timeout>();
+    const styles = useThemedStyles(createStyles);
 
     // Intersection Observer による可視性検出（Web環境のみ）
     useEffect(() => {
@@ -361,48 +373,49 @@ export function useLazyLoading() {
 /**
  * スタイル定義
  */
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  loadingText: {
-    marginTop: 10,
-    fontSize: 14,
-    color: "#666",
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  errorTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#d32f2f",
-    marginBottom: 10,
-  },
-  errorMessage: {
-    fontSize: 14,
-    color: "#666",
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  retryButton: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#2f95dc",
-    padding: 10,
-    backgroundColor: "#f0f8ff",
-    borderRadius: 8,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
+    },
+    loadingText: {
+      marginTop: 10,
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+    },
+    errorContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
+    },
+    errorTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.error,
+      marginBottom: 10,
+    },
+    errorMessage: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      textAlign: "center",
+      marginBottom: 20,
+    },
+    retryButton: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+      padding: 10,
+      backgroundColor: theme.colors.infoBackground,
+      borderRadius: 8,
+    },
+  });
 
 /**
  * 使用例:

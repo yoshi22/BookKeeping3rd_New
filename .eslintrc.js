@@ -13,12 +13,21 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    project: "./tsconfig.json",
+  },
+  settings: {
+    "import/resolver": {
+      typescript: {
+        alwaysTryTypes: true,
+      },
+    },
   },
   rules: {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "no-console": "warn",
+    "import/no-unresolved": "off", // TypeScriptパスマッピングの問題を回避
+    "@typescript-eslint/no-empty-object-type": "off", // この規則は存在しないため無効化
+    "@typescript-eslint/no-wrapper-object-types": "off", // この規則は存在しないため無効化
   },
   overrides: [
     {

@@ -7,7 +7,7 @@
 
 import React from "react";
 import { View, ViewStyle, ActivityIndicator, StyleSheet } from "react-native";
-import { useTheme, useThemedStyles } from "../../context/ThemeContext";
+import { useTheme, useThemedStyles, type Theme } from "../../context/ThemeContext";
 import { Typography } from "../ui/Typography";
 import { Card, CardContent } from "../ui/Card";
 import { Pulse, Rotate, FadeIn, AnimatedProgressBar } from "../ui/Animation";

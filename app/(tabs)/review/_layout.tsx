@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import React from "react";
-import { useTheme } from "../../../src/context/ThemeContext";
+import { useTheme, type Theme } from "../../../src/context/ThemeContext";
 
 export default function ReviewLayout() {
   const { theme } = useTheme();

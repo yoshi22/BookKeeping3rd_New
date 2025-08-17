@@ -7,6 +7,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { Animated, ViewStyle, Easing, Dimensions } from "react-native";
+import { useColors } from "../../context/ThemeContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -289,11 +290,16 @@ export function AnimatedProgressBar({
   progress,
   duration = animationConfig.duration.slow,
   height = 8,
-  backgroundColor = "#E0E0E0",
-  progressColor = "#4CAF50",
+  backgroundColor,
+  progressColor,
   style,
 }: ProgressBarProps) {
+  const colors = useColors();
   const progressValue = useRef(new Animated.Value(0)).current;
+
+  // テーマ対応のデフォルトカラー
+  const effectiveBackgroundColor = backgroundColor || colors.borderLight;
+  const effectiveProgressColor = progressColor || colors.success;
 
   useEffect(() => {
     Animated.timing(progressValue, {
@@ -315,7 +321,7 @@ export function AnimatedProgressBar({
       style={[
         {
           height,
-          backgroundColor,
+          backgroundColor: effectiveBackgroundColor,
           borderRadius: height / 2,
           overflow: "hidden",
         },
@@ -329,7 +335,7 @@ export function AnimatedProgressBar({
         style={{
           height: "100%",
           width: widthInterpolation,
-          backgroundColor: progressColor,
+          backgroundColor: effectiveProgressColor,
           borderRadius: height / 2,
         }}
       />

@@ -3,12 +3,19 @@
  * Step 2.2: 解答記録機能実装統合
  */
 
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../context/ThemeContext";
 import AnswerForm from "./AnswerForm";
-import LedgerEntryForm from "./LedgerEntryForm";
+import UnifiedLedgerEntryForm from "./unified/LedgerEntryForm";
 import LedgerEntryFormWithDropdown from "./LedgerEntryFormWithDropdown";
-import JournalEntryForm from "./JournalEntryForm";
+import UnifiedJournalEntryForm from "./unified/JournalEntryForm";
 import ChoiceAnswerForm from "./ChoiceAnswerForm";
 import MultipleBlankChoiceForm from "./MultipleBlankChoiceForm";
 import VoucherEntryForm from "./VoucherEntryForm";
@@ -316,6 +323,11 @@ export default function QuestionDisplay({
   onSubmitAnswer,
   answerTemplate,
 }: QuestionDisplayProps) {
+  // Theme system integration for dark mode support
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
   // 複数エントリが必要な帳簿問題かどうか判定
   const isMultiEntryLedgerQuestion = (
     questionId: string,
@@ -366,10 +378,11 @@ export default function QuestionDisplay({
       questionId,
       answerTemplateType: answerTemplate?.type,
       shouldUseJournalEntryForm,
-      shouldUseLedgerEntryForm: answerTemplate?.type === "ledger_entry" ||
+      shouldUseLedgerEntryForm:
+        answerTemplate?.type === "ledger_entry" ||
         (questionId.startsWith("Q_L_") &&
           isMultiEntryLedgerQuestion(questionId, questionText)),
-      answerTemplate: answerTemplate
+      answerTemplate: answerTemplate,
     });
   }
 
@@ -504,7 +517,7 @@ export default function QuestionDisplay({
           correctAnswer={correctAnswer}
         />
       ) : shouldUseJournalEntryForm ? (
-        <JournalEntryForm
+        <UnifiedJournalEntryForm
           questionId={questionId}
           questionText={questionText}
           sessionType={sessionType}
@@ -512,6 +525,7 @@ export default function QuestionDisplay({
           startTime={startTime}
           onSubmitAnswer={onSubmitAnswer}
           showSubmitButton={true}
+          mode="learning"
         />
       ) : shouldUseLedgerEntryFormWithDropdown ? (
         <LedgerEntryFormWithDropdown
@@ -525,14 +539,16 @@ export default function QuestionDisplay({
           answerTemplate={answerTemplate}
         />
       ) : shouldUseLedgerEntryForm ? (
-        <LedgerEntryForm
+        <UnifiedLedgerEntryForm
           questionId={questionId}
+          questionText={questionText}
           sessionType={sessionType}
           sessionId={sessionId}
           startTime={startTime}
           onSubmitAnswer={onSubmitAnswer}
           showSubmitButton={true}
           expectedEntries={getExpectedEntryCount(questionText)}
+          mode="learning"
         />
       ) : answerFields.length > 0 && onAnswerChange ? (
         <AnswerForm
@@ -573,90 +589,88 @@ export default function QuestionDisplay({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  header: {
-    backgroundColor: "white",
-    padding: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  backButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-  },
-  backButtonText: {
-    color: "#2f95dc",
-    fontSize: 16,
-  },
-  questionInfo: {
-    alignItems: "center",
-  },
-  questionId: {
-    fontSize: 14,
-    color: "#666",
-  },
-  categoryName: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  difficulty: {
-    fontSize: 12,
-    color: "#ff6b35",
-  },
-  answerSection: {
-    backgroundColor: "white",
-    margin: 15,
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  answerTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 15,
-    color: "#333",
-  },
-  answerPlaceholder: {
-    padding: 20,
-    borderWidth: 2,
-    borderColor: "#ddd",
-    borderStyle: "dashed",
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: 120,
-  },
-  placeholderText: {
-    fontSize: 16,
-    color: "#999",
-    textAlign: "center",
-    lineHeight: 24,
-  },
-  actionSection: {
-    padding: 15,
-    marginTop: "auto",
-  },
-  submitButton: {
-    backgroundColor: "#2f95dc",
-    padding: 15,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  submitButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
+// Theme-aware styles function for dark mode support
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    header: {
+      backgroundColor: theme.colors.surface,
+      padding: 15,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+    },
+    backButton: {
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+    },
+    backButtonText: {
+      color: theme.colors.primary,
+      fontSize: 16,
+    },
+    questionInfo: {
+      alignItems: "center",
+    },
+    questionId: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+    },
+    categoryName: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    difficulty: {
+      fontSize: 12,
+      color: theme.colors.warning, // Theme orange for difficulty
+    },
+    answerSection: {
+      backgroundColor: theme.colors.surface,
+      margin: 15,
+      padding: 20,
+      borderRadius: 10,
+      ...theme.shadows.medium,
+    },
+    answerTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 15,
+      color: theme.colors.text,
+    },
+    answerPlaceholder: {
+      padding: 20,
+      borderWidth: 2,
+      borderColor: theme.colors.borderLight,
+      borderStyle: "dashed",
+      borderRadius: 8,
+      alignItems: "center",
+      justifyContent: "center",
+      minHeight: 120,
+    },
+    placeholderText: {
+      fontSize: 16,
+      color: theme.colors.textDisabled,
+      textAlign: "center",
+      lineHeight: 24,
+    },
+    actionSection: {
+      padding: 15,
+      marginTop: "auto",
+    },
+    submitButton: {
+      backgroundColor: theme.colors.primary,
+      padding: 15,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    submitButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+  });

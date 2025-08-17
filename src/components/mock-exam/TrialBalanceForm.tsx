@@ -12,7 +12,7 @@ import {
   Modal,
   FlatList,
 } from "react-native";
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme, useThemedStyles, type Theme } from "../../context/ThemeContext";
 import ExplanationModal from "./ExplanationModal";
 import {
   MockExamFormProps,
@@ -45,6 +45,7 @@ export default function TrialBalanceForm({
   questionText,
 }: TrialBalanceFormProps) {
   const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
   const [explanationModalVisible, setExplanationModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentSelectionIndex, setCurrentSelectionIndex] = useState<
@@ -618,259 +619,262 @@ export default function TrialBalanceForm({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  questionCard: {
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 20,
-  },
-  questionNumber: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 4,
-  },
-  remainingTime: {
-    fontSize: 14,
-    marginBottom: 12,
-  },
-  questionText: {
-    fontSize: 18,
-    lineHeight: 26,
-  },
-  formCard: {
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  headerRow: {
-    flexDirection: "row",
-    paddingVertical: 12,
-    paddingHorizontal: 8,
-    borderBottomWidth: 2,
-    borderBottomColor: "#007AFF",
-    marginBottom: 8,
-  },
-  headerCell: {
-    fontWeight: "bold",
-    fontSize: 16,
-    textAlign: "center",
-  },
-  accountHeader: {
-    flex: 3,
-    textAlign: "left",
-  },
-  amountHeader: {
-    flex: 2,
-  },
-  entryRow: {
-    flexDirection: "row",
-    paddingVertical: 8,
-    paddingHorizontal: 4,
-    borderBottomWidth: 1,
-    alignItems: "center",
-  },
-  accountCell: {
-    flex: 3,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  accountInput: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 6,
-    padding: 10,
-    fontSize: 14,
-    marginRight: 8,
-  },
-  amountCell: {
-    flex: 2,
-    paddingHorizontal: 4,
-  },
-  amountInput: {
-    borderWidth: 1,
-    borderRadius: 6,
-    padding: 12,
-    fontSize: 16,
-    textAlign: "right",
-    minHeight: 44,
-    includeFontPadding: false,
-  },
-  removeSmallButton: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  removeSmallButtonText: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-  addButton: {
-    marginTop: 16,
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    alignItems: "center",
-  },
-  addButtonText: {
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  totalRow: {
-    flexDirection: "row",
-    paddingVertical: 12,
-    paddingHorizontal: 8,
-    marginTop: 16,
-    borderWidth: 2,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  totalLabel: {
-    flex: 3,
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  totalAmount: {
-    flex: 2,
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "right",
-    paddingHorizontal: 8,
-  },
-  balanceStatus: {
-    marginTop: 12,
-    padding: 12,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  balanceText: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 4,
-  },
-  differenceText: {
-    fontSize: 14,
-    fontWeight: "500",
-  },
-  buttonContainer: {
-    gap: 12,
-    marginBottom: 20,
-  },
-  submitButton: {
-    padding: 16,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  submitButtonText: {
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  nextButton: {
-    padding: 16,
-    borderRadius: 8,
-    alignItems: "center",
-    borderWidth: 1,
-  },
-  nextButtonText: {
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  explanationButton: {
-    padding: 16,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop: 8,
-  },
-  explanationButtonText: {
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  navigationContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 12,
-  },
-  navButton: {
-    flex: 1,
-    padding: 12,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  navButtonText: {
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  // Account picker styles
-  accountPickerContainer: {
-    flex: 1,
-    minHeight: 44,
-    borderWidth: 1,
-    borderRadius: 6,
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 12,
-    flexDirection: "row",
-    marginRight: 8,
-  },
-  accountPickerText: {
-    fontSize: 14,
-    flex: 1,
-  },
-  accountPickerArrow: {
-    fontSize: 12,
-    marginLeft: 8,
-  },
-  // Modal styles
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "flex-end",
-  },
-  modalContent: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    maxHeight: "80%",
-  },
-  modalHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 20,
-    borderBottomWidth: 1,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  modalCloseButton: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalCloseText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  modalItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-  },
-  modalItemText: {
-    fontSize: 16,
-  },
-});
+const createStyles = (
+  theme: Theme,
+) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 16,
+    },
+    questionCard: {
+      padding: 20,
+      borderRadius: 12,
+      marginBottom: 20,
+    },
+    questionNumber: {
+      fontSize: 16,
+      fontWeight: "600",
+      marginBottom: 4,
+    },
+    remainingTime: {
+      fontSize: 14,
+      marginBottom: 12,
+    },
+    questionText: {
+      fontSize: 18,
+      lineHeight: 26,
+    },
+    formCard: {
+      padding: 20,
+      borderRadius: 12,
+      marginBottom: 20,
+    },
+    sectionTitle: {
+      fontSize: 20,
+      fontWeight: "bold",
+      marginBottom: 20,
+      textAlign: "center",
+    },
+    headerRow: {
+      flexDirection: "row",
+      paddingVertical: 12,
+      paddingHorizontal: 8,
+      borderBottomWidth: 2,
+      borderBottomColor: theme.colors.primary,
+      marginBottom: 8,
+    },
+    headerCell: {
+      fontWeight: "bold",
+      fontSize: 16,
+      textAlign: "center",
+    },
+    accountHeader: {
+      flex: 3,
+      textAlign: "left",
+    },
+    amountHeader: {
+      flex: 2,
+    },
+    entryRow: {
+      flexDirection: "row",
+      paddingVertical: 8,
+      paddingHorizontal: 4,
+      borderBottomWidth: 1,
+      alignItems: "center",
+    },
+    accountCell: {
+      flex: 3,
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    accountInput: {
+      flex: 1,
+      borderWidth: 1,
+      borderRadius: 6,
+      padding: 10,
+      fontSize: 14,
+      marginRight: 8,
+    },
+    amountCell: {
+      flex: 2,
+      paddingHorizontal: 4,
+    },
+    amountInput: {
+      borderWidth: 1,
+      borderRadius: 6,
+      padding: 12,
+      fontSize: 16,
+      textAlign: "right",
+      minHeight: 44,
+      includeFontPadding: false,
+    },
+    removeSmallButton: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    removeSmallButtonText: {
+      color: theme.colors.surface,
+      fontSize: 14,
+      fontWeight: "bold",
+    },
+    addButton: {
+      marginTop: 16,
+      padding: 12,
+      borderRadius: 8,
+      borderWidth: 1,
+      alignItems: "center",
+    },
+    addButtonText: {
+      fontSize: 14,
+      fontWeight: "600",
+    },
+    totalRow: {
+      flexDirection: "row",
+      paddingVertical: 12,
+      paddingHorizontal: 8,
+      marginTop: 16,
+      borderWidth: 2,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    totalLabel: {
+      flex: 3,
+      fontSize: 18,
+      fontWeight: "bold",
+    },
+    totalAmount: {
+      flex: 2,
+      fontSize: 16,
+      fontWeight: "bold",
+      textAlign: "right",
+      paddingHorizontal: 8,
+    },
+    balanceStatus: {
+      marginTop: 12,
+      padding: 12,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    balanceText: {
+      fontSize: 16,
+      fontWeight: "600",
+      marginBottom: 4,
+    },
+    differenceText: {
+      fontSize: 14,
+      fontWeight: "500",
+    },
+    buttonContainer: {
+      gap: 12,
+      marginBottom: 20,
+    },
+    submitButton: {
+      padding: 16,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    submitButtonText: {
+      fontSize: 18,
+      fontWeight: "600",
+    },
+    nextButton: {
+      padding: 16,
+      borderRadius: 8,
+      alignItems: "center",
+      borderWidth: 1,
+    },
+    nextButtonText: {
+      fontSize: 16,
+      fontWeight: "600",
+    },
+    explanationButton: {
+      padding: 16,
+      borderRadius: 8,
+      alignItems: "center",
+      marginTop: 8,
+    },
+    explanationButtonText: {
+      fontSize: 16,
+      fontWeight: "600",
+    },
+    navigationContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      gap: 12,
+    },
+    navButton: {
+      flex: 1,
+      padding: 12,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    navButtonText: {
+      fontSize: 16,
+      fontWeight: "600",
+    },
+    // Account picker styles
+    accountPickerContainer: {
+      flex: 1,
+      minHeight: 44,
+      borderWidth: 1,
+      borderRadius: 6,
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 12,
+      flexDirection: "row",
+      marginRight: 8,
+    },
+    accountPickerText: {
+      fontSize: 14,
+      flex: 1,
+    },
+    accountPickerArrow: {
+      fontSize: 12,
+      marginLeft: 8,
+    },
+    // Modal styles
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: theme.colors.background + "80",
+      justifyContent: "flex-end",
+    },
+    modalContent: {
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      maxHeight: "80%",
+    },
+    modalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 20,
+      borderBottomWidth: 1,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "600",
+    },
+    modalCloseButton: {
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalCloseText: {
+      color: theme.colors.surface,
+      fontSize: 18,
+      fontWeight: "bold",
+    },
+    modalItem: {
+      padding: 15,
+      borderBottomWidth: 1,
+    },
+    modalItemText: {
+      fontSize: 16,
+    },
+  });

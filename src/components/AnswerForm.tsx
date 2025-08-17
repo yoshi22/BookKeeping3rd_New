@@ -13,6 +13,13 @@ import {
   ActivityIndicator,
   TextInput,
 } from "react-native";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../context/ThemeContext";
 import AccountDropdown from "./AccountDropdown";
 import NumberInput from "./NumberInput";
 import AnswerGuide from "./AnswerGuide";
@@ -55,6 +62,12 @@ export default function AnswerForm({
   onSubmitAnswer,
   showSubmitButton = true,
 }: AnswerFormProps) {
+  // Theme system integration for dark mode support
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
 
@@ -196,7 +209,7 @@ export default function AnswerForm({
               value={answers[field.name] || ""}
               onChangeText={(value) => onAnswerChange(field.name, value)}
               placeholder={getPlaceholder(field.name, field.label)}
-              placeholderTextColor="#999"
+              placeholderTextColor={theme.colors.textDisabled}
             />
             {(field.name === "date" || field.label.includes("日付")) && (
               <Text style={styles.hintText}>
@@ -237,7 +250,7 @@ export default function AnswerForm({
             <View style={styles.submitButtonContent}>
               <ActivityIndicator
                 size="small"
-                color="white"
+                color={theme.colors.surface}
                 style={styles.loader}
               />
               <Text style={styles.submitButtonText}>送信中...</Text>
@@ -257,95 +270,93 @@ export default function AnswerForm({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    margin: 15,
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  titleContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  helpButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: "#e3f2fd",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  helpButtonText: {
-    fontSize: 16,
-  },
-  fieldContainer: {
-    marginBottom: 15,
-  },
-  fieldLabel: {
-    fontSize: 16,
-    fontWeight: "500",
-    marginBottom: 8,
-    color: "#333",
-  },
-  required: {
-    color: "#d32f2f",
-  },
-  textInput: {
-    padding: 12,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    backgroundColor: "white",
-    minHeight: 48,
-    fontSize: 16,
-    color: "#333",
-  },
-  hintText: {
-    fontSize: 12,
-    color: "#666",
-    marginTop: 4,
-    fontStyle: "italic",
-  },
-  inputText: {
-    fontSize: 16,
-    color: "#333",
-  },
-  placeholderText: {
-    color: "#999",
-  },
-  submitButton: {
-    backgroundColor: "#2196F3",
-    padding: 15,
-    borderRadius: 8,
-    marginTop: 20,
-    alignItems: "center",
-  },
-  submitButtonDisabled: {
-    backgroundColor: "#9E9E9E",
-  },
-  submitButtonContent: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  submitButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  loader: {
-    marginRight: 8,
-  },
-});
+// Theme-aware styles function for dark mode support
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.surface,
+      margin: 15,
+      padding: 20,
+      borderRadius: 10,
+      ...theme.shadows.medium,
+    },
+    titleContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 15,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    helpButton: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: theme.colors.infoBackground,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    helpButtonText: {
+      fontSize: 16,
+    },
+    fieldContainer: {
+      marginBottom: 15,
+    },
+    fieldLabel: {
+      fontSize: 16,
+      fontWeight: "500",
+      marginBottom: 8,
+      color: theme.colors.text,
+    },
+    required: {
+      color: theme.colors.error,
+    },
+    textInput: {
+      padding: 12,
+      borderWidth: 1,
+      borderColor: theme.colors.borderLight,
+      borderRadius: 8,
+      backgroundColor: theme.colors.surface,
+      minHeight: 48,
+      fontSize: 16,
+      color: theme.colors.text,
+    },
+    hintText: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginTop: 4,
+      fontStyle: "italic",
+    },
+    inputText: {
+      fontSize: 16,
+      color: theme.colors.text,
+    },
+    placeholderText: {
+      color: theme.colors.textDisabled,
+    },
+    submitButton: {
+      backgroundColor: theme.colors.primary,
+      padding: 15,
+      borderRadius: 8,
+      marginTop: 20,
+      alignItems: "center",
+    },
+    submitButtonDisabled: {
+      backgroundColor: theme.colors.textDisabled,
+    },
+    submitButtonContent: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    submitButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    loader: {
+      marginRight: 8,
+    },
+  });

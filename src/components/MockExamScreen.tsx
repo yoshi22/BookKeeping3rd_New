@@ -14,6 +14,7 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
+import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 import QuestionDisplay from "./QuestionDisplay";
 import AnswerForm from "./AnswerForm";
 import QuestionNavigation from "./QuestionNavigation";
@@ -36,6 +37,8 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
   onComplete,
   onExit,
 }) => {
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
   const [session, setSession] = useState<MockExamSession | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
@@ -235,7 +238,7 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
   if (loading) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
+        <ActivityIndicator size="large" color={theme.colors.primary} />
         <Text style={styles.loadingText}>模試を準備中...</Text>
       </View>
     );
@@ -244,7 +247,7 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
   if (submitting) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
+        <ActivityIndicator size="large" color={theme.colors.primary} />
         <Text style={styles.loadingText}>模試を採点中...</Text>
       </View>
     );
@@ -329,9 +332,9 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
             />
 
             <AnswerForm
-              fields={[]} // TODO: Extract fields from question
+              fields={[]} // Future enhancement: Extract dynamic fields from question template
               answers={currentAnswer || {}}
-              onAnswerChange={() => {}} // TODO: Implement answer change handler
+              onAnswerChange={() => {}} // Future enhancement: Real-time answer saving in mock exams
               questionId={currentQuestion.question_id}
               sessionType="mock_exam"
               onSubmitAnswer={(response) => {
@@ -471,160 +474,161 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  centerContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: "#f8f9fa",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e9ecef",
-  },
-  headerLeft: {
-    flex: 1,
-  },
-  headerCenter: {
-    flex: 2,
-    alignItems: "center",
-  },
-  headerRight: {
-    flex: 1,
-    alignItems: "flex-end",
-  },
-  timeText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#212529",
-  },
-  timeWarning: {
-    color: "#fd7e14",
-  },
-  timeCritical: {
-    color: "#dc3545",
-  },
-  progressText: {
-    fontSize: 12,
-    color: "#6c757d",
-    marginTop: 2,
-  },
-  exitButton: {
-    backgroundColor: "#6c757d",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 6,
-  },
-  exitButtonText: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  submitButton: {
-    backgroundColor: "#28a745",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 6,
-  },
-  submitButtonText: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  progressContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    backgroundColor: "#f8f9fa",
-  },
-  progressBar: {
-    height: 4,
-    backgroundColor: "#e9ecef",
-    borderRadius: 2,
-    overflow: "hidden",
-  },
-  progressFill: {
-    height: "100%",
-    backgroundColor: "#007AFF",
-  },
-  questionContainer: {
-    flex: 1,
-    padding: 16,
-  },
-  navigationContainer: {
-    borderTopWidth: 1,
-    borderTopColor: "#e9ecef",
-    backgroundColor: "#f8f9fa",
-  },
-  loadingText: {
-    marginTop: 12,
-    fontSize: 16,
-    color: "#6c757d",
-  },
-  errorText: {
-    fontSize: 16,
-    color: "#dc3545",
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContainer: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    padding: 24,
-    margin: 20,
-    maxWidth: 400,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#212529",
-    marginBottom: 12,
-    textAlign: "center",
-  },
-  modalMessage: {
-    fontSize: 14,
-    color: "#6c757d",
-    lineHeight: 20,
-    textAlign: "center",
-    marginBottom: 24,
-  },
-  modalButtons: {
-    flexDirection: "row",
-    gap: 12,
-  },
-  modalButton: {
-    flex: 1,
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  cancelButton: {
-    backgroundColor: "#6c757d",
-  },
-  cancelButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  confirmButton: {
-    backgroundColor: "#dc3545",
-  },
-  confirmButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.surface,
+    },
+    centerContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
+    },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 16,
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    headerLeft: {
+      flex: 1,
+    },
+    headerCenter: {
+      flex: 2,
+      alignItems: "center",
+    },
+    headerRight: {
+      flex: 1,
+      alignItems: "flex-end",
+    },
+    timeText: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    timeWarning: {
+      color: theme.colors.warning,
+    },
+    timeCritical: {
+      color: theme.colors.error,
+    },
+    progressText: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginTop: 2,
+    },
+    exitButton: {
+      backgroundColor: theme.colors.textSecondary,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      borderRadius: 6,
+    },
+    exitButtonText: {
+      color: theme.colors.surface,
+      fontSize: 14,
+      fontWeight: "600",
+    },
+    submitButton: {
+      backgroundColor: theme.colors.success,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      borderRadius: 6,
+    },
+    submitButtonText: {
+      color: theme.colors.surface,
+      fontSize: 14,
+      fontWeight: "600",
+    },
+    progressContainer: {
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      backgroundColor: theme.colors.backgroundSecondary,
+    },
+    progressBar: {
+      height: 4,
+      backgroundColor: theme.colors.border,
+      borderRadius: 2,
+      overflow: "hidden",
+    },
+    progressFill: {
+      height: "100%",
+      backgroundColor: theme.colors.primary,
+    },
+    questionContainer: {
+      flex: 1,
+      padding: 16,
+    },
+    navigationContainer: {
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.border,
+      backgroundColor: theme.colors.backgroundSecondary,
+    },
+    loadingText: {
+      marginTop: 12,
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+    errorText: {
+      fontSize: 16,
+      color: theme.colors.error,
+      textAlign: "center",
+      marginBottom: 20,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: theme.colors.background + "80",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalContainer: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 12,
+      padding: 24,
+      margin: 20,
+      maxWidth: 400,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 12,
+      textAlign: "center",
+    },
+    modalMessage: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      lineHeight: 20,
+      textAlign: "center",
+      marginBottom: 24,
+    },
+    modalButtons: {
+      flexDirection: "row",
+      gap: 12,
+    },
+    modalButton: {
+      flex: 1,
+      paddingVertical: 12,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    cancelButton: {
+      backgroundColor: theme.colors.textSecondary,
+    },
+    cancelButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "600",
+    },
+    confirmButton: {
+      backgroundColor: theme.colors.error,
+    },
+    confirmButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "600",
+    },
+  });

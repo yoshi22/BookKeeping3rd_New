@@ -6,7 +6,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Platform, Vibration, Alert } from "react-native";
 import { Audio } from "expo-av";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme, type Theme } from "../context/ThemeContext";
 import { useAccessibility } from "./useAccessibility";
 import { useScreenReaderOptimization } from "./useScreenReaderOptimization";
 
@@ -20,6 +20,7 @@ export interface AudioFeedbackOptions {
 
 export interface VisualFeedbackOptions {
   type: "success" | "error" | "warning" | "info" | "navigation" | "action";
+  message?: string;
   duration?: number;
   position?: "top" | "center" | "bottom";
   showIcon?: boolean;
@@ -275,9 +276,15 @@ export function useVisualAudioSupport(options: AudioFeedbackOptions = {}) {
 
       // ハプティックフィードバック
       if (!skipHaptic) {
-        triggerHapticFeedback(
-          type === "navigation" ? "light" : type === "action" ? "medium" : type,
-        );
+        const hapticType =
+          type === "navigation"
+            ? "light"
+            : type === "action"
+              ? "medium"
+              : type === "info"
+                ? "light"
+                : type;
+        triggerHapticFeedback(hapticType);
       }
 
       // サウンドエフェクト

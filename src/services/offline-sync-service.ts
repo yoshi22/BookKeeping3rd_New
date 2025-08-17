@@ -3,10 +3,10 @@
  * 接続状態管理・バックグラウンド同期・競合解決
  */
 
-import NetInfo, { NetInfoState } from "@react-native-netinfo";
+import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AppState, AppStateStatus } from "react-native";
-import { database } from "../data/database";
+import { databaseService } from "../data/database";
 import { offlineCacheService } from "./offline-cache-service";
 import { StatisticsService } from "./statistics-service";
 import { ReviewService } from "./review-service";
@@ -170,7 +170,7 @@ export class OfflineSyncService {
     ];
 
     for (const query of queries) {
-      await database.executeQuery(query);
+      await databaseService.executeSql(query);
     }
   }
 
@@ -199,7 +199,9 @@ export class OfflineSyncService {
    */
   private updateNetworkStatus(state: NetInfoState): void {
     const wasOnline = this.syncStatus.isOnline;
-    const isOnline = state.isConnected && state.isInternetReachable;
+    const isOnline = Boolean(
+      state.isConnected && (state.isInternetReachable ?? false),
+    );
 
     this.syncStatus.isOnline = isOnline;
 
@@ -308,7 +310,7 @@ export class OfflineSyncService {
       operation.lastError || null,
     ];
 
-    await database.executeQuery(query, params);
+    await databaseService.executeSql(query, params);
   }
 
   /**
@@ -323,7 +325,7 @@ export class OfflineSyncService {
         ORDER BY timestamp ASC
       `;
 
-      const result = await database.executeQuery(query);
+      const result = await databaseService.executeSql(query);
 
       if (result.rows) {
         for (const row of result.rows) {
@@ -565,7 +567,7 @@ export class OfflineSyncService {
   ): Promise<any | null> {
     try {
       const query = `SELECT * FROM ${tableName} WHERE id = ? LIMIT 1`;
-      const result = await database.executeQuery(query, [id]);
+      const result = await databaseService.executeSql(query, [id]);
 
       return result.rows && result.rows.length > 0 ? result.rows[0] : null;
     } catch (error) {
@@ -631,7 +633,7 @@ export class OfflineSyncService {
       conflict.resolutionStrategy,
     ];
 
-    await database.executeQuery(query, params);
+    await databaseService.executeSql(query, params);
   }
 
   /**
@@ -680,7 +682,7 @@ export class OfflineSyncService {
 
       // マージ結果を適用
       const updateQuery = this.buildUpdateQuery(conflict.table, mergedData);
-      await database.executeQuery(updateQuery.query, updateQuery.params);
+      await databaseService.executeSql(updateQuery.query, updateQuery.params);
 
       await this.markConflictResolved(conflict.id);
       console.log(`[OfflineSyncService] マージ完了: ${conflict.id}`);
@@ -710,7 +712,7 @@ export class OfflineSyncService {
    * 競合解決完了のマーク
    */
   private async markConflictResolved(conflictId: string): Promise<void> {
-    await database.executeQuery(
+    await databaseService.executeSql(
       "UPDATE sync_conflicts SET resolved = 1 WHERE id = ?",
       [conflictId],
     );
@@ -741,7 +743,7 @@ export class OfflineSyncService {
       WHERE id = ?
     `;
 
-    await database.executeQuery(query, [
+    await databaseService.executeSql(query, [
       operation.status,
       operation.retryCount,
       operation.lastError || null,
@@ -761,9 +763,10 @@ export class OfflineSyncService {
     );
 
     // SQLiteからも削除
-    await database.executeQuery("DELETE FROM sync_operations WHERE id = ?", [
-      operation.id,
-    ]);
+    await databaseService.executeSql(
+      "DELETE FROM sync_operations WHERE id = ?",
+      [operation.id],
+    );
   }
 
   /**

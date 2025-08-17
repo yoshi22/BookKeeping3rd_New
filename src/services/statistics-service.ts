@@ -810,6 +810,13 @@ export class StatisticsService {
 
     return result.rows[0]?.count || 0;
   }
+
+  /**
+   * カテゴリ別進捗取得
+   */
+  public async getCategoryProgress(): Promise<CategoryStatistics[]> {
+    return await this.getCategoryStatistics();
+  }
 }
 
 /**

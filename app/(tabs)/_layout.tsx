@@ -81,30 +81,10 @@ function TabLayout() {
       <Tabs.Screen
         name="review"
         options={{
-          title: "復習",
-          headerShown: false, // ヘッダー非表示
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="refresh" color={color} focused={focused} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="stats"
-        options={{
-          title: "統計",
+          title: "復習・進捗",
           headerShown: false, // ヘッダー非表示
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="bar-chart" color={color} focused={focused} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="mock-exam"
-        options={{
-          title: "模試",
-          headerShown: false, // ヘッダー非表示
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="test" color={color} focused={focused} />
           ),
         }}
       />

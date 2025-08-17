@@ -1,23 +1,22 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import {
   Screen,
   Container,
   Flex,
 } from "../../src/components/layout/ResponsiveLayout";
-import { useTheme } from "../../src/context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  type Theme,
+} from "../../src/context/ThemeContext";
 import { TypographyUtils } from "../../src/theme/typography";
 
 export default function HomeScreen() {
   const router = useRouter();
   const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
 
   return (
     <Screen
@@ -201,35 +200,29 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  mainContent: {
-    paddingVertical: 20,
-    paddingTop: 40, // 上部のマージンを調整
-    paddingBottom: 100, // 下部に十分なパディングを追加（タブバーのため）
-  },
-  menuContainer: {
-    width: "100%",
-    maxWidth: 400,
-    paddingBottom: 20, // 下部に追加のパディング
-  },
-  menuButton: {
-    padding: 24,
-    borderRadius: 12,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  menuIcon: {
-    fontSize: 32,
-    marginBottom: 12,
-  },
-});
+    mainContent: {
+      paddingVertical: 20,
+      paddingTop: 40, // 上部のマージンを調整
+      paddingBottom: 100, // 下部に十分なパディングを追加（タブバーのため）
+    },
+    menuContainer: {
+      width: "100%",
+      maxWidth: 400,
+      paddingBottom: 20, // 下部に追加のパディング
+    },
+    menuButton: {
+      padding: 24,
+      borderRadius: 12,
+      alignItems: "center",
+      ...theme.shadows.medium,
+    },
+    menuIcon: {
+      fontSize: 32,
+      marginBottom: 12,
+    },
+  });

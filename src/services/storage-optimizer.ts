@@ -4,7 +4,7 @@
  */
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { database } from "../data/database";
+import { databaseService } from "../data/database";
 import { offlineCacheService } from "./offline-cache-service";
 
 export interface StorageStats {
@@ -141,7 +141,7 @@ export class StorageOptimizer {
       ];
 
       const results = await Promise.all(
-        pragmaQueries.map((query) => database.executeQuery(query)),
+        pragmaQueries.map((query) => databaseService.executeSql(query)),
       );
 
       const pageCount = results[0].rows?.[0]?.page_count || 0;
@@ -225,8 +225,8 @@ export class StorageOptimizer {
   private async calculateFragmentationRatio(): Promise<number> {
     try {
       const results = await Promise.all([
-        database.executeQuery("PRAGMA page_count"),
-        database.executeQuery("PRAGMA freelist_count"),
+        databaseService.executeSql("PRAGMA page_count"),
+        databaseService.executeSql("PRAGMA freelist_count"),
       ]);
 
       const pageCount = results[0].rows?.[0]?.page_count || 0;
@@ -347,7 +347,7 @@ export class StorageOptimizer {
       sizeBefore = statsBefore.size;
 
       // VACUUM実行
-      await database.executeQuery("VACUUM");
+      await databaseService.executeSql("VACUUM");
 
       // VACUUM後のサイズ取得
       const statsAfter = await this.analyzeDatabaseSize();
@@ -388,15 +388,15 @@ export class StorageOptimizer {
         SELECT name, sql FROM sqlite_master 
         WHERE type = 'index' AND sql IS NOT NULL
       `;
-      const indexResult = await database.executeQuery(indexQuery);
+      const indexResult = await databaseService.executeSql(indexQuery);
 
       const indexCount = indexResult.rows?.length || 0;
 
       // ANALYZE実行（統計情報更新）
-      await database.executeQuery("ANALYZE");
+      await databaseService.executeSql("ANALYZE");
 
       // REINDEX実行（インデックス再構築）
-      await database.executeQuery("REINDEX");
+      await databaseService.executeSql("REINDEX");
 
       success = true;
       details = `${indexCount}個のインデックスを最適化`;
@@ -440,7 +440,7 @@ export class StorageOptimizer {
         WHERE expires_at IS NOT NULL 
         AND expires_at < ?
       `;
-      await database.executeQuery(oldCacheQuery, [Date.now()]);
+      await databaseService.executeSql(oldCacheQuery, [Date.now()]);
 
       // 1週間以上古いキャッシュも削除
       const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
@@ -448,7 +448,7 @@ export class StorageOptimizer {
         DELETE FROM cache_data 
         WHERE last_accessed < ?
       `;
-      await database.executeQuery(oldDataQuery, [weekAgo]);
+      await databaseService.executeSql(oldDataQuery, [weekAgo]);
 
       // クリーンアップ後のサイズ
       const cacheAfter = offlineCacheService.getCacheStats();
@@ -564,7 +564,7 @@ export class StorageOptimizer {
 
     try {
       // データベース統計の更新
-      await database.executeQuery("ANALYZE");
+      await databaseService.executeSql("ANALYZE");
 
       // 各テーブルの行数カウント更新
       const tables = [
@@ -579,7 +579,7 @@ export class StorageOptimizer {
       let totalRows = 0;
       for (const table of tables) {
         try {
-          const result = await database.executeQuery(
+          const result = await databaseService.executeSql(
             `SELECT COUNT(*) as count FROM ${table}`,
           );
           const count = result.rows?.[0]?.count || 0;

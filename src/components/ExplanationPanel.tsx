@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native";
+import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../context/ThemeContext";
 
 interface ExplanationPanelProps {
   explanation: string;
@@ -30,6 +31,12 @@ export default function ExplanationPanel({
   correctAnswer,
   showAnswerComparison = false,
 }: ExplanationPanelProps) {
+  // Theme system integration for dark mode support
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
+
   const [isExpanded, setIsExpanded] = useState(true);
 
   // 解説文のフォーマット
@@ -630,8 +637,8 @@ export default function ExplanationPanel({
                     {
                       color:
                         (fs.incomeStatement?.netIncome || 0) >= 0
-                          ? "#4caf50"
-                          : "#f44336",
+                          ? theme.colors.success
+                          : theme.colors.error,
                     },
                   ]}
                 >
@@ -872,546 +879,544 @@ export default function ExplanationPanel({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    margin: 15,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-    overflow: "hidden",
-  },
-  header: {
-    backgroundColor: "#fff3e0",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ffcc02",
-  },
-  headerContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-  },
-  resultIcon: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 12,
-  },
-  correctIcon: {
-    backgroundColor: "#4caf50",
-  },
-  incorrectIcon: {
-    backgroundColor: "#f44336",
-  },
-  resultIconText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "white",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-    flex: 1,
-  },
-  expandIcon: {
-    fontSize: 14,
-    color: "#666",
-  },
-  content: {
-    padding: 16,
-  },
-  comparisonSection: {
-    marginBottom: 20,
-  },
-  comparisonTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 12,
-  },
-  comparisonContent: {
-    gap: 12,
-  },
-  answerBlock: {
-    marginBottom: 8,
-  },
-  answerLabel: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: "#666",
-    marginBottom: 6,
-  },
-  answerBox: {
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-  },
-  correctAnswerBox: {
-    backgroundColor: "#e8f5e8",
-    borderColor: "#4caf50",
-  },
-  incorrectAnswerBox: {
-    backgroundColor: "#ffeaea",
-    borderColor: "#f44336",
-  },
-  answerText: {
-    fontSize: 14,
-    color: "#333",
-    marginBottom: 2,
-  },
-  explanationSection: {
-    marginBottom: 20,
-  },
-  explanationTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 12,
-  },
-  explanationContainer: {
-    maxHeight: 200,
-  },
-  explanationText: {
-    fontSize: 15,
-    lineHeight: 24,
-    color: "#444",
-    textAlign: "left",
-  },
-  correctAnswerSection: {
-    marginBottom: 16,
-  },
-  correctAnswerTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#4caf50",
-    marginBottom: 12,
-    textAlign: "center",
-  },
-  userAnswerSection: {
-    marginTop: 16,
-  },
-  userAnswerTitle: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#666",
-    marginBottom: 8,
-  },
-  ledgerEntryBox: {
-    backgroundColor: "#e8f5e8",
-    borderColor: "#4caf50",
-    borderWidth: 2,
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 8,
-  },
-  journalEntryBox: {
-    backgroundColor: "#e8f5e8",
-    borderColor: "#4caf50",
-    borderWidth: 2,
-    padding: 12,
-    borderRadius: 8,
-  },
-  userEntryBox: {
-    padding: 8,
-    marginBottom: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-  },
-  entryHeader: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 6,
-  },
-  entryText: {
-    fontSize: 13,
-    color: "#333",
-    marginBottom: 4,
-    lineHeight: 18,
-  },
-  resultBadge: {
-    padding: 8,
-    borderRadius: 6,
-    alignItems: "center",
-    marginTop: 8,
-  },
-  correctBadge: {
-    backgroundColor: "#4caf50",
-  },
-  incorrectBadge: {
-    backgroundColor: "#f44336",
-  },
-  resultBadgeText: {
-    color: "white",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-  journalRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  journalColumn: {
-    flex: 1,
-    paddingHorizontal: 8,
-  },
-  journalHeader: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 8,
-    textAlign: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#4caf50",
-    paddingBottom: 4,
-  },
-  journalDivider: {
-    width: 1,
-    backgroundColor: "#4caf50",
-    marginHorizontal: 8,
-  },
-  entryRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 6,
-    paddingVertical: 2,
-  },
-  entryAmount: {
-    fontSize: 13,
-    color: "#333",
-    fontWeight: "500",
-    marginLeft: 8,
-  },
-  ledgerTableBox: {
-    backgroundColor: "#e8f5e8",
-    borderColor: "#4caf50",
-    borderWidth: 2,
-    borderRadius: 8,
-    overflow: "hidden",
-  },
-  ledgerTableHeader: {
-    flexDirection: "row",
-    backgroundColor: "#4caf50",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-  },
-  ledgerHeaderText: {
-    flex: 1,
-    fontSize: 13,
-    fontWeight: "bold",
-    color: "white",
-    textAlign: "center",
-  },
-  ledgerTableRow: {
-    flexDirection: "row",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  ledgerCellText: {
-    flex: 1,
-    fontSize: 12,
-    color: "#333",
-    textAlign: "center",
-  },
-  ledgerCellAmount: {
-    flex: 1,
-    fontSize: 12,
-    color: "#333",
-    textAlign: "right",
-    fontWeight: "500",
-  },
-  // 試算表用のスタイル
-  trialBalanceBox: {
-    backgroundColor: "#e8f5e8",
-    borderColor: "#4caf50",
-    borderWidth: 2,
-    borderRadius: 8,
-    overflow: "hidden",
-  },
-  trialBalanceHeader: {
-    flexDirection: "row",
-    backgroundColor: "#4caf50",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-  },
-  trialBalanceRow: {
-    flexDirection: "row",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  trialHeaderText: {
-    fontSize: 13,
-    fontWeight: "bold",
-    color: "white",
-    textAlign: "center",
-  },
-  trialCellText: {
-    fontSize: 12,
-    color: "#333",
-    textAlign: "left",
-  },
-  trialCellAmount: {
-    fontSize: 12,
-    color: "#333",
-    textAlign: "right",
-    fontWeight: "500",
-  },
+// Theme-aware styles function for dark mode support
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.surface,
+      margin: 15,
+      borderRadius: 10,
+      ...theme.shadows.medium,
+      overflow: "hidden",
+    },
+    header: {
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.warning,
+    },
+    headerContent: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 16,
+    },
+    resultIcon: {
+      width: 28,
+      height: 28,
+      borderRadius: 14,
+      justifyContent: "center",
+      alignItems: "center",
+      marginRight: 12,
+    },
+    correctIcon: {
+      backgroundColor: theme.colors.success,
+    },
+    incorrectIcon: {
+      backgroundColor: theme.colors.error,
+    },
+    resultIconText: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.surface,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      flex: 1,
+    },
+    expandIcon: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+    },
+    content: {
+      padding: 16,
+    },
+    comparisonSection: {
+      marginBottom: 20,
+    },
+    comparisonTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 12,
+    },
+    comparisonContent: {
+      gap: 12,
+    },
+    answerBlock: {
+      marginBottom: 8,
+    },
+    answerLabel: {
+      fontSize: 14,
+      fontWeight: "500",
+      color: theme.colors.textSecondary,
+      marginBottom: 6,
+    },
+    answerBox: {
+      padding: 12,
+      borderRadius: 8,
+      borderWidth: 1,
+    },
+    correctAnswerBox: {
+      backgroundColor: theme.colors.successBackground,
+      borderColor: theme.colors.success,
+    },
+    incorrectAnswerBox: {
+      backgroundColor: theme.colors.errorBackground,
+      borderColor: theme.colors.error,
+    },
+    answerText: {
+      fontSize: 14,
+      color: theme.colors.text,
+      marginBottom: 2,
+    },
+    explanationSection: {
+      marginBottom: 20,
+    },
+    explanationTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 12,
+    },
+    explanationContainer: {
+      maxHeight: 200,
+    },
+    explanationText: {
+      fontSize: 15,
+      lineHeight: 24,
+      color: theme.colors.text,
+      textAlign: "left",
+    },
+    correctAnswerSection: {
+      marginBottom: 16,
+    },
+    correctAnswerTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.success,
+      marginBottom: 12,
+      textAlign: "center",
+    },
+    userAnswerSection: {
+      marginTop: 16,
+    },
+    userAnswerTitle: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: theme.colors.textSecondary,
+      marginBottom: 8,
+    },
+    ledgerEntryBox: {
+      backgroundColor: theme.colors.successBackground,
+      borderColor: theme.colors.success,
+      borderWidth: 2,
+      padding: 12,
+      borderRadius: 8,
+      marginBottom: 8,
+    },
+    journalEntryBox: {
+      backgroundColor: theme.colors.successBackground,
+      borderColor: theme.colors.success,
+      borderWidth: 2,
+      padding: 12,
+      borderRadius: 8,
+    },
+    userEntryBox: {
+      padding: 8,
+      marginBottom: 8,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+    },
+    entryHeader: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 6,
+    },
+    entryText: {
+      fontSize: 13,
+      color: theme.colors.text,
+      marginBottom: 4,
+      lineHeight: 18,
+    },
+    resultBadge: {
+      padding: 8,
+      borderRadius: 6,
+      alignItems: "center",
+      marginTop: 8,
+    },
+    correctBadge: {
+      backgroundColor: theme.colors.success,
+    },
+    incorrectBadge: {
+      backgroundColor: theme.colors.error,
+    },
+    resultBadgeText: {
+      color: theme.colors.surface,
+      fontSize: 14,
+      fontWeight: "bold",
+    },
+    journalRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    journalColumn: {
+      flex: 1,
+      paddingHorizontal: 8,
+    },
+    journalHeader: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 8,
+      textAlign: "center",
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.success,
+      paddingBottom: 4,
+    },
+    journalDivider: {
+      width: 1,
+      backgroundColor: theme.colors.success,
+      marginHorizontal: 8,
+    },
+    entryRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 6,
+      paddingVertical: 2,
+    },
+    entryAmount: {
+      fontSize: 13,
+      color: theme.colors.text,
+      fontWeight: "500",
+      marginLeft: 8,
+    },
+    ledgerTableBox: {
+      backgroundColor: theme.colors.successBackground,
+      borderColor: theme.colors.success,
+      borderWidth: 2,
+      borderRadius: 8,
+      overflow: "hidden",
+    },
+    ledgerTableHeader: {
+      flexDirection: "row",
+      backgroundColor: theme.colors.success,
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+    },
+    ledgerHeaderText: {
+      flex: 1,
+      fontSize: 13,
+      fontWeight: "bold",
+      color: theme.colors.surface,
+      textAlign: "center",
+    },
+    ledgerTableRow: {
+      flexDirection: "row",
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+    },
+    ledgerCellText: {
+      flex: 1,
+      fontSize: 12,
+      color: theme.colors.text,
+      textAlign: "center",
+    },
+    ledgerCellAmount: {
+      flex: 1,
+      fontSize: 12,
+      color: theme.colors.text,
+      textAlign: "right",
+      fontWeight: "500",
+    },
+    // 試算表用のスタイル
+    trialBalanceBox: {
+      backgroundColor: theme.colors.successBackground,
+      borderColor: theme.colors.success,
+      borderWidth: 2,
+      borderRadius: 8,
+      overflow: "hidden",
+    },
+    trialBalanceHeader: {
+      flexDirection: "row",
+      backgroundColor: theme.colors.success,
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+    },
+    trialBalanceRow: {
+      flexDirection: "row",
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+    },
+    trialHeaderText: {
+      fontSize: 13,
+      fontWeight: "bold",
+      color: theme.colors.surface,
+      textAlign: "center",
+    },
+    trialCellText: {
+      fontSize: 12,
+      color: theme.colors.text,
+      textAlign: "left",
+    },
+    trialCellAmount: {
+      fontSize: 12,
+      color: theme.colors.text,
+      textAlign: "right",
+      fontWeight: "500",
+    },
 
-  voucherBox: {
-    backgroundColor: "#f9f9f9",
-    padding: 12,
-    marginBottom: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#e0e0e0",
-  },
-  voucherTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    paddingBottom: 4,
-  },
-  voucherEntry: {
-    paddingVertical: 4,
-    paddingLeft: 8,
-  },
-  choiceAnswerBox: {
-    backgroundColor: "#f0f8ff",
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#4a90e2",
-  },
-  selectedText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#333",
-  },
-  multipleBlankAnswerBox: {
-    backgroundColor: "#f0f8ff",
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#4a90e2",
-  },
-  blankAnswerText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#333",
-    marginBottom: 6,
-    lineHeight: 22,
-  },
-  // 財務諸表用のスタイル
-  financialStatementContainer: {
-    marginBottom: 20,
-  },
-  financialStatementTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 12,
-    textAlign: "center",
-  },
-  balanceSheetBox: {
-    flexDirection: "row",
-    borderWidth: 2,
-    borderColor: "#4caf50",
-    borderRadius: 8,
-    overflow: "hidden",
-    backgroundColor: "#f8fff8",
-  },
-  balanceSheetColumn: {
-    flex: 1,
-    padding: 12,
-  },
-  balanceSheetDivider: {
-    width: 2,
-    backgroundColor: "#4caf50",
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#2e7d32",
-    marginBottom: 8,
-    paddingBottom: 4,
-    borderBottomWidth: 1,
-    borderBottomColor: "#c8e6c9",
-  },
-  accountRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 4,
-  },
-  accountName: {
-    fontSize: 13,
-    color: "#333",
-  },
-  accountAmount: {
-    fontSize: 13,
-    color: "#333",
-    fontWeight: "500",
-  },
-  totalRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 6,
-    marginTop: 8,
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: "#c8e6c9",
-  },
-  totalLabel: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-  totalAmount: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-  incomeStatementBox: {
-    borderWidth: 2,
-    borderColor: "#4caf50",
-    borderRadius: 8,
-    overflow: "hidden",
-    backgroundColor: "#f8fff8",
-    padding: 12,
-  },
-  netIncomeRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 8,
-    marginTop: 12,
-    paddingTop: 12,
-    borderTopWidth: 2,
-    borderTopColor: "#4caf50",
-  },
-  netIncomeLabel: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-  netIncomeAmount: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-  // Additional balance sheet styles
-  balanceSheetSectionHeader: {
-    paddingBottom: 4,
-    marginBottom: 8,
-  },
-  balanceSheetSectionTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-  balanceSheetRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 4,
-  },
-  balanceSheetAccountName: {
-    fontSize: 13,
-    color: "#333",
-  },
-  balanceSheetAmount: {
-    fontSize: 13,
-    color: "#333",
-    fontWeight: "500",
-  },
-  balanceSheetTotalRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 6,
-    marginTop: 8,
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: "#c8e6c9",
-  },
-  balanceSheetTotalLabel: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-  balanceSheetTotalAmount: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-  // Additional income statement styles
-  incomeStatementSection: {
-    marginBottom: 12,
-  },
-  incomeStatementSectionTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#2e7d32",
-    marginBottom: 8,
-  },
-  incomeStatementRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 4,
-  },
-  incomeStatementAccountName: {
-    fontSize: 13,
-    color: "#333",
-  },
-  incomeStatementAmount: {
-    fontSize: 13,
-    color: "#333",
-    fontWeight: "500",
-  },
-  incomeStatementSubtotalRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 6,
-    marginTop: 8,
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: "#c8e6c9",
-  },
-  incomeStatementSubtotalLabel: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-  incomeStatementSubtotalAmount: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-  incomeStatementResultRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 8,
-    marginTop: 12,
-    paddingTop: 12,
-    borderTopWidth: 2,
-    borderTopColor: "#4caf50",
-  },
-  incomeStatementResultLabel: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-  incomeStatementResultAmount: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-});
+    voucherBox: {
+      backgroundColor: theme.colors.backgroundSecondary,
+      padding: 12,
+      marginBottom: 10,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: theme.colors.borderLight,
+    },
+    voucherTitle: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 8,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+      paddingBottom: 4,
+    },
+    voucherEntry: {
+      paddingVertical: 4,
+      paddingLeft: 8,
+    },
+    choiceAnswerBox: {
+      backgroundColor: theme.colors.infoBackground,
+      padding: 12,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+    },
+    selectedText: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+    },
+    multipleBlankAnswerBox: {
+      backgroundColor: theme.colors.infoBackground,
+      padding: 12,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+    },
+    blankAnswerText: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+      marginBottom: 6,
+      lineHeight: 22,
+    },
+    // 財務諸表用のスタイル
+    financialStatementContainer: {
+      marginBottom: 20,
+    },
+    financialStatementTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 12,
+      textAlign: "center",
+    },
+    balanceSheetBox: {
+      flexDirection: "row",
+      borderWidth: 2,
+      borderColor: theme.colors.success,
+      borderRadius: 8,
+      overflow: "hidden",
+      backgroundColor: theme.colors.successBackground,
+    },
+    balanceSheetColumn: {
+      flex: 1,
+      padding: 12,
+    },
+    balanceSheetDivider: {
+      width: 2,
+      backgroundColor: theme.colors.success,
+    },
+    sectionTitle: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+      marginBottom: 8,
+      paddingBottom: 4,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.successBackground,
+    },
+    accountRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 4,
+    },
+    accountName: {
+      fontSize: 13,
+      color: theme.colors.text,
+    },
+    accountAmount: {
+      fontSize: 13,
+      color: theme.colors.text,
+      fontWeight: "500",
+    },
+    totalRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 6,
+      marginTop: 8,
+      paddingTop: 8,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.successBackground,
+    },
+    totalLabel: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+    },
+    totalAmount: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+    },
+    incomeStatementBox: {
+      borderWidth: 2,
+      borderColor: theme.colors.success,
+      borderRadius: 8,
+      overflow: "hidden",
+      backgroundColor: theme.colors.successBackground,
+      padding: 12,
+    },
+    netIncomeRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 8,
+      marginTop: 12,
+      paddingTop: 12,
+      borderTopWidth: 2,
+      borderTopColor: theme.colors.success,
+    },
+    netIncomeLabel: {
+      fontSize: 15,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+    },
+    netIncomeAmount: {
+      fontSize: 15,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+    },
+    // Additional balance sheet styles
+    balanceSheetSectionHeader: {
+      paddingBottom: 4,
+      marginBottom: 8,
+    },
+    balanceSheetSectionTitle: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+    },
+    balanceSheetRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 4,
+    },
+    balanceSheetAccountName: {
+      fontSize: 13,
+      color: theme.colors.text,
+    },
+    balanceSheetAmount: {
+      fontSize: 13,
+      color: theme.colors.text,
+      fontWeight: "500",
+    },
+    balanceSheetTotalRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 6,
+      marginTop: 8,
+      paddingTop: 8,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.successBackground,
+    },
+    balanceSheetTotalLabel: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+    },
+    balanceSheetTotalAmount: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+    },
+    // Additional income statement styles
+    incomeStatementSection: {
+      marginBottom: 12,
+    },
+    incomeStatementSectionTitle: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+      marginBottom: 8,
+    },
+    incomeStatementRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 4,
+    },
+    incomeStatementAccountName: {
+      fontSize: 13,
+      color: theme.colors.text,
+    },
+    incomeStatementAmount: {
+      fontSize: 13,
+      color: theme.colors.text,
+      fontWeight: "500",
+    },
+    incomeStatementSubtotalRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 6,
+      marginTop: 8,
+      paddingTop: 8,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.successBackground,
+    },
+    incomeStatementSubtotalLabel: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+    },
+    incomeStatementSubtotalAmount: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+    },
+    incomeStatementResultRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: 8,
+      marginTop: 12,
+      paddingTop: 12,
+      borderTopWidth: 2,
+      borderTopColor: theme.colors.success,
+    },
+    incomeStatementResultLabel: {
+      fontSize: 15,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+    },
+    incomeStatementResultAmount: {
+      fontSize: 15,
+      fontWeight: "bold",
+      color: theme.colors.successDark,
+    },
+  });

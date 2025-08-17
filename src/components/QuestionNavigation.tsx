@@ -3,13 +3,9 @@
  * Step 2.1.6: カテゴリ選択・問題ナビゲーション機能実装
  */
 
-import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 
 interface QuestionNavigationProps {
   currentQuestionIndex: number;
@@ -34,11 +30,14 @@ export default function QuestionNavigation({
   canGoNext = true,
   showQuestionNumbers = false,
 }: QuestionNavigationProps) {
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
 
   // 進捗率の計算
-  const progressPercentage = totalQuestions > 0 
-    ? ((currentQuestionIndex + 1) / totalQuestions) * 100 
-    : 0;
+  const progressPercentage =
+    totalQuestions > 0
+      ? ((currentQuestionIndex + 1) / totalQuestions) * 100
+      : 0;
 
   // 問題番号リストの生成（表示する場合）
   const renderQuestionNumbers = () => {
@@ -55,22 +54,22 @@ export default function QuestionNavigation({
           ]}
           onPress={() => onQuestionSelect(i)}
         >
-          <Text style={[
-            styles.questionNumberText,
-            i === currentQuestionIndex && styles.questionNumberTextActive,
-          ]}>
+          <Text
+            style={[
+              styles.questionNumberText,
+              i === currentQuestionIndex && styles.questionNumberTextActive,
+            ]}
+          >
             {i + 1}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity>,
       );
     }
 
     return (
       <View style={styles.questionNumbersContainer}>
         <Text style={styles.questionNumbersTitle}>問題選択:</Text>
-        <View style={styles.questionNumbers}>
-          {numbers}
-        </View>
+        <View style={styles.questionNumbers}>{numbers}</View>
       </View>
     );
   };
@@ -93,11 +92,11 @@ export default function QuestionNavigation({
       {/* 進捗バー */}
       <View style={styles.progressBarContainer}>
         <View style={styles.progressBarBackground}>
-          <View 
+          <View
             style={[
               styles.progressBarFill,
-              { width: `${progressPercentage}%` }
-            ]} 
+              { width: `${progressPercentage}%` },
+            ]}
           />
         </View>
       </View>
@@ -113,10 +112,12 @@ export default function QuestionNavigation({
           onPress={onPrevious}
           disabled={!canGoPrevious}
         >
-          <Text style={[
-            styles.navButtonText,
-            !canGoPrevious && styles.navButtonTextDisabled,
-          ]}>
+          <Text
+            style={[
+              styles.navButtonText,
+              !canGoPrevious && styles.navButtonTextDisabled,
+            ]}
+          >
             ← 前の問題
           </Text>
         </TouchableOpacity>
@@ -130,10 +131,13 @@ export default function QuestionNavigation({
           onPress={onNext}
           disabled={!canGoNext}
         >
-          <Text style={[
-            styles.navButtonText,
-            !canGoNext && styles.navButtonTextDisabled,
-          ]}>
+          <Text
+            style={[
+              styles.navButtonText,
+              styles.nextButtonText,
+              !canGoNext && styles.navButtonTextDisabled,
+            ]}
+          >
             次の問題 →
           </Text>
         </TouchableOpacity>
@@ -145,129 +149,130 @@ export default function QuestionNavigation({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    margin: 15,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-    overflow: 'hidden',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#f8f9fa',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-  },
-  categoryInfo: {
-    flex: 1,
-  },
-  categoryName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 2,
-  },
-  progressText: {
-    fontSize: 14,
-    color: '#666',
-  },
-  progressPercentage: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#2f95dc',
-  },
-  progressBarContainer: {
-    padding: 16,
-    paddingTop: 8,
-    paddingBottom: 8,
-  },
-  progressBarBackground: {
-    height: 8,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-  progressBarFill: {
-    height: '100%',
-    backgroundColor: '#2f95dc',
-    borderRadius: 4,
-  },
-  navigationButtons: {
-    flexDirection: 'row',
-    padding: 16,
-    gap: 12,
-  },
-  navButton: {
-    flex: 1,
-    padding: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 44,
-  },
-  prevButton: {
-    backgroundColor: '#f5f5f5',
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  nextButton: {
-    backgroundColor: '#2f95dc',
-  },
-  navButtonDisabled: {
-    backgroundColor: '#f0f0f0',
-    borderColor: '#e0e0e0',
-  },
-  navButtonText: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  navButtonTextDisabled: {
-    color: '#ccc',
-  },
-  questionNumbersContainer: {
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-  },
-  questionNumbersTitle: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 8,
-  },
-  questionNumbers: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  questionNumber: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: '#f5f5f5',
-    borderWidth: 1,
-    borderColor: '#ddd',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  questionNumberActive: {
-    backgroundColor: '#2f95dc',
-    borderColor: '#2f95dc',
-  },
-  questionNumberText: {
-    fontSize: 14,
-    color: '#666',
-    fontWeight: '500',
-  },
-  questionNumberTextActive: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.surface,
+      margin: 15,
+      borderRadius: 10,
+      ...theme.shadows.medium,
+      overflow: "hidden",
+    },
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 16,
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    categoryInfo: {
+      flex: 1,
+    },
+    categoryName: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 2,
+    },
+    progressText: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+    },
+    progressPercentage: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+    },
+    progressBarContainer: {
+      padding: 16,
+      paddingTop: 8,
+      paddingBottom: 8,
+    },
+    progressBarBackground: {
+      height: 8,
+      backgroundColor: theme.colors.border,
+      borderRadius: 4,
+      overflow: "hidden",
+    },
+    progressBarFill: {
+      height: "100%",
+      backgroundColor: theme.colors.primary,
+      borderRadius: 4,
+    },
+    navigationButtons: {
+      flexDirection: "row",
+      padding: 16,
+      gap: 12,
+    },
+    navButton: {
+      flex: 1,
+      padding: 12,
+      borderRadius: 8,
+      alignItems: "center",
+      justifyContent: "center",
+      minHeight: 44,
+    },
+    prevButton: {
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    nextButton: {
+      backgroundColor: theme.colors.primary,
+    },
+    navButtonDisabled: {
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderColor: theme.colors.border,
+    },
+    navButtonText: {
+      fontSize: 16,
+      fontWeight: "500",
+      color: theme.colors.text,
+    },
+    nextButtonText: {
+      color: theme.colors.surface,
+    },
+    navButtonTextDisabled: {
+      color: theme.colors.textDisabled,
+    },
+    questionNumbersContainer: {
+      padding: 16,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.border,
+    },
+    questionNumbersTitle: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginBottom: 8,
+    },
+    questionNumbers: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: 8,
+    },
+    questionNumber: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    questionNumberActive: {
+      backgroundColor: theme.colors.primary,
+      borderColor: theme.colors.primary,
+    },
+    questionNumberText: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      fontWeight: "500",
+    },
+    questionNumberTextActive: {
+      color: theme.colors.surface,
+      fontWeight: "bold",
+    },
+  });

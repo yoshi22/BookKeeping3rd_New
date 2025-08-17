@@ -12,8 +12,11 @@ import React, {
 } from "react";
 import { Animated, View, Text, StyleSheet } from "react-native";
 import { useAccessibility } from "./useAccessibility";
-import { lightColors } from "../theme/colors";
-import { useColors } from "../context/ThemeContext";
+import {
+  useColors,
+  useThemedStyles,
+  type Theme,
+} from "../context/ThemeContext";
 
 export interface ProgressConfig {
   duration?: number;
@@ -86,6 +89,7 @@ export const CircularProgress = forwardRef<any, CircularProgressProps>(
     const animatedProgress = useRef(new Animated.Value(0)).current;
     const { isReduceMotionEnabled } = useAccessibility();
     const colors = useColors();
+    const styles = useThemedStyles(createStyles);
 
     // Phase 4: テーマに応じたデフォルトカラー
     const effectiveColor = color || colors.primary;
@@ -184,14 +188,7 @@ export const CircularProgress = forwardRef<any, CircularProgressProps>(
                   ]}
                   accessibilityLabel={`進捗 ${Math.round(progress)}%`}
                 >
-                  {animatedProgress
-                    .interpolate({
-                      inputRange: [0, 100],
-                      outputRange: [0, progress],
-                    })
-                    .__getValue()
-                    .toFixed(0)}
-                  %
+                  {Math.round(progress)}%
                 </Animated.Text>
               )}
               {showLabel && label && (
@@ -228,6 +225,7 @@ export const LinearProgress = forwardRef<any, LinearProgressProps>(
     const animatedProgress = useRef(new Animated.Value(0)).current;
     const { isReduceMotionEnabled } = useAccessibility();
     const colors = useColors();
+    const styles = useThemedStyles(createStyles);
 
     // Phase 4: テーマに応じたデフォルトカラー
     const effectiveColor = color || colors.primary;
@@ -317,11 +315,18 @@ export const SkeletonLoader: React.FC<SkeletonProps> = ({
   height = 20,
   borderRadius = 4,
   animated = true,
-  shimmerColor = "#E0E0E0",
-  backgroundColor = "#F5F5F5",
+  shimmerColor,
+  backgroundColor,
 }) => {
+  const colors = useColors();
+  const styles = useThemedStyles(createStyles);
   const shimmerAnimation = useRef(new Animated.Value(0)).current;
   const { isReduceMotionEnabled } = useAccessibility();
+
+  // テーマ対応のデフォルトカラー
+  const effectiveShimmerColor = shimmerColor || colors.borderLight;
+  const effectiveBackgroundColor =
+    backgroundColor || colors.backgroundSecondary;
 
   useEffect(() => {
     if (!animated || isReduceMotionEnabled) return;
@@ -355,10 +360,10 @@ export const SkeletonLoader: React.FC<SkeletonProps> = ({
       style={[
         styles.skeletonContainer,
         {
-          width,
-          height,
+          width: typeof width === "string" ? (width as any) : width,
+          height: typeof height === "string" ? (height as any) : height,
           borderRadius,
-          backgroundColor,
+          backgroundColor: effectiveBackgroundColor,
         },
       ]}
       accessibilityLabel="読み込み中"
@@ -368,7 +373,7 @@ export const SkeletonLoader: React.FC<SkeletonProps> = ({
           style={[
             styles.skeletonShimmer,
             {
-              backgroundColor: shimmerColor,
+              backgroundColor: effectiveShimmerColor,
               transform: [{ translateX }],
             },
           ]}
@@ -392,6 +397,7 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
 }) => {
   const { isReduceMotionEnabled } = useAccessibility();
   const colors = useColors();
+  const styles = useThemedStyles(createStyles);
 
   // Phase 4: テーマに応じたデフォルトカラー
   const effectiveActiveColor = activeColor || colors.primary;
@@ -406,7 +412,7 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
 
   const getStepTextColor = (index: number, step: any) => {
     if (step.completed || step.active || index === currentStep) {
-      return "#FFFFFF";
+      return colors.surface;
     }
     return colors.textSecondary;
   };
@@ -532,6 +538,9 @@ export const LearningProgress: React.FC<LearningProgressProps> = ({
   correctAnswers,
   categoryProgress = [],
 }) => {
+  const colors = useColors();
+  const styles = useThemedStyles(createStyles);
+
   const completionPercentage = (completedQuestions / totalQuestions) * 100;
   const accuracyPercentage =
     completedQuestions > 0 ? (correctAnswers / completedQuestions) * 100 : 0;
@@ -544,7 +553,7 @@ export const LearningProgress: React.FC<LearningProgressProps> = ({
           progress={completionPercentage}
           size={120}
           strokeWidth={10}
-          color={lightColors.primary}
+          color={colors.primary}
           showPercentage={true}
           showLabel={true}
           label="完了率"
@@ -586,180 +595,181 @@ export const LearningProgress: React.FC<LearningProgressProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  // 円形プログレス
-  circularContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  circularBackground: {
-    borderColor: "#E0E0E0",
-  },
-  circularProgress: {
-    borderTopColor: "transparent",
-    borderRightColor: "transparent",
-  },
-  circularContent: {
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  circularTextContainer: {
-    alignItems: "center",
-  },
-  percentageText: {
-    fontWeight: "bold",
-  },
-  labelText: {
-    color: lightColors.textSecondary,
-    marginTop: 2,
-  },
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    // 円形プログレス
+    circularContainer: {
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    circularBackground: {
+      borderColor: theme.colors.border,
+    },
+    circularProgress: {
+      borderTopColor: "transparent",
+      borderRightColor: "transparent",
+    },
+    circularContent: {
+      position: "absolute",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    circularTextContainer: {
+      alignItems: "center",
+    },
+    percentageText: {
+      fontWeight: "bold",
+    },
+    labelText: {
+      color: theme.colors.textSecondary,
+      marginTop: 2,
+    },
 
-  // 線形プログレス
-  linearContainer: {
-    width: "100%",
-  },
-  linearHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  linearLabel: {
-    fontSize: 14,
-    fontWeight: "500",
-  },
-  linearPercentage: {
-    fontSize: 12,
-  },
-  linearBackground: {
-    overflow: "hidden",
-  },
-  linearFill: {
-    position: "absolute",
-    left: 0,
-    top: 0,
-  },
+    // 線形プログレス
+    linearContainer: {
+      width: "100%",
+    },
+    linearHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 8,
+    },
+    linearLabel: {
+      fontSize: 14,
+      fontWeight: "500",
+    },
+    linearPercentage: {
+      fontSize: 12,
+    },
+    linearBackground: {
+      overflow: "hidden",
+    },
+    linearFill: {
+      position: "absolute",
+      left: 0,
+      top: 0,
+    },
 
-  // スケルトンローダー
-  skeletonContainer: {
-    overflow: "hidden",
-    position: "relative",
-  },
-  skeletonShimmer: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    opacity: 0.3,
-  },
+    // スケルトンローダー
+    skeletonContainer: {
+      overflow: "hidden",
+      position: "relative",
+    },
+    skeletonShimmer: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      opacity: 0.3,
+    },
 
-  // ステップインジケーター
-  stepContainer: {
-    flex: 1,
-  },
-  stepHorizontal: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  stepVertical: {
-    flexDirection: "column",
-  },
-  stepItem: {
-    position: "relative",
-  },
-  stepItemHorizontal: {
-    flex: 1,
-    alignItems: "center",
-  },
-  stepItemVertical: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  stepCircle: {
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 1,
-  },
-  stepNumber: {
-    fontWeight: "bold",
-  },
-  stepInfo: {
-    marginLeft: 12,
-  },
-  stepInfoHorizontal: {
-    marginTop: 8,
-    alignItems: "center",
-  },
-  stepInfoVertical: {
-    flex: 1,
-  },
-  stepTitle: {
-    fontSize: 14,
-    fontWeight: "500",
-  },
-  stepDescription: {
-    fontSize: 12,
-    color: lightColors.textSecondary,
-    marginTop: 2,
-  },
-  stepConnector: {
-    position: "absolute",
-  },
-  stepConnectorHorizontal: {
-    right: -50,
-    top: 16,
-    width: 100,
-    height: 2,
-  },
-  stepConnectorVertical: {
-    left: 16,
-    bottom: -20,
-    width: 2,
-    height: 20,
-  },
+    // ステップインジケーター
+    stepContainer: {
+      flex: 1,
+    },
+    stepHorizontal: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    stepVertical: {
+      flexDirection: "column",
+    },
+    stepItem: {
+      position: "relative",
+    },
+    stepItemHorizontal: {
+      flex: 1,
+      alignItems: "center",
+    },
+    stepItemVertical: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 20,
+    },
+    stepCircle: {
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1,
+    },
+    stepNumber: {
+      fontWeight: "bold",
+    },
+    stepInfo: {
+      marginLeft: 12,
+    },
+    stepInfoHorizontal: {
+      marginTop: 8,
+      alignItems: "center",
+    },
+    stepInfoVertical: {
+      flex: 1,
+    },
+    stepTitle: {
+      fontSize: 14,
+      fontWeight: "500",
+    },
+    stepDescription: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginTop: 2,
+    },
+    stepConnector: {
+      position: "absolute",
+    },
+    stepConnectorHorizontal: {
+      right: -50,
+      top: 16,
+      width: 100,
+      height: 2,
+    },
+    stepConnectorVertical: {
+      left: 16,
+      bottom: -20,
+      width: 2,
+      height: 20,
+    },
 
-  // 学習進捗
-  learningProgressContainer: {
-    padding: 20,
-  },
-  overallProgress: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 30,
-  },
-  progressStats: {
-    marginLeft: 20,
-    flex: 1,
-  },
-  progressLabel: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: lightColors.text,
-    marginBottom: 8,
-  },
-  progressText: {
-    fontSize: 16,
-    color: lightColors.textSecondary,
-    marginBottom: 4,
-  },
-  accuracyText: {
-    fontSize: 14,
-    color: lightColors.success,
-    fontWeight: "500",
-  },
-  categoryProgressContainer: {
-    marginTop: 20,
-  },
-  categoryTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: lightColors.text,
-    marginBottom: 16,
-  },
-});
+    // 学習進捗
+    learningProgressContainer: {
+      padding: 20,
+    },
+    overallProgress: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 30,
+    },
+    progressStats: {
+      marginLeft: 20,
+      flex: 1,
+    },
+    progressLabel: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 8,
+    },
+    progressText: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+      marginBottom: 4,
+    },
+    accuracyText: {
+      fontSize: 14,
+      color: theme.colors.success,
+      fontWeight: "500",
+    },
+    categoryProgressContainer: {
+      marginTop: 20,
+    },
+    categoryTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 16,
+    },
+  });
 
 CircularProgress.displayName = "CircularProgress";
 LinearProgress.displayName = "LinearProgress";

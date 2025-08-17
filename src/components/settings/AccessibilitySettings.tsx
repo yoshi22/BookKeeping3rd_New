@@ -12,10 +12,14 @@ import {
   Switch,
   TouchableOpacity,
   Alert,
-  Slider,
 } from "react-native";
+import Slider from "@react-native-community/slider";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useTheme, useAccessibleStyles } from "../../context/ThemeContext";
+import {
+  useTheme,
+  useAccessibleStyles,
+  type Theme,
+} from "../../context/ThemeContext";
 import { useAccessibility } from "../../hooks/useAccessibility";
 import {
   useVisualAudioSupport,
@@ -44,13 +48,7 @@ export function AccessibilitySettings({
   } = useTheme();
   const { getHighContrastColor, getMinTouchTargetStyle, checkContrast } =
     useAccessibleStyles();
-  const {
-    isScreenReaderEnabled,
-    isVoiceOverRunning,
-    isReduceMotionEnabled,
-    isLargeTextEnabled,
-    checkSystemAccessibility,
-  } = useAccessibility();
+  const { isScreenReaderEnabled, isReduceMotionEnabled } = useAccessibility();
   const { triggerCBTFeedback, testAllFeedbacks } = useVisualAudioSupport();
   const { settings: audioSettings, updateSetting } = useAudioSettings();
   const { announceWithContext, announceKeyboardHelp } =
@@ -75,9 +73,7 @@ export function AccessibilitySettings({
   // システムアクセシビリティ状態
   const [systemStatus, setSystemStatus] = useState({
     screenReader: isScreenReaderEnabled,
-    voiceOver: isVoiceOverRunning,
     reduceMotion: isReduceMotionEnabled,
-    largeText: isLargeTextEnabled,
   });
 
   // 設定変更時の処理
@@ -108,7 +104,7 @@ export function AccessibilitySettings({
 
       // スクリーンリーダー用アナウンス
       if (isScreenReaderEnabled) {
-        const settingNames = {
+        const settingNames: Record<string, string> = {
           enableSoundEffects: "音声効果",
           enableHapticFeedback: "触覚フィードバック",
           enableVisualFeedback: "視覚的フィードバック",
@@ -129,7 +125,7 @@ export function AccessibilitySettings({
 
       // CBTフィードバックテスト
       if (key === "enableSoundEffects" && value) {
-        triggerCBTFeedback("correct");
+        triggerCBTFeedback("answer_correct");
       }
 
       onSettingsChange?.(newSettings);
@@ -147,20 +143,17 @@ export function AccessibilitySettings({
 
   // システム状態の更新
   useEffect(() => {
-    const updateSystemStatus = async () => {
-      const status = await checkSystemAccessibility();
+    const updateSystemStatus = () => {
       setSystemStatus({
-        screenReader: status.isScreenReaderEnabled,
-        voiceOver: status.isVoiceOverRunning,
-        reduceMotion: status.isReduceMotionEnabled,
-        largeText: status.isLargeTextEnabled,
+        screenReader: isScreenReaderEnabled,
+        reduceMotion: isReduceMotionEnabled,
       });
     };
 
     updateSystemStatus();
     const interval = setInterval(updateSystemStatus, 5000);
     return () => clearInterval(interval);
-  }, [checkSystemAccessibility]);
+  }, [isScreenReaderEnabled, isReduceMotionEnabled]);
 
   // 設定項目コンポーネント
   const SettingItem = ({
@@ -227,7 +220,7 @@ export function AccessibilitySettings({
           return (
             <TouchableOpacity
               style={[styles.button, disabled && styles.disabledButton]}
-              onPress={() => !disabled && onValueChange()}
+              onPress={() => !disabled && onValueChange(true)}
               accessibilityRole="button"
               accessibilityLabel={title}
               disabled={disabled}
@@ -260,7 +253,7 @@ export function AccessibilitySettings({
     };
 
     return (
-      <View style={containerStyle} accessibilityRole="listitem" testID={testId}>
+      <View style={containerStyle} testID={testId}>
         <View style={styles.settingContent}>
           {icon && (
             <MaterialCommunityIcons

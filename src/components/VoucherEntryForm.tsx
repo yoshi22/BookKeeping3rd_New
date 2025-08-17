@@ -15,6 +15,7 @@ import {
   TextInput,
   Modal,
 } from "react-native";
+import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../context/ThemeContext";
 import {
   answerService,
   SubmitAnswerRequest,
@@ -66,6 +67,12 @@ export default function VoucherEntryForm({
   onSubmitAnswer,
   showSubmitButton = true,
 }: VoucherEntryFormProps) {
+  // Theme system integration for dark mode support
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
+
   const [entries, setEntries] = useState<VoucherEntry[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeVoucherType, setActiveVoucherType] = useState<string | null>(
@@ -74,7 +81,7 @@ export default function VoucherEntryForm({
 
   // voucherTypesをrefで保持して確実にアクセスできるようにする
   const voucherTypesRef = useRef<VoucherType[]>(voucherTypes);
-  
+
   // voucherTypesが変更されたらrefを更新
   useEffect(() => {
     voucherTypesRef.current = voucherTypes;
@@ -184,16 +191,19 @@ export default function VoucherEntryForm({
 
       // voucherTypesの存在確認（refから取得）
       const currentVoucherTypes = voucherTypesRef.current;
-      console.log("[VoucherEntryForm] handleSubmitAnswer - voucherTypes check:", {
-        propVoucherTypes: voucherTypes,
-        refVoucherTypes: currentVoucherTypes,
-        propIsArray: Array.isArray(voucherTypes),
-        refIsArray: Array.isArray(currentVoucherTypes),
-        propLength: voucherTypes?.length,
-        refLength: currentVoucherTypes?.length,
-        entries: entries.length
-      });
-      
+      console.log(
+        "[VoucherEntryForm] handleSubmitAnswer - voucherTypes check:",
+        {
+          propVoucherTypes: voucherTypes,
+          refVoucherTypes: currentVoucherTypes,
+          propIsArray: Array.isArray(voucherTypes),
+          refIsArray: Array.isArray(currentVoucherTypes),
+          propLength: voucherTypes?.length,
+          refLength: currentVoucherTypes?.length,
+          entries: entries.length,
+        },
+      );
+
       if (!currentVoucherTypes || !Array.isArray(currentVoucherTypes)) {
         console.error(
           "[VoucherEntryForm] voucherTypes is undefined or not an array:",
@@ -207,7 +217,9 @@ export default function VoucherEntryForm({
       // 各伝票の必須フィールドチェック
       for (let i = 0; i < entries.length; i++) {
         const entry = entries[i];
-        const voucherType = currentVoucherTypes.find((v) => v.type === entry.type);
+        const voucherType = currentVoucherTypes.find(
+          (v) => v.type === entry.type,
+        );
 
         if (voucherType) {
           const missingFields = voucherType.fields
@@ -339,7 +351,7 @@ export default function VoucherEntryForm({
                   ? "金額を入力"
                   : field.label
             }
-            placeholderTextColor="#999"
+            placeholderTextColor={theme.colors.textDisabled}
             keyboardType={field.type === "number" ? "numeric" : "default"}
           />
         )}
@@ -431,7 +443,7 @@ export default function VoucherEntryForm({
             <View style={styles.submitButtonContent}>
               <ActivityIndicator
                 size="small"
-                color="white"
+                color={theme.colors.surface}
                 style={styles.loader}
               />
               <Text style={styles.submitButtonText}>送信中...</Text>
@@ -510,239 +522,236 @@ export default function VoucherEntryForm({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    margin: 15,
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 15,
-  },
-  voucherTypeContainer: {
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#333",
-    marginBottom: 10,
-  },
-  voucherTypeButtons: {
-    flexDirection: "row",
-  },
-  voucherTypeButton: {
-    backgroundColor: "#e3f2fd",
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 6,
-    marginRight: 10,
-    borderWidth: 1,
-    borderColor: "#2196F3",
-  },
-  voucherTypeButtonText: {
-    color: "#1976D2",
-    fontSize: 14,
-    fontWeight: "500",
-  },
-  entriesContainer: {
-    maxHeight: 400,
-    marginBottom: 10,
-  },
-  entryCard: {
-    backgroundColor: "#f8f9fa",
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 15,
-    borderWidth: 1,
-    borderColor: "#e0e0e0",
-  },
-  entryHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  entryTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  removeButton: {
-    backgroundColor: "#ffebee",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: "#f44336",
-  },
-  removeButtonText: {
-    color: "#d32f2f",
-    fontSize: 12,
-    fontWeight: "500",
-  },
-  fieldContainer: {
-    marginBottom: 12,
-  },
-  fieldLabel: {
-    fontSize: 14,
-    fontWeight: "500",
-    marginBottom: 6,
-    color: "#333",
-  },
-  required: {
-    color: "#d32f2f",
-  },
-  textInput: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 6,
-    backgroundColor: "white",
-    fontSize: 14,
-    color: "#333",
-  },
-  selectButton: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 12,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    backgroundColor: "white",
-    minHeight: 48,
-  },
-  selectButtonEmpty: {
-    borderColor: "#ccc",
-  },
-  selectText: {
-    fontSize: 16,
-    color: "#333",
-    flex: 1,
-  },
-  placeholderText: {
-    color: "#999",
-  },
-  selectArrow: {
-    fontSize: 12,
-    color: "#666",
-    marginLeft: 8,
-  },
-  emptyState: {
-    padding: 40,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  emptyStateText: {
-    fontSize: 16,
-    color: "#666",
-    textAlign: "center",
-    lineHeight: 22,
-  },
-  submitButton: {
-    backgroundColor: "#2196F3",
-    padding: 15,
-    borderRadius: 8,
-    marginTop: 20,
-    alignItems: "center",
-  },
-  submitButtonDisabled: {
-    backgroundColor: "#9E9E9E",
-  },
-  submitButtonContent: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  submitButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  loader: {
-    marginRight: 8,
-  },
-  // モーダル関連のスタイル
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContainer: {
-    backgroundColor: "white",
-    borderRadius: 12,
-    width: "90%",
-    maxHeight: "95%",
-    minHeight: "50%",
-    overflow: "hidden",
-  },
-  modalHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  closeButton: {
-    padding: 4,
-  },
-  closeButtonText: {
-    fontSize: 24,
-    color: "#666",
-  },
-  modalContent: {
-    flex: 1,
-    padding: 20,
-    maxHeight: "70%",
-  },
-  optionItem: {
-    padding: 15,
-    borderRadius: 6,
-    marginBottom: 8,
-    backgroundColor: "#f8f9fa",
-  },
-  optionItemSelected: {
-    backgroundColor: "#e3f2fd",
-    borderWidth: 1,
-    borderColor: "#2196F3",
-  },
-  optionText: {
-    fontSize: 16,
-    color: "#333",
-  },
-  optionTextSelected: {
-    fontWeight: "bold",
-    color: "#2196F3",
-  },
-  modalFooter: {
-    padding: 20,
-    borderTopWidth: 1,
-    borderTopColor: "#e0e0e0",
-  },
-  cancelButton: {
-    padding: 12,
-    borderRadius: 6,
-    backgroundColor: "#f5f5f5",
-    alignItems: "center",
-  },
-  cancelButtonText: {
-    fontSize: 16,
-    color: "#666",
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.surface,
+      margin: 15,
+      padding: 20,
+      borderRadius: 10,
+      ...theme.shadows.medium,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 15,
+    },
+    voucherTypeContainer: {
+      marginBottom: 20,
+    },
+    sectionTitle: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+      marginBottom: 10,
+    },
+    voucherTypeButtons: {
+      flexDirection: "row",
+    },
+    voucherTypeButton: {
+      backgroundColor: theme.colors.infoBackground,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 6,
+      marginRight: 10,
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+    },
+    voucherTypeButtonText: {
+      color: theme.colors.primary,
+      fontSize: 14,
+      fontWeight: "500",
+    },
+    entriesContainer: {
+      maxHeight: 400,
+      marginBottom: 10,
+    },
+    entryCard: {
+      backgroundColor: theme.colors.backgroundSecondary,
+      padding: 15,
+      borderRadius: 8,
+      marginBottom: 15,
+      borderWidth: 1,
+      borderColor: theme.colors.borderLight,
+    },
+    entryHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 15,
+    },
+    entryTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    removeButton: {
+      backgroundColor: theme.colors.errorBackground,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      borderRadius: 4,
+      borderWidth: 1,
+      borderColor: theme.colors.error,
+    },
+    removeButtonText: {
+      color: theme.colors.error,
+      fontSize: 12,
+      fontWeight: "500",
+    },
+    fieldContainer: {
+      marginBottom: 12,
+    },
+    fieldLabel: {
+      fontSize: 14,
+      fontWeight: "500",
+      marginBottom: 6,
+      color: theme.colors.text,
+    },
+    required: {
+      color: theme.colors.error,
+    },
+    textInput: {
+      padding: 10,
+      borderWidth: 1,
+      borderColor: theme.colors.borderLight,
+      borderRadius: 6,
+      backgroundColor: theme.colors.surface,
+      fontSize: 14,
+      color: theme.colors.text,
+    },
+    selectButton: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 12,
+      borderWidth: 1,
+      borderColor: theme.colors.borderLight,
+      borderRadius: 8,
+      backgroundColor: theme.colors.surface,
+      minHeight: 48,
+    },
+    selectButtonEmpty: {
+      borderColor: theme.colors.borderLight,
+    },
+    selectText: {
+      fontSize: 16,
+      color: theme.colors.text,
+      flex: 1,
+    },
+    placeholderText: {
+      color: theme.colors.textDisabled,
+    },
+    selectArrow: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginLeft: 8,
+    },
+    emptyState: {
+      padding: 40,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    emptyStateText: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+      textAlign: "center",
+      lineHeight: 22,
+    },
+    submitButton: {
+      backgroundColor: theme.colors.primary,
+      padding: 15,
+      borderRadius: 8,
+      marginTop: 20,
+      alignItems: "center",
+    },
+    submitButtonDisabled: {
+      backgroundColor: theme.colors.textDisabled,
+    },
+    submitButtonContent: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    submitButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    loader: {
+      marginRight: 8,
+    },
+    // モーダル関連のスタイル
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: theme.colors.background + "80",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalContainer: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 12,
+      width: "90%",
+      maxHeight: "95%",
+      minHeight: "50%",
+      overflow: "hidden",
+    },
+    modalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    closeButton: {
+      padding: 4,
+    },
+    closeButtonText: {
+      fontSize: 24,
+      color: theme.colors.textSecondary,
+    },
+    modalContent: {
+      flex: 1,
+      padding: 20,
+      maxHeight: "70%",
+    },
+    optionItem: {
+      padding: 15,
+      borderRadius: 6,
+      marginBottom: 8,
+      backgroundColor: theme.colors.backgroundSecondary,
+    },
+    optionItemSelected: {
+      backgroundColor: theme.colors.infoBackground,
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+    },
+    optionText: {
+      fontSize: 16,
+      color: theme.colors.text,
+    },
+    optionTextSelected: {
+      fontWeight: "bold",
+      color: theme.colors.primary,
+    },
+    modalFooter: {
+      padding: 20,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.borderLight,
+    },
+    cancelButton: {
+      padding: 12,
+      borderRadius: 6,
+      backgroundColor: theme.colors.backgroundSecondary,
+      alignItems: "center",
+    },
+    cancelButtonText: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+  });

@@ -7,7 +7,7 @@ import {
   Modal,
   SafeAreaView,
 } from "react-native";
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme, type Theme } from "../../context/ThemeContext";
 
 interface NumericPadProps {
   visible: boolean;
@@ -211,7 +211,7 @@ const createStyles = (theme: any) =>
   StyleSheet.create({
     overlay: {
       flex: 1,
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backgroundColor: theme.colors.background + "80",
       justifyContent: "flex-end",
     },
     container: {

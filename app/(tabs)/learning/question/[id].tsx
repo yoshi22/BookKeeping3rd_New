@@ -23,12 +23,7 @@ import { SessionType } from "../../../../src/types/database";
 import { QuestionRepository } from "../../../../src/data/repositories/question-repository";
 import type { Question } from "../../../../src/types/models";
 import { reviewService } from "../../../../src/services/review-service";
-import {
-  useTheme,
-  useThemedStyles,
-  useColors,
-  useDynamicColors,
-} from "../../../../src/context/ThemeContext";
+import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../../../../src/context/ThemeContext";
 
 export default function LearningQuestionScreen() {
   // Phase 4: ダークモード対応のテーマシステム
@@ -385,7 +380,7 @@ export default function LearningQuestionScreen() {
 }
 
 const createStyles = (
-  theme: typeof import("../../../../src/context/ThemeContext").Theme,
+  theme: Theme,
 ) =>
   StyleSheet.create({
     container: {

@@ -17,6 +17,7 @@ import {
   useDynamicColors,
   ThemeMode,
   CustomThemeVariant,
+  type Theme,
 } from "../../src/context/ThemeContext";
 import { confirmResetDatabase } from "../../src/utils/reset-database";
 import { customThemeVariants } from "../../src/theme/colors";
@@ -149,6 +150,45 @@ export default function SettingsScreen() {
           </View>
         </View>
 
+        {/* テーマ設定セクション */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <AppIcon
+              name="settings"
+              size={IconContextSizes.listItem}
+              color={theme.colors.primary}
+            />
+            <Text style={styles.sectionTitle}>テーマ設定</Text>
+          </View>
+
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>表示テーマの切り替え</Text>
+            <Text style={styles.description}>
+              アプリの表示テーマを変更できます。システム設定に従うか、手動で選択できます。
+            </Text>
+
+            <TouchableOpacity
+              style={styles.themeButton}
+              onPress={() => setShowThemeModal(true)}
+              testID="settings-theme-button"
+              accessibilityLabel="テーマを変更"
+            >
+              <View style={styles.themeButtonContent}>
+                <Text style={styles.themeButtonLabel}>現在のテーマ</Text>
+                <Text style={styles.themeButtonValue}>
+                  {themeOptions.find((option) => option.key === themeMode)
+                    ?.label || "不明"}
+                </Text>
+              </View>
+              <AppIcon
+                name="forward"
+                size="small"
+                color={theme.colors.textSecondary}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+
         {/* アプリ情報セクション */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
@@ -251,13 +291,66 @@ export default function SettingsScreen() {
           </View>
         </View>
       </ScrollView>
+
+      {/* テーマ選択モーダル */}
+      <Modal
+        visible={showThemeModal}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setShowThemeModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>テーマを選択</Text>
+              <TouchableOpacity
+                onPress={() => setShowThemeModal(false)}
+                style={styles.modalCloseButton}
+                testID="theme-modal-close"
+              >
+                <AppIcon
+                  name="close"
+                  size="medium"
+                  color={theme.colors.textSecondary}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <ScrollView style={styles.modalScroll}>
+              {themeOptions.map((option) => (
+                <TouchableOpacity
+                  key={option.key}
+                  style={[
+                    styles.themeOption,
+                    selectedTheme === option.key && styles.themeOptionSelected,
+                  ]}
+                  onPress={() => handleThemeChange(option.key)}
+                  testID={`theme-option-${option.key}`}
+                >
+                  <View style={styles.themeOptionContent}>
+                    <Text style={styles.themeOptionLabel}>{option.label}</Text>
+                    <Text style={styles.themeOptionDescription}>
+                      {option.description}
+                    </Text>
+                  </View>
+                  {selectedTheme === option.key && (
+                    <AppIcon
+                      name="correct"
+                      size="small"
+                      color={theme.colors.primary}
+                    />
+                  )}
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
     </Screen>
   );
 }
 
-const createStyles = (
-  theme: typeof import("../../src/context/ThemeContext").Theme,
-) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -381,5 +474,88 @@ const createStyles = (
       color: theme.colors.error,
       textAlign: "center",
       marginTop: 5,
+    },
+    themeButton: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: 15,
+      backgroundColor: theme.colors.surface,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: theme.colors.borderLight,
+      marginTop: 10,
+    },
+    themeButtonContent: {
+      flex: 1,
+    },
+    themeButtonLabel: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginBottom: 2,
+    },
+    themeButtonValue: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: theme.colors.background + "80",
+      justifyContent: "flex-end",
+    },
+    modalContent: {
+      backgroundColor: theme.colors.card,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      maxHeight: "80%",
+      paddingBottom: 40,
+    },
+    modalHeader: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    modalCloseButton: {
+      padding: 5,
+    },
+    modalScroll: {
+      padding: 20,
+    },
+    themeOption: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: 15,
+      backgroundColor: theme.colors.surface,
+      borderRadius: 8,
+      marginBottom: 10,
+      borderWidth: 1,
+      borderColor: theme.colors.borderLight,
+    },
+    themeOptionSelected: {
+      borderColor: theme.colors.primary,
+      backgroundColor: theme.colors.primaryLight,
+    },
+    themeOptionContent: {
+      flex: 1,
+    },
+    themeOptionLabel: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+      marginBottom: 2,
+    },
+    themeOptionDescription: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
     },
   });

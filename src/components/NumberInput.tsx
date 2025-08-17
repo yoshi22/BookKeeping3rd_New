@@ -3,7 +3,7 @@
  * Step 2.1.4: 数値入力コンポーネント実装（カンマ自動挿入対応）
  */
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -13,14 +13,15 @@ import {
   TextInput,
   Alert,
   SafeAreaView,
-} from 'react-native';
+} from "react-native";
+import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 
 interface NumberInputProps {
   label: string;
   value?: number;
   onChange: (value: number | undefined) => void;
   required?: boolean;
-  format?: 'currency' | 'percentage' | 'number';
+  format?: "currency" | "percentage" | "number";
   placeholder?: string;
   maxValue?: number;
   minValue?: number;
@@ -31,22 +32,24 @@ export default function NumberInput({
   value,
   onChange,
   required = false,
-  format = 'number',
-  placeholder = '数値を入力してください',
+  format = "number",
+  placeholder = "数値を入力してください",
   maxValue,
   minValue = 0,
 }: NumberInputProps) {
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
 
   // 数値をフォーマットして表示
   const formatDisplayValue = (num: number | undefined): string => {
-    if (num === undefined || num === null) return '';
-    
+    if (num === undefined || num === null) return "";
+
     switch (format) {
-      case 'currency':
+      case "currency":
         return `¥${num.toLocaleString()}`;
-      case 'percentage':
+      case "percentage":
         return `${num}%`;
       default:
         return num.toLocaleString();
@@ -56,14 +59,14 @@ export default function NumberInput({
   // 入力テキストから数値を抽出
   const parseInputValue = (text: string): number | undefined => {
     // カンマ、円マーク、%マークを除去
-    const cleanText = text.replace(/[¥,%]/g, '');
-    
-    if (cleanText === '') return undefined;
-    
+    const cleanText = text.replace(/[¥,%]/g, "");
+
+    if (cleanText === "") return undefined;
+
     const num = parseFloat(cleanText);
-    
+
     if (isNaN(num)) return undefined;
-    
+
     return num;
   };
 
@@ -71,7 +74,7 @@ export default function NumberInput({
   const formatInputText = (text: string): string => {
     const num = parseInputValue(text);
     if (num === undefined) return text;
-    
+
     // 数値が有効な場合、カンマ区切りで表示
     return num.toLocaleString();
   };
@@ -81,69 +84,70 @@ export default function NumberInput({
     if (minValue !== undefined && num < minValue) {
       return `${minValue}以上の値を入力してください`;
     }
-    
+
     if (maxValue !== undefined && num > maxValue) {
       return `${maxValue}以下の値を入力してください`;
     }
-    
+
     // 小数点以下の桁数チェック（金額の場合は整数のみ）
-    if (format === 'currency' && num % 1 !== 0) {
-      return '金額は整数で入力してください';
+    if (format === "currency" && num % 1 !== 0) {
+      return "金額は整数で入力してください";
     }
-    
+
     return null;
   };
 
   // モーダルを開く
   const openModal = () => {
-    setInputText(value ? value.toString() : '');
+    setInputText(value ? value.toString() : "");
     setIsModalVisible(true);
   };
 
   // 入力確定処理
   const handleConfirm = () => {
     const num = parseInputValue(inputText);
-    
+
     if (required && num === undefined) {
-      Alert.alert('入力エラー', '値を入力してください');
+      Alert.alert("入力エラー", "値を入力してください");
       return;
     }
-    
+
     if (num !== undefined) {
       const validationError = validateValue(num);
       if (validationError) {
-        Alert.alert('入力エラー', validationError);
+        Alert.alert("入力エラー", validationError);
         return;
       }
     }
-    
+
     onChange(num);
     setIsModalVisible(false);
-    setInputText('');
+    setInputText("");
   };
 
   // キャンセル処理
   const handleCancel = () => {
     setIsModalVisible(false);
-    setInputText('');
+    setInputText("");
   };
 
   // クリア処理
   const handleClear = () => {
-    setInputText('');
+    setInputText("");
   };
 
   // 入力テキスト変更処理
   const handleTextChange = (text: string) => {
     // 数字、カンマ、小数点のみ許可
-    const sanitizedText = text.replace(/[^\d.,]/g, '');
+    const sanitizedText = text.replace(/[^\d.,]/g, "");
     setInputText(sanitizedText);
   };
 
   // プリセット値ボタン（金額入力用）
-  const presetValues = format === 'currency' ? [
-    1000, 5000, 10000, 50000, 100000, 500000, 1000000
-  ] : [];
+  const presetValues =
+    format === "currency"
+      ? [1000, 5000, 10000, 50000, 100000, 500000, 1000000]
+      : [];
 
   const handlePresetValue = (presetValue: number) => {
     setInputText(presetValue.toString());
@@ -156,18 +160,12 @@ export default function NumberInput({
           {label}
           {required && <Text style={styles.required}> *</Text>}
         </Text>
-        
+
         <TouchableOpacity
-          style={[
-            styles.inputButton,
-            !value && styles.inputButtonEmpty,
-          ]}
+          style={[styles.inputButton, !value && styles.inputButtonEmpty]}
           onPress={openModal}
         >
-          <Text style={[
-            styles.inputText,
-            !value && styles.placeholderText,
-          ]}>
+          <Text style={[styles.inputText, !value && styles.placeholderText]}>
             {value !== undefined ? formatDisplayValue(value) : placeholder}
           </Text>
           <Text style={styles.inputIcon}>✏️</Text>
@@ -211,7 +209,7 @@ export default function NumberInput({
                   value={inputText}
                   onChangeText={handleTextChange}
                   keyboardType="numeric"
-                  placeholder={`例: ${format === 'currency' ? '100000' : '100'}`}
+                  placeholder={`例: ${format === "currency" ? "100000" : "100"}`}
                   autoFocus={true}
                   selectTextOnFocus={true}
                 />
@@ -256,9 +254,11 @@ export default function NumberInput({
               {/* 入力制限の説明 */}
               <View style={styles.helpSection}>
                 <Text style={styles.helpText}>
-                  {format === 'currency' && '• 金額は整数で入力してください'}
-                  {minValue !== undefined && `• 最小値: ${minValue.toLocaleString()}`}
-                  {maxValue !== undefined && `• 最大値: ${maxValue.toLocaleString()}`}
+                  {format === "currency" && "• 金額は整数で入力してください"}
+                  {minValue !== undefined &&
+                    `• 最小値: ${minValue.toLocaleString()}`}
+                  {maxValue !== undefined &&
+                    `• 最大値: ${maxValue.toLocaleString()}`}
                 </Text>
               </View>
             </View>
@@ -284,193 +284,196 @@ export default function NumberInput({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 15,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginBottom: 8,
-    color: '#333',
-  },
-  required: {
-    color: '#d32f2f',
-  },
-  inputButton: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 12,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    backgroundColor: 'white',
-    minHeight: 48,
-  },
-  inputButtonEmpty: {
-    borderColor: '#ccc',
-  },
-  inputText: {
-    fontSize: 16,
-    color: '#333',
-    flex: 1,
-  },
-  placeholderText: {
-    color: '#999',
-  },
-  inputIcon: {
-    fontSize: 16,
-    marginLeft: 8,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    width: '90%',
-    maxHeight: '80%',
-    overflow: 'hidden',
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  closeButton: {
-    padding: 4,
-  },
-  closeButtonText: {
-    fontSize: 24,
-    color: '#666',
-  },
-  modalContent: {
-    padding: 16,
-  },
-  currentValueSection: {
-    marginBottom: 16,
-    padding: 12,
-    backgroundColor: '#f5f5f5',
-    borderRadius: 8,
-  },
-  currentValueLabel: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 4,
-  },
-  currentValueText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  inputSection: {
-    marginBottom: 16,
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 12,
-    fontSize: 18,
-    textAlign: 'right',
-    marginBottom: 8,
-  },
-  clearButton: {
-    alignSelf: 'flex-end',
-    padding: 8,
-  },
-  clearButtonText: {
-    color: '#666',
-    fontSize: 14,
-  },
-  previewSection: {
-    marginBottom: 16,
-    padding: 12,
-    backgroundColor: '#e3f2fd',
-    borderRadius: 8,
-  },
-  previewLabel: {
-    fontSize: 14,
-    color: '#1976d2',
-    marginBottom: 4,
-  },
-  previewText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#1976d2',
-  },
-  presetSection: {
-    marginBottom: 16,
-  },
-  presetLabel: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 8,
-  },
-  presetButtons: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  presetButton: {
-    padding: 8,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 6,
-    marginRight: 4,
-    marginBottom: 4,
-  },
-  presetButtonText: {
-    fontSize: 12,
-    color: '#333',
-  },
-  helpSection: {
-    marginBottom: 16,
-  },
-  helpText: {
-    fontSize: 12,
-    color: '#666',
-    lineHeight: 16,
-  },
-  modalFooter: {
-    flexDirection: 'row',
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-    gap: 12,
-  },
-  cancelButton: {
-    flex: 1,
-    padding: 12,
-    borderRadius: 6,
-    backgroundColor: '#f5f5f5',
-    alignItems: 'center',
-  },
-  cancelButtonText: {
-    fontSize: 16,
-    color: '#666',
-  },
-  confirmButton: {
-    flex: 1,
-    padding: 12,
-    borderRadius: 6,
-    backgroundColor: '#2f95dc',
-    alignItems: 'center',
-  },
-  confirmButtonText: {
-    fontSize: 16,
-    color: 'white',
-    fontWeight: 'bold',
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      marginBottom: 15,
+    },
+    label: {
+      fontSize: 16,
+      fontWeight: "500",
+      marginBottom: 8,
+      color: theme.colors.text,
+    },
+    required: {
+      color: theme.colors.error,
+    },
+    inputButton: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 12,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      borderRadius: 8,
+      backgroundColor: theme.colors.surface,
+      minHeight: 48,
+    },
+    inputButtonEmpty: {
+      borderColor: theme.colors.borderLight,
+    },
+    inputText: {
+      fontSize: 16,
+      color: theme.colors.text,
+      flex: 1,
+    },
+    placeholderText: {
+      color: theme.colors.textSecondary,
+    },
+    inputIcon: {
+      fontSize: 16,
+      marginLeft: 8,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: theme.colors.background + "80",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalContainer: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 12,
+      width: "90%",
+      maxHeight: "80%",
+      overflow: "hidden",
+    },
+    modalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    closeButton: {
+      padding: 4,
+    },
+    closeButtonText: {
+      fontSize: 24,
+      color: theme.colors.textSecondary,
+    },
+    modalContent: {
+      padding: 16,
+    },
+    currentValueSection: {
+      marginBottom: 16,
+      padding: 12,
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderRadius: 8,
+    },
+    currentValueLabel: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginBottom: 4,
+    },
+    currentValueText: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    inputSection: {
+      marginBottom: 16,
+    },
+    textInput: {
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      borderRadius: 8,
+      padding: 12,
+      fontSize: 18,
+      textAlign: "right",
+      marginBottom: 8,
+      backgroundColor: theme.colors.background,
+      color: theme.colors.text,
+    },
+    clearButton: {
+      alignSelf: "flex-end",
+      padding: 8,
+    },
+    clearButtonText: {
+      color: theme.colors.textSecondary,
+      fontSize: 14,
+    },
+    previewSection: {
+      marginBottom: 16,
+      padding: 12,
+      backgroundColor: theme.colors.primary + "20",
+      borderRadius: 8,
+    },
+    previewLabel: {
+      fontSize: 14,
+      color: theme.colors.primary,
+      marginBottom: 4,
+    },
+    previewText: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+    },
+    presetSection: {
+      marginBottom: 16,
+    },
+    presetLabel: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginBottom: 8,
+    },
+    presetButtons: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: 8,
+    },
+    presetButton: {
+      padding: 8,
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderRadius: 6,
+      marginRight: 4,
+      marginBottom: 4,
+    },
+    presetButtonText: {
+      fontSize: 12,
+      color: theme.colors.text,
+    },
+    helpSection: {
+      marginBottom: 16,
+    },
+    helpText: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      lineHeight: 16,
+    },
+    modalFooter: {
+      flexDirection: "row",
+      padding: 16,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.border,
+      gap: 12,
+    },
+    cancelButton: {
+      flex: 1,
+      padding: 12,
+      borderRadius: 6,
+      backgroundColor: theme.colors.backgroundSecondary,
+      alignItems: "center",
+    },
+    cancelButtonText: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+    confirmButton: {
+      flex: 1,
+      padding: 12,
+      borderRadius: 6,
+      backgroundColor: theme.colors.primary,
+      alignItems: "center",
+    },
+    confirmButtonText: {
+      fontSize: 16,
+      color: theme.colors.surface,
+      fontWeight: "bold",
+    },
+  });

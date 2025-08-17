@@ -29,6 +29,7 @@ import {
   useThemedStyles,
   useColors,
   useDynamicColors,
+  type Theme,
 } from "../../../src/context/ThemeContext";
 
 export default function LearningScreen() {
@@ -72,7 +73,7 @@ export default function LearningScreen() {
       totalQuestions: questionCounts.journal,
       completedQuestions: 0,
       icon: "📝",
-      color: "#4CAF50",
+      color: theme.categoryColors.journal,
       points: "45点",
       examCount: "15問",
       examTime: "15-20分",
@@ -87,7 +88,7 @@ export default function LearningScreen() {
       totalQuestions: questionCounts.ledger,
       completedQuestions: 0,
       icon: "📋",
-      color: "#FF9800",
+      color: theme.categoryColors.ledger,
       points: "20点",
       examCount: "2問",
       examTime: "15-20分",
@@ -101,7 +102,7 @@ export default function LearningScreen() {
       totalQuestions: questionCounts.trial_balance,
       completedQuestions: 0,
       icon: "📊",
-      color: "#2196F3",
+      color: theme.categoryColors.trialBalance,
       points: "35点",
       examCount: "1問",
       examTime: "25-30分",
@@ -293,7 +294,7 @@ export default function LearningScreen() {
                       style={[
                         styles.categoryCard,
                         {
-                          borderLeftColor: "#ff6b35",
+                          borderLeftColor: theme.colors.secondary,
                           minHeight: deviceInfo.isTablet ? 200 : 160,
                         },
                       ]}
@@ -331,7 +332,7 @@ export default function LearningScreen() {
                         <View
                           style={[
                             styles.pointsBadge,
-                            { backgroundColor: "#ff6b35" },
+                            { backgroundColor: theme.colors.secondary },
                           ]}
                         >
                           <Text style={styles.pointsText}>302問</Text>
@@ -363,7 +364,7 @@ export default function LearningScreen() {
                       <View
                         style={[
                           styles.categoryAction,
-                          { backgroundColor: "#ff6b35" },
+                          { backgroundColor: theme.colors.secondary },
                         ]}
                       >
                         <Text style={styles.actionText}>開始</Text>
@@ -491,15 +492,26 @@ export default function LearningScreen() {
               <Text
                 style={[
                   styles.sectionTitle,
-                  { fontSize: deviceInfo.isTablet ? 20 : 18 },
+                  { fontSize: deviceInfo.isTablet ? 22 : 20 },
                 ]}
               >
-                🎯 実力チェック
+                🎯 本格CBT模擬試験
+              </Text>
+              <Text
+                style={[
+                  styles.sectionSubtitle,
+                  { fontSize: deviceInfo.isTablet ? 16 : 14 },
+                ]}
+              >
+                実際の試験環境で実力を測定しよう！
               </Text>
               <TouchableOpacity
                 style={[
                   styles.mockExamButton,
-                  { minHeight: deviceInfo.isTablet ? 120 : 100 },
+                  {
+                    minHeight: deviceInfo.isTablet ? 140 : 120,
+                    marginTop: 15,
+                  },
                 ]}
                 onPress={() => {
                   router.push("/mock-exam");
@@ -545,9 +557,7 @@ export default function LearningScreen() {
 }
 
 // Phase 4: ダークモード対応のスタイル生成関数
-const createStyles = (
-  theme: typeof import("../../../src/context/ThemeContext").Theme,
-) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -630,7 +640,7 @@ const createStyles = (
       borderRadius: 15,
     },
     pointsText: {
-      color: "white",
+      color: theme.colors.surface,
       fontWeight: "bold",
       fontSize: 14,
     },
@@ -671,27 +681,38 @@ const createStyles = (
       borderRadius: 5,
     },
     actionText: {
-      color: "white",
+      color: theme.colors.surface,
       fontWeight: "bold",
     },
     sectionTitle: {
       fontSize: 18,
       fontWeight: "bold",
-      marginBottom: 12,
+      marginBottom: 8,
       color: theme.colors.text,
+      textAlign: "center",
+    },
+    sectionSubtitle: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      textAlign: "center",
+      marginBottom: 15,
     },
     mockExamSection: {
       padding: 20,
+      backgroundColor: `${theme.colors.primary}08`,
+      borderRadius: 15,
+      margin: 20,
     },
     mockExamButton: {
-      backgroundColor: theme.colors.surface,
-      padding: 15,
-      borderRadius: 10,
+      backgroundColor: `${theme.colors.primary}15`,
+      padding: 20,
+      borderRadius: 15,
       flexDirection: "row",
       alignItems: "center",
-      borderLeftWidth: 4,
-      borderLeftColor: "#ff6b35",
-      ...theme.shadows.medium,
+      borderWidth: 2,
+      borderColor: `${theme.colors.primary}30`,
+      ...theme.shadows.large,
+      elevation: 8,
     },
     mockExamIcon: {
       fontSize: 30,
@@ -718,11 +739,11 @@ const createStyles = (
     examAction: {
       paddingHorizontal: 15,
       paddingVertical: 8,
-      backgroundColor: "#ff6b35",
+      backgroundColor: theme.colors.secondary,
       borderRadius: 5,
     },
     examActionText: {
-      color: "white",
+      color: theme.colors.surface,
       fontWeight: "bold",
     },
     loadingContainer: {

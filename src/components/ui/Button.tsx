@@ -17,7 +17,7 @@ import {
   View,
   Animated,
 } from "react-native";
-import { useTheme, useThemedStyles } from "../../context/ThemeContext";
+import { useTheme, useThemedStyles, type Theme } from "../../context/ThemeContext";
 import {
   useHapticFeedback,
   LearningHapticContext,

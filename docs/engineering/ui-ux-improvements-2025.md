@@ -776,7 +776,7 @@ export const MasterDetailView = ({ master, detail }) => {
 
 3. **Nielsen Norman Group** - "Mobile UX Research 2024"
    - 認知負荷の軽減手法
-   - プログレッシブディスクロージャー
+  - プログレッシブディスクロージャー
    - エラー処理のベストプラクティス
 
 #### 学習アプリ専門
@@ -951,7 +951,7 @@ export const Button: React.FC<ButtonProps> = ({
           <>
             {icon && <View style={styles.iconContainer}>{icon}</View>}
             <Text style={textStyle}>{title}</Text>
-          </>
+          </>ß
         )}
       </Animated.View>
     </TouchableOpacity>

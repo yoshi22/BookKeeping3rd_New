@@ -12,6 +12,13 @@ import {
   Modal,
   ScrollView,
 } from "react-native";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../context/ThemeContext";
 
 interface AnswerGuideProps {
   questionType: "journal" | "ledger" | "trial_balance";
@@ -30,6 +37,11 @@ export default function AnswerGuide({
   visible,
   onClose,
 }: AnswerGuideProps) {
+  // Theme system integration for dark mode support
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
   const getGuideContent = (): GuideSection => {
     switch (questionType) {
       case "journal":
@@ -157,102 +169,104 @@ export default function AnswerGuide({
   );
 }
 
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  container: {
-    backgroundColor: "white",
-    borderRadius: 15,
-    maxHeight: "80%",
-    width: "100%",
-    maxWidth: 400,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-    flex: 1,
-  },
-  closeButton: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: "#f0f0f0",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  closeButtonText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#666",
-  },
-  content: {
-    maxHeight: 400,
-  },
-  section: {
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f5f5f5",
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#2196F3",
-    marginBottom: 10,
-  },
-  contentText: {
-    fontSize: 14,
-    color: "#555",
-    lineHeight: 20,
-    marginBottom: 5,
-  },
-  exampleContainer: {
-    backgroundColor: "#f8f9fa",
-    borderRadius: 8,
-    padding: 15,
-  },
-  exampleRow: {
-    flexDirection: "row",
-    marginBottom: 8,
-  },
-  exampleLabel: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: "#333",
-    minWidth: 80,
-  },
-  exampleValue: {
-    fontSize: 14,
-    color: "#2196F3",
-    fontFamily: "monospace",
-    backgroundColor: "#e3f2fd",
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 4,
-  },
-  confirmButton: {
-    backgroundColor: "#2196F3",
-    margin: 20,
-    padding: 15,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  confirmButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
+// Theme-aware styles function for dark mode support
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    overlay: {
+      flex: 1,
+      backgroundColor: theme.colors.background + "80",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
+    },
+    container: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 15,
+      maxHeight: "80%",
+      width: "100%",
+      maxWidth: 400,
+    },
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      flex: 1,
+    },
+    closeButton: {
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      backgroundColor: theme.colors.backgroundSecondary,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    closeButtonText: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.textSecondary,
+    },
+    content: {
+      maxHeight: 400,
+    },
+    section: {
+      padding: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+    },
+    sectionTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+      marginBottom: 10,
+    },
+    contentText: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      lineHeight: 20,
+      marginBottom: 5,
+    },
+    exampleContainer: {
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderRadius: 8,
+      padding: 15,
+    },
+    exampleRow: {
+      flexDirection: "row",
+      marginBottom: 8,
+    },
+    exampleLabel: {
+      fontSize: 14,
+      fontWeight: "500",
+      color: theme.colors.text,
+      minWidth: 80,
+    },
+    exampleValue: {
+      fontSize: 14,
+      color: theme.colors.primary,
+      fontFamily: "monospace",
+      backgroundColor: theme.colors.infoBackground,
+      paddingHorizontal: 8,
+      paddingVertical: 2,
+      borderRadius: 4,
+    },
+    confirmButton: {
+      backgroundColor: theme.colors.primary,
+      margin: 20,
+      padding: 15,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    confirmButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+  });

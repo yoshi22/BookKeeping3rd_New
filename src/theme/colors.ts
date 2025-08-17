@@ -17,10 +17,20 @@ export interface ColorPalette {
   secondaryLight: string;
   secondaryDark: string;
 
+  // Accent Color
+  accent: string;
+
   // Background Colors
   background: string;
+  backgroundSecondary: string;
   surface: string;
   card: string;
+
+  // Status Background Colors
+  infoBackground: string;
+  warningBackground: string;
+  successBackground: string;
+  errorBackground: string;
 
   // Text Colors
   text: string;
@@ -29,6 +39,7 @@ export interface ColorPalette {
 
   // Status Colors
   success: string;
+  successDark: string;
   warning: string;
   error: string;
   info: string;
@@ -36,6 +47,13 @@ export interface ColorPalette {
   // Border Colors
   border: string;
   borderLight: string;
+
+  // Status Border Colors
+  successBorder: string;
+  errorBorder: string;
+  warningBorder: string;
+  infoBorder: string;
+  primaryBorder: string;
 
   // Interactive Colors
   link: string;
@@ -212,10 +230,20 @@ export const lightColors: ColorPalette = {
   secondaryLight: brandColors.secondary[400],
   secondaryDark: brandColors.secondary[800],
 
+  // Accent
+  accent: brandColors.primary[600],
+
   // Background
   background: brandColors.neutral[0],
+  backgroundSecondary: brandColors.neutral[100],
   surface: brandColors.neutral[50],
   card: brandColors.neutral[0],
+
+  // Status Background Colors
+  infoBackground: brandColors.primary[50],
+  warningBackground: "#FFF8E1",
+  successBackground: brandColors.secondary[50],
+  errorBackground: "#FFEBEE",
 
   // Text
   text: brandColors.neutral[900],
@@ -224,6 +252,7 @@ export const lightColors: ColorPalette = {
 
   // Status - アクセシビリティ改善
   success: brandColors.semantic.success,
+  successDark: brandColors.secondary[800],
   warning: brandColors.semantic.warning,
   error: brandColors.semantic.error,
   info: brandColors.semantic.info,
@@ -231,6 +260,13 @@ export const lightColors: ColorPalette = {
   // Border
   border: brandColors.neutral[300],
   borderLight: brandColors.neutral[200],
+
+  // Status Border Colors
+  successBorder: brandColors.semantic.success,
+  errorBorder: brandColors.semantic.error,
+  warningBorder: brandColors.semantic.warning,
+  infoBorder: brandColors.semantic.info,
+  primaryBorder: brandColors.primary[500],
 
   // Interactive
   link: brandColors.primary[500],
@@ -262,10 +298,20 @@ export const darkColors: ColorPalette = {
   secondaryLight: brandColors.secondary[300],
   secondaryDark: brandColors.secondary[600],
 
+  // Accent
+  accent: darkBrandColors.primary[400],
+
   // Background
   background: darkBrandColors.neutral[50],
+  backgroundSecondary: darkBrandColors.neutral[200],
   surface: darkBrandColors.neutral[100],
   card: darkBrandColors.neutral[200],
+
+  // Status Background Colors
+  infoBackground: darkBrandColors.primary[100],
+  warningBackground: "#3E2723",
+  successBackground: brandColors.secondary[100],
+  errorBackground: "#421C1C",
 
   // Text
   text: darkBrandColors.neutral[1000],
@@ -274,6 +320,7 @@ export const darkColors: ColorPalette = {
 
   // Status
   success: brandColors.secondary[400],
+  successDark: brandColors.secondary[600],
   warning: "#FFB74D",
   error: "#EF5350",
   info: darkBrandColors.primary[500],
@@ -281,6 +328,13 @@ export const darkColors: ColorPalette = {
   // Border
   border: darkBrandColors.neutral[300],
   borderLight: darkBrandColors.neutral[200],
+
+  // Status Border Colors
+  successBorder: brandColors.secondary[400],
+  errorBorder: "#EF5350",
+  warningBorder: "#FFB74D",
+  infoBorder: darkBrandColors.primary[500],
+  primaryBorder: darkBrandColors.primary[500],
 
   // Interactive
   link: darkBrandColors.primary[500],

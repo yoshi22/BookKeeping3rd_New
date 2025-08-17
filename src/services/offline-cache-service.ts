@@ -4,8 +4,8 @@
  */
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { database } from "../data/database";
-import { StatisticsService } from "./statistics-service";
+import { databaseService } from "../data/database";
+import { statisticsService } from "./statistics-service";
 import { ReviewService } from "./review-service";
 
 export interface CacheConfig {
@@ -140,7 +140,7 @@ export class OfflineCacheService {
       CREATE INDEX IF NOT EXISTS idx_last_accessed ON cache_data(last_accessed);
     `;
 
-    await database.executeQuery(query);
+    await databaseService.executeSql(query);
   }
 
   /**
@@ -256,7 +256,7 @@ export class OfflineCacheService {
         LIMIT 1
       `;
 
-      const result = await database.executeQuery(query, [key]);
+      const result = await databaseService.executeSql(query, [key]);
 
       if (result.rows && result.rows.length > 0) {
         const row = result.rows[0];
@@ -309,7 +309,7 @@ export class OfflineCacheService {
         entry.metadata ? JSON.stringify(entry.metadata) : null,
       ];
 
-      await database.executeQuery(query, params);
+      await databaseService.executeSql(query, params);
     } catch (error) {
       console.error("[OfflineCacheService] SQLiteキャッシュ保存エラー:", error);
     }
@@ -348,7 +348,7 @@ export class OfflineCacheService {
    */
   private async preloadQuestions(): Promise<void> {
     try {
-      const questions = await database.executeQuery(`
+      const questions = await databaseService.executeSql(`
         SELECT id, type, difficulty, category_id, title, statement,
                options, correct_answer, explanation
         FROM questions
@@ -372,7 +372,7 @@ export class OfflineCacheService {
    */
   private async preloadCategories(): Promise<void> {
     try {
-      const categories = await database.executeQuery(`
+      const categories = await databaseService.executeSql(`
         SELECT id, name, description, parent_id, sort_order
         FROM categories
         ORDER BY sort_order ASC
@@ -394,7 +394,7 @@ export class OfflineCacheService {
    */
   private async preloadAccountItems(): Promise<void> {
     try {
-      const accounts = await database.executeQuery(`
+      const accounts = await databaseService.executeSql(`
         SELECT id, name, category, normal_balance
         FROM account_items
         ORDER BY category, name
@@ -416,7 +416,7 @@ export class OfflineCacheService {
    */
   private async preloadUserProgress(): Promise<void> {
     try {
-      const progress = await database.executeQuery(`
+      const progress = await databaseService.executeSql(`
         SELECT category_id, total_questions, correct_answers, accuracy_rate,
                last_updated
         FROM user_progress
@@ -442,7 +442,7 @@ export class OfflineCacheService {
    */
   private async preloadReviewItems(): Promise<void> {
     try {
-      const reviewItems = await database.executeQuery(`
+      const reviewItems = await databaseService.executeSql(`
         SELECT ri.*, q.title, q.type, q.difficulty
         FROM review_items ri
         JOIN questions q ON ri.question_id = q.id
@@ -470,8 +470,7 @@ export class OfflineCacheService {
    */
   private async preloadStatistics(): Promise<void> {
     try {
-      const statsService = StatisticsService.getInstance();
-      const stats = await statsService.getOverallStatistics();
+      const stats = await statisticsService.getOverallStatistics();
 
       await this.set(this.cacheKeys.statistics, stats, {
         expiresIn: 15 * 60 * 1000, // 15分
@@ -555,7 +554,7 @@ export class OfflineCacheService {
 
       // SQLiteからも削除
       try {
-        await database.executeQuery(
+        await databaseService.executeSql(
           "DELETE FROM cache_data WHERE cache_key = ?",
           [key],
         );
@@ -585,7 +584,7 @@ export class OfflineCacheService {
       }
 
       // SQLiteの期限切れ削除
-      await database.executeQuery(
+      await databaseService.executeSql(
         "DELETE FROM cache_data WHERE expires_at IS NOT NULL AND expires_at < ?",
         [now],
       );
@@ -610,7 +609,7 @@ export class OfflineCacheService {
         LIMIT 50
       `;
 
-      const result = await database.executeQuery(query, [Date.now()]);
+      const result = await databaseService.executeSql(query, [Date.now()]);
 
       if (result.rows) {
         for (const row of result.rows) {
@@ -658,7 +657,7 @@ export class OfflineCacheService {
    */
   private async updateCacheStats(): Promise<void> {
     try {
-      const result = await database.executeQuery(`
+      const result = await databaseService.executeSql(`
         SELECT 
           COUNT(*) as total_entries,
           SUM(size) as total_size,
@@ -731,7 +730,7 @@ export class OfflineCacheService {
       this.memoryCache.delete(key);
 
       // SQLiteキャッシュから削除
-      await database.executeQuery(
+      await databaseService.executeSql(
         "DELETE FROM cache_data WHERE cache_key = ?",
         [key],
       );
@@ -788,7 +787,7 @@ export class OfflineCacheService {
       this.memoryCache.clear();
 
       // SQLiteキャッシュクリア
-      await database.executeQuery("DELETE FROM cache_data");
+      await databaseService.executeSql("DELETE FROM cache_data");
 
       // アクセスログクリア
       this.accessLog.clear();

@@ -5,6 +5,7 @@
 
 import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../context/ThemeContext";
 
 interface QuestionTextProps {
   questionText: string;
@@ -19,6 +20,11 @@ export default function QuestionText({
   difficulty,
   showDifficulty = true,
 }: QuestionTextProps) {
+  // Theme system integration for dark mode support
+  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
   // 改行や特殊文字を適切に表示するためのフォーマット
   const formatQuestionText = (text: string): string => {
     return text
@@ -102,21 +108,21 @@ export default function QuestionText({
     return { journalEntries, otherContent: text };
   };
 
-  // 難易度に応じたスタイルを取得
+  // 難易度に応じたスタイルを取得（テーマ対応）
   const getDifficultyStyle = (level: number) => {
     switch (level) {
       case 1:
-        return { color: "#4caf50", text: "基礎" }; // 緑
+        return { color: theme.colors.success, text: "基礎" }; // 緑
       case 2:
-        return { color: "#ff9800", text: "標準" }; // オレンジ
+        return { color: theme.colors.warning, text: "標準" }; // オレンジ
       case 3:
-        return { color: "#f44336", text: "応用" }; // 赤
+        return { color: theme.colors.error, text: "応用" }; // 赤
       case 4:
-        return { color: "#9c27b0", text: "発展" }; // 紫
+        return { color: theme.colors.secondary, text: "発展" }; // 紫
       case 5:
-        return { color: "#e91e63", text: "最高" }; // ピンク
+        return { color: theme.colors.accent, text: "最高" }; // ピンク
       default:
-        return { color: "#757575", text: "不明" }; // グレー
+        return { color: theme.colors.textSecondary, text: "不明" }; // グレー
     }
   };
 
@@ -215,124 +221,122 @@ export default function QuestionText({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    margin: 15,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-    overflow: "hidden",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: "#f8f9fa",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-    flex: 1,
-  },
-  questionId: {
-    fontSize: 14,
-    color: "#666",
-    marginRight: 12,
-  },
-  difficultyContainer: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-    backgroundColor: "rgba(0, 0, 0, 0.05)",
-  },
-  difficultyText: {
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  textContainer: {
-    maxHeight: 300, // 長い問題文の場合はスクロール可能
-  },
-  questionText: {
-    fontSize: 16,
-    lineHeight: 26,
-    color: "#333",
-    padding: 20,
-    textAlign: "left",
-  },
-  questionContent: {
-    padding: 20,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#2196F3",
-    marginTop: 15,
-    marginBottom: 12,
-    paddingHorizontal: 20,
-  },
-  journalTable: {
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: "#e0e0e0",
-    borderRadius: 8,
-    overflow: "hidden",
-    marginHorizontal: 20,
-  },
-  journalHeader: {
-    flexDirection: "row",
-    backgroundColor: "#f8f9fa",
-    borderBottomWidth: 2,
-    borderBottomColor: "#2196F3",
-  },
-  journalHeaderText: {
-    flex: 1,
-    textAlign: "center",
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-    paddingVertical: 12,
-  },
-  debitHeader: {
-    borderRightWidth: 1,
-    borderRightColor: "#e0e0e0",
-  },
-  creditHeader: {
-    // 貸方ヘッダー専用スタイル（現在は空）
-  },
-  journalRow: {
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: "#f0f0f0",
-    minHeight: 60,
-  },
-  journalCell: {
-    flex: 1,
-    padding: 12,
-    justifyContent: "center",
-    borderRightWidth: 1,
-    borderRightColor: "#f0f0f0",
-  },
-  dateText: {
-    fontSize: 12,
-    color: "#666",
-    marginBottom: 4,
-  },
-  entryText: {
-    fontSize: 14,
-    color: "#333",
-    fontWeight: "500",
-  },
-  descriptionText: {
-    fontSize: 12,
-    color: "#888",
-    marginTop: 4,
-    fontStyle: "italic",
-  },
-});
+// Theme-aware styles function for dark mode support
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.surface,
+      margin: 15,
+      borderRadius: 10,
+      ...theme.shadows.medium,
+      overflow: "hidden",
+    },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 16,
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      flex: 1,
+    },
+    questionId: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginRight: 12,
+    },
+    difficultyContainer: {
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 12,
+      backgroundColor: theme.colors.borderLight,
+    },
+    difficultyText: {
+      fontSize: 12,
+      fontWeight: "bold",
+    },
+    textContainer: {
+      maxHeight: 300, // 長い問題文の場合はスクロール可能
+    },
+    questionText: {
+      fontSize: 16,
+      lineHeight: 26,
+      color: theme.colors.text,
+      padding: 20,
+      textAlign: "left",
+    },
+    questionContent: {
+      padding: 20,
+    },
+    sectionTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+      marginTop: 15,
+      marginBottom: 12,
+      paddingHorizontal: 20,
+    },
+    journalTable: {
+      marginVertical: 10,
+      borderWidth: 1,
+      borderColor: theme.colors.borderLight,
+      borderRadius: 8,
+      overflow: "hidden",
+      marginHorizontal: 20,
+    },
+    journalHeader: {
+      flexDirection: "row",
+      backgroundColor: theme.colors.backgroundSecondary,
+      borderBottomWidth: 2,
+      borderBottomColor: theme.colors.primary,
+    },
+    journalHeaderText: {
+      flex: 1,
+      textAlign: "center",
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      paddingVertical: 12,
+    },
+    debitHeader: {
+      borderRightWidth: 1,
+      borderRightColor: theme.colors.borderLight,
+    },
+    creditHeader: {
+      // 貸方ヘッダー専用スタイル（現在は空）
+    },
+    journalRow: {
+      flexDirection: "row",
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+      minHeight: 60,
+    },
+    journalCell: {
+      flex: 1,
+      padding: 12,
+      justifyContent: "center",
+      borderRightWidth: 1,
+      borderRightColor: theme.colors.borderLight,
+    },
+    dateText: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginBottom: 4,
+    },
+    entryText: {
+      fontSize: 14,
+      color: theme.colors.text,
+      fontWeight: "500",
+    },
+    descriptionText: {
+      fontSize: 12,
+      color: theme.colors.textDisabled,
+      marginTop: 4,
+      fontStyle: "italic",
+    },
+  });

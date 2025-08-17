@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import JournalEntryForm from "./JournalEntryForm";
+import UnifiedJournalEntryForm from "../unified/JournalEntryForm";
 import { JournalEntry } from "../shared/FormTypes";
 import { Screen } from "../layout/ResponsiveLayout";
 
@@ -38,7 +38,8 @@ export default function JournalEntryDemo() {
   return (
     <Screen>
       <View style={styles.container}>
-        <JournalEntryForm
+        <UnifiedJournalEntryForm
+          questionId="DEMO_J_001"
           questionText={SAMPLE_QUESTION}
           onSubmit={handleSubmit}
           onNext={handleNext}
@@ -46,6 +47,7 @@ export default function JournalEntryDemo() {
           questionNumber={1}
           totalQuestions={15}
           timeRemaining="45:30"
+          mode="mock_exam"
         />
       </View>
     </Screen>

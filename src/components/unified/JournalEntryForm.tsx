@@ -1,3 +1,8 @@
+/**
+ * 統合版仕訳入力フォーム
+ * 学習モードと模試モードの両方をサポート
+ */
+
 import React, { useState, useRef } from "react";
 import {
   View,
@@ -12,35 +17,37 @@ import {
   FlatList,
   ActivityIndicator,
   TextInput,
-  TouchableWithoutFeedback,
-  Keyboard,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { useTheme } from "../context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../../context/ThemeContext";
 import {
   answerService,
   SubmitAnswerRequest,
   SubmitAnswerResponse,
-} from "../services/answer-service";
-import { SessionType } from "../types/database";
-import NumericPad from "./ui/NumericPad";
+} from "../../services/answer-service";
+import NumericPad from "../ui/NumericPad";
+import ExplanationModal from "../mock-exam/ExplanationModal";
+import { JournalEntry, UnifiedFormProps, FormState } from "../shared/FormTypes";
+import { STANDARD_ACCOUNT_OPTIONS } from "../shared/AccountOptions";
 import {
-  JournalEntry,
-  BaseFormProps,
-  FormState,
-  STANDARD_ACCOUNT_OPTIONS,
   validateAmount,
   formatAmount,
   createSubmitAnswerRequest,
   createInitialFormState,
   removeDuplicateEntries,
-} from "./shared";
+} from "../shared/FormUtils";
 
-export interface JournalEntryFormProps extends BaseFormProps {
-  questionText: string;
+export interface UnifiedJournalEntryFormProps extends UnifiedFormProps {
+  // JournalEntry特有のプロパティ
+  onSubmit?: (debits: JournalEntry[], credits: JournalEntry[]) => void;
 }
 
-export default function JournalEntryForm({
+const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
   questionId,
   questionText,
   sessionType = "learning",
@@ -48,29 +55,51 @@ export default function JournalEntryForm({
   startTime = Date.now(),
   onSubmitAnswer,
   showSubmitButton = true,
-}: JournalEntryFormProps) {
+
+  // 模試モード固有プロパティ
+  questionNumber,
+  totalQuestions,
+  timeRemaining,
+  explanation,
+  correctAnswer,
+  userAnswer,
+  isCorrect,
+  showExplanation,
+  onNext,
+  onPrevious,
+
+  // 統合モード制御
+  mode = "learning",
+  onDirectSubmit,
+  onSubmit,
+}: UnifiedJournalEntryFormProps) {
+  // Theme system integration
   const { theme } = useTheme();
+  const colors = useColors();
+  const dynamicColors = useDynamicColors();
+  const styles = useThemedStyles(createStyles);
+
+  // Form state
   const [formState, setFormState] = useState<FormState>(
     createInitialFormState(),
   );
 
-  // 入力フィールドへの参照
-  const debitRefs = useRef<{ [key: string]: TextInput | null }>({});
-  const creditRefs = useRef<{ [key: string]: TextInput | null }>({});
-
+  // Journal entry state
   const [debits, setDebits] = useState<JournalEntry[]>([
     { account: "", amount: 0 },
   ]);
   const [credits, setCredits] = useState<JournalEntry[]>([
     { account: "", amount: 0 },
   ]);
+
+  // Modal state
   const [modalVisible, setModalVisible] = useState(false);
   const [currentSelection, setCurrentSelection] = useState<{
     type: "debit" | "credit";
     index: number;
   } | null>(null);
 
-  // 数字パッド関連の状態
+  // Numeric pad state (学習モード用)
   const [numericPadVisible, setNumericPadVisible] = useState(false);
   const [currentAmountEdit, setCurrentAmountEdit] = useState<{
     type: "debit" | "credit";
@@ -78,6 +107,10 @@ export default function JournalEntryForm({
   } | null>(null);
   const [tempAmount, setTempAmount] = useState("");
 
+  // Explanation modal state (模試モード用)
+  const [explanationModalVisible, setExplanationModalVisible] = useState(false);
+
+  // Entry management functions
   const addDebitRow = () => {
     if (debits.length < 4) {
       setDebits([...debits, { account: "", amount: 0 }]);
@@ -132,6 +165,7 @@ export default function JournalEntryForm({
     setCredits(newCredits);
   };
 
+  // Account selection
   const showAccountSelector = (type: "debit" | "credit", index: number) => {
     if (Platform.OS === "ios") {
       const options = STANDARD_ACCOUNT_OPTIONS.map((option) => option.label);
@@ -153,7 +187,6 @@ export default function JournalEntryForm({
         },
       );
     } else {
-      // Fallback to modal for Android or if ActionSheet doesn't work
       setCurrentSelection({ type, index });
       setModalVisible(true);
     }
@@ -174,7 +207,7 @@ export default function JournalEntryForm({
     setCurrentSelection(null);
   };
 
-  // 数字パッドを開く
+  // Numeric pad functions (学習モード用)
   const openNumericPad = (type: "debit" | "credit", index: number) => {
     const currentValue =
       type === "debit"
@@ -185,7 +218,6 @@ export default function JournalEntryForm({
     setNumericPadVisible(true);
   };
 
-  // 数字パッドから値を確定
   const confirmAmount = () => {
     if (currentAmountEdit) {
       const amount = parseInt(tempAmount) || 0;
@@ -200,19 +232,20 @@ export default function JournalEntryForm({
     setTempAmount("");
   };
 
+  // Validation and submission
   const validateAndSubmit = async () => {
     if (formState.isSubmitting) return;
 
-    // 借方の合計を計算
+    // Calculate totals
     const debitTotal = debits
       .filter((entry) => entry.account && entry.amount > 0)
       .reduce((sum, entry) => sum + entry.amount, 0);
 
-    // 貸方の合計を計算
     const creditTotal = credits
       .filter((entry) => entry.account && entry.amount > 0)
       .reduce((sum, entry) => sum + entry.amount, 0);
 
+    // Validation
     if (debitTotal === 0 || creditTotal === 0) {
       Alert.alert(
         "入力エラー",
@@ -229,7 +262,7 @@ export default function JournalEntryForm({
       return;
     }
 
-    // 有効な仕訳のみを取得
+    // Get valid entries
     const validDebits = debits.filter(
       (entry) => entry.account && entry.amount > 0,
     );
@@ -237,7 +270,7 @@ export default function JournalEntryForm({
       (entry) => entry.account && entry.amount > 0,
     );
 
-    // 重複チェック
+    // Duplicate check
     const uniqueDebits = removeDuplicateEntries(
       validDebits,
       (entry) => entry.account,
@@ -266,29 +299,38 @@ export default function JournalEntryForm({
     try {
       setFormState({ ...formState, isSubmitting: true });
 
-      // 解答データを準備（新しい配列形式）
-      const answerData = {
-        questionType: "journal" as const,
-        debits: validDebits,
-        credits: validCredits,
-      };
+      // Handle submission based on mode
+      if (mode === "mock_exam" && (onDirectSubmit || onSubmit)) {
+        // 模試モード: 直接コールバック実行
+        if (onDirectSubmit) {
+          onDirectSubmit({ debits: validDebits, credits: validCredits });
+        } else if (onSubmit) {
+          onSubmit(validDebits, validCredits);
+        }
+      } else {
+        // 学習モード: answerService経由
+        const answerData = {
+          questionType: "journal" as const,
+          debits: validDebits,
+          credits: validCredits,
+        };
 
-      // 解答送信
-      const request = createSubmitAnswerRequest(
-        questionId,
-        answerData,
-        sessionType,
-        sessionId,
-        startTime,
-      );
+        const request = createSubmitAnswerRequest(
+          questionId,
+          answerData,
+          sessionType,
+          sessionId,
+          startTime,
+        );
 
-      const response = await answerService.submitAnswer(request);
+        const response = await answerService.submitAnswer(request);
 
-      if (onSubmitAnswer) {
-        onSubmitAnswer(response);
+        if (onSubmitAnswer) {
+          onSubmitAnswer(response);
+        }
       }
     } catch (error) {
-      console.error("[JournalEntryForm] 解答送信エラー:", error);
+      console.error("[UnifiedJournalEntryForm] 解答送信エラー:", error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setFormState({ ...formState, isSubmitting: false });
@@ -299,16 +341,81 @@ export default function JournalEntryForm({
     return amount > 0 ? formatAmount(amount) : "";
   };
 
-  const styles = createStyles(theme);
+  // Amount input component - varies by mode
+  const renderAmountInput = (
+    type: "debit" | "credit",
+    entry: JournalEntry,
+    index: number,
+  ) => {
+    const isLearningMode = mode === "learning";
+
+    if (isLearningMode) {
+      // 学習モード: NumericPad使用
+      return (
+        <TouchableOpacity
+          style={[
+            styles.amountInput,
+            (type === "debit" ? debits : credits).length > 1
+              ? styles.amountInputWithButton
+              : {},
+          ]}
+          onPress={() => openNumericPad(type, index)}
+          testID={
+            index === 0
+              ? `${type}-amount-input`
+              : `${type}-amount-input-${index}`
+          }
+          accessibilityLabel={`${type === "debit" ? "借方" : "貸方"}金額入力 ${index + 1}`}
+        >
+          <Text style={styles.amountText}>
+            {entry.amount > 0 ? entry.amount.toLocaleString() : "金額を入力"}
+          </Text>
+        </TouchableOpacity>
+      );
+    } else {
+      // 模試モード: TextInput使用
+      return (
+        <TextInput
+          style={[
+            styles.amountInput,
+            (type === "debit" ? debits : credits).length > 1
+              ? styles.amountInputWithButton
+              : {},
+          ]}
+          value={entry.amount > 0 ? entry.amount.toString() : ""}
+          onChangeText={(text) =>
+            type === "debit"
+              ? updateDebit(index, "amount", text)
+              : updateCredit(index, "amount", text)
+          }
+          placeholder="金額"
+          keyboardType="numeric"
+          textAlign="right"
+        />
+      );
+    }
+  };
 
   return (
-    <ScrollView style={styles.container} testID="journal-entry-form">
-      {/* 問題文 */}
+    <ScrollView style={styles.container} testID="unified-journal-entry-form">
+      {/* Header for mock exam mode */}
+      {mode === "mock_exam" && questionNumber && totalQuestions && (
+        <View style={styles.header}>
+          <Text style={styles.questionInfo}>
+            問{questionNumber} / {totalQuestions}
+          </Text>
+          {timeRemaining && (
+            <Text style={styles.timeRemaining}>残り {timeRemaining}</Text>
+          )}
+        </View>
+      )}
+
+      {/* Question text */}
       <View style={styles.questionContainer}>
         <Text style={styles.questionText}>{questionText}</Text>
       </View>
 
-      {/* 仕訳表 */}
+      {/* Journal table */}
       <View style={styles.journalTable}>
         <View style={styles.tableHeader}>
           <Text style={[styles.headerText, styles.debitHeader]}>借方</Text>
@@ -316,6 +423,7 @@ export default function JournalEntryForm({
         </View>
 
         <View style={styles.tableContent}>
+          {/* Debit section */}
           <View style={styles.debitSection}>
             <Text style={styles.sectionLabel}>借方</Text>
             {debits.map((debit, index) => (
@@ -337,25 +445,7 @@ export default function JournalEntryForm({
                 </TouchableOpacity>
 
                 <View style={styles.amountRow}>
-                  <TouchableOpacity
-                    style={[
-                      styles.amountInput,
-                      debits.length > 1 ? styles.amountInputWithButton : {},
-                    ]}
-                    onPress={() => openNumericPad("debit", index)}
-                    testID={
-                      index === 0
-                        ? "debit-amount-input"
-                        : `debit-amount-input-${index}`
-                    }
-                    accessibilityLabel={`借方金額入力 ${index + 1}`}
-                  >
-                    <Text style={styles.amountText}>
-                      {debit.amount > 0
-                        ? debit.amount.toLocaleString()
-                        : "金額を入力"}
-                    </Text>
-                  </TouchableOpacity>
+                  {renderAmountInput("debit", debit, index)}
 
                   {debits.length > 1 && (
                     <TouchableOpacity
@@ -376,6 +466,7 @@ export default function JournalEntryForm({
             )}
           </View>
 
+          {/* Credit section */}
           <View style={styles.creditSection}>
             <Text style={styles.sectionLabel}>貸方</Text>
             {credits.map((credit, index) => (
@@ -397,25 +488,7 @@ export default function JournalEntryForm({
                 </TouchableOpacity>
 
                 <View style={styles.amountRow}>
-                  <TouchableOpacity
-                    style={[
-                      styles.amountInput,
-                      credits.length > 1 ? styles.amountInputWithButton : {},
-                    ]}
-                    onPress={() => openNumericPad("credit", index)}
-                    testID={
-                      index === 0
-                        ? "credit-amount-input"
-                        : `credit-amount-input-${index}`
-                    }
-                    accessibilityLabel={`貸方金額入力 ${index + 1}`}
-                  >
-                    <Text style={styles.amountText}>
-                      {credit.amount > 0
-                        ? credit.amount.toLocaleString()
-                        : "金額を入力"}
-                    </Text>
-                  </TouchableOpacity>
+                  {renderAmountInput("credit", credit, index)}
 
                   {credits.length > 1 && (
                     <TouchableOpacity
@@ -438,7 +511,7 @@ export default function JournalEntryForm({
         </View>
       </View>
 
-      {/* 合計表示 */}
+      {/* Totals */}
       <View style={styles.totalContainer}>
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>借方合計:</Text>
@@ -460,29 +533,63 @@ export default function JournalEntryForm({
         </View>
       </View>
 
-      {/* 送信ボタン */}
-      {showSubmitButton && (
-        <View style={styles.submitContainer}>
+      {/* Navigation and buttons */}
+      {mode === "mock_exam" ? (
+        // 模試モード: ナビゲーションボタン
+        <View style={styles.navigationContainer}>
+          {onPrevious && (
+            <TouchableOpacity style={styles.navButton} onPress={onPrevious}>
+              <Text style={styles.navButtonText}>前の問題</Text>
+            </TouchableOpacity>
+          )}
+
           <TouchableOpacity
-            style={[
-              styles.submitButton,
-              formState.isSubmitting && styles.submitButtonDisabled,
-            ]}
+            style={styles.submitButton}
             onPress={validateAndSubmit}
-            disabled={formState.isSubmitting}
-            testID="submit-answer-button"
-            accessibilityLabel="解答を送信"
           >
-            {formState.isSubmitting ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text style={styles.submitButtonText}>解答を送信</Text>
-            )}
+            <Text style={styles.submitButtonText}>解答確認</Text>
           </TouchableOpacity>
+
+          {explanation && (
+            <TouchableOpacity
+              style={styles.explanationButton}
+              onPress={() => setExplanationModalVisible(true)}
+            >
+              <Text style={styles.explanationButtonText}>📖 解説を見る</Text>
+            </TouchableOpacity>
+          )}
+
+          {onNext && (
+            <TouchableOpacity style={styles.navButton} onPress={onNext}>
+              <Text style={styles.navButtonText}>次の問題</Text>
+            </TouchableOpacity>
+          )}
         </View>
+      ) : (
+        // 学習モード: 送信ボタンのみ
+        showSubmitButton && (
+          <View style={styles.submitContainer}>
+            <TouchableOpacity
+              style={[
+                styles.submitButton,
+                formState.isSubmitting && styles.submitButtonDisabled,
+              ]}
+              onPress={validateAndSubmit}
+              disabled={formState.isSubmitting}
+              testID="submit-answer-button"
+              accessibilityLabel="解答を送信"
+            >
+              {formState.isSubmitting ? (
+                <ActivityIndicator color={theme.colors.surface} />
+              ) : (
+                <Text style={styles.submitButtonText}>解答を送信</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+        )
       )}
 
-      {/* 勘定科目選択Modal */}
+      {/* Account selection modal */}
       <Modal
         visible={modalVisible}
         transparent={true}
@@ -504,7 +611,7 @@ export default function JournalEntryForm({
             <FlatList
               data={STANDARD_ACCOUNT_OPTIONS.filter(
                 (account) => account.value !== "",
-              )} // 空の選択肢を除外
+              )}
               keyExtractor={(item) => item.value}
               renderItem={({ item }) => (
                 <TouchableOpacity
@@ -519,21 +626,38 @@ export default function JournalEntryForm({
         </View>
       </Modal>
 
-      {/* 数字パッド */}
-      <NumericPad
-        visible={numericPadVisible}
-        value={tempAmount}
-        onValueChange={setTempAmount}
-        onClose={confirmAmount}
-        placeholder="金額を入力"
-        label="金額入力"
-        maxLength={10}
-      />
+      {/* Numeric pad for learning mode */}
+      {mode === "learning" && (
+        <NumericPad
+          visible={numericPadVisible}
+          value={tempAmount}
+          onValueChange={setTempAmount}
+          onClose={confirmAmount}
+          placeholder="金額を入力"
+          label="金額入力"
+          maxLength={10}
+        />
+      )}
+
+      {/* Explanation modal for mock exam mode */}
+      {mode === "mock_exam" && (
+        <ExplanationModal
+          visible={explanationModalVisible}
+          onClose={() => setExplanationModalVisible(false)}
+          explanation={explanation || ""}
+          questionText={questionText}
+          correctAnswer={correctAnswer}
+          userAnswer={userAnswer}
+          isCorrect={isCorrect}
+        />
+      )}
     </ScrollView>
   );
-}
+});
 
-const createStyles = (theme: any) =>
+export default UnifiedJournalEntryForm;
+
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -563,11 +687,7 @@ const createStyles = (theme: any) =>
       backgroundColor: theme.colors.surface,
       margin: 16,
       borderRadius: 8,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
+      ...theme.shadows.medium,
     },
     questionText: {
       fontSize: 16,
@@ -667,9 +787,7 @@ const createStyles = (theme: any) =>
       fontSize: 18,
       fontWeight: "600",
     },
-    amountInputWithButton: {
-      // 削除ボタンがある場合は幅を調整
-    },
+    amountInputWithButton: {},
     removeButton: {
       width: 36,
       height: 36,
@@ -700,11 +818,7 @@ const createStyles = (theme: any) =>
       padding: 16,
       backgroundColor: theme.colors.surface,
       borderRadius: 8,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
+      ...theme.shadows.medium,
     },
     totalRow: {
       flexDirection: "row",
@@ -774,10 +888,9 @@ const createStyles = (theme: any) =>
       color: theme.colors.background,
       fontWeight: "600",
     },
-    // Modal styles
     modalOverlay: {
       flex: 1,
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backgroundColor: theme.colors.background + "80",
       justifyContent: "flex-end",
     },
     modalContent: {

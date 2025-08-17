@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Stack } from "expo-router";
-import { useTheme } from "../src/context/ThemeContext";
+import { useTheme, type Theme } from "../src/context/ThemeContext";
 import JournalEntryDemo from "../src/components/mock-exam/JournalEntryDemo";
 
 export default function TestJournalScreen() {

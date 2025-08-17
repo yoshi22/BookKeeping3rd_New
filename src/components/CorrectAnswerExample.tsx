@@ -5,6 +5,7 @@
 
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 import { QuestionCorrectAnswer } from "../types/models";
 
 interface CorrectAnswerExampleProps {
@@ -18,6 +19,9 @@ export default function CorrectAnswerExample({
   correctAnswer,
   show,
 }: CorrectAnswerExampleProps) {
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
+
   if (!show || !correctAnswer) return null;
 
   const renderJournalExample = () => {
@@ -159,16 +163,19 @@ export default function CorrectAnswerExample({
     }
 
     // Filter and transform entries to ensure required properties
-    const validEntries = entries.filter(entry => 
-      entry.accountName && 
-      typeof entry.debitAmount === 'number' && 
-      typeof entry.creditAmount === 'number'
-    ).map(entry => ({
-      accountName: entry.accountName!,
-      debitAmount: entry.debitAmount!,
-      creditAmount: entry.creditAmount!
-    }));
-    
+    const validEntries = entries
+      .filter(
+        (entry) =>
+          entry.accountName &&
+          typeof entry.debitAmount === "number" &&
+          typeof entry.creditAmount === "number",
+      )
+      .map((entry) => ({
+        accountName: entry.accountName!,
+        debitAmount: entry.debitAmount!,
+        creditAmount: entry.creditAmount!,
+      }));
+
     return renderEntriesFromArray(validEntries);
   };
 
@@ -289,51 +296,52 @@ export default function CorrectAnswerExample({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff3e0",
-    borderRadius: 8,
-    padding: 15,
-    margin: 10,
-    borderLeftWidth: 4,
-    borderLeftColor: "#ff9800",
-  },
-  exampleContainer: {
-    marginBottom: 10,
-  },
-  exampleTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 10,
-  },
-  fieldRow: {
-    flexDirection: "row",
-    marginBottom: 5,
-    alignItems: "center",
-  },
-  fieldLabel: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: "#555",
-    minWidth: 100,
-  },
-  fieldValue: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#d84315",
-    fontFamily: "monospace",
-    backgroundColor: "#fff",
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 4,
-    marginLeft: 10,
-  },
-  hintText: {
-    fontSize: 12,
-    color: "#666",
-    fontStyle: "italic",
-    marginTop: 5,
-    lineHeight: 16,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.warningBackground,
+      borderRadius: 8,
+      padding: 15,
+      margin: 10,
+      borderLeftWidth: 4,
+      borderLeftColor: theme.colors.warning,
+    },
+    exampleContainer: {
+      marginBottom: 10,
+    },
+    exampleTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 10,
+    },
+    fieldRow: {
+      flexDirection: "row",
+      marginBottom: 5,
+      alignItems: "center",
+    },
+    fieldLabel: {
+      fontSize: 14,
+      fontWeight: "500",
+      color: theme.colors.textSecondary,
+      minWidth: 100,
+    },
+    fieldValue: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+      fontFamily: "monospace",
+      backgroundColor: theme.colors.surface,
+      paddingHorizontal: 8,
+      paddingVertical: 2,
+      borderRadius: 4,
+      marginLeft: 10,
+    },
+    hintText: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      fontStyle: "italic",
+      marginTop: 5,
+      lineHeight: 16,
+    },
+  });

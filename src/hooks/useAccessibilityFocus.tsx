@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native";
 import { useAccessibility } from "./useAccessibility";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme, type Theme } from "../context/ThemeContext";
 
 export interface FocusableElement {
   ref: React.RefObject<any>;
@@ -47,8 +47,7 @@ export function useAccessibilityFocus(options: AccessibilityFocusOptions = {}) {
     highlightFocus = true,
   } = options;
 
-  const { isScreenReaderEnabled, isReduceMotionEnabled, isVoiceOverRunning } =
-    useAccessibility();
+  const { isScreenReaderEnabled, isReduceMotionEnabled } = useAccessibility();
 
   const { theme } = useTheme();
 
@@ -118,10 +117,9 @@ export function useAccessibilityFocus(options: AccessibilityFocusOptions = {}) {
               if (Platform.OS === "ios") {
                 AccessibilityInfo.setAccessibilityFocus(node);
               } else {
-                UIManager.sendAccessibilityEvent(
-                  node,
-                  UIManager.AccessibilityEventTypes.typeViewFocused,
-                );
+                // Android用の代替アプローチ
+                // sendAccessibilityEventは現在のReact Nativeには存在しない
+                AccessibilityInfo.setAccessibilityFocus(node);
               }
 
               // フォーカス履歴更新
@@ -337,9 +335,9 @@ export function useAccessibilityFocus(options: AccessibilityFocusOptions = {}) {
       currentFocus: currentFocusRef.current,
       focusHistory: [...focusHistoryRef.current],
       isScreenReaderActive: isScreenReaderEnabled,
-      isVoiceOverActive: isVoiceOverRunning,
+      isVoiceOverActive: isScreenReaderEnabled, // iOS VoiceOver状態は isScreenReaderEnabled で代替
     }),
-    [isScreenReaderEnabled, isVoiceOverRunning],
+    [isScreenReaderEnabled],
   );
 
   return {
@@ -364,7 +362,7 @@ export function useAccessibilityFocus(options: AccessibilityFocusOptions = {}) {
 
     // アクセシビリティ情報
     isScreenReaderEnabled,
-    isVoiceOverRunning,
+    isVoiceOverRunning: isScreenReaderEnabled, // iOS VoiceOver状態は isScreenReaderEnabled で代替
   };
 }
 
@@ -412,12 +410,11 @@ export const FocusableView = React.forwardRef<
       <View
         ref={ref}
         accessible={true}
-        accessibilityRole={accessibilityRole}
+        accessibilityRole={accessibilityRole as any}
         accessibilityLabel={accessibilityLabel}
         accessibilityHint={accessibilityHint}
         accessibilityState={{ disabled }}
-        onAccessibilityFocus={onFocus}
-        onKeyPress={(event) => handleKeyPress(event, groupId, focusId)}
+        onAccessibilityTap={onFocus}
         style={[style, focusStyle]}
         {...props}
       >

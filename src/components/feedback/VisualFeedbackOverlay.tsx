@@ -17,7 +17,7 @@ import {
   useVisualFeedbackRenderer,
   VisualFeedbackOptions,
 } from "../../hooks/useVisualAudioSupport";
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme, type Theme } from "../../context/ThemeContext";
 import { useAccessibility } from "../../hooks/useAccessibility";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
