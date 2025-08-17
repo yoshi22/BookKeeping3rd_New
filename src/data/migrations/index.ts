@@ -69,7 +69,9 @@ export async function initializeDatabase(): Promise<void> {
         throw new Error(
           `Database corruption detected - reset required: ${(error as Error).message}`,
         );
-      } else if ((error as Error).message.includes("Transaction execution failed")) {
+      } else if (
+        (error as Error).message.includes("Transaction execution failed")
+      ) {
         throw new Error(
           `Database transaction failed - reset recommended: ${(error as Error).message}`,
         );
@@ -104,14 +106,11 @@ async function loadSampleData(): Promise<void> {
       },
     });
 
-    // 一時的に強制更新を有効化（250問データ読み込みのため）
-    const forceUpdate = false;
-
-    // 元のロジック（デバッグ用）
-    // const forceUpdate =
-    //   __DEV__ &&
-    //   (process.env.FORCE_UPDATE_QUESTIONS === "true" ||
-    //     process.env.EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS === "true");
+    // 環境変数による強制更新フラグ（修正適用用）
+    const forceUpdate =
+      __DEV__ &&
+      (process.env.FORCE_UPDATE_QUESTIONS === "true" ||
+        process.env.EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS === "true");
 
     logger.debug("[Database] forceUpdate フラグ:", { details: forceUpdate });
 

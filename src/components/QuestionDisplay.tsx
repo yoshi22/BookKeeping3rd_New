@@ -348,19 +348,11 @@ export default function QuestionDisplay({
       answerTemplate?.allowMultipleEntries) ||
     (questionId.startsWith("Q_J_") && answerTemplate?.type === "journal_entry");
 
-  // Debug logging for Q_J_001 - コンポーネントライフサイクル追跡
-  if (questionId === "Q_J_001") {
-    const displayComponentId = Math.random().toString(36).substr(2, 9);
-    console.log("[QuestionDisplay] Q_J_001 Mount:", {
-      displayComponentId,
-      questionId,
+  // デバッグログ（簡素化版）
+  if (process.env.NODE_ENV === "development") {
+    console.log(`[QuestionDisplay] レンダリング: ${questionId}`, {
       answerTemplateType: answerTemplate?.type,
       shouldUseJournalEntryForm,
-      shouldUseLedgerEntryForm:
-        answerTemplate?.type === "ledger_entry" ||
-        (questionId.startsWith("Q_L_") &&
-          isMultiEntryLedgerQuestion(questionId, questionText)),
-      answerTemplate: answerTemplate,
     });
   }
 
