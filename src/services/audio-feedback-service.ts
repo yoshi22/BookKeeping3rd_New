@@ -6,6 +6,7 @@
 import { Audio } from "expo-av";
 import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { logger } from "../../utils/logger";
 
 export interface AudioFeedbackConfig {
   enableSoundEffects: boolean;
@@ -190,9 +191,9 @@ export class AudioFeedbackService {
       await this.preloadBasicSounds();
 
       this.isInitialized = true;
-      console.log("[AudioFeedbackService] 音声システム初期化完了");
+      logger.debug("[AudioFeedbackService] 音声システム初期化完了");
     } catch (error) {
-      console.error("[AudioFeedbackService] 初期化エラー:", error);
+      logger.error("[AudioFeedbackService] 初期化エラー:", error);
       throw error;
     }
   }
@@ -207,7 +208,7 @@ export class AudioFeedbackService {
         this.config = { ...this.config, ...JSON.parse(savedConfig) };
       }
     } catch (error) {
-      console.warn("[AudioFeedbackService] 設定読み込みエラー:", error);
+      logger.warn("[AudioFeedbackService] 設定読み込みエラー:", { details: error });
     }
   }
 
@@ -224,7 +225,7 @@ export class AudioFeedbackService {
         JSON.stringify(this.config),
       );
     } catch (error) {
-      console.error("[AudioFeedbackService] 設定保存エラー:", error);
+      logger.error("[AudioFeedbackService] 設定保存エラー:", error);
     }
   }
 
@@ -432,21 +433,21 @@ export class AudioFeedbackService {
    */
   public async testSoundEffects(): Promise<void> {
     if (!this.isInitialized) {
-      console.warn("[AudioFeedbackService] 音声システムが初期化されていません");
+      logger.warn("[AudioFeedbackService] 音声システムが初期化されていません");
       return;
     }
 
-    console.log("[AudioFeedbackService] 音声効果テスト開始");
+    logger.debug("[AudioFeedbackService] 音声効果テスト開始");
     const testSounds = ["tap", "success", "error", "warning", "info"];
 
     for (let i = 0; i < testSounds.length; i++) {
       const soundId = testSounds[i];
-      console.log(`[AudioFeedbackService] テスト再生: ${soundId}`);
+      logger.debug("[AudioFeedbackService] テスト再生: ${soundId}");
       await this.playSoundEffect(soundId);
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
-    console.log("[AudioFeedbackService] 音声効果テスト完了");
+    logger.debug("[AudioFeedbackService] 音声効果テスト完了");
   }
 
   /**
@@ -497,9 +498,9 @@ export class AudioFeedbackService {
       this.synthesizedSounds.clear();
 
       this.isInitialized = false;
-      console.log("[AudioFeedbackService] クリーンアップ完了");
+      logger.debug("[AudioFeedbackService] クリーンアップ完了");
     } catch (error) {
-      console.error("[AudioFeedbackService] クリーンアップエラー:", error);
+      logger.error("[AudioFeedbackService] クリーンアップエラー:", error);
     }
   }
 }

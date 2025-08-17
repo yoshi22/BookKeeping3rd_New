@@ -9,6 +9,7 @@ import { questionRepository } from "../data/repositories/question-repository";
 import { reviewItemRepository } from "../data/repositories/review-item-repository";
 import { statisticsCache } from "./statistics-cache";
 import { QuestionCategory } from "../types/models";
+import { logger } from "../../utils/logger";
 
 /**
  * 全体学習統計
@@ -138,7 +139,7 @@ export class StatisticsService {
         return cached;
       }
 
-      console.log("[StatisticsService] 全体学習統計取得開始");
+      logger.debug("[StatisticsService] 全体学習統計取得開始");
 
       // 基本統計取得（回答数ベース）
       const basicStats = await learningHistoryRepository.getStatistics();
@@ -183,17 +184,17 @@ export class StatisticsService {
       // キャッシュに保存
       statisticsCache.setOverallStats(statistics);
 
-      console.log("[StatisticsService] 全体学習統計取得完了");
-      console.log("[StatisticsService] 統計データ:", {
+      logger.debug("[StatisticsService] 全体学習統計取得完了");
+      logger.debug("[StatisticsService] 統計データ:", { details: {
         totalQuestions: statistics.totalQuestions,
         answeredQuestions: statistics.answeredQuestions,
         correctAnswers: statistics.correctAnswers,
         incorrectAnswers: statistics.incorrectAnswers,
-      });
+      } });
 
       return statistics;
     } catch (error) {
-      console.error("[StatisticsService] getOverallStatistics エラー:", error);
+      logger.error("[StatisticsService] getOverallStatistics エラー:", error);
       throw error;
     }
   }
@@ -209,7 +210,7 @@ export class StatisticsService {
         return cached;
       }
 
-      console.log("[StatisticsService] カテゴリ別統計取得開始");
+      logger.debug("[StatisticsService] カテゴリ別統計取得開始");
 
       const categories: QuestionCategory[] = [
         "journal",
@@ -280,10 +281,10 @@ export class StatisticsService {
       // キャッシュに保存
       statisticsCache.setCategoryStats(statistics);
 
-      console.log("[StatisticsService] カテゴリ別統計取得完了");
+      logger.debug("[StatisticsService] カテゴリ別統計取得完了");
       return statistics;
     } catch (error) {
-      console.error("[StatisticsService] getCategoryStatistics エラー:", error);
+      logger.error("[StatisticsService] getCategoryStatistics エラー:", error);
       throw error;
     }
   }
@@ -295,7 +296,7 @@ export class StatisticsService {
     days: number = 30,
   ): Promise<DailyStatistics[]> {
     try {
-      console.log(`[StatisticsService] 日別学習統計取得開始: ${days}日間`);
+      logger.debug("[StatisticsService] 日別学習統計取得開始: ${days}日間");
 
       const endDate = new Date();
       const startDate = new Date();
@@ -352,10 +353,10 @@ export class StatisticsService {
         a.date.localeCompare(b.date),
       );
 
-      console.log("[StatisticsService] 日別学習統計取得完了");
+      logger.debug("[StatisticsService] 日別学習統計取得完了");
       return result;
     } catch (error) {
-      console.error("[StatisticsService] getDailyStatistics エラー:", error);
+      logger.error("[StatisticsService] getDailyStatistics エラー:", error);
       throw error;
     }
   }
@@ -365,7 +366,7 @@ export class StatisticsService {
    */
   public async getLearningTrends(): Promise<LearningTrends> {
     try {
-      console.log("[StatisticsService] 学習傾向分析開始");
+      logger.debug("[StatisticsService] 学習傾向分析開始");
 
       // 週別・月別進捗データ取得
       const weeklyProgress = await this.getWeeklyProgress();
@@ -394,10 +395,10 @@ export class StatisticsService {
         recommendations,
       };
 
-      console.log("[StatisticsService] 学習傾向分析完了");
+      logger.debug("[StatisticsService] 学習傾向分析完了");
       return trends;
     } catch (error) {
-      console.error("[StatisticsService] getLearningTrends エラー:", error);
+      logger.error("[StatisticsService] getLearningTrends エラー:", error);
       throw error;
     }
   }
@@ -413,7 +414,7 @@ export class StatisticsService {
         return cached;
       }
 
-      console.log("[StatisticsService] 学習目標進捗取得開始");
+      logger.debug("[StatisticsService] 学習目標進捗取得開始");
 
       // 目標設定取得（将来的にはユーザー設定から）
       const targets = {
@@ -469,10 +470,10 @@ export class StatisticsService {
       // キャッシュに保存
       statisticsCache.setLearningGoals(goals);
 
-      console.log("[StatisticsService] 学習目標進捗取得完了");
+      logger.debug("[StatisticsService] 学習目標進捗取得完了");
       return goals;
     } catch (error) {
-      console.error("[StatisticsService] getLearningGoals エラー:", error);
+      logger.error("[StatisticsService] getLearningGoals エラー:", error);
       throw error;
     }
   }

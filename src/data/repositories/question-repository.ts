@@ -4,6 +4,7 @@
  */
 
 import { BaseRepository } from "./base-repository";
+import { logger } from "../../../utils/logger";
 import {
   Question,
   QuestionCategory,
@@ -95,7 +96,7 @@ export class QuestionRepository extends BaseRepository<Question> {
       );
       return result.rows;
     } catch (error) {
-      console.error(`[QuestionRepository] findByCategory エラー:`, error);
+      logger.error("[QuestionRepository] findByCategory エラー:", error);
       throw error;
     }
   }
@@ -165,10 +166,10 @@ export class QuestionRepository extends BaseRepository<Question> {
 
       const result = await this.executeQuery<Question>(sql, params);
 
-      console.log(`[QuestionRepository] 復習問題 ${result.rows.length}問取得`);
+      logger.debug("[QuestionRepository] 復習問題 ${result.rows.length}問取得");
       return result.rows;
     } catch (error) {
-      console.error(`[QuestionRepository] findReviewQuestions エラー:`, error);
+      logger.error("[QuestionRepository] findReviewQuestions エラー:", error);
       throw error;
     }
   }
@@ -187,10 +188,10 @@ export class QuestionRepository extends BaseRepository<Question> {
 
       const result = await this.executeQuery<Question>(sql, questionIds);
 
-      console.log(`[QuestionRepository] ID指定で ${result.rows.length}問取得`);
+      logger.debug("[QuestionRepository] ID指定で ${result.rows.length}問取得");
       return result.rows;
     } catch (error) {
-      console.error(`[QuestionRepository] findByIds エラー:`, error);
+      logger.error("[QuestionRepository] findByIds エラー:", error);
       throw error;
     }
   }
@@ -230,7 +231,7 @@ export class QuestionRepository extends BaseRepository<Question> {
       );
       return result.rows;
     } catch (error) {
-      console.error(`[QuestionRepository] findByTag エラー:`, error);
+      logger.error("[QuestionRepository] findByTag エラー:", error);
       throw error;
     }
   }
@@ -566,10 +567,10 @@ export class QuestionRepository extends BaseRepository<Question> {
         averageDifficulty: Math.round(averageDifficulty * 100) / 100,
       };
 
-      console.log("[QuestionRepository] 問題統計情報取得完了:", stats);
+      logger.debug("[QuestionRepository] 問題統計情報取得完了:", { details: stats });
       return stats;
     } catch (error) {
-      console.error("[QuestionRepository] getStats エラー:", error);
+      logger.error("[QuestionRepository] getStats エラー:", error);
       throw error;
     }
   }
@@ -601,7 +602,7 @@ export class QuestionRepository extends BaseRepository<Question> {
         counts[row.category_id] = row.count;
       });
 
-      console.log("[QuestionRepository] カテゴリ別問題数取得完了:", counts);
+      logger.debug("[QuestionRepository] カテゴリ別問題数取得完了:", { details: counts });
       return counts;
     } catch (error) {
       console.error(
@@ -668,7 +669,7 @@ export class QuestionRepository extends BaseRepository<Question> {
       );
       return result.rows;
     } catch (error) {
-      console.error(`[QuestionRepository] findByExamSection エラー:`, error);
+      logger.error("[QuestionRepository] findByExamSection エラー:", error);
       throw error;
     }
   }
@@ -697,7 +698,7 @@ export class QuestionRepository extends BaseRepository<Question> {
         counts[row.exam_section] = row.count;
       });
 
-      console.log("[QuestionRepository] セクション別問題数取得完了:", counts);
+      logger.debug("[QuestionRepository] セクション別問題数取得完了:", { details: counts });
       return counts;
     } catch (error) {
       console.error(
@@ -757,7 +758,7 @@ export class QuestionRepository extends BaseRepository<Question> {
       );
       return result.rows;
     } catch (error) {
-      console.error(`[QuestionRepository] findBySubcategory エラー:`, error);
+      logger.error("[QuestionRepository] findBySubcategory エラー:", error);
       throw error;
     }
   }
@@ -784,7 +785,7 @@ export class QuestionRepository extends BaseRepository<Question> {
       );
       return result.rows;
     } catch (error) {
-      console.error(`[QuestionRepository] getSubcategories エラー:`, error);
+      logger.error("[QuestionRepository] getSubcategories エラー:", error);
       throw error;
     }
   }
@@ -853,7 +854,7 @@ export class QuestionRepository extends BaseRepository<Question> {
         actualCounts,
       };
 
-      console.log("[QuestionRepository] コンテンツ構成検証完了:", validation);
+      logger.debug("[QuestionRepository] コンテンツ構成検証完了:", { details: validation });
       return validation;
     } catch (error) {
       console.error(

@@ -20,6 +20,7 @@ import React, {
 } from "react";
 import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
+import { logger } from "../../utils/logger";
 
 /**
  * 遅延ローディング設定
@@ -222,7 +223,7 @@ class ErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("[LazyComponent] Error boundary caught:", error, errorInfo);
+    logger.error("[LazyComponent] Error boundary caught:", error, errorInfo);
   }
 
   private handleRetry = () => {
@@ -316,7 +317,7 @@ export class LazyComponentManager {
       try {
         await loadPromise;
         this.preloadedComponents.add(name);
-        console.log(`[LazyComponentManager] プリロード完了: ${name}`);
+        logger.debug("[LazyComponentManager] プリロード完了: ${name}");
       } catch (error) {
         console.error(
           `[LazyComponentManager] プリロードエラー: ${name}`,
@@ -353,7 +354,7 @@ export class LazyComponentManager {
   public clearPreloadCache(): void {
     this.preloadedComponents.clear();
     this.loadingComponents.clear();
-    console.log("[LazyComponentManager] プリロードキャッシュクリア");
+    logger.debug("[LazyComponentManager] プリロードキャッシュクリア");
   }
 }
 

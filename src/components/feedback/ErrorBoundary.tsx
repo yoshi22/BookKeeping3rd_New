@@ -12,6 +12,7 @@ import { Button } from "../ui/Button";
 import { Card, CardContent, CardActions } from "../ui/Card";
 import { Container } from "../layout/ResponsiveLayout";
 import { useTheme, type Theme } from "../../context/ThemeContext";
+import { logger } from "../../../utils/logger";
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -71,7 +72,7 @@ export class ErrorBoundary extends Component<
 
     // 開発環境でのみコンソール出力
     if (__DEV__) {
-      console.error("ErrorBoundary caught an error:", errorLog);
+      logger.error("ErrorBoundary caught an error:", errorLog);
     }
 
     // 本番環境では、ローカルストレージに保存（分析用）
@@ -96,7 +97,7 @@ export class ErrorBoundary extends Component<
         JSON.stringify(recentLogs),
       );
     } catch (error) {
-      console.error("Failed to save error log:", error);
+      logger.error("Failed to save error log:", error);
     }
   };
 
@@ -329,7 +330,7 @@ function DataErrorFallback({ error }: { error: Error }) {
       // アプリの再読み込み
       window.location.reload();
     } catch (resetError) {
-      console.error("Failed to reset data:", resetError);
+      logger.error("Failed to reset data:", resetError);
     }
   };
 
@@ -382,7 +383,7 @@ export function useErrorHandler() {
     setError(error);
 
     // エラーログ
-    console.error("Error handled by useErrorHandler:", error);
+    logger.error("Error handled by useErrorHandler:", error);
   }, []);
 
   const clearError = React.useCallback(() => {

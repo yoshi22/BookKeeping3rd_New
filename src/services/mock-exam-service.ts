@@ -8,6 +8,7 @@ import { QuestionRepository } from "../data/repositories/question-repository";
 import { LearningHistoryRepository } from "../data/repositories/learning-history-repository";
 import { ReviewItemRepository } from "../data/repositories/review-item-repository";
 import { AnswerService } from "./answer-service";
+import { logger } from "../../utils/logger";
 
 import {
   MockExam,
@@ -136,7 +137,7 @@ export class MockExamService {
 
       return session;
     } catch (error) {
-      console.error("Failed to start mock exam session:", error);
+      logger.error("Failed to start mock exam session:", error);
       throw error;
     }
   }
@@ -175,7 +176,7 @@ export class MockExamService {
         answered_at: new Date().toISOString(),
       });
     } catch (error) {
-      console.error("Failed to record mock exam answer:", error);
+      logger.error("Failed to record mock exam answer:", error);
       throw error;
     }
   }
@@ -234,7 +235,7 @@ export class MockExamService {
 
       return result;
     } catch (error) {
-      console.error("Failed to complete mock exam session:", error);
+      logger.error("Failed to complete mock exam session:", error);
       throw error;
     }
   }
@@ -390,7 +391,7 @@ export class MockExamService {
           updated_at: new Date().toISOString(),
         });
       } catch (error) {
-        console.warn(`Failed to add question to review: ${questionId}`, error);
+        logger.warn("Failed to add question to review: ${questionId}", { details: error });
       }
     }
   }

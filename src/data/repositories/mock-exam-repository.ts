@@ -5,6 +5,7 @@
 
 import { BaseRepository } from "./base-repository";
 import { databaseService } from "../database";
+import { logger } from "../../../utils/logger";
 import {
   MockExam,
   MockExamQuestion,
@@ -35,7 +36,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         is_active: Boolean(row.is_active),
       }));
     } catch (error) {
-      console.error("MockExamRepository.findAllMockExams error:", error);
+      logger.error("MockExamRepository.findAllMockExams error:", error);
       throw error;
     }
   }
@@ -60,7 +61,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         is_active: Boolean(row.is_active),
       };
     } catch (error) {
-      console.error("MockExamRepository.findMockExamById error:", error);
+      logger.error("MockExamRepository.findMockExamById error:", error);
       throw error;
     }
   }
@@ -79,7 +80,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
 
       return JSON.parse(exam.structure_json) as MockExamStructure;
     } catch (error) {
-      console.error("MockExamRepository.getMockExamStructure");
+      logger.error("MockExamRepository.getMockExamStructure");
       throw error;
     }
   }
@@ -102,7 +103,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
 
       return result.rows;
     } catch (error) {
-      console.error("MockExamRepository.findMockExamQuestions");
+      logger.error("MockExamRepository.findMockExamQuestions");
       throw error;
     }
   }
@@ -126,7 +127,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
 
       return result.rows;
     } catch (error) {
-      console.error("MockExamRepository.findMockExamQuestionsBySection");
+      logger.error("MockExamRepository.findMockExamQuestionsBySection");
       throw error;
     }
   }
@@ -156,7 +157,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
 
       return result.rows;
     } catch (error) {
-      console.error("MockExamRepository.findMockExamQuestionsWithDetails");
+      logger.error("MockExamRepository.findMockExamQuestionsWithDetails");
       throw error;
     }
   }
@@ -185,7 +186,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
 
       return result.insertId || 0;
     } catch (error) {
-      console.error("MockExamRepository.createMockExamQuestion");
+      logger.error("MockExamRepository.createMockExamQuestion");
       throw error;
     }
   }
@@ -218,7 +219,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
 
       return result.insertId || 0;
     } catch (error) {
-      console.error("MockExamRepository.createMockExamResult");
+      logger.error("MockExamRepository.createMockExamResult");
       throw error;
     }
   }
@@ -263,7 +264,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         is_passed: Boolean(row.is_passed),
       }));
     } catch (error) {
-      console.error("MockExamRepository.findMockExamResults");
+      logger.error("MockExamRepository.findMockExamResults");
       throw error;
     }
   }
@@ -287,7 +288,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         is_passed: Boolean(row.is_passed),
       }));
     } catch (error) {
-      console.error("MockExamRepository.findMockExamResultsByExamId");
+      logger.error("MockExamRepository.findMockExamResultsByExamId");
       throw error;
     }
   }
@@ -321,7 +322,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         is_passed: Boolean(row.is_passed),
       };
     } catch (error) {
-      console.error("MockExamRepository.findLatestMockExamResult");
+      logger.error("MockExamRepository.findLatestMockExamResult");
       throw error;
     }
   }
@@ -348,7 +349,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         result.rows[0].detailed_results_json,
       ) as MockExamDetailedResults;
     } catch (error) {
-      console.error("MockExamRepository.getMockExamDetailedResults");
+      logger.error("MockExamRepository.getMockExamDetailedResults");
       throw error;
     }
   }
@@ -386,7 +387,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         averageTime: stats.average_time || 0,
       };
     } catch (error) {
-      console.error("MockExamRepository.getMockExamStatistics");
+      logger.error("MockExamRepository.getMockExamStatistics");
       throw error;
     }
   }
@@ -420,7 +421,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         averageTime: row.average_time || 0,
       }));
     } catch (error) {
-      console.error("MockExamRepository.getMockExamStatisticsByExam");
+      logger.error("MockExamRepository.getMockExamStatisticsByExam");
       throw error;
     }
   }
@@ -453,7 +454,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         takenAt: row.taken_at,
       }));
     } catch (error) {
-      console.error("MockExamRepository.getRecentMockExamTrend");
+      logger.error("MockExamRepository.getRecentMockExamTrend");
       throw error;
     }
   }

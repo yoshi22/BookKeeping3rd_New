@@ -5,6 +5,7 @@
 
 import React, { useState, useMemo, useCallback } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { logger } from "../../utils/logger";
 import {
   useTheme,
   useThemedStyles,
@@ -182,7 +183,7 @@ function TrialBalanceFormWrapper({
         onSubmitAnswer(response);
       }
     } catch (error) {
-      console.error("[TrialBalanceFormWrapper] 解答送信エラー:", error);
+      logger.error("[TrialBalanceFormWrapper] 解答送信エラー:", error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);
@@ -285,7 +286,7 @@ function FinancialStatementFormWrapper({
         );
       }
     } catch (error) {
-      console.error("[FinancialStatementFormWrapper] 解答送信エラー:", error);
+      logger.error("[FinancialStatementFormWrapper] 解答送信エラー:", error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);

@@ -11,6 +11,7 @@ import {
   DatabaseResult,
   QueryResult,
 } from "../types/database";
+import { logger } from "../utils/logger";
 
 // Web環境では expo-sqlite をインポートしない
 let SQLite: any = null;
@@ -18,7 +19,10 @@ if (Platform.OS !== "web") {
   try {
     SQLite = require("expo-sqlite");
   } catch (error) {
-    console.warn("[DatabaseService] SQLite import failed:", error);
+    logger.warn("SQLite import failed:", {
+      component: "DatabaseService",
+      details: error,
+    });
   }
 }
 
@@ -40,7 +44,10 @@ class WebDatabaseMock {
   private tables: Map<string, any[]> = new Map();
 
   runSync(sql: string, params: any[] = []): any {
-    console.log(`[WebDB] Mock SQL実行: ${sql}`, params);
+    logger.debug("Mock SQL実行: ${sql}", {
+      component: "WebDatabaseMock",
+      params,
+    });
 
     try {
       // 基本的なSQL操作をシミュレート
@@ -66,9 +73,10 @@ class WebDatabaseMock {
       } else if (sql.includes("CREATE TABLE") || sql.includes("CREATE INDEX")) {
         // テーブル作成・インデックス作成は成功をシミュレート
         changes = 0;
-        console.log(
-          `[WebDB] テーブル/インデックス作成をシミュレート: ${sql.substring(0, 50)}...`,
-        );
+        logger.debug("テーブル/インデックス作成をシミュレート", {
+          component: "WebDatabaseMock",
+          sql: sql.substring(0, 50) + "...",
+        });
       } else if (sql.includes("SELECT")) {
         const tableName = this.extractTableName(sql);
         const data = this.tables.get(tableName) || [];
@@ -79,7 +87,9 @@ class WebDatabaseMock {
         } else {
           rows.push(...data.slice(0, 100)); // 最大100件まで返す
         }
-        console.log(`[WebDB] SELECT from ${tableName}: ${rows.length}件`);
+        logger.debug("SELECT from ${tableName}: ${rows.length}件", {
+          component: "WebDatabaseMock",
+        });
       } else if (sql.includes("INSERT")) {
         const tableName = this.extractTableName(sql);
         const data = this.tables.get(tableName) || [];
@@ -88,30 +98,42 @@ class WebDatabaseMock {
         this.tables.set(tableName, data);
         changes = 1;
         lastInsertRowId = newId;
-        console.log(`[WebDB] INSERT into ${tableName}: ID=${newId}`);
+        logger.debug("INSERT into ${tableName}: ID=${newId}", {
+          component: "WebDatabaseMock",
+        });
       } else if (sql.includes("UPDATE") || sql.includes("DELETE")) {
         const tableName = this.extractTableName(sql);
         changes = 1;
-        console.log(
-          `[WebDB] UPDATE/DELETE from ${tableName}: affected=${changes}`,
-        );
+        logger.debug("UPDATE/DELETE from テーブル", {
+          component: "WebDatabaseMock",
+          tableName,
+          affected: changes,
+        });
       }
 
       const result = {
         getAllSync: () => {
-          console.log(`[WebDB] getAllSync returning ${rows.length} rows`);
+          logger.debug("getAllSync returning ${rows.length} rows", {
+            component: "WebDatabaseMock",
+          });
           return rows;
         },
         changes,
         lastInsertRowId,
       };
 
-      console.log(
-        `[WebDB] SQL実行結果: changes=${changes}, lastInsertRowId=${lastInsertRowId}, rows=${rows.length}`,
-      );
+      logger.debug("SQL実行結果", {
+        component: "WebDatabaseMock",
+        changes,
+        lastInsertRowId,
+        rowCount: rows.length,
+      });
       return result;
     } catch (error) {
-      console.error(`[WebDB] Mock SQL実行エラー: ${sql}`, error);
+      logger.error("Mock SQL実行エラー: ${sql}", null, {
+        component: "WebDatabaseMock",
+        error,
+      });
       // エラーでも最低限の結果を返してアプリが動作するようにする
       return {
         getAllSync: () => [],
@@ -122,10 +144,13 @@ class WebDatabaseMock {
   }
 
   prepareSync(sql: string): any {
-    console.log(`[WebDB] Mock prepareSync: ${sql}`);
+    logger.debug("Mock prepareSync: ${sql}", { component: "WebDatabaseMock" });
     return {
       executeSync: (params: any[] = []) => {
-        console.log(`[WebDB] Mock executeSync with params:`, params);
+        logger.debug("Mock executeSync with params:", {
+          component: "WebDatabaseMock",
+          params,
+        });
         // runSyncと同じロジックを使用
         const result = this.runSync(sql, params);
         return {
@@ -133,24 +158,28 @@ class WebDatabaseMock {
         };
       },
       finalizeSync: () => {
-        console.log(`[WebDB] Mock finalizeSync`);
+        logger.debug("Mock finalizeSync", { component: "WebDatabaseMock" });
       },
     };
   }
 
   async withTransactionAsync(operations: Function): Promise<void> {
-    console.log("[WebDB] Mock トランザクション実行");
+    logger.debug("Mock トランザクション実行", { component: "WebDatabaseMock" });
     try {
       await operations(this);
-      console.log("[WebDB] Mock トランザクション成功");
+      logger.debug("Mock トランザクション成功", {
+        component: "WebDatabaseMock",
+      });
     } catch (error) {
-      console.error("[WebDB] Mock トランザクションエラー:", error);
+      logger.error("Mock トランザクションエラー:", error, {
+        component: "WebDatabaseMock",
+      });
       throw error;
     }
   }
 
   closeSync(): void {
-    console.log("[WebDB] Mock データベースクローズ");
+    logger.debug("Mock データベースクローズ", { component: "WebDatabaseMock" });
     this.tables.clear();
   }
 
@@ -210,94 +239,107 @@ export class DatabaseService {
    */
   private async performInitialization(): Promise<void> {
     if (this.isInitializing) {
-      console.warn("[DatabaseService] 初期化が既に進行中です");
+      logger.warn("初期化が既に進行中です", { component: "DatabaseService" });
       return;
     }
 
     this.isInitializing = true;
-    
-    console.log(
-      `[DatabaseService] データベース接続開始: ${DATABASE_CONFIG.name}`,
-    );
-    console.log(`[DatabaseService] Platform.OS: ${Platform.OS}`);
-    console.log(`[DatabaseService] SQLite モジュール利用可能: ${!!SQLite}`);
+
+    logger.database("データベース接続開始", {
+      name: DATABASE_CONFIG.name,
+      platform: Platform.OS,
+      sqliteAvailable: !!SQLite,
+    });
 
     try {
       // Web環境の場合はモック実装を使用
       if (Platform.OS === "web") {
-        console.log("[DatabaseService] Web環境検出 - モック実装を使用");
+        logger.info("Web環境検出 - モック実装を使用", {
+          component: "DatabaseService",
+        });
         this.db = new WebDatabaseMock();
       } else {
         // ネイティブ環境ではSQLiteを使用
         if (!SQLite) {
-          console.warn(
-            "[DatabaseService] SQLite モジュールが利用できません - モックを使用",
-          );
+          logger.warn("SQLite モジュールが利用できません - モックを使用", {
+            component: "DatabaseService",
+          });
           this.db = new WebDatabaseMock();
         } else {
           try {
-            console.log(
-              `[DatabaseService] SQLite接続試行: ${DATABASE_CONFIG.name}`,
-            );
+            logger.database("SQLite接続試行", { name: DATABASE_CONFIG.name });
             this.db = SQLite.openDatabaseSync(DATABASE_CONFIG.name);
-            console.log("[DatabaseService] SQLite接続成功");
+            logger.info("SQLite接続成功", { component: "DatabaseService" });
           } catch (sqliteError) {
-            console.error(
-              "[DatabaseService] SQLite初期化失敗、詳細:",
+            logger.error(
+              "SQLite初期化失敗、フォールバックとしてモックを使用",
               sqliteError,
+              {
+                component: "DatabaseService",
+                errorType:
+                  sqliteError instanceof Error
+                    ? sqliteError.constructor.name
+                    : typeof sqliteError,
+              },
             );
-            console.error(
-              "[DatabaseService] SQLite Error Stack:",
-              sqliteError instanceof Error
-                ? sqliteError.stack
-                : "No stack trace",
-            );
-            console.warn("[DatabaseService] フォールバックとしてモックを使用");
             this.db = new WebDatabaseMock();
           }
         }
       }
 
-      console.log("[DatabaseService] データベースインスタンス作成完了");
+      logger.info("データベースインスタンス作成完了", {
+        component: "DatabaseService",
+      });
 
       // 基本的なPRAGMA設定を実行（初期化中は循環参照を避けるため直接実行）
       try {
-        console.log("[DatabaseService] PRAGMA設定開始");
+        logger.database("PRAGMA設定開始", {});
 
         // 外部キー制約を有効化
-        console.log("[DatabaseService] 外部キー制約設定中");
+        logger.database("外部キー制約設定中", {});
         await this.executeDirectSql("PRAGMA foreign_keys = ON");
 
         // WALモードは環境によっては失敗する可能性があるため、オプション扱い
         if (Platform.OS !== "web" && SQLite) {
           try {
-            console.log("[DatabaseService] WALモード設定中");
+            logger.database("WALモード設定中", { operation: "wal_mode" });
             await this.executeDirectSql("PRAGMA journal_mode = WAL");
-            
-            console.log("[DatabaseService] 同期モード設定中");
+
+            logger.database("同期モード設定中", { operation: "synchronous" });
             await this.executeDirectSql("PRAGMA synchronous = NORMAL");
 
-            console.log("[DatabaseService] オートバキューム設定中");
+            logger.database("オートバキューム設定中", {
+              operation: "auto_vacuum",
+            });
             await this.executeDirectSql("PRAGMA auto_vacuum = INCREMENTAL");
           } catch (walError) {
-            console.warn("[DatabaseService] WALモード設定をスキップ:", walError);
+            logger.warn("WALモード設定をスキップ", {
+              component: "DatabaseService",
+              error: walError instanceof Error ? walError.message : walError,
+            });
             // WALモード設定の失敗は致命的ではない
           }
         }
 
-        console.log("[DatabaseService] PRAGMA設定完了");
+        logger.database("PRAGMA設定完了", { operation: "pragma_complete" });
       } catch (pragmaError) {
-        console.warn("[DatabaseService] PRAGMA設定で一部エラー:", pragmaError);
+        logger.warn("PRAGMA設定で一部エラー", {
+          component: "DatabaseService",
+          error:
+            pragmaError instanceof Error ? pragmaError.message : pragmaError,
+        });
         // PRAGMA設定のエラーは初期化を阻止しない
       }
 
-      console.log("[DatabaseService] データベース接続完了");
+      logger.info("データベース接続完了", { component: "DatabaseService" });
       this.isInitialized = true;
       this.isInitializing = false;
     } catch (error) {
       this.isInitializing = false;
-      console.error("[DatabaseService] 初期化中の予期しないエラー:", error);
-      console.error("[DatabaseService] Error details:", {
+      logger.error("初期化中の予期しないエラー", error, {
+        component: "DatabaseService",
+      });
+      logger.error("初期化エラー詳細", null, {
         message: error instanceof Error ? error.message : error,
         stack: error instanceof Error ? error.stack : undefined,
         platform: Platform.OS,
@@ -316,7 +358,9 @@ export class DatabaseService {
             error instanceof Error ? error.constructor.name : typeof error,
         },
       );
-      console.error("[DatabaseService] 最終初期化エラー:", dbError);
+      logger.error("最終初期化エラー:", dbError, {
+        component: "DatabaseService",
+      });
       throw dbError;
     }
   }
@@ -324,18 +368,24 @@ export class DatabaseService {
   /**
    * 直接SQL実行（初期化中用、循環参照を避ける）
    */
-  private async executeDirectSql(sql: string, params: any[] = []): Promise<any> {
+  private async executeDirectSql(
+    sql: string,
+    params: any[] = [],
+  ): Promise<any> {
     if (!this.db) {
       throw new Error("Database not available for direct SQL execution");
     }
 
     try {
-      console.log(`[DatabaseService] SQL実行: ${sql}`, params);
-      
+      logger.database("SQL実行", {
+        sql: sql.substring(0, 100),
+        params: params.length,
+      });
+
       // SQLのタイプを判定してそれに応じた処理を行う
       const sqlLower = sql.trim().toLowerCase();
-      
-      if (sqlLower.startsWith('select') || sqlLower.startsWith('pragma')) {
+
+      if (sqlLower.startsWith("select") || sqlLower.startsWith("pragma")) {
         // SELECTやPRAGMAクエリの場合
         const statement = this.db.prepareSync(sql);
         try {
@@ -397,12 +447,15 @@ export class DatabaseService {
     }
 
     try {
-      console.log(`[DatabaseService] SQL実行: ${sql}`, params);
+      logger.database("SQL実行", {
+        sql: sql.substring(0, 100),
+        params: params.length,
+      });
 
       // SQLのタイプを判定してそれに応じた処理を行う
       const sqlLower = sql.trim().toLowerCase();
-      
-      if (sqlLower.startsWith('select') || sqlLower.startsWith('pragma')) {
+
+      if (sqlLower.startsWith("select") || sqlLower.startsWith("pragma")) {
         // SELECTやPRAGMAクエリの場合
         const statement = this.db.prepareSync(sql);
         try {
@@ -455,13 +508,17 @@ export class DatabaseService {
     }
 
     try {
-      console.log("[DatabaseService] トランザクション開始");
+      logger.database("トランザクション開始", {
+        operation: "transaction_begin",
+      });
 
       await this.db.withTransactionAsync(async () => {
         await operations(this.db!);
       });
 
-      console.log("[DatabaseService] トランザクション成功");
+      logger.database("トランザクション成功", {
+        operation: "transaction_commit",
+      });
       return { success: true };
     } catch (error) {
       const dbError = this.createDatabaseError(
@@ -469,7 +526,9 @@ export class DatabaseService {
         error,
         "HIGH",
       );
-      console.error("[DatabaseService] トランザクションエラー:", dbError);
+      logger.error("トランザクションエラー:", dbError, {
+        component: "DatabaseService",
+      });
       throw dbError;
     }
   }
@@ -482,7 +541,9 @@ export class DatabaseService {
       const result = await this.executeSql("PRAGMA integrity_check");
       return result.rows.length > 0 && result.rows[0].integrity_check === "ok";
     } catch (error) {
-      console.error("[DatabaseService] 整合性チェックエラー:", error);
+      logger.error("整合性チェックエラー:", error, {
+        component: "DatabaseService",
+      });
       return false;
     }
   }
@@ -534,7 +595,9 @@ export class DatabaseService {
 
       return stats;
     } catch (error) {
-      console.error("[DatabaseService] 統計情報取得エラー:", error);
+      logger.error("統計情報取得エラー:", error, {
+        component: "DatabaseService",
+      });
       throw this.createDatabaseError(
         "Failed to get database stats",
         error,
@@ -548,7 +611,7 @@ export class DatabaseService {
    */
   public async close(): Promise<void> {
     if (this.db) {
-      console.log("[DatabaseService] データベース接続クローズ");
+      logger.database("データベース接続クローズ", {});
 
       try {
         this.db.closeSync();
@@ -556,14 +619,16 @@ export class DatabaseService {
         this.isInitialized = false;
         this.isInitializing = false;
         this.initializationPromise = null;
-        console.log("[DatabaseService] データベース接続クローズ完了");
+        logger.database("データベース接続クローズ完了", {});
       } catch (error) {
         const dbError = this.createDatabaseError(
           "Failed to close database",
           error,
           "MEDIUM",
         );
-        console.error("[DatabaseService] クローズエラー:", dbError);
+        logger.error("クローズエラー:", dbError, {
+          component: "DatabaseService",
+        });
         throw dbError;
       }
     }
@@ -573,70 +638,80 @@ export class DatabaseService {
    * データベース完全リセット（ファイル削除＋再作成）
    */
   public async resetDatabase(): Promise<void> {
-    console.log("[DatabaseService] データベース完全リセット開始");
-    
+    logger.database("データベース完全リセット開始", {
+      operation: "database_reset",
+    });
+
     try {
       // 既存の接続をクローズ
       await this.close();
-      
+
       // React Native環境でのみファイル削除を実行
       if (Platform.OS !== "web") {
         try {
           // expo-file-systemを動的インポート
-          const { documentDirectory, deleteAsync, getInfoAsync } = await import('expo-file-system');
-          
+          const { documentDirectory, deleteAsync, getInfoAsync } = await import(
+            "expo-file-system"
+          );
+
           if (documentDirectory) {
             const dbPath = `${documentDirectory}SQLite/${DATABASE_CONFIG.name}`;
-            const walPath = `${dbPath}-wal`;  
+            const walPath = `${dbPath}-wal`;
             const shmPath = `${dbPath}-shm`;
-            
-            console.log(`[DatabaseService] データベースファイル削除試行: ${dbPath}`);
-            
+
+            logger.database("データベースファイル削除試行", { path: dbPath });
+
             // メインデータベースファイル削除
             const dbInfo = await getInfoAsync(dbPath);
             if (dbInfo.exists) {
               await deleteAsync(dbPath);
-              console.log("[DatabaseService] メインDBファイル削除完了");
+              logger.database("メインDBファイル削除完了", {});
             }
-            
+
             // WALファイル削除
             const walInfo = await getInfoAsync(walPath);
             if (walInfo.exists) {
               await deleteAsync(walPath);
-              console.log("[DatabaseService] WALファイル削除完了");
+              logger.database("WALファイル削除完了", {});
             }
-            
+
             // SHMファイル削除
             const shmInfo = await getInfoAsync(shmPath);
             if (shmInfo.exists) {
               await deleteAsync(shmPath);
-              console.log("[DatabaseService] SHMファイル削除完了");
+              logger.database("SHMファイル削除完了", {});
             }
-            
-            console.log("[DatabaseService] 全データベースファイル削除完了");
+
+            logger.database("全データベースファイル削除完了", {});
           }
         } catch (fileError) {
-          console.warn("[DatabaseService] ファイル削除エラー（継続可能）:", fileError);
+          logger.warn("ファイル削除エラー（継続可能）:", {
+            component: "DatabaseService",
+            error: fileError instanceof Error ? fileError.message : fileError,
+          });
           // ファイル削除失敗は致命的でない - 新しい接続で上書きされる
         }
       }
-      
+
       // インスタンス状態をリセット
       this.db = null;
       this.isInitialized = false;
       this.isInitializing = false;
       this.initializationPromise = null;
-      
-      console.log("[DatabaseService] データベースリセット完了 - 次回初期化時に新しいDBが作成されます");
-      
-    } catch (error) {
-      console.error("[DatabaseService] データベースリセットエラー:", error);
-      throw this.createDatabaseError(
-        "Database reset failed", 
-        error, 
-        "HIGH",
-        { resetAttempt: true }
+
+      logger.info(
+        "データベースリセット完了 - 次回初期化時に新しいDBが作成されます",
+        {
+          component: "DatabaseService",
+        },
       );
+    } catch (error) {
+      logger.error("データベースリセットエラー:", error, {
+        component: "DatabaseService",
+      });
+      throw this.createDatabaseError("Database reset failed", error, "HIGH", {
+        resetAttempt: true,
+      });
     }
   }
 
@@ -645,11 +720,11 @@ export class DatabaseService {
    */
   public async vacuum(): Promise<void> {
     try {
-      console.log("[DatabaseService] データベース最適化開始");
+      logger.database("データベース最適化開始", {});
       await this.executeSql("VACUUM");
-      console.log("[DatabaseService] データベース最適化完了");
+      logger.database("データベース最適化完了", {});
     } catch (error) {
-      console.error("[DatabaseService] 最適化エラー:", error);
+      logger.error("最適化エラー:", error, { component: "DatabaseService" });
       throw this.createDatabaseError("Database vacuum failed", error, "MEDIUM");
     }
   }

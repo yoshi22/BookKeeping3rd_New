@@ -6,6 +6,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, Platform } from "react-native";
 import { useAccessibility } from "./useAccessibility";
+import { logger } from "../../utils/logger";
 
 export interface ScreenReaderElement {
   id: string;
@@ -129,7 +130,7 @@ export function useScreenReaderOptimization() {
             AccessibilityInfo.announceForAccessibility(fullMessage);
           }
         } catch (error) {
-          console.warn("[ScreenReader] アナウンスエラー:", error);
+          logger.warn("[ScreenReader] アナウンスエラー:", { details: error });
         }
       };
 

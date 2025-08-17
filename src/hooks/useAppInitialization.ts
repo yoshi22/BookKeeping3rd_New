@@ -13,6 +13,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { optimizedDatabaseService } from '../data/database-optimized';
 import { statisticsCache } from '../services/statistics-cache';
 import { databaseService } from '../data/database';
+import { logger } from "../../utils/logger";
 
 /**
  * 初期化段階の定義
@@ -93,7 +94,7 @@ export function useAppInitialization() {
       await optimizedDatabaseService.quickInitialize();
       
       const quickInitTime = performance.now() - startTime;
-      console.log(`[AppInit] Stage 1 完了: ${quickInitTime.toFixed(2)}ms`);
+      logger.debug("[AppInit] Stage 1 完了: ${quickInitTime.toFixed(2)}ms");
 
       setState(prev => ({
         ...prev,
@@ -108,7 +109,7 @@ export function useAppInitialization() {
       const essentialData = await loadEssentialData();
       
       const essentialDataTime = performance.now() - startTime;
-      console.log(`[AppInit] Stage 2 完了: ${essentialDataTime.toFixed(2)}ms`);
+      logger.debug("[AppInit] Stage 2 完了: ${essentialDataTime.toFixed(2)}ms");
 
       setState(prev => ({
         ...prev,
@@ -123,7 +124,7 @@ export function useAppInitialization() {
       performBackgroundTasks(); // 非同期実行
 
       const totalTime = performance.now() - startTime;
-      console.log(`[AppInit] 初期化完了: ${totalTime.toFixed(2)}ms`);
+      logger.debug("[AppInit] 初期化完了: ${totalTime.toFixed(2)}ms");
 
       setState(prev => ({
         ...prev,

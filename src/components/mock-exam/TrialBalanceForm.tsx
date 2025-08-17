@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { logger } from "../../../utils/logger";
 import {
   View,
   Text,
@@ -84,21 +85,21 @@ export default function TrialBalanceForm({
 
   const updateEntry = useCallback(
     (index: number, field: keyof TrialBalanceEntry, value: any) => {
-      console.log("[TrialBalanceForm] updateEntry called:", {
+      logger.debug("[TrialBalanceForm] updateEntry called:", { details: {
         index,
         field,
         value,
-      });
+      } });
 
       setEntries((prevEntries) => {
         const newEntries = [...prevEntries];
         newEntries[index] = { ...newEntries[index], [field]: value };
 
-        console.log("[TrialBalanceForm] updateEntry setting new state:", {
+        logger.debug("[TrialBalanceForm] updateEntry setting new state:", { details: {
           oldEntries: prevEntries,
           newEntries,
           targetEntry: newEntries[index],
-        });
+        } });
 
         return newEntries;
       });

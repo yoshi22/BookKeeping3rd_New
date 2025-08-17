@@ -4,6 +4,7 @@
  */
 
 import { DatabaseError, LogLevel } from '../types/database';
+import { logger } from "../../utils/logger";
 
 /**
  * アプリケーションエラーのベースクラス
@@ -341,7 +342,7 @@ export class ErrorRecoveryStrategy {
 
         // 指数バックオフで待機
         const delay = baseDelay * Math.pow(2, attempt - 1);
-        console.warn(`[ErrorRecoveryStrategy] データベースロック検出, ${delay}ms後にリトライ (${attempt}/${maxRetries})`);
+        logger.warn("[ErrorRecoveryStrategy] データベースロック検出, ${delay}ms後にリトライ (${attempt}/${maxRetries})");
         
         await new Promise(resolve => setTimeout(resolve, delay));
       }

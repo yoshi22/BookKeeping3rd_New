@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from "react";
+import { logger } from "../../utils/logger";
 import {
   View,
   Text,
@@ -275,7 +276,7 @@ export default function LedgerEntryFormWithDropdown({
         );
       }
     } catch (error) {
-      console.error("[LedgerEntryFormWithDropdown] 解答送信エラー:", error);
+      logger.error("[LedgerEntryFormWithDropdown] 解答送信エラー:", error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);

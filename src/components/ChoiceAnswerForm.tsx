@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from "react";
+import { logger } from "../../utils/logger";
 import {
   View,
   Text,
@@ -105,10 +106,10 @@ export default function ChoiceAnswerForm({
         startTime,
       };
 
-      console.log("[ChoiceAnswerForm] 解答送信:", request);
+      logger.debug("[ChoiceAnswerForm] 解答送信:", { details: request });
 
       const response = await answerService.submitAnswer(request);
-      console.log("[ChoiceAnswerForm] 解答送信完了:", response);
+      logger.debug("[ChoiceAnswerForm] 解答送信完了:", { details: response });
 
       if (onSubmitAnswer) {
         onSubmitAnswer(response);
@@ -122,7 +123,7 @@ export default function ChoiceAnswerForm({
         ]);
       }
     } catch (error) {
-      console.error("[ChoiceAnswerForm] 解答送信エラー:", error);
+      logger.error("[ChoiceAnswerForm] 解答送信エラー:", error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);

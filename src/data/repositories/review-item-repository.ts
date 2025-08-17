@@ -6,6 +6,7 @@
 
 import { BaseRepository } from "./base-repository";
 import { ReviewItem, QuestionCategory } from "../../types/models";
+import { logger } from "../../../utils/logger";
 
 /**
  * 復習優先度レベル
@@ -102,11 +103,11 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
       );
 
       const existing = await this.findByQuestionId(data.questionId);
-      console.log(`[ReviewItemRepository] 既存アイテム検索結果:`, existing);
+      logger.debug("[ReviewItemRepository] 既存アイテム検索結果:", { details: existing });
 
       if (existing) {
         // 既存レコードの更新
-        console.log(`[ReviewItemRepository] 既存レコード更新処理`);
+        logger.debug("[ReviewItemRepository] 既存レコード更新処理");
         const updateData: UpdateReviewItemData = {
           incorrectCount: data.incorrectCount ?? existing.incorrect_count,
           consecutiveCorrectCount:
@@ -120,7 +121,7 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
         return await this.updateByQuestionId(data.questionId, updateData);
       } else {
         // 新規作成
-        console.log(`[ReviewItemRepository] 新規アイテム作成処理`);
+        logger.debug("[ReviewItemRepository] 新規アイテム作成処理");
         const reviewItemData = {
           question_id: data.questionId,
           incorrect_count: data.incorrectCount ?? 1,
@@ -135,14 +136,14 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
           updated_at: new Date().toISOString(),
         };
 
-        console.log(`[ReviewItemRepository] 新規作成データ:`, reviewItemData);
+        logger.debug("[ReviewItemRepository] 新規作成データ:", { details: reviewItemData });
         const result = await this.create(reviewItemData);
-        console.log(`[ReviewItemRepository] 新規作成結果:`, result);
+        logger.debug("[ReviewItemRepository] 新規作成結果:", { details: result });
         return result;
       }
     } catch (error) {
-      console.error("[ReviewItemRepository] createOrUpdate エラー:", error);
-      console.error("[ReviewItemRepository] Error details:", {
+      logger.error("[ReviewItemRepository] createOrUpdate エラー:", error);
+      logger.error("[ReviewItemRepository] Error details:", {
         message: error instanceof Error ? error.message : error,
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -160,7 +161,7 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
       const result = await this.findOne({ question_id: questionId });
       return result;
     } catch (error) {
-      console.error("[ReviewItemRepository] findByQuestionId エラー:", error);
+      logger.error("[ReviewItemRepository] findByQuestionId エラー:", error);
       throw error;
     }
   }
@@ -211,10 +212,10 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
         throw new Error(`更新後の復習アイテムが見つかりません: ${questionId}`);
       }
 
-      console.log(`[ReviewItemRepository] 復習アイテム更新完了: ${questionId}`);
+      logger.debug("[ReviewItemRepository] 復習アイテム更新完了: ${questionId}");
       return updated;
     } catch (error) {
-      console.error("[ReviewItemRepository] updateByQuestionId エラー:", error);
+      logger.error("[ReviewItemRepository] updateByQuestionId エラー:", error);
       throw error;
     }
   }
@@ -224,7 +225,7 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
    */
   public async getReviewList(filter: ReviewFilter = {}): Promise<ReviewItem[]> {
     try {
-      console.log(`[ReviewItemRepository] getReviewList開始:`, filter);
+      logger.debug("[ReviewItemRepository] getReviewList開始:", { details: filter });
       let sql = `
         SELECT ri.* FROM review_items ri
       `;
@@ -279,8 +280,8 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
         params.push(filter.limit);
       }
 
-      console.log(`[ReviewItemRepository] 実行SQL:`, sql);
-      console.log(`[ReviewItemRepository] SQLパラメータ:`, params);
+      logger.debug("[ReviewItemRepository] 実行SQL:", { details: sql });
+      logger.debug("[ReviewItemRepository] SQLパラメータ:", { details: params });
 
       const result = await this.executeQuery<ReviewItem>(sql, params);
 
@@ -290,7 +291,7 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
       );
       return result.rows;
     } catch (error) {
-      console.error("[ReviewItemRepository] getReviewList エラー:", error);
+      logger.error("[ReviewItemRepository] getReviewList エラー:", error);
       throw error;
     }
   }
@@ -434,7 +435,7 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
         lastUpdated: new Date().toISOString(),
       };
 
-      console.log("[ReviewItemRepository] 復習統計取得完了");
+      logger.debug("[ReviewItemRepository] 復習統計取得完了");
       return statistics;
     } catch (error) {
       console.error(
@@ -462,10 +463,10 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
   public async deleteByQuestionId(questionId: string): Promise<number> {
     try {
       const result = await this.deleteWhere({ question_id: questionId });
-      console.log(`[ReviewItemRepository] 復習アイテム削除完了: ${questionId}`);
+      logger.debug("[ReviewItemRepository] 復習アイテム削除完了: ${questionId}");
       return result;
     } catch (error) {
-      console.error("[ReviewItemRepository] deleteByQuestionId エラー:", error);
+      logger.error("[ReviewItemRepository] deleteByQuestionId エラー:", error);
       throw error;
     }
   }

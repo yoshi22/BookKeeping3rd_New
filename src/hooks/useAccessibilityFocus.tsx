@@ -4,6 +4,7 @@
  */
 
 import React, { useRef, useCallback, useEffect, useMemo } from "react";
+import { logger } from "../../utils/logger";
 import {
   AccessibilityInfo,
   findNodeHandle,
@@ -145,7 +146,7 @@ export function useAccessibilityFocus(options: AccessibilityFocusOptions = {}) {
               }
             }
           } catch (error) {
-            console.warn("[AccessibilityFocus] フォーカス設定エラー:", error);
+            logger.warn("[AccessibilityFocus] フォーカス設定エラー:", { details: error });
           }
         }
       }, delay);

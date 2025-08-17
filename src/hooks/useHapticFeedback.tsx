@@ -9,6 +9,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import * as Haptics from "expo-haptics";
 import { Platform } from "react-native";
+import { logger } from "../../utils/logger";
 
 /**
  * ハプティックフィードバックの種類定義
@@ -77,7 +78,7 @@ export const useHapticFeedback = () => {
         }
       }
     } catch (error) {
-      console.warn("Haptic feedback not available:", error);
+      logger.warn("Haptic feedback not available:", { details: error });
       setIsAvailable(false);
     }
   }, []);
@@ -102,7 +103,7 @@ export const useHapticFeedback = () => {
             break;
         }
       } catch (error) {
-        console.warn("Impact haptic failed:", error);
+        logger.warn("Impact haptic failed:", { details: error });
       }
     },
     [settings.enabled, isAvailable],
@@ -134,7 +135,7 @@ export const useHapticFeedback = () => {
             break;
         }
       } catch (error) {
-        console.warn("Notification haptic failed:", error);
+        logger.warn("Notification haptic failed:", { details: error });
       }
     },
     [settings.enabled, isAvailable],
@@ -149,7 +150,7 @@ export const useHapticFeedback = () => {
     try {
       await Haptics.selectionAsync();
     } catch (error) {
-      console.warn("Selection haptic failed:", error);
+      logger.warn("Selection haptic failed:", { details: error });
     }
   }, [settings.enabled, isAvailable]);
 
@@ -235,7 +236,7 @@ export const useHapticFeedback = () => {
             break;
         }
       } catch (error) {
-        console.warn(`Learning haptic failed for context ${context}:`, error);
+        logger.warn("Learning haptic failed for context ${context}:", { details: error });
       }
     },
     [settings.enabled, isAvailable, notification, impact, selection],
@@ -268,7 +269,7 @@ export const useHapticFeedback = () => {
           }
         }
       } catch (error) {
-        console.warn("Custom haptic pattern failed:", error);
+        logger.warn("Custom haptic pattern failed:", { details: error });
       }
     },
     [settings.enabled, isAvailable, impact],
@@ -309,7 +310,7 @@ export const useHapticFeedback = () => {
       setTimeout(() => notification("success"), 600);
       setTimeout(() => selection(), 800);
     } catch (error) {
-      console.warn("Haptic test failed:", error);
+      logger.warn("Haptic test failed:", { details: error });
     }
   }, [isAvailable, impact, notification, selection]);
 

@@ -10,6 +10,7 @@
  */
 
 import { Platform } from "react-native";
+import { logger } from "../../utils/logger";
 import {
   Database,
   DatabaseConfig,
@@ -24,7 +25,7 @@ if (Platform.OS !== "web") {
   try {
     SQLite = require("expo-sqlite");
   } catch (error) {
-    console.warn("[DatabaseOptimized] SQLite import failed:", error);
+    logger.warn("[DatabaseOptimized] SQLite import failed:", { details: error });
   }
 }
 
@@ -66,7 +67,7 @@ class WebDatabaseMock {
   }
 
   private mockExecuteSql(sql: string, params: any[] = []): any {
-    console.log(`[WebDB] Mock SQL実行: ${sql}`, params);
+    logger.debug("[WebDB] Mock SQL実行: ${sql}", { details: params });
 
     // 基本的なSQL操作をシミュレート
     if (
@@ -135,28 +136,28 @@ class WebDatabaseMock {
   }
 
   prepareSync(sql: string): any {
-    console.log(`[WebDB] Mock prepareSync: ${sql}`);
+    logger.debug("[WebDB] Mock prepareSync: ${sql}");
     return {
       executeSync: (params: any[] = []) => {
-        console.log(`[WebDB] Mock executeSync with params:`, params);
+        logger.debug("[WebDB] Mock executeSync with params:", { details: params });
         const result = this.runSync(sql, params);
         return {
           getAllSync: () => result.getAllSync(),
         };
       },
       finalizeSync: () => {
-        console.log(`[WebDB] Mock finalizeSync`);
+        logger.debug("[WebDB] Mock finalizeSync");
       },
     };
   }
 
   async withTransactionAsync(operations: Function): Promise<void> {
-    console.log("[WebDB] Mock トランザクション実行");
+    logger.debug("[WebDB] Mock トランザクション実行");
     await operations();
   }
 
   closeSync(): void {
-    console.log("[WebDB] Mock データベースクローズ");
+    logger.debug("[WebDB] Mock データベースクローズ");
     this.tables.clear();
   }
 }
@@ -221,19 +222,19 @@ export class OptimizedDatabaseService {
       return;
     }
 
-    console.log("[OptimizedDB] 高速初期化開始");
+    logger.debug("[OptimizedDB] 高速初期化開始");
     const startTime = performance.now();
 
     try {
       // Web環境の場合はモック実装を使用
       if (Platform.OS === "web") {
-        console.log("[OptimizedDB] Web環境検出 - モック実装を使用");
+        logger.debug("[OptimizedDB] Web環境検出 - モック実装を使用");
         this.db = new WebDatabaseMock();
       } else {
         // ネイティブ環境ではSQLiteを使用（最小限の初期化のみ実行）
         try {
           if (!SQLite) {
-            console.warn("[OptimizedDB] SQLite not available, using fallback");
+            logger.warn("[OptimizedDB] SQLite not available, using fallback");
             this.db = new WebDatabaseMock();
           } else {
             this.db = SQLite.openDatabaseSync(OPTIMIZED_DATABASE_CONFIG.name);
@@ -254,7 +255,7 @@ export class OptimizedDatabaseService {
       this.isInitialized = true;
 
       const initTime = performance.now() - startTime;
-      console.log(`[OptimizedDB] 高速初期化完了: ${initTime.toFixed(2)}ms`);
+      logger.debug("[OptimizedDB] 高速初期化完了: ${initTime.toFixed(2)}ms");
 
       // 残りの設定は背景で実行
       this.backgroundInitialization();
@@ -264,7 +265,7 @@ export class OptimizedDatabaseService {
         error,
         "CRITICAL",
       );
-      console.error("[OptimizedDB] 高速初期化エラー:", dbError);
+      logger.error("[OptimizedDB] 高速初期化エラー:", dbError);
       throw dbError;
     }
   }
@@ -274,7 +275,7 @@ export class OptimizedDatabaseService {
    */
   private async backgroundInitialization(): Promise<void> {
     try {
-      console.log("[OptimizedDB] バックグラウンド初期化開始");
+      logger.debug("[OptimizedDB] バックグラウンド初期化開始");
 
       // パフォーマンス設定を順次適用
       await this.executeSqlDirect("PRAGMA synchronous = NORMAL");
@@ -288,9 +289,9 @@ export class OptimizedDatabaseService {
       // 統計情報更新
       await this.executeSqlDirect("ANALYZE");
 
-      console.log("[OptimizedDB] バックグラウンド初期化完了");
+      logger.debug("[OptimizedDB] バックグラウンド初期化完了");
     } catch (error) {
-      console.error("[OptimizedDB] バックグラウンド初期化エラー:", error);
+      logger.error("[OptimizedDB] バックグラウンド初期化エラー:", error);
     }
   }
 
@@ -308,7 +309,7 @@ export class OptimizedDatabaseService {
       try {
         await this.executeSqlDirect(indexSql);
       } catch (error) {
-        console.warn("[OptimizedDB] インデックス作成警告:", error);
+        logger.warn("[OptimizedDB] インデックス作成警告:", { details: error });
       }
     }
   }
@@ -331,14 +332,14 @@ export class OptimizedDatabaseService {
     if (useCache && sql.trim().toUpperCase().startsWith("SELECT")) {
       const cached = this.getFromCache<T>(cacheKey);
       if (cached) {
-        console.log(`[OptimizedDB] キャッシュヒット: ${sql}`);
+        logger.debug("[OptimizedDB] キャッシュヒット: ${sql}");
         return cached;
       }
 
       // 同じクエリが実行中の場合は結果を待機
       const pending = this.pendingQueries.get(cacheKey);
       if (pending) {
-        console.log(`[OptimizedDB] 同一クエリ待機: ${sql}`);
+        logger.debug("[OptimizedDB] 同一クエリ待機: ${sql}");
         return pending as Promise<QueryResult<T>>;
       }
     }
@@ -417,7 +418,7 @@ export class OptimizedDatabaseService {
     }
 
     try {
-      console.log(`[OptimizedDB] バッチクエリ実行開始: ${queries.length}件`);
+      logger.debug("[OptimizedDB] バッチクエリ実行開始: ${queries.length}件");
       const startTime = performance.now();
 
       await this.db.withTransactionAsync(async () => {
@@ -516,7 +517,7 @@ export class OptimizedDatabaseService {
   public clearCache(): void {
     this.queryCache.clear();
     this.pendingQueries.clear();
-    console.log("[OptimizedDB] クエリキャッシュクリア");
+    logger.debug("[OptimizedDB] クエリキャッシュクリア");
   }
 
   /**
@@ -604,7 +605,7 @@ export class OptimizedDatabaseService {
    * 定期メンテナンス
    */
   public performMaintenance(): void {
-    console.log("[OptimizedDB] 定期メンテナンス開始");
+    logger.debug("[OptimizedDB] 定期メンテナンス開始");
 
     // 期限切れキャッシュエントリ削除
     const now = Date.now();

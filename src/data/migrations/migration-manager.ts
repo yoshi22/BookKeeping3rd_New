@@ -5,6 +5,7 @@
 
 import { databaseService } from "../database";
 import { MigrationInfo } from "../../types/database";
+import { logger } from "../../../utils/logger";
 
 /**
  * マイグレーション管理クラス
@@ -27,13 +28,13 @@ export class MigrationManager {
    * 初期化
    */
   public async initialize(): Promise<void> {
-    console.log("[MigrationManager] 初期化開始");
+    logger.debug("[MigrationManager] 初期化開始");
     try {
       await this.createMigrationTable();
       await this.loadMigrations();
-      console.log("[MigrationManager] 初期化完了");
+      logger.debug("[MigrationManager] 初期化完了");
     } catch (error) {
-      console.error("[MigrationManager] 初期化エラー:", error);
+      logger.error("[MigrationManager] 初期化エラー:", error);
       throw error;
     }
   }
@@ -45,7 +46,7 @@ export class MigrationManager {
    * マイグレーションテーブル作成
    */
   private async createMigrationTable(): Promise<void> {
-    console.log("[MigrationManager] マイグレーションテーブル作成開始");
+    logger.debug("[MigrationManager] マイグレーションテーブル作成開始");
 
     try {
       // シンプルなトランザクション無しでテーブル作成を試行
@@ -57,9 +58,9 @@ export class MigrationManager {
         checksum TEXT
       )`;
 
-      console.log("[MigrationManager] SQL実行:", sql);
+      logger.debug("[MigrationManager] SQL実行:", { details: sql });
       await databaseService.executeSql(sql);
-      console.log("[MigrationManager] マイグレーションテーブル作成完了");
+      logger.debug("[MigrationManager] マイグレーションテーブル作成完了");
 
       // テーブル作成後、存在確認（オプション）
       try {
@@ -71,7 +72,7 @@ export class MigrationManager {
           throw new Error("Migration table was not created successfully");
         }
 
-        console.log("[MigrationManager] マイグレーションテーブル存在確認完了");
+        logger.debug("[MigrationManager] マイグレーションテーブル存在確認完了");
       } catch (verifyError) {
         console.error(
           "[MigrationManager] テーブル存在確認エラー:",
@@ -84,7 +85,7 @@ export class MigrationManager {
         "[MigrationManager] マイグレーションテーブル作成エラー:",
         error,
       );
-      console.error("[MigrationManager] Error details:", {
+      logger.error("[MigrationManager] Error details:", {
         message: error instanceof Error ? error.message : error,
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -119,7 +120,7 @@ export class MigrationManager {
    * 全マイグレーション実行
    */
   public async runMigrations(): Promise<void> {
-    console.log("[MigrationManager] マイグレーション実行開始");
+    logger.debug("[MigrationManager] マイグレーション実行開始");
 
     // 実行済みマイグレーションを確認
     const executedVersions = await this.getExecutedMigrations();
@@ -134,7 +135,7 @@ export class MigrationManager {
     );
 
     if (pendingMigrations.length === 0) {
-      console.log("[MigrationManager] 実行すべきマイグレーションがありません");
+      logger.debug("[MigrationManager] 実行すべきマイグレーションがありません");
       return;
     }
 
@@ -147,7 +148,7 @@ export class MigrationManager {
       await this.executeMigration(migration);
     }
 
-    console.log("[MigrationManager] 全マイグレーション実行完了");
+    logger.debug("[MigrationManager] 全マイグレーション実行完了");
   }
 
   /**
@@ -245,7 +246,7 @@ export class MigrationManager {
           ],
         );
 
-        console.log(`[MigrationManager] マイグレーション記録保存完了`);
+        logger.debug("[MigrationManager] マイグレーション記録保存完了");
       } catch (recordError) {
         console.warn(
           `[MigrationManager] マイグレーション記録保存失敗（SQLは実行済み）:`,
@@ -290,7 +291,7 @@ export class MigrationManager {
   private async loadMigrations(): Promise<void> {
     // マイグレーション定義をここで登録
     // 実際の使用時は、マイグレーションファイルから動的に読み込む
-    console.log("[MigrationManager] マイグレーション定義読み込み完了");
+    logger.debug("[MigrationManager] マイグレーション定義読み込み完了");
   }
 
   /**
@@ -340,7 +341,7 @@ export class MigrationManager {
       .sort((a, b) => b - a);
 
     if (rollbackVersions.length === 0) {
-      console.log("[MigrationManager] ロールバック対象がありません");
+      logger.debug("[MigrationManager] ロールバック対象がありません");
       return;
     }
 

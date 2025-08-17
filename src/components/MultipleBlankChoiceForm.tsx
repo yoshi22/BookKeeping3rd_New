@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from "react";
+import { logger } from "../../utils/logger";
 import {
   View,
   Text,
@@ -100,10 +101,10 @@ export default function MultipleBlankChoiceForm({
         startTime,
       };
 
-      console.log("[MultipleBlankChoiceForm] 解答送信:", request);
+      logger.debug("[MultipleBlankChoiceForm] 解答送信:", { details: request });
 
       const response = await answerService.submitAnswer(request);
-      console.log("[MultipleBlankChoiceForm] 解答送信完了:", response);
+      logger.debug("[MultipleBlankChoiceForm] 解答送信完了:", { details: response });
 
       if (onSubmitAnswer) {
         onSubmitAnswer(response);
@@ -117,7 +118,7 @@ export default function MultipleBlankChoiceForm({
         ]);
       }
     } catch (error) {
-      console.error("[MultipleBlankChoiceForm] 解答送信エラー:", error);
+      logger.error("[MultipleBlankChoiceForm] 解答送信エラー:", error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);

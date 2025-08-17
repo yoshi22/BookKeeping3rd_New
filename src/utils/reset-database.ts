@@ -6,16 +6,17 @@
 import { databaseService } from "../data/database";
 import { setupDatabase } from "../data/migrations";
 import { Alert } from "react-native";
+import { logger } from "../../utils/logger";
 
 /**
  * データベースをリセットして最新のデータを再読み込み
  */
 export async function resetDatabase(): Promise<void> {
   try {
-    console.log("[ResetDatabase] データベースリセット開始");
+    logger.debug("[ResetDatabase] データベースリセット開始");
 
     // 1. 既存のデータを全て削除
-    console.log("[ResetDatabase] 既存データ削除中...");
+    logger.debug("[ResetDatabase] 既存データ削除中...");
 
     // 学習履歴とその他のデータを削除
     await databaseService.executeSql("DELETE FROM learning_history");
@@ -28,7 +29,7 @@ export async function resetDatabase(): Promise<void> {
     // 問題データを削除
     await databaseService.executeSql("DELETE FROM questions");
 
-    console.log("[ResetDatabase] 既存データ削除完了");
+    logger.debug("[ResetDatabase] 既存データ削除完了");
 
     // 2. カテゴリデータも削除（マイグレーションで再作成される）
     await databaseService.executeSql("DELETE FROM categories");
@@ -36,12 +37,12 @@ export async function resetDatabase(): Promise<void> {
     // 3. マイグレーション履歴もリセット
     await databaseService.executeSql("DELETE FROM migration_history");
 
-    console.log("[ResetDatabase] データベース再初期化中...");
+    logger.debug("[ResetDatabase] データベース再初期化中...");
 
     // 4. データベースを再セットアップ
     await setupDatabase();
 
-    console.log("[ResetDatabase] データベースリセット完了");
+    logger.debug("[ResetDatabase] データベースリセット完了");
 
     // 5. 確認のため問題数をチェック
     const result = await databaseService.executeSql(
@@ -49,7 +50,7 @@ export async function resetDatabase(): Promise<void> {
     );
     const mdCount = result.rows[0]?.count || 0;
 
-    console.log(`[ResetDatabase] Q_MD_で始まる問題数: ${mdCount}`);
+    logger.debug("[ResetDatabase] Q_MD_で始まる問題数: ${mdCount}");
 
     if (mdCount > 0) {
       // 最初の問題を確認
@@ -58,8 +59,8 @@ export async function resetDatabase(): Promise<void> {
       );
 
       if (firstQuestion.rows.length > 0) {
-        console.log("[ResetDatabase] 最初の問題確認:");
-        console.log(`ID: ${firstQuestion.rows[0].id}`);
+        logger.debug("[ResetDatabase] 最初の問題確認:");
+        logger.debug("ID: ${firstQuestion.rows[0].id}");
         console.log(
           `問題文: ${firstQuestion.rows[0].question_text.substring(0, 80)}...`,
         );
@@ -72,7 +73,7 @@ export async function resetDatabase(): Promise<void> {
       [{ text: "OK" }],
     );
   } catch (error) {
-    console.error("[ResetDatabase] リセット中にエラー:", error);
+    logger.error("[ResetDatabase] リセット中にエラー:", error);
     Alert.alert("エラー", "データベースのリセット中にエラーが発生しました。", [
       { text: "OK" },
     ]);
@@ -99,7 +100,7 @@ export function confirmResetDatabase(): void {
           try {
             await resetDatabase();
           } catch (error) {
-            console.error("Database reset failed:", error);
+            logger.error("Database reset failed:", error);
           }
         },
       },

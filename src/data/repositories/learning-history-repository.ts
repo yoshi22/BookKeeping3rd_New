@@ -4,6 +4,7 @@
  */
 
 import { BaseRepository } from "./base-repository";
+import { logger } from "../../../utils/logger";
 import {
   LearningHistory,
   QuestionCategory,
@@ -123,7 +124,7 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       );
       return result;
     } catch (error) {
-      console.error(`[LearningHistoryRepository] recordAnswer エラー:`, error);
+      logger.error("[LearningHistoryRepository] recordAnswer エラー:", error);
       throw error;
     }
   }
@@ -453,10 +454,10 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         dailyStats,
       };
 
-      console.log("[LearningHistoryRepository] 学習統計情報取得完了");
+      logger.debug("[LearningHistoryRepository] 学習統計情報取得完了");
       return statistics;
     } catch (error) {
-      console.error("[LearningHistoryRepository] getStatistics エラー:", error);
+      logger.error("[LearningHistoryRepository] getStatistics エラー:", error);
       throw error;
     }
   }
@@ -635,7 +636,7 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       );
       return result;
     } catch (error) {
-      console.error(`[LearningHistoryRepository] deleteSession エラー:`, error);
+      logger.error("[LearningHistoryRepository] deleteSession エラー:", error);
       throw error;
     }
   }

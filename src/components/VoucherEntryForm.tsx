@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useRef, useEffect } from "react";
+import { logger } from "../../utils/logger";
 import {
   View,
   Text,
@@ -126,7 +127,7 @@ export default function VoucherEntryForm({
 
   // 新しい伝票エントリを追加
   const addVoucherEntry = (voucherType: string) => {
-    console.log("[VoucherEntryForm] addVoucherEntry called with:", voucherType);
+    logger.debug("[VoucherEntryForm] addVoucherEntry called with:", { details: voucherType });
     const newEntry: VoucherEntry = { type: voucherType };
     setEntries([...entries, newEntry]);
     setActiveVoucherType(voucherType);
@@ -151,11 +152,11 @@ export default function VoucherEntryForm({
 
   // 選択モーダルを開く
   const openSelectModal = (entryIndex: number, field: VoucherField) => {
-    console.log("[VoucherEntryForm] openSelectModal called:", {
+    logger.debug("[VoucherEntryForm] openSelectModal called:", { details: {
       entryIndex,
       fieldName: field.name,
       fieldLabel: field.label,
-    });
+    } });
     setSelectedEntryIndex(entryIndex);
     setSelectedField(field);
     setIsModalVisible(true);
@@ -163,11 +164,11 @@ export default function VoucherEntryForm({
 
   // 選択モーダルで選択肢を選ぶ
   const handleOptionSelect = (option: string) => {
-    console.log("[VoucherEntryForm] handleOptionSelect called:", {
+    logger.debug("[VoucherEntryForm] handleOptionSelect called:", { details: {
       option,
       selectedEntryIndex,
       selectedFieldName: selectedField?.name,
-    });
+    } });
     if (selectedEntryIndex !== null && selectedField) {
       updateEntry(selectedEntryIndex, selectedField.name, option);
       setIsModalVisible(false);
@@ -268,10 +269,10 @@ export default function VoucherEntryForm({
         startTime,
       };
 
-      console.log("[VoucherEntryForm] 解答送信:", request);
+      logger.debug("[VoucherEntryForm] 解答送信:", { details: request });
 
       const response = await answerService.submitAnswer(request);
-      console.log("[VoucherEntryForm] 解答送信完了:", response);
+      logger.debug("[VoucherEntryForm] 解答送信完了:", { details: response });
 
       if (onSubmitAnswer) {
         onSubmitAnswer(response);
@@ -285,7 +286,7 @@ export default function VoucherEntryForm({
         ]);
       }
     } catch (error) {
-      console.error("[VoucherEntryForm] 解答送信エラー:", error);
+      logger.error("[VoucherEntryForm] 解答送信エラー:", error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);
@@ -301,13 +302,13 @@ export default function VoucherEntryForm({
     const value = entry[field.name as keyof VoucherEntry];
 
     // デバッグ: フィールド情報を確認
-    console.log("[VoucherEntryForm] renderVoucherField:", {
+    logger.debug("[VoucherEntryForm] renderVoucherField:", { details: {
       fieldName: field.name,
       fieldType: field.type,
       hasOptions: !!field.options,
       optionsCount: field.options?.length,
       options: field.options,
-    });
+    } });
 
     return (
       <View key={field.name} style={styles.fieldContainer}>

@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from "react";
+import { logger } from "../../../utils/logger";
 import {
   View,
   Text,
@@ -294,7 +295,7 @@ const UnifiedLedgerEntryForm = React.memo(function UnifiedLedgerEntryForm({
         }
       }
     } catch (error) {
-      console.error("[UnifiedLedgerEntryForm] 解答送信エラー:", error);
+      logger.error("[UnifiedLedgerEntryForm] 解答送信エラー:", error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setFormState({ ...formState, isSubmitting: false });

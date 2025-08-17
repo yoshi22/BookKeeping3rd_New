@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useRef } from "react";
+import { logger } from "../../utils/logger";
 import {
   View,
   Text,
@@ -73,7 +74,7 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
       setSession(newSession);
       setRemainingTime(mockExamService.getRemainingTime(newSession));
     } catch (error) {
-      console.error("Failed to initialize mock exam session:", error);
+      logger.error("Failed to initialize mock exam session:", error);
       Alert.alert("エラー", "模試の開始に失敗しました", [
         { text: "OK", onPress: onExit },
       ]);
@@ -133,7 +134,7 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
       updatedSession.answers.set(questionId, answer);
       setSession(updatedSession);
     } catch (error) {
-      console.error("Failed to record answer:", error);
+      logger.error("Failed to record answer:", error);
       Alert.alert("エラー", "解答の記録に失敗しました");
     }
   };
@@ -179,7 +180,7 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
       const result = await mockExamService.completeMockExamSession(session);
       onComplete(result);
     } catch (error) {
-      console.error("Failed to submit exam:", error);
+      logger.error("Failed to submit exam:", error);
       Alert.alert("エラー", "模試の提出に失敗しました");
       setSubmitting(false);
     }
@@ -193,7 +194,7 @@ export const MockExamScreen: React.FC<MockExamScreenProps> = ({
       const result = await mockExamService.completeMockExamSession(session);
       onComplete(result);
     } catch (error) {
-      console.error("Failed to force submit exam:", error);
+      logger.error("Failed to force submit exam:", error);
       Alert.alert("エラー", "模試の終了に失敗しました");
     }
   };

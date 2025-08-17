@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { databaseService } from "../data/database";
 import { statisticsService } from "./statistics-service";
 import { ReviewService } from "./review-service";
+import { logger } from "../../utils/logger";
 
 export interface CacheConfig {
   maxCacheSize: number; // MB
@@ -86,7 +87,7 @@ export class OfflineCacheService {
     if (this.isInitialized) return;
 
     try {
-      console.log("[OfflineCacheService] キャッシュシステム初期化開始");
+      logger.debug("[OfflineCacheService] キャッシュシステム初期化開始");
 
       // 設定読み込み
       await this.loadConfig();
@@ -109,9 +110,9 @@ export class OfflineCacheService {
       await this.updateCacheStats();
 
       this.isInitialized = true;
-      console.log("[OfflineCacheService] キャッシュシステム初期化完了");
+      logger.debug("[OfflineCacheService] キャッシュシステム初期化完了");
     } catch (error) {
-      console.error("[OfflineCacheService] 初期化エラー:", error);
+      logger.error("[OfflineCacheService] 初期化エラー:", error);
       throw error;
     }
   }
@@ -311,7 +312,7 @@ export class OfflineCacheService {
 
       await databaseService.executeSql(query, params);
     } catch (error) {
-      console.error("[OfflineCacheService] SQLiteキャッシュ保存エラー:", error);
+      logger.error("[OfflineCacheService] SQLiteキャッシュ保存エラー:", error);
     }
   }
 
@@ -320,7 +321,7 @@ export class OfflineCacheService {
    */
   private async preloadCriticalData(): Promise<void> {
     try {
-      console.log("[OfflineCacheService] 重要データプリロード開始");
+      logger.debug("[OfflineCacheService] 重要データプリロード開始");
 
       const preloadTasks = [
         // 基本マスタデータ
@@ -337,9 +338,9 @@ export class OfflineCacheService {
       ];
 
       await Promise.allSettled(preloadTasks);
-      console.log("[OfflineCacheService] 重要データプリロード完了");
+      logger.debug("[OfflineCacheService] 重要データプリロード完了");
     } catch (error) {
-      console.warn("[OfflineCacheService] プリロードエラー:", error);
+      logger.warn("[OfflineCacheService] プリロードエラー:", { details: error });
     }
   }
 
@@ -363,7 +364,7 @@ export class OfflineCacheService {
         });
       }
     } catch (error) {
-      console.warn("[OfflineCacheService] 問題プリロードエラー:", error);
+      logger.warn("[OfflineCacheService] 問題プリロードエラー:", { details: error });
     }
   }
 
@@ -385,7 +386,7 @@ export class OfflineCacheService {
         });
       }
     } catch (error) {
-      console.warn("[OfflineCacheService] カテゴリプリロードエラー:", error);
+      logger.warn("[OfflineCacheService] カテゴリプリロードエラー:", { details: error });
     }
   }
 
@@ -407,7 +408,7 @@ export class OfflineCacheService {
         });
       }
     } catch (error) {
-      console.warn("[OfflineCacheService] 勘定科目プリロードエラー:", error);
+      logger.warn("[OfflineCacheService] 勘定科目プリロードエラー:", { details: error });
     }
   }
 
@@ -477,7 +478,7 @@ export class OfflineCacheService {
         priority: "normal",
       });
     } catch (error) {
-      console.warn("[OfflineCacheService] 統計プリロードエラー:", error);
+      logger.warn("[OfflineCacheService] 統計プリロードエラー:", { details: error });
     }
   }
 
@@ -566,7 +567,7 @@ export class OfflineCacheService {
       }
     }
 
-    console.log(`[OfflineCacheService] LRU削除完了: ${evictCount}エントリ`);
+    logger.debug("[OfflineCacheService] LRU削除完了: ${evictCount}エントリ");
   }
 
   /**
@@ -589,9 +590,9 @@ export class OfflineCacheService {
         [now],
       );
 
-      console.log("[OfflineCacheService] 期限切れキャッシュクリーンアップ完了");
+      logger.debug("[OfflineCacheService] 期限切れキャッシュクリーンアップ完了");
     } catch (error) {
-      console.error("[OfflineCacheService] クリーンアップエラー:", error);
+      logger.error("[OfflineCacheService] クリーンアップエラー:", error);
     }
   }
 
@@ -633,7 +634,7 @@ export class OfflineCacheService {
         `[OfflineCacheService] メモリキャッシュ復元完了: ${this.memoryCache.size}エントリ`,
       );
     } catch (error) {
-      console.warn("[OfflineCacheService] メモリキャッシュ復元エラー:", error);
+      logger.warn("[OfflineCacheService] メモリキャッシュ復元エラー:", { details: error });
     }
   }
 
@@ -648,7 +649,7 @@ export class OfflineCacheService {
         this.config = { ...this.config, ...parsed };
       }
     } catch (error) {
-      console.warn("[OfflineCacheService] 設定読み込みエラー:", error);
+      logger.warn("[OfflineCacheService] 設定読み込みエラー:", { details: error });
     }
   }
 
@@ -677,7 +678,7 @@ export class OfflineCacheService {
         };
       }
     } catch (error) {
-      console.warn("[OfflineCacheService] 統計更新エラー:", error);
+      logger.warn("[OfflineCacheService] 統計更新エラー:", { details: error });
     }
   }
 
@@ -738,7 +739,7 @@ export class OfflineCacheService {
       // アクセスログからも削除
       this.accessLog.delete(key);
 
-      console.log(`[OfflineCacheService] キャッシュ無効化完了: ${key}`);
+      logger.debug("[OfflineCacheService] キャッシュ無効化完了: ${key}");
     } catch (error) {
       console.error(
         `[OfflineCacheService] キャッシュ無効化エラー (${key}):`,
@@ -801,9 +802,9 @@ export class OfflineCacheService {
         newestEntry: 0,
       };
 
-      console.log("[OfflineCacheService] 全キャッシュクリア完了");
+      logger.debug("[OfflineCacheService] 全キャッシュクリア完了");
     } catch (error) {
-      console.error("[OfflineCacheService] 全キャッシュクリアエラー:", error);
+      logger.error("[OfflineCacheService] 全キャッシュクリアエラー:", error);
     }
   }
 
@@ -831,9 +832,9 @@ export class OfflineCacheService {
         "offline_cache_config",
         JSON.stringify(this.config),
       );
-      console.log("[OfflineCacheService] 設定更新完了");
+      logger.debug("[OfflineCacheService] 設定更新完了");
     } catch (error) {
-      console.error("[OfflineCacheService] 設定更新エラー:", error);
+      logger.error("[OfflineCacheService] 設定更新エラー:", error);
     }
   }
 
@@ -846,9 +847,9 @@ export class OfflineCacheService {
       this.memoryCache.clear();
       this.accessLog.clear();
       this.isInitialized = false;
-      console.log("[OfflineCacheService] クリーンアップ完了");
+      logger.debug("[OfflineCacheService] クリーンアップ完了");
     } catch (error) {
-      console.error("[OfflineCacheService] クリーンアップエラー:", error);
+      logger.error("[OfflineCacheService] クリーンアップエラー:", error);
     }
   }
 }

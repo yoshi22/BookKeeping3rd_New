@@ -6,6 +6,7 @@
 import { useState, useEffect } from "react";
 import { Platform, AccessibilityInfo, Appearance } from "react-native";
 import { AccessibilityColors } from "../theme/colors";
+import { logger } from "../../utils/logger";
 
 export interface AccessibilityState {
   isScreenReaderEnabled: boolean;
@@ -51,7 +52,7 @@ export function useAccessibility(): AccessibilityState & AccessibilityHelpers {
           isScreenReaderEnabled: isEnabled,
         }));
       } catch (error) {
-        console.warn("Failed to check screen reader status:", error);
+        logger.warn("Failed to check screen reader status:", { details: error });
       }
     };
 
@@ -75,7 +76,7 @@ export function useAccessibility(): AccessibilityState & AccessibilityHelpers {
             isHighContrastEnabled: false,
           }));
         } catch (error) {
-          console.warn("Failed to check high contrast status:", error);
+          logger.warn("Failed to check high contrast status:", { details: error });
         }
       }
     };
@@ -94,7 +95,7 @@ export function useAccessibility(): AccessibilityState & AccessibilityHelpers {
             }));
           }
         } catch (error) {
-          console.warn("Failed to check reduce motion status:", error);
+          logger.warn("Failed to check reduce motion status:", { details: error });
         }
       }
     };
@@ -281,7 +282,7 @@ export function useDynamicType() {
           // デフォルトスケールを使用
           setFontScale(1.0); // フォールバック
         } catch (error) {
-          console.warn("Failed to get font scale:", error);
+          logger.warn("Failed to get font scale:", { details: error });
           setFontScale(1.0); // エラー時はデフォルト
         }
       };

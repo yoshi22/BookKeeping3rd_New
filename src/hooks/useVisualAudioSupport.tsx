@@ -9,6 +9,7 @@ import { Audio } from "expo-av";
 import { useTheme, type Theme } from "../context/ThemeContext";
 import { useAccessibility } from "./useAccessibility";
 import { useScreenReaderOptimization } from "./useScreenReaderOptimization";
+import { logger } from "../../utils/logger";
 
 export interface AudioFeedbackOptions {
   enableSoundEffects?: boolean;
@@ -70,7 +71,7 @@ export function useVisualAudioSupport(options: AudioFeedbackOptions = {}) {
           setIsAudioEnabled(true);
         }
       } catch (error) {
-        console.warn("[VisualAudioSupport] 音声初期化エラー:", error);
+        logger.warn("[VisualAudioSupport] 音声初期化エラー:", { details: error });
         setIsAudioEnabled(false);
       }
     };
@@ -83,7 +84,7 @@ export function useVisualAudioSupport(options: AudioFeedbackOptions = {}) {
         try {
           await sound.unloadAsync();
         } catch (error) {
-          console.warn("[VisualAudioSupport] 音声クリーンアップエラー:", error);
+          logger.warn("[VisualAudioSupport] 音声クリーンアップエラー:", { details: error });
         }
       });
       soundsRef.current.clear();
@@ -458,7 +459,7 @@ export function useVisualAudioSupport(options: AudioFeedbackOptions = {}) {
   // デバッグ・テスト用のフィードバック
   const testAllFeedbacks = useCallback(() => {
     if (__DEV__) {
-      console.log("[VisualAudioSupport] 全フィードバックテスト開始");
+      logger.debug("[VisualAudioSupport] 全フィードバックテスト開始");
 
       const tests = [
         { type: "success" as const, message: "成功テスト" },

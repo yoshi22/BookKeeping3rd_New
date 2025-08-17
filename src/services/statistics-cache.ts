@@ -5,6 +5,7 @@
  */
 
 import { OverallStatistics, CategoryStatistics, LearningGoals, DailyStatistics } from './statistics-service';
+import { logger } from "../../utils/logger";
 
 /**
  * キャッシュエントリ
@@ -56,7 +57,7 @@ export class StatisticsCacheService {
       return null;
     }
     
-    console.log(`[StatisticsCache] キャッシュヒット: ${key}`);
+    logger.debug("[StatisticsCache] キャッシュヒット: ${key}");
     return entry.data;
   }
 
@@ -74,7 +75,7 @@ export class StatisticsCacheService {
     };
     
     this.cache.set(key, entry);
-    console.log(`[StatisticsCache] キャッシュ保存: ${key}, TTL: ${ttl}ms`);
+    logger.debug("[StatisticsCache] キャッシュ保存: ${key}, TTL: ${ttl}ms");
     
     // メモリ使用量管理
     this.cleanupExpiredEntries();
@@ -149,7 +150,7 @@ export class StatisticsCacheService {
    * カテゴリ特定のキャッシュ無効化
    */
   public invalidateCategory(categoryId: string): void {
-    console.log(`[StatisticsCache] カテゴリ特定キャッシュ無効化: ${categoryId}`);
+    logger.debug("[StatisticsCache] カテゴリ特定キャッシュ無効化: ${categoryId}");
     
     this.cache.delete(`category_${categoryId}_stats` as CacheKey);
     this.cache.delete('category_stats');
@@ -228,7 +229,7 @@ export class StatisticsCacheService {
     });
     
     if (expiredKeys.length > 0) {
-      console.log(`[StatisticsCache] 期限切れエントリ削除: ${expiredKeys.length}件`);
+      logger.debug("[StatisticsCache] 期限切れエントリ削除: ${expiredKeys.length}件");
     }
     
     // メモリ使用量チェック
@@ -262,7 +263,7 @@ export class StatisticsCacheService {
       this.cache.delete(key);
     });
     
-    console.log(`[StatisticsCache] 古いエントリ削除: ${entries.length}件`);
+    logger.debug("[StatisticsCache] 古いエントリ削除: ${entries.length}件");
   }
 
   /**
@@ -301,8 +302,8 @@ export class StatisticsCacheService {
     
     const cacheInfo = this.getCacheInfo();
     
-    console.log(`[StatisticsCache] メンテナンス完了: ${beforeCount} -> ${afterCount}エントリ`);
-    console.log(`[StatisticsCache] メモリ使用量: ${cacheInfo.memoryUsageKB}KB`);
+    logger.debug("[StatisticsCache] メンテナンス完了: ${beforeCount} -> ${afterCount}エントリ");
+    logger.debug("[StatisticsCache] メモリ使用量: ${cacheInfo.memoryUsageKB}KB");
   }
 }
 

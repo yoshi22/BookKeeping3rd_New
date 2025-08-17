@@ -84,7 +84,7 @@ export class MemoryOptimizer {
       return; // 既に監視中
     }
 
-    console.log("[MemoryOptimizer] メモリ監視開始");
+    logger.debug("[MemoryOptimizer] メモリ監視開始");
 
     this.monitoringInterval = setInterval(() => {
       this.collectMemoryStats();
@@ -103,7 +103,7 @@ export class MemoryOptimizer {
     if (this.monitoringInterval) {
       clearInterval(this.monitoringInterval);
       this.monitoringInterval = null;
-      console.log("[MemoryOptimizer] メモリ監視停止");
+      logger.debug("[MemoryOptimizer] メモリ監視停止");
     }
   }
 
@@ -149,13 +149,13 @@ export class MemoryOptimizer {
     const usage = currentStats.usagePercentage;
 
     if (usage > MEMORY_WARNING_THRESHOLDS.CRITICAL) {
-      console.error("[MemoryOptimizer] 重要: メモリ使用量が危険レベルです");
+      logger.error("[MemoryOptimizer] 重要: メモリ使用量が危険レベルです");
       this.performEmergencyCleanup();
     } else if (usage > MEMORY_WARNING_THRESHOLDS.HIGH) {
-      console.warn("[MemoryOptimizer] 警告: メモリ使用量が高レベルです");
+      logger.warn("[MemoryOptimizer] 警告: メモリ使用量が高レベルです");
       this.performAggressiveCleanup();
     } else if (usage > MEMORY_WARNING_THRESHOLDS.MEDIUM) {
-      console.info("[MemoryOptimizer] 注意: メモリ使用量が中レベルです");
+      logger.info("[MemoryOptimizer] 注意: メモリ使用量が中レベルです");
       this.performMildCleanup();
     }
   }
@@ -178,7 +178,7 @@ export class MemoryOptimizer {
    * 軽度なクリーンアップ
    */
   private performMildCleanup(): void {
-    console.log("[MemoryOptimizer] 軽度クリーンアップ実行");
+    logger.debug("[MemoryOptimizer] 軽度クリーンアップ実行");
 
     // 古いキャッシュエントリの削除
     this.evictOldCacheEntries(0.1); // 10%削除
@@ -191,7 +191,7 @@ export class MemoryOptimizer {
    * 積極的なクリーンアップ
    */
   private performAggressiveCleanup(): void {
-    console.log("[MemoryOptimizer] 積極的クリーンアップ実行");
+    logger.debug("[MemoryOptimizer] 積極的クリーンアップ実行");
 
     // より多くのキャッシュエントリを削除
     this.evictOldCacheEntries(0.3); // 30%削除
@@ -207,7 +207,7 @@ export class MemoryOptimizer {
    * 緊急クリーンアップ
    */
   private performEmergencyCleanup(): void {
-    console.error("[MemoryOptimizer] 緊急クリーンアップ実行");
+    logger.error("[MemoryOptimizer] 緊急クリーンアップ実行");
 
     // ほぼ全てのキャッシュをクリア
     this.evictOldCacheEntries(0.8); // 80%削除
@@ -380,7 +380,7 @@ export class MemoryOptimizer {
   private clearWeakRefs(): void {
     const count = this.weakRefs.size;
     this.weakRefs.clear();
-    console.log(`[MemoryOptimizer] 弱参照全クリア: ${count}件削除`);
+    logger.debug("[MemoryOptimizer] 弱参照全クリア: ${count}件削除");
   }
 
   /**
@@ -472,10 +472,10 @@ export class MemoryOptimizer {
    */
   private triggerGarbageCollection(): void {
     if (typeof global !== "undefined" && global.gc) {
-      console.log("[MemoryOptimizer] 手動ガベージコレクション実行");
+      logger.debug("[MemoryOptimizer] 手動ガベージコレクション実行");
       global.gc();
     } else {
-      console.log("[MemoryOptimizer] ガベージコレクション利用不可");
+      logger.debug("[MemoryOptimizer] ガベージコレクション利用不可");
     }
   }
 
@@ -537,7 +537,7 @@ export class MemoryOptimizer {
    * メモリ最適化の停止・クリーンアップ
    */
   public shutdown(): void {
-    console.log("[MemoryOptimizer] シャットダウン開始");
+    logger.debug("[MemoryOptimizer] シャットダウン開始");
 
     this.stopMonitoring();
     this.objectPools.clear();
@@ -547,7 +547,7 @@ export class MemoryOptimizer {
     this.memoryStats.length = 0;
     this.currentCacheSize = 0;
 
-    console.log("[MemoryOptimizer] シャットダウン完了");
+    logger.debug("[MemoryOptimizer] シャットダウン完了");
   }
 }
 

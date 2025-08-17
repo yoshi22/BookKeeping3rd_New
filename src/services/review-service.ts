@@ -13,6 +13,7 @@ import {
 import { learningHistoryRepository } from "../data/repositories/learning-history-repository";
 import { questionRepository } from "../data/repositories/question-repository";
 import { Question, QuestionCategory } from "../types/models";
+import { logger } from "../../utils/logger";
 
 /**
  * 復習優先度アルゴリズム設定
@@ -202,7 +203,7 @@ export class ReviewService {
           );
 
           const category = await this.getQuestionCategory(questionId);
-          console.log(`[ReviewService] 問題カテゴリ取得: ${category}`);
+          logger.debug("[ReviewService] 問題カテゴリ取得: ${category}");
 
           const initialPriority = this.calculatePriority({
             incorrectCount: 1,
@@ -210,7 +211,7 @@ export class ReviewService {
             lastAnsweredAt: now,
             category,
           });
-          console.log(`[ReviewService] 初期優先度計算: ${initialPriority}`);
+          logger.debug("[ReviewService] 初期優先度計算: ${initialPriority}");
 
           const createData = {
             questionId,
@@ -220,15 +221,15 @@ export class ReviewService {
             priorityScore: initialPriority,
             lastAnsweredAt: now,
           };
-          console.log(`[ReviewService] 復習アイテム作成データ:`, createData);
+          logger.debug("[ReviewService] 復習アイテム作成データ:", { details: createData });
 
           const newItem = await reviewItemRepository.createOrUpdate(createData);
-          console.log(`[ReviewService] 復習アイテム作成完了:`, newItem);
+          logger.debug("[ReviewService] 復習アイテム作成完了:", { details: newItem });
 
           // 作成後の確認
           const verification =
             await reviewItemRepository.findByQuestionId(questionId);
-          console.log(`[ReviewService] 作成確認クエリ結果:`, verification);
+          logger.debug("[ReviewService] 作成確認クエリ結果:", { details: verification });
 
           result = {
             questionId,
@@ -251,13 +252,13 @@ export class ReviewService {
             "[ReviewService] 復習アイテム変更により統計キャッシュをクリア",
           );
         } catch (error) {
-          console.warn("[ReviewService] 統計キャッシュクリアに失敗:", error);
+          logger.warn("[ReviewService] 統計キャッシュクリアに失敗:", { details: error });
         }
       }
 
       return result;
     } catch (error) {
-      console.error("[ReviewService] updateReviewStatus エラー:", error);
+      logger.error("[ReviewService] updateReviewStatus エラー:", error);
       throw error;
     }
   }
@@ -309,7 +310,7 @@ export class ReviewService {
     options: GenerateReviewListOptions = {},
   ): Promise<Question[]> {
     try {
-      console.log("[ReviewService] 復習リスト生成開始:", options);
+      logger.debug("[ReviewService] 復習リスト生成開始:", { details: options });
 
       const filter: ReviewFilter = {
         status: ["needs_review", "priority_review"], // 復習対象のみ
@@ -333,7 +334,7 @@ export class ReviewService {
       }
 
       // 復習アイテム取得
-      console.log("[ReviewService] 復習アイテム取得フィルター:", filter);
+      logger.debug("[ReviewService] 復習アイテム取得フィルター:", { details: filter });
       const reviewItems = await reviewItemRepository.getReviewList(filter);
       console.log(
         `[ReviewService] 復習アイテム取得結果: ${reviewItems.length}件`,
@@ -341,7 +342,7 @@ export class ReviewService {
       );
 
       if (reviewItems.length === 0) {
-        console.log("[ReviewService] 復習対象の問題がありません");
+        logger.debug("[ReviewService] 復習対象の問題がありません");
         return [];
       }
 
@@ -356,10 +357,10 @@ export class ReviewService {
         }
       }
 
-      console.log(`[ReviewService] 復習リスト生成完了: ${questions.length}件`);
+      logger.debug("[ReviewService] 復習リスト生成完了: ${questions.length}件");
       return questions;
     } catch (error) {
-      console.error("[ReviewService] generateReviewList エラー:", error);
+      logger.error("[ReviewService] generateReviewList エラー:", error);
       throw error;
     }
   }
@@ -369,7 +370,7 @@ export class ReviewService {
    */
   public async getReviewStatistics(): Promise<ReviewStatistics> {
     try {
-      console.log("[ReviewService] 復習統計取得開始");
+      logger.debug("[ReviewService] 復習統計取得開始");
       const result = await reviewItemRepository.getReviewStatistics();
       console.log(
         "[ReviewService] 復習統計取得完了:",
@@ -377,8 +378,8 @@ export class ReviewService {
       );
       return result;
     } catch (error) {
-      console.error("[ReviewService] getReviewStatistics エラー:", error);
-      console.error("[ReviewService] Error details:", {
+      logger.error("[ReviewService] getReviewStatistics エラー:", error);
+      logger.error("[ReviewService] Error details:", {
         message: error instanceof Error ? error.message : error,
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -410,7 +411,7 @@ export class ReviewService {
         totalCount: questions.length,
       };
     } catch (error) {
-      console.error("[ReviewService] startReviewSession エラー:", error);
+      logger.error("[ReviewService] startReviewSession エラー:", error);
       throw error;
     }
   }
@@ -429,9 +430,9 @@ export class ReviewService {
     }>
   > {
     try {
-      console.log("[ReviewService] 弱点分野分析開始");
+      logger.debug("[ReviewService] 弱点分野分析開始");
       const stats = await this.getReviewStatistics();
-      console.log("[ReviewService] 統計データに基づく分析:", stats);
+      logger.debug("[ReviewService] 統計データに基づく分析:", { details: stats });
       const analysis = [];
 
       const categoryNames: Record<QuestionCategory, string> = {
@@ -485,8 +486,8 @@ export class ReviewService {
       );
       return analysis;
     } catch (error) {
-      console.error("[ReviewService] analyzeWeakAreas エラー:", error);
-      console.error("[ReviewService] Error details:", {
+      logger.error("[ReviewService] analyzeWeakAreas エラー:", error);
+      logger.error("[ReviewService] Error details:", {
         message: error instanceof Error ? error.message : error,
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -547,7 +548,7 @@ export class ReviewService {
     oldHistoryDeleted: number;
   }> {
     try {
-      console.log("[ReviewService] 復習アイテムクリーンアップ開始");
+      logger.debug("[ReviewService] 復習アイテムクリーンアップ開始");
 
       // 克服済みアイテムの削除（7日間保持）
       const masteredItemsDeleted =
@@ -566,7 +567,7 @@ export class ReviewService {
         oldHistoryDeleted,
       };
     } catch (error) {
-      console.error("[ReviewService] cleanupReviewItems エラー:", error);
+      logger.error("[ReviewService] cleanupReviewItems エラー:", error);
       throw error;
     }
   }
