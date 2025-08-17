@@ -89,8 +89,8 @@ async function loadSampleData(): Promise<void> {
 
     const { databaseService } = await import("../database");
     const { allQuestions: allSampleQuestions, questionStatistics } =
-      await import("../questions");
-    const SAMPLE_DATA_VERSION = "2025-08-10-master-questions";
+      await import("../master-questions");
+    const SAMPLE_DATA_VERSION = "2025-08-17-text-format-fixed";
 
     // 開発環境での強制更新フラグ（React Native環境対応）
     console.log("[Database] 環境変数チェック:", {
@@ -100,7 +100,7 @@ async function loadSampleData(): Promise<void> {
         process.env.EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS,
     });
 
-    // 一時的に強制更新を無効化（復習リスト保持のため）
+    // 一時的に強制更新を有効化（250問データ読み込みのため）
     const forceUpdate = false;
 
     // 元のロジック（デバッグ用）
