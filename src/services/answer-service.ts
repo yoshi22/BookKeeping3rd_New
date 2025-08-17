@@ -379,23 +379,10 @@ export class AnswerService {
     answerData: CBTAnswerData,
     question: Question,
   ): boolean {
-    console.log("[DEBUG] isAnswerCorrect - 開始", {
-      questionId: question.id,
-      categoryId: question.category_id,
-      correctAnswerJson: question.correct_answer_json,
-      answerDataKeys: Object.keys(answerData),
-      answerData: answerData,
-    });
-
     try {
       const correctAnswer = JSON.parse(
         question.correct_answer_json,
       ) as QuestionCorrectAnswer;
-
-      console.log("[DEBUG] isAnswerCorrect - パース成功", {
-        questionId: question.id,
-        parsedCorrectAnswer: correctAnswer,
-      });
 
       // First check answer template for question type
       try {
@@ -405,10 +392,6 @@ export class AnswerService {
           (answerTemplate?.type === "multiple_choice" &&
             !answerTemplate?.questions)
         ) {
-          console.log(
-            `[DEBUG] isAnswerCorrect - choice問題として処理: ${answerTemplate.type}`,
-            question.id,
-          );
           return this.isChoiceAnswerCorrect(
             answerData,
             correctAnswer,
@@ -419,47 +402,22 @@ export class AnswerService {
           answerTemplate?.questions &&
           Array.isArray(answerTemplate.questions)
         ) {
-          console.log(
-            "[DEBUG] isAnswerCorrect - multiple_blank_choice問題として処理",
-            question.id,
-          );
           return this.isMultipleBlankChoiceAnswerCorrect(
             answerData,
             correctAnswer,
           );
         } else if (answerTemplate?.type === "voucher_entry") {
-          console.log(
-            "[DEBUG] isAnswerCorrect - voucher_entry問題として処理",
-            question.id,
-          );
           return this.isVoucherAnswerCorrect(answerData, correctAnswer);
         }
-      } catch (templateError) {
-        console.warn(
-          "[DEBUG] answer_template_json解析失敗、カテゴリベース判定に移行:",
-          templateError,
-        );
-      }
+      } catch (templateError) {}
 
       // Fall back to category-based routing
       switch (question.category_id) {
         case "journal":
-          console.log(
-            "[DEBUG] isAnswerCorrect - journal分岐に入る",
-            question.id,
-          );
           return this.isJournalAnswerCorrect(answerData, correctAnswer);
         case "ledger":
-          console.log(
-            "[DEBUG] isAnswerCorrect - ledger分岐に入る",
-            question.id,
-          );
           return this.isLedgerAnswerCorrect(answerData, correctAnswer);
         case "trial_balance":
-          console.log(
-            "[DEBUG] isAnswerCorrect - trial_balance分岐に入る",
-            question.id,
-          );
           return this.isTrialBalanceAnswerCorrect(answerData, correctAnswer);
         default:
           console.error(
@@ -469,11 +427,6 @@ export class AnswerService {
       }
     } catch (error) {
       console.error("[AnswerService] 正解判定エラー:", error);
-      console.error("[DEBUG] isAnswerCorrect - パースエラー詳細", {
-        questionId: question.id,
-        correctAnswerJson: question.correct_answer_json,
-        error: error,
-      });
       return false;
     }
   }
@@ -490,34 +443,6 @@ export class AnswerService {
 
     const data = answerData as any;
 
-    console.log("[DEBUG] isJournalAnswerCorrect - 仕訳答え合わせデバッグ:", {
-      questionId: data.questionId || "不明",
-      userAnswer: {
-        debit_account: data.debit_account,
-        debit_amount: data.debit_amount,
-        credit_account: data.credit_account,
-        credit_amount: data.credit_amount,
-      },
-      correctAnswer: {
-        debit_account: entry.debit_account,
-        debit_amount: entry.debit_amount,
-        credit_account: entry.credit_account,
-        credit_amount: entry.credit_amount,
-      },
-      typeComparison: {
-        debit_account_type: `${typeof data.debit_account} vs ${typeof entry.debit_account}`,
-        debit_amount_type: `${typeof data.debit_amount} vs ${typeof entry.debit_amount}`,
-        credit_account_type: `${typeof data.credit_account} vs ${typeof entry.credit_account}`,
-        credit_amount_type: `${typeof data.credit_amount} vs ${typeof entry.credit_amount}`,
-      },
-      detailedMatch: {
-        debit_account_match: data.debit_account === entry.debit_account,
-        debit_amount_match: data.debit_amount === entry.debit_amount,
-        credit_account_match: data.credit_account === entry.credit_account,
-        credit_amount_match: data.credit_amount === entry.credit_amount,
-      },
-    });
-
     // Check if the answer data is in the new array format (from JournalEntryForm)
     if (
       data.debits &&
@@ -525,7 +450,6 @@ export class AnswerService {
       Array.isArray(data.debits) &&
       Array.isArray(data.credits)
     ) {
-      console.log("[DEBUG] Using new array format validation");
       return this.isMultipleJournalEntriesCorrect(data, correctAnswer);
     }
 
@@ -535,8 +459,6 @@ export class AnswerService {
       data.debit_amount === entry.debit_amount &&
       data.credit_account === entry.credit_account &&
       data.credit_amount === entry.credit_amount;
-
-    console.log(`[DEBUG] Legacy format validation result: ${isCorrect}`);
     return isCorrect;
   }
 
@@ -792,15 +714,9 @@ export class AnswerService {
     answerData: CBTAnswerData,
     correctAnswer: QuestionCorrectAnswer,
   ): boolean {
-    console.log("[DEBUG] isTrialBalanceAnswerCorrect - 開始", {
-      answerData,
-      correctAnswer,
-    });
-
     // Handle legacy format first (for backward compatibility)
     const balances = correctAnswer.trialBalance?.balances;
     if (balances) {
-      console.log("[DEBUG] Using legacy trialBalance.balances format");
       const data = answerData as any;
       return Object.entries(balances).every(([account, amount]) => {
         return data[account] === amount;
@@ -810,7 +726,6 @@ export class AnswerService {
     // Handle financialStatements format (Q_T_001など)
     const financialStatements = (correctAnswer as any).financialStatements;
     if (financialStatements) {
-      console.log("[DEBUG] Using financialStatements format");
       // 財務諸表形式の場合は、entriesに変換
       const convertedEntries =
         this.convertFinancialStatementsToEntries(financialStatements);
@@ -822,7 +737,6 @@ export class AnswerService {
     // Handle new format: { entries: [...] }
     const correctEntries = (correctAnswer as any).entries;
     if (!correctEntries || !Array.isArray(correctEntries)) {
-      console.error("[DEBUG] No valid entries found in correctAnswer");
       return false;
     }
 
@@ -830,24 +744,13 @@ export class AnswerService {
     const data = answerData as any;
     const userEntries = data.entries;
     if (!userEntries || !Array.isArray(userEntries)) {
-      console.error("[DEBUG] No valid entries found in user answer");
       return false;
     }
-
-    console.log("[DEBUG] Comparing entries format:", {
-      correctEntries: correctEntries.length,
-      userEntries: userEntries.length,
-    });
 
     // Convert both arrays to account balance maps for comparison
     const correctBalances =
       this.convertTrialBalanceEntriesToBalances(correctEntries);
     const userBalances = this.convertTrialBalanceEntriesToBalances(userEntries);
-
-    console.log("[DEBUG] Balance comparison:", {
-      correctBalances,
-      userBalances,
-    });
 
     // Compare all accounts
     const allAccounts = new Set([
@@ -855,7 +758,7 @@ export class AnswerService {
       ...Object.keys(userBalances),
     ]);
 
-    for (const account of allAccounts) {
+    for (const account of Array.from(allAccounts)) {
       const correctBalance = correctBalances[account] || {
         debit: 0,
         credit: 0,
@@ -866,15 +769,9 @@ export class AnswerService {
         correctBalance.debit !== userBalance.debit ||
         correctBalance.credit !== userBalance.credit
       ) {
-        console.log(`[DEBUG] Mismatch for account ${account}:`, {
-          correct: correctBalance,
-          user: userBalance,
-        });
         return false;
       }
     }
-
-    console.log("[DEBUG] All trial balance entries match");
     return true;
   }
 
@@ -985,11 +882,6 @@ export class AnswerService {
         }
       }
     }
-
-    console.log(
-      "[DEBUG] convertFinancialStatementsToEntries - 変換結果:",
-      entries,
-    );
     return entries;
   }
 
@@ -1008,24 +900,13 @@ export class AnswerService {
     const userEntries = data.entries;
 
     if (!userEntries || !Array.isArray(userEntries)) {
-      console.error("[DEBUG] No valid entries found in user answer");
       return false;
     }
-
-    console.log("[DEBUG] Comparing entries:", {
-      correctEntries: correctEntries.length,
-      userEntries: userEntries.length,
-    });
 
     // Convert both arrays to account balance maps for comparison
     const correctBalances =
       this.convertTrialBalanceEntriesToBalances(correctEntries);
     const userBalances = this.convertTrialBalanceEntriesToBalances(userEntries);
-
-    console.log("[DEBUG] Balance comparison:", {
-      correctBalances,
-      userBalances,
-    });
 
     // Compare all accounts
     const allAccounts = new Set([
@@ -1033,7 +914,7 @@ export class AnswerService {
       ...Object.keys(userBalances),
     ]);
 
-    for (const account of allAccounts) {
+    for (const account of Array.from(allAccounts)) {
       const correctBalance = correctBalances[account] || {
         debit: 0,
         credit: 0,
@@ -1044,15 +925,9 @@ export class AnswerService {
         correctBalance.debit !== userBalance.debit ||
         correctBalance.credit !== userBalance.credit
       ) {
-        console.log(`[DEBUG] Mismatch for account ${account}:`, {
-          correct: correctBalance,
-          user: userBalance,
-        });
         return false;
       }
     }
-
-    console.log("[DEBUG] All trial balance entries match");
     return true;
   }
 
@@ -1064,72 +939,35 @@ export class AnswerService {
     correctAnswer: QuestionCorrectAnswer,
   ): boolean {
     const data = answerData as any;
-    console.log("[DEBUG] isVoucherAnswerCorrect - 開始");
-    console.log(
-      "[DEBUG] Voucher validation - answerData:",
-      JSON.stringify(data, null, 2),
-    );
-    console.log(
-      "[DEBUG] Voucher validation - correctAnswer:",
-      JSON.stringify(correctAnswer, null, 2),
-    );
 
     // 正答データのentriesと比較
     const correctVoucherType = (correctAnswer as any).voucher_type;
     const correctEntries = (correctAnswer as any).entries;
 
     if (!correctEntries || !Array.isArray(correctEntries)) {
-      console.error("[DEBUG] 正答データのentriesが見つかりません", {
-        correctAnswer: correctAnswer,
-        correctEntries: correctEntries,
-      });
       return false;
     }
 
     // ユーザーの解答データ
     const userVoucherType = data.voucher_type;
     const userEntries = data.entries;
-
-    console.log("[DEBUG] データ構造確認:", {
-      userVoucherType: userVoucherType,
-      correctVoucherType: correctVoucherType,
-      userEntriesLength: userEntries?.length,
-      correctEntriesLength: correctEntries?.length,
-    });
-
     if (!userEntries || !Array.isArray(userEntries)) {
-      console.error("[DEBUG] ユーザー解答のentriesが見つかりません", {
-        data: data,
-        userEntries: userEntries,
-        dataKeys: Object.keys(data),
-      });
       return false;
     }
 
     // 伝票タイプの確認
     if (correctVoucherType && userVoucherType !== correctVoucherType) {
-      console.log(
-        `[DEBUG] 伝票タイプが異なります: user='${userVoucherType}', correct='${correctVoucherType}'`,
-      );
       return false;
     }
 
     // エントリ数の確認
     if (userEntries.length !== correctEntries.length) {
-      console.log(
-        `[DEBUG] エントリ数が異なります: user=${userEntries.length}, correct=${correctEntries.length}`,
-      );
       return false;
     }
 
     // 各エントリの照合
     for (let i = 0; i < correctEntries.length; i++) {
       const correctEntry = correctEntries[i];
-
-      console.log(`[DEBUG] エントリ ${i + 1} の照合開始:`, {
-        correctEntry: correctEntry,
-        userEntriesForMatching: userEntries,
-      });
 
       // 同じデータを持つエントリを探す
       const matchingEntry = userEntries.find((userEntry: any) => {
@@ -1148,31 +986,13 @@ export class AnswerService {
         const descriptionMatch =
           !correctEntry.description ||
           userEntry.description === correctEntry.description;
-
-        console.log(`[DEBUG] エントリ照合詳細 (${i + 1}):`, {
-          userEntry: userEntry,
-          correctEntry: correctEntry,
-          dateMatch: dateMatch,
-          accountMatch: accountMatch,
-          amountMatch: amountMatch,
-          descriptionMatch: descriptionMatch,
-          overallMatch:
-            dateMatch && accountMatch && amountMatch && descriptionMatch,
-        });
-
         return dateMatch && accountMatch && amountMatch && descriptionMatch;
       });
 
       if (!matchingEntry) {
-        console.log(`[DEBUG] 一致するエントリが見つかりません (${i + 1}):`, {
-          correctEntry: correctEntry,
-          searchedUserEntries: userEntries,
-        });
         return false;
       }
     }
-
-    console.log("[DEBUG] 全ての伝票エントリが一致しました");
     return true;
   }
 

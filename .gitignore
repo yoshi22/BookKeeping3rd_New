@@ -55,3 +55,12 @@ test-questions.db
 
 # Serena cache files (Claude Code)
 .serena/cache/
+
+# Backup files
+backup/
+
+# Archive files
+scripts/archive/
+
+# Compiled JavaScript files (TypeScript project)
+src/**/*.js
