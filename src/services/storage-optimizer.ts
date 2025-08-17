@@ -6,7 +6,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { databaseService } from "../data/database";
 import { offlineCacheService } from "./offline-cache-service";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 export interface StorageStats {
   totalSize: number; // bytes
@@ -89,7 +89,7 @@ export class StorageOptimizer {
       this.isInitialized = true;
       logger.debug("[StorageOptimizer] ストレージ最適化システム初期化完了");
     } catch (error) {
-      logger.error("[StorageOptimizer] 初期化エラー:", error);
+      logger.error("[StorageOptimizer] 初期化エラー:", error  as Error);
       throw error;
     }
   }
@@ -121,7 +121,7 @@ export class StorageOptimizer {
 
       return stats;
     } catch (error) {
-      logger.error("[StorageOptimizer] ストレージ分析エラー:", error);
+      logger.error("[StorageOptimizer] ストレージ分析エラー:", error  as Error);
       throw error;
     }
   }
@@ -276,7 +276,7 @@ export class StorageOptimizer {
         await this.optimizeStorage();
       }
     } catch (error) {
-      logger.error("[StorageOptimizer] 定期最適化エラー:", error);
+      logger.error("[StorageOptimizer] 定期最適化エラー:", error  as Error);
     }
   }
 
@@ -325,7 +325,7 @@ export class StorageOptimizer {
       logger.debug("[StorageOptimizer] ストレージ最適化完了");
       return results;
     } catch (error) {
-      logger.error("[StorageOptimizer] ストレージ最適化エラー:", error);
+      logger.error("[StorageOptimizer] ストレージ最適化エラー:", error  as Error);
       throw error;
     } finally {
       this.isOptimizing = false;
@@ -361,8 +361,8 @@ export class StorageOptimizer {
         `[StorageOptimizer] VACUUM完了: ${sizeBefore} → ${sizeAfter} bytes`,
       );
     } catch (error) {
-      details = `VACUUMエラー: ${error instanceof Error ? error.message : String(error)}`;
-      logger.error("[StorageOptimizer] VACUUMエラー:", error);
+      details = `VACUUMエラー: ${error instanceof Error ? (error as Error).message : String(error)}`;
+      logger.error("[StorageOptimizer] VACUUMエラー:", error  as Error);
     }
 
     return {
@@ -404,8 +404,8 @@ export class StorageOptimizer {
 
       logger.debug("[StorageOptimizer] インデックス最適化完了: ${indexCount}個");
     } catch (error) {
-      details = `インデックス最適化エラー: ${error instanceof Error ? error.message : String(error)}`;
-      logger.error("[StorageOptimizer] インデックス最適化エラー:", error);
+      details = `インデックス最適化エラー: ${error instanceof Error ? (error as Error).message : String(error)}`;
+      logger.error("[StorageOptimizer] インデックス最適化エラー:", error  as Error);
     }
 
     return {
@@ -463,7 +463,7 @@ export class StorageOptimizer {
         `[StorageOptimizer] キャッシュクリーンアップ完了: ${deletedItems}個削除`,
       );
     } catch (error) {
-      details = `キャッシュクリーンアップエラー: ${error instanceof Error ? error.message : String(error)}`;
+      details = `キャッシュクリーンアップエラー: ${error instanceof Error ? (error as Error).message : String(error)}`;
       console.error(
         "[StorageOptimizer] キャッシュクリーンアップエラー:",
         error,
@@ -541,8 +541,8 @@ export class StorageOptimizer {
         `[StorageOptimizer] AsyncStorage最適化完了: ${keysToDelete.length}個削除`,
       );
     } catch (error) {
-      details = `AsyncStorage最適化エラー: ${error instanceof Error ? error.message : String(error)}`;
-      logger.error("[StorageOptimizer] AsyncStorage最適化エラー:", error);
+      details = `AsyncStorage最適化エラー: ${error instanceof Error ? (error as Error).message : String(error)}`;
+      logger.error("[StorageOptimizer] AsyncStorage最適化エラー:", error  as Error);
     }
 
     return {
@@ -598,8 +598,8 @@ export class StorageOptimizer {
 
       logger.debug("[StorageOptimizer] 統計更新完了: ${totalRows}行");
     } catch (error) {
-      details = `統計更新エラー: ${error instanceof Error ? error.message : String(error)}`;
-      logger.error("[StorageOptimizer] 統計更新エラー:", error);
+      details = `統計更新エラー: ${error instanceof Error ? (error as Error).message : String(error)}`;
+      logger.error("[StorageOptimizer] 統計更新エラー:", error  as Error);
     }
 
     return {
@@ -642,7 +642,7 @@ export class StorageOptimizer {
         JSON.stringify(recentHistory),
       );
     } catch (error) {
-      logger.error("[StorageOptimizer] 最適化履歴保存エラー:", error);
+      logger.error("[StorageOptimizer] 最適化履歴保存エラー:", error  as Error);
     }
   }
 
@@ -686,7 +686,7 @@ export class StorageOptimizer {
 
       logger.debug("[StorageOptimizer] 設定更新完了");
     } catch (error) {
-      logger.error("[StorageOptimizer] 設定更新エラー:", error);
+      logger.error("[StorageOptimizer] 設定更新エラー:", error  as Error);
     }
   }
 
@@ -777,7 +777,7 @@ export class StorageOptimizer {
       this.isInitialized = false;
       logger.debug("[StorageOptimizer] クリーンアップ完了");
     } catch (error) {
-      logger.error("[StorageOptimizer] クリーンアップエラー:", error);
+      logger.error("[StorageOptimizer] クリーンアップエラー:", error  as Error);
     }
   }
 }

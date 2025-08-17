@@ -71,12 +71,23 @@ export interface TabletLayoutConfig {
 }
 
 export interface ResponsiveStyles {
-  container: any;
-  content: any;
-  sidebar: any;
-  grid: any;
-  spacing: any;
-  typography: any;
+  container: ViewStyle;
+  content: ViewStyle;
+  sidebar: ViewStyle;
+  grid: ViewStyle;
+  spacing: {
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    xl: number;
+    xxl: number;
+  };
+  typography: {
+    scale: number;
+    lineHeight: number;
+    maxWidth?: number;
+  };
 }
 
 const defaultConfig: TabletLayoutConfig = {
@@ -271,8 +282,9 @@ export function useTabletLayout(config: Partial<TabletLayoutConfig> = {}) {
       const offsetWidth = (100 / gridColumns) * offset;
 
       return {
-        width: `${itemWidth}%` as any,
-        marginLeft: offset > 0 ? (`${offsetWidth}%` as any) : 0,
+        width: `${itemWidth}%` as ViewStyle["width"],
+        marginLeft:
+          offset > 0 ? (`${offsetWidth}%` as ViewStyle["marginLeft"]) : 0,
         paddingHorizontal: gutterSize / 2,
         marginBottom: gutterSize,
       };
@@ -290,7 +302,7 @@ export function useTabletLayout(config: Partial<TabletLayoutConfig> = {}) {
 
   // 条件付きスタイル適用
   const whenBreakpoint = useCallback(
-    <T extends any>(
+    <T extends unknown>(
       breakpoint: keyof TabletLayoutConfig["breakpoints"],
       trueValue: T,
       falseValue?: T,
@@ -302,7 +314,7 @@ export function useTabletLayout(config: Partial<TabletLayoutConfig> = {}) {
 
   // デバイス別値取得
   const getValueByDevice = useCallback(
-    <T extends any>(values: {
+    <T extends unknown>(values: {
       phone?: T;
       tablet?: T;
       desktop?: T;
@@ -341,7 +353,11 @@ export function useTabletLayout(config: Partial<TabletLayoutConfig> = {}) {
 
   // オリエンテーション対応ヘルパー
   const getOrientationSpecificValue = useCallback(
-    <T extends any>(values: { portrait?: T; landscape?: T; default: T }): T => {
+    <T extends unknown>(values: {
+      portrait?: T;
+      landscape?: T;
+      default: T;
+    }): T => {
       const { isLandscape } = deviceInfo;
       if (isLandscape && values.landscape !== undefined) {
         return values.landscape;

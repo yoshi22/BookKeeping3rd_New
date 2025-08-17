@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from "react";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 import {
   View,
   Text,
@@ -138,7 +138,7 @@ export default function AnswerForm({
         );
       }
     } catch (error) {
-      logger.error("[AnswerForm] 解答送信エラー:", error);
+      logger.error("[AnswerForm] 解答送信エラー:", error  as Error);
       Alert.alert(
         "エラー",
         "解答の送信に失敗しました。もう一度お試しください。",

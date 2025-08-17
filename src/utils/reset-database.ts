@@ -6,7 +6,7 @@
 import { databaseService } from "../data/database";
 import { setupDatabase } from "../data/migrations";
 import { Alert } from "react-native";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 /**
  * データベースをリセットして最新のデータを再読み込み
@@ -73,7 +73,7 @@ export async function resetDatabase(): Promise<void> {
       [{ text: "OK" }],
     );
   } catch (error) {
-    logger.error("[ResetDatabase] リセット中にエラー:", error);
+    logger.error("[ResetDatabase] リセット中にエラー:", error  as Error);
     Alert.alert("エラー", "データベースのリセット中にエラーが発生しました。", [
       { text: "OK" },
     ]);
@@ -100,7 +100,7 @@ export function confirmResetDatabase(): void {
           try {
             await resetDatabase();
           } catch (error) {
-            logger.error("Database reset failed:", error);
+            logger.error("Database reset failed:", error  as Error);
           }
         },
       },

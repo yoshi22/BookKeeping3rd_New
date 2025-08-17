@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useRef } from "react";
-import { logger } from "../../../utils/logger";
+import { logger } from "../../utils/logger";
 import {
   View,
   Text,
@@ -331,7 +331,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
         }
       }
     } catch (error) {
-      logger.error("[UnifiedJournalEntryForm] 解答送信エラー:", error);
+      logger.error("[UnifiedJournalEntryForm] 解答送信エラー:", error  as Error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setFormState({ ...formState, isSubmitting: false });

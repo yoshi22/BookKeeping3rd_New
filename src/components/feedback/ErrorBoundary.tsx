@@ -12,7 +12,7 @@ import { Button } from "../ui/Button";
 import { Card, CardContent, CardActions } from "../ui/Card";
 import { Container } from "../layout/ResponsiveLayout";
 import { useTheme, type Theme } from "../../context/ThemeContext";
-import { logger } from "../../../utils/logger";
+import { logger } from "../../utils/logger";
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -64,7 +64,7 @@ export class ErrorBoundary extends Component<
   private logError = (error: Error, errorInfo: any) => {
     const errorLog = {
       timestamp: new Date().toISOString(),
-      message: error.message,
+      message: (error as Error).message,
       stack: error.stack,
       componentStack: errorInfo.componentStack,
       userAgent: navigator.userAgent,
@@ -72,7 +72,11 @@ export class ErrorBoundary extends Component<
 
     // 開発環境でのみコンソール出力
     if (__DEV__) {
-      logger.error("ErrorBoundary caught an error:", errorLog);
+      logger.error("ErrorBoundary caught an error:", error, {
+        timestamp: errorLog.timestamp,
+        componentStack: errorLog.componentStack,
+        userAgent: errorLog.userAgent,
+      });
     }
 
     // 本番環境では、ローカルストレージに保存（分析用）
@@ -97,7 +101,7 @@ export class ErrorBoundary extends Component<
         JSON.stringify(recentLogs),
       );
     } catch (error) {
-      logger.error("Failed to save error log:", error);
+      logger.error("Failed to save error log:", error  as Error);
     }
   };
 
@@ -151,11 +155,11 @@ function DefaultErrorScreen({
 }: DefaultErrorScreenProps) {
   const { theme } = useTheme();
   const isNetworkError =
-    error.message.includes("Network") || error.message.includes("fetch");
+    (error as Error).message.includes("Network") || (error as Error).message.includes("fetch");
   const isStorageError =
-    error.message.includes("Storage") || error.message.includes("AsyncStorage");
+    (error as Error).message.includes("Storage") || (error as Error).message.includes("AsyncStorage");
   const isRenderError =
-    error.message.includes("render") || error.message.includes("component");
+    (error as Error).message.includes("render") || (error as Error).message.includes("component");
 
   const getErrorMessage = () => {
     if (isNetworkError) {
@@ -251,7 +255,7 @@ function DefaultErrorScreen({
                   variant="caption"
                   style={{ fontFamily: "monospace" }}
                 >
-                  {error.message}
+                  {(error as Error).message}
                 </Typography>
               </ScrollView>
             </View>
@@ -330,7 +334,7 @@ function DataErrorFallback({ error }: { error: Error }) {
       // アプリの再読み込み
       window.location.reload();
     } catch (resetError) {
-      logger.error("Failed to reset data:", resetError);
+      logger.error("Failed to reset data:", resetError  as Error);
     }
   };
 
@@ -383,7 +387,7 @@ export function useErrorHandler() {
     setError(error);
 
     // エラーログ
-    logger.error("Error handled by useErrorHandler:", error);
+    logger.error("Error handled by useErrorHandler:", error  as Error);
   }, []);
 
   const clearError = React.useCallback(() => {

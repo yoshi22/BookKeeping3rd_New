@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { BackHandler, Platform } from "react-native";
 import { useAccessibilityFocus } from "./useAccessibilityFocus";
 import { useAccessibility } from "./useAccessibility";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 export interface KeyboardShortcut {
   key: string;

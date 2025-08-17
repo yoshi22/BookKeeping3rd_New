@@ -6,7 +6,7 @@
 import { Audio } from "expo-av";
 import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 export interface AudioFeedbackConfig {
   enableSoundEffects: boolean;
@@ -193,7 +193,7 @@ export class AudioFeedbackService {
       this.isInitialized = true;
       logger.debug("[AudioFeedbackService] 音声システム初期化完了");
     } catch (error) {
-      logger.error("[AudioFeedbackService] 初期化エラー:", error);
+      logger.error("[AudioFeedbackService] 初期化エラー:", error as Error);
       throw error;
     }
   }
@@ -225,7 +225,7 @@ export class AudioFeedbackService {
         JSON.stringify(this.config),
       );
     } catch (error) {
-      logger.error("[AudioFeedbackService] 設定保存エラー:", error);
+      logger.error("[AudioFeedbackService] 設定保存エラー:", error as Error);
     }
   }
 
@@ -500,7 +500,7 @@ export class AudioFeedbackService {
       this.isInitialized = false;
       logger.debug("[AudioFeedbackService] クリーンアップ完了");
     } catch (error) {
-      logger.error("[AudioFeedbackService] クリーンアップエラー:", error);
+      logger.error("[AudioFeedbackService] クリーンアップエラー:", error as Error);
     }
   }
 }

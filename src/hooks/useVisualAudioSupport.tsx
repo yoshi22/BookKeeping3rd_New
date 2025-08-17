@@ -9,7 +9,7 @@ import { Audio } from "expo-av";
 import { useTheme, type Theme } from "../context/ThemeContext";
 import { useAccessibility } from "./useAccessibility";
 import { useScreenReaderOptimization } from "./useScreenReaderOptimization";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 export interface AudioFeedbackOptions {
   enableSoundEffects?: boolean;

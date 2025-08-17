@@ -130,10 +130,7 @@ class WebDatabaseMock {
       });
       return result;
     } catch (error) {
-      logger.error("Mock SQL実行エラー: ${sql}", null, {
-        component: "WebDatabaseMock",
-        error,
-      });
+      logger.error("Mock SQL実行エラー: ${sql}", error as Error);
       // エラーでも最低限の結果を返してアプリが動作するようにする
       return {
         getAllSync: () => [],
@@ -171,9 +168,7 @@ class WebDatabaseMock {
         component: "WebDatabaseMock",
       });
     } catch (error) {
-      logger.error("Mock トランザクションエラー:", error, {
-        component: "WebDatabaseMock",
-      });
+      logger.error("Mock トランザクションエラー:", error as Error);
       throw error;
     }
   }
@@ -273,7 +268,7 @@ export class DatabaseService {
           } catch (sqliteError) {
             logger.error(
               "SQLite初期化失敗、フォールバックとしてモックを使用",
-              sqliteError,
+              sqliteError as Error,
               {
                 component: "DatabaseService",
                 errorType:
@@ -336,15 +331,8 @@ export class DatabaseService {
       this.isInitializing = false;
     } catch (error) {
       this.isInitializing = false;
-      logger.error("初期化中の予期しないエラー", error, {
-        component: "DatabaseService",
-      });
-      logger.error("初期化エラー詳細", null, {
-        message: error instanceof Error ? error.message : error,
-        stack: error instanceof Error ? error.stack : undefined,
-        platform: Platform.OS,
-        sqliteAvailable: !!SQLite,
-      });
+      logger.error("初期化中の予期しないエラー", error as Error);
+      logger.error("初期化エラー詳細", error as Error);
 
       const dbError = this.createDatabaseError(
         "Database initialization failed",
@@ -358,7 +346,7 @@ export class DatabaseService {
             error instanceof Error ? error.constructor.name : typeof error,
         },
       );
-      logger.error("最終初期化エラー:", dbError, {
+      logger.error("最終初期化エラー:", dbError as Error, {
         component: "DatabaseService",
       });
       throw dbError;
@@ -526,7 +514,7 @@ export class DatabaseService {
         error,
         "HIGH",
       );
-      logger.error("トランザクションエラー:", dbError, {
+      logger.error("トランザクションエラー:", dbError as Error, {
         component: "DatabaseService",
       });
       throw dbError;
@@ -541,9 +529,7 @@ export class DatabaseService {
       const result = await this.executeSql("PRAGMA integrity_check");
       return result.rows.length > 0 && result.rows[0].integrity_check === "ok";
     } catch (error) {
-      logger.error("整合性チェックエラー:", error, {
-        component: "DatabaseService",
-      });
+      logger.error("整合性チェックエラー:", error as Error);
       return false;
     }
   }
@@ -595,9 +581,7 @@ export class DatabaseService {
 
       return stats;
     } catch (error) {
-      logger.error("統計情報取得エラー:", error, {
-        component: "DatabaseService",
-      });
+      logger.error("統計情報取得エラー:", error as Error);
       throw this.createDatabaseError(
         "Failed to get database stats",
         error,
@@ -626,7 +610,7 @@ export class DatabaseService {
           error,
           "MEDIUM",
         );
-        logger.error("クローズエラー:", dbError, {
+        logger.error("クローズエラー:", dbError as Error, {
           component: "DatabaseService",
         });
         throw dbError;
@@ -706,9 +690,7 @@ export class DatabaseService {
         },
       );
     } catch (error) {
-      logger.error("データベースリセットエラー:", error, {
-        component: "DatabaseService",
-      });
+      logger.error("データベースリセットエラー:", error as Error);
       throw this.createDatabaseError("Database reset failed", error, "HIGH", {
         resetAttempt: true,
       });
@@ -724,7 +706,7 @@ export class DatabaseService {
       await this.executeSql("VACUUM");
       logger.database("データベース最適化完了", {});
     } catch (error) {
-      logger.error("最適化エラー:", error, { component: "DatabaseService" });
+      logger.error("最適化エラー:", error as Error);
       throw this.createDatabaseError("Database vacuum failed", error, "MEDIUM");
     }
   }

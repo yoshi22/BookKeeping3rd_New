@@ -20,7 +20,7 @@ import React, {
 } from "react";
 import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 /**
  * 遅延ローディング設定
@@ -71,7 +71,7 @@ const DefaultErrorComponent = memo<{ error: Error; retry: () => void }>(
     return (
       <View style={styles.errorContainer}>
         <Text style={styles.errorTitle}>読み込みエラー</Text>
-        <Text style={styles.errorMessage}>{error.message}</Text>
+        <Text style={styles.errorMessage}>{(error as Error).message}</Text>
         <Text style={styles.retryButton} onPress={retry}>
           再試行
         </Text>

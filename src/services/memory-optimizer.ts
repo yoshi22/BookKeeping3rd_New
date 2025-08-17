@@ -9,6 +9,8 @@
  * - 大きなデータ構造の効率的管理
  */
 
+import { logger } from "../utils/logger";
+
 /**
  * メモリ使用量統計
  */

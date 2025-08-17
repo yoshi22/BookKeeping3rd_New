@@ -1,27 +1,25 @@
 /**
  * オンボーディングフロー
  * 簿記3級問題集アプリ - Step 5.2: UX最適化
- * 
+ *
  * 初回利用時のユーザーガイド機能
  */
 
-import React, { useState, useRef } from 'react';
-import { logger } from "../../../utils/logger";
+import React, { useState, useRef } from "react";
+import { logger } from "../../utils/logger";
+import { View, ScrollView, Dimensions, Image, StyleSheet } from "react-native";
 import {
-  View,
-  ScrollView,
-  Dimensions,
-  Image,
-  StyleSheet,
-} from 'react-native';
-import { useTheme, useThemedStyles, type Theme } from "../../context/ThemeContext";
-import { Typography, Heading } from '../ui/Typography';
-import { Button } from '../ui/Button';
-import { Card, CardContent } from '../ui/Card';
-import { FadeIn, SlideIn, ScaleIn } from '../ui/Animation';
-import { Screen, Container } from '../layout/ResponsiveLayout';
+  useTheme,
+  useThemedStyles,
+  type Theme,
+} from "../../context/ThemeContext";
+import { Typography, Heading } from "../ui/Typography";
+import { Button } from "../ui/Button";
+import { Card, CardContent } from "../ui/Card";
+import { FadeIn, SlideIn, ScaleIn } from "../ui/Animation";
+import { Screen, Container } from "../layout/ResponsiveLayout";
 
-const { width: screenWidth } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get("window");
 
 interface OnboardingStep {
   id: string;
@@ -33,36 +31,37 @@ interface OnboardingStep {
 
 const onboardingSteps: OnboardingStep[] = [
   {
-    id: 'welcome',
-    title: '簿記3級 確実復習へようこそ',
-    description: '間違えた問題を確実に潰すシンプルで効果的な学習アプリです。あなたの合格をサポートします。',
-    image: '📚',
+    id: "welcome",
+    title: "簿記3級 確実復習へようこそ",
+    description:
+      "間違えた問題を確実に潰すシンプルで効果的な学習アプリです。あなたの合格をサポートします。",
+    image: "📚",
   },
   {
-    id: 'features',
-    title: '3つの主要機能',
-    description: '学習・復習・模試の3つの機能で効率的に学習を進められます。',
-    component: (
-      <FeaturesList />
-    ),
+    id: "features",
+    title: "3つの主要機能",
+    description: "学習・復習・模試の3つの機能で効率的に学習を進められます。",
+    component: <FeaturesList />,
   },
   {
-    id: 'privacy',
-    title: 'プライバシー重視',
-    description: '個人情報は一切収集しません。すべてのデータはお使いの端末に安全に保存されます。',
-    image: '🔒',
+    id: "privacy",
+    title: "プライバシー重視",
+    description:
+      "個人情報は一切収集しません。すべてのデータはお使いの端末に安全に保存されます。",
+    image: "🔒",
   },
   {
-    id: 'offline',
-    title: 'オフライン完結',
-    description: 'インターネット接続は不要です。どこでも安心して学習できます。',
-    image: '📱',
+    id: "offline",
+    title: "オフライン完結",
+    description: "インターネット接続は不要です。どこでも安心して学習できます。",
+    image: "📱",
   },
   {
-    id: 'start',
-    title: '学習を始めましょう',
-    description: '準備完了です！今すぐ学習を開始して、簿記3級合格を目指しましょう。',
-    image: '🚀',
+    id: "start",
+    title: "学習を始めましょう",
+    description:
+      "準備完了です！今すぐ学習を開始して、簿記3級合格を目指しましょう。",
+    image: "🚀",
   },
 ];
 
@@ -126,7 +125,7 @@ export function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowProps) {
                 />
               ))}
             </View>
-            
+
             <Button
               title="スキップ"
               variant="ghost"
@@ -149,11 +148,11 @@ export function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowProps) {
           >
             {onboardingSteps.map((step, index) => (
               <View key={step.id} style={styles.stepContainer}>
-                <SlideIn
-                  direction="right"
-                  delay={index * 100}
-                >
-                  <OnboardingStep step={step} isActive={index === currentStep} />
+                <SlideIn direction="right" delay={index * 100}>
+                  <OnboardingStep
+                    step={step}
+                    isActive={index === currentStep}
+                  />
                 </SlideIn>
               </View>
             ))}
@@ -170,9 +169,9 @@ export function OnboardingFlow({ onComplete, onSkip }: OnboardingFlowProps) {
               disabled={currentStep === 0}
               style={styles.footerButton}
             />
-            
+
             <Button
-              title={isLastStep ? '学習開始' : '次へ'}
+              title={isLastStep ? "学習開始" : "次へ"}
               variant="primary"
               onPress={handleNext}
               style={styles.footerButton}
@@ -221,9 +220,9 @@ function OnboardingStep({ step, isActive }: OnboardingStepProps) {
 
           {/* 説明 */}
           <FadeIn delay={isActive ? 400 : 0}>
-            <Typography 
-              variant="body1" 
-              align="center" 
+            <Typography
+              variant="body1"
+              align="center"
               color="secondary"
               style={styles.stepDescription}
             >
@@ -245,19 +244,19 @@ function FeaturesList() {
 
   const features = [
     {
-      icon: '📚',
-      title: '学習',
-      description: '分野別に問題を解いて基礎力を向上',
+      icon: "📚",
+      title: "学習",
+      description: "分野別に問題を解いて基礎力を向上",
     },
     {
-      icon: '🔄',
-      title: '復習',
-      description: '間違えた問題を優先的に復習',
+      icon: "🔄",
+      title: "復習",
+      description: "間違えた問題を優先的に復習",
     },
     {
-      icon: '🎯',
-      title: '模試',
-      description: 'CBT形式で本番さながらの模擬試験',
+      icon: "🎯",
+      title: "模試",
+      description: "CBT形式で本番さながらの模擬試験",
     },
   ];
 
@@ -270,7 +269,11 @@ function FeaturesList() {
               <Typography variant="h2" align="center">
                 {feature.icon}
               </Typography>
-              <Typography variant="subtitle1" align="center" style={{ marginTop: theme.spacing.sm }}>
+              <Typography
+                variant="subtitle1"
+                align="center"
+                style={{ marginTop: theme.spacing.sm }}
+              >
                 {feature.title}
               </Typography>
               <Typography variant="caption" align="center" color="secondary">
@@ -284,88 +287,89 @@ function FeaturesList() {
   );
 }
 
-const createStyles = (theme: any) => StyleSheet.create({
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: theme.spacing.lg,
-  },
+const createStyles = (theme: any) =>
+  StyleSheet.create({
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingVertical: theme.spacing.lg,
+    },
 
-  progressContainer: {
-    flexDirection: 'row',
-    gap: theme.spacing.sm,
-  },
+    progressContainer: {
+      flexDirection: "row",
+      gap: theme.spacing.sm,
+    },
 
-  progressDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: theme.colors.textDisabled,
-  },
+    progressDot: {
+      width: 8,
+      height: 8,
+      borderRadius: 4,
+      backgroundColor: theme.colors.textDisabled,
+    },
 
-  progressDotActive: {
-    backgroundColor: theme.colors.primary,
-    width: 24,
-  },
+    progressDotActive: {
+      backgroundColor: theme.colors.primary,
+      width: 24,
+    },
 
-  skipButton: {
-    paddingHorizontal: theme.spacing.md,
-  },
+    skipButton: {
+      paddingHorizontal: theme.spacing.md,
+    },
 
-  contentContainer: {
-    flex: 1,
-  },
+    contentContainer: {
+      flex: 1,
+    },
 
-  stepContainer: {
-    width: screenWidth - (theme.layoutSpacing.screenPadding * 2),
-    justifyContent: 'center',
-  },
+    stepContainer: {
+      width: screenWidth - theme.layoutSpacing.screenPadding * 2,
+      justifyContent: "center",
+    },
 
-  step: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: theme.spacing.md,
-  },
+    step: {
+      flex: 1,
+      justifyContent: "center",
+      paddingHorizontal: theme.spacing.md,
+    },
 
-  stepCard: {
-    marginHorizontal: theme.spacing.lg,
-  },
+    stepCard: {
+      marginHorizontal: theme.spacing.lg,
+    },
 
-  stepImage: {
-    alignItems: 'center',
-    marginBottom: theme.spacing.xl,
-    height: 120,
-    justifyContent: 'center',
-  },
+    stepImage: {
+      alignItems: "center",
+      marginBottom: theme.spacing.xl,
+      height: 120,
+      justifyContent: "center",
+    },
 
-  stepTitle: {
-    marginBottom: theme.spacing.lg,
-  },
+    stepTitle: {
+      marginBottom: theme.spacing.lg,
+    },
 
-  stepDescription: {
-    lineHeight: theme.typography.body1.lineHeight * 1.5,
-  },
+    stepDescription: {
+      lineHeight: theme.typography.body1.lineHeight * 1.5,
+    },
 
-  featuresList: {
-    gap: theme.spacing.md,
-  },
+    featuresList: {
+      gap: theme.spacing.md,
+    },
 
-  featureCard: {
-    alignItems: 'center',
-  },
+    featureCard: {
+      alignItems: "center",
+    },
 
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: theme.spacing.lg,
-    gap: theme.spacing.md,
-  },
+    footer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingVertical: theme.spacing.lg,
+      gap: theme.spacing.md,
+    },
 
-  footerButton: {
-    flex: 1,
-  },
-});
+    footerButton: {
+      flex: 1,
+    },
+  });
 
 /**
  * オンボーディング状態管理フック
@@ -380,11 +384,14 @@ export function useOnboarding() {
 
   const checkOnboardingStatus = async () => {
     try {
-      const AsyncStorage = await import('@react-native-async-storage/async-storage');
-      const hasSeenOnboardingValue = await AsyncStorage.default.getItem('hasSeenOnboarding');
-      setHasSeenOnboarding(hasSeenOnboardingValue === 'true');
+      const AsyncStorage = await import(
+        "@react-native-async-storage/async-storage"
+      );
+      const hasSeenOnboardingValue =
+        await AsyncStorage.default.getItem("hasSeenOnboarding");
+      setHasSeenOnboarding(hasSeenOnboardingValue === "true");
     } catch (error) {
-      console.error('Failed to check onboarding status:', error);
+      console.error("Failed to check onboarding status:", error);
     } finally {
       setIsLoading(false);
     }
@@ -392,21 +399,25 @@ export function useOnboarding() {
 
   const completeOnboarding = async () => {
     try {
-      const AsyncStorage = await import('@react-native-async-storage/async-storage');
-      await AsyncStorage.default.setItem('hasSeenOnboarding', 'true');
+      const AsyncStorage = await import(
+        "@react-native-async-storage/async-storage"
+      );
+      await AsyncStorage.default.setItem("hasSeenOnboarding", "true");
       setHasSeenOnboarding(true);
     } catch (error) {
-      console.error('Failed to save onboarding status:', error);
+      console.error("Failed to save onboarding status:", error);
     }
   };
 
   const resetOnboarding = async () => {
     try {
-      const AsyncStorage = await import('@react-native-async-storage/async-storage');
-      await AsyncStorage.default.removeItem('hasSeenOnboarding');
+      const AsyncStorage = await import(
+        "@react-native-async-storage/async-storage"
+      );
+      await AsyncStorage.default.removeItem("hasSeenOnboarding");
       setHasSeenOnboarding(false);
     } catch (error) {
-      console.error('Failed to reset onboarding status:', error);
+      console.error("Failed to reset onboarding status:", error);
     }
   };
 

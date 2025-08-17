@@ -4,7 +4,7 @@
  */
 
 import { DatabaseError, LogLevel } from '../types/database';
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 /**
  * アプリケーションエラーのベースクラス
@@ -66,7 +66,7 @@ export class DatabaseAppError extends AppError {
   private static determineSeverity(error: any): 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' {
     if (!error) return 'MEDIUM';
     
-    const errorMessage = error.message || error.toString();
+    const errorMessage = (error as Error).message || error.toString();
     
     // データベース破損・接続不可
     if (errorMessage.includes('database is locked') || 
@@ -94,7 +94,7 @@ export class DatabaseAppError extends AppError {
   private static determineErrorCode(error: any): string {
     if (!error) return 'DB_UNKNOWN_ERROR';
     
-    const errorMessage = error.message || error.toString();
+    const errorMessage = (error as Error).message || error.toString();
     
     if (errorMessage.includes('database is locked')) return 'DB_LOCKED';
     if (errorMessage.includes('no such table')) return 'DB_TABLE_NOT_FOUND';
@@ -229,20 +229,20 @@ export class ErrorHandler {
    */
   private convertToAppError(error: Error, context: Record<string, any>): AppError {
     // SQLiteエラーの場合
-    if (error.message && (
-        error.message.includes('database') || 
-        error.message.includes('SQL') ||
-        error.message.includes('sqlite')
+    if ((error as Error).message && (
+        (error as Error).message.includes('database') || 
+        (error as Error).message.includes('SQL') ||
+        (error as Error).message.includes('sqlite')
       )) {
       return new DatabaseAppError('Database operation failed', error, context);
     }
 
     // その他の一般的なエラー
     return new AppError(
-      error.message || 'Unknown error occurred',
+      (error as Error).message || 'Unknown error occurred',
       'GENERAL_ERROR',
       'MEDIUM',
-      { ...context, originalError: error.message },
+      { ...context, originalError: (error as Error).message },
       true
     );
   }
@@ -256,7 +256,7 @@ export class ErrorHandler {
       timestamp: error.timestamp,
       level: logLevel,
       code: error.code,
-      message: error.message,
+      message: (error as Error).message,
       severity: error.severity,
       recoverable: error.recoverable,
       context: error.context,

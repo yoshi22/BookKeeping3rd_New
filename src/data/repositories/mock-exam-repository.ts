@@ -5,7 +5,7 @@
 
 import { BaseRepository } from "./base-repository";
 import { databaseService } from "../database";
-import { logger } from "../../../utils/logger";
+import { logger } from "../../utils/logger";
 import {
   MockExam,
   MockExamQuestion,
@@ -36,7 +36,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         is_active: Boolean(row.is_active),
       }));
     } catch (error) {
-      logger.error("MockExamRepository.findAllMockExams error:", error);
+      logger.error("MockExamRepository.findAllMockExams error:", error as Error);
       throw error;
     }
   }
@@ -61,7 +61,7 @@ export class MockExamRepository extends BaseRepository<MockExam> {
         is_active: Boolean(row.is_active),
       };
     } catch (error) {
-      logger.error("MockExamRepository.findMockExamById error:", error);
+      logger.error("MockExamRepository.findMockExamById error:", error as Error);
       throw error;
     }
   }

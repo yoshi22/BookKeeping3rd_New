@@ -10,7 +10,7 @@
  */
 
 import { Platform } from "react-native";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 import {
   Database,
   DatabaseConfig,
@@ -25,7 +25,9 @@ if (Platform.OS !== "web") {
   try {
     SQLite = require("expo-sqlite");
   } catch (error) {
-    logger.warn("[DatabaseOptimized] SQLite import failed:", { details: error });
+    logger.warn("[DatabaseOptimized] SQLite import failed:", {
+      details: error,
+    });
   }
 }
 
@@ -139,7 +141,9 @@ class WebDatabaseMock {
     logger.debug("[WebDB] Mock prepareSync: ${sql}");
     return {
       executeSync: (params: any[] = []) => {
-        logger.debug("[WebDB] Mock executeSync with params:", { details: params });
+        logger.debug("[WebDB] Mock executeSync with params:", {
+          details: params,
+        });
         const result = this.runSync(sql, params);
         return {
           getAllSync: () => result.getAllSync(),
@@ -265,7 +269,7 @@ export class OptimizedDatabaseService {
         error,
         "CRITICAL",
       );
-      logger.error("[OptimizedDB] 高速初期化エラー:", dbError);
+      logger.error("[OptimizedDB] 高速初期化エラー:", dbError  as Error);
       throw dbError;
     }
   }
@@ -291,7 +295,7 @@ export class OptimizedDatabaseService {
 
       logger.debug("[OptimizedDB] バックグラウンド初期化完了");
     } catch (error) {
-      logger.error("[OptimizedDB] バックグラウンド初期化エラー:", error);
+      logger.error("[OptimizedDB] バックグラウンド初期化エラー:", error  as Error);
     }
   }
 

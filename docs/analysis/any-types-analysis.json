@@ -1,0 +1,2230 @@
+{
+  "summary": {
+    "totalCount": 353,
+    "byCategory": {
+      "explicitAny": 70,
+      "anyArrays": 61,
+      "recordAny": 34,
+      "functionParams": 77,
+      "errorTypes": 0,
+      "databaseTypes": 25,
+      "unknown": 86
+    },
+    "topFiles": [
+      [
+        "src/services/answer-service.ts",
+        40
+      ],
+      [
+        "src/components/ExplanationPanel.tsx",
+        24
+      ],
+      [
+        "src/data/database-optimized.ts",
+        23
+      ],
+      [
+        "src/data/database.ts",
+        18
+      ],
+      [
+        "src/data/repositories/base-repository.ts",
+        17
+      ],
+      [
+        "src/utils/error-handler.ts",
+        14
+      ],
+      [
+        "src/components/QuestionDisplay.tsx",
+        13
+      ],
+      [
+        "src/hooks/useTabletLayout.tsx",
+        11
+      ],
+      [
+        "src/types/database.ts",
+        11
+      ],
+      [
+        "src/data/repositories/learning-history-repository.ts",
+        11
+      ],
+      [
+        "src/data/repositories/question-repository.ts",
+        11
+      ],
+      [
+        "src/services/memory-optimizer.ts",
+        9
+      ],
+      [
+        "src/components/mock-exam/ExplanationModal.tsx",
+        8
+      ],
+      [
+        "src/components/settings/AccessibilitySettings.tsx",
+        8
+      ],
+      [
+        "src/services/offline-sync-service.ts",
+        8
+      ],
+      [
+        "src/utils/logger.ts",
+        8
+      ],
+      [
+        "src/data/repositories/mock-exam-repository.ts",
+        7
+      ],
+      [
+        "src/components/LazyComponent.tsx",
+        7
+      ],
+      [
+        "src/components/feedback/ErrorBoundary.tsx",
+        6
+      ],
+      [
+        "src/components/shared/FormTypes.ts",
+        6
+      ]
+    ]
+  },
+  "details": {
+    "explicitAny": [
+      {
+        "file": "src/components/CorrectAnswerExample.tsx",
+        "line": 99,
+        "content": "{entriesArray.map((entry: any, index: number) => {",
+        "snippet": "{entriesArray.map((entry: any, index: number) => {"
+      },
+      {
+        "file": "src/components/CorrectAnswerExample.tsx",
+        "line": 186,
+        "content": "financialStatements: any,",
+        "snippet": "financialStatements: any,"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 81,
+        "content": "correctAnswer.entries.map((entry: any, eIndex: number) => (",
+        "snippet": "correctAnswer.entries.map((entry: any, eIndex: number) => ("
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 134,
+        "content": "{vouchers.map((voucher: any, vIndex: number) => (",
+        "snippet": "{vouchers.map((voucher: any, vIndex: number) => ("
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 138,
+        "content": "voucher.entries.map((entry: any, eIndex: number) => (",
+        "snippet": "voucher.entries.map((entry: any, eIndex: number) => ("
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 264,
+        "content": "{entries.map((entry: any, index: number) => (",
+        "snippet": "{entries.map((entry: any, index: number) => ("
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 327,
+        "content": "{entries.map((entry: any, index: number) => (",
+        "snippet": "{entries.map((entry: any, index: number) => ("
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 360,
+        "content": "{entries.map((entry: any, index: number) => {",
+        "snippet": "{entries.map((entry: any, index: number) => {"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 420,
+        "content": "(asset: any, index: number) =>",
+        "snippet": "(asset: any, index: number) =>"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 455,
+        "content": "(liability: any, index: number) =>",
+        "snippet": "(liability: any, index: number) =>"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 491,
+        "content": "(equity: any, index: number) =>",
+        "snippet": "(equity: any, index: number) =>"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 560,
+        "content": "(revenue: any, index: number) =>",
+        "snippet": "(revenue: any, index: number) =>"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 597,
+        "content": "(expense: any, index: number) =>",
+        "snippet": "(expense: any, index: number) =>"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 670,
+        "content": "(entry: any, index: number) => {",
+        "snippet": "(entry: any, index: number) => {"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 691,
+        "content": "(entry: any, index: number) => {",
+        "snippet": "(entry: any, index: number) => {"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 768,
+        "content": "? userAnswer.entries.map((entry: any, index: number) => (",
+        "snippet": "? userAnswer.entries.map((entry: any, index: number) => ("
+      },
+      {
+        "file": "src/components/FinancialStatementForm.tsx",
+        "line": 41,
+        "content": "correctAnswer?: any;",
+        "snippet": "correctAnswer?: any;"
+      },
+      {
+        "file": "src/components/FinancialStatementForm.tsx",
+        "line": 42,
+        "content": "userAnswer?: any;",
+        "snippet": "userAnswer?: any;"
+      },
+      {
+        "file": "src/components/LedgerEntryFormWithDropdown.tsx",
+        "line": 56,
+        "content": "answerTemplate?: any;",
+        "snippet": "answerTemplate?: any;"
+      },
+      {
+        "file": "src/components/LedgerEntryFormWithDropdown.tsx",
+        "line": 287,
+        "content": "const renderField = (column: ColumnDefinition, entry: any, index: number) => {",
+        "snippet": "const renderField = (column: ColumnDefinition, entry: any, index: number) => {"
+      },
+      {
+        "file": "src/components/feedback/ErrorBoundary.tsx",
+        "line": 20,
+        "content": "errorInfo: any;",
+        "snippet": "errorInfo: any;"
+      },
+      {
+        "file": "src/components/feedback/VisualFeedbackOverlay.tsx",
+        "line": 31,
+        "content": "style?: any;",
+        "snippet": "style?: any;"
+      },
+      {
+        "file": "src/components/mock-exam/ExplanationModal.tsx",
+        "line": 18,
+        "content": "correctAnswer?: any;",
+        "snippet": "correctAnswer?: any;"
+      },
+      {
+        "file": "src/components/mock-exam/ExplanationModal.tsx",
+        "line": 19,
+        "content": "userAnswer?: any;",
+        "snippet": "userAnswer?: any;"
+      },
+      {
+        "file": "src/components/settings/AccessibilitySettings.tsx",
+        "line": 172,
+        "content": "value: any;",
+        "snippet": "value: any;"
+      },
+      {
+        "file": "src/components/settings/AccessibilitySettings.tsx",
+        "line": 178,
+        "content": "[key: string]: any;",
+        "snippet": "[key: string]: any;"
+      },
+      {
+        "file": "src/components/settings/AccessibilitySettings.tsx",
+        "line": 520,
+        "content": "const useStyles = (theme: any, compactMode: boolean) =>",
+        "snippet": "const useStyles = (theme: any, compactMode: boolean) =>"
+      },
+      {
+        "file": "src/components/shared/FormTypes.ts",
+        "line": 66,
+        "content": "correctAnswer?: any;",
+        "snippet": "correctAnswer?: any;"
+      },
+      {
+        "file": "src/components/shared/FormTypes.ts",
+        "line": 67,
+        "content": "userAnswer?: any;",
+        "snippet": "userAnswer?: any;"
+      },
+      {
+        "file": "src/components/shared/FormTypes.ts",
+        "line": 85,
+        "content": "correctAnswer?: any;",
+        "snippet": "correctAnswer?: any;"
+      },
+      {
+        "file": "src/components/shared/FormTypes.ts",
+        "line": 86,
+        "content": "userAnswer?: any;",
+        "snippet": "userAnswer?: any;"
+      },
+      {
+        "file": "src/components/shared/FormTypes.ts",
+        "line": 121,
+        "content": "[key: string]: any;",
+        "snippet": "[key: string]: any;"
+      },
+      {
+        "file": "src/components/shared/FormUtils.ts",
+        "line": 123,
+        "content": "answerData: any,",
+        "snippet": "answerData: any,"
+      },
+      {
+        "file": "src/components/shared/FormUtils.ts",
+        "line": 176,
+        "content": "[key: string]: any;",
+        "snippet": "[key: string]: any;"
+      },
+      {
+        "file": "src/components/ui/Animation.tsx",
+        "line": 355,
+        "content": "textStyle?: any;",
+        "snippet": "textStyle?: any;"
+      },
+      {
+        "file": "src/components/unified/LedgerEntryForm.tsx",
+        "line": 147,
+        "content": "value: any,",
+        "snippet": "value: any,"
+      },
+      {
+        "file": "src/components/unified/LedgerEntryForm.tsx",
+        "line": 180,
+        "content": "value: any,",
+        "snippet": "value: any,"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 587,
+        "content": "originalError: any,",
+        "snippet": "originalError: any,"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 737,
+        "content": "originalError: any,",
+        "snippet": "originalError: any,"
+      },
+      {
+        "file": "src/hooks/useAccessibilityFocus.tsx",
+        "line": 291,
+        "content": "(event: any, groupId: string, elementId: string) => {",
+        "snippet": "(event: any, groupId: string, elementId: string) => {"
+      },
+      {
+        "file": "src/hooks/useAccessibilityFocus.tsx",
+        "line": 385,
+        "content": "style?: any;",
+        "snippet": "style?: any;"
+      },
+      {
+        "file": "src/hooks/useAnimations.tsx",
+        "line": 534,
+        "content": "style?: any;",
+        "snippet": "style?: any;"
+      },
+      {
+        "file": "src/hooks/useAnimations.tsx",
+        "line": 560,
+        "content": "style?: any;",
+        "snippet": "style?: any;"
+      },
+      {
+        "file": "src/hooks/useAnimations.tsx",
+        "line": 603,
+        "content": "style?: any;",
+        "snippet": "style?: any;"
+      },
+      {
+        "file": "src/hooks/useFeedbackAnimations.tsx",
+        "line": 471,
+        "content": "style?: any;",
+        "snippet": "style?: any;"
+      },
+      {
+        "file": "src/hooks/useKeyboardNavigation.tsx",
+        "line": 149,
+        "content": "event: any,",
+        "snippet": "event: any,"
+      },
+      {
+        "file": "src/hooks/useTabletLayout.tsx",
+        "line": 74,
+        "content": "container: any;",
+        "snippet": "container: any;"
+      },
+      {
+        "file": "src/hooks/useTabletLayout.tsx",
+        "line": 75,
+        "content": "content: any;",
+        "snippet": "content: any;"
+      },
+      {
+        "file": "src/hooks/useTabletLayout.tsx",
+        "line": 76,
+        "content": "sidebar: any;",
+        "snippet": "sidebar: any;"
+      },
+      {
+        "file": "src/hooks/useTabletLayout.tsx",
+        "line": 77,
+        "content": "grid: any;",
+        "snippet": "grid: any;"
+      },
+      {
+        "file": "src/hooks/useTabletLayout.tsx",
+        "line": 78,
+        "content": "spacing: any;",
+        "snippet": "spacing: any;"
+      },
+      {
+        "file": "src/hooks/useTabletLayout.tsx",
+        "line": 79,
+        "content": "typography: any;",
+        "snippet": "typography: any;"
+      },
+      {
+        "file": "src/hooks/useVisualAudioSupport.tsx",
+        "line": 34,
+        "content": "file: any; // Expo Audio source",
+        "snippet": "file: any; // Expo Audio source"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 259,
+        "content": "template: any,",
+        "snippet": "template: any,"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 282,
+        "content": "data.entries.forEach((entry: any, index: number) => {",
+        "snippet": "data.entries.forEach((entry: any, index: number) => {"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 318,
+        "content": "template: any,",
+        "snippet": "template: any,"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 809,
+        "content": "financialStatements: any,",
+        "snippet": "financialStatements: any,"
+      },
+      {
+        "file": "src/services/memory-optimizer.ts",
+        "line": 64,
+        "content": "{ data: any; lastAccessed: number; size: number }",
+        "snippet": "{ data: any; lastAccessed: number; size: number }"
+      },
+      {
+        "file": "src/services/offline-sync-service.ts",
+        "line": 28,
+        "content": "data: any;",
+        "snippet": "data: any;"
+      },
+      {
+        "file": "src/services/offline-sync-service.ts",
+        "line": 47,
+        "content": "clientData: any;",
+        "snippet": "clientData: any;"
+      },
+      {
+        "file": "src/services/offline-sync-service.ts",
+        "line": 48,
+        "content": "serverData: any;",
+        "snippet": "serverData: any;"
+      },
+      {
+        "file": "src/services/offline-sync-service.ts",
+        "line": 256,
+        "content": "data: any,",
+        "snippet": "data: any,"
+      },
+      {
+        "file": "src/services/offline-sync-service.ts",
+        "line": 588,
+        "content": "existingData: any,",
+        "snippet": "existingData: any,"
+      },
+      {
+        "file": "src/services/offline-sync-service.ts",
+        "line": 700,
+        "content": "data: any,",
+        "snippet": "data: any,"
+      },
+      {
+        "file": "src/types/database.ts",
+        "line": 236,
+        "content": "correctAnswer: any;",
+        "snippet": "correctAnswer: any;"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 47,
+        "content": "originalError?: any,",
+        "snippet": "originalError?: any,"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 211,
+        "content": "error: any,",
+        "snippet": "error: any,"
+      },
+      {
+        "file": "src/utils/logger.ts",
+        "line": 35,
+        "content": "[key: string]: any;",
+        "snippet": "[key: string]: any;"
+      },
+      {
+        "file": "src/utils/logger.ts",
+        "line": 168,
+        "content": "details?: any,",
+        "snippet": "details?: any,"
+      },
+      {
+        "file": "src/utils/validator.ts",
+        "line": 28,
+        "content": "public static required(value: any, fieldName: string): ValidationResult {",
+        "snippet": "public static required(value: any, fieldName: string): ValidationResult {"
+      }
+    ],
+    "anyArrays": [
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 219,
+        "content": "assets: any[];",
+        "snippet": "assets: any[];"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 220,
+        "content": "liabilities: any[];",
+        "snippet": "liabilities: any[];"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 221,
+        "content": "equity: any[];",
+        "snippet": "equity: any[];"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 224,
+        "content": "revenues: any[];",
+        "snippet": "revenues: any[];"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 225,
+        "content": "expenses: any[];",
+        "snippet": "expenses: any[];"
+      },
+      {
+        "file": "src/components/shared/FormUtils.ts",
+        "line": 191,
+        "content": "export const debounce = <T extends (...args: any[]) => any>(",
+        "snippet": "export const debounce = <T extends (...args: any[]) => any>("
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 40,
+        "content": "private tables: Map<string, any[]> = new Map();",
+        "snippet": "private tables: Map<string, any[]> = new Map();"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 51,
+        "content": "params: any[],",
+        "snippet": "params: any[],"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 69,
+        "content": "private mockExecuteSql(sql: string, params: any[] = []): any {",
+        "snippet": "private mockExecuteSql(sql: string, params: any[] = []): any {"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 111,
+        "content": "private parseInsertParams(params: any[]): Record<string, any> {",
+        "snippet": "private parseInsertParams(params: any[]): Record<string, any> {"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 120,
+        "content": "runSync(sql: string, params: any[] = []): any {",
+        "snippet": "runSync(sql: string, params: any[] = []): any {"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 141,
+        "content": "executeSync: (params: any[] = []) => {",
+        "snippet": "executeSync: (params: any[] = []) => {"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 181,
+        "content": "params: any[];",
+        "snippet": "params: any[];"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 322,
+        "content": "params: any[] = [],",
+        "snippet": "params: any[] = [],"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 373,
+        "content": "params: any[] = [],",
+        "snippet": "params: any[] = [],"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 406,
+        "content": "queries: Array<{ sql: string; params: any[] }>,",
+        "snippet": "queries: Array<{ sql: string; params: any[] }>,"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 449,
+        "content": "private generateCacheKey(sql: string, params: any[]): string {",
+        "snippet": "private generateCacheKey(sql: string, params: any[]): string {"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 477,
+        "content": "params: any[],",
+        "snippet": "params: any[],"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 44,
+        "content": "private tables: Map<string, any[]> = new Map();",
+        "snippet": "private tables: Map<string, any[]> = new Map();"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 46,
+        "content": "runSync(sql: string, params: any[] = []): any {",
+        "snippet": "runSync(sql: string, params: any[] = []): any {"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 54,
+        "content": "const rows: any[] = [];",
+        "snippet": "const rows: any[] = [];"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 149,
+        "content": "executeSync: (params: any[] = []) => {",
+        "snippet": "executeSync: (params: any[] = []) => {"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 191,
+        "content": "private parseInsertParams(params: any[]): Record<string, any> {",
+        "snippet": "private parseInsertParams(params: any[]): Record<string, any> {"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 373,
+        "content": "params: any[] = [],",
+        "snippet": "params: any[] = [],"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 427,
+        "content": "params: any[] = [],",
+        "snippet": "params: any[] = [],"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 42,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 73,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 117,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 306,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 415,
+        "content": "params: any[] = [],",
+        "snippet": "params: any[] = [],"
+      },
+      {
+        "file": "src/data/repositories/learning-history-repository.ts",
+        "line": 197,
+        "content": "const params: any[] = [category];",
+        "snippet": "const params: any[] = [category];"
+      },
+      {
+        "file": "src/data/repositories/learning-history-repository.ts",
+        "line": 249,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/learning-history-repository.ts",
+        "line": 484,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/learning-history-repository.ts",
+        "line": 590,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/mock-exam-repository.ts",
+        "line": 235,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/mock-exam-repository.ts",
+        "line": 304,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/question-repository.ts",
+        "line": 60,
+        "content": "const params: any[] = [category];",
+        "snippet": "const params: any[] = [category];"
+      },
+      {
+        "file": "src/data/repositories/question-repository.ts",
+        "line": 117,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/question-repository.ts",
+        "line": 156,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/question-repository.ts",
+        "line": 213,
+        "content": "const params: any[] = [`%\"${tag}\"%`];",
+        "snippet": "const params: any[] = [`%\"${tag}\"%`];"
+      },
+      {
+        "file": "src/data/repositories/question-repository.ts",
+        "line": 254,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/question-repository.ts",
+        "line": 330,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/question-repository.ts",
+        "line": 631,
+        "content": "const params: any[] = [examSection];",
+        "snippet": "const params: any[] = [examSection];"
+      },
+      {
+        "file": "src/data/repositories/question-repository.ts",
+        "line": 726,
+        "content": "const params: any[] = [subcategoryId];",
+        "snippet": "const params: any[] = [subcategoryId];"
+      },
+      {
+        "file": "src/data/repositories/question-repository.ts",
+        "line": 769,
+        "content": "public async getSubcategories(examSection?: 1 | 2 | 3): Promise<any[]> {",
+        "snippet": "public async getSubcategories(examSection?: 1 | 2 | 3): Promise<any[]> {"
+      },
+      {
+        "file": "src/data/repositories/question-repository.ts",
+        "line": 772,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/data/repositories/review-item-repository.ts",
+        "line": 232,
+        "content": "const params: any[] = [];",
+        "snippet": "const params: any[] = [];"
+      },
+      {
+        "file": "src/hooks/useAppInitialization.ts",
+        "line": 54,
+        "content": "categories: any[];",
+        "snippet": "categories: any[];"
+      },
+      {
+        "file": "src/hooks/useAppInitialization.ts",
+        "line": 55,
+        "content": "accountItems: any[];",
+        "snippet": "accountItems: any[];"
+      },
+      {
+        "file": "src/hooks/useAppInitialization.ts",
+        "line": 56,
+        "content": "appSettings: any[];",
+        "snippet": "appSettings: any[];"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 634,
+        "content": "userEntries: any[],",
+        "snippet": "userEntries: any[],"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 635,
+        "content": "correctEntries: any[],",
+        "snippet": "correctEntries: any[],"
+      },
+      {
+        "file": "src/services/memory-optimizer.ts",
+        "line": 50,
+        "content": "private objectPools = new Map<string, any[]>();",
+        "snippet": "private objectPools = new Map<string, any[]>();"
+      },
+      {
+        "file": "src/services/offline-sync-service.ts",
+        "line": 701,
+        "content": "): { query: string; params: any[] } {",
+        "snippet": "): { query: string; params: any[] } {"
+      },
+      {
+        "file": "src/services/statistics-service.ts",
+        "line": 728,
+        "content": "weeklyData: any[],",
+        "snippet": "weeklyData: any[],"
+      },
+      {
+        "file": "src/types/database.ts",
+        "line": 25,
+        "content": "params?: any[],",
+        "snippet": "params?: any[],"
+      },
+      {
+        "file": "src/types/database.ts",
+        "line": 41,
+        "content": "params?: any[],",
+        "snippet": "params?: any[],"
+      },
+      {
+        "file": "src/utils/logger.ts",
+        "line": 311,
+        "content": "debug: (message: string, ...args: any[]) => {",
+        "snippet": "debug: (message: string, ...args: any[]) => {"
+      },
+      {
+        "file": "src/utils/logger.ts",
+        "line": 314,
+        "content": "info: (message: string, ...args: any[]) => {",
+        "snippet": "info: (message: string, ...args: any[]) => {"
+      },
+      {
+        "file": "src/utils/logger.ts",
+        "line": 317,
+        "content": "warn: (message: string, ...args: any[]) => {",
+        "snippet": "warn: (message: string, ...args: any[]) => {"
+      },
+      {
+        "file": "src/utils/logger.ts",
+        "line": 320,
+        "content": "error: (message: string, error?: Error, ...args: any[]) => {",
+        "snippet": "error: (message: string, error?: Error, ...args: any[]) => {"
+      }
+    ],
+    "recordAny": [
+      {
+        "file": "src/components/AnswerForm.tsx",
+        "line": 45,
+        "content": "answers: Record<string, any>;",
+        "snippet": "answers: Record<string, any>;"
+      },
+      {
+        "file": "src/components/AnswerResultDialog.tsx",
+        "line": 92,
+        "content": "const formatted: Record<string, any> = {};",
+        "snippet": "const formatted: Record<string, any> = {};"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 21,
+        "content": "userAnswer?: Record<string, any>;",
+        "snippet": "userAnswer?: Record<string, any>;"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 22,
+        "content": "correctAnswer?: Record<string, any>;",
+        "snippet": "correctAnswer?: Record<string, any>;"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 51,
+        "content": "answers?: Record<string, any>;",
+        "snippet": "answers?: Record<string, any>;"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 55,
+        "content": "correctAnswer?: Record<string, any>;",
+        "snippet": "correctAnswer?: Record<string, any>;"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 107,
+        "content": "answers?: Record<string, any>;",
+        "snippet": "answers?: Record<string, any>;"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 111,
+        "content": "correctAnswer?: Record<string, any>;",
+        "snippet": "correctAnswer?: Record<string, any>;"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 130,
+        "content": "correctAnswer?: Record<string, any>;",
+        "snippet": "correctAnswer?: Record<string, any>;"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 140,
+        "content": "correctAnswer?: Record<string, any>;",
+        "snippet": "correctAnswer?: Record<string, any>;"
+      },
+      {
+        "file": "src/context/ThemeContext.tsx",
+        "line": 371,
+        "content": "export function useThemedStyles<T extends Record<string, any>>(",
+        "snippet": "export function useThemedStyles<T extends Record<string, any>>("
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 112,
+        "content": "const result: Record<string, any> = {};",
+        "snippet": "const result: Record<string, any> = {};"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 589,
+        "content": "context: Record<string, any> = {},",
+        "snippet": "context: Record<string, any> = {},"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 192,
+        "content": "const result: Record<string, any> = {};",
+        "snippet": "const result: Record<string, any> = {};"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 739,
+        "content": "context: Record<string, any> = {},",
+        "snippet": "context: Record<string, any> = {},"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 66,
+        "content": "conditions: Record<string, any>,",
+        "snippet": "conditions: Record<string, any>,"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 114,
+        "content": "public async count(conditions?: Record<string, any>): Promise<number> {",
+        "snippet": "public async count(conditions?: Record<string, any>): Promise<number> {"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 303,
+        "content": "public async deleteWhere(conditions: Record<string, any>): Promise<number> {",
+        "snippet": "public async deleteWhere(conditions: Record<string, any>): Promise<number> {"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 337,
+        "content": "const columns = Object.keys(data as Record<string, any>);",
+        "snippet": "const columns = Object.keys(data as Record<string, any>);"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 339,
+        "content": "const values = Object.values(data as Record<string, any>);",
+        "snippet": "const values = Object.values(data as Record<string, any>);"
+      },
+      {
+        "file": "src/hooks/useVisualAudioSupport.tsx",
+        "line": 445,
+        "content": "details: Record<string, any>,",
+        "snippet": "details: Record<string, any>,"
+      },
+      {
+        "file": "src/services/offline-cache-service.ts",
+        "line": 29,
+        "content": "metadata?: Record<string, any>;",
+        "snippet": "metadata?: Record<string, any>;"
+      },
+      {
+        "file": "src/services/offline-cache-service.ts",
+        "line": 201,
+        "content": "metadata?: Record<string, any>;",
+        "snippet": "metadata?: Record<string, any>;"
+      },
+      {
+        "file": "src/types/database.ts",
+        "line": 111,
+        "content": "context?: Record<string, any>;",
+        "snippet": "context?: Record<string, any>;"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 15,
+        "content": "public readonly context: Record<string, any>;",
+        "snippet": "public readonly context: Record<string, any>;"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 23,
+        "content": "context: Record<string, any> = {},",
+        "snippet": "context: Record<string, any> = {},"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 48,
+        "content": "context: Record<string, any> = {}",
+        "snippet": "context: Record<string, any> = {}"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 123,
+        "content": "context: Record<string, any> = {}",
+        "snippet": "context: Record<string, any> = {}"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 145,
+        "content": "context: Record<string, any> = {}",
+        "snippet": "context: Record<string, any> = {}"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 185,
+        "content": "public handle(error: Error | AppError, context: Record<string, any> = {}): AppError {",
+        "snippet": "public handle(error: Error | AppError, context: Record<string, any> = {}): AppError {"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 213,
+        "content": "context: Record<string, any> = {}",
+        "snippet": "context: Record<string, any> = {}"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 230,
+        "content": "private convertToAppError(error: Error, context: Record<string, any>): AppError {",
+        "snippet": "private convertToAppError(error: Error, context: Record<string, any>): AppError {"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 381,
+        "content": "errorContext: Record<string, any> = {}",
+        "snippet": "errorContext: Record<string, any> = {}"
+      },
+      {
+        "file": "src/utils/validator.ts",
+        "line": 430,
+        "content": "export function validateRequiredFields<T extends Record<string, any>>(",
+        "snippet": "export function validateRequiredFields<T extends Record<string, any>>("
+      }
+    ],
+    "functionParams": [
+      {
+        "file": "src/components/AnswerForm.tsx",
+        "line": 46,
+        "content": "onAnswerChange: (fieldName: string, value: any) => void;",
+        "snippet": "onAnswerChange: (fieldName: string, value: any) => void;"
+      },
+      {
+        "file": "src/components/AnswerResultDialog.tsx",
+        "line": 51,
+        "content": "const formatCorrectAnswer = (correctAnswer: any): any => {",
+        "snippet": "const formatCorrectAnswer = (correctAnswer: any): any => {"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 440,
+        "content": "(sum: number, item: any) => sum + (item.amount || 0),",
+        "snippet": "(sum: number, item: any) => sum + (item.amount || 0),"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 475,
+        "content": "(sum: number, item: any) => sum + (item.amount || 0),",
+        "snippet": "(sum: number, item: any) => sum + (item.amount || 0),"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 512,
+        "content": "(sum: number, item: any) => {",
+        "snippet": "(sum: number, item: any) => {"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 530,
+        "content": "(sum: number, item: any) => sum + (item.amount || 0),",
+        "snippet": "(sum: number, item: any) => sum + (item.amount || 0),"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 534,
+        "content": "(sum: number, item: any) => {",
+        "snippet": "(sum: number, item: any) => {"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 582,
+        "content": "(sum: number, item: any) => sum + (item.amount || 0),",
+        "snippet": "(sum: number, item: any) => sum + (item.amount || 0),"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 619,
+        "content": "(sum: number, item: any) => sum + (item.amount || 0),",
+        "snippet": "(sum: number, item: any) => sum + (item.amount || 0),"
+      },
+      {
+        "file": "src/components/ExplanationPanel.tsx",
+        "line": 816,
+        "content": "const formatAnswerValue = (value: any): string => {",
+        "snippet": "const formatAnswerValue = (value: any): string => {"
+      },
+      {
+        "file": "src/components/LazyComponent.tsx",
+        "line": 216,
+        "content": "constructor(props: any) {",
+        "snippet": "constructor(props: any) {"
+      },
+      {
+        "file": "src/components/LedgerEntryFormWithDropdown.tsx",
+        "line": 193,
+        "content": "const updateEntry = (index: number, field: keyof LedgerEntry, value: any) => {",
+        "snippet": "const updateEntry = (index: number, field: keyof LedgerEntry, value: any) => {"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 57,
+        "content": "onAnswerChange?: (fieldName: string, value: any) => void;",
+        "snippet": "onAnswerChange?: (fieldName: string, value: any) => void;"
+      },
+      {
+        "file": "src/components/QuestionDisplay.tsx",
+        "line": 113,
+        "content": "onAnswerChange?: (fieldName: string, value: any) => void;",
+        "snippet": "onAnswerChange?: (fieldName: string, value: any) => void;"
+      },
+      {
+        "file": "src/components/VoucherEntryForm.tsx",
+        "line": 141,
+        "content": "const updateEntry = (index: number, field: string, value: any) => {",
+        "snippet": "const updateEntry = (index: number, field: string, value: any) => {"
+      },
+      {
+        "file": "src/components/feedback/ErrorBoundary.tsx",
+        "line": 25,
+        "content": "fallback?: (error: Error, errorInfo: any) => ReactNode;",
+        "snippet": "fallback?: (error: Error, errorInfo: any) => ReactNode;"
+      },
+      {
+        "file": "src/components/feedback/ErrorBoundary.tsx",
+        "line": 26,
+        "content": "onError?: (error: Error, errorInfo: any) => void;",
+        "snippet": "onError?: (error: Error, errorInfo: any) => void;"
+      },
+      {
+        "file": "src/components/feedback/ErrorBoundary.tsx",
+        "line": 49,
+        "content": "componentDidCatch(error: Error, errorInfo: any) {",
+        "snippet": "componentDidCatch(error: Error, errorInfo: any) {"
+      },
+      {
+        "file": "src/components/feedback/ErrorBoundary.tsx",
+        "line": 64,
+        "content": "private logError = (error: Error, errorInfo: any) => {",
+        "snippet": "private logError = (error: Error, errorInfo: any) => {"
+      },
+      {
+        "file": "src/components/feedback/ErrorBoundary.tsx",
+        "line": 82,
+        "content": "private saveErrorToStorage = async (errorLog: any) => {",
+        "snippet": "private saveErrorToStorage = async (errorLog: any) => {"
+      },
+      {
+        "file": "src/components/feedback/LoadingStates.tsx",
+        "line": 447,
+        "content": "const createStyles = (theme: any) =>",
+        "snippet": "const createStyles = (theme: any) =>"
+      },
+      {
+        "file": "src/components/help/HelpSystem.tsx",
+        "line": 512,
+        "content": "const createStyles = (theme: any) => StyleSheet.create({",
+        "snippet": "const createStyles = (theme: any) => StyleSheet.create({"
+      },
+      {
+        "file": "src/components/mock-exam/ExplanationModal.tsx",
+        "line": 218,
+        "content": "function formatAnswer(answer: any): string {",
+        "snippet": "function formatAnswer(answer: any): string {"
+      },
+      {
+        "file": "src/components/mock-exam/ExplanationModal.tsx",
+        "line": 235,
+        "content": ".map((d: any) => `借方: ${d.account} ${d.amount}円`)",
+        "snippet": ".map((d: any) => `借方: ${d.account} ${d.amount}円`)"
+      },
+      {
+        "file": "src/components/mock-exam/ExplanationModal.tsx",
+        "line": 238,
+        "content": ".map((c: any) => `貸方: ${c.account} ${c.amount}円`)",
+        "snippet": ".map((c: any) => `貸方: ${c.account} ${c.amount}円`)"
+      },
+      {
+        "file": "src/components/mock-exam/ExplanationModal.tsx",
+        "line": 247,
+        "content": "(entry: any) =>",
+        "snippet": "(entry: any) =>"
+      },
+      {
+        "file": "src/components/mock-exam/ExplanationModal.tsx",
+        "line": 258,
+        "content": "(entry: any) =>",
+        "snippet": "(entry: any) =>"
+      },
+      {
+        "file": "src/components/mock-exam/ExplanationModal.tsx",
+        "line": 267,
+        "content": "(entry: any) =>",
+        "snippet": "(entry: any) =>"
+      },
+      {
+        "file": "src/components/mock-exam/TrialBalanceForm.tsx",
+        "line": 87,
+        "content": "(index: number, field: keyof TrialBalanceEntry, value: any) => {",
+        "snippet": "(index: number, field: keyof TrialBalanceEntry, value: any) => {"
+      },
+      {
+        "file": "src/components/onboarding/OnboardingFlow.tsx",
+        "line": 106,
+        "content": "const handleScroll = (event: any) => {",
+        "snippet": "const handleScroll = (event: any) => {"
+      },
+      {
+        "file": "src/components/onboarding/OnboardingFlow.tsx",
+        "line": 287,
+        "content": "const createStyles = (theme: any) => StyleSheet.create({",
+        "snippet": "const createStyles = (theme: any) => StyleSheet.create({"
+      },
+      {
+        "file": "src/components/settings/AccessibilitySettings.tsx",
+        "line": 32,
+        "content": "onSettingsChange?: (settings: any) => void;",
+        "snippet": "onSettingsChange?: (settings: any) => void;"
+      },
+      {
+        "file": "src/components/settings/AccessibilitySettings.tsx",
+        "line": 81,
+        "content": "async (key: string, value: any) => {",
+        "snippet": "async (key: string, value: any) => {"
+      },
+      {
+        "file": "src/components/settings/AccessibilitySettings.tsx",
+        "line": 173,
+        "content": "onValueChange: (value: any) => void;",
+        "snippet": "onValueChange: (value: any) => void;"
+      },
+      {
+        "file": "src/components/shared/FormTypes.ts",
+        "line": 96,
+        "content": "onDirectSubmit?: (data: any) => void;",
+        "snippet": "onDirectSubmit?: (data: any) => void;"
+      },
+      {
+        "file": "src/components/ui/Button.tsx",
+        "line": 101,
+        "content": "const handlePress = async (event: any) => {",
+        "snippet": "const handlePress = async (event: any) => {"
+      },
+      {
+        "file": "src/components/ui/Button.tsx",
+        "line": 225,
+        "content": "const createStyles = (theme: any) =>",
+        "snippet": "const createStyles = (theme: any) =>"
+      },
+      {
+        "file": "src/components/ui/Card.tsx",
+        "line": 121,
+        "content": "const createStyles = (theme: any) =>",
+        "snippet": "const createStyles = (theme: any) =>"
+      },
+      {
+        "file": "src/components/ui/Card.tsx",
+        "line": 172,
+        "content": "const createHeaderStyles = (theme: any) =>",
+        "snippet": "const createHeaderStyles = (theme: any) =>"
+      },
+      {
+        "file": "src/components/ui/Card.tsx",
+        "line": 196,
+        "content": "const createContentStyles = (theme: any) =>",
+        "snippet": "const createContentStyles = (theme: any) =>"
+      },
+      {
+        "file": "src/components/ui/Card.tsx",
+        "line": 231,
+        "content": "const createActionsStyles = (theme: any) =>",
+        "snippet": "const createActionsStyles = (theme: any) =>"
+      },
+      {
+        "file": "src/components/ui/NumericPad.tsx",
+        "line": 210,
+        "content": "const createStyles = (theme: any) =>",
+        "snippet": "const createStyles = (theme: any) =>"
+      },
+      {
+        "file": "src/components/ui/Typography.tsx",
+        "line": 76,
+        "content": "const createStyles = (theme: any) => {",
+        "snippet": "const createStyles = (theme: any) => {"
+      },
+      {
+        "file": "src/data/repositories/mock-exam-repository.ts",
+        "line": 34,
+        "content": "return result.rows.map((row: any) => ({",
+        "snippet": "return result.rows.map((row: any) => ({"
+      },
+      {
+        "file": "src/data/repositories/mock-exam-repository.ts",
+        "line": 262,
+        "content": "return result.rows.map((row: any) => ({",
+        "snippet": "return result.rows.map((row: any) => ({"
+      },
+      {
+        "file": "src/data/repositories/mock-exam-repository.ts",
+        "line": 286,
+        "content": "return result.rows.map((row: any) => ({",
+        "snippet": "return result.rows.map((row: any) => ({"
+      },
+      {
+        "file": "src/data/repositories/mock-exam-repository.ts",
+        "line": 413,
+        "content": "return result.rows.map((row: any) => ({",
+        "snippet": "return result.rows.map((row: any) => ({"
+      },
+      {
+        "file": "src/data/repositories/mock-exam-repository.ts",
+        "line": 449,
+        "content": "return result.rows.map((row: any) => ({",
+        "snippet": "return result.rows.map((row: any) => ({"
+      },
+      {
+        "file": "src/hooks/useAnimations.tsx",
+        "line": 276,
+        "content": "const springTo = useCallback((toValue: number, config?: any) => {",
+        "snippet": "const springTo = useCallback((toValue: number, config?: any) => {"
+      },
+      {
+        "file": "src/hooks/useAnimations.tsx",
+        "line": 284,
+        "content": "const gentleSpringTo = useCallback((toValue: number, config?: any) => {",
+        "snippet": "const gentleSpringTo = useCallback((toValue: number, config?: any) => {"
+      },
+      {
+        "file": "src/hooks/useKeyboardNavigation.tsx",
+        "line": 64,
+        "content": "const getKeyCombo = useCallback((event: any) => {",
+        "snippet": "const getKeyCombo = useCallback((event: any) => {"
+      },
+      {
+        "file": "src/hooks/useKeyboardNavigation.tsx",
+        "line": 77,
+        "content": "(event: any) => {",
+        "snippet": "(event: any) => {"
+      },
+      {
+        "file": "src/hooks/useKeyboardNavigation.tsx",
+        "line": 478,
+        "content": "onKeyPress?: (event: any) => void;",
+        "snippet": "onKeyPress?: (event: any) => void;"
+      },
+      {
+        "file": "src/hooks/useKeyboardNavigation.tsx",
+        "line": 493,
+        "content": "(event: any) => {",
+        "snippet": "(event: any) => {"
+      },
+      {
+        "file": "src/hooks/useProgressIndicators.tsx",
+        "line": 407,
+        "content": "const getStepColor = (index: number, step: any) => {",
+        "snippet": "const getStepColor = (index: number, step: any) => {"
+      },
+      {
+        "file": "src/hooks/useProgressIndicators.tsx",
+        "line": 413,
+        "content": "const getStepTextColor = (index: number, step: any) => {",
+        "snippet": "const getStepTextColor = (index: number, step: any) => {"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 202,
+        "content": "template.fields?.forEach((field: any) => {",
+        "snippet": "template.fields?.forEach((field: any) => {"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 225,
+        "content": "const field = template.fields?.find((f: any) => f.name === key);",
+        "snippet": "const field = template.fields?.find((f: any) => f.name === key);"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 283,
+        "content": "template.fields?.forEach((field: any) => {",
+        "snippet": "template.fields?.forEach((field: any) => {"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 978,
+        "content": "const matchingEntry = userEntries.find((userEntry: any) => {",
+        "snippet": "const matchingEntry = userEntries.find((userEntry: any) => {"
+      },
+      {
+        "file": "src/services/memory-optimizer.ts",
+        "line": 304,
+        "content": "public cacheLargeData(key: string, data: any): void {",
+        "snippet": "public cacheLargeData(key: string, data: any): void {"
+      },
+      {
+        "file": "src/services/memory-optimizer.ts",
+        "line": 485,
+        "content": "private estimateObjectSize(obj: any): number {",
+        "snippet": "private estimateObjectSize(obj: any): number {"
+      },
+      {
+        "file": "src/services/mock-exam-service.ts",
+        "line": 112,
+        "content": "total: examQuestions.filter((q: any) => q.section_number === 1)",
+        "snippet": "total: examQuestions.filter((q: any) => q.section_number === 1)"
+      },
+      {
+        "file": "src/services/mock-exam-service.ts",
+        "line": 117,
+        "content": "total: examQuestions.filter((q: any) => q.section_number === 2)",
+        "snippet": "total: examQuestions.filter((q: any) => q.section_number === 2)"
+      },
+      {
+        "file": "src/services/mock-exam-service.ts",
+        "line": 122,
+        "content": "total: examQuestions.filter((q: any) => q.section_number === 3)",
+        "snippet": "total: examQuestions.filter((q: any) => q.section_number === 3)"
+      },
+      {
+        "file": "src/types/database.ts",
+        "line": 26,
+        "content": "success?: (tx: Transaction, results: any) => void,",
+        "snippet": "success?: (tx: Transaction, results: any) => void,"
+      },
+      {
+        "file": "src/types/database.ts",
+        "line": 27,
+        "content": "error?: (tx: Transaction, error: any) => void,",
+        "snippet": "error?: (tx: Transaction, error: any) => void,"
+      },
+      {
+        "file": "src/types/database.ts",
+        "line": 35,
+        "content": "error?: (error: any) => void,",
+        "snippet": "error?: (error: any) => void,"
+      },
+      {
+        "file": "src/types/database.ts",
+        "line": 42,
+        "content": "success?: (results: any) => void,",
+        "snippet": "success?: (results: any) => void,"
+      },
+      {
+        "file": "src/types/database.ts",
+        "line": 43,
+        "content": "error?: (error: any) => void,",
+        "snippet": "error?: (error: any) => void,"
+      },
+      {
+        "file": "src/types/database.ts",
+        "line": 46,
+        "content": "close(success?: () => void, error?: (error: any) => void): void;",
+        "snippet": "close(success?: () => void, error?: (error: any) => void): void;"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 66,
+        "content": "private static determineSeverity(error: any): 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' {",
+        "snippet": "private static determineSeverity(error: any): 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' {"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 94,
+        "content": "private static determineErrorCode(error: any): string {",
+        "snippet": "private static determineErrorCode(error: any): string {"
+      },
+      {
+        "file": "src/utils/error-handler.ts",
+        "line": 361,
+        "content": "private static isDatabaseLockError(error: any): boolean {",
+        "snippet": "private static isDatabaseLockError(error: any): boolean {"
+      },
+      {
+        "file": "src/utils/logger.ts",
+        "line": 126,
+        "content": "public database(operation: string, details?: any): void {",
+        "snippet": "public database(operation: string, details?: any): void {"
+      },
+      {
+        "file": "src/utils/logger.ts",
+        "line": 153,
+        "content": "public ui(component: string, action: string, details?: any): void {",
+        "snippet": "public ui(component: string, action: string, details?: any): void {"
+      },
+      {
+        "file": "src/utils/validator.ts",
+        "line": 240,
+        "content": "public static validateJournalAnswer(answer: any): ValidationResult {",
+        "snippet": "public static validateJournalAnswer(answer: any): ValidationResult {"
+      }
+    ],
+    "errorTypes": [],
+    "databaseTypes": [
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 23,
+        "content": "let SQLite: any = null;",
+        "snippet": "let SQLite: any = null;"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 33,
+        "content": "type SQLiteDatabase = any;",
+        "snippet": "type SQLiteDatabase = any;"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 138,
+        "content": "prepareSync(sql: string): any {",
+        "snippet": "prepareSync(sql: string): any {"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 182,
+        "content": "result: QueryResult<any>;",
+        "snippet": "result: QueryResult<any>;"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 198,
+        "content": "private pendingQueries = new Map<string, Promise<QueryResult<any>>>();",
+        "snippet": "private pendingQueries = new Map<string, Promise<QueryResult<any>>>();"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 320,
+        "content": "public async executeSql<T = any>(",
+        "snippet": "public async executeSql<T = any>("
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 371,
+        "content": "private async executeSqlDirect<T = any>(",
+        "snippet": "private async executeSqlDirect<T = any>("
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 17,
+        "content": "let SQLite: any = null;",
+        "snippet": "let SQLite: any = null;"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 146,
+        "content": "prepareSync(sql: string): any {",
+        "snippet": "prepareSync(sql: string): any {"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 206,
+        "content": "private db: any | WebDatabaseMock | null = null;",
+        "snippet": "private db: any | WebDatabaseMock | null = null;"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 425,
+        "content": "public async executeSql<T = any>(",
+        "snippet": "public async executeSql<T = any>("
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 496,
+        "content": "operations: (db: any | WebDatabaseMock) => Promise<void>,",
+        "snippet": "operations: (db: any | WebDatabaseMock) => Promise<void>,"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 345,
+        "content": "const recordId = result.insertId || (data as any).id;",
+        "snippet": "const recordId = result.insertId || (data as any).id;"
+      },
+      {
+        "file": "src/data/repositories/learning-history-repository.ts",
+        "line": 291,
+        "content": "const basicStatsResult = await this.executeQuery<any>(",
+        "snippet": "const basicStatsResult = await this.executeQuery<any>("
+      },
+      {
+        "file": "src/data/repositories/learning-history-repository.ts",
+        "line": 311,
+        "content": "const categoryStatsResult = await this.executeQuery<any>(",
+        "snippet": "const categoryStatsResult = await this.executeQuery<any>("
+      },
+      {
+        "file": "src/data/repositories/learning-history-repository.ts",
+        "line": 377,
+        "content": "const sessionStatsResult = await this.executeQuery<any>(",
+        "snippet": "const sessionStatsResult = await this.executeQuery<any>("
+      },
+      {
+        "file": "src/data/repositories/learning-history-repository.ts",
+        "line": 432,
+        "content": "const dailyStatsResult = await this.executeQuery<any>(",
+        "snippet": "const dailyStatsResult = await this.executeQuery<any>("
+      },
+      {
+        "file": "src/data/repositories/learning-history-repository.ts",
+        "line": 506,
+        "content": "const overallResult = await this.executeQuery<any>(overallQuery, params);",
+        "snippet": "const overallResult = await this.executeQuery<any>(overallQuery, params);"
+      },
+      {
+        "file": "src/data/repositories/learning-history-repository.ts",
+        "line": 523,
+        "content": "const categoryResult = await this.executeQuery<any>(categoryQuery, []);",
+        "snippet": "const categoryResult = await this.executeQuery<any>(categoryQuery, []);"
+      },
+      {
+        "file": "src/data/repositories/learning-history-repository.ts",
+        "line": 612,
+        "content": "const result = await this.executeQuery<any>(sql, params);",
+        "snippet": "const result = await this.executeQuery<any>(sql, params);"
+      },
+      {
+        "file": "src/data/repositories/question-repository.ts",
+        "line": 781,
+        "content": "const result = await this.executeQuery<any>(sql, params);",
+        "snippet": "const result = await this.executeQuery<any>(sql, params);"
+      },
+      {
+        "file": "src/data/repositories/review-item-repository.ts",
+        "line": 314,
+        "content": "const basicStatsResult = await this.executeQuery<any>(",
+        "snippet": "const basicStatsResult = await this.executeQuery<any>("
+      },
+      {
+        "file": "src/data/repositories/review-item-repository.ts",
+        "line": 334,
+        "content": "const priorityDistResult = await this.executeQuery<any>(",
+        "snippet": "const priorityDistResult = await this.executeQuery<any>("
+      },
+      {
+        "file": "src/data/repositories/review-item-repository.ts",
+        "line": 366,
+        "content": "const categoryStatsResult = await this.executeQuery<any>(",
+        "snippet": "const categoryStatsResult = await this.executeQuery<any>("
+      },
+      {
+        "file": "src/types/database.ts",
+        "line": 15,
+        "content": "export interface QueryResult<T = any> {",
+        "snippet": "export interface QueryResult<T = any> {"
+      }
+    ],
+    "unknown": [
+      {
+        "file": "src/components/CorrectAnswerExample.tsx",
+        "line": 141,
+        "content": "const financialStatements = (correctAnswer as any).financialStatements;",
+        "snippet": "const financialStatements = (correctAnswer as any).financialStatements;"
+      },
+      {
+        "file": "src/components/LazyComponent.tsx",
+        "line": 144,
+        "content": "const currentElement = containerRef.current as any;",
+        "snippet": "const currentElement = containerRef.current as any;"
+      },
+      {
+        "file": "src/components/LazyComponent.tsx",
+        "line": 198,
+        "content": "<LazyLoadedComponent {...(props as any)} />",
+        "snippet": "<LazyLoadedComponent {...(props as any)} />"
+      },
+      {
+        "file": "src/components/LazyComponent.tsx",
+        "line": 273,
+        "content": "(LazyComponent as any).preload = preload;",
+        "snippet": "(LazyComponent as any).preload = preload;"
+      },
+      {
+        "file": "src/components/LazyComponent.tsx",
+        "line": 275,
+        "content": "return LazyComponent as ComponentType<P> & { preload: () => Promise<any> };",
+        "snippet": "return LazyComponent as ComponentType<P> & { preload: () => Promise<any> };"
+      },
+      {
+        "file": "src/components/LazyComponent.tsx",
+        "line": 284,
+        "content": "private loadingComponents = new Map<string, Promise<any>>();",
+        "snippet": "private loadingComponents = new Map<string, Promise<any>>();"
+      },
+      {
+        "file": "src/components/LazyComponent.tsx",
+        "line": 297,
+        "content": "components: Array<{ name: string; loader: () => Promise<any> }>,",
+        "snippet": "components: Array<{ name: string; loader: () => Promise<any> }>,"
+      },
+      {
+        "file": "src/components/feedback/VisualFeedbackOverlay.tsx",
+        "line": 224,
+        "content": "name={getIcon(feedback.options.type) as any}",
+        "snippet": "name={getIcon(feedback.options.type) as any}"
+      },
+      {
+        "file": "src/components/feedback/VisualFeedbackOverlay.tsx",
+        "line": 314,
+        "content": "name={questionTypeIcon as any}",
+        "snippet": "name={questionTypeIcon as any}"
+      },
+      {
+        "file": "src/components/settings/AccessibilitySettings.tsx",
+        "line": 94,
+        "content": "updateSetting(key as any, value);",
+        "snippet": "updateSetting(key as any, value);"
+      },
+      {
+        "file": "src/components/settings/AccessibilitySettings.tsx",
+        "line": 260,
+        "content": "name={icon as any}",
+        "snippet": "name={icon as any}"
+      },
+      {
+        "file": "src/components/shared/FormUtils.ts",
+        "line": 131,
+        "content": "sessionType: sessionType as any,",
+        "snippet": "sessionType: sessionType as any,"
+      },
+      {
+        "file": "src/components/ui/Button.tsx",
+        "line": 150,
+        "content": "const getTextStyle = (): any => {",
+        "snippet": "const getTextStyle = (): any => {"
+      },
+      {
+        "file": "src/components/ui/Button.tsx",
+        "line": 158,
+        "content": "return StyleSheet.flatten([baseStyle, textStyle as any]);",
+        "snippet": "return StyleSheet.flatten([baseStyle, textStyle as any]);"
+      },
+      {
+        "file": "src/components/ui/Typography.tsx",
+        "line": 82,
+        "content": "Object.entries(theme.typography).forEach(([key, value]: [string, any]) => {",
+        "snippet": "Object.entries(theme.typography).forEach(([key, value]: [string, any]) => {"
+      },
+      {
+        "file": "src/components/ui/Typography.tsx",
+        "line": 233,
+        "content": "fontVariant: [\"tabular-nums\"] as any,",
+        "snippet": "fontVariant: [\"tabular-nums\"] as any,"
+      },
+      {
+        "file": "src/components/ui/Typography.tsx",
+        "line": 323,
+        "content": "fontVariant: [\"tabular-nums\"] as any,",
+        "snippet": "fontVariant: [\"tabular-nums\"] as any,"
+      },
+      {
+        "file": "src/data/database-optimized.ts",
+        "line": 203,
+        "content": "private lazyLoadPromises = new Map<string, Promise<any>>();",
+        "snippet": "private lazyLoadPromises = new Map<string, Promise<any>>();"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 374,
+        "content": "): Promise<any> {",
+        "snippet": "): Promise<any> {"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 554,
+        "content": "public async getStats(): Promise<any> {",
+        "snippet": "public async getStats(): Promise<any> {"
+      },
+      {
+        "file": "src/data/database.ts",
+        "line": 569,
+        "content": "const stats: any = {",
+        "snippet": "const stats: any = {"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 181,
+        "content": "const questionId = (data as any).question_id;",
+        "snippet": "const questionId = (data as any).question_id;"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 200,
+        "content": "((data as any).created_at || (data as any).updated_at)",
+        "snippet": "((data as any).created_at || (data as any).updated_at)"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 204,
+        "content": "${(data as any).created_at ? \"created_at\" : \"updated_at\"} DESC LIMIT 1`;",
+        "snippet": "${(data as any).created_at ? \"created_at\" : \"updated_at\"} DESC LIMIT 1`;"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 230,
+        "content": "id: (insertedRecord as any).id,",
+        "snippet": "id: (insertedRecord as any).id,"
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 365,
+        "content": "public async createMany(",
+        "snippet": "public async createMany("
+      },
+      {
+        "file": "src/data/repositories/base-repository.ts",
+        "line": 391,
+        "content": "logger.error(\"[${this.constructor.name}] createMany エラー:\", error);",
+        "snippet": "logger.error(\"[${this.constructor.name}] createMany エラー:\", error);"
+      },
+      {
+        "file": "src/data/repositories/review-item-repository.ts",
+        "line": 177,
+        "content": "const updateFields: any = {",
+        "snippet": "const updateFields: any = {"
+      },
+      {
+        "file": "src/hooks/useAccessibility.tsx",
+        "line": 176,
+        "content": "const props: any = {",
+        "snippet": "const props: any = {"
+      },
+      {
+        "file": "src/hooks/useAccessibilityFocus.tsx",
+        "line": 19,
+        "content": "ref: React.RefObject<any>;",
+        "snippet": "ref: React.RefObject<any>;"
+      },
+      {
+        "file": "src/hooks/useAccessibilityFocus.tsx",
+        "line": 414,
+        "content": "accessibilityRole={accessibilityRole as any}",
+        "snippet": "accessibilityRole={accessibilityRole as any}"
+      },
+      {
+        "file": "src/hooks/useFeedbackAnimations.tsx",
+        "line": 30,
+        "content": "getAnimatedStyle: () => any;",
+        "snippet": "getAnimatedStyle: () => any;"
+      },
+      {
+        "file": "src/hooks/useHapticFeedback.tsx",
+        "line": 357,
+        "content": "return React.forwardRef<any, T>((props, ref) => {",
+        "snippet": "return React.forwardRef<any, T>((props, ref) => {"
+      },
+      {
+        "file": "src/hooks/useHapticFeedback.tsx",
+        "line": 369,
+        "content": "<WrappedComponent {...(props as any)} ref={ref} onPress={handlePress} />",
+        "snippet": "<WrappedComponent {...(props as any)} ref={ref} onPress={handlePress} />"
+      },
+      {
+        "file": "src/hooks/useProgressIndicators.tsx",
+        "line": 72,
+        "content": "export const CircularProgress = forwardRef<any, CircularProgressProps>(",
+        "snippet": "export const CircularProgress = forwardRef<any, CircularProgressProps>("
+      },
+      {
+        "file": "src/hooks/useProgressIndicators.tsx",
+        "line": 210,
+        "content": "export const LinearProgress = forwardRef<any, LinearProgressProps>(",
+        "snippet": "export const LinearProgress = forwardRef<any, LinearProgressProps>("
+      },
+      {
+        "file": "src/hooks/useProgressIndicators.tsx",
+        "line": 363,
+        "content": "width: typeof width === \"string\" ? (width as any) : width,",
+        "snippet": "width: typeof width === \"string\" ? (width as any) : width,"
+      },
+      {
+        "file": "src/hooks/useProgressIndicators.tsx",
+        "line": 364,
+        "content": "height: typeof height === \"string\" ? (height as any) : height,",
+        "snippet": "height: typeof height === \"string\" ? (height as any) : height,"
+      },
+      {
+        "file": "src/hooks/useScreenTransitions.tsx",
+        "line": 39,
+        "content": "getTransformStyle: () => any;",
+        "snippet": "getTransformStyle: () => any;"
+      },
+      {
+        "file": "src/hooks/useTabletLayout.tsx",
+        "line": 274,
+        "content": "width: `${itemWidth}%` as any,",
+        "snippet": "width: `${itemWidth}%` as any,"
+      },
+      {
+        "file": "src/hooks/useTabletLayout.tsx",
+        "line": 275,
+        "content": "marginLeft: offset > 0 ? (`${offsetWidth}%` as any) : 0,",
+        "snippet": "marginLeft: offset > 0 ? (`${offsetWidth}%` as any) : 0,"
+      },
+      {
+        "file": "src/hooks/useTabletLayout.tsx",
+        "line": 293,
+        "content": "<T extends any>(",
+        "snippet": "<T extends any>("
+      },
+      {
+        "file": "src/hooks/useTabletLayout.tsx",
+        "line": 305,
+        "content": "<T extends any>(values: {",
+        "snippet": "<T extends any>(values: {"
+      },
+      {
+        "file": "src/hooks/useTabletLayout.tsx",
+        "line": 344,
+        "content": "<T extends any>(values: { portrait?: T; landscape?: T; default: T }): T => {",
+        "snippet": "<T extends any>(values: { portrait?: T; landscape?: T; default: T }): T => {"
+      },
+      {
+        "file": "src/hooks/useVisualAudioSupport.tsx",
+        "line": 236,
+        "content": "priority: priority as any,",
+        "snippet": "priority: priority as any,"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 203,
+        "content": "const value = (answerData as any)[field.name];",
+        "snippet": "const value = (answerData as any)[field.name];"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 262,
+        "content": "const data = answerData as any;",
+        "snippet": "const data = answerData as any;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 321,
+        "content": "const data = answerData as any;",
+        "snippet": "const data = answerData as any;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 449,
+        "content": "const data = answerData as any;",
+        "snippet": "const data = answerData as any;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 563,
+        "content": "const data = answerData as any;",
+        "snippet": "const data = answerData as any;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 586,
+        "content": "const correctDate = (correctEntry as any).date;",
+        "snippet": "const correctDate = (correctEntry as any).date;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 587,
+        "content": "const correctDescription = (correctEntry as any).description;",
+        "snippet": "const correctDescription = (correctEntry as any).description;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 589,
+        "content": "(correctEntry as any).debitAmount ||",
+        "snippet": "(correctEntry as any).debitAmount ||"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 590,
+        "content": "(correctEntry as any).debit_amount ||",
+        "snippet": "(correctEntry as any).debit_amount ||"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 593,
+        "content": "(correctEntry as any).creditAmount ||",
+        "snippet": "(correctEntry as any).creditAmount ||"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 594,
+        "content": "(correctEntry as any).credit_amount ||",
+        "snippet": "(correctEntry as any).credit_amount ||"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 668,
+        "content": "const correctDate = (correctEntry as any).date;",
+        "snippet": "const correctDate = (correctEntry as any).date;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 669,
+        "content": "const correctDescription = (correctEntry as any).description;",
+        "snippet": "const correctDescription = (correctEntry as any).description;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 671,
+        "content": "(correctEntry as any).debitAmount ||",
+        "snippet": "(correctEntry as any).debitAmount ||"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 672,
+        "content": "(correctEntry as any).debit_amount ||",
+        "snippet": "(correctEntry as any).debit_amount ||"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 675,
+        "content": "(correctEntry as any).creditAmount ||",
+        "snippet": "(correctEntry as any).creditAmount ||"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 676,
+        "content": "(correctEntry as any).credit_amount ||",
+        "snippet": "(correctEntry as any).credit_amount ||"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 725,
+        "content": "const data = answerData as any;",
+        "snippet": "const data = answerData as any;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 732,
+        "content": "const financialStatements = (correctAnswer as any).financialStatements;",
+        "snippet": "const financialStatements = (correctAnswer as any).financialStatements;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 743,
+        "content": "const correctEntries = (correctAnswer as any).entries;",
+        "snippet": "const correctEntries = (correctAnswer as any).entries;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 749,
+        "content": "const data = answerData as any;",
+        "snippet": "const data = answerData as any;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 904,
+        "content": "const data = answerData as any;",
+        "snippet": "const data = answerData as any;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 946,
+        "content": "const data = answerData as any;",
+        "snippet": "const data = answerData as any;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 949,
+        "content": "const correctVoucherType = (correctAnswer as any).voucher_type;",
+        "snippet": "const correctVoucherType = (correctAnswer as any).voucher_type;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 950,
+        "content": "const correctEntries = (correctAnswer as any).entries;",
+        "snippet": "const correctEntries = (correctAnswer as any).entries;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 1012,
+        "content": "const data = answerData as any;",
+        "snippet": "const data = answerData as any;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 1026,
+        "content": "const correctSelected = (correctAnswer as any).selected;",
+        "snippet": "const correctSelected = (correctAnswer as any).selected;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 1038,
+        "content": "const correctSelectedOptions = (correctAnswer as any).selected_options;",
+        "snippet": "const correctSelectedOptions = (correctAnswer as any).selected_options;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 1084,
+        "content": "const data = answerData as any;",
+        "snippet": "const data = answerData as any;"
+      },
+      {
+        "file": "src/services/answer-service.ts",
+        "line": 1104,
+        "content": "const correctAnswers = (correctAnswer as any).answers;",
+        "snippet": "const correctAnswers = (correctAnswer as any).answers;"
+      },
+      {
+        "file": "src/services/audio-feedback-service.ts",
+        "line": 265,
+        "content": "(window as any).webkitAudioContext)();",
+        "snippet": "(window as any).webkitAudioContext)();"
+      },
+      {
+        "file": "src/services/audio-feedback-service.ts",
+        "line": 349,
+        "content": "const audio = new (globalThis as any).Audio(dataURL);",
+        "snippet": "const audio = new (globalThis as any).Audio(dataURL);"
+      },
+      {
+        "file": "src/services/memory-optimizer.ts",
+        "line": 51,
+        "content": "private poolConfigs = new Map<string, PoolConfig<any>>();",
+        "snippet": "private poolConfigs = new Map<string, PoolConfig<any>>();"
+      },
+      {
+        "file": "src/services/memory-optimizer.ts",
+        "line": 59,
+        "content": "private weakRefs = new Set<WeakRef<any>>();",
+        "snippet": "private weakRefs = new Set<WeakRef<any>>();"
+      },
+      {
+        "file": "src/services/memory-optimizer.ts",
+        "line": 114,
+        "content": "if (typeof performance === \"undefined\" || !(performance as any).memory) {",
+        "snippet": "if (typeof performance === \"undefined\" || !(performance as any).memory) {"
+      },
+      {
+        "file": "src/services/memory-optimizer.ts",
+        "line": 118,
+        "content": "const memory = (performance as any).memory;",
+        "snippet": "const memory = (performance as any).memory;"
+      },
+      {
+        "file": "src/services/memory-optimizer.ts",
+        "line": 335,
+        "content": "public getLargeData(key: string): any | null {",
+        "snippet": "public getLargeData(key: string): any | null {"
+      },
+      {
+        "file": "src/services/offline-cache-service.ts",
+        "line": 20,
+        "content": "export interface CacheEntry<T = any> {",
+        "snippet": "export interface CacheEntry<T = any> {"
+      },
+      {
+        "file": "src/services/offline-sync-service.ts",
+        "line": 568,
+        "content": "): Promise<any | null> {",
+        "snippet": "): Promise<any | null> {"
+      },
+      {
+        "file": "src/services/statistics-cache.ts",
+        "line": 33,
+        "content": "private cache = new Map<CacheKey, CacheEntry<any>>();",
+        "snippet": "private cache = new Map<CacheKey, CacheEntry<any>>();"
+      },
+      {
+        "file": "src/theme/colors.ts",
+        "line": 146,
+        "content": "company: {",
+        "snippet": "company: {"
+      }
+    ]
+  },
+  "generatedAt": "2025-08-17T12:39:01.921Z"
+}

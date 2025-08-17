@@ -5,7 +5,7 @@
 
 import { databaseService } from "../database";
 import { DatabaseResult, QueryResult } from "../../types/database";
-import { logger } from "../../../utils/logger";
+import { logger } from "../../utils/logger";
 
 /**
  * 基底Repositoryクラス
@@ -28,7 +28,7 @@ export abstract class BaseRepository<T> {
 
       return result.rows.length > 0 ? result.rows[0] : null;
     } catch (error) {
-      logger.error("[${this.constructor.name}] findById エラー:", error);
+      logger.error("[${this.constructor.name}] findById エラー:", error as Error);
       throw error;
     }
   }
@@ -54,7 +54,7 @@ export abstract class BaseRepository<T> {
       const result = await databaseService.executeSql<T>(sql, params);
       return result.rows;
     } catch (error) {
-      logger.error("[${this.constructor.name}] findAll エラー:", error);
+      logger.error("[${this.constructor.name}] findAll エラー:", error as Error);
       throw error;
     }
   }
@@ -103,7 +103,7 @@ export abstract class BaseRepository<T> {
       const result = await databaseService.executeSql<T>(sql, params);
       return result.rows;
     } catch (error) {
-      logger.error("[${this.constructor.name}] findWhere エラー:", error);
+      logger.error("[${this.constructor.name}] findWhere エラー:", error as Error);
       throw error;
     }
   }
@@ -137,7 +137,7 @@ export abstract class BaseRepository<T> {
       );
       return result.rows[0]?.count || 0;
     } catch (error) {
-      logger.error("[${this.constructor.name}] count エラー:", error);
+      logger.error("[${this.constructor.name}] count エラー:", error as Error);
       throw error;
     }
   }
@@ -232,13 +232,8 @@ export abstract class BaseRepository<T> {
       });
       return insertedRecord;
     } catch (error) {
-      logger.error("[${this.constructor.name}] create エラー:", error);
-      logger.error("[${this.constructor.name}] Error details:", {
-        message: error instanceof Error ? error.message : error,
-        stack: error instanceof Error ? error.stack : undefined,
-        tableName: this.tableName,
-        data: data,
-      });
+      logger.error("[${this.constructor.name}] create エラー:", error as Error);
+      logger.error("[${this.constructor.name}] Error details:");
       throw error;
     }
   }
@@ -268,7 +263,7 @@ export abstract class BaseRepository<T> {
       logger.debug("[${this.constructor.name}] レコード更新完了: ID ${id}");
       return await this.findById(id);
     } catch (error) {
-      logger.error("[${this.constructor.name}] update エラー:", error);
+      logger.error("[${this.constructor.name}] update エラー:", error as Error);
       throw error;
     }
   }
@@ -292,7 +287,7 @@ export abstract class BaseRepository<T> {
 
       return success;
     } catch (error) {
-      logger.error("[${this.constructor.name}] delete エラー:", error);
+      logger.error("[${this.constructor.name}] delete エラー:", error as Error);
       throw error;
     }
   }
@@ -324,7 +319,7 @@ export abstract class BaseRepository<T> {
       );
       return result.rowsAffected;
     } catch (error) {
-      logger.error("[${this.constructor.name}] deleteWhere エラー:", error);
+      logger.error("[${this.constructor.name}] deleteWhere エラー:", error as Error);
       throw error;
     }
   }
@@ -354,7 +349,7 @@ export abstract class BaseRepository<T> {
       logger.debug("[${this.constructor.name}] Upsert完了:", { details: recordId });
       return record;
     } catch (error) {
-      logger.error("[${this.constructor.name}] upsert エラー:", error);
+      logger.error("[${this.constructor.name}] upsert エラー:", error as Error);
       throw error;
     }
   }
@@ -388,7 +383,7 @@ export abstract class BaseRepository<T> {
       );
       return results;
     } catch (error) {
-      logger.error("[${this.constructor.name}] createMany エラー:", error);
+      logger.error("[${this.constructor.name}] createMany エラー:", error as Error);
       throw error;
     }
   }
@@ -402,7 +397,7 @@ export abstract class BaseRepository<T> {
       const result = await databaseService.executeSql(sql, [this.tableName]);
       return result.rows.length > 0;
     } catch (error) {
-      logger.error("[${this.constructor.name}] tableExists エラー:", error);
+      logger.error("[${this.constructor.name}] tableExists エラー:", error as Error);
       return false;
     }
   }
@@ -417,7 +412,7 @@ export abstract class BaseRepository<T> {
     try {
       return await databaseService.executeSql<R>(sql, params);
     } catch (error) {
-      logger.error("[${this.constructor.name}] executeQuery エラー:", error);
+      logger.error("[${this.constructor.name}] executeQuery エラー:", error as Error);
       throw error;
     }
   }
@@ -458,7 +453,7 @@ export abstract class BaseRepository<T> {
 
       return result.rows.length > 0 ? result.rows[0] : null;
     } catch (error) {
-      logger.error("[${this.constructor.name}] findOne エラー:", error);
+      logger.error("[${this.constructor.name}] findOne エラー:", error as Error);
       throw error;
     }
   }
@@ -487,7 +482,7 @@ export abstract class BaseRepository<T> {
       );
       return result.rowsAffected;
     } catch (error) {
-      logger.error("[${this.constructor.name}] updateWhere エラー:", error);
+      logger.error("[${this.constructor.name}] updateWhere エラー:", error as Error);
       throw error;
     }
   }

@@ -9,7 +9,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import * as Haptics from "expo-haptics";
 import { Platform } from "react-native";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 /**
  * ハプティックフィードバックの種類定義

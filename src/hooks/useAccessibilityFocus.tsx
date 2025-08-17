@@ -4,7 +4,7 @@
  */
 
 import React, { useRef, useCallback, useEffect, useMemo } from "react";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 import {
   AccessibilityInfo,
   findNodeHandle,

@@ -4,13 +4,18 @@
  */
 
 import { BaseRepository } from "./base-repository";
-import { logger } from "../../../utils/logger";
+import { logger } from "../../utils/logger";
 import {
   LearningHistory,
   QuestionCategory,
   SessionType,
 } from "../../types/models";
 import { CBTAnswerData } from "../../types/database";
+import {
+  SqlParameter,
+  TypedQueryResult,
+  DatabaseError,
+} from "../../types/enhanced-types";
 
 /**
  * 学習履歴フィルター
@@ -124,7 +129,7 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       );
       return result;
     } catch (error) {
-      logger.error("[LearningHistoryRepository] recordAnswer エラー:", error);
+      logger.error("[LearningHistoryRepository] recordAnswer エラー:", error as Error);
       throw error;
     }
   }
@@ -194,7 +199,7 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         INNER JOIN questions q ON lh.question_id = q.id
         WHERE q.category_id = ?
       `;
-      const params: any[] = [category];
+      const params: SqlParameter[] = [category];
 
       if (options.sessionType) {
         sql += " AND lh.session_type = ?";
@@ -246,7 +251,7 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
   ): Promise<LearningStatistics> {
     try {
       let whereClause = "";
-      const params: any[] = [];
+      const params: SqlParameter[] = [];
 
       // 日付範囲フィルター
       if (options.dateFrom || options.dateTo) {
@@ -288,10 +293,15 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         ${whereClause}
       `;
 
-      const basicStatsResult = await this.executeQuery<any>(
-        basicStatsQuery,
-        params,
-      );
+      const basicStatsResult = await this.executeQuery<{
+        totalAnswers: number;
+        correctAnswers: number;
+        accuracyRate: number;
+        averageAnswerTime: number;
+        totalStudyTime: number;
+        sessionCount: number;
+        lastAnsweredAt?: string;
+      }>(basicStatsQuery, params);
       const basicStats = basicStatsResult.rows[0] || {};
 
       // カテゴリ別統計
@@ -308,10 +318,13 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         GROUP BY q.category_id
       `;
 
-      const categoryStatsResult = await this.executeQuery<any>(
-        categoryStatsQuery,
-        params,
-      );
+      const categoryStatsResult = await this.executeQuery<{
+        category_id: QuestionCategory;
+        totalAnswers: number;
+        correctAnswers: number;
+        accuracyRate: number;
+        averageAnswerTime: number;
+      }>(categoryStatsQuery, params);
       const categoryStats = {
         journal: {
           totalAnswers: 0,
@@ -374,10 +387,13 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         GROUP BY lh.session_type
       `;
 
-      const sessionStatsResult = await this.executeQuery<any>(
-        sessionStatsQuery,
-        params,
-      );
+      const sessionStatsResult = await this.executeQuery<{
+        session_type: SessionType;
+        totalAnswers: number;
+        correctAnswers: number;
+        accuracyRate: number;
+        sessionCount: number;
+      }>(sessionStatsQuery, params);
       const sessionTypeStats = {
         learning: {
           totalAnswers: 0,
@@ -429,10 +445,13 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         LIMIT 30
       `;
 
-      const dailyStatsResult = await this.executeQuery<any>(
-        dailyStatsQuery,
-        params,
-      );
+      const dailyStatsResult = await this.executeQuery<{
+        date: string;
+        questionsAnswered: number;
+        correctAnswers: number;
+        accuracyRate: number;
+        studyTime: number;
+      }>(dailyStatsQuery, params);
       const dailyStats = dailyStatsResult.rows.map((row) => ({
         date: row.date,
         questionsAnswered: row.questionsAnswered || 0,
@@ -457,7 +476,7 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       logger.debug("[LearningHistoryRepository] 学習統計情報取得完了");
       return statistics;
     } catch (error) {
-      logger.error("[LearningHistoryRepository] getStatistics エラー:", error);
+      logger.error("[LearningHistoryRepository] getStatistics エラー:", error as Error);
       throw error;
     }
   }
@@ -481,7 +500,7 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
   }> {
     try {
       let whereClause = "";
-      const params: any[] = [];
+      const params: SqlParameter[] = [];
 
       // カテゴリフィルター
       if (options.category) {
@@ -503,7 +522,10 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         ${whereClause}
       `;
 
-      const overallResult = await this.executeQuery<any>(overallQuery, params);
+      const overallResult = await this.executeQuery<{
+        totalUniqueQuestions: number;
+        correctUniqueQuestions: number;
+      }>(overallQuery, params);
       const overall = overallResult.rows[0] || {};
 
       // カテゴリ別ユニーク問題数
@@ -520,7 +542,11 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         GROUP BY q.category_id
       `;
 
-      const categoryResult = await this.executeQuery<any>(categoryQuery, []);
+      const categoryResult = await this.executeQuery<{
+        category_id: QuestionCategory;
+        totalUnique: number;
+        correctUnique: number;
+      }>(categoryQuery, []);
       const categoryBreakdown = {
         journal: { totalUnique: 0, correctUnique: 0 },
         ledger: { totalUnique: 0, correctUnique: 0 },
@@ -587,7 +613,7 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
           COUNT(*) as totalAttempts
         FROM learning_history lh
       `;
-      const params: any[] = [];
+      const params: SqlParameter[] = [];
 
       if (options.category) {
         sql +=
@@ -609,7 +635,12 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         params.push(options.limit);
       }
 
-      const result = await this.executeQuery<any>(sql, params);
+      const result = await this.executeQuery<{
+        question_id: string;
+        incorrectCount: number;
+        lastIncorrectAt: string;
+        totalAttempts: number;
+      }>(sql, params);
       return result.rows.map((row) => ({
         questionId: row.question_id,
         incorrectCount: row.incorrectCount,
@@ -636,7 +667,7 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       );
       return result;
     } catch (error) {
-      logger.error("[LearningHistoryRepository] deleteSession エラー:", error);
+      logger.error("[LearningHistoryRepository] deleteSession エラー:", error as Error);
       throw error;
     }
   }

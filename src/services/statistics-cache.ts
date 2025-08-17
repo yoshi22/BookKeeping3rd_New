@@ -5,7 +5,7 @@
  */
 
 import { OverallStatistics, CategoryStatistics, LearningGoals, DailyStatistics } from './statistics-service';
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 /**
  * キャッシュエントリ

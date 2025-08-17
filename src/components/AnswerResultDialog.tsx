@@ -21,8 +21,10 @@ interface AnswerResultDialogProps {
   visible: boolean;
   result: SubmitAnswerResponse | null;
   onClose: () => void;
-  onNextQuestion?: () => void;
+  onReviewQuestion?: () => void;
   showNextButton?: boolean;
+  showReviewButton?: boolean;
+  onNextQuestion?: () => void;
 }
 
 export default function AnswerResultDialog({

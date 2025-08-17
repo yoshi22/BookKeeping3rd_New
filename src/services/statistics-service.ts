@@ -9,7 +9,7 @@ import { questionRepository } from "../data/repositories/question-repository";
 import { reviewItemRepository } from "../data/repositories/review-item-repository";
 import { statisticsCache } from "./statistics-cache";
 import { QuestionCategory } from "../types/models";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 /**
  * 全体学習統計
@@ -194,7 +194,7 @@ export class StatisticsService {
 
       return statistics;
     } catch (error) {
-      logger.error("[StatisticsService] getOverallStatistics エラー:", error);
+      logger.error("[StatisticsService] getOverallStatistics エラー:", error  as Error);
       throw error;
     }
   }
@@ -284,7 +284,7 @@ export class StatisticsService {
       logger.debug("[StatisticsService] カテゴリ別統計取得完了");
       return statistics;
     } catch (error) {
-      logger.error("[StatisticsService] getCategoryStatistics エラー:", error);
+      logger.error("[StatisticsService] getCategoryStatistics エラー:", error  as Error);
       throw error;
     }
   }
@@ -356,7 +356,7 @@ export class StatisticsService {
       logger.debug("[StatisticsService] 日別学習統計取得完了");
       return result;
     } catch (error) {
-      logger.error("[StatisticsService] getDailyStatistics エラー:", error);
+      logger.error("[StatisticsService] getDailyStatistics エラー:", error  as Error);
       throw error;
     }
   }
@@ -398,7 +398,7 @@ export class StatisticsService {
       logger.debug("[StatisticsService] 学習傾向分析完了");
       return trends;
     } catch (error) {
-      logger.error("[StatisticsService] getLearningTrends エラー:", error);
+      logger.error("[StatisticsService] getLearningTrends エラー:", error  as Error);
       throw error;
     }
   }
@@ -473,7 +473,7 @@ export class StatisticsService {
       logger.debug("[StatisticsService] 学習目標進捗取得完了");
       return goals;
     } catch (error) {
-      logger.error("[StatisticsService] getLearningGoals エラー:", error);
+      logger.error("[StatisticsService] getLearningGoals エラー:", error  as Error);
       throw error;
     }
   }

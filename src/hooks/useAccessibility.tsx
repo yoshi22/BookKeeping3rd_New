@@ -6,7 +6,7 @@
 import { useState, useEffect } from "react";
 import { Platform, AccessibilityInfo, Appearance } from "react-native";
 import { AccessibilityColors } from "../theme/colors";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 export interface AccessibilityState {
   isScreenReaderEnabled: boolean;

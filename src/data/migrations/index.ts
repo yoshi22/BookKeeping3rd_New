@@ -8,7 +8,7 @@ import { migration001 } from "./001-initial-schema";
 import { addExamSectionsMigration } from "./002-add-exam-sections";
 import { migration003 } from "./003-add-question-structure";
 import { migration004 } from "./004-populate-question-structure";
-import { logger } from "../../../utils/logger";
+import { logger } from "../../utils/logger";
 
 /**
  * 全マイグレーションの登録と実行
@@ -32,7 +32,9 @@ export async function initializeDatabase(): Promise<void> {
     logger.debug("[Database] マイグレーション実行");
     await migrationManager.runMigrations();
 
-    logger.debug("[Database] マイグレーション完了 - サンプルデータ読み込み開始");
+    logger.debug(
+      "[Database] マイグレーション完了 - サンプルデータ読み込み開始",
+    );
 
     // サンプルデータの読み込み（非同期）
     try {
@@ -51,32 +53,31 @@ export async function initializeDatabase(): Promise<void> {
       const status = await migrationManager.getStatus();
       logger.debug("[Database] マイグレーション状態:", { details: status });
     } catch (statusError) {
-      logger.warn("[Database] 状態確認失敗（継続可能）:", { details: statusError });
+      logger.warn("[Database] 状態確認失敗（継続可能）:", {
+        details: statusError,
+      });
     }
 
     logger.debug("[Database] データベース初期化完了");
   } catch (error) {
-    logger.error("[Database] データベース初期化エラー:", error);
-    logger.error("[Database] Error details:", {
-      message: error instanceof Error ? error.message : error,
-      stack: error instanceof Error ? error.stack : undefined,
-    });
+    logger.error("[Database] データベース初期化エラー:", error as Error);
+    logger.error("[Database] Error details:");
 
     // エラーの種類に応じて異なる処理
     if (error instanceof Error) {
-      if (error.message.includes("Database corruption detected")) {
+      if ((error as Error).message.includes("Database corruption detected")) {
         throw new Error(
-          `Database corruption detected - reset required: ${error.message}`,
+          `Database corruption detected - reset required: ${(error as Error).message}`,
         );
-      } else if (error.message.includes("Transaction execution failed")) {
+      } else if ((error as Error).message.includes("Transaction execution failed")) {
         throw new Error(
-          `Database transaction failed - reset recommended: ${error.message}`,
+          `Database transaction failed - reset recommended: ${(error as Error).message}`,
         );
       }
     }
 
     throw new Error(
-      `Database initialization failed: ${error instanceof Error ? error.message : error}`,
+      `Database initialization failed: ${error instanceof Error ? (error as Error).message : error}`,
     );
   }
 }
@@ -94,12 +95,14 @@ async function loadSampleData(): Promise<void> {
     const SAMPLE_DATA_VERSION = "2025-08-17-text-format-fixed";
 
     // 開発環境での強制更新フラグ（React Native環境対応）
-    logger.debug("[Database] 環境変数チェック:", { details: {
-      __DEV__,
-      FORCE_UPDATE_QUESTIONS: process.env.FORCE_UPDATE_QUESTIONS,
-      EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS:
-        process.env.EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS,
-    } });
+    logger.debug("[Database] 環境変数チェック:", {
+      details: {
+        __DEV__,
+        FORCE_UPDATE_QUESTIONS: process.env.FORCE_UPDATE_QUESTIONS,
+        EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS:
+          process.env.EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS,
+      },
+    });
 
     // 一時的に強制更新を有効化（250問データ読み込みのため）
     const forceUpdate = false;
@@ -130,16 +133,18 @@ async function loadSampleData(): Promise<void> {
     // バージョンチェック
     const needsUpdate = currentVersion !== SAMPLE_DATA_VERSION;
 
-    logger.debug("[Database] バージョンチェック結果:", { details: {
-      currentVersion,
-      SAMPLE_DATA_VERSION,
-      needsUpdate,
-    } });
+    logger.debug("[Database] バージョンチェック結果:", {
+      details: {
+        currentVersion,
+        SAMPLE_DATA_VERSION,
+        needsUpdate,
+      },
+    });
 
     if (needsUpdate) {
       logger.debug("[Database] データバージョンが更新されています");
-      logger.debug("[Database] 現在: ${currentVersion || "なし"}");
-      logger.debug("[Database] 新規: ${SAMPLE_DATA_VERSION}");
+      logger.debug(`[Database] 現在: ${currentVersion || "なし"}`);
+      logger.debug(`[Database] 新規: ${SAMPLE_DATA_VERSION}`);
     }
 
     // 既存の問題データをチェック
@@ -148,11 +153,13 @@ async function loadSampleData(): Promise<void> {
     );
 
     if (existingCount.rows[0]?.count > 0) {
-      logger.debug("[Database] 削除条件チェック:", { details: {
-        forceUpdate,
-        needsUpdate,
-        shouldDelete: forceUpdate || needsUpdate,
-      } });
+      logger.debug("[Database] 削除条件チェック:", {
+        details: {
+          forceUpdate,
+          needsUpdate,
+          shouldDelete: forceUpdate || needsUpdate,
+        },
+      });
 
       if (forceUpdate || needsUpdate) {
         console.log(
@@ -176,7 +183,9 @@ async function loadSampleData(): Promise<void> {
             );
 
             await databaseService.executeSql("DELETE FROM review_items");
-            logger.debug("[Database] review_items テーブル削除完了（強制更新）");
+            logger.debug(
+              "[Database] review_items テーブル削除完了（強制更新）",
+            );
           } else {
             console.log(
               "[Database] ユーザーデータ（learning_history, review_items）は保持します",
@@ -336,7 +345,9 @@ async function loadSampleData(): Promise<void> {
         `[Database] 模試データ読み込み完了: ${mockExamData.exams.length}件の模試、${mockExamData.questions.length}件の問題関連`,
       );
     } catch (mockExamError) {
-      logger.warn("[Database] 模試データ読み込みエラー:", { details: mockExamError });
+      logger.warn("[Database] 模試データ読み込みエラー:", {
+        details: mockExamError,
+      });
       // 模試データの失敗は致命的でない
     }
 
@@ -358,7 +369,9 @@ async function loadSampleData(): Promise<void> {
         `[Database] データバージョン保存完了: ${SAMPLE_DATA_VERSION}`,
       );
     } catch (versionError) {
-      logger.warn("[Database] バージョン情報保存エラー:", { details: versionError });
+      logger.warn("[Database] バージョン情報保存エラー:", {
+        details: versionError,
+      });
       // バージョン保存の失敗は致命的でない
     }
   } catch (error) {
@@ -403,13 +416,13 @@ export async function setupDatabase(): Promise<void> {
 
     logger.debug("[Database] データベースセットアップ完了");
   } catch (error) {
-    logger.error("[Database] データベースセットアップエラー:", error);
+    logger.error("[Database] データベースセットアップエラー:", error as Error);
     console.error(
       "[Database] Setup Error Stack:",
       error instanceof Error ? error.stack : undefined,
     );
     throw new Error(
-      `Database setup failed: ${error instanceof Error ? error.message : error}`,
+      `Database setup failed: ${error instanceof Error ? (error as Error).message : error}`,
     );
   }
 }

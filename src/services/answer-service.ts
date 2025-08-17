@@ -6,7 +6,18 @@
 
 import { CBTAnswerData, SessionType } from "../types/database";
 import { Question, QuestionCorrectAnswer } from "../types/models";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
+import {
+  QuestionTemplate,
+  QuestionField,
+  AnswerData,
+  JournalEntry,
+  LedgerEntry,
+  TrialBalanceEntry,
+  FinancialStatementEntry,
+  CorrectAnswer,
+  safeJsonParse,
+} from "../types/enhanced-types";
 import {
   learningHistoryRepository,
   CBTAnswerRecord,
@@ -133,10 +144,15 @@ export class AnswerService {
           );
         }
       } catch (reviewError) {
-        logger.error("[AnswerService] 復習状況更新エラー:", reviewError);
-        logger.error("[AnswerService] Error details:", {
+        logger.error(
+          "[AnswerService] 復習状況更新エラー:",
+          reviewError as Error,
+        );
+        logger.error("[AnswerService] Error details:", reviewError as Error, {
           message:
-            reviewError instanceof Error ? reviewError.message : reviewError,
+            reviewError instanceof Error
+              ? reviewError.message
+              : String(reviewError),
           stack: reviewError instanceof Error ? reviewError.stack : undefined,
         });
         // 復習状況更新エラーは致命的ではないため、処理を継続
@@ -167,7 +183,7 @@ export class AnswerService {
 
       return response;
     } catch (error) {
-      logger.error("[AnswerService] 解答送信エラー:", error);
+      logger.error("[AnswerService] 解答送信エラー:", error as Error);
       throw error;
     }
   }
@@ -182,7 +198,10 @@ export class AnswerService {
     const errors: string[] = [];
 
     try {
-      const template = JSON.parse(question.answer_template_json);
+      const template = safeJsonParse<QuestionTemplate>(
+        question.answer_template_json,
+        {} as QuestionTemplate,
+      );
 
       // 伝票問題の場合は専用バリデーションを使用
       if (template.type === "voucher_entry") {
@@ -199,8 +218,8 @@ export class AnswerService {
       }
 
       // 必須フィールドチェック
-      template.fields?.forEach((field: any) => {
-        const value = (answerData as any)[field.name];
+      template.fields?.forEach((field: QuestionField) => {
+        const value = (answerData as AnswerData)[field.name];
         if (
           field.required &&
           (value === null || value === undefined || value === "")
@@ -222,7 +241,9 @@ export class AnswerService {
 
       // 数値フィールドチェック
       Object.entries(answerData).forEach(([key, value]) => {
-        const field = template.fields?.find((f: any) => f.name === key);
+        const field = template.fields?.find(
+          (f: QuestionField) => f.name === key,
+        );
         if (field?.type === "number" && value !== null && value !== undefined) {
           if (typeof value !== "number" || isNaN(value)) {
             errors.push(`${field.label}は有効な数値を入力してください`);
@@ -244,7 +265,10 @@ export class AnswerService {
         }
       }
     } catch (parseError) {
-      logger.error("[AnswerService] テンプレート解析エラー:", parseError);
+      logger.error(
+        "[AnswerService] テンプレート解析エラー:",
+        parseError as Error,
+      );
       errors.push("問題データの解析に失敗しました");
     }
 
@@ -256,12 +280,23 @@ export class AnswerService {
    */
   private validateVoucherAnswer(
     answerData: CBTAnswerData,
-    template: any,
+    template: QuestionTemplate,
   ): string[] {
     const errors: string[] = [];
-    const data = answerData as any;
+    const data = answerData as AnswerData & {
+      voucher_type?: string;
+      entries?: Array<{
+        account?: string;
+        amount?: number;
+        date?: string;
+        description?: string;
+        [key: string]: string | number | undefined;
+      }>;
+    };
 
-    logger.debug("[AnswerService] 伝票バリデーション開始:", { details: { data, template } });
+    logger.debug("[AnswerService] 伝票バリデーション開始:", {
+      details: { data, template },
+    });
 
     // 基本構造チェック
     if (!data.voucher_type) {
@@ -279,8 +314,8 @@ export class AnswerService {
     }
 
     // 各エントリの必須フィールドチェック
-    data.entries.forEach((entry: any, index: number) => {
-      template.fields?.forEach((field: any) => {
+    data.entries.forEach((entry, index: number) => {
+      template.fields?.forEach((field: QuestionField) => {
         const value = entry[field.name];
         if (
           field.required &&
@@ -306,7 +341,9 @@ export class AnswerService {
       }
     });
 
-    logger.debug("[AnswerService] 伝票バリデーション完了:", { details: { errors } });
+    logger.debug("[AnswerService] 伝票バリデーション完了:", {
+      details: { errors },
+    });
     return errors;
   }
 
@@ -315,10 +352,17 @@ export class AnswerService {
    */
   private validateMultipleBlankChoiceAnswer(
     answerData: CBTAnswerData,
-    template: any,
+    template: QuestionTemplate & {
+      questions?: Array<{
+        id: string;
+        label: string;
+      }>;
+    },
   ): string[] {
     const errors: string[] = [];
-    const data = answerData as any;
+    const data = answerData as AnswerData & {
+      answers?: Record<string, string>;
+    };
 
     console.log(
       "[AnswerService] Multiple blank choice validation - answerData:",
@@ -391,7 +435,10 @@ export class AnswerService {
 
       // First check answer template for question type
       try {
-        const answerTemplate = JSON.parse(question.answer_template_json);
+        const answerTemplate = safeJsonParse<QuestionTemplate>(
+          question.answer_template_json,
+          {} as QuestionTemplate,
+        );
         if (
           answerTemplate?.type === "single_choice" ||
           (answerTemplate?.type === "multiple_choice" &&
@@ -431,7 +478,7 @@ export class AnswerService {
           return false;
       }
     } catch (error) {
-      logger.error("[AnswerService] 正解判定エラー:", error);
+      logger.error("[AnswerService] 正解判定エラー:", error as Error);
       return false;
     }
   }
@@ -446,7 +493,14 @@ export class AnswerService {
     const entry = correctAnswer.journalEntry;
     if (!entry) return false;
 
-    const data = answerData as any;
+    const data = answerData as AnswerData & {
+      debit_account?: string;
+      debit_amount?: number;
+      credit_account?: string;
+      credit_amount?: number;
+      debits?: Array<{ account: string; amount: number }>;
+      credits?: Array<{ account: string; amount: number }>;
+    };
 
     // Check if the answer data is in the new array format (from JournalEntryForm)
     if (
@@ -455,15 +509,21 @@ export class AnswerService {
       Array.isArray(data.debits) &&
       Array.isArray(data.credits)
     ) {
-      return this.isMultipleJournalEntriesCorrect(data, correctAnswer);
+      return this.isMultipleJournalEntriesCorrect(
+        {
+          debits: data.debits,
+          credits: data.credits,
+        },
+        correctAnswer,
+      );
     }
 
     // Legacy format: single debit/credit entries
     const isCorrect =
       data.debit_account === entry.debit_account &&
-      data.debit_amount === entry.debit_amount &&
+      (data as any).debit_amount === (entry as any).debit_amount &&
       data.credit_account === entry.credit_account &&
-      data.credit_amount === entry.credit_amount;
+      (data as any).credit_amount === (entry as any).credit_amount;
     return isCorrect;
   }
 
@@ -487,10 +547,10 @@ export class AnswerService {
     // For simple questions (single debit/credit), convert to arrays for comparison
     if (entry.debit_account && entry.credit_account) {
       const expectedDebits = [
-        { account: entry.debit_account, amount: entry.debit_amount },
+        { account: entry.debit_account, amount: (entry as any).debit_amount },
       ];
       const expectedCredits = [
-        { account: entry.credit_account, amount: entry.credit_amount },
+        { account: entry.credit_account, amount: (entry as any).credit_amount },
       ];
 
       return (
@@ -560,8 +620,16 @@ export class AnswerService {
     const entry = correctAnswer.ledgerEntry;
     if (!entry?.entries) return false;
 
-    const data = answerData as any;
-    logger.debug("[AnswerService] Ledger validation - answerData:", { details: data });
+    const data = answerData as AnswerData & {
+      entries?: Array<LedgerEntry>;
+      date?: string;
+      description?: string;
+      debit_amount?: number;
+      credit_amount?: number;
+    };
+    logger.debug("[AnswerService] Ledger validation - answerData:", {
+      details: data,
+    });
     console.log(
       "[AnswerService] Ledger validation - correctAnswer:",
       correctAnswer,
@@ -578,48 +646,46 @@ export class AnswerService {
 
       // Match field names from answer template: date, description, debit_amount, credit_amount
       // with correct answer (handle both snake_case and camelCase)
-      const userDate = data.date;
+      const userDate = (data as any).date;
       const userDescription = data.description;
-      const userDebitAmount = data.debit_amount || 0;
-      const userCreditAmount = data.credit_amount || 0;
+      const userDebitAmount = (data as any).debit_amount || 0;
+      const userCreditAmount = (data as any).credit_amount || 0;
 
       const correctDate = (correctEntry as any).date;
-      const correctDescription = (correctEntry as any).description;
-      const correctDebitAmount =
-        (correctEntry as any).debitAmount ||
-        (correctEntry as any).debit_amount ||
-        0;
-      const correctCreditAmount =
-        (correctEntry as any).creditAmount ||
-        (correctEntry as any).credit_amount ||
-        0;
+      const correctDescription = correctEntry.description;
+      const correctDebitAmount = (correctEntry as any).debit_amount || 0;
+      const correctCreditAmount = (correctEntry as any).credit_amount || 0;
 
-      logger.debug("[AnswerService] Comparing single entry:", { details: {
-        userDate,
-        correctDate,
-        userDescription,
-        correctDescription,
-        userDebitAmount,
-        correctDebitAmount,
-        userCreditAmount,
-        correctCreditAmount,
-      } });
+      logger.debug("[AnswerService] Comparing single entry:", {
+        details: {
+          userDate,
+          correctDate,
+          userDescription,
+          correctDescription,
+          userDebitAmount,
+          correctDebitAmount,
+          userCreditAmount,
+          correctCreditAmount,
+        },
+      });
 
       // Match all required fields
       const dateMatch = !correctDate || userDate === correctDate;
       const descMatch =
         !correctDescription ||
         userDescription?.includes(correctDescription) ||
-        correctDescription?.includes(userDescription);
+        correctDescription?.includes(userDescription || "");
       const debitMatch = userDebitAmount === correctDebitAmount;
       const creditMatch = userCreditAmount === correctCreditAmount;
 
-      logger.debug("[AnswerService] Single entry match results:", { details: {
-        dateMatch,
-        descMatch,
-        debitMatch,
-        creditMatch,
-      } });
+      logger.debug("[AnswerService] Single entry match results:", {
+        details: {
+          dateMatch,
+          descMatch,
+          debitMatch,
+          creditMatch,
+        },
+      });
 
       return dateMatch && descMatch && debitMatch && creditMatch;
     }
@@ -631,13 +697,15 @@ export class AnswerService {
    * 複数帳簿エントリの正解判定
    */
   private validateMultipleLedgerEntries(
-    userEntries: any[],
-    correctEntries: any[],
+    userEntries: LedgerEntry[],
+    correctEntries: LedgerEntry[],
   ): boolean {
-    logger.debug("[AnswerService] Validating multiple entries:", { details: {
-      userEntries,
-      correctEntries,
-    } });
+    logger.debug("[AnswerService] Validating multiple entries:", {
+      details: {
+        userEntries,
+        correctEntries,
+      },
+    });
 
     if (userEntries.length !== correctEntries.length) {
       console.log(
@@ -647,11 +715,11 @@ export class AnswerService {
     }
 
     // Sort both arrays by date for consistent comparison
-    const sortedUserEntries = [...userEntries].sort((a, b) =>
-      a.date.localeCompare(b.date),
+    const sortedUserEntries = [...userEntries].sort(
+      (a, b) => (a as any).date?.localeCompare((b as any).date || "") || 0,
     );
     const sortedCorrectEntries = [...correctEntries].sort((a, b) =>
-      (a.date || "").localeCompare(b.date || ""),
+      ((a as any).date || "").localeCompare((b as any).date || ""),
     );
 
     // Validate each entry
@@ -660,48 +728,46 @@ export class AnswerService {
       const correctEntry = sortedCorrectEntries[i];
 
       // Extract values with support for different field naming conventions
-      const userDate = userEntry.date;
+      const userDate = (userEntry as any).date;
       const userDescription = userEntry.description;
-      const userDebitAmount = userEntry.debit_amount || 0;
-      const userCreditAmount = userEntry.credit_amount || 0;
+      const userDebitAmount = (userEntry as any).debit_amount || 0;
+      const userCreditAmount = (userEntry as any).credit_amount || 0;
 
       const correctDate = (correctEntry as any).date;
-      const correctDescription = (correctEntry as any).description;
-      const correctDebitAmount =
-        (correctEntry as any).debitAmount ||
-        (correctEntry as any).debit_amount ||
-        0;
-      const correctCreditAmount =
-        (correctEntry as any).creditAmount ||
-        (correctEntry as any).credit_amount ||
-        0;
+      const correctDescription = correctEntry.description;
+      const correctDebitAmount = (correctEntry as any).debit_amount || 0;
+      const correctCreditAmount = (correctEntry as any).credit_amount || 0;
 
-      logger.debug("[AnswerService] Comparing entry ${i + 1}:", { details: {
-        userDate,
-        correctDate,
-        userDescription,
-        correctDescription,
-        userDebitAmount,
-        correctDebitAmount,
-        userCreditAmount,
-        correctCreditAmount,
-      } });
+      logger.debug("[AnswerService] Comparing entry ${i + 1}:", {
+        details: {
+          userDate,
+          correctDate,
+          userDescription,
+          correctDescription,
+          userDebitAmount,
+          correctDebitAmount,
+          userCreditAmount,
+          correctCreditAmount,
+        },
+      });
 
       // Match fields for this entry
       const dateMatch = !correctDate || userDate === correctDate;
       const descMatch =
         !correctDescription ||
         userDescription?.includes(correctDescription) ||
-        correctDescription?.includes(userDescription);
+        correctDescription?.includes(userDescription || "");
       const debitMatch = userDebitAmount === correctDebitAmount;
       const creditMatch = userCreditAmount === correctCreditAmount;
 
-      logger.debug("[AnswerService] Entry ${i + 1} match results:", { details: {
-        dateMatch,
-        descMatch,
-        debitMatch,
-        creditMatch,
-      } });
+      logger.debug("[AnswerService] Entry ${i + 1} match results:", {
+        details: {
+          dateMatch,
+          descMatch,
+          debitMatch,
+          creditMatch,
+        },
+      });
 
       if (!dateMatch || !descMatch || !debitMatch || !creditMatch) {
         return false;
@@ -722,14 +788,28 @@ export class AnswerService {
     // Handle legacy format first (for backward compatibility)
     const balances = correctAnswer.trialBalance?.balances;
     if (balances) {
-      const data = answerData as any;
+      const data = answerData as AnswerData;
       return Object.entries(balances).every(([account, amount]) => {
         return data[account] === amount;
       });
     }
 
     // Handle financialStatements format (Q_T_001など)
-    const financialStatements = (correctAnswer as any).financialStatements;
+    const financialStatements = (
+      correctAnswer as CorrectAnswer & {
+        financialStatements?: {
+          balanceSheet?: {
+            assets?: FinancialStatementEntry[];
+            liabilities?: FinancialStatementEntry[];
+            equity?: FinancialStatementEntry[];
+          };
+          incomeStatement?: {
+            revenues?: FinancialStatementEntry[];
+            expenses?: FinancialStatementEntry[];
+          };
+        };
+      }
+    ).financialStatements;
     if (financialStatements) {
       // 財務諸表形式の場合は、entriesに変換
       const convertedEntries =
@@ -740,13 +820,17 @@ export class AnswerService {
     }
 
     // Handle new format: { entries: [...] }
-    const correctEntries = (correctAnswer as any).entries;
+    const correctEntries = (
+      correctAnswer as CorrectAnswer & {
+        entries?: TrialBalanceEntry[];
+      }
+    ).entries;
     if (!correctEntries || !Array.isArray(correctEntries)) {
       return false;
     }
 
     // Get user answer entries
-    const data = answerData as any;
+    const data = answerData as AnswerData;
     const userEntries = data.entries;
     if (!userEntries || !Array.isArray(userEntries)) {
       return false;
@@ -901,7 +985,7 @@ export class AnswerService {
     }>,
     answerData: CBTAnswerData,
   ): boolean {
-    const data = answerData as any;
+    const data = answerData as AnswerData;
     const userEntries = data.entries;
 
     if (!userEntries || !Array.isArray(userEntries)) {
@@ -943,11 +1027,20 @@ export class AnswerService {
     answerData: CBTAnswerData,
     correctAnswer: QuestionCorrectAnswer,
   ): boolean {
-    const data = answerData as any;
+    const data = answerData as AnswerData;
 
     // 正答データのentriesと比較
-    const correctVoucherType = (correctAnswer as any).voucher_type;
-    const correctEntries = (correctAnswer as any).entries;
+    const correctVoucherAnswer = correctAnswer as CorrectAnswer & {
+      voucher_type?: string;
+      entries?: Array<{
+        date?: string;
+        account?: string;
+        amount?: number;
+        description?: string;
+      }>;
+    };
+    const correctVoucherType = correctVoucherAnswer.voucher_type;
+    const correctEntries = correctVoucherAnswer.entries;
 
     if (!correctEntries || !Array.isArray(correctEntries)) {
       return false;
@@ -977,9 +1070,10 @@ export class AnswerService {
       // 同じデータを持つエントリを探す
       const matchingEntry = userEntries.find((userEntry: any) => {
         const dateMatch =
-          !correctEntry.date ||
-          userEntry.date === correctEntry.date ||
-          userEntry.date === correctEntry.date.replace(/\//g, "/");
+          !(correctEntry as any).date ||
+          (userEntry as any).date === (correctEntry as any).date ||
+          (userEntry as any).date ===
+            (correctEntry as any).date.replace(/\//g, "/");
 
         const accountMatch =
           !correctEntry.account || userEntry.account === correctEntry.account;
@@ -1009,8 +1103,10 @@ export class AnswerService {
     correctAnswer: QuestionCorrectAnswer,
     questionType: "single_choice" | "multiple_choice",
   ): boolean {
-    const data = answerData as any;
-    logger.debug("[AnswerService] Choice validation - answerData:", { details: data });
+    const data = answerData as AnswerData;
+    logger.debug("[AnswerService] Choice validation - answerData:", {
+      details: data,
+    });
     console.log(
       "[AnswerService] Choice validation - correctAnswer:",
       correctAnswer,
@@ -1023,19 +1119,29 @@ export class AnswerService {
     if (questionType === "single_choice") {
       // Single choice: compare selected option
       const userSelected = data.selected;
-      const correctSelected = (correctAnswer as any).selected;
+      const correctSelected = (
+        correctAnswer as CorrectAnswer & {
+          selected?: string;
+        }
+      ).selected;
 
-      logger.debug("[AnswerService] Single choice comparison:", { details: {
-        userSelected,
-        correctSelected,
-        match: userSelected === correctSelected,
-      } });
+      logger.debug("[AnswerService] Single choice comparison:", {
+        details: {
+          userSelected,
+          correctSelected,
+          match: userSelected === correctSelected,
+        },
+      });
 
       return userSelected === correctSelected;
     } else if (questionType === "multiple_choice") {
       // Multiple choice: compare selected options arrays
       const userSelectedOptions = data.selected_options;
-      const correctSelectedOptions = (correctAnswer as any).selected_options;
+      const correctSelectedOptions = (
+        correctAnswer as CorrectAnswer & {
+          selected_options?: string[];
+        }
+      ).selected_options;
 
       if (
         !Array.isArray(userSelectedOptions) ||
@@ -1055,11 +1161,13 @@ export class AnswerService {
       const sortedUser = [...userSelectedOptions].sort();
       const sortedCorrect = [...correctSelectedOptions].sort();
 
-      logger.debug("[AnswerService] Multiple choice comparison:", { details: {
-        userSelectedOptions: sortedUser,
-        correctSelectedOptions: sortedCorrect,
-        lengthMatch: sortedUser.length === sortedCorrect.length,
-      } });
+      logger.debug("[AnswerService] Multiple choice comparison:", {
+        details: {
+          userSelectedOptions: sortedUser,
+          correctSelectedOptions: sortedCorrect,
+          lengthMatch: sortedUser.length === sortedCorrect.length,
+        },
+      });
 
       // Compare lengths and contents
       if (sortedUser.length !== sortedCorrect.length) {
@@ -1081,7 +1189,7 @@ export class AnswerService {
     answerData: CBTAnswerData,
     correctAnswer: QuestionCorrectAnswer,
   ): boolean {
-    const data = answerData as any;
+    const data = answerData as AnswerData;
 
     console.log(
       "[AnswerService] Multiple blank choice validation - answerData:",
@@ -1101,7 +1209,11 @@ export class AnswerService {
     }
 
     const userAnswers = data.answers;
-    const correctAnswers = (correctAnswer as any).answers;
+    const correctAnswers = (
+      correctAnswer as CorrectAnswer & {
+        answers?: Record<string, string>;
+      }
+    ).answers;
 
     if (!correctAnswers || typeof correctAnswers !== "object") {
       console.error(
@@ -1179,7 +1291,7 @@ export class AnswerService {
 
       return results;
     } catch (error) {
-      logger.error("[AnswerService] バッチ解答送信エラー:", error);
+      logger.error("[AnswerService] バッチ解答送信エラー:", error as Error);
       throw error;
     }
   }
@@ -1213,7 +1325,7 @@ export class AnswerService {
         averageTime,
       };
     } catch (error) {
-      logger.error("[AnswerService] セッション統計取得エラー:", error);
+      logger.error("[AnswerService] セッション統計取得エラー:", error as Error);
       throw error;
     }
   }

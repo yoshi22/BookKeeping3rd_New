@@ -6,7 +6,7 @@
 
 import { BaseRepository } from "./base-repository";
 import { ReviewItem, QuestionCategory } from "../../types/models";
-import { logger } from "../../../utils/logger";
+import { logger } from "../../utils/logger";
 
 /**
  * 復習優先度レベル
@@ -142,11 +142,8 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
         return result;
       }
     } catch (error) {
-      logger.error("[ReviewItemRepository] createOrUpdate エラー:", error);
-      logger.error("[ReviewItemRepository] Error details:", {
-        message: error instanceof Error ? error.message : error,
-        stack: error instanceof Error ? error.stack : undefined,
-      });
+      logger.error("[ReviewItemRepository] createOrUpdate エラー:", error as Error);
+      logger.error("[ReviewItemRepository] Error details:");
       throw error;
     }
   }
@@ -161,7 +158,7 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
       const result = await this.findOne({ question_id: questionId });
       return result;
     } catch (error) {
-      logger.error("[ReviewItemRepository] findByQuestionId エラー:", error);
+      logger.error("[ReviewItemRepository] findByQuestionId エラー:", error as Error);
       throw error;
     }
   }
@@ -215,7 +212,7 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
       logger.debug("[ReviewItemRepository] 復習アイテム更新完了: ${questionId}");
       return updated;
     } catch (error) {
-      logger.error("[ReviewItemRepository] updateByQuestionId エラー:", error);
+      logger.error("[ReviewItemRepository] updateByQuestionId エラー:", error as Error);
       throw error;
     }
   }
@@ -225,7 +222,7 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
    */
   public async getReviewList(filter: ReviewFilter = {}): Promise<ReviewItem[]> {
     try {
-      logger.debug("[ReviewItemRepository] getReviewList開始:", { details: filter });
+      logger.debug("[ReviewItemRepository] getReviewList開始:");
       let sql = `
         SELECT ri.* FROM review_items ri
       `;
@@ -291,7 +288,7 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
       );
       return result.rows;
     } catch (error) {
-      logger.error("[ReviewItemRepository] getReviewList エラー:", error);
+      logger.error("[ReviewItemRepository] getReviewList エラー:", error as Error);
       throw error;
     }
   }
@@ -466,7 +463,7 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
       logger.debug("[ReviewItemRepository] 復習アイテム削除完了: ${questionId}");
       return result;
     } catch (error) {
-      logger.error("[ReviewItemRepository] deleteByQuestionId エラー:", error);
+      logger.error("[ReviewItemRepository] deleteByQuestionId エラー:", error as Error);
       throw error;
     }
   }

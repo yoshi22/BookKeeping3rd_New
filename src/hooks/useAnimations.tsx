@@ -8,7 +8,7 @@
 
 import React, { useCallback, useRef, useEffect } from 'react';
 import { Animated, Easing, Platform } from 'react-native';
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 /**
  * アニメーションの種類定義

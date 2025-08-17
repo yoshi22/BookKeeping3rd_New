@@ -10,7 +10,7 @@ import { databaseService } from "../data/database";
 import { offlineCacheService } from "./offline-cache-service";
 import { StatisticsService } from "./statistics-service";
 import { ReviewService } from "./review-service";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 export interface SyncConfig {
   enableBackgroundSync: boolean;
@@ -119,7 +119,7 @@ export class OfflineSyncService {
       this.isInitialized = true;
       logger.debug("[OfflineSyncService] 同期システム初期化完了");
     } catch (error) {
-      logger.error("[OfflineSyncService] 初期化エラー:", error);
+      logger.error("[OfflineSyncService] 初期化エラー:", error  as Error);
       throw error;
     }
   }
@@ -191,7 +191,7 @@ export class OfflineSyncService {
 
       logger.debug("[OfflineSyncService] ネットワーク監視開始");
     } catch (error) {
-      logger.error("[OfflineSyncService] ネットワーク監視エラー:", error);
+      logger.error("[OfflineSyncService] ネットワーク監視エラー:", error  as Error);
     }
   }
 
@@ -285,7 +285,7 @@ export class OfflineSyncService {
       );
       return operation.id;
     } catch (error) {
-      logger.error("[OfflineSyncService] 操作登録エラー:", error);
+      logger.error("[OfflineSyncService] 操作登録エラー:", error  as Error);
       throw error;
     }
   }
@@ -396,7 +396,7 @@ export class OfflineSyncService {
 
       logger.debug("[OfflineSyncService] 同期完了");
     } catch (error) {
-      logger.error("[OfflineSyncService] 同期エラー:", error);
+      logger.error("[OfflineSyncService] 同期エラー:", error  as Error);
     } finally {
       this.syncStatus.isCurrentlySyncing = false;
       this.syncStatus.syncProgress = 0;
@@ -446,11 +446,11 @@ export class OfflineSyncService {
 
         logger.debug("[OfflineSyncService] 操作成功: ${operation.id}");
       } catch (error) {
-        logger.error("[OfflineSyncService] 操作失敗: ${operation.id}", error);
+        logger.error("[OfflineSyncService] 操作失敗: ${operation.id}", error  as Error);
 
         operation.retryCount++;
         operation.lastError =
-          error instanceof Error ? error.message : String(error);
+          error instanceof Error ? (error as Error).message : String(error);
 
         if (operation.retryCount < this.config.retryAttempts) {
           operation.status = "pending";
@@ -688,7 +688,7 @@ export class OfflineSyncService {
       await this.markConflictResolved(conflict.id);
       logger.debug("[OfflineSyncService] マージ完了: ${conflict.id}");
     } catch (error) {
-      logger.error("[OfflineSyncService] マージエラー: ${conflict.id}", error);
+      logger.error("[OfflineSyncService] マージエラー: ${conflict.id}", error  as Error);
     }
   }
 
@@ -872,7 +872,7 @@ export class OfflineSyncService {
 
       logger.debug("[OfflineSyncService] 設定更新完了");
     } catch (error) {
-      logger.error("[OfflineSyncService] 設定更新エラー:", error);
+      logger.error("[OfflineSyncService] 設定更新エラー:", error  as Error);
     }
   }
 
@@ -893,7 +893,7 @@ export class OfflineSyncService {
 
       logger.debug("[OfflineSyncService] クリーンアップ完了");
     } catch (error) {
-      logger.error("[OfflineSyncService] クリーンアップエラー:", error);
+      logger.error("[OfflineSyncService] クリーンアップエラー:", error  as Error);
     }
   }
 }

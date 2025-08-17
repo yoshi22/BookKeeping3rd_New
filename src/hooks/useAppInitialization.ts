@@ -13,7 +13,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { optimizedDatabaseService } from '../data/database-optimized';
 import { statisticsCache } from '../services/statistics-cache';
 import { databaseService } from '../data/database';
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 /**
  * 初期化段階の定義

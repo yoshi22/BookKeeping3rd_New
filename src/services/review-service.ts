@@ -13,7 +13,7 @@ import {
 import { learningHistoryRepository } from "../data/repositories/learning-history-repository";
 import { questionRepository } from "../data/repositories/question-repository";
 import { Question, QuestionCategory } from "../types/models";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 /**
  * 復習優先度アルゴリズム設定
@@ -258,7 +258,7 @@ export class ReviewService {
 
       return result;
     } catch (error) {
-      logger.error("[ReviewService] updateReviewStatus エラー:", error);
+      logger.error("[ReviewService] updateReviewStatus エラー:", error as Error);
       throw error;
     }
   }
@@ -360,7 +360,7 @@ export class ReviewService {
       logger.debug("[ReviewService] 復習リスト生成完了: ${questions.length}件");
       return questions;
     } catch (error) {
-      logger.error("[ReviewService] generateReviewList エラー:", error);
+      logger.error("[ReviewService] generateReviewList エラー:", error as Error);
       throw error;
     }
   }
@@ -378,11 +378,8 @@ export class ReviewService {
       );
       return result;
     } catch (error) {
-      logger.error("[ReviewService] getReviewStatistics エラー:", error);
-      logger.error("[ReviewService] Error details:", {
-        message: error instanceof Error ? error.message : error,
-        stack: error instanceof Error ? error.stack : undefined,
-      });
+      logger.error("[ReviewService] getReviewStatistics エラー:", error as Error);
+      logger.error("[ReviewService] Error details:");
       throw error;
     }
   }
@@ -411,7 +408,7 @@ export class ReviewService {
         totalCount: questions.length,
       };
     } catch (error) {
-      logger.error("[ReviewService] startReviewSession エラー:", error);
+      logger.error("[ReviewService] startReviewSession エラー:", error as Error);
       throw error;
     }
   }
@@ -432,7 +429,7 @@ export class ReviewService {
     try {
       logger.debug("[ReviewService] 弱点分野分析開始");
       const stats = await this.getReviewStatistics();
-      logger.debug("[ReviewService] 統計データに基づく分析:", { details: stats });
+      logger.debug("[ReviewService] 統計データに基づく分析:");
       const analysis = [];
 
       const categoryNames: Record<QuestionCategory, string> = {
@@ -486,11 +483,8 @@ export class ReviewService {
       );
       return analysis;
     } catch (error) {
-      logger.error("[ReviewService] analyzeWeakAreas エラー:", error);
-      logger.error("[ReviewService] Error details:", {
-        message: error instanceof Error ? error.message : error,
-        stack: error instanceof Error ? error.stack : undefined,
-      });
+      logger.error("[ReviewService] analyzeWeakAreas エラー:", error as Error);
+      logger.error("[ReviewService] Error details:");
       throw error;
     }
   }
@@ -567,7 +561,7 @@ export class ReviewService {
         oldHistoryDeleted,
       };
     } catch (error) {
-      logger.error("[ReviewService] cleanupReviewItems エラー:", error);
+      logger.error("[ReviewService] cleanupReviewItems エラー:", error as Error);
       throw error;
     }
   }

@@ -6,7 +6,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, Platform } from "react-native";
 import { useAccessibility } from "./useAccessibility";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 export interface ScreenReaderElement {
   id: string;

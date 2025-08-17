@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { logger } from "../../../utils/logger";
+import { logger } from "../../utils/logger";
 import {
   View,
   Text,
@@ -13,7 +13,11 @@ import {
   Modal,
   FlatList,
 } from "react-native";
-import { useTheme, useThemedStyles, type Theme } from "../../context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  type Theme,
+} from "../../context/ThemeContext";
 import ExplanationModal from "./ExplanationModal";
 import {
   MockExamFormProps,
@@ -85,21 +89,25 @@ export default function TrialBalanceForm({
 
   const updateEntry = useCallback(
     (index: number, field: keyof TrialBalanceEntry, value: any) => {
-      logger.debug("[TrialBalanceForm] updateEntry called:", { details: {
-        index,
-        field,
-        value,
-      } });
+      logger.debug("[TrialBalanceForm] updateEntry called:", {
+        details: {
+          index,
+          field,
+          value,
+        },
+      });
 
       setEntries((prevEntries) => {
         const newEntries = [...prevEntries];
         newEntries[index] = { ...newEntries[index], [field]: value };
 
-        logger.debug("[TrialBalanceForm] updateEntry setting new state:", { details: {
-          oldEntries: prevEntries,
-          newEntries,
-          targetEntry: newEntries[index],
-        } });
+        logger.debug("[TrialBalanceForm] updateEntry setting new state:", {
+          details: {
+            oldEntries: prevEntries,
+            newEntries,
+            targetEntry: newEntries[index],
+          },
+        });
 
         return newEntries;
       });
@@ -620,9 +628,7 @@ export default function TrialBalanceForm({
   );
 }
 
-const createStyles = (
-  theme: Theme,
-) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,

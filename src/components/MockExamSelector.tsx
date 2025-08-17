@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 import {
   View,
   Text,
@@ -74,7 +74,7 @@ export const MockExamSelector: React.FC<MockExamSelectorProps> = ({
 
       setMockExams(enrichedExams);
     } catch (err) {
-      logger.error("Failed to load mock exams:", err);
+      logger.error("Failed to load mock exams:", err  as Error);
       setError("模試情報の読み込みに失敗しました");
     } finally {
       setLoading(false);

@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { databaseService } from "../data/database";
 import { statisticsService } from "./statistics-service";
 import { ReviewService } from "./review-service";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 
 export interface CacheConfig {
   maxCacheSize: number; // MB
@@ -112,7 +112,7 @@ export class OfflineCacheService {
       this.isInitialized = true;
       logger.debug("[OfflineCacheService] キャッシュシステム初期化完了");
     } catch (error) {
-      logger.error("[OfflineCacheService] 初期化エラー:", error);
+      logger.error("[OfflineCacheService] 初期化エラー:", error  as Error);
       throw error;
     }
   }
@@ -312,7 +312,7 @@ export class OfflineCacheService {
 
       await databaseService.executeSql(query, params);
     } catch (error) {
-      logger.error("[OfflineCacheService] SQLiteキャッシュ保存エラー:", error);
+      logger.error("[OfflineCacheService] SQLiteキャッシュ保存エラー:", error  as Error);
     }
   }
 
@@ -592,7 +592,7 @@ export class OfflineCacheService {
 
       logger.debug("[OfflineCacheService] 期限切れキャッシュクリーンアップ完了");
     } catch (error) {
-      logger.error("[OfflineCacheService] クリーンアップエラー:", error);
+      logger.error("[OfflineCacheService] クリーンアップエラー:", error  as Error);
     }
   }
 
@@ -804,7 +804,7 @@ export class OfflineCacheService {
 
       logger.debug("[OfflineCacheService] 全キャッシュクリア完了");
     } catch (error) {
-      logger.error("[OfflineCacheService] 全キャッシュクリアエラー:", error);
+      logger.error("[OfflineCacheService] 全キャッシュクリアエラー:", error  as Error);
     }
   }
 
@@ -834,7 +834,7 @@ export class OfflineCacheService {
       );
       logger.debug("[OfflineCacheService] 設定更新完了");
     } catch (error) {
-      logger.error("[OfflineCacheService] 設定更新エラー:", error);
+      logger.error("[OfflineCacheService] 設定更新エラー:", error  as Error);
     }
   }
 
@@ -849,7 +849,7 @@ export class OfflineCacheService {
       this.isInitialized = false;
       logger.debug("[OfflineCacheService] クリーンアップ完了");
     } catch (error) {
-      logger.error("[OfflineCacheService] クリーンアップエラー:", error);
+      logger.error("[OfflineCacheService] クリーンアップエラー:", error  as Error);
     }
   }
 }

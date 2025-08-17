@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from "react";
-import { logger } from "../../utils/logger";
+import { logger } from "../utils/logger";
 import {
   View,
   Text,
@@ -123,7 +123,7 @@ export default function ChoiceAnswerForm({
         ]);
       }
     } catch (error) {
-      logger.error("[ChoiceAnswerForm] 解答送信エラー:", error);
+      logger.error("[ChoiceAnswerForm] 解答送信エラー:", error  as Error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);

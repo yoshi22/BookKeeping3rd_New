@@ -5,7 +5,7 @@
 
 import { databaseService } from "../database";
 import { MigrationInfo } from "../../types/database";
-import { logger } from "../../../utils/logger";
+import { logger } from "../../utils/logger";
 
 /**
  * マイグレーション管理クラス
@@ -34,7 +34,7 @@ export class MigrationManager {
       await this.loadMigrations();
       logger.debug("[MigrationManager] 初期化完了");
     } catch (error) {
-      logger.error("[MigrationManager] 初期化エラー:", error);
+      logger.error("[MigrationManager] 初期化エラー:", error as Error);
       throw error;
     }
   }
@@ -85,22 +85,25 @@ export class MigrationManager {
         "[MigrationManager] マイグレーションテーブル作成エラー:",
         error,
       );
-      logger.error("[MigrationManager] Error details:", {
-        message: error instanceof Error ? error.message : error,
-        stack: error instanceof Error ? error.stack : undefined,
+      logger.error("[MigrationManager] Error details:", error as Error, {
+        component: "MigrationManager",
+        errorType:
+          error instanceof Error ? error.constructor.name : typeof error,
       });
 
       // データベースが破損している可能性がある場合の処理
       if (
         error instanceof Error &&
-        (error.message.includes("database is locked") ||
-          error.message.includes("Transaction execution failed") ||
-          error.message.includes("database disk image is malformed"))
+        ((error as Error).message.includes("database is locked") ||
+          (error as Error).message.includes("Transaction execution failed") ||
+          (error as Error).message.includes("database disk image is malformed"))
       ) {
         console.warn(
           "[MigrationManager] データベース破損の可能性 - リセットが必要",
         );
-        throw new Error(`Database corruption detected: ${error.message}`);
+        throw new Error(
+          `Database corruption detected: ${(error as Error).message}`,
+        );
       }
 
       throw error;
