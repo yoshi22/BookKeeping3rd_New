@@ -14,9 +14,9 @@ export const addExamSectionsMigration = {
   sql: [
     // === Drop and recreate exam_sections table to ensure clean schema ===
     `DROP TABLE IF EXISTS exam_sections`,
-    
-    `CREATE TABLE exam_sections (
-      section_number INTEGER PRIMARY KEY CHECK (section_number BETWEEN 1 AND 3),
+
+    `CREATE TABLE IF NOT EXISTS exam_sections (
+      section_number INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
       display_name TEXT NOT NULL,
       total_points INTEGER NOT NULL,

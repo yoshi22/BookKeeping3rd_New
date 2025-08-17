@@ -23,7 +23,13 @@ import { SessionType } from "../../../../src/types/database";
 import { QuestionRepository } from "../../../../src/data/repositories/question-repository";
 import type { Question } from "../../../../src/types/models";
 import { reviewService } from "../../../../src/services/review-service";
-import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../../../../src/context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../../../../src/context/ThemeContext";
 
 export default function LearningQuestionScreen() {
   // Phase 4: ダークモード対応のテーマシステム
@@ -31,6 +37,17 @@ export default function LearningQuestionScreen() {
   const colors = useColors();
   const dynamicColors = useDynamicColors();
   const styles = useThemedStyles(createStyles);
+
+  // Q_J_001デバッグ: 学習画面レンダリング追跡
+  const { id: questionId } = useLocalSearchParams();
+  if (questionId === "Q_J_001") {
+    const screenRenderId = Math.random().toString(36).substr(2, 9);
+    console.log("[LearningQuestionScreen] Q_J_001 Render:", {
+      screenRenderId,
+      questionId,
+      timestamp: Date.now(),
+    });
+  }
 
   const { id, sessionId, sessionType, filteredQuestions } =
     useLocalSearchParams();
@@ -183,14 +200,6 @@ export default function LearningQuestionScreen() {
     } else {
       Alert.alert("最後の問題です", "他のカテゴリの問題に挑戦してみましょう！");
     }
-  };
-
-  // 復習リストに追加
-  const handleAddToReview = () => {
-    Alert.alert(
-      "復習リストに追加",
-      "復習リストに追加されました。復習画面からアクセスできます。",
-    );
   };
 
   // 戻るボタン（タブ内ナビゲーション用）
@@ -371,17 +380,13 @@ export default function LearningQuestionScreen() {
         result={submitResult}
         onClose={handleCloseResultDialog}
         onNextQuestion={handleNextQuestion}
-        onReviewQuestion={handleAddToReview}
         showNextButton={canGoNext}
-        showReviewButton={!submitResult?.isCorrect}
       />
     </ScrollView>
   );
 }
 
-const createStyles = (
-  theme: Theme,
-) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,

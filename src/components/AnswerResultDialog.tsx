@@ -21,9 +21,7 @@ interface AnswerResultDialogProps {
   visible: boolean;
   result: SubmitAnswerResponse | null;
   onClose: () => void;
-  onReviewQuestion?: () => void;
   showNextButton?: boolean;
-  showReviewButton?: boolean;
   onNextQuestion?: () => void;
 }
 
@@ -285,16 +283,8 @@ const createStyles = (theme: Theme) =>
       borderRadius: 8,
       alignItems: "center",
     },
-    reviewButton: {
-      backgroundColor: theme.colors.warning,
-    },
     nextButton: {
       backgroundColor: theme.colors.primary,
-    },
-    reviewButtonText: {
-      color: theme.colors.surface,
-      fontSize: 16,
-      fontWeight: "bold",
     },
     nextButtonText: {
       color: theme.colors.surface,

@@ -42,34 +42,6 @@ interface AnswerField {
   options?: string[];
 }
 
-interface QuestionDisplayProps {
-  questionId: string;
-  categoryName: string;
-  questionText: string;
-  difficulty: number;
-  answerFields?: AnswerField[];
-  answers?: Record<string, any>;
-  explanation?: string;
-  showExplanation?: boolean;
-  isCorrect?: boolean;
-  correctAnswer?: Record<string, any>;
-  onBack: () => void;
-  onAnswerChange?: (fieldName: string, value: any) => void;
-  sessionType?: SessionType;
-  sessionId?: string;
-  startTime?: number;
-  onSubmitAnswer?: (response: SubmitAnswerResponse) => void;
-}
-
-interface AnswerField {
-  label: string;
-  type: "dropdown" | "number" | "text";
-  name: string;
-  required: boolean;
-  format?: "currency" | "percentage";
-  options?: string[];
-}
-
 interface VoucherField {
   name: string;
   label: string;
@@ -115,7 +87,7 @@ interface QuestionDisplayProps {
   sessionId?: string;
   startTime?: number;
   onSubmitAnswer?: (response: SubmitAnswerResponse) => void;
-  answerTemplate?: AnswerTemplate; // Add answer template prop
+  answerTemplate?: AnswerTemplate;
 }
 
 // Wrapper component for TrialBalanceForm to integrate with answer service
@@ -183,7 +155,7 @@ function TrialBalanceFormWrapper({
         onSubmitAnswer(response);
       }
     } catch (error) {
-      logger.error("[TrialBalanceFormWrapper] 解答送信エラー:", error  as Error);
+      logger.error("[TrialBalanceFormWrapper] 解答送信エラー:", error as Error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);
@@ -286,7 +258,10 @@ function FinancialStatementFormWrapper({
         );
       }
     } catch (error) {
-      logger.error("[FinancialStatementFormWrapper] 解答送信エラー:", error  as Error);
+      logger.error(
+        "[FinancialStatementFormWrapper] 解答送信エラー:",
+        error as Error,
+      );
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);
@@ -373,9 +348,11 @@ export default function QuestionDisplay({
       answerTemplate?.allowMultipleEntries) ||
     (questionId.startsWith("Q_J_") && answerTemplate?.type === "journal_entry");
 
-  // Debug logging for Q_J_001
+  // Debug logging for Q_J_001 - コンポーネントライフサイクル追跡
   if (questionId === "Q_J_001") {
-    console.log("[QuestionDisplay] Q_J_001 Debug Info:", {
+    const displayComponentId = Math.random().toString(36).substr(2, 9);
+    console.log("[QuestionDisplay] Q_J_001 Mount:", {
+      displayComponentId,
       questionId,
       answerTemplateType: answerTemplate?.type,
       shouldUseJournalEntryForm,
@@ -436,6 +413,7 @@ export default function QuestionDisplay({
 
       {/* 問題文 */}
       <QuestionText
+        key={`question-text-${questionId}`}
         questionText={questionText}
         questionId={questionId}
         difficulty={difficulty}

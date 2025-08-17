@@ -3,9 +3,18 @@
  * Step 2.1.5: 問題文・解説表示コンポーネント実装
  */
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../context/ThemeContext";
+
+// Q_J_001重複レンダリング防止用グローバル状態
+let activeQuestionTextInstances = new Set<string>();
 
 interface QuestionTextProps {
   questionText: string;
@@ -25,6 +34,64 @@ export default function QuestionText({
   const colors = useColors();
   const dynamicColors = useDynamicColors();
   const styles = useThemedStyles(createStyles);
+
+  // 重複レンダリング防止
+  const instanceIdRef = useRef<string>();
+  const shouldRender = useRef<boolean>(true);
+
+  useEffect(() => {
+    if (questionId) {
+      // コンポーネントインスタンスの一意ID生成
+      instanceIdRef.current = Math.random().toString(36).substr(2, 9);
+      const instanceKey = `${questionId}-${instanceIdRef.current}`;
+
+      // 既に同じ問題IDがアクティブかチェック
+      const isAlreadyActive = Array.from(activeQuestionTextInstances).some(
+        (key) => key.startsWith(`${questionId}-`),
+      );
+
+      if (isAlreadyActive && questionId === "Q_J_001") {
+        console.log(
+          `[QuestionText] Q_J_001 重複検出 - レンダリングをスキップ:`,
+          {
+            instanceId: instanceIdRef.current,
+            activeInstances: Array.from(activeQuestionTextInstances),
+          },
+        );
+        shouldRender.current = false;
+        return;
+      }
+
+      // アクティブなインスタンスとして登録
+      activeQuestionTextInstances.add(instanceKey);
+      shouldRender.current = true;
+
+      if (questionId === "Q_J_001") {
+        console.log(`[QuestionText] Q_J_001 インスタンス登録:`, {
+          instanceId: instanceIdRef.current,
+          instanceKey,
+          activeInstances: Array.from(activeQuestionTextInstances),
+        });
+      }
+
+      // クリーンアップ関数
+      return () => {
+        activeQuestionTextInstances.delete(instanceKey);
+        if (questionId === "Q_J_001") {
+          console.log(`[QuestionText] Q_J_001 インスタンス削除:`, {
+            instanceId: instanceIdRef.current,
+            instanceKey,
+            remainingInstances: Array.from(activeQuestionTextInstances),
+          });
+        }
+      };
+    }
+  }, [questionId]);
+
+  // 重複の場合は何もレンダリングしない
+  if (!shouldRender.current) {
+    return null;
+  }
   // 改行や特殊文字を適切に表示するためのフォーマット
   const formatQuestionText = (text: string): string => {
     return text
@@ -129,6 +196,22 @@ export default function QuestionText({
   const difficultyInfo = difficulty ? getDifficultyStyle(difficulty) : null;
   const isTrialBalance = isTrialBalanceProblem(questionText, questionId);
   const { journalEntries } = formatJournalEntries(questionText);
+
+  // Q_J_001のデバッグログ - コンポーネントライフサイクル追跡
+  if (questionId === "Q_J_001") {
+    const componentId = Math.random().toString(36).substr(2, 9);
+    console.log("[QuestionText] Q_J_001 Mount:", {
+      componentId,
+      questionId,
+      isTrialBalance,
+      journalEntriesLength: journalEntries.length,
+      questionTextLength: questionText.length,
+      renderPath:
+        isTrialBalance && journalEntries.length > 0
+          ? "trial_balance_path"
+          : "normal_path",
+    });
+  }
 
   // 仕訳を2列で表示するコンポーネント
   const renderJournalEntriesTable = () => (

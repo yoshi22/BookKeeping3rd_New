@@ -23,7 +23,13 @@ import { SessionType } from "../../../../src/types/database";
 import { QuestionRepository } from "../../../../src/data/repositories/question-repository";
 import type { Question } from "../../../../src/types/models";
 import { reviewService } from "../../../../src/services/review-service";
-import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../../../../src/context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../../../../src/context/ThemeContext";
 
 export default function ReviewQuestionScreen() {
   // Phase 4: ダークモード対応のテーマシステム
@@ -204,14 +210,6 @@ export default function ReviewQuestionScreen() {
     }
   };
 
-  // 復習リストに追加
-  const handleAddToReview = () => {
-    Alert.alert(
-      "復習リストに追加",
-      "復習リストに追加されました。復習画面からアクセスできます。",
-    );
-  };
-
   // 戻るボタン（タブ内ナビゲーション用）
   const handleGoBack = () => {
     router.back();
@@ -390,17 +388,13 @@ export default function ReviewQuestionScreen() {
         result={submitResult}
         onClose={handleCloseResultDialog}
         onNextQuestion={handleNextQuestion}
-        onReviewQuestion={handleAddToReview}
         showNextButton={canGoNext}
-        showReviewButton={!submitResult?.isCorrect}
       />
     </ScrollView>
   );
 }
 
-const createStyles = (
-  theme: Theme,
-) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
