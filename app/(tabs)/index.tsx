@@ -115,34 +115,6 @@ export default function HomeScreen() {
                 styles.menuButton,
                 { backgroundColor: theme.colors.surface },
               ]}
-              onPress={() => router.push("/stats")}
-              testID="home-stats-button"
-              accessibilityLabel="学習統計を確認"
-            >
-              <Text style={styles.menuIcon}>📊</Text>
-              <Text
-                style={[
-                  TypographyUtils.getTextStyle("h6"),
-                  { color: theme.colors.text, marginBottom: theme.spacing.xs },
-                ]}
-              >
-                学習統計
-              </Text>
-              <Text
-                style={[
-                  TypographyUtils.getTextStyle("body2"),
-                  { color: theme.colors.textSecondary, textAlign: "center" },
-                ]}
-              >
-                進捗状況を確認
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.menuButton,
-                { backgroundColor: theme.colors.surface },
-              ]}
               onPress={() => router.push("/mock-exam")}
               testID="home-mock-exam-button"
               accessibilityLabel="CBT模擬試験を開始"
@@ -163,34 +135,6 @@ export default function HomeScreen() {
                 ]}
               >
                 本番形式で実力試験
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.menuButton,
-                { backgroundColor: theme.colors.surface },
-              ]}
-              onPress={() => router.push("/test-journal")}
-              testID="home-test-journal-button"
-              accessibilityLabel="仕訳フォームテストを開始"
-            >
-              <Text style={styles.menuIcon}>🧪</Text>
-              <Text
-                style={[
-                  TypographyUtils.getTextStyle("h6"),
-                  { color: theme.colors.text, marginBottom: theme.spacing.xs },
-                ]}
-              >
-                仕訳フォームテスト
-              </Text>
-              <Text
-                style={[
-                  TypographyUtils.getTextStyle("body2"),
-                  { color: theme.colors.textSecondary, textAlign: "center" },
-                ]}
-              >
-                複数借方・貸方UI確認
               </Text>
             </TouchableOpacity>
           </Flex>
