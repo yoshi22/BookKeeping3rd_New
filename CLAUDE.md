@@ -78,6 +78,44 @@ node scripts/testing/web-smoke-test.js             # Web版スモークテスト
 scripts/utilities/ensure-english.sh                # 入力言語を英語に切り替え（macOS）
 ```
 
+## データベース更新手順
+
+**重要**: 問題データ（master-questions.ts）を修正した後は、以下の手順を必ず実行してください。
+
+### 手順1: データバージョンの更新
+
+`src/data/migrations/index.ts` で以下を更新：
+
+1. `SAMPLE_DATA_VERSION` を新しい値に変更（例：`"2025-08-17-description"`）
+2. 一時的に `const forceUpdate = true` に設定
+
+### 手順2: アプリでの確認
+
+```bash
+# Expoサーバー再起動
+npm start
+# または
+npx expo start --clear
+```
+
+### 手順3: データ保護の復元
+
+確認完了後、必ず以下を実行：
+
+- `const forceUpdate = false` に戻す
+- 変更をコミット
+
+### ⚠️ 注意事項
+
+- `forceUpdate = true` のままだと、ユーザーの学習履歴・復習データが毎回削除される
+- データベース更新時のみ一時的にtrueにし、確認後は必ずfalseに戻す
+- この手順を忘れると、修正されたデータがアプリに反映されない
+
+### 過去のトラブル例
+
+- 問題データを修正したが、forceUpdateを設定せず、シミュレーターで変更が反映されない
+- forceUpdateをtrueのままコミットし、ユーザーデータが削除される問題が発生
+
 ## コードアーキテクチャ
 
 ### プロジェクト構造
