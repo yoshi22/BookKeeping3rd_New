@@ -22,9 +22,7 @@ interface AnswerResultDialogProps {
   result: SubmitAnswerResponse | null;
   onClose: () => void;
   onNextQuestion?: () => void;
-  onReviewQuestion?: () => void;
   showNextButton?: boolean;
-  showReviewButton?: boolean;
 }
 
 export default function AnswerResultDialog({
@@ -32,9 +30,7 @@ export default function AnswerResultDialog({
   result,
   onClose,
   onNextQuestion,
-  onReviewQuestion,
   showNextButton = true,
-  showReviewButton = true,
 }: AnswerResultDialogProps) {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
@@ -170,15 +166,6 @@ export default function AnswerResultDialog({
 
         {/* アクションボタン */}
         <View style={styles.actionButtons}>
-          {showReviewButton && !result.isCorrect && (
-            <TouchableOpacity
-              style={[styles.actionButton, styles.reviewButton]}
-              onPress={onReviewQuestion}
-            >
-              <Text style={styles.reviewButtonText}>復習リストに追加</Text>
-            </TouchableOpacity>
-          )}
-
           {showNextButton && (
             <TouchableOpacity
               style={[styles.actionButton, styles.nextButton]}

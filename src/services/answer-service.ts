@@ -101,16 +101,20 @@ export class AnswerService {
       // 7. 統計キャッシュ無効化
       statisticsCache.invalidateOnAnswerSubmit();
 
-      // 8. 復習状況更新（学習・復習セッションのみ）
+      // 8. 復習状況更新（全セッションタイプで実行）
       let reviewUpdate: ReviewUpdateResult | undefined;
-      if (
-        request.sessionType === "learning" ||
-        request.sessionType === "review"
-      ) {
-        try {
-          console.log(
-            `[AnswerService] 復習状況更新開始: questionId=${request.questionId}, isCorrect=${isCorrect}, sessionType=${request.sessionType}`,
-          );
+      try {
+        console.log(
+          `[AnswerService] 復習状況更新開始: questionId=${request.questionId}, isCorrect=${isCorrect}, sessionType=${request.sessionType}`,
+        );
+
+        // 学習・復習セッションでは常に更新、それ以外では不正解時のみ更新
+        const shouldUpdate =
+          request.sessionType === "learning" ||
+          request.sessionType === "review" ||
+          !isCorrect; // 間違えた問題は全セッションで復習リストに追加
+
+        if (shouldUpdate) {
           reviewUpdate = await reviewService.updateReviewStatus(
             request.questionId,
             isCorrect,
@@ -122,19 +126,19 @@ export class AnswerService {
           console.log(
             `[AnswerService] 復習状況更新詳細: previousStatus=${reviewUpdate.previousStatus}, newStatus=${reviewUpdate.newStatus}, previousPriority=${reviewUpdate.previousPriority}, newPriority=${reviewUpdate.newPriority}`,
           );
-        } catch (reviewError) {
-          console.error("[AnswerService] 復習状況更新エラー:", reviewError);
-          console.error("[AnswerService] Error details:", {
-            message:
-              reviewError instanceof Error ? reviewError.message : reviewError,
-            stack: reviewError instanceof Error ? reviewError.stack : undefined,
-          });
-          // 復習状況更新エラーは致命的ではないため、処理を継続
+        } else {
+          console.log(
+            `[AnswerService] 復習状況更新スキップ: sessionType=${request.sessionType}, isCorrect=${isCorrect} (正解のため更新不要)`,
+          );
         }
-      } else {
-        console.log(
-          `[AnswerService] 復習状況更新スキップ: sessionType=${request.sessionType} (学習・復習セッションではない)`,
-        );
+      } catch (reviewError) {
+        console.error("[AnswerService] 復習状況更新エラー:", reviewError);
+        console.error("[AnswerService] Error details:", {
+          message:
+            reviewError instanceof Error ? reviewError.message : reviewError,
+          stack: reviewError instanceof Error ? reviewError.stack : undefined,
+        });
+        // 復習状況更新エラーは致命的ではないため、処理を継続
       }
 
       // 9. 正解データ取得
