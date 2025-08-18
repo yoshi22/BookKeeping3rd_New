@@ -81,8 +81,12 @@ export interface QuestionTemplate {
   category?: string;
   type?:
     | "journal"
+    | "journal_entry"
     | "ledger"
+    | "ledger_account"
+    | "subsidiary_book"
     | "trial_balance"
+    | "worksheet"
     | "financial_statement"
     | "voucher_entry"
     | "multiple_choice"
@@ -105,7 +109,7 @@ export interface QuestionTemplate {
 // 基本解答データ（CBTAnswerDataとの互換性を考慮）
 export interface AnswerData {
   [fieldName: string]: string | number | boolean | null | undefined | any;
-  
+
   // Multiple choice specific fields
   selected_options?: string[];
   selected_option?: string;

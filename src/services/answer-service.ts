@@ -203,7 +203,7 @@ export class AnswerService {
         {} as QuestionTemplate,
       );
 
-      // 伝票問題の場合は専用バリデーションを使用
+      // 各問題タイプに応じた専用バリデーション
       if (template.type === "voucher_entry") {
         return this.validateVoucherAnswer(answerData, template);
       }
@@ -216,6 +216,9 @@ export class AnswerService {
       ) {
         return this.validateMultipleBlankChoiceAnswer(answerData, template);
       }
+
+      // 他のタイプ(journal_entry, subsidiary_book, ledger_account,
+      // financial_statement, worksheet, trial_balance)は共通バリデーション処理を使用
 
       // 必須フィールドチェック
       template.fields?.forEach((field: QuestionField) => {
@@ -457,6 +460,19 @@ export class AnswerService {
             answerData,
             correctAnswer,
           );
+        } else if (answerTemplate?.type === "journal_entry") {
+          return this.isJournalAnswerCorrect(answerData, correctAnswer);
+        } else if (
+          answerTemplate?.type === "subsidiary_book" ||
+          answerTemplate?.type === "ledger_account"
+        ) {
+          return this.isLedgerAnswerCorrect(answerData, correctAnswer);
+        } else if (
+          answerTemplate?.type === "financial_statement" ||
+          answerTemplate?.type === "worksheet" ||
+          answerTemplate?.type === "trial_balance"
+        ) {
+          return this.isTrialBalanceAnswerCorrect(answerData, correctAnswer);
         } else if (answerTemplate?.type === "voucher_entry") {
           return this.isVoucherAnswerCorrect(answerData, correctAnswer);
         }
