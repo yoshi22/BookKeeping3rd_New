@@ -26,6 +26,7 @@
 
 - リファクタリング作業完了を反映
 - TestFlightで新しいバージョンとして認識させるため
+- **追加変更**: buildNumber 3→4 (初回ビルドがold設定で実行されたため)
 
 ### 3. 品質確認 ⚠️
 
@@ -52,9 +53,27 @@ eas build --platform ios --profile production --non-interactive
 
 **ビルド情報:**
 
-- Build ID: `e581fd39-dcd0-4b06-bc27-571e2aec22a1`
-- ログURL: https://expo.dev/accounts/yoshi22/projects/fukushumaster-alpha/builds/e581fd39-dcd0-4b06-bc27-571e2aec22a1
-- 状態: 進行中（バックグラウンド実行）
+- 初回Build ID: `e581fd39-dcd0-4b06-bc27-571e2aec22a1` (1.0.1-build.2) ❌
+- 2回目Build ID: `32654a33-7e88-4d6c-9e9c-8e6b98a42df2` (1.0.2-build.4) ❌
+- 3回目Build ID: `12e2bbb4-62a6-4338-b887-61635a6fb54d` (1.0.2-build.4) ❌
+- **最新Build ID: `531c01f2-111b-4274-8471-6f93ea427157` (1.0.3-build.4)** ✅
+- ログURL: https://expo.dev/accounts/yoshi22/projects/fukushumaster-alpha/builds/531c01f2-111b-4274-8471-6f93ea427157
+- 状態: **✅ TestFlight提出成功！**
+
+## 🎉 TestFlight提出完了
+
+**提出詳細:**
+
+- Submission ID: `c1c6fc5a-ed9f-4aa1-826c-8031e3869798`
+- 提出日時: 2025-08-18 21:00頃
+- ステータス: **成功**
+- App Store Connect URL: https://appstoreconnect.apple.com/apps/6613152748/testflight/ios
+
+**最終確認された値:**
+
+- App Version: **1.0.3** ✅
+- Build number: **4** ✅
+- 重複エラー: **なし** ✅
 
 ## アーキテクチャ改善の反映
 
