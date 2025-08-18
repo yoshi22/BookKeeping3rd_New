@@ -21,7 +21,7 @@ import UnifiedJournalEntryForm from "../../src/components/unified/JournalEntryFo
 import UnifiedLedgerEntryForm from "../../src/components/unified/LedgerEntryForm";
 import TrialBalanceForm from "../../src/components/mock-exam/TrialBalanceForm";
 import { JournalEntry } from "../../src/components/shared/FormTypes";
-import { MockExamLedgerEntry } from "../../src/components/unified/LedgerEntryForm";
+import { MockExamLedgerEntry } from "../../src/components/unified/LedgerFormTypes";
 import { TrialBalanceEntry } from "../../src/components/mock-exam/TrialBalanceForm";
 
 interface MockExamAnswer {
