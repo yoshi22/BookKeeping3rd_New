@@ -388,10 +388,11 @@ export class ReviewService {
     try {
       logger.debug("[ReviewService] 復習統計取得開始");
       const result = await reviewItemRepository.getReviewStatistics();
-      logger.debug(
-        "[ReviewService] 復習統計取得完了:",
-        JSON.stringify(result, null, 2),
-      );
+      logger.debug("[ReviewService] 復習統計取得完了:", {
+        component: "ReviewService",
+        operation: "getReviewStatistics",
+        data: result,
+      });
       return result;
     } catch (error) {
       logger.error(
@@ -499,10 +500,11 @@ export class ReviewService {
       // 復習が必要な順でソート
       analysis.sort((a, b) => b.averagePriority - a.averagePriority);
 
-      logger.debug(
-        "[ReviewService] 弱点分野分析完了:",
-        JSON.stringify(analysis, null, 2),
-      );
+      logger.debug("[ReviewService] 弱点分野分析完了:", {
+        component: "ReviewService",
+        operation: "analyzeWeakAreas",
+        data: analysis,
+      });
       return analysis;
     } catch (error) {
       logger.error("[ReviewService] analyzeWeakAreas エラー:", error as Error);

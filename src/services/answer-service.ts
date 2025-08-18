@@ -1145,7 +1145,9 @@ export class AnswerService {
       ) {
         logger.error(
           "[AnswerService] Multiple choice validation: options are not arrays",
+          new Error("Invalid options format"),
           {
+            component: "AnswerService",
             userSelectedOptions,
             correctSelectedOptions,
           },

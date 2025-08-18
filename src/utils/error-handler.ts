@@ -283,17 +283,29 @@ export class ErrorHandler {
     // ログシステム出力（logger使用）
     switch (logLevel) {
       case "ERROR":
-        logger.error("[ErrorHandler]", logData);
+        logger.error("[ErrorHandler]", error as Error, {
+          component: "ErrorHandler",
+          ...logData,
+        });
         break;
       case "WARN":
-        logger.warn("[ErrorHandler]", logData);
+        logger.warn("[ErrorHandler]", {
+          component: "ErrorHandler",
+          ...logData,
+        });
         break;
       case "INFO":
-        logger.info("[ErrorHandler]", logData);
+        logger.info("[ErrorHandler]", {
+          component: "ErrorHandler",
+          ...logData,
+        });
         break;
       case "DEBUG":
       default:
-        logger.debug("[ErrorHandler]", logData);
+        logger.debug("[ErrorHandler]", {
+          component: "ErrorHandler",
+          ...logData,
+        });
         break;
     }
   }
