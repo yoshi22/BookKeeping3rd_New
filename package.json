@@ -9,7 +9,10 @@
     "web": "expo start --web",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "check:quick": "tsc --noEmit && npm run lint && npm test"
+    "check:quick": "tsc --noEmit && npm run lint && npm test",
+    "build:ios": "eas build --platform ios --profile production",
+    "build:android": "eas build --platform android --profile production",
+    "build:preview": "eas build --platform ios --profile preview"
   },
   "dependencies": {
     "@expo/metro-runtime": "~4.0.1",

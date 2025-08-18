@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "3.app"
-               BlueprintName = "3"
-               ReferencedContainer = "container:3.xcodeproj">
+               BuildableName = "3Alpha.app"
+               BlueprintName = "3Alpha"
+               ReferencedContainer = "container:3Alpha.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "3Tests.xctest"
-               BlueprintName = "3Tests"
-               ReferencedContainer = "container:3.xcodeproj">
+               BuildableName = "3AlphaTests.xctest"
+               BlueprintName = "3AlphaTests"
+               ReferencedContainer = "container:3Alpha.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "3.app"
-            BlueprintName = "3"
-            ReferencedContainer = "container:3.xcodeproj">
+            BuildableName = "3Alpha.app"
+            BlueprintName = "3Alpha"
+            ReferencedContainer = "container:3Alpha.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "3.app"
-            BlueprintName = "3"
-            ReferencedContainer = "container:3.xcodeproj">
+            BuildableName = "3Alpha.app"
+            BlueprintName = "3Alpha"
+            ReferencedContainer = "container:3Alpha.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

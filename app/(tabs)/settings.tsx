@@ -21,6 +21,7 @@ import {
 } from "../../src/context/ThemeContext";
 import { confirmResetDatabase } from "../../src/utils/reset-database";
 import { customThemeVariants } from "../../src/theme/colors";
+import { TestDataCreator } from "../../src/components/dev-tools/TestDataCreator";
 
 export default function SettingsScreen() {
   // Phase 4: ダークモード対応のテーマシステム
@@ -33,6 +34,9 @@ export default function SettingsScreen() {
   // カスタムテーマ選択モーダル状態
   const [showThemeModal, setShowThemeModal] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState<ThemeMode>(themeMode);
+
+  // 開発者モード状態
+  const [showTestDataCreator, setShowTestDataCreator] = useState(false);
 
   // テーマ情報
   const themeOptions: {
@@ -252,6 +256,40 @@ export default function SettingsScreen() {
           </View>
         </View>
 
+        {/* 開発者向けセクション（開発環境のみ） */}
+        {__DEV__ && (
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <AppIcon
+                name="debug"
+                size={IconContextSizes.listItem}
+                color={theme.colors.primary}
+              />
+              <Text style={styles.sectionTitle}>開発者ツール</Text>
+            </View>
+
+            <View style={styles.card}>
+              <Text style={styles.cardTitle}>復習システム テストデータ</Text>
+              <Text style={styles.description}>
+                復習機能をテストするためのサンプルデータを作成します。
+                学習履歴と復習アイテムがない場合にご利用ください。
+              </Text>
+
+              <TouchableOpacity
+                style={styles.themeButton}
+                onPress={() => setShowTestDataCreator(true)}
+                testID="settings-test-data-button"
+                accessibilityLabel="テストデータ作成"
+              >
+                <View style={styles.themeButtonContent}>
+                  <Text style={styles.themeButtonLabel}>復習テストデータ</Text>
+                  <Text style={styles.themeButtonValue}>作成 →</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
         {/* 学習のコツセクション */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
@@ -346,6 +384,37 @@ export default function SettingsScreen() {
           </View>
         </View>
       </Modal>
+
+      {/* テストデータ作成モーダル（開発環境のみ） */}
+      {__DEV__ && (
+        <Modal
+          visible={showTestDataCreator}
+          animationType="slide"
+          presentationStyle="pageSheet"
+          onRequestClose={() => setShowTestDataCreator(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={[styles.modalContent, { maxHeight: "90%" }]}>
+              <View style={styles.modalHeader}>
+                <Text style={styles.modalTitle}>
+                  復習システム テストデータ作成
+                </Text>
+                <TouchableOpacity
+                  style={styles.modalCloseButton}
+                  onPress={() => setShowTestDataCreator(false)}
+                >
+                  <AppIcon
+                    name="close"
+                    size="medium"
+                    color={theme.colors.textSecondary}
+                  />
+                </TouchableOpacity>
+              </View>
+              <TestDataCreator />
+            </View>
+          </View>
+        </Modal>
+      )}
     </Screen>
   );
 }

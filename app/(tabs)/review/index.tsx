@@ -478,13 +478,13 @@ export default function ReviewScreen() {
     try {
       const options = priorityOnly
         ? {
-            priorityLevels: ["critical", "high"] as (
+            priorityLevels: ["critical", "high", "medium"] as (
               | "critical"
               | "high"
               | "medium"
               | "low"
             )[],
-            maxCount: 10,
+            maxCount: 15,
           }
         : {
             maxCount: 20,
@@ -499,7 +499,7 @@ export default function ReviewScreen() {
 
       // 復習問題画面に遷移（セッション情報を渡す）
       router.push({
-        pathname: "./question/[id]",
+        pathname: "/(tabs)/review/question/[id]",
         params: {
           id: session.questions[0].id,
           sessionId: session.sessionId,
@@ -526,7 +526,7 @@ export default function ReviewScreen() {
       }
 
       router.push({
-        pathname: "./question/[id]",
+        pathname: "/(tabs)/review/question/[id]",
         params: {
           id: session.questions[0].id,
           sessionId: session.sessionId,

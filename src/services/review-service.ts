@@ -70,16 +70,16 @@ export interface GenerateReviewListOptions {
  */
 export class ReviewService {
   private readonly priorityConfig: PriorityConfig = {
-    incorrectCountWeight: 20,
+    incorrectCountWeight: 25, // 20→25: 基本スコアを上げて重点復習対象に入りやすくする
     timeDecayWeight: 0.1,
     consecutiveCorrectPenalty: 15,
     categoryBonus: {
-      journal: 5, // 仕訳は基本なので少し高め
-      ledger: 3, // 帳簿は中程度
-      trial_balance: 8, // 試算表は重要なので高め
-      financial_statement: 10, // 財務諸表は最重要
-      voucher_entry: 4, // 伝票記入は中程度
-      multiple_blank_choice: 6, // 複数空欄選択は少し高め
+      journal: 10, // 仕訳は基本なので高めに調整
+      ledger: 8, // 帳簿は中程度だが重要
+      trial_balance: 15, // 試算表は重要なので高め
+      financial_statement: 15, // 財務諸表は最重要
+      voucher_entry: 8, // 伝票記入は中程度だが重要
+      multiple_blank_choice: 12, // 複数空欄選択は高め
     } as Record<QuestionCategory, number>,
     maxPriorityScore: 100,
   };

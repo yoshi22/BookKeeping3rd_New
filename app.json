@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "簿記3級問題集「確実復習」",
-    "slug": "bookkeeping-app",
-    "version": "1.0.0",
+    "name": "簿記3級「復習マスター」Alpha",
+    "slug": "fukushumaster-alpha",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,29 +11,32 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bookkeepingapp.app"
+      "bundleIdentifier": "com.yoshi.Boki3rdReviewMaster.alpha",
+      "buildNumber": "3"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.bookkeepingapp.app"
+      "package": "com.yoshi.Boki3rdReviewMaster.alpha"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": [
-      "expo-router",
-      "expo-dev-client",
-      "expo-sqlite"
-    ],
-    "scheme": "bookkeeping-app"
+    "plugins": ["expo-router", "expo-dev-client", "expo-sqlite"],
+    "scheme": "fukushumaster-alpha",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "257418fd-fb59-4a5a-8b3c-194bd15706ad"
+      }
+    }
   }
 }
