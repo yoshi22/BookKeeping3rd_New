@@ -515,7 +515,29 @@ export class AnswerService {
       credit_amount?: number;
       debits?: { account: string; amount: number }[];
       credits?: { account: string; amount: number }[];
+      journalEntry?: {
+        debit?: { account: string; amount: number };
+        credit?: { account: string; amount: number };
+      };
     };
+
+    // Check for UnifiedJournalEntryForm format: journalEntry.debit/credit
+    if (
+      data.journalEntry &&
+      data.journalEntry.debit &&
+      data.journalEntry.credit
+    ) {
+      const userDebit = data.journalEntry.debit;
+      const userCredit = data.journalEntry.credit;
+
+      const isCorrect =
+        userDebit.account === entry.debit_account &&
+        userDebit.amount === (entry as any).debit_amount &&
+        userCredit.account === entry.credit_account &&
+        userCredit.amount === (entry as any).credit_amount;
+
+      return isCorrect;
+    }
 
     // Check if the answer data is in the new array format (from JournalEntryForm)
     if (

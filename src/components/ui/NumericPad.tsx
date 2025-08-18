@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Modal,
   SafeAreaView,
+  useWindowDimensions,
 } from "react-native";
 import { useTheme, type Theme } from "../../context/ThemeContext";
 
@@ -29,6 +30,7 @@ export default function NumericPad({
   maxLength = 10,
 }: NumericPadProps) {
   const { theme } = useTheme();
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   const handleNumberPress = (num: string) => {
     if (value.length < maxLength) {
@@ -56,7 +58,7 @@ export default function NumericPad({
     return num.toLocaleString();
   };
 
-  const styles = createStyles(theme);
+  const styles = createStyles(theme, screenWidth, screenHeight);
 
   return (
     <Modal
@@ -207,8 +209,44 @@ export default function NumericPad({
   );
 }
 
-const createStyles = (theme: any) =>
-  StyleSheet.create({
+const createStyles = (
+  theme: any,
+  screenWidth: number,
+  screenHeight: number,
+) => {
+  // 相対サイズ計算ロジック（最小値・最大値制限付き）
+  const responsive = {
+    padding: {
+      horizontal: Math.max(10, Math.min(30, screenWidth * 0.05)),
+      vertical: Math.max(10, Math.min(25, screenHeight * 0.02)),
+      bottom: Math.max(15, Math.min(30, screenHeight * 0.025)),
+    },
+    margin: {
+      horizontal: Math.max(2, Math.min(8, screenWidth * 0.015)),
+      vertical: Math.max(10, Math.min(20, screenHeight * 0.02)),
+    },
+    button: {
+      height: Math.max(45, Math.min(80, screenHeight * 0.075)),
+      closeSize: Math.max(25, Math.min(40, screenWidth * 0.08)),
+    },
+    fontSize: {
+      header: Math.max(14, Math.min(22, screenWidth * 0.045)),
+      closeButton: Math.max(14, Math.min(22, screenWidth * 0.045)),
+      display: Math.max(24, Math.min(40, screenWidth * 0.08)),
+      displayUnit: Math.max(16, Math.min(26, screenWidth * 0.05)),
+      button: Math.max(18, Math.min(30, screenWidth * 0.06)),
+      action: Math.max(12, Math.min(18, screenWidth * 0.04)),
+    },
+    radius: {
+      small: Math.max(6, Math.min(15, screenWidth * 0.025)),
+      medium: Math.max(8, Math.min(20, screenWidth * 0.05)),
+    },
+    displayArea: {
+      minHeight: Math.max(60, Math.min(100, screenHeight * 0.1)),
+    },
+  };
+
+  return StyleSheet.create({
     overlay: {
       flex: 1,
       backgroundColor: theme.colors.background + "80",
@@ -216,85 +254,85 @@ const createStyles = (theme: any) =>
     },
     container: {
       backgroundColor: theme.colors.surface,
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
+      borderTopLeftRadius: responsive.radius.medium,
+      borderTopRightRadius: responsive.radius.medium,
       maxHeight: "70%",
     },
     safeArea: {
-      paddingBottom: 20,
+      paddingBottom: responsive.padding.bottom,
     },
     header: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      paddingHorizontal: 20,
-      paddingVertical: 15,
+      paddingHorizontal: responsive.padding.horizontal,
+      paddingVertical: responsive.padding.vertical,
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.border,
     },
     headerText: {
-      fontSize: 18,
+      fontSize: responsive.fontSize.header,
       fontWeight: "600",
       color: theme.colors.text,
     },
     closeButton: {
-      width: 30,
-      height: 30,
-      borderRadius: 15,
+      width: responsive.button.closeSize,
+      height: responsive.button.closeSize,
+      borderRadius: responsive.button.closeSize / 2,
       backgroundColor: theme.colors.error,
       justifyContent: "center",
       alignItems: "center",
     },
     closeButtonText: {
       color: theme.colors.background,
-      fontSize: 18,
+      fontSize: responsive.fontSize.closeButton,
       fontWeight: "bold",
     },
     displayArea: {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      paddingVertical: 20,
-      paddingHorizontal: 20,
-      minHeight: 80,
+      paddingVertical: responsive.padding.vertical,
+      paddingHorizontal: responsive.padding.horizontal,
+      minHeight: responsive.displayArea.minHeight,
       backgroundColor: theme.colors.background,
-      marginHorizontal: 20,
-      marginVertical: 15,
-      borderRadius: 10,
+      marginHorizontal: responsive.padding.horizontal,
+      marginVertical: responsive.margin.vertical,
+      borderRadius: responsive.radius.small,
       borderWidth: 2,
       borderColor: theme.colors.primary,
     },
     displayText: {
-      fontSize: 32,
+      fontSize: responsive.fontSize.display,
       fontWeight: "bold",
       color: theme.colors.text,
-      marginRight: 10,
+      marginRight: responsive.margin.horizontal * 2,
     },
     displayUnit: {
-      fontSize: 20,
+      fontSize: responsive.fontSize.displayUnit,
       color: theme.colors.textSecondary,
     },
     padContainer: {
-      paddingHorizontal: 20,
+      paddingHorizontal: responsive.padding.horizontal,
     },
     row: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginBottom: 10,
+      marginBottom: responsive.margin.vertical / 2,
     },
     button: {
       flex: 1,
-      height: 60,
+      height: responsive.button.height,
       backgroundColor: theme.colors.background,
-      borderRadius: 10,
+      borderRadius: responsive.radius.small,
       justifyContent: "center",
       alignItems: "center",
-      marginHorizontal: 5,
+      marginHorizontal: responsive.margin.horizontal,
       borderWidth: 1,
       borderColor: theme.colors.border,
     },
     buttonText: {
-      fontSize: 24,
+      fontSize: responsive.fontSize.button,
       fontWeight: "600",
       color: theme.colors.text,
     },
@@ -304,7 +342,7 @@ const createStyles = (theme: any) =>
     },
     clearText: {
       color: theme.colors.warning,
-      fontSize: 16,
+      fontSize: responsive.fontSize.action,
     },
     deleteButton: {
       backgroundColor: theme.colors.error + "20",
@@ -312,7 +350,7 @@ const createStyles = (theme: any) =>
     },
     deleteText: {
       color: theme.colors.error,
-      fontSize: 16,
+      fontSize: responsive.fontSize.action,
     },
     confirmButton: {
       backgroundColor: theme.colors.primary,
@@ -320,6 +358,7 @@ const createStyles = (theme: any) =>
     },
     confirmText: {
       color: theme.colors.background,
-      fontSize: 16,
+      fontSize: responsive.fontSize.action,
     },
   });
+};
