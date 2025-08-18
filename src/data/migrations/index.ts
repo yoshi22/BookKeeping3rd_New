@@ -95,24 +95,11 @@ async function loadSampleData(): Promise<void> {
       await import("../master-questions");
     const SAMPLE_DATA_VERSION = "2025-08-18-alpha-test-fixes";
 
-    // 開発環境での強制更新フラグ（React Native環境対応）
-    logger.debug("[Database] 環境変数チェック:", {
-      details: {
-        __DEV__,
-        FORCE_UPDATE_QUESTIONS: process.env.FORCE_UPDATE_QUESTIONS,
-        EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS:
-          process.env.EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS,
-      },
-    });
-
-    // 環境変数による強制更新フラグ（修正適用用）
-    // エラー解決後は通常の環境変数チェックに戻す
+    // 環境変数による強制更新フラグ（開発時のみ）
     const forceUpdate =
       __DEV__ &&
       (process.env.FORCE_UPDATE_QUESTIONS === "true" ||
         process.env.EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS === "true");
-
-    logger.debug("[Database] forceUpdate フラグ:", { details: forceUpdate });
 
     // 現在のデータバージョンを取得
     let currentVersion = null;
@@ -123,27 +110,11 @@ async function loadSampleData(): Promise<void> {
       );
       currentVersion = versionResult.rows[0]?.value;
     } catch (error) {
-      logger.debug("[Database] バージョン情報取得エラー（初回起動時は正常）:", {
-        details: error,
-      });
+      // 初回起動時は app_settings テーブルが存在しない場合があるため正常
     }
 
     // バージョンチェック
     const needsUpdate = currentVersion !== SAMPLE_DATA_VERSION;
-
-    logger.debug("[Database] バージョンチェック結果:", {
-      details: {
-        currentVersion,
-        SAMPLE_DATA_VERSION,
-        needsUpdate,
-      },
-    });
-
-    if (needsUpdate) {
-      logger.debug("[Database] データバージョンが更新されています");
-      logger.debug(`[Database] 現在: ${currentVersion || "なし"}`);
-      logger.debug(`[Database] 新規: ${SAMPLE_DATA_VERSION}`);
-    }
 
     // 既存の問題データをチェック
     const existingCount = await databaseService.executeSql(
@@ -151,72 +122,34 @@ async function loadSampleData(): Promise<void> {
     );
 
     if (existingCount.rows[0]?.count > 0) {
-      logger.debug("[Database] 削除条件チェック:", {
-        details: {
-          forceUpdate,
-          needsUpdate,
-          shouldDelete: forceUpdate || needsUpdate,
-        },
-      });
-
       if (forceUpdate || needsUpdate) {
         logger.debug(
           forceUpdate
-            ? "[Database] 強制更新モード: 既存の問題データを削除します"
-            : "[Database] データバージョンが更新されたため、問題データのみを更新します",
+            ? "[Database] 強制更新モード: 既存データを削除"
+            : "[Database] バージョン更新: 問題データを更新",
         );
 
-        // 関連データを安全な順序で削除（外部キー制約を考慮）
+        // 外部キー制約を考慮した安全な削除
         try {
-          // 1. 外部キー制約を一時的に無効化
           await databaseService.executeSql("PRAGMA foreign_keys = OFF");
-          logger.debug("[Database] 外部キー制約を一時無効化");
 
-          // 2. 依存関係のある順序で削除
-          // 強制更新時のみユーザーデータを削除、通常のバージョン更新時は保持
+          // 強制更新時のみユーザーデータを削除
           if (forceUpdate) {
             await databaseService.executeSql("DELETE FROM learning_history");
-            logger.debug(
-              "[Database] learning_history テーブル削除完了（強制更新）",
-            );
-
             await databaseService.executeSql("DELETE FROM review_items");
-            logger.debug(
-              "[Database] review_items テーブル削除完了（強制更新）",
-            );
-          } else {
-            logger.debug(
-              "[Database] ユーザーデータ（learning_history, review_items）は保持します",
-            );
           }
 
           await databaseService.executeSql("DELETE FROM mock_exam_results");
-          logger.debug("[Database] mock_exam_results テーブル削除完了");
-
           await databaseService.executeSql("DELETE FROM mock_exam_questions");
-          logger.debug("[Database] mock_exam_questions テーブル削除完了");
-
           await databaseService.executeSql("DELETE FROM questions");
-          logger.debug("[Database] questions テーブル削除完了");
 
-          // 3. 外部キー制約を再有効化
           await databaseService.executeSql("PRAGMA foreign_keys = ON");
-          logger.debug("[Database] 外部キー制約を再有効化");
         } catch (deleteError) {
-          logger.debug("[Database] 削除処理エラー:", { details: deleteError });
-          // 外部キー制約を確実に再有効化
           await databaseService.executeSql("PRAGMA foreign_keys = ON");
           throw deleteError;
         }
-
-        logger.debug("[Database] 既存データの削除完了");
       } else {
-        logger.debug(
-          "[Database] 既存の問題データが見つかりました。サンプルデータ読み込みをスキップします",
-        );
-        logger.debug(
-          "[Database] ヒント: EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS=true を設定すると強制更新できます",
-        );
+        logger.debug("[Database] 既存データをスキップ");
         return;
       }
     }
@@ -225,35 +158,8 @@ async function loadSampleData(): Promise<void> {
     const allQuestions = allSampleQuestions;
     logger.debug(`[Database] 読み込み対象問題数: ${allQuestions.length}件`);
 
-    // Q_J_001のデータソース確認（デバッグ用）
-    const qJ001 = allQuestions.find((q) => q.id === "Q_J_001");
-    if (qJ001) {
-      logger.debug("[Database] 読み込み前Q_J_001データソース確認:", {
-        details: {
-          id: qJ001.id,
-          correct_answer_json: qJ001.correct_answer_json,
-          parsed: JSON.parse(qJ001.correct_answer_json || "{}"),
-          data_version: SAMPLE_DATA_VERSION,
-        },
-      });
-    } else {
-      logger.debug("[Database] 警告: Q_J_001が見つかりません！");
-    }
-
     // 全問題データの挿入
     for (const question of allQuestions) {
-      // Q_J_001の詳細ログ（問題調査用）
-      if (question.id === "Q_J_001") {
-        logger.debug("[Database] Q_J_001データ詳細ログ:", {
-          details: {
-            id: question.id,
-            correct_answer_json: question.correct_answer_json,
-            parsed_answer: JSON.parse(question.correct_answer_json || "{}"),
-            source_file: "allSampleQuestions配列から取得",
-          },
-        });
-      }
-
       await databaseService.executeSql(
         `INSERT INTO questions (
           id, category_id, question_text, answer_template_json, 
@@ -273,22 +179,6 @@ async function loadSampleData(): Promise<void> {
           question.updated_at,
         ],
       );
-
-      // Q_J_001挿入後の確認ログ
-      if (question.id === "Q_J_001") {
-        const inserted = await databaseService.executeSql(
-          "SELECT id, correct_answer_json FROM questions WHERE id = ?",
-          ["Q_J_001"],
-        );
-        logger.debug("[Database] Q_J_001挿入後データベース確認:", {
-          details: {
-            inserted_data: inserted.rows[0],
-            parsed_inserted: JSON.parse(
-              inserted.rows[0]?.correct_answer_json || "{}",
-            ),
-          },
-        });
-      }
     }
 
     logger.debug(
@@ -384,19 +274,43 @@ async function loadSampleData(): Promise<void> {
   }
 }
 
+// データベース初期化状態管理
+let initializationPromise: Promise<void> | null = null;
+
 /**
  * データベースのセットアップ（アプリ起動時に呼び出し）
+ * 重複実行防止機能付き
  */
 export async function setupDatabase(): Promise<void> {
-  logger.debug("[Database] データベーセットアップ開始");
+  // 既に初期化中の場合は同じPromiseを返す
+  if (initializationPromise) {
+    return initializationPromise;
+  }
 
+  // 初期化を実行し、Promiseを保持
+  initializationPromise = performDatabaseSetup();
+
+  try {
+    await initializationPromise;
+    logger.debug("[Database] データベースセットアップ完了");
+  } catch (error) {
+    logger.error("[Database] データベースセットアップエラー:", error as Error);
+    initializationPromise = null; // エラー時はリセット
+    throw error;
+  }
+
+  return initializationPromise;
+}
+
+/**
+ * 実際のデータベースセットアップ処理
+ */
+async function performDatabaseSetup(): Promise<void> {
   try {
     const { databaseService } = await import("../database");
 
     // データベース接続初期化
-    logger.debug("[Database] データベース接続初期化中");
     await databaseService.initialize();
-    logger.debug("[Database] データベース接続初期化完了");
 
     // データベース接続状態確認
     if (!databaseService.isConnected()) {
@@ -404,27 +318,15 @@ export async function setupDatabase(): Promise<void> {
     }
 
     // マイグレーション実行
-    logger.debug("[Database] マイグレーション実行開始");
     await initializeDatabase();
-    logger.debug("[Database] マイグレーション実行完了");
 
     // データベース整合性チェック
-    logger.debug("[Database] データベース整合性チェック中");
     const isHealthy = await databaseService.checkIntegrity();
     if (!isHealthy) {
       logger.warn("[Database] データベース整合性チェック失敗");
-      // 整合性チェック失敗は警告として扱い、アプリ起動は継続
-    } else {
-      logger.debug("[Database] データベース整合性チェック成功");
     }
-
-    logger.debug("[Database] データベースセットアップ完了");
   } catch (error) {
     logger.error("[Database] データベースセットアップエラー:", error as Error);
-    logger.error(
-      "[Database] Setup Error Stack:",
-      error instanceof Error ? error : new Error(String(error)),
-    );
     throw new Error(
       `Database setup failed: ${error instanceof Error ? (error as Error).message : error}`,
     );
