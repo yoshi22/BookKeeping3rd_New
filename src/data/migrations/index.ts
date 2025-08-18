@@ -93,7 +93,7 @@ async function loadSampleData(): Promise<void> {
     const { databaseService } = await import("../database");
     const { allQuestions: allSampleQuestions, questionStatistics } =
       await import("../master-questions");
-    const SAMPLE_DATA_VERSION = "2025-08-17-text-format-fixed";
+    const SAMPLE_DATA_VERSION = "2025-08-18-alpha-test-fixes";
 
     // 開発環境での強制更新フラグ（React Native環境対応）
     logger.debug("[Database] 環境変数チェック:", {
@@ -106,6 +106,7 @@ async function loadSampleData(): Promise<void> {
     });
 
     // 環境変数による強制更新フラグ（修正適用用）
+    // エラー解決後は通常の環境変数チェックに戻す
     const forceUpdate =
       __DEV__ &&
       (process.env.FORCE_UPDATE_QUESTIONS === "true" ||
