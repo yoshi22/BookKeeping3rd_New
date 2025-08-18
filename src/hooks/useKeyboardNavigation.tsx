@@ -95,10 +95,9 @@ export function useKeyboardNavigation(options: KeyboardNavigationOptions = {}) {
               announce(`ショートカット実行: ${shortcut.description}`);
             }
           } catch (error) {
-            console.warn(
-              "[KeyboardNavigation] ショートカット実行エラー:",
-              error,
-            );
+            logger.warn("[KeyboardNavigation] ショートカット実行エラー:", {
+              details: error,
+            });
           }
           return;
         }

@@ -244,10 +244,9 @@ export class OptimizedDatabaseService {
             this.db = SQLite.openDatabaseSync(OPTIMIZED_DATABASE_CONFIG.name);
           }
         } catch (sqliteError) {
-          console.warn(
-            "[OptimizedDB] SQLite初期化失敗、フォールバックを使用:",
-            sqliteError,
-          );
+          logger.warn("[OptimizedDB] SQLite初期化失敗、フォールバックを使用:", {
+            details: sqliteError,
+          });
           this.db = new WebDatabaseMock();
         }
       }
@@ -269,7 +268,7 @@ export class OptimizedDatabaseService {
         error,
         "CRITICAL",
       );
-      logger.error("[OptimizedDB] 高速初期化エラー:", dbError  as Error);
+      logger.error("[OptimizedDB] 高速初期化エラー:", dbError as Error);
       throw dbError;
     }
   }
@@ -295,7 +294,10 @@ export class OptimizedDatabaseService {
 
       logger.debug("[OptimizedDB] バックグラウンド初期化完了");
     } catch (error) {
-      logger.error("[OptimizedDB] バックグラウンド初期化エラー:", error  as Error);
+      logger.error(
+        "[OptimizedDB] バックグラウンド初期化エラー:",
+        error as Error,
+      );
     }
   }
 
@@ -407,7 +409,7 @@ export class OptimizedDatabaseService {
    * バッチクエリ実行（トランザクション最適化）
    */
   public async executeBatchQueries(
-    queries: Array<{ sql: string; params: any[] }>,
+    queries: { sql: string; params: any[] }[],
   ): Promise<DatabaseResult> {
     if (!this.isInitialized) {
       await this.quickInitialize();
@@ -432,9 +434,9 @@ export class OptimizedDatabaseService {
       });
 
       const executionTime = performance.now() - startTime;
-      console.log(
-        `[OptimizedDB] バッチクエリ完了: ${executionTime.toFixed(2)}ms`,
-      );
+      logger.debug("[OptimizedDB] バッチクエリ完了:", {
+        details: `${executionTime.toFixed(2)}ms`,
+      });
       return { success: true };
     } catch (error) {
       const dbError = this.createDatabaseError(
@@ -510,9 +512,9 @@ export class OptimizedDatabaseService {
       this.queryCache.delete(key);
     });
 
-    console.log(
-      `[OptimizedDB] 古いキャッシュエントリ削除: ${entries.length}件`,
-    );
+    logger.debug("[OptimizedDB] 古いキャッシュエントリ削除:", {
+      details: `${entries.length}件`,
+    });
   }
 
   /**
@@ -625,9 +627,9 @@ export class OptimizedDatabaseService {
       this.queryCache.delete(key);
     });
 
-    console.log(
-      `[OptimizedDB] メンテナンス完了: ${expiredKeys.length}件の期限切れエントリ削除`,
-    );
+    logger.debug("[OptimizedDB] メンテナンス完了:", {
+      details: `${expiredKeys.length}件の期限切れエントリ削除`,
+    });
   }
 
   /**

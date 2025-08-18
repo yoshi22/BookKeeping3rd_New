@@ -74,16 +74,16 @@ export class MigrationManager {
 
         logger.debug("[MigrationManager] マイグレーションテーブル存在確認完了");
       } catch (verifyError) {
-        console.error(
+        logger.error(
           "[MigrationManager] テーブル存在確認エラー:",
-          verifyError,
+          verifyError as Error,
         );
         throw verifyError;
       }
     } catch (error) {
-      console.error(
+      logger.error(
         "[MigrationManager] マイグレーションテーブル作成エラー:",
-        error,
+        error as Error,
       );
       logger.error("[MigrationManager] Error details:", error as Error, {
         component: "MigrationManager",
@@ -98,7 +98,7 @@ export class MigrationManager {
           (error as Error).message.includes("Transaction execution failed") ||
           (error as Error).message.includes("database disk image is malformed"))
       ) {
-        console.warn(
+        logger.warn(
           "[MigrationManager] データベース破損の可能性 - リセットが必要",
         );
         throw new Error(
@@ -127,10 +127,9 @@ export class MigrationManager {
 
     // 実行済みマイグレーションを確認
     const executedVersions = await this.getExecutedMigrations();
-    console.log(
-      "[MigrationManager] 実行済みマイグレーション:",
-      executedVersions,
-    );
+    logger.debug("[MigrationManager] 実行済みマイグレーション:", {
+      details: executedVersions,
+    });
 
     // 未実行のマイグレーションを抽出
     const pendingMigrations = this.migrations.filter(
@@ -142,7 +141,7 @@ export class MigrationManager {
       return;
     }
 
-    console.log(
+    logger.debug(
       `[MigrationManager] ${pendingMigrations.length}個のマイグレーションを実行します`,
     );
 
@@ -161,7 +160,7 @@ export class MigrationManager {
    * 個別マイグレーション実行
    */
   private async executeMigration(migration: MigrationInfo): Promise<void> {
-    console.log(
+    logger.debug(
       `[MigrationManager] マイグレーション実行開始: v${migration.version} - ${migration.name}`,
     );
 
@@ -172,15 +171,15 @@ export class MigrationManager {
         [migration.version],
       );
       if (executed.rows.length > 0) {
-        console.log(
+        logger.debug(
           `[MigrationManager] マイグレーション v${migration.version} は既に実行済みです。スキップします。`,
         );
         return;
       }
     } catch (checkError) {
-      console.log(
+      logger.warn(
         `[MigrationManager] マイグレーション実行状態チェック時のエラー（継続）:`,
-        checkError,
+        { details: checkError },
       );
     }
 
@@ -193,7 +192,7 @@ export class MigrationManager {
         sqlChunks.push(migration.sql.slice(i, i + CHUNK_SIZE));
       }
 
-      console.log(
+      logger.debug(
         `[MigrationManager] ${migration.sql.length}のSQL文を${sqlChunks.length}個のチャンクで実行`,
       );
 
@@ -203,13 +202,13 @@ export class MigrationManager {
 
         try {
           for (const sql of chunk) {
-            console.log(
+            logger.debug(
               `[MigrationManager] SQL実行 (チャンク ${chunkIndex + 1}/${sqlChunks.length}): ${sql.substring(0, 50)}...`,
             );
             await databaseService.executeSql(sql, []);
           }
 
-          console.log(
+          logger.debug(
             `[MigrationManager] チャンク ${chunkIndex + 1}/${sqlChunks.length} 完了`,
           );
         } catch (chunkError) {
@@ -224,13 +223,13 @@ export class MigrationManager {
             errorMessage.includes("duplicate column name") ||
             errorMessage.includes("column already exists")
           ) {
-            console.log(
+            logger.debug(
               `[MigrationManager] チャンク ${chunkIndex + 1} 既存オブジェクト検出（継続）`,
             );
           } else {
-            console.error(
+            logger.error(
               `[MigrationManager] チャンク ${chunkIndex + 1} エラー:`,
-              chunkError,
+              chunkError as Error,
             );
             throw chunkError;
           }
@@ -251,20 +250,20 @@ export class MigrationManager {
 
         logger.debug("[MigrationManager] マイグレーション記録保存完了");
       } catch (recordError) {
-        console.warn(
+        logger.warn(
           `[MigrationManager] マイグレーション記録保存失敗（SQLは実行済み）:`,
-          recordError,
+          { details: recordError },
         );
         // 記録保存の失敗は致命的でない - SQLは既に実行済み
       }
 
-      console.log(
+      logger.debug(
         `[MigrationManager] マイグレーション完了: v${migration.version} - ${migration.name}`,
       );
     } catch (error) {
-      console.error(
+      logger.error(
         `[MigrationManager] マイグレーションエラー: v${migration.version} - ${migration.name}`,
-        error,
+        error as Error,
       );
       throw new Error(`Migration failed: ${migration.name} - ${error}`);
     }
@@ -280,9 +279,9 @@ export class MigrationManager {
       );
       return result.rows.map((row) => row.version);
     } catch (error) {
-      console.error(
+      logger.error(
         "[MigrationManager] 実行済みマイグレーション取得エラー:",
-        error,
+        error as Error,
       );
       return [];
     }
@@ -334,7 +333,7 @@ export class MigrationManager {
    * ロールバック実行（注意：データ損失の可能性）
    */
   public async rollback(targetVersion: number): Promise<void> {
-    console.warn(
+    logger.warn(
       `[MigrationManager] ロールバック実行: バージョン ${targetVersion} まで`,
     );
 
@@ -353,7 +352,7 @@ export class MigrationManager {
       if (migration && migration.rollbackSql) {
         await this.executeRollback(migration);
       } else {
-        console.warn(
+        logger.warn(
           `[MigrationManager] バージョン ${version} のロールバックSQLが見つかりません`,
         );
       }
@@ -370,7 +369,7 @@ export class MigrationManager {
       );
     }
 
-    console.log(
+    logger.debug(
       `[MigrationManager] ロールバック実行: v${migration.version} - ${migration.name}`,
     );
 
@@ -388,13 +387,13 @@ export class MigrationManager {
         );
       });
 
-      console.log(
+      logger.debug(
         `[MigrationManager] ロールバック完了: v${migration.version} - ${migration.name}`,
       );
     } catch (error) {
-      console.error(
+      logger.error(
         `[MigrationManager] ロールバックエラー: v${migration.version} - ${migration.name}`,
-        error,
+        error as Error,
       );
       throw error;
     }

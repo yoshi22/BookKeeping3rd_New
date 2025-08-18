@@ -112,7 +112,7 @@ export class OfflineCacheService {
       this.isInitialized = true;
       logger.debug("[OfflineCacheService] キャッシュシステム初期化完了");
     } catch (error) {
-      logger.error("[OfflineCacheService] 初期化エラー:", error  as Error);
+      logger.error("[OfflineCacheService] 初期化エラー:", error as Error);
       throw error;
     }
   }
@@ -179,10 +179,9 @@ export class OfflineCacheService {
 
       return null;
     } catch (error) {
-      console.warn(
-        `[OfflineCacheService] キャッシュ取得エラー (${key}):`,
-        error,
-      );
+      logger.warn(`[OfflineCacheService] キャッシュ取得エラー (${key}):`, {
+        details: error,
+      });
       if (fallbackFn) {
         return await fallbackFn();
       }
@@ -234,9 +233,9 @@ export class OfflineCacheService {
       // 統計更新
       this.updateCacheStatsSync();
     } catch (error) {
-      console.error(
+      logger.error(
         `[OfflineCacheService] キャッシュ保存エラー (${key}):`,
-        error,
+        error as Error,
       );
     }
   }
@@ -276,9 +275,9 @@ export class OfflineCacheService {
 
       return null;
     } catch (error) {
-      console.warn(
+      logger.warn(
         `[OfflineCacheService] SQLiteキャッシュ取得エラー (${key}):`,
-        error,
+        { details: error },
       );
       return null;
     }
@@ -312,7 +311,10 @@ export class OfflineCacheService {
 
       await databaseService.executeSql(query, params);
     } catch (error) {
-      logger.error("[OfflineCacheService] SQLiteキャッシュ保存エラー:", error  as Error);
+      logger.error(
+        "[OfflineCacheService] SQLiteキャッシュ保存エラー:",
+        error as Error,
+      );
     }
   }
 
@@ -340,7 +342,9 @@ export class OfflineCacheService {
       await Promise.allSettled(preloadTasks);
       logger.debug("[OfflineCacheService] 重要データプリロード完了");
     } catch (error) {
-      logger.warn("[OfflineCacheService] プリロードエラー:", { details: error });
+      logger.warn("[OfflineCacheService] プリロードエラー:", {
+        details: error,
+      });
     }
   }
 
@@ -364,7 +368,9 @@ export class OfflineCacheService {
         });
       }
     } catch (error) {
-      logger.warn("[OfflineCacheService] 問題プリロードエラー:", { details: error });
+      logger.warn("[OfflineCacheService] 問題プリロードエラー:", {
+        details: error,
+      });
     }
   }
 
@@ -386,7 +392,9 @@ export class OfflineCacheService {
         });
       }
     } catch (error) {
-      logger.warn("[OfflineCacheService] カテゴリプリロードエラー:", { details: error });
+      logger.warn("[OfflineCacheService] カテゴリプリロードエラー:", {
+        details: error,
+      });
     }
   }
 
@@ -408,7 +416,9 @@ export class OfflineCacheService {
         });
       }
     } catch (error) {
-      logger.warn("[OfflineCacheService] 勘定科目プリロードエラー:", { details: error });
+      logger.warn("[OfflineCacheService] 勘定科目プリロードエラー:", {
+        details: error,
+      });
     }
   }
 
@@ -431,10 +441,9 @@ export class OfflineCacheService {
         });
       }
     } catch (error) {
-      console.warn(
-        "[OfflineCacheService] ユーザー進捗プリロードエラー:",
-        error,
-      );
+      logger.warn("[OfflineCacheService] ユーザー進捗プリロードエラー:", {
+        details: error,
+      });
     }
   }
 
@@ -459,10 +468,9 @@ export class OfflineCacheService {
         });
       }
     } catch (error) {
-      console.warn(
-        "[OfflineCacheService] 復習アイテムプリロードエラー:",
-        error,
-      );
+      logger.warn("[OfflineCacheService] 復習アイテムプリロードエラー:", {
+        details: error,
+      });
     }
   }
 
@@ -478,7 +486,9 @@ export class OfflineCacheService {
         priority: "normal",
       });
     } catch (error) {
-      logger.warn("[OfflineCacheService] 統計プリロードエラー:", { details: error });
+      logger.warn("[OfflineCacheService] 統計プリロードエラー:", {
+        details: error,
+      });
     }
   }
 
@@ -560,14 +570,14 @@ export class OfflineCacheService {
           [key],
         );
       } catch (error) {
-        console.warn(
+        logger.warn(
           `[OfflineCacheService] SQLiteキャッシュ削除エラー (${key}):`,
-          error,
+          { details: error },
         );
       }
     }
 
-    logger.debug("[OfflineCacheService] LRU削除完了: ${evictCount}エントリ");
+    logger.debug(`[OfflineCacheService] LRU削除完了: ${evictCount}エントリ`);
   }
 
   /**
@@ -590,9 +600,14 @@ export class OfflineCacheService {
         [now],
       );
 
-      logger.debug("[OfflineCacheService] 期限切れキャッシュクリーンアップ完了");
+      logger.debug(
+        "[OfflineCacheService] 期限切れキャッシュクリーンアップ完了",
+      );
     } catch (error) {
-      logger.error("[OfflineCacheService] クリーンアップエラー:", error  as Error);
+      logger.error(
+        "[OfflineCacheService] クリーンアップエラー:",
+        error as Error,
+      );
     }
   }
 
@@ -630,11 +645,13 @@ export class OfflineCacheService {
         }
       }
 
-      console.log(
+      logger.debug(
         `[OfflineCacheService] メモリキャッシュ復元完了: ${this.memoryCache.size}エントリ`,
       );
     } catch (error) {
-      logger.warn("[OfflineCacheService] メモリキャッシュ復元エラー:", { details: error });
+      logger.warn("[OfflineCacheService] メモリキャッシュ復元エラー:", {
+        details: error,
+      });
     }
   }
 
@@ -649,7 +666,9 @@ export class OfflineCacheService {
         this.config = { ...this.config, ...parsed };
       }
     } catch (error) {
-      logger.warn("[OfflineCacheService] 設定読み込みエラー:", { details: error });
+      logger.warn("[OfflineCacheService] 設定読み込みエラー:", {
+        details: error,
+      });
     }
   }
 
@@ -739,11 +758,11 @@ export class OfflineCacheService {
       // アクセスログからも削除
       this.accessLog.delete(key);
 
-      logger.debug("[OfflineCacheService] キャッシュ無効化完了: ${key}");
+      logger.debug(`[OfflineCacheService] キャッシュ無効化完了: ${key}`);
     } catch (error) {
-      console.error(
+      logger.error(
         `[OfflineCacheService] キャッシュ無効化エラー (${key}):`,
-        error,
+        error as Error,
       );
     }
   }
@@ -768,13 +787,13 @@ export class OfflineCacheService {
         await this.invalidate(key);
       }
 
-      console.log(
+      logger.debug(
         `[OfflineCacheService] パターンキャッシュ無効化完了: ${pattern} (${keysToDelete.length}件)`,
       );
     } catch (error) {
-      console.error(
+      logger.error(
         `[OfflineCacheService] パターンキャッシュ無効化エラー (${pattern}):`,
-        error,
+        error as Error,
       );
     }
   }
@@ -804,7 +823,10 @@ export class OfflineCacheService {
 
       logger.debug("[OfflineCacheService] 全キャッシュクリア完了");
     } catch (error) {
-      logger.error("[OfflineCacheService] 全キャッシュクリアエラー:", error  as Error);
+      logger.error(
+        "[OfflineCacheService] 全キャッシュクリアエラー:",
+        error as Error,
+      );
     }
   }
 
@@ -834,7 +856,7 @@ export class OfflineCacheService {
       );
       logger.debug("[OfflineCacheService] 設定更新完了");
     } catch (error) {
-      logger.error("[OfflineCacheService] 設定更新エラー:", error  as Error);
+      logger.error("[OfflineCacheService] 設定更新エラー:", error as Error);
     }
   }
 
@@ -849,7 +871,10 @@ export class OfflineCacheService {
       this.isInitialized = false;
       logger.debug("[OfflineCacheService] クリーンアップ完了");
     } catch (error) {
-      logger.error("[OfflineCacheService] クリーンアップエラー:", error  as Error);
+      logger.error(
+        "[OfflineCacheService] クリーンアップエラー:",
+        error as Error,
+      );
     }
   }
 }

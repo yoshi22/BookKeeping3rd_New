@@ -16,7 +16,13 @@ import {
   TextInput,
   Modal,
 } from "react-native";
-import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../context/ThemeContext";
 import {
   answerService,
   SubmitAnswerRequest,
@@ -96,38 +102,38 @@ export default function VoucherEntryForm({
   const [selectedField, setSelectedField] = useState<VoucherField | null>(null);
 
   // デバッグ: voucherTypesの内容を確認
-  console.log(
-    "[VoucherEntryForm] voucherTypes received:",
-    JSON.stringify(voucherTypes, null, 2),
-  );
-  console.log(
-    "[VoucherEntryForm] voucherTypes length:",
-    voucherTypes?.length || 0,
-  );
+  logger.debug("[VoucherEntryForm] voucherTypes received:", {
+    details: JSON.stringify(voucherTypes, null, 2),
+  });
+  logger.debug("[VoucherEntryForm] voucherTypes length:", {
+    details: voucherTypes?.length || 0,
+  });
   if (voucherTypes && voucherTypes.length > 0) {
-    console.log(
-      "[VoucherEntryForm] First voucher type:",
-      voucherTypes[0].type,
-      "Fields count:",
-      voucherTypes[0].fields?.length || 0,
-    );
+    logger.debug("[VoucherEntryForm] First voucher type:", {
+      details: {
+        type: voucherTypes[0].type,
+        fieldsCount: voucherTypes[0].fields?.length || 0,
+      },
+    });
     if (voucherTypes[0].fields && voucherTypes[0].fields.length > 0) {
       voucherTypes[0].fields.forEach((field, index) => {
-        console.log(
-          `[VoucherEntryForm] Field ${index}:`,
-          field.name,
-          field.type,
-          "Options:",
-          field.options?.length || 0,
-          field.options,
-        );
+        logger.debug(`[VoucherEntryForm] Field ${index}:`, {
+          details: {
+            name: field.name,
+            type: field.type,
+            optionsCount: field.options?.length || 0,
+            options: field.options,
+          },
+        });
       });
     }
   }
 
   // 新しい伝票エントリを追加
   const addVoucherEntry = (voucherType: string) => {
-    logger.debug("[VoucherEntryForm] addVoucherEntry called with:", { details: voucherType });
+    logger.debug("[VoucherEntryForm] addVoucherEntry called with:", {
+      details: voucherType,
+    });
     const newEntry: VoucherEntry = { type: voucherType };
     setEntries([...entries, newEntry]);
     setActiveVoucherType(voucherType);
@@ -152,11 +158,13 @@ export default function VoucherEntryForm({
 
   // 選択モーダルを開く
   const openSelectModal = (entryIndex: number, field: VoucherField) => {
-    logger.debug("[VoucherEntryForm] openSelectModal called:", { details: {
-      entryIndex,
-      fieldName: field.name,
-      fieldLabel: field.label,
-    } });
+    logger.debug("[VoucherEntryForm] openSelectModal called:", {
+      details: {
+        entryIndex,
+        fieldName: field.name,
+        fieldLabel: field.label,
+      },
+    });
     setSelectedEntryIndex(entryIndex);
     setSelectedField(field);
     setIsModalVisible(true);
@@ -164,11 +172,13 @@ export default function VoucherEntryForm({
 
   // 選択モーダルで選択肢を選ぶ
   const handleOptionSelect = (option: string) => {
-    logger.debug("[VoucherEntryForm] handleOptionSelect called:", { details: {
-      option,
-      selectedEntryIndex,
-      selectedFieldName: selectedField?.name,
-    } });
+    logger.debug("[VoucherEntryForm] handleOptionSelect called:", {
+      details: {
+        option,
+        selectedEntryIndex,
+        selectedFieldName: selectedField?.name,
+      },
+    });
     if (selectedEntryIndex !== null && selectedField) {
       updateEntry(selectedEntryIndex, selectedField.name, option);
       setIsModalVisible(false);
@@ -192,23 +202,25 @@ export default function VoucherEntryForm({
 
       // voucherTypesの存在確認（refから取得）
       const currentVoucherTypes = voucherTypesRef.current;
-      console.log(
+      logger.debug(
         "[VoucherEntryForm] handleSubmitAnswer - voucherTypes check:",
         {
-          propVoucherTypes: voucherTypes,
-          refVoucherTypes: currentVoucherTypes,
-          propIsArray: Array.isArray(voucherTypes),
-          refIsArray: Array.isArray(currentVoucherTypes),
-          propLength: voucherTypes?.length,
-          refLength: currentVoucherTypes?.length,
-          entries: entries.length,
+          details: {
+            propVoucherTypes: voucherTypes,
+            refVoucherTypes: currentVoucherTypes,
+            propIsArray: Array.isArray(voucherTypes),
+            refIsArray: Array.isArray(currentVoucherTypes),
+            propLength: voucherTypes?.length,
+            refLength: currentVoucherTypes?.length,
+            entries: entries.length,
+          },
         },
       );
 
       if (!currentVoucherTypes || !Array.isArray(currentVoucherTypes)) {
-        console.error(
+        logger.error(
           "[VoucherEntryForm] voucherTypes is undefined or not an array:",
-          { prop: voucherTypes, ref: currentVoucherTypes },
+          new Error("voucherTypes validation failed"),
         );
         Alert.alert("エラー", "伝票定義が見つかりません");
         setIsSubmitting(false);
@@ -286,7 +298,7 @@ export default function VoucherEntryForm({
         ]);
       }
     } catch (error) {
-      logger.error("[VoucherEntryForm] 解答送信エラー:", error  as Error);
+      logger.error("[VoucherEntryForm] 解答送信エラー:", error as Error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);
@@ -302,13 +314,15 @@ export default function VoucherEntryForm({
     const value = entry[field.name as keyof VoucherEntry];
 
     // デバッグ: フィールド情報を確認
-    logger.debug("[VoucherEntryForm] renderVoucherField:", { details: {
-      fieldName: field.name,
-      fieldType: field.type,
-      hasOptions: !!field.options,
-      optionsCount: field.options?.length,
-      options: field.options,
-    } });
+    logger.debug("[VoucherEntryForm] renderVoucherField:", {
+      details: {
+        fieldName: field.name,
+        fieldType: field.type,
+        hasOptions: !!field.options,
+        optionsCount: field.options?.length,
+        options: field.options,
+      },
+    });
 
     return (
       <View key={field.name} style={styles.fieldContainer}>
@@ -320,9 +334,9 @@ export default function VoucherEntryForm({
           <TouchableOpacity
             style={[styles.selectButton, !value && styles.selectButtonEmpty]}
             onPress={() => {
-              console.log(
+              logger.debug(
                 "[VoucherEntryForm] Select button pressed for field:",
-                field.name,
+                { details: field.name },
               );
               openSelectModal(index, field);
             }}
@@ -425,10 +439,9 @@ export default function VoucherEntryForm({
             entries.length === 0 && styles.submitButtonDisabled,
           ]}
           onPress={() => {
-            console.log(
-              "[VoucherEntryForm] Submit button pressed, entries:",
-              entries,
-            );
+            logger.debug("[VoucherEntryForm] Submit button pressed, entries:", {
+              details: entries,
+            });
             if (entries.length > 0) {
               handleSubmitAnswer();
             } else {

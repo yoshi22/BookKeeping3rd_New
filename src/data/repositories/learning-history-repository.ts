@@ -60,13 +60,13 @@ export interface LearningStatistics {
   };
 
   // 日別統計
-  dailyStats: Array<{
+  dailyStats: {
     date: string;
     questionsAnswered: number;
     correctAnswers: number;
     accuracyRate: number;
     studyTime: number;
-  }>;
+  }[];
 }
 
 interface CategoryStats {
@@ -124,12 +124,15 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
 
       const result = await this.create(historyData);
 
-      console.log(
+      logger.debug(
         `[LearningHistoryRepository] CBT解答記録完了: ${record.questionId}`,
       );
       return result;
     } catch (error) {
-      logger.error("[LearningHistoryRepository] recordAnswer エラー:", error as Error);
+      logger.error(
+        "[LearningHistoryRepository] recordAnswer エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -154,9 +157,9 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       const result = await this.executeQuery<LearningHistory>(sql, params);
       return result.rows;
     } catch (error) {
-      console.error(
+      logger.error(
         `[LearningHistoryRepository] findByQuestionId エラー:`,
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -172,9 +175,9 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       const result = await this.executeQuery<LearningHistory>(sql, [sessionId]);
       return result.rows;
     } catch (error) {
-      console.error(
+      logger.error(
         `[LearningHistoryRepository] findBySessionId エラー:`,
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -231,9 +234,9 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       const result = await this.executeQuery<LearningHistory>(sql, params);
       return result.rows;
     } catch (error) {
-      console.error(
+      logger.error(
         `[LearningHistoryRepository] findByCategory エラー:`,
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -476,7 +479,10 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       logger.debug("[LearningHistoryRepository] 学習統計情報取得完了");
       return statistics;
     } catch (error) {
-      logger.error("[LearningHistoryRepository] getStatistics エラー:", error as Error);
+      logger.error(
+        "[LearningHistoryRepository] getStatistics エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -572,16 +578,16 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         categoryBreakdown,
       };
 
-      console.log(
+      logger.debug(
         "[LearningHistoryRepository] getUniqueAnsweredQuestions result:",
-        result,
+        { details: result },
       );
 
       return result;
     } catch (error) {
-      console.error(
+      logger.error(
         "[LearningHistoryRepository] getUniqueAnsweredQuestions エラー:",
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -597,12 +603,12 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       limit?: number;
     } = {},
   ): Promise<
-    Array<{
+    {
       questionId: string;
       incorrectCount: number;
       lastIncorrectAt: string;
       totalAttempts: number;
-    }>
+    }[]
   > {
     try {
       let sql = `
@@ -648,9 +654,9 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
         totalAttempts: row.totalAttempts,
       }));
     } catch (error) {
-      console.error(
+      logger.error(
         "[LearningHistoryRepository] findIncorrectQuestions エラー:",
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -662,12 +668,15 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
   public async deleteSession(sessionId: string): Promise<number> {
     try {
       const result = await this.deleteWhere({ session_id: sessionId });
-      console.log(
+      logger.debug(
         `[LearningHistoryRepository] セッション削除完了: ${sessionId}, ${result}件`,
       );
       return result;
     } catch (error) {
-      logger.error("[LearningHistoryRepository] deleteSession エラー:", error as Error);
+      logger.error(
+        "[LearningHistoryRepository] deleteSession エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -683,14 +692,14 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       const sql = "DELETE FROM learning_history WHERE answered_at < ?";
       const result = await this.executeQuery(sql, [cutoffDate.toISOString()]);
 
-      console.log(
+      logger.debug(
         `[LearningHistoryRepository] 古い履歴クリーンアップ完了: ${result.rowsAffected}件削除`,
       );
       return result.rowsAffected;
     } catch (error) {
-      console.error(
+      logger.error(
         "[LearningHistoryRepository] cleanupOldHistory エラー:",
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -718,18 +727,18 @@ export class LearningHistoryRepository extends BaseRepository<LearningHistory> {
       ]);
 
       if (result.rowsAffected === 0) {
-        console.warn(
+        logger.warn(
           `[LearningHistoryRepository] updateCorrectStatus: 対象レコードが見つかりません - questionId: ${questionId}, sessionId: ${sessionId}`,
         );
       } else {
-        console.log(
+        logger.debug(
           `[LearningHistoryRepository] 正解フラグ更新完了: ${questionId} -> ${isCorrect}`,
         );
       }
     } catch (error) {
-      console.error(
+      logger.error(
         `[LearningHistoryRepository] updateCorrectStatus エラー:`,
-        error,
+        error as Error,
       );
       throw error;
     }

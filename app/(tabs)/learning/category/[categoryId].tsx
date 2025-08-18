@@ -22,6 +22,7 @@ import type {
   QuestionCategory,
   QuestionDifficulty,
 } from "../../../../src/types/models";
+import { logger } from "../../../../src/utils/logger";
 
 interface FilterOptions {
   difficulties: QuestionDifficulty[];
@@ -147,7 +148,7 @@ export default function CategoryDetailScreen() {
   // 問題タイプオプションの定義 (problemsStrategy.md完全準拠)
   const questionTypeOptions: Record<
     QuestionCategory,
-    Array<{ type: string; name: string; icon: string; count: number }>
+    { type: string; name: string; icon: string; count: number }[]
   > = {
     journal: [
       { type: "cash_deposit", name: "現金・預金取引", icon: "💰", count: 42 },
@@ -242,10 +243,6 @@ export default function CategoryDetailScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        console.log(
-          `[CategoryDetail] カテゴリ ${categoryId} のデータ読み込み開始`,
-        );
-
         // 問題データを読み込む（problemsStrategy順序を使用）
         const questionRepository = new QuestionRepository();
         const categoryQuestions = await questionRepository.findByCategory(
@@ -253,16 +250,13 @@ export default function CategoryDetailScreen() {
           { useProblemsStrategyOrder: true },
         );
 
-        console.log(
-          `[CategoryDetail] ${categoryQuestions.length}問の問題を取得`,
-        );
         setQuestions(categoryQuestions);
         setFilteredQuestions(categoryQuestions);
 
         // 学習統計を読み込む
         await loadLearningStats();
       } catch (error) {
-        console.error("[CategoryDetail] データ読み込みエラー:", error);
+        logger.error("[CategoryDetail] データ読み込みエラー:", error as Error);
       } finally {
         setLoading(false);
       }
@@ -397,7 +391,7 @@ export default function CategoryDetailScreen() {
         recentQuestions,
       });
     } catch (error) {
-      console.error("学習統計の読み込みに失敗:", error);
+      logger.error("学習統計の読み込みに失敗:", error as Error);
     }
   };
 
@@ -981,7 +975,7 @@ export default function CategoryDetailScreen() {
 
       return tagLabels.slice(0, 3); // 最大3つまで
     } catch (e) {
-      console.error("タグ解析エラー:", e);
+      logger.error("タグ解析エラー:", e as Error);
       return [];
     }
   };

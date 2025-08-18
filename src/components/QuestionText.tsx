@@ -5,6 +5,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { logger } from "../utils/logger";
 import {
   useTheme,
   useThemedStyles,
@@ -51,10 +52,18 @@ export default function QuestionText({
     if (existing && now - existing.renderedAt < 100) {
       // 100ms以内の再レンダリングは重複とみなす
       existing.count += 1;
-      console.warn(
-        `[QuestionText] 重複検出 (${existing.count}回目) - レンダリングをスキップ: ${questionId}`,
-        { timeDiff: now - existing.renderedAt, existingCount: existing.count },
-      );
+      if (
+        process.env.NODE_ENV === "development" &&
+        process.env.DEBUG_RENDERING
+      ) {
+        logger.warn(
+          `[QuestionText] 重複検出 (${existing.count}回目) - レンダリングをスキップ: ${questionId}`,
+          {
+            timeDiff: now - existing.renderedAt,
+            existingCount: existing.count,
+          },
+        );
+      }
       shouldRender.current = false;
     } else {
       // 新しいインスタンスまたは十分時間が経過した再レンダリング
@@ -63,11 +72,16 @@ export default function QuestionText({
       renderingInstances.set(questionId, { count: 1, renderedAt: now });
       shouldRender.current = true;
 
-      console.log(`[QuestionText] インスタンス登録: ${questionId}`, {
-        instanceId: instanceIdRef.current,
-        isFirstRender: !existing,
-        totalInstances: renderingInstances.size,
-      });
+      if (
+        process.env.NODE_ENV === "development" &&
+        process.env.DEBUG_RENDERING
+      ) {
+        logger.debug(`[QuestionText] インスタンス登録: ${questionId}`, {
+          instanceId: instanceIdRef.current,
+          isFirstRender: !existing,
+          totalInstances: renderingInstances.size,
+        });
+      }
     }
   }
 
@@ -80,18 +94,28 @@ export default function QuestionText({
           const existing = renderingInstances.get(questionId);
           if (existing && existing.count <= 1) {
             renderingInstances.delete(questionId);
-            console.log(`[QuestionText] インスタンス削除: ${questionId}`, {
-              instanceId: instanceIdRef.current,
-              remainingInstances: renderingInstances.size,
-            });
+            if (
+              process.env.NODE_ENV === "development" &&
+              process.env.DEBUG_RENDERING
+            ) {
+              logger.debug(`[QuestionText] インスタンス削除: ${questionId}`, {
+                instanceId: instanceIdRef.current,
+                remainingInstances: renderingInstances.size,
+              });
+            }
           } else if (existing) {
             existing.count -= 1;
-            console.log(
-              `[QuestionText] インスタンスカウント減少: ${questionId}`,
-              {
-                remainingCount: existing.count,
-              },
-            );
+            if (
+              process.env.NODE_ENV === "development" &&
+              process.env.DEBUG_RENDERING
+            ) {
+              logger.debug(
+                `[QuestionText] インスタンスカウント減少: ${questionId}`,
+                {
+                  remainingCount: existing.count,
+                },
+              );
+            }
           }
         }, 50);
       }
@@ -121,12 +145,12 @@ export default function QuestionText({
   // 仕訳行を抽出して2列表示用にフォーマット
   const formatJournalEntries = (text: string) => {
     const lines = text.split("\n");
-    const journalEntries: Array<{
+    const journalEntries: {
       date: string;
       debit: string;
       credit: string;
       description: string;
-    }> = [];
+    }[] = [];
     let currentSection = "";
 
     lines.forEach((line) => {

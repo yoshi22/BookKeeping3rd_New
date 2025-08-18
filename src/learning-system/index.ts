@@ -4,13 +4,6 @@
  */
 
 // 戦略関連
-export * from "./strategy/learning-paths";
-export * from "./strategy/category-config";
-export * from "./strategy/difficulty-matrix";
-
-// エンジン関連
-export * from "./engine/question-selector";
-
 // 統合ヘルパー関数
 import { Question } from "@/types/models";
 import {
@@ -24,6 +17,13 @@ import {
   LEARNING_PHASES,
   getLearningPath,
 } from "./strategy/learning-paths";
+
+export * from "./strategy/learning-paths";
+export * from "./strategy/category-config";
+export * from "./strategy/difficulty-matrix";
+
+// エンジン関連
+export * from "./engine/question-selector";
 
 /**
  * 学習システムの初期化

@@ -61,7 +61,7 @@ export async function resetDatabase(): Promise<void> {
       if (firstQuestion.rows.length > 0) {
         logger.debug("[ResetDatabase] 最初の問題確認:");
         logger.debug("ID: ${firstQuestion.rows[0].id}");
-        console.log(
+        logger.debug(
           `問題文: ${firstQuestion.rows[0].question_text.substring(0, 80)}...`,
         );
       }
@@ -73,7 +73,7 @@ export async function resetDatabase(): Promise<void> {
       [{ text: "OK" }],
     );
   } catch (error) {
-    logger.error("[ResetDatabase] リセット中にエラー:", error  as Error);
+    logger.error("[ResetDatabase] リセット中にエラー:", error as Error);
     Alert.alert("エラー", "データベースのリセット中にエラーが発生しました。", [
       { text: "OK" },
     ]);
@@ -100,7 +100,7 @@ export function confirmResetDatabase(): void {
           try {
             await resetDatabase();
           } catch (error) {
-            logger.error("Database reset failed:", error  as Error);
+            logger.error("Database reset failed:", error as Error);
           }
         },
       },

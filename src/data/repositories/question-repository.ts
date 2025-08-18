@@ -91,12 +91,15 @@ export class QuestionRepository extends BaseRepository<Question> {
 
       const result = await this.executeQuery<Question>(sql, params);
 
-      console.log(
+      logger.debug(
         `[QuestionRepository] カテゴリ ${category} から ${result.rows.length}問取得 (problemsStrategy順序: ${options.useProblemsStrategyOrder || false})`,
       );
       return result.rows;
     } catch (error) {
-      logger.error("[QuestionRepository] findByCategory エラー:", error as Error);
+      logger.error(
+        "[QuestionRepository] findByCategory エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -126,14 +129,14 @@ export class QuestionRepository extends BaseRepository<Question> {
 
       const result = await this.executeQuery<Question>(sql, params);
 
-      console.log(
+      logger.debug(
         `[QuestionRepository] 未学習問題 ${result.rows.length}問取得`,
       );
       return result.rows;
     } catch (error) {
-      console.error(
+      logger.error(
         `[QuestionRepository] findUnstudiedQuestions エラー:`,
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -169,7 +172,10 @@ export class QuestionRepository extends BaseRepository<Question> {
       logger.debug("[QuestionRepository] 復習問題 ${result.rows.length}問取得");
       return result.rows;
     } catch (error) {
-      logger.error("[QuestionRepository] findReviewQuestions エラー:", error as Error);
+      logger.error(
+        "[QuestionRepository] findReviewQuestions エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -226,7 +232,7 @@ export class QuestionRepository extends BaseRepository<Question> {
 
       const result = await this.executeQuery<Question>(sql, params);
 
-      console.log(
+      logger.debug(
         `[QuestionRepository] タグ "${tag}" で ${result.rows.length}問取得`,
       );
       return result.rows;
@@ -293,14 +299,14 @@ export class QuestionRepository extends BaseRepository<Question> {
 
       const result = await this.executeQuery<Question>(sql, params);
 
-      console.log(
+      logger.debug(
         `[QuestionRepository] problemsStrategy順序で ${result.rows.length}問取得`,
       );
       return result.rows;
     } catch (error) {
-      console.error(
+      logger.error(
         `[QuestionRepository] findWithProblemsStrategyOrder エラー:`,
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -310,12 +316,12 @@ export class QuestionRepository extends BaseRepository<Question> {
    * サブカテゴリ一覧取得（problemsStrategy.md基準）
    */
   public async getSubcategoriesWithCounts(sectionNumber?: 1 | 2 | 3): Promise<
-    Array<{
+    {
       subcategory: string;
       pattern_type: string;
       count: number;
       section_number: number;
-    }>
+    }[]
   > {
     try {
       let sql = `
@@ -346,14 +352,14 @@ export class QuestionRepository extends BaseRepository<Question> {
         section_number: number;
       }>(sql, params);
 
-      console.log(
+      logger.debug(
         `[QuestionRepository] サブカテゴリ一覧 ${result.rows.length}件取得`,
       );
       return result.rows;
     } catch (error) {
-      console.error(
+      logger.error(
         `[QuestionRepository] getSubcategoriesWithCounts エラー:`,
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -409,18 +415,18 @@ export class QuestionRepository extends BaseRepository<Question> {
             detailed: Array.isArray(tags) ? tags : [],
           };
         } catch (parseError) {
-          console.warn(
+          logger.warn(
             `[QuestionRepository] タグJSON解析エラー for ${questionId}:`,
-            parseError,
+            { details: parseError },
           );
         }
       }
 
       return { ...question, tagHierarchy };
     } catch (error) {
-      console.error(
+      logger.error(
         `[QuestionRepository] getQuestionWithTagHierarchy エラー:`,
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -488,15 +494,14 @@ export class QuestionRepository extends BaseRepository<Question> {
         patternBreakdown,
       };
 
-      console.log(
-        "[QuestionRepository] problemsStrategy統計情報取得完了:",
-        stats,
-      );
+      logger.debug("[QuestionRepository] problemsStrategy統計情報取得完了:", {
+        details: stats,
+      });
       return stats;
     } catch (error) {
-      console.error(
+      logger.error(
         "[QuestionRepository] getProblemsStrategyStats エラー:",
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -567,7 +572,9 @@ export class QuestionRepository extends BaseRepository<Question> {
         averageDifficulty: Math.round(averageDifficulty * 100) / 100,
       };
 
-      logger.debug("[QuestionRepository] 問題統計情報取得完了:", { details: stats });
+      logger.debug("[QuestionRepository] 問題統計情報取得完了:", {
+        details: stats,
+      });
       return stats;
     } catch (error) {
       logger.error("[QuestionRepository] getStats エラー:", error as Error);
@@ -602,12 +609,14 @@ export class QuestionRepository extends BaseRepository<Question> {
         counts[row.category_id] = row.count;
       });
 
-      logger.debug("[QuestionRepository] カテゴリ別問題数取得完了:", { details: counts });
+      logger.debug("[QuestionRepository] カテゴリ別問題数取得完了:", {
+        details: counts,
+      });
       return counts;
     } catch (error) {
-      console.error(
+      logger.error(
         "[QuestionRepository] getQuestionCountsByCategory エラー:",
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -664,12 +673,15 @@ export class QuestionRepository extends BaseRepository<Question> {
 
       const result = await this.executeQuery<Question>(sql, params);
 
-      console.log(
+      logger.debug(
         `[QuestionRepository] 第${examSection}問から ${result.rows.length}問取得`,
       );
       return result.rows;
     } catch (error) {
-      logger.error("[QuestionRepository] findByExamSection エラー:", error as Error);
+      logger.error(
+        "[QuestionRepository] findByExamSection エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -698,12 +710,14 @@ export class QuestionRepository extends BaseRepository<Question> {
         counts[row.exam_section] = row.count;
       });
 
-      logger.debug("[QuestionRepository] セクション別問題数取得完了:", { details: counts });
+      logger.debug("[QuestionRepository] セクション別問題数取得完了:", {
+        details: counts,
+      });
       return counts;
     } catch (error) {
-      console.error(
+      logger.error(
         "[QuestionRepository] getQuestionCountsByExamSection エラー:",
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -753,12 +767,15 @@ export class QuestionRepository extends BaseRepository<Question> {
 
       const result = await this.executeQuery<Question>(sql, params);
 
-      console.log(
+      logger.debug(
         `[QuestionRepository] サブカテゴリ ${subcategoryId} から ${result.rows.length}問取得`,
       );
       return result.rows;
     } catch (error) {
-      logger.error("[QuestionRepository] findBySubcategory エラー:", error as Error);
+      logger.error(
+        "[QuestionRepository] findBySubcategory エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -780,12 +797,15 @@ export class QuestionRepository extends BaseRepository<Question> {
 
       const result = await this.executeQuery<any>(sql, params);
 
-      console.log(
+      logger.debug(
         `[QuestionRepository] ${result.rows.length}個のサブカテゴリ取得`,
       );
       return result.rows;
     } catch (error) {
-      logger.error("[QuestionRepository] getSubcategories エラー:", error as Error);
+      logger.error(
+        "[QuestionRepository] getSubcategories エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -854,12 +874,14 @@ export class QuestionRepository extends BaseRepository<Question> {
         actualCounts,
       };
 
-      logger.debug("[QuestionRepository] コンテンツ構成検証完了:", { details: validation });
+      logger.debug("[QuestionRepository] コンテンツ構成検証完了:", {
+        details: validation,
+      });
       return validation;
     } catch (error) {
-      console.error(
+      logger.error(
         "[QuestionRepository] validateContentStructure エラー:",
-        error,
+        error as Error,
       );
       throw error;
     }
@@ -871,11 +893,11 @@ export class QuestionRepository extends BaseRepository<Question> {
   public async validateAnswerTemplates(): Promise<{
     validCount: number;
     invalidCount: number;
-    errors: Array<{ questionId: string; error: string }>;
+    errors: { questionId: string; error: string }[];
   }> {
     try {
       const allQuestions = await this.findAll();
-      const errors: Array<{ questionId: string; error: string }> = [];
+      const errors: { questionId: string; error: string }[] = [];
       let validCount = 0;
       let invalidCount = 0;
 
@@ -930,15 +952,14 @@ export class QuestionRepository extends BaseRepository<Question> {
         errors,
       };
 
-      console.log(
-        "[QuestionRepository] CBT解答テンプレート検証完了:",
-        validation,
-      );
+      logger.debug("[QuestionRepository] CBT解答テンプレート検証完了:", {
+        details: validation,
+      });
       return validation;
     } catch (error) {
-      console.error(
+      logger.error(
         "[QuestionRepository] validateAnswerTemplates エラー:",
-        error,
+        error as Error,
       );
       throw error;
     }

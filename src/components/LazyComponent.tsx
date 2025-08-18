@@ -294,12 +294,11 @@ export class LazyComponentManager {
    * 複数コンポーネントの一括プリロード
    */
   public async preloadComponents(
-    components: Array<{ name: string; loader: () => Promise<any> }>,
+    components: { name: string; loader: () => Promise<any> }[],
   ): Promise<void> {
-    console.log(
-      "[LazyComponentManager] 一括プリロード開始:",
-      components.length,
-    );
+    logger.debug("[LazyComponentManager] 一括プリロード開始:", {
+      details: `${components.length}個のコンポーネント`,
+    });
     const startTime = performance.now();
 
     const preloadPromises = components.map(async ({ name, loader }) => {
@@ -319,9 +318,9 @@ export class LazyComponentManager {
         this.preloadedComponents.add(name);
         logger.debug("[LazyComponentManager] プリロード完了: ${name}");
       } catch (error) {
-        console.error(
+        logger.error(
           `[LazyComponentManager] プリロードエラー: ${name}`,
-          error,
+          error as Error,
         );
       } finally {
         this.loadingComponents.delete(name);
@@ -331,9 +330,9 @@ export class LazyComponentManager {
     await Promise.allSettled(preloadPromises);
 
     const endTime = performance.now();
-    console.log(
-      `[LazyComponentManager] 一括プリロード完了: ${endTime - startTime}ms`,
-    );
+    logger.debug("[LazyComponentManager] 一括プリロード完了:", {
+      details: `${endTime - startTime}ms`,
+    });
   }
 
   /**

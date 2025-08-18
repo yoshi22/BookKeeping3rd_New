@@ -7,6 +7,11 @@ import { useRef, useCallback } from "react";
 import { Animated, Vibration, Platform } from "react-native";
 import { useAccessibility } from "./useAccessibility";
 
+/**
+ * フィードバック付きコンポーネントのラッパー
+ */
+import React, { forwardRef, useImperativeHandle } from "react";
+
 export interface FeedbackAnimations {
   // 成功フィードバック
   successPulse: (config?: AnimationConfig) => Promise<void>;
@@ -452,11 +457,6 @@ export function useFeedbackAnimations(): FeedbackAnimations {
     reset,
   };
 }
-
-/**
- * フィードバック付きコンポーネントのラッパー
- */
-import React, { forwardRef, useImperativeHandle } from "react";
 
 export interface FeedbackAnimatedViewRef {
   triggerSuccess: (config?: AnimationConfig) => Promise<void>;

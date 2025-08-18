@@ -3,7 +3,7 @@
  * 簿記3級問題集アプリ - 統一的なエラー処理
  */
 
-import { DatabaseError, LogLevel } from '../types/database';
+import { DatabaseError, LogLevel } from "../types/database";
 import { logger } from "../utils/logger";
 
 /**
@@ -11,17 +11,17 @@ import { logger } from "../utils/logger";
  */
 export class AppError extends Error {
   public readonly code: string;
-  public readonly severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  public readonly severity: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
   public readonly context: Record<string, any>;
   public readonly recoverable: boolean;
   public readonly timestamp: string;
 
   constructor(
     message: string,
-    code: string = 'UNKNOWN_ERROR',
-    severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' = 'MEDIUM',
+    code: string = "UNKNOWN_ERROR",
+    severity: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL" = "MEDIUM",
     context: Record<string, any> = {},
-    recoverable: boolean = true
+    recoverable: boolean = true,
   ) {
     super(message);
     this.name = this.constructor.name;
@@ -45,11 +45,11 @@ export class DatabaseAppError extends AppError {
   constructor(
     message: string,
     originalError?: any,
-    context: Record<string, any> = {}
+    context: Record<string, any> = {},
   ) {
     const severity = DatabaseAppError.determineSeverity(originalError);
     const code = DatabaseAppError.determineErrorCode(originalError);
-    
+
     super(
       message,
       code,
@@ -57,55 +57,65 @@ export class DatabaseAppError extends AppError {
       {
         ...context,
         originalError: originalError?.message || originalError,
-        sqlCode: originalError?.code
+        sqlCode: originalError?.code,
       },
-      severity !== 'CRITICAL'
+      severity !== "CRITICAL",
     );
   }
 
-  private static determineSeverity(error: any): 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' {
-    if (!error) return 'MEDIUM';
-    
+  private static determineSeverity(
+    error: any,
+  ): "LOW" | "MEDIUM" | "HIGH" | "CRITICAL" {
+    if (!error) return "MEDIUM";
+
     const errorMessage = (error as Error).message || error.toString();
-    
+
     // データベース破損・接続不可
-    if (errorMessage.includes('database is locked') || 
-        errorMessage.includes('no such table') ||
-        errorMessage.includes('disk I/O error')) {
-      return 'CRITICAL';
+    if (
+      errorMessage.includes("database is locked") ||
+      errorMessage.includes("no such table") ||
+      errorMessage.includes("disk I/O error")
+    ) {
+      return "CRITICAL";
     }
-    
+
     // データ整合性エラー
-    if (errorMessage.includes('FOREIGN KEY constraint') ||
-        errorMessage.includes('UNIQUE constraint') ||
-        errorMessage.includes('CHECK constraint')) {
-      return 'HIGH';
+    if (
+      errorMessage.includes("FOREIGN KEY constraint") ||
+      errorMessage.includes("UNIQUE constraint") ||
+      errorMessage.includes("CHECK constraint")
+    ) {
+      return "HIGH";
     }
-    
+
     // 一般的なSQLエラー
-    if (errorMessage.includes('syntax error') ||
-        errorMessage.includes('no such column')) {
-      return 'MEDIUM';
+    if (
+      errorMessage.includes("syntax error") ||
+      errorMessage.includes("no such column")
+    ) {
+      return "MEDIUM";
     }
-    
-    return 'LOW';
+
+    return "LOW";
   }
 
   private static determineErrorCode(error: any): string {
-    if (!error) return 'DB_UNKNOWN_ERROR';
-    
+    if (!error) return "DB_UNKNOWN_ERROR";
+
     const errorMessage = (error as Error).message || error.toString();
-    
-    if (errorMessage.includes('database is locked')) return 'DB_LOCKED';
-    if (errorMessage.includes('no such table')) return 'DB_TABLE_NOT_FOUND';
-    if (errorMessage.includes('no such column')) return 'DB_COLUMN_NOT_FOUND';
-    if (errorMessage.includes('FOREIGN KEY constraint')) return 'DB_FK_VIOLATION';
-    if (errorMessage.includes('UNIQUE constraint')) return 'DB_UNIQUE_VIOLATION';
-    if (errorMessage.includes('CHECK constraint')) return 'DB_CHECK_VIOLATION';
-    if (errorMessage.includes('syntax error')) return 'DB_SYNTAX_ERROR';
-    if (errorMessage.includes('disk I/O error')) return 'DB_IO_ERROR';
-    
-    return 'DB_GENERAL_ERROR';
+
+    if (errorMessage.includes("database is locked")) return "DB_LOCKED";
+    if (errorMessage.includes("no such table")) return "DB_TABLE_NOT_FOUND";
+    if (errorMessage.includes("no such column")) return "DB_COLUMN_NOT_FOUND";
+    if (errorMessage.includes("FOREIGN KEY constraint"))
+      return "DB_FK_VIOLATION";
+    if (errorMessage.includes("UNIQUE constraint"))
+      return "DB_UNIQUE_VIOLATION";
+    if (errorMessage.includes("CHECK constraint")) return "DB_CHECK_VIOLATION";
+    if (errorMessage.includes("syntax error")) return "DB_SYNTAX_ERROR";
+    if (errorMessage.includes("disk I/O error")) return "DB_IO_ERROR";
+
+    return "DB_GENERAL_ERROR";
   }
 }
 
@@ -115,21 +125,21 @@ export class DatabaseAppError extends AppError {
 export class ValidationError extends AppError {
   public readonly field?: string;
   public readonly validationRule?: string;
-  
+
   constructor(
     message: string,
     field?: string,
     validationRule?: string,
-    context: Record<string, any> = {}
+    context: Record<string, any> = {},
   ) {
     super(
       message,
-      'VALIDATION_ERROR',
-      'MEDIUM',
+      "VALIDATION_ERROR",
+      "MEDIUM",
       { ...context, field, validationRule },
-      true
+      true,
     );
-    
+
     this.field = field;
     this.validationRule = validationRule;
   }
@@ -141,10 +151,10 @@ export class ValidationError extends AppError {
 export class BusinessLogicError extends AppError {
   constructor(
     message: string,
-    code: string = 'BUSINESS_LOGIC_ERROR',
-    context: Record<string, any> = {}
+    code: string = "BUSINESS_LOGIC_ERROR",
+    context: Record<string, any> = {},
   ) {
-    super(message, code, 'HIGH', context, true);
+    super(message, code, "HIGH", context, true);
   }
 }
 
@@ -153,7 +163,7 @@ export class BusinessLogicError extends AppError {
  */
 export class ErrorHandler {
   private static instance: ErrorHandler;
-  private errorListeners: Array<(error: AppError) => void> = [];
+  private errorListeners: ((error: AppError) => void)[] = [];
 
   public static getInstance(): ErrorHandler {
     if (!ErrorHandler.instance) {
@@ -182,7 +192,10 @@ export class ErrorHandler {
   /**
    * エラー処理
    */
-  public handle(error: Error | AppError, context: Record<string, any> = {}): AppError {
+  public handle(
+    error: Error | AppError,
+    context: Record<string, any> = {},
+  ): AppError {
     let appError: AppError;
 
     // AppErrorの場合はそのまま使用
@@ -210,12 +223,12 @@ export class ErrorHandler {
   public handleDatabaseError(
     error: any,
     operation: string,
-    context: Record<string, any> = {}
+    context: Record<string, any> = {},
   ): DatabaseAppError {
     const dbError = new DatabaseAppError(
       `Database operation failed: ${operation}`,
       error,
-      { ...context, operation }
+      { ...context, operation },
     );
 
     this.logError(dbError);
@@ -227,23 +240,27 @@ export class ErrorHandler {
   /**
    * 一般的なErrorをAppErrorに変換
    */
-  private convertToAppError(error: Error, context: Record<string, any>): AppError {
+  private convertToAppError(
+    error: Error,
+    context: Record<string, any>,
+  ): AppError {
     // SQLiteエラーの場合
-    if ((error as Error).message && (
-        (error as Error).message.includes('database') || 
-        (error as Error).message.includes('SQL') ||
-        (error as Error).message.includes('sqlite')
-      )) {
-      return new DatabaseAppError('Database operation failed', error, context);
+    if (
+      (error as Error).message &&
+      ((error as Error).message.includes("database") ||
+        (error as Error).message.includes("SQL") ||
+        (error as Error).message.includes("sqlite"))
+    ) {
+      return new DatabaseAppError("Database operation failed", error, context);
     }
 
     // その他の一般的なエラー
     return new AppError(
-      (error as Error).message || 'Unknown error occurred',
-      'GENERAL_ERROR',
-      'MEDIUM',
+      (error as Error).message || "Unknown error occurred",
+      "GENERAL_ERROR",
+      "MEDIUM",
       { ...context, originalError: (error as Error).message },
-      true
+      true,
     );
   }
 
@@ -260,23 +277,23 @@ export class ErrorHandler {
       severity: error.severity,
       recoverable: error.recoverable,
       context: error.context,
-      stack: error.stack
+      stack: error.stack,
     };
 
-    // コンソール出力（実際の実装では適切なログシステムを使用）
+    // ログシステム出力（logger使用）
     switch (logLevel) {
-      case 'ERROR':
-        console.error('[ErrorHandler]', logData);
+      case "ERROR":
+        logger.error("[ErrorHandler]", logData);
         break;
-      case 'WARN':
-        console.warn('[ErrorHandler]', logData);
+      case "WARN":
+        logger.warn("[ErrorHandler]", logData);
         break;
-      case 'INFO':
-        console.info('[ErrorHandler]', logData);
+      case "INFO":
+        logger.info("[ErrorHandler]", logData);
         break;
-      case 'DEBUG':
+      case "DEBUG":
       default:
-        console.log('[ErrorHandler]', logData);
+        logger.debug("[ErrorHandler]", logData);
         break;
     }
   }
@@ -286,15 +303,15 @@ export class ErrorHandler {
    */
   private getLogLevel(severity: string): LogLevel {
     switch (severity) {
-      case 'CRITICAL':
-        return 'ERROR';
-      case 'HIGH':
-        return 'ERROR';
-      case 'MEDIUM':
-        return 'WARN';
-      case 'LOW':
+      case "CRITICAL":
+        return "ERROR";
+      case "HIGH":
+        return "ERROR";
+      case "MEDIUM":
+        return "WARN";
+      case "LOW":
       default:
-        return 'INFO';
+        return "INFO";
     }
   }
 
@@ -302,11 +319,11 @@ export class ErrorHandler {
    * エラーリスナーに通知
    */
   private notifyListeners(error: AppError): void {
-    this.errorListeners.forEach(listener => {
+    this.errorListeners.forEach((listener) => {
       try {
         listener(error);
       } catch (listenerError) {
-        console.error('[ErrorHandler] リスナーエラー:', listenerError);
+        logger.error("[ErrorHandler] リスナーエラー:", listenerError as Error);
       }
     });
   }
@@ -322,7 +339,7 @@ export class ErrorRecoveryStrategy {
   public static async recoverFromDatabaseLock<T>(
     operation: () => Promise<T>,
     maxRetries: number = 3,
-    baseDelay: number = 100
+    baseDelay: number = 100,
   ): Promise<T> {
     let lastError: Error;
 
@@ -331,7 +348,7 @@ export class ErrorRecoveryStrategy {
         return await operation();
       } catch (error) {
         lastError = error as Error;
-        
+
         if (!this.isDatabaseLockError(error)) {
           throw error;
         }
@@ -342,16 +359,18 @@ export class ErrorRecoveryStrategy {
 
         // 指数バックオフで待機
         const delay = baseDelay * Math.pow(2, attempt - 1);
-        logger.warn("[ErrorRecoveryStrategy] データベースロック検出, ${delay}ms後にリトライ (${attempt}/${maxRetries})");
-        
-        await new Promise(resolve => setTimeout(resolve, delay));
+        logger.warn(
+          "[ErrorRecoveryStrategy] データベースロック検出, ${delay}ms後にリトライ (${attempt}/${maxRetries})",
+        );
+
+        await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
 
     throw new DatabaseAppError(
       `Database operation failed after ${maxRetries} retries`,
       lastError!,
-      { maxRetries, operation: operation.name }
+      { maxRetries, operation: operation.name },
     );
   }
 
@@ -359,8 +378,10 @@ export class ErrorRecoveryStrategy {
    * データベースロックエラーかどうかを判定
    */
   private static isDatabaseLockError(error: any): boolean {
-    const message = error?.message || error?.toString() || '';
-    return message.includes('database is locked') || message.includes('SQLITE_BUSY');
+    const message = error?.message || error?.toString() || "";
+    return (
+      message.includes("database is locked") || message.includes("SQLITE_BUSY")
+    );
   }
 }
 
@@ -378,7 +399,7 @@ export const errorHandler = ErrorHandler.getInstance();
  */
 export async function safeAsyncOperation<T>(
   operation: () => Promise<T>,
-  errorContext: Record<string, any> = {}
+  errorContext: Record<string, any> = {},
 ): Promise<{ result?: T; error?: AppError }> {
   try {
     const result = await operation();
@@ -394,15 +415,17 @@ export async function safeAsyncOperation<T>(
  */
 export function getUserFriendlyErrorMessage(error: AppError): string {
   const userMessages: Record<string, string> = {
-    'DB_LOCKED': 'データベースが使用中です。しばらく待ってから再試行してください。',
-    'DB_TABLE_NOT_FOUND': 'データベースの設定に問題があります。アプリを再起動してください。',
-    'DB_FK_VIOLATION': 'データの整合性に問題があります。',
-    'DB_UNIQUE_VIOLATION': '重複するデータが存在します。',
-    'VALIDATION_ERROR': '入力内容に問題があります。',
-    'BUSINESS_LOGIC_ERROR': '処理を完了できませんでした。',
-    'NETWORK_ERROR': 'ネットワーク接続を確認してください。',
-    'UNKNOWN_ERROR': '予期しないエラーが発生しました。'
+    DB_LOCKED:
+      "データベースが使用中です。しばらく待ってから再試行してください。",
+    DB_TABLE_NOT_FOUND:
+      "データベースの設定に問題があります。アプリを再起動してください。",
+    DB_FK_VIOLATION: "データの整合性に問題があります。",
+    DB_UNIQUE_VIOLATION: "重複するデータが存在します。",
+    VALIDATION_ERROR: "入力内容に問題があります。",
+    BUSINESS_LOGIC_ERROR: "処理を完了できませんでした。",
+    NETWORK_ERROR: "ネットワーク接続を確認してください。",
+    UNKNOWN_ERROR: "予期しないエラーが発生しました。",
   };
 
-  return userMessages[error.code] || userMessages['UNKNOWN_ERROR'];
+  return userMessages[error.code] || userMessages["UNKNOWN_ERROR"];
 }

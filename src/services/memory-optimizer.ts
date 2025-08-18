@@ -135,7 +135,7 @@ export class MemoryOptimizer {
 
     // デバッグ用ログ（開発時のみ）
     if (__DEV__ && stats.usagePercentage > MEMORY_WARNING_THRESHOLDS.MEDIUM) {
-      console.warn(
+      logger.warn(
         `[MemoryOptimizer] メモリ使用率: ${(stats.usagePercentage * 100).toFixed(1)}%`,
       );
     }
@@ -229,7 +229,7 @@ export class MemoryOptimizer {
    */
   public createObjectPool<T>(name: string, config: PoolConfig<T>): void {
     if (this.objectPools.has(name)) {
-      console.warn(
+      logger.warn(
         `[MemoryOptimizer] オブジェクトプール '${name}' は既に存在します`,
       );
       return;
@@ -238,7 +238,7 @@ export class MemoryOptimizer {
     this.objectPools.set(name, []);
     this.poolConfigs.set(name, config);
 
-    console.log(
+    logger.debug(
       `[MemoryOptimizer] オブジェクトプール '${name}' を作成 (maxSize: ${config.maxSize})`,
     );
   }
@@ -251,7 +251,7 @@ export class MemoryOptimizer {
     const config = this.poolConfigs.get(name) as PoolConfig<T>;
 
     if (!pool || !config) {
-      console.warn(
+      logger.warn(
         `[MemoryOptimizer] オブジェクトプール '${name}' が見つかりません`,
       );
       return null;
@@ -326,7 +326,7 @@ export class MemoryOptimizer {
 
     this.currentCacheSize += size;
 
-    console.log(
+    logger.debug(
       `[MemoryOptimizer] 大きなデータキャッシュ: ${key} (${(size / 1024).toFixed(1)}KB)`,
     );
   }
@@ -370,7 +370,7 @@ export class MemoryOptimizer {
     });
 
     if (cleanedCount > 0) {
-      console.log(
+      logger.debug(
         `[MemoryOptimizer] 弱参照クリーンアップ: ${cleanedCount}件削除`,
       );
     }
@@ -397,7 +397,7 @@ export class MemoryOptimizer {
       if (pool.length > config.maxSize * 0.8) {
         const removeCount = Math.floor(pool.length * 0.2);
         pool.splice(0, removeCount);
-        console.log(
+        logger.debug(
           `[MemoryOptimizer] オブジェクトプール '${name}' を${removeCount}件縮小`,
         );
       }
@@ -412,7 +412,7 @@ export class MemoryOptimizer {
       const removeCount = Math.floor(pool.length * ratio);
       if (removeCount > 0) {
         pool.splice(0, removeCount);
-        console.log(
+        logger.debug(
           `[MemoryOptimizer] オブジェクトプール '${name}' を${removeCount}件削除`,
         );
       }
@@ -438,7 +438,7 @@ export class MemoryOptimizer {
     });
 
     if (removedCount > 0) {
-      console.log(
+      logger.debug(
         `[MemoryOptimizer] 古いキャッシュ削除: ${removedCount}件 (${(freedSize / 1024).toFixed(1)}KB解放)`,
       );
     }
@@ -463,7 +463,7 @@ export class MemoryOptimizer {
     }
 
     if (removeCount > 0) {
-      console.log(
+      logger.debug(
         `[MemoryOptimizer] キャッシュ削除: ${removeCount}件 (${(freedSize / 1024).toFixed(1)}KB解放)`,
       );
     }

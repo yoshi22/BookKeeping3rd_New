@@ -41,10 +41,9 @@ export async function initializeDatabase(): Promise<void> {
       await loadSampleData();
       logger.debug("[Database] サンプルデータ読み込み完了");
     } catch (sampleError) {
-      console.warn(
-        "[Database] サンプルデータ読み込み失敗（継続可能）:",
-        sampleError,
-      );
+      logger.warn("[Database] サンプルデータ読み込み失敗（継続可能）:", {
+        details: sampleError,
+      });
       // サンプルデータの失敗は致命的でない
     }
 
@@ -123,10 +122,9 @@ async function loadSampleData(): Promise<void> {
       );
       currentVersion = versionResult.rows[0]?.value;
     } catch (error) {
-      console.log(
-        "[Database] バージョン情報取得エラー（初回起動時は正常）:",
-        error,
-      );
+      logger.debug("[Database] バージョン情報取得エラー（初回起動時は正常）:", {
+        details: error,
+      });
     }
 
     // バージョンチェック
@@ -161,7 +159,7 @@ async function loadSampleData(): Promise<void> {
       });
 
       if (forceUpdate || needsUpdate) {
-        console.log(
+        logger.debug(
           forceUpdate
             ? "[Database] 強制更新モード: 既存の問題データを削除します"
             : "[Database] データバージョンが更新されたため、問題データのみを更新します",
@@ -177,7 +175,7 @@ async function loadSampleData(): Promise<void> {
           // 強制更新時のみユーザーデータを削除、通常のバージョン更新時は保持
           if (forceUpdate) {
             await databaseService.executeSql("DELETE FROM learning_history");
-            console.log(
+            logger.debug(
               "[Database] learning_history テーブル削除完了（強制更新）",
             );
 
@@ -186,7 +184,7 @@ async function loadSampleData(): Promise<void> {
               "[Database] review_items テーブル削除完了（強制更新）",
             );
           } else {
-            console.log(
+            logger.debug(
               "[Database] ユーザーデータ（learning_history, review_items）は保持します",
             );
           }
@@ -212,10 +210,10 @@ async function loadSampleData(): Promise<void> {
 
         logger.debug("[Database] 既存データの削除完了");
       } else {
-        console.log(
+        logger.debug(
           "[Database] 既存の問題データが見つかりました。サンプルデータ読み込みをスキップします",
         );
-        console.log(
+        logger.debug(
           "[Database] ヒント: EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS=true を設定すると強制更新できます",
         );
         return;
@@ -224,16 +222,18 @@ async function loadSampleData(): Promise<void> {
 
     // 全問題データを使用
     const allQuestions = allSampleQuestions;
-    logger.debug("[Database] 読み込み対象問題数: ${allQuestions.length}件");
+    logger.debug(`[Database] 読み込み対象問題数: ${allQuestions.length}件`);
 
     // Q_J_001のデータソース確認（デバッグ用）
     const qJ001 = allQuestions.find((q) => q.id === "Q_J_001");
     if (qJ001) {
-      console.log("[Database] 読み込み前Q_J_001データソース確認:", {
-        id: qJ001.id,
-        correct_answer_json: qJ001.correct_answer_json,
-        parsed: JSON.parse(qJ001.correct_answer_json || "{}"),
-        data_version: SAMPLE_DATA_VERSION,
+      logger.debug("[Database] 読み込み前Q_J_001データソース確認:", {
+        details: {
+          id: qJ001.id,
+          correct_answer_json: qJ001.correct_answer_json,
+          parsed: JSON.parse(qJ001.correct_answer_json || "{}"),
+          data_version: SAMPLE_DATA_VERSION,
+        },
       });
     } else {
       logger.debug("[Database] 警告: Q_J_001が見つかりません！");
@@ -243,11 +243,13 @@ async function loadSampleData(): Promise<void> {
     for (const question of allQuestions) {
       // Q_J_001の詳細ログ（問題調査用）
       if (question.id === "Q_J_001") {
-        console.log("[Database] Q_J_001データ詳細ログ:", {
-          id: question.id,
-          correct_answer_json: question.correct_answer_json,
-          parsed_answer: JSON.parse(question.correct_answer_json || "{}"),
-          source_file: "allSampleQuestions配列から取得",
+        logger.debug("[Database] Q_J_001データ詳細ログ:", {
+          details: {
+            id: question.id,
+            correct_answer_json: question.correct_answer_json,
+            parsed_answer: JSON.parse(question.correct_answer_json || "{}"),
+            source_file: "allSampleQuestions配列から取得",
+          },
         });
       }
 
@@ -277,16 +279,18 @@ async function loadSampleData(): Promise<void> {
           "SELECT id, correct_answer_json FROM questions WHERE id = ?",
           ["Q_J_001"],
         );
-        console.log("[Database] Q_J_001挿入後データベース確認:", {
-          inserted_data: inserted.rows[0],
-          parsed_inserted: JSON.parse(
-            inserted.rows[0]?.correct_answer_json || "{}",
-          ),
+        logger.debug("[Database] Q_J_001挿入後データベース確認:", {
+          details: {
+            inserted_data: inserted.rows[0],
+            parsed_inserted: JSON.parse(
+              inserted.rows[0]?.correct_answer_json || "{}",
+            ),
+          },
         });
       }
     }
 
-    console.log(
+    logger.debug(
       `[Database] 全問題データ読み込み完了: ${allQuestions.length}件の問題を追加`,
     );
 
@@ -295,7 +299,7 @@ async function loadSampleData(): Promise<void> {
       const { generateMockExamData } = await import("../sample-mock-exams");
       const mockExamData = generateMockExamData();
 
-      console.log(
+      logger.debug(
         `[Database] 模試データ読み込み開始: ${mockExamData.exams.length}件の模試`,
       );
 
@@ -340,7 +344,7 @@ async function loadSampleData(): Promise<void> {
         );
       }
 
-      console.log(
+      logger.debug(
         `[Database] 模試データ読み込み完了: ${mockExamData.exams.length}件の模試、${mockExamData.questions.length}件の問題関連`,
       );
     } catch (mockExamError) {
@@ -364,7 +368,7 @@ async function loadSampleData(): Promise<void> {
         ["sample_data_version", SAMPLE_DATA_VERSION, new Date().toISOString()],
       );
 
-      console.log(
+      logger.debug(
         `[Database] データバージョン保存完了: ${SAMPLE_DATA_VERSION}`,
       );
     } catch (versionError) {
@@ -416,9 +420,9 @@ export async function setupDatabase(): Promise<void> {
     logger.debug("[Database] データベースセットアップ完了");
   } catch (error) {
     logger.error("[Database] データベースセットアップエラー:", error as Error);
-    console.error(
+    logger.error(
       "[Database] Setup Error Stack:",
-      error instanceof Error ? error.stack : undefined,
+      error instanceof Error ? error : new Error(String(error)),
     );
     throw new Error(
       `Database setup failed: ${error instanceof Error ? (error as Error).message : error}`,

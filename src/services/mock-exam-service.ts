@@ -28,7 +28,7 @@ export interface MockExamSession {
   startedAt: Date;
   timeLimit: number; // 分
   currentQuestionIndex: number;
-  questions: Array<Question & MockExamQuestion>;
+  questions: (Question & MockExamQuestion)[];
   answers: Map<string, CBTAnswerData>;
   answerTimes: Map<string, number>; // 各問題の解答時間（秒）
   sectionProgress: {
@@ -391,7 +391,9 @@ export class MockExamService {
           updated_at: new Date().toISOString(),
         });
       } catch (error) {
-        logger.warn("Failed to add question to review: ${questionId}", { details: error });
+        logger.warn("Failed to add question to review: ${questionId}", {
+          details: error,
+        });
       }
     }
   }
@@ -413,9 +415,9 @@ export class MockExamService {
           result.isCorrect,
         );
       } catch (error) {
-        console.warn(
+        logger.warn(
           `Failed to update learning history: ${result.questionId}`,
-          error,
+          error as Error,
         );
       }
     }

@@ -93,7 +93,7 @@ export class ReviewService {
     answerTime: number = 0,
   ): Promise<ReviewUpdateResult> {
     try {
-      console.log(
+      logger.debug(
         `[ReviewService] 復習状況更新開始: ${questionId}, 正解=${isCorrect}`,
       );
 
@@ -198,7 +198,7 @@ export class ReviewService {
           };
         } else {
           // 新規復習アイテム作成
-          console.log(
+          logger.debug(
             `[ReviewService] 新規復習アイテム作成開始: ${questionId}`,
           );
 
@@ -221,15 +221,21 @@ export class ReviewService {
             priorityScore: initialPriority,
             lastAnsweredAt: now,
           };
-          logger.debug("[ReviewService] 復習アイテム作成データ:", { details: createData });
+          logger.debug("[ReviewService] 復習アイテム作成データ:", {
+            details: createData,
+          });
 
           const newItem = await reviewItemRepository.createOrUpdate(createData);
-          logger.debug("[ReviewService] 復習アイテム作成完了:", { details: newItem });
+          logger.debug("[ReviewService] 復習アイテム作成完了:", {
+            details: newItem,
+          });
 
           // 作成後の確認
           const verification =
             await reviewItemRepository.findByQuestionId(questionId);
-          logger.debug("[ReviewService] 作成確認クエリ結果:", { details: verification });
+          logger.debug("[ReviewService] 作成確認クエリ結果:", {
+            details: verification,
+          });
 
           result = {
             questionId,
@@ -248,17 +254,22 @@ export class ReviewService {
         try {
           const { statisticsCache } = require("./statistics-cache");
           statisticsCache.clearAll();
-          console.log(
+          logger.debug(
             "[ReviewService] 復習アイテム変更により統計キャッシュをクリア",
           );
         } catch (error) {
-          logger.warn("[ReviewService] 統計キャッシュクリアに失敗:", { details: error });
+          logger.warn("[ReviewService] 統計キャッシュクリアに失敗:", {
+            details: error,
+          });
         }
       }
 
       return result;
     } catch (error) {
-      logger.error("[ReviewService] updateReviewStatus エラー:", error as Error);
+      logger.error(
+        "[ReviewService] updateReviewStatus エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -334,9 +345,11 @@ export class ReviewService {
       }
 
       // 復習アイテム取得
-      logger.debug("[ReviewService] 復習アイテム取得フィルター:", { details: filter });
+      logger.debug("[ReviewService] 復習アイテム取得フィルター:", {
+        details: filter,
+      });
       const reviewItems = await reviewItemRepository.getReviewList(filter);
-      console.log(
+      logger.debug(
         `[ReviewService] 復習アイテム取得結果: ${reviewItems.length}件`,
         reviewItems,
       );
@@ -360,7 +373,10 @@ export class ReviewService {
       logger.debug("[ReviewService] 復習リスト生成完了: ${questions.length}件");
       return questions;
     } catch (error) {
-      logger.error("[ReviewService] generateReviewList エラー:", error as Error);
+      logger.error(
+        "[ReviewService] generateReviewList エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -372,13 +388,16 @@ export class ReviewService {
     try {
       logger.debug("[ReviewService] 復習統計取得開始");
       const result = await reviewItemRepository.getReviewStatistics();
-      console.log(
+      logger.debug(
         "[ReviewService] 復習統計取得完了:",
         JSON.stringify(result, null, 2),
       );
       return result;
     } catch (error) {
-      logger.error("[ReviewService] getReviewStatistics エラー:", error as Error);
+      logger.error(
+        "[ReviewService] getReviewStatistics エラー:",
+        error as Error,
+      );
       logger.error("[ReviewService] Error details:");
       throw error;
     }
@@ -398,7 +417,7 @@ export class ReviewService {
       const sessionId = `review_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       const questions = await this.generateReviewList(options);
 
-      console.log(
+      logger.debug(
         `[ReviewService] 復習セッション開始: ${sessionId}, ${questions.length}問`,
       );
 
@@ -408,7 +427,10 @@ export class ReviewService {
         totalCount: questions.length,
       };
     } catch (error) {
-      logger.error("[ReviewService] startReviewSession エラー:", error as Error);
+      logger.error(
+        "[ReviewService] startReviewSession エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -417,14 +439,14 @@ export class ReviewService {
    * 弱点分野分析
    */
   public async analyzeWeakAreas(): Promise<
-    Array<{
+    {
       category: QuestionCategory;
       categoryName: string;
       reviewCount: number;
       averagePriority: number;
       lastReviewedAt?: string;
       recommendation: string;
-    }>
+    }[]
   > {
     try {
       logger.debug("[ReviewService] 弱点分野分析開始");
@@ -450,7 +472,7 @@ export class ReviewService {
         const totalReview =
           categoryStats.needsReview + categoryStats.priorityReview;
 
-        console.log(
+        logger.debug(
           `[ReviewService] ${categoryKey}の復習対象件数: ${totalReview}`,
         );
 
@@ -477,7 +499,7 @@ export class ReviewService {
       // 復習が必要な順でソート
       analysis.sort((a, b) => b.averagePriority - a.averagePriority);
 
-      console.log(
+      logger.debug(
         "[ReviewService] 弱点分野分析完了:",
         JSON.stringify(analysis, null, 2),
       );
@@ -552,7 +574,7 @@ export class ReviewService {
       const oldHistoryDeleted =
         await learningHistoryRepository.cleanupOldHistory(365);
 
-      console.log(
+      logger.info(
         `[ReviewService] クリーンアップ完了: 克服済み${masteredItemsDeleted}件, 古い履歴${oldHistoryDeleted}件削除`,
       );
 
@@ -561,7 +583,10 @@ export class ReviewService {
         oldHistoryDeleted,
       };
     } catch (error) {
-      logger.error("[ReviewService] cleanupReviewItems エラー:", error as Error);
+      logger.error(
+        "[ReviewService] cleanupReviewItems エラー:",
+        error as Error,
+      );
       throw error;
     }
   }

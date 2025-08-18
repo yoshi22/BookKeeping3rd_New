@@ -777,13 +777,13 @@ export const MasterDetailContainer: React.FC<MasterDetailContainerProps> = ({
  */
 export interface SplitViewNavigationProps {
   children: React.ReactNode;
-  navigationItems?: Array<{
+  navigationItems?: {
     id: string;
     title: string;
     icon?: string;
     onPress: () => void;
     active?: boolean;
-  }>;
+  }[];
   style?: ViewStyle;
 }
 

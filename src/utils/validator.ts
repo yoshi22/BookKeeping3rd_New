@@ -11,11 +11,11 @@ import { CBTAnswerData, QuestionCategory, QuestionDifficulty } from '../types/da
  */
 export interface ValidationResult {
   isValid: boolean;
-  errors: Array<{
+  errors: {
     field: string;
     code: string;
     message: string;
-  }>;
+  }[];
 }
 
 /**
@@ -48,7 +48,7 @@ export class Validator {
     min?: number,
     max?: number
   ): ValidationResult {
-    const errors: Array<{ field: string; code: string; message: string }> = [];
+    const errors: { field: string; code: string; message: string }[] = [];
 
     if (typeof value !== 'string') {
       errors.push({
@@ -85,7 +85,7 @@ export class Validator {
     min?: number,
     max?: number
   ): ValidationResult {
-    const errors: Array<{ field: string; code: string; message: string }> = [];
+    const errors: { field: string; code: string; message: string }[] = [];
 
     if (typeof value !== 'number' || isNaN(value)) {
       errors.push({
@@ -162,7 +162,7 @@ export class QuestionValidator {
    * 問題IDバリデーション
    */
   public static validateQuestionId(id: string): ValidationResult {
-    const errors: Array<{ field: string; code: string; message: string }> = [];
+    const errors: { field: string; code: string; message: string }[] = [];
 
     // 必須チェック
     const requiredResult = Validator.required(id, 'questionId');
@@ -238,7 +238,7 @@ export class CBTAnswerValidator {
    * 仕訳解答バリデーション
    */
   public static validateJournalAnswer(answer: any): ValidationResult {
-    const errors: Array<{ field: string; code: string; message: string }> = [];
+    const errors: { field: string; code: string; message: string }[] = [];
 
     if (!answer.journalEntry) {
       errors.push({
@@ -315,7 +315,7 @@ export class CBTAnswerValidator {
     answerTimeMs: number;
     sessionType?: string;
   }): ValidationResult {
-    const errors: Array<{ field: string; code: string; message: string }> = [];
+    const errors: { field: string; code: string; message: string }[] = [];
 
     // 問題IDバリデーション
     const questionIdResult = QuestionValidator.validateQuestionId(data.questionId);
@@ -431,7 +431,7 @@ export function validateRequiredFields<T extends Record<string, any>>(
   obj: T,
   requiredFields: (keyof T)[]
 ): ValidationResult {
-  const errors: Array<{ field: string; code: string; message: string }> = [];
+  const errors: { field: string; code: string; message: string }[] = [];
 
   for (const field of requiredFields) {
     const result = Validator.required(obj[field], field as string);

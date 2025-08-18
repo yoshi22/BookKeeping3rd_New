@@ -87,11 +87,11 @@ export default function CorrectAnswerExample({
   };
 
   const renderEntriesFromArray = (
-    entriesArray: Array<{
+    entriesArray: {
       accountName: string;
       debitAmount: number;
       creditAmount: number;
-    }>,
+    }[],
   ) => {
     return (
       <View style={styles.exampleContainer}>
@@ -184,16 +184,16 @@ export default function CorrectAnswerExample({
    */
   const convertFinancialStatementsToEntries = (
     financialStatements: any,
-  ): Array<{
+  ): {
     accountName: string;
     debitAmount: number;
     creditAmount: number;
-  }> => {
-    const entries: Array<{
+  }[] => {
+    const entries: {
       accountName: string;
       debitAmount: number;
       creditAmount: number;
-    }> = [];
+    }[] = [];
 
     // 貸借対照表の資産（借方）
     if (financialStatements.balanceSheet?.assets) {

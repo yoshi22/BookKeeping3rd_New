@@ -8,6 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { router } from "expo-router";
+import { logger } from "../../../src/utils/logger";
 import { useFocusEffect } from "@react-navigation/native";
 import { reviewService } from "../../../src/services/review-service";
 import { ReviewStatistics } from "../../../src/data/repositories/review-item-repository";
@@ -64,16 +65,16 @@ export default function ReviewScreen() {
   // データベース初期化確認
   const ensureDatabaseInitialized = async (): Promise<boolean> => {
     try {
-      console.log("[ReviewScreen] データベース初期化確認開始");
+      logger.debug("[ReviewScreen] データベース初期化確認開始");
       await setupDatabase();
-      console.log("[ReviewScreen] データベース初期化確認完了");
+      logger.debug("[ReviewScreen] データベース初期化確認完了");
       return true; // 通常の初期化成功
     } catch (error) {
-      console.error("[ReviewScreen] データベース初期化エラー:", error);
-      console.error("[ReviewScreen] Error details:", {
+      logger.error("[ReviewScreen] データベース初期化エラー:", error as Error);
+      logger.error("[ReviewScreen] Error details:", {
         message: error instanceof Error ? error.message : error,
         stack: error instanceof Error ? error.stack : undefined,
-      });
+      } as any);
 
       // データベースリセットを試行
       const resetSuccess = await tryDatabaseReset(error);
@@ -84,23 +85,26 @@ export default function ReviewScreen() {
   // データベースリセット試行
   const tryDatabaseReset = async (originalError: any) => {
     try {
-      console.log("[ReviewScreen] データベースリセットを試行中...");
+      logger.info("[ReviewScreen] データベースリセットを試行中...");
 
       // データベースサービスを取得してリセット実行
       const { databaseService } = await import("../../../src/data/database");
       await databaseService.resetDatabase();
-      console.log("[ReviewScreen] データベースリセット完了");
+      logger.debug("[ReviewScreen] データベースリセット完了");
 
       // リセット後に再初期化を試行
       await setupDatabase();
-      console.log("[ReviewScreen] リセット後の初期化成功");
+      logger.debug("[ReviewScreen] リセット後の初期化成功");
 
       // 初期化成功後、復習データの再読み込みを実行
-      console.log("[ReviewScreen] リセット後の復習データ読み込み開始");
+      logger.debug("[ReviewScreen] リセット後の復習データ読み込み開始");
       return true; // 成功を示すフラグを返す
     } catch (resetError) {
-      console.error("[ReviewScreen] データベースリセット失敗:", resetError);
-      console.error("[ReviewScreen] Reset error details:", {
+      logger.error(
+        "[ReviewScreen] データベースリセット失敗:",
+        resetError as Error,
+      );
+      logger.error("[ReviewScreen] Reset error details:", resetError as Error, {
         message: resetError instanceof Error ? resetError.message : resetError,
         stack: resetError instanceof Error ? resetError.stack : undefined,
       });
@@ -124,7 +128,7 @@ export default function ReviewScreen() {
       const initSuccess = await ensureDatabaseInitialized();
 
       if (!initSuccess) {
-        console.error("[ReviewScreen] データベース初期化に失敗しました");
+        logger.error("[ReviewScreen] データベース初期化に失敗しました");
         throw new Error("データベース初期化に失敗しました");
       }
 
@@ -134,7 +138,7 @@ export default function ReviewScreen() {
 
       try {
         // デバッグ用：直接SQLでreview_itemsテーブルを確認
-        console.log("[ReviewScreen] デバッグ: review_itemsテーブルを直接確認");
+        logger.debug("[ReviewScreen] デバッグ: review_itemsテーブルを直接確認");
         const { databaseService } = await import("../../../src/data/database");
 
         // SQLクエリを実行してデバッグ情報を取得
@@ -147,25 +151,23 @@ export default function ReviewScreen() {
         const learningHistoryIncorrect = await databaseService.executeSql(
           "SELECT * FROM learning_history WHERE is_correct = 0 LIMIT 5",
         );
-        console.log(
-          "[ReviewScreen] デバッグ: review_itemsテーブルの件数:",
-          reviewItemsCount.rows,
-        );
-        console.log(
+        logger.debug("[ReviewScreen] デバッグ: review_itemsテーブルの件数:", {
+          details: reviewItemsCount.rows,
+        });
+        logger.debug(
           "[ReviewScreen] デバッグ: review_itemsテーブルのデータ（先頭10件）:",
-          reviewItemsData.rows,
+          { details: reviewItemsData.rows },
         );
-        console.log(
-          "[ReviewScreen] デバッグ: 不正解の学習履歴（先頭5件）:",
-          learningHistoryIncorrect.rows,
-        );
+        logger.debug("[ReviewScreen] デバッグ: 不正解の学習履歴（先頭5件）:", {
+          details: learningHistoryIncorrect.rows,
+        });
 
         stats = await reviewService.getReviewStatistics();
         weakAreas = await reviewService.analyzeWeakAreas();
       } catch (dbError) {
-        console.warn(
+        logger.warn(
           "[ReviewScreen] データベースエラー、フォールバックデータを使用:",
-          dbError,
+          { details: dbError },
         );
 
         // フォールバックデータを設定
@@ -281,11 +283,11 @@ export default function ReviewScreen() {
 
       setWeaknessCategories(formattedCategories);
     } catch (error) {
-      console.error("[ReviewScreen] 復習データ読み込みエラー:", error);
+      logger.error("[ReviewScreen] 復習データ読み込みエラー:", error as Error);
 
       let errorMessage = "復習データの読み込みに失敗しました";
       if (error instanceof Error) {
-        console.error("[ReviewScreen] Error details:", {
+        logger.error("[ReviewScreen] Error details:", error as Error, {
           message: error.message,
           stack: error.stack,
         });
@@ -400,7 +402,7 @@ export default function ReviewScreen() {
         },
       ]);
 
-      console.warn("[ReviewScreen] フォールバックデータでUI表示を継続");
+      logger.warn("[ReviewScreen] フォールバックデータでUI表示を継続");
     } finally {
       setLoading(false);
     }
@@ -420,7 +422,7 @@ export default function ReviewScreen() {
   // 画面がフォーカスされたときに最新データを再取得
   useFocusEffect(
     useCallback(() => {
-      console.log("[ReviewScreen] 画面フォーカス - 最新データを取得");
+      logger.debug("[ReviewScreen] 画面フォーカス - 最新データを取得");
       // キャッシュをクリアして最新のデータを取得
       try {
         const {
@@ -428,7 +430,9 @@ export default function ReviewScreen() {
         } = require("../../../src/services/statistics-cache");
         statisticsCache.clearAll();
       } catch (error) {
-        console.warn("[ReviewScreen] キャッシュクリアに失敗:", error);
+        logger.warn("[ReviewScreen] キャッシュクリアに失敗:", {
+          details: error,
+        });
       }
       loadReviewData();
     }, []),
@@ -438,7 +442,7 @@ export default function ReviewScreen() {
   const loadStatisticsData = async () => {
     try {
       setLoadingStatistics(true);
-      console.log("[ReviewScreen] 統計データ読み込み開始");
+      logger.debug("[ReviewScreen] 統計データ読み込み開始");
 
       const stats = await statisticsService.getOverallStatistics();
       const categoryProgress = await statisticsService.getCategoryProgress();
@@ -449,9 +453,9 @@ export default function ReviewScreen() {
         categoryProgress,
         learningTrends,
       });
-      console.log("[ReviewScreen] 統計データ読み込み完了");
+      logger.debug("[ReviewScreen] 統計データ読み込み完了");
     } catch (error) {
-      console.error("[ReviewScreen] 統計データ読み込みエラー:", error);
+      logger.error("[ReviewScreen] 統計データ読み込みエラー:", error as Error);
       // フォールバックデータ
       setStatisticsData({
         overall: {
@@ -503,7 +507,7 @@ export default function ReviewScreen() {
         },
       });
     } catch (error) {
-      console.error("復習セッション開始エラー:", error);
+      logger.error("復習セッション開始エラー:", error as Error);
       Alert.alert("エラー", "復習セッションの開始に失敗しました");
     }
   };
@@ -530,7 +534,7 @@ export default function ReviewScreen() {
         },
       });
     } catch (error) {
-      console.error("カテゴリ別復習開始エラー:", error);
+      logger.error("カテゴリ別復習開始エラー:", error as Error);
       Alert.alert("エラー", "復習の開始に失敗しました");
     }
   };

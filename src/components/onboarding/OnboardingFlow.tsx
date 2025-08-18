@@ -391,7 +391,7 @@ export function useOnboarding() {
         await AsyncStorage.default.getItem("hasSeenOnboarding");
       setHasSeenOnboarding(hasSeenOnboardingValue === "true");
     } catch (error) {
-      console.error("Failed to check onboarding status:", error);
+      logger.error("Failed to check onboarding status:", error as Error);
     } finally {
       setIsLoading(false);
     }
@@ -405,7 +405,7 @@ export function useOnboarding() {
       await AsyncStorage.default.setItem("hasSeenOnboarding", "true");
       setHasSeenOnboarding(true);
     } catch (error) {
-      console.error("Failed to save onboarding status:", error);
+      logger.error("Failed to save onboarding status:", error as Error);
     }
   };
 
@@ -417,7 +417,7 @@ export function useOnboarding() {
       await AsyncStorage.default.removeItem("hasSeenOnboarding");
       setHasSeenOnboarding(false);
     } catch (error) {
-      console.error("Failed to reset onboarding status:", error);
+      logger.error("Failed to reset onboarding status:", error as Error);
     }
   };
 

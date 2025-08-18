@@ -116,7 +116,7 @@ export class AnswerService {
       // 8. 復習状況更新（全セッションタイプで実行）
       let reviewUpdate: ReviewUpdateResult | undefined;
       try {
-        console.log(
+        logger.debug(
           `[AnswerService] 復習状況更新開始: questionId=${request.questionId}, isCorrect=${isCorrect}, sessionType=${request.sessionType}`,
         );
 
@@ -132,14 +132,14 @@ export class AnswerService {
             isCorrect,
             answerTimeMs,
           );
-          console.log(
+          logger.debug(
             `[AnswerService] 復習状況更新完了: ${reviewUpdate.action} - ${reviewUpdate.message}`,
           );
-          console.log(
+          logger.debug(
             `[AnswerService] 復習状況更新詳細: previousStatus=${reviewUpdate.previousStatus}, newStatus=${reviewUpdate.newStatus}, previousPriority=${reviewUpdate.previousPriority}, newPriority=${reviewUpdate.newPriority}`,
           );
         } else {
-          console.log(
+          logger.debug(
             `[AnswerService] 復習状況更新スキップ: sessionType=${request.sessionType}, isCorrect=${isCorrect} (正解のため更新不要)`,
           );
         }
@@ -177,7 +177,7 @@ export class AnswerService {
       };
 
       const processTime = Date.now() - startProcessTime;
-      console.log(
+      logger.debug(
         `[AnswerService] 解答送信完了: ${request.questionId}, 正解=${isCorrect}, 処理時間=${processTime}ms`,
       );
 
@@ -285,13 +285,13 @@ export class AnswerService {
     const errors: string[] = [];
     const data = answerData as AnswerData & {
       voucher_type?: string;
-      entries?: Array<{
+      entries?: {
         account?: string;
         amount?: number;
         date?: string;
         description?: string;
         [key: string]: string | number | undefined;
-      }>;
+      }[];
     };
 
     logger.debug("[AnswerService] 伝票バリデーション開始:", {
@@ -353,10 +353,10 @@ export class AnswerService {
   private validateMultipleBlankChoiceAnswer(
     answerData: CBTAnswerData,
     template: QuestionTemplate & {
-      questions?: Array<{
+      questions?: {
         id: string;
         label: string;
-      }>;
+      }[];
     },
   ): string[] {
     const errors: string[] = [];
@@ -364,13 +364,13 @@ export class AnswerService {
       answers?: Record<string, string>;
     };
 
-    console.log(
+    logger.debug(
       "[AnswerService] Multiple blank choice validation - answerData:",
-      data,
+      { details: data },
     );
-    console.log(
+    logger.debug(
       "[AnswerService] Multiple blank choice validation - template:",
-      template,
+      { details: template },
     );
 
     // Check if answer data has the expected structure
@@ -414,10 +414,9 @@ export class AnswerService {
       }
     }
 
-    console.log(
-      "[AnswerService] Multiple blank choice validation errors:",
-      errors,
-    );
+    logger.debug("[AnswerService] Multiple blank choice validation errors:", {
+      details: errors,
+    });
     return errors;
   }
 
@@ -472,7 +471,7 @@ export class AnswerService {
         case "trial_balance":
           return this.isTrialBalanceAnswerCorrect(answerData, correctAnswer);
         default:
-          console.error(
+          logger.error(
             `[AnswerService] 未対応のカテゴリ: ${question.category_id}`,
           );
           return false;
@@ -498,8 +497,8 @@ export class AnswerService {
       debit_amount?: number;
       credit_account?: string;
       credit_amount?: number;
-      debits?: Array<{ account: string; amount: number }>;
-      credits?: Array<{ account: string; amount: number }>;
+      debits?: { account: string; amount: number }[];
+      credits?: { account: string; amount: number }[];
     };
 
     // Check if the answer data is in the new array format (from JournalEntryForm)
@@ -532,8 +531,8 @@ export class AnswerService {
    */
   private isMultipleJournalEntriesCorrect(
     data: {
-      debits: Array<{ account: string; amount: number }>;
-      credits: Array<{ account: string; amount: number }>;
+      debits: { account: string; amount: number }[];
+      credits: { account: string; amount: number }[];
     },
     correctAnswer: QuestionCorrectAnswer,
   ): boolean {
@@ -569,11 +568,11 @@ export class AnswerService {
       return (
         this.compareJournalEntryArrays(
           validDebits,
-          entry.debits as Array<{ account: string; amount: number }>,
+          entry.debits as { account: string; amount: number }[],
         ) &&
         this.compareJournalEntryArrays(
           validCredits,
-          entry.credits as Array<{ account: string; amount: number }>,
+          entry.credits as { account: string; amount: number }[],
         )
       );
     }
@@ -585,8 +584,8 @@ export class AnswerService {
    * 仕訳エントリ配列の比較
    */
   private compareJournalEntryArrays(
-    userEntries: Array<{ account: string; amount: number }>,
-    correctEntries: Array<{ account: string; amount: number }>,
+    userEntries: { account: string; amount: number }[],
+    correctEntries: { account: string; amount: number }[],
   ): boolean {
     if (userEntries.length !== correctEntries.length) {
       return false;
@@ -621,7 +620,7 @@ export class AnswerService {
     if (!entry?.entries) return false;
 
     const data = answerData as AnswerData & {
-      entries?: Array<LedgerEntry>;
+      entries?: LedgerEntry[];
       date?: string;
       description?: string;
       debit_amount?: number;
@@ -630,10 +629,9 @@ export class AnswerService {
     logger.debug("[AnswerService] Ledger validation - answerData:", {
       details: data,
     });
-    console.log(
-      "[AnswerService] Ledger validation - correctAnswer:",
-      correctAnswer,
-    );
+    logger.debug("[AnswerService] Ledger validation - correctAnswer:", {
+      details: correctAnswer,
+    });
 
     // Check if answer data contains multiple entries (new format)
     if (data.entries && Array.isArray(data.entries)) {
@@ -708,7 +706,7 @@ export class AnswerService {
     });
 
     if (userEntries.length !== correctEntries.length) {
-      console.log(
+      logger.debug(
         `[AnswerService] Entry count mismatch: user=${userEntries.length}, correct=${correctEntries.length}`,
       );
       return false;
@@ -868,11 +866,11 @@ export class AnswerService {
    * Convert trial balance entries to balance map for comparison
    */
   private convertTrialBalanceEntriesToBalances(
-    entries: Array<{
+    entries: {
       accountName: string;
       debitAmount: number;
       creditAmount: number;
-    }>,
+    }[],
   ): Record<string, { debit: number; credit: number }> {
     const balances: Record<string, { debit: number; credit: number }> = {};
 
@@ -891,12 +889,12 @@ export class AnswerService {
    */
   private convertFinancialStatementsToEntries(
     financialStatements: any,
-  ): Array<{ accountName: string; debitAmount: number; creditAmount: number }> {
-    const entries: Array<{
+  ): { accountName: string; debitAmount: number; creditAmount: number }[] {
+    const entries: {
       accountName: string;
       debitAmount: number;
       creditAmount: number;
-    }> = [];
+    }[] = [];
 
     // 貸借対照表の資産（借方）
     if (financialStatements.balanceSheet?.assets) {
@@ -978,11 +976,11 @@ export class AnswerService {
    * 試算表エントリの比較
    */
   private compareTrialBalanceEntries(
-    correctEntries: Array<{
+    correctEntries: {
       accountName: string;
       debitAmount: number;
       creditAmount: number;
-    }>,
+    }[],
     answerData: CBTAnswerData,
   ): boolean {
     const data = answerData as AnswerData;
@@ -1032,12 +1030,12 @@ export class AnswerService {
     // 正答データのentriesと比較
     const correctVoucherAnswer = correctAnswer as CorrectAnswer & {
       voucher_type?: string;
-      entries?: Array<{
+      entries?: {
         date?: string;
         account?: string;
         amount?: number;
         description?: string;
-      }>;
+      }[];
     };
     const correctVoucherType = correctVoucherAnswer.voucher_type;
     const correctEntries = correctVoucherAnswer.entries;
@@ -1107,14 +1105,12 @@ export class AnswerService {
     logger.debug("[AnswerService] Choice validation - answerData:", {
       details: data,
     });
-    console.log(
-      "[AnswerService] Choice validation - correctAnswer:",
-      correctAnswer,
-    );
-    console.log(
-      "[AnswerService] Choice validation - questionType:",
-      questionType,
-    );
+    logger.debug("[AnswerService] Choice validation - correctAnswer:", {
+      details: correctAnswer,
+    });
+    logger.debug("[AnswerService] Choice validation - questionType:", {
+      details: questionType,
+    });
 
     if (questionType === "single_choice") {
       // Single choice: compare selected option
@@ -1147,7 +1143,7 @@ export class AnswerService {
         !Array.isArray(userSelectedOptions) ||
         !Array.isArray(correctSelectedOptions)
       ) {
-        console.error(
+        logger.error(
           "[AnswerService] Multiple choice validation: options are not arrays",
           {
             userSelectedOptions,
@@ -1191,18 +1187,18 @@ export class AnswerService {
   ): boolean {
     const data = answerData as AnswerData;
 
-    console.log(
+    logger.debug(
       "[AnswerService] Multiple blank choice validation - answerData:",
-      data,
+      { details: data },
     );
-    console.log(
+    logger.debug(
       "[AnswerService] Multiple blank choice validation - correctAnswer:",
-      correctAnswer,
+      { details: correctAnswer },
     );
 
     // Check if answer data has the expected structure
     if (!data.answers || typeof data.answers !== "object") {
-      console.error(
+      logger.error(
         "[AnswerService] Multiple blank choice validation: answers object missing or invalid",
       );
       return false;
@@ -1216,7 +1212,7 @@ export class AnswerService {
     ).answers;
 
     if (!correctAnswers || typeof correctAnswers !== "object") {
-      console.error(
+      logger.error(
         "[AnswerService] Multiple blank choice validation: correct answers object missing or invalid",
       );
       return false;
@@ -1226,7 +1222,7 @@ export class AnswerService {
     const correctAnswerKeys = Object.keys(correctAnswers);
     const userAnswerKeys = Object.keys(userAnswers);
 
-    console.log(
+    logger.debug(
       "[AnswerService] Multiple blank choice validation comparison:",
       {
         userAnswerKeys,
@@ -1247,14 +1243,14 @@ export class AnswerService {
     // Check if all answers are correct
     for (const key of correctAnswerKeys) {
       if (userAnswers[key] !== correctAnswers[key]) {
-        console.log(
+        logger.debug(
           `[AnswerService] Incorrect answer for blank ${key}: got '${userAnswers[key]}', expected '${correctAnswers[key]}'`,
         );
         return false;
       }
     }
 
-    console.log(
+    logger.debug(
       "[AnswerService] Multiple blank choice validation: all answers correct",
     );
     return true;
@@ -1285,7 +1281,7 @@ export class AnswerService {
       }
 
       const processTime = Date.now() - startTime;
-      console.log(
+      logger.debug(
         `[AnswerService] バッチ解答送信完了: ${answers.length}件, 処理時間=${processTime}ms`,
       );
 

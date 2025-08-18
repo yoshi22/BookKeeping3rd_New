@@ -88,10 +88,10 @@ export interface QuestionTemplate {
     | "multiple_choice"
     | "single_choice";
   fields?: QuestionField[];
-  questions?: Array<{
+  questions?: {
     id: string;
     label: string;
-  }>;
+  }[];
   validation?: {
     required?: string[];
     optional?: string[];

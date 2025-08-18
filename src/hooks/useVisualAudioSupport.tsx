@@ -51,7 +51,7 @@ export function useVisualAudioSupport(options: AudioFeedbackOptions = {}) {
 
   const [isAudioEnabled, setIsAudioEnabled] = useState(false);
   const [visualFeedbacks, setVisualFeedbacks] = useState<
-    Array<{ id: string; options: VisualFeedbackOptions; timestamp: number }>
+    { id: string; options: VisualFeedbackOptions; timestamp: number }[]
   >([]);
   const soundsRef = useRef<Map<string, Audio.Sound>>(new Map());
   const feedbackTimeoutRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
@@ -71,7 +71,9 @@ export function useVisualAudioSupport(options: AudioFeedbackOptions = {}) {
           setIsAudioEnabled(true);
         }
       } catch (error) {
-        logger.warn("[VisualAudioSupport] 音声初期化エラー:", { details: error });
+        logger.warn("[VisualAudioSupport] 音声初期化エラー:", {
+          details: error,
+        });
         setIsAudioEnabled(false);
       }
     };
@@ -84,7 +86,9 @@ export function useVisualAudioSupport(options: AudioFeedbackOptions = {}) {
         try {
           await sound.unloadAsync();
         } catch (error) {
-          logger.warn("[VisualAudioSupport] 音声クリーンアップエラー:", { details: error });
+          logger.warn("[VisualAudioSupport] 音声クリーンアップエラー:", {
+            details: error,
+          });
         }
       });
       soundsRef.current.clear();
@@ -110,9 +114,9 @@ export function useVisualAudioSupport(options: AudioFeedbackOptions = {}) {
         soundsRef.current.set(effect.id, sound);
         return sound;
       } catch (error) {
-        console.warn(
+        logger.warn(
           `[VisualAudioSupport] サウンドエフェクト読み込みエラー (${effect.name}):`,
-          error,
+          { details: error },
         );
         return null;
       }
@@ -131,9 +135,9 @@ export function useVisualAudioSupport(options: AudioFeedbackOptions = {}) {
           await sound.setVolumeAsync(options.volume || soundVolume);
           await sound.replayAsync();
         } catch (error) {
-          console.warn(
+          logger.warn(
             `[VisualAudioSupport] サウンド再生エラー (${effectId}):`,
-            error,
+            { details: error },
           );
         }
       }
@@ -196,10 +200,9 @@ export function useVisualAudioSupport(options: AudioFeedbackOptions = {}) {
           Vibration.vibrate(patterns[type]);
         }
       } catch (error) {
-        console.warn(
-          "[VisualAudioSupport] ハプティックフィードバックエラー:",
-          error,
-        );
+        logger.warn("[VisualAudioSupport] ハプティックフィードバックエラー:", {
+          details: error,
+        });
       }
     },
     [enableHapticFeedback],

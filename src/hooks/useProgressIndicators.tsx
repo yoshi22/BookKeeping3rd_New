@@ -51,13 +51,13 @@ export interface SkeletonProps {
 }
 
 export interface StepIndicatorProps {
-  steps: Array<{
+  steps: {
     id: string;
     title: string;
     description?: string;
     completed?: boolean;
     active?: boolean;
-  }>;
+  }[];
   currentStep: number;
   orientation?: "horizontal" | "vertical";
   size?: number;
@@ -524,12 +524,12 @@ export interface LearningProgressProps {
   totalQuestions: number;
   completedQuestions: number;
   correctAnswers: number;
-  categoryProgress?: Array<{
+  categoryProgress?: {
     name: string;
     total: number;
     completed: number;
     color: string;
-  }>;
+  }[];
 }
 
 export const LearningProgress: React.FC<LearningProgressProps> = ({

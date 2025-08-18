@@ -63,11 +63,11 @@ interface AnswerTemplate {
   fields?: AnswerField[];
   options?: string[];
   vouchers?: VoucherType[];
-  questions?: Array<{
+  questions?: {
     id: string;
     label: string;
     options: string[];
-  }>;
+  }[];
 }
 
 interface QuestionDisplayProps {
@@ -348,9 +348,9 @@ export default function QuestionDisplay({
       answerTemplate?.allowMultipleEntries) ||
     (questionId.startsWith("Q_J_") && answerTemplate?.type === "journal_entry");
 
-  // デバッグログ（簡素化版）
-  if (process.env.NODE_ENV === "development") {
-    console.log(`[QuestionDisplay] レンダリング: ${questionId}`, {
+  // レンダリング判定ログ（必要時のみ有効化）
+  if (process.env.NODE_ENV === "development" && process.env.DEBUG_RENDERING) {
+    logger.debug(`[QuestionDisplay] レンダリング: ${questionId}`, {
       answerTemplateType: answerTemplate?.type,
       shouldUseJournalEntryForm,
     });
@@ -371,9 +371,14 @@ export default function QuestionDisplay({
   // Determine if should use VoucherEntryForm for voucher entry questions
   const shouldUseVoucherEntryForm = answerTemplate?.type === "voucher_entry";
 
-  // Debug: Log answerTemplate for voucher questions
-  if (questionId.startsWith("Q_L_02") && answerTemplate) {
-    console.log(
+  // バウチャー問題のテンプレート確認（デバッグ時のみ）
+  if (
+    process.env.NODE_ENV === "development" &&
+    process.env.DEBUG_VOUCHER &&
+    questionId.startsWith("Q_L_02") &&
+    answerTemplate
+  ) {
+    logger.debug(
       "[QuestionDisplay] answerTemplate for voucher:",
       answerTemplate,
     );

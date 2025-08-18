@@ -124,7 +124,7 @@ export interface CBTAnswerData {
 
   // 帳簿問題の解答 - LedgerEntry配列を直接格納
   ledgerEntry?: {
-    entries: Array<{
+    entries: {
       account?: string;
       description?: string;
       amount?: number;
@@ -139,7 +139,7 @@ export interface CBTAnswerData {
       receipt?: number;
       payment?: number;
       balance?: number;
-    }>;
+    }[];
   };
 
   // 試算表問題の解答
@@ -148,29 +148,29 @@ export interface CBTAnswerData {
   };
 
   // 試算表問題の解答（配列形式） - TrialBalanceEntry配列を直接格納
-  entries?: Array<{
+  entries?: {
     accountName: string;
     debitAmount: number;
     creditAmount: number;
-  }>;
+  }[];
 
   // 財務諸表問題の解答
   financialStatements?: {
     balanceSheet: {
-      assets: Array<{ accountName: string; amount: number }>;
-      liabilities: Array<{ accountName: string; amount: number }>;
-      equity: Array<{ accountName: string; amount: number }>;
+      assets: { accountName: string; amount: number }[];
+      liabilities: { accountName: string; amount: number }[];
+      equity: { accountName: string; amount: number }[];
     };
     incomeStatement: {
-      revenues: Array<{ accountName: string; amount: number }>;
-      expenses: Array<{ accountName: string; amount: number }>;
+      revenues: { accountName: string; amount: number }[];
+      expenses: { accountName: string; amount: number }[];
       netIncome: number;
     };
   };
 
   // 伝票記入問題の解答 - より具体的な型定義
   voucher_type?: string;
-  voucherEntries?: Array<{
+  voucherEntries?: {
     type: string;
     date?: string;
     account?: string;
@@ -180,7 +180,7 @@ export interface CBTAnswerData {
     debit_amount?: number;
     credit_account?: string;
     credit_amount?: number;
-  }>;
+  }[];
 
   // 複数空欄選択問題の解答
   answers?: Record<string, string>;
@@ -203,13 +203,13 @@ export interface MockExamDetailedResults {
   actualDuration: number; // 秒
 
   // セクション別結果
-  sectionResults: Array<{
+  sectionResults: {
     sectionNumber: 1 | 2 | 3;
     sectionName: string;
     score: number;
     maxScore: number;
     questions: MockExamQuestionResult[];
-  }>;
+  }[];
 
   // 全体統計
   totalCorrect: number;

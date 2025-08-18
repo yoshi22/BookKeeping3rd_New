@@ -208,7 +208,9 @@ export class AudioFeedbackService {
         this.config = { ...this.config, ...JSON.parse(savedConfig) };
       }
     } catch (error) {
-      logger.warn("[AudioFeedbackService] 設定読み込みエラー:", { details: error });
+      logger.warn("[AudioFeedbackService] 設定読み込みエラー:", {
+        details: error,
+      });
     }
   }
 
@@ -240,10 +242,9 @@ export class AudioFeedbackService {
         try {
           await this.generateToneSound(soundId);
         } catch (error) {
-          console.warn(
-            `[AudioFeedbackService] 音声生成エラー (${soundId}):`,
-            error,
-          );
+          logger.warn(`[AudioFeedbackService] 音声生成エラー (${soundId}):`, {
+            details: error,
+          });
         }
       }),
     );
@@ -299,10 +300,9 @@ export class AudioFeedbackService {
       // ネイティブ環境では外部ライブラリまたは事前録音された音声ファイルを使用
       return undefined;
     } catch (error) {
-      console.warn(
-        `[AudioFeedbackService] トーン生成エラー (${soundId}):`,
-        error,
-      );
+      logger.warn(`[AudioFeedbackService] トーン生成エラー (${soundId}):`, {
+        details: error,
+      });
       return undefined;
     }
   }
@@ -374,10 +374,9 @@ export class AudioFeedbackService {
         await executePlay();
       }
     } catch (error) {
-      console.warn(
-        `[AudioFeedbackService] 音声再生エラー (${soundId}):`,
-        error,
-      );
+      logger.warn(`[AudioFeedbackService] 音声再生エラー (${soundId}):`, {
+        details: error,
+      });
     }
   }
 
@@ -474,10 +473,9 @@ export class AudioFeedbackService {
         try {
           await sound.unloadAsync();
         } catch (error) {
-          console.warn(
-            `[AudioFeedbackService] 音声解放エラー (${soundId}):`,
-            error,
-          );
+          logger.warn(`[AudioFeedbackService] 音声解放エラー (${soundId}):`, {
+            details: error,
+          });
         }
       }
       this.soundCache.clear();
@@ -488,10 +486,9 @@ export class AudioFeedbackService {
           try {
             URL.revokeObjectURL(dataURL);
           } catch (error) {
-            console.warn(
-              `[AudioFeedbackService] URL解放エラー (${soundId}):`,
-              error,
-            );
+            logger.warn(`[AudioFeedbackService] URL解放エラー (${soundId}):`, {
+              details: error,
+            });
           }
         }
       }
@@ -500,7 +497,10 @@ export class AudioFeedbackService {
       this.isInitialized = false;
       logger.debug("[AudioFeedbackService] クリーンアップ完了");
     } catch (error) {
-      logger.error("[AudioFeedbackService] クリーンアップエラー:", error as Error);
+      logger.error(
+        "[AudioFeedbackService] クリーンアップエラー:",
+        error as Error,
+      );
     }
   }
 }

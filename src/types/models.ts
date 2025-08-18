@@ -194,7 +194,7 @@ export interface QuestionAnswerTemplate {
   type: "journal_entry" | "ledger_entry" | "trial_balance";
   allowMultipleEntries?: boolean;
   maxEntries?: number;
-  fields: Array<{
+  fields: {
     label: string;
     type: "dropdown" | "number" | "text" | "date";
     name: string;
@@ -202,7 +202,7 @@ export interface QuestionAnswerTemplate {
     format?: "currency" | "percentage";
     placeholder?: string;
     options?: string[]; // ドロップダウンの選択肢
-  }>;
+  }[];
 }
 
 /**
@@ -222,11 +222,11 @@ export interface QuestionCorrectAnswer {
 
   // 帳簿問題の正解
   ledgerEntry?: {
-    entries: Array<{
+    entries: {
       account?: string;
       description?: string;
       amount?: number;
-    }>;
+    }[];
   };
 
   // 試算表問題の正解
@@ -235,7 +235,7 @@ export interface QuestionCorrectAnswer {
   };
 
   // 試算表問題の別形式（エントリー配列）と伝票問題のエントリー
-  entries?: Array<{
+  entries?: {
     // 試算表用
     accountName?: string;
     debitAmount?: number;
@@ -256,18 +256,18 @@ export interface QuestionCorrectAnswer {
     customer?: string;
     supplier?: string;
     payment_type?: string;
-  }>;
+  }[];
 
   // 財務諸表形式（複雑な試算表問題用）
   financialStatements?: {
     balanceSheet?: {
-      assets?: Array<{ accountName: string; amount: number }>;
-      liabilities?: Array<{ accountName: string; amount: number }>;
-      equity?: Array<{ accountName: string; amount: number }>;
+      assets?: { accountName: string; amount: number }[];
+      liabilities?: { accountName: string; amount: number }[];
+      equity?: { accountName: string; amount: number }[];
     };
     incomeStatement?: {
-      revenues?: Array<{ accountName: string; amount: number }>;
-      expenses?: Array<{ accountName: string; amount: number }>;
+      revenues?: { accountName: string; amount: number }[];
+      expenses?: { accountName: string; amount: number }[];
       netIncome?: number;
     };
   };

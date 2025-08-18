@@ -6,16 +6,28 @@
  * 学習アプリに適した段階的・心地よいアニメーション
  */
 
-import React, { useCallback, useRef, useEffect } from 'react';
-import { Animated, Easing, Platform } from 'react-native';
+import React, { useCallback, useRef, useEffect } from "react";
+import { Animated, Easing, Platform } from "react-native";
 import { logger } from "../utils/logger";
 
 /**
  * アニメーションの種類定義
  */
-export type AnimationType = 'fade' | 'scale' | 'slide' | 'bounce' | 'spring' | 'rotate';
-export type AnimationDirection = 'up' | 'down' | 'left' | 'right' | 'in' | 'out';
-export type AnimationDuration = 'fast' | 'normal' | 'slow' | 'very-slow';
+export type AnimationType =
+  | "fade"
+  | "scale"
+  | "slide"
+  | "bounce"
+  | "spring"
+  | "rotate";
+export type AnimationDirection =
+  | "up"
+  | "down"
+  | "left"
+  | "right"
+  | "in"
+  | "out";
+export type AnimationDuration = "fast" | "normal" | "slow" | "very-slow";
 
 /**
  * アニメーション設定
@@ -57,7 +69,7 @@ export const AnimationPresets = {
     useNativeDriver: true,
   },
 
-  // スライドアニメーション  
+  // スライドアニメーション
   slideInFromRight: {
     duration: 300,
     easing: Easing.out(Easing.cubic),
@@ -118,7 +130,7 @@ export const AnimationDurations = {
   fast: 150,
   normal: 300,
   slow: 500,
-  'very-slow': 800,
+  "very-slow": 800,
 } as const;
 
 /**
@@ -131,31 +143,40 @@ export const useAnimations = () => {
   const useFadeAnimation = (initialValue: number = 0) => {
     const opacity = useRef(new Animated.Value(initialValue)).current;
 
-    const fadeIn = useCallback((config?: AnimationConfig) => {
-      return Animated.timing(opacity, {
-        toValue: 1,
-        ...AnimationPresets.fadeIn,
-        ...config,
-      });
-    }, [opacity]);
+    const fadeIn = useCallback(
+      (config?: AnimationConfig) => {
+        return Animated.timing(opacity, {
+          toValue: 1,
+          ...AnimationPresets.fadeIn,
+          ...config,
+        });
+      },
+      [opacity],
+    );
 
-    const fadeOut = useCallback((config?: AnimationConfig) => {
-      return Animated.timing(opacity, {
-        toValue: 0,
-        ...AnimationPresets.fadeOut,
-        ...config,
-      });
-    }, [opacity]);
+    const fadeOut = useCallback(
+      (config?: AnimationConfig) => {
+        return Animated.timing(opacity, {
+          toValue: 0,
+          ...AnimationPresets.fadeOut,
+          ...config,
+        });
+      },
+      [opacity],
+    );
 
-    const fadeTo = useCallback((toValue: number, config?: AnimationConfig) => {
-      return Animated.timing(opacity, {
-        toValue,
-        duration: AnimationDurations.normal,
-        easing: Easing.ease,
-        useNativeDriver: true,
-        ...config,
-      });
-    }, [opacity]);
+    const fadeTo = useCallback(
+      (toValue: number, config?: AnimationConfig) => {
+        return Animated.timing(opacity, {
+          toValue,
+          duration: AnimationDurations.normal,
+          easing: Easing.ease,
+          useNativeDriver: true,
+          ...config,
+        });
+      },
+      [opacity],
+    );
 
     return { opacity, fadeIn, fadeOut, fadeTo };
   };
@@ -166,50 +187,62 @@ export const useAnimations = () => {
   const useScaleAnimation = (initialValue: number = 1) => {
     const scale = useRef(new Animated.Value(initialValue)).current;
 
-    const scaleIn = useCallback((config?: AnimationConfig) => {
-      return Animated.timing(scale, {
-        toValue: 1,
-        ...AnimationPresets.scaleIn,
-        ...config,
-      });
-    }, [scale]);
-
-    const scaleOut = useCallback((config?: AnimationConfig) => {
-      return Animated.timing(scale, {
-        toValue: 0,
-        ...AnimationPresets.scaleOut,
-        ...config,
-      });
-    }, [scale]);
-
-    const scaleTo = useCallback((toValue: number, config?: AnimationConfig) => {
-      return Animated.timing(scale, {
-        toValue,
-        duration: AnimationDurations.normal,
-        easing: Easing.ease,
-        useNativeDriver: true,
-        ...config,
-      });
-    }, [scale]);
-
-    const pulseScale = useCallback((config?: AnimationConfig) => {
-      return Animated.sequence([
-        Animated.timing(scale, {
-          toValue: 1.1,
-          duration: 150,
-          easing: Easing.ease,
-          useNativeDriver: true,
-          ...config,
-        }),
-        Animated.timing(scale, {
+    const scaleIn = useCallback(
+      (config?: AnimationConfig) => {
+        return Animated.timing(scale, {
           toValue: 1,
-          duration: 150,
+          ...AnimationPresets.scaleIn,
+          ...config,
+        });
+      },
+      [scale],
+    );
+
+    const scaleOut = useCallback(
+      (config?: AnimationConfig) => {
+        return Animated.timing(scale, {
+          toValue: 0,
+          ...AnimationPresets.scaleOut,
+          ...config,
+        });
+      },
+      [scale],
+    );
+
+    const scaleTo = useCallback(
+      (toValue: number, config?: AnimationConfig) => {
+        return Animated.timing(scale, {
+          toValue,
+          duration: AnimationDurations.normal,
           easing: Easing.ease,
           useNativeDriver: true,
           ...config,
-        }),
-      ]);
-    }, [scale]);
+        });
+      },
+      [scale],
+    );
+
+    const pulseScale = useCallback(
+      (config?: AnimationConfig) => {
+        return Animated.sequence([
+          Animated.timing(scale, {
+            toValue: 1.1,
+            duration: 150,
+            easing: Easing.ease,
+            useNativeDriver: true,
+            ...config,
+          }),
+          Animated.timing(scale, {
+            toValue: 1,
+            duration: 150,
+            easing: Easing.ease,
+            useNativeDriver: true,
+            ...config,
+          }),
+        ]);
+      },
+      [scale],
+    );
 
     return { scale, scaleIn, scaleOut, scaleTo, pulseScale };
   };
@@ -221,49 +254,61 @@ export const useAnimations = () => {
     const translateX = useRef(new Animated.Value(initialValue)).current;
     const translateY = useRef(new Animated.Value(initialValue)).current;
 
-    const slideInFromRight = useCallback((fromValue: number = 300, config?: AnimationConfig) => {
-      translateX.setValue(fromValue);
-      return Animated.timing(translateX, {
-        toValue: 0,
-        ...AnimationPresets.slideInFromRight,
-        ...config,
-      });
-    }, [translateX]);
+    const slideInFromRight = useCallback(
+      (fromValue: number = 300, config?: AnimationConfig) => {
+        translateX.setValue(fromValue);
+        return Animated.timing(translateX, {
+          toValue: 0,
+          ...AnimationPresets.slideInFromRight,
+          ...config,
+        });
+      },
+      [translateX],
+    );
 
-    const slideInFromLeft = useCallback((fromValue: number = -300, config?: AnimationConfig) => {
-      translateX.setValue(fromValue);
-      return Animated.timing(translateX, {
-        toValue: 0,
-        ...AnimationPresets.slideInFromLeft,
-        ...config,
-      });
-    }, [translateX]);
+    const slideInFromLeft = useCallback(
+      (fromValue: number = -300, config?: AnimationConfig) => {
+        translateX.setValue(fromValue);
+        return Animated.timing(translateX, {
+          toValue: 0,
+          ...AnimationPresets.slideInFromLeft,
+          ...config,
+        });
+      },
+      [translateX],
+    );
 
-    const slideUp = useCallback((fromValue: number = 50, config?: AnimationConfig) => {
-      translateY.setValue(fromValue);
-      return Animated.timing(translateY, {
-        toValue: 0,
-        ...AnimationPresets.slideUp,
-        ...config,
-      });
-    }, [translateY]);
+    const slideUp = useCallback(
+      (fromValue: number = 50, config?: AnimationConfig) => {
+        translateY.setValue(fromValue);
+        return Animated.timing(translateY, {
+          toValue: 0,
+          ...AnimationPresets.slideUp,
+          ...config,
+        });
+      },
+      [translateY],
+    );
 
-    const slideDown = useCallback((fromValue: number = -50, config?: AnimationConfig) => {
-      translateY.setValue(fromValue);
-      return Animated.timing(translateY, {
-        toValue: 0,
-        ...AnimationPresets.slideDown,
-        ...config,
-      });
-    }, [translateY]);
+    const slideDown = useCallback(
+      (fromValue: number = -50, config?: AnimationConfig) => {
+        translateY.setValue(fromValue);
+        return Animated.timing(translateY, {
+          toValue: 0,
+          ...AnimationPresets.slideDown,
+          ...config,
+        });
+      },
+      [translateY],
+    );
 
-    return { 
-      translateX, 
-      translateY, 
-      slideInFromRight, 
-      slideInFromLeft, 
-      slideUp, 
-      slideDown 
+    return {
+      translateX,
+      translateY,
+      slideInFromRight,
+      slideInFromLeft,
+      slideUp,
+      slideDown,
     };
   };
 
@@ -273,21 +318,27 @@ export const useAnimations = () => {
   const useSpringAnimation = (initialValue: number = 0) => {
     const springValue = useRef(new Animated.Value(initialValue)).current;
 
-    const springTo = useCallback((toValue: number, config?: any) => {
-      return Animated.spring(springValue, {
-        toValue,
-        ...AnimationPresets.spring,
-        ...config,
-      });
-    }, [springValue]);
+    const springTo = useCallback(
+      (toValue: number, config?: any) => {
+        return Animated.spring(springValue, {
+          toValue,
+          ...AnimationPresets.spring,
+          ...config,
+        });
+      },
+      [springValue],
+    );
 
-    const gentleSpringTo = useCallback((toValue: number, config?: any) => {
-      return Animated.spring(springValue, {
-        toValue,
-        ...AnimationPresets.gentleSpring,
-        ...config,
-      });
-    }, [springValue]);
+    const gentleSpringTo = useCallback(
+      (toValue: number, config?: any) => {
+        return Animated.spring(springValue, {
+          toValue,
+          ...AnimationPresets.gentleSpring,
+          ...config,
+        });
+      },
+      [springValue],
+    );
 
     return { springValue, springTo, gentleSpringTo };
   };
@@ -298,33 +349,39 @@ export const useAnimations = () => {
   const useRotationAnimation = (initialValue: number = 0) => {
     const rotation = useRef(new Animated.Value(initialValue)).current;
 
-    const rotateTo = useCallback((toValue: number, config?: AnimationConfig) => {
-      return Animated.timing(rotation, {
-        toValue,
-        duration: AnimationDurations.normal,
-        easing: Easing.ease,
-        useNativeDriver: true,
-        ...config,
-      });
-    }, [rotation]);
-
-    const spin = useCallback((config?: AnimationConfig) => {
-      rotation.setValue(0);
-      return Animated.loop(
-        Animated.timing(rotation, {
-          toValue: 1,
-          duration: 1000,
-          easing: Easing.linear,
+    const rotateTo = useCallback(
+      (toValue: number, config?: AnimationConfig) => {
+        return Animated.timing(rotation, {
+          toValue,
+          duration: AnimationDurations.normal,
+          easing: Easing.ease,
           useNativeDriver: true,
           ...config,
-        }),
-        { iterations: config?.iterations || -1 }
-      );
-    }, [rotation]);
+        });
+      },
+      [rotation],
+    );
+
+    const spin = useCallback(
+      (config?: AnimationConfig) => {
+        rotation.setValue(0);
+        return Animated.loop(
+          Animated.timing(rotation, {
+            toValue: 1,
+            duration: 1000,
+            easing: Easing.linear,
+            useNativeDriver: true,
+            ...config,
+          }),
+          { iterations: config?.iterations || -1 },
+        );
+      },
+      [rotation],
+    );
 
     const interpolateRotation = rotation.interpolate({
       inputRange: [0, 1],
-      outputRange: ['0deg', '360deg'],
+      outputRange: ["0deg", "360deg"],
     });
 
     return { rotation, rotateTo, spin, interpolateRotation };
@@ -426,7 +483,7 @@ export const useAnimations = () => {
             easing: Easing.ease,
             useNativeDriver: true,
           }),
-        ])
+        ]),
       );
     }, [opacity]);
 
@@ -498,12 +555,12 @@ export const useAnimations = () => {
       ]);
     }, [opacity, scale, translateY]);
 
-    return { 
-      opacity, 
-      scale, 
-      translateY, 
-      modalEnterAnimation, 
-      modalExitAnimation 
+    return {
+      opacity,
+      scale,
+      translateY,
+      modalEnterAnimation,
+      modalExitAnimation,
     };
   };
 
@@ -527,7 +584,12 @@ export const AnimatedComponents = {
   /**
    * フェードイン対応View
    */
-  FadeInView: ({ children, duration = 300, delay = 0, style }: {
+  FadeInView: ({
+    children,
+    duration = 300,
+    delay = 0,
+    style,
+  }: {
     children: React.ReactNode;
     duration?: number;
     delay?: number;
@@ -543,38 +605,48 @@ export const AnimatedComponents = {
     }, [fadeIn, duration, delay]);
 
     return (
-      <Animated.View style={[style, { opacity }]}>
-        {children}
-      </Animated.View>
+      <Animated.View style={[style, { opacity }]}>{children}</Animated.View>
     );
   },
 
   /**
    * スライドイン対応View
    */
-  SlideInView: ({ children, direction = 'up', duration = 300, delay = 0, style }: {
+  SlideInView: ({
+    children,
+    direction = "up",
+    duration = 300,
+    delay = 0,
+    style,
+  }: {
     children: React.ReactNode;
-    direction?: 'up' | 'down' | 'left' | 'right';
+    direction?: "up" | "down" | "left" | "right";
     duration?: number;
     delay?: number;
     style?: any;
   }) => {
-    const { translateX, translateY, slideUp, slideDown, slideInFromLeft, slideInFromRight } = 
-      useAnimations().useSlideAnimation();
+    const {
+      translateX,
+      translateY,
+      slideUp,
+      slideDown,
+      slideInFromLeft,
+      slideInFromRight,
+    } = useAnimations().useSlideAnimation();
 
     useEffect(() => {
       const timer = setTimeout(() => {
         switch (direction) {
-          case 'up':
+          case "up":
             slideUp(undefined, { duration }).start();
             break;
-          case 'down':
+          case "down":
             slideDown(undefined, { duration }).start();
             break;
-          case 'left':
+          case "left":
             slideInFromLeft(undefined, { duration }).start();
             break;
-          case 'right':
+          case "right":
             slideInFromRight(undefined, { duration }).start();
             break;
         }
@@ -582,21 +654,25 @@ export const AnimatedComponents = {
       return () => clearTimeout(timer);
     }, [direction, duration, delay]);
 
-    const transform = direction === 'left' || direction === 'right' 
-      ? [{ translateX }] 
-      : [{ translateY }];
+    const transform =
+      direction === "left" || direction === "right"
+        ? [{ translateX }]
+        : [{ translateY }];
 
     return (
-      <Animated.View style={[style, { transform }]}>
-        {children}
-      </Animated.View>
+      <Animated.View style={[style, { transform }]}>{children}</Animated.View>
     );
   },
 
   /**
    * スケールイン対応View
    */
-  ScaleInView: ({ children, duration = 300, delay = 0, style }: {
+  ScaleInView: ({
+    children,
+    duration = 300,
+    delay = 0,
+    style,
+  }: {
     children: React.ReactNode;
     duration?: number;
     delay?: number;
@@ -623,13 +699,13 @@ export const AnimatedComponents = {
  * パフォーマンス最適化のための設定
  */
 export const enableLayoutAnimations = () => {
-  if (Platform.OS === 'android') {
+  if (Platform.OS === "android") {
     // Android: LayoutAnimationを有効化
     try {
-      const { LayoutAnimation } = require('react-native');
+      const { LayoutAnimation } = require("react-native");
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     } catch (error) {
-      console.warn('LayoutAnimation not available:', error);
+      logger.warn("LayoutAnimation not available:", { details: error });
     }
   }
 };

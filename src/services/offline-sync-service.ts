@@ -119,7 +119,7 @@ export class OfflineSyncService {
       this.isInitialized = true;
       logger.debug("[OfflineSyncService] 同期システム初期化完了");
     } catch (error) {
-      logger.error("[OfflineSyncService] 初期化エラー:", error  as Error);
+      logger.error("[OfflineSyncService] 初期化エラー:", error as Error);
       throw error;
     }
   }
@@ -191,7 +191,10 @@ export class OfflineSyncService {
 
       logger.debug("[OfflineSyncService] ネットワーク監視開始");
     } catch (error) {
-      logger.error("[OfflineSyncService] ネットワーク監視エラー:", error  as Error);
+      logger.error(
+        "[OfflineSyncService] ネットワーク監視エラー:",
+        error as Error,
+      );
     }
   }
 
@@ -242,7 +245,7 @@ export class OfflineSyncService {
       }
     }, this.config.syncInterval);
 
-    console.log(
+    logger.debug(
       `[OfflineSyncService] バックグラウンド同期開始 (${this.config.syncInterval}ms間隔)`,
     );
   }
@@ -280,12 +283,12 @@ export class OfflineSyncService {
         setTimeout(() => this.triggerSync(), 1000); // 1秒後に実行
       }
 
-      console.log(
+      logger.debug(
         `[OfflineSyncService] 同期操作登録: ${operation.id} (${type} ${table})`,
       );
       return operation.id;
     } catch (error) {
-      logger.error("[OfflineSyncService] 操作登録エラー:", error  as Error);
+      logger.error("[OfflineSyncService] 操作登録エラー:", error as Error);
       throw error;
     }
   }
@@ -345,12 +348,14 @@ export class OfflineSyncService {
         }
       }
 
-      console.log(
+      logger.debug(
         `[OfflineSyncService] 未処理操作復元完了: ${this.operationQueue.length}件`,
       );
       this.updateSyncStats();
     } catch (error) {
-      logger.warn("[OfflineSyncService] 未処理操作復元エラー:", { details: error });
+      logger.warn("[OfflineSyncService] 未処理操作復元エラー:", {
+        details: error,
+      });
     }
   }
 
@@ -371,7 +376,7 @@ export class OfflineSyncService {
       this.syncStatus.syncProgress = 0;
       this.notifyStatusChange();
 
-      console.log(
+      logger.debug(
         `[OfflineSyncService] 同期開始: ${this.operationQueue.length}件の操作`,
       );
 
@@ -396,7 +401,7 @@ export class OfflineSyncService {
 
       logger.debug("[OfflineSyncService] 同期完了");
     } catch (error) {
-      logger.error("[OfflineSyncService] 同期エラー:", error  as Error);
+      logger.error("[OfflineSyncService] 同期エラー:", error as Error);
     } finally {
       this.syncStatus.isCurrentlySyncing = false;
       this.syncStatus.syncProgress = 0;
@@ -426,9 +431,7 @@ export class OfflineSyncService {
       try {
         // リトライ制限チェック
         if (operation.retryCount >= this.config.retryAttempts) {
-          console.warn(
-            `[OfflineSyncService] リトライ上限到達: ${operation.id}`,
-          );
+          logger.warn(`[OfflineSyncService] リトライ上限到達: ${operation.id}`);
           await this.markOperationFailed(operation, "リトライ上限到達");
           continue;
         }
@@ -444,9 +447,12 @@ export class OfflineSyncService {
         await this.updateOperationStatus(operation);
         await this.removeOperationFromQueue(operation);
 
-        logger.debug("[OfflineSyncService] 操作成功: ${operation.id}");
+        logger.debug(`[OfflineSyncService] 操作成功: ${operation.id}`);
       } catch (error) {
-        logger.error("[OfflineSyncService] 操作失敗: ${operation.id}", error  as Error);
+        logger.error(
+          `[OfflineSyncService] 操作失敗: ${operation.id}`,
+          error as Error,
+        );
 
         operation.retryCount++;
         operation.lastError =
@@ -507,7 +513,7 @@ export class OfflineSyncService {
       await this.handleConflict(operation, existingData);
     } else {
       // ローカルDBに正常に保存されていることを確認
-      console.log(
+      logger.debug(
         `[OfflineSyncService] 作成操作確認: ${operation.table} ID=${operation.data.id}`,
       );
     }
@@ -532,7 +538,7 @@ export class OfflineSyncService {
     if (existingData.updated_at > operation.timestamp) {
       await this.handleConflict(operation, existingData);
     } else {
-      console.log(
+      logger.debug(
         `[OfflineSyncService] 更新操作確認: ${operation.table} ID=${operation.data.id}`,
       );
     }
@@ -549,11 +555,11 @@ export class OfflineSyncService {
 
     if (!existingData) {
       // すでに削除済み（正常）
-      console.log(
+      logger.debug(
         `[OfflineSyncService] 削除操作確認（既に削除済み）: ${operation.table} ID=${operation.data.id}`,
       );
     } else {
-      console.log(
+      logger.debug(
         `[OfflineSyncService] 削除操作確認: ${operation.table} ID=${operation.data.id}`,
       );
     }
@@ -572,10 +578,9 @@ export class OfflineSyncService {
 
       return result.rows && result.rows.length > 0 ? result.rows[0] : null;
     } catch (error) {
-      console.warn(
-        `[OfflineSyncService] データ確認エラー: ${tableName}`,
-        error,
-      );
+      logger.warn(`[OfflineSyncService] データ確認エラー: ${tableName}`, {
+        details: error,
+      });
       return null;
     }
   }
@@ -611,7 +616,7 @@ export class OfflineSyncService {
         await this.resolveConflictMerge(conflict);
         break;
       default:
-        logger.debug("[OfflineSyncService] 手動解決待ち競合: ${conflict.id}");
+        logger.debug(`[OfflineSyncService] 手動解決待ち競合: ${conflict.id}`);
     }
   }
 
@@ -643,7 +648,7 @@ export class OfflineSyncService {
   private async resolveConflictClientWins(
     conflict: ConflictData,
   ): Promise<void> {
-    console.log(
+    logger.debug(
       `[OfflineSyncService] 競合解決（クライアント優先）: ${conflict.id}`,
     );
     // クライアントデータを維持（何もしない）
@@ -656,7 +661,7 @@ export class OfflineSyncService {
   private async resolveConflictServerWins(
     conflict: ConflictData,
   ): Promise<void> {
-    console.log(
+    logger.debug(
       `[OfflineSyncService] 競合解決（サーバー優先）: ${conflict.id}`,
     );
     // この実装ではサーバーが存在しないため、既存データを維持
@@ -667,7 +672,7 @@ export class OfflineSyncService {
    * マージでの競合解決
    */
   private async resolveConflictMerge(conflict: ConflictData): Promise<void> {
-    logger.debug("[OfflineSyncService] 競合解決（マージ）: ${conflict.id}");
+    logger.debug(`[OfflineSyncService] 競合解決（マージ）: ${conflict.id}`);
 
     try {
       // 簡単なマージロジック（フィールドレベルでの最新値採用）
@@ -686,9 +691,12 @@ export class OfflineSyncService {
       await databaseService.executeSql(updateQuery.query, updateQuery.params);
 
       await this.markConflictResolved(conflict.id);
-      logger.debug("[OfflineSyncService] マージ完了: ${conflict.id}");
+      logger.debug(`[OfflineSyncService] マージ完了: ${conflict.id}`);
     } catch (error) {
-      logger.error("[OfflineSyncService] マージエラー: ${conflict.id}", error  as Error);
+      logger.error(
+        `[OfflineSyncService] マージエラー: ${conflict.id}`,
+        error as Error,
+      );
     }
   }
 
@@ -845,7 +853,9 @@ export class OfflineSyncService {
         this.config = { ...this.config, ...parsed };
       }
     } catch (error) {
-      logger.warn("[OfflineSyncService] 設定読み込みエラー:", { details: error });
+      logger.warn("[OfflineSyncService] 設定読み込みエラー:", {
+        details: error,
+      });
     }
   }
 
@@ -872,7 +882,7 @@ export class OfflineSyncService {
 
       logger.debug("[OfflineSyncService] 設定更新完了");
     } catch (error) {
-      logger.error("[OfflineSyncService] 設定更新エラー:", error  as Error);
+      logger.error("[OfflineSyncService] 設定更新エラー:", error as Error);
     }
   }
 
@@ -893,7 +903,10 @@ export class OfflineSyncService {
 
       logger.debug("[OfflineSyncService] クリーンアップ完了");
     } catch (error) {
-      logger.error("[OfflineSyncService] クリーンアップエラー:", error  as Error);
+      logger.error(
+        "[OfflineSyncService] クリーンアップエラー:",
+        error as Error,
+      );
     }
   }
 }

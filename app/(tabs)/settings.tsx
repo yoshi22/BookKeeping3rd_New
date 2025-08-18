@@ -35,21 +35,21 @@ export default function SettingsScreen() {
   const [selectedTheme, setSelectedTheme] = useState<ThemeMode>(themeMode);
 
   // テーマ情報
-  const themeOptions: Array<{
+  const themeOptions: {
     key: ThemeMode;
     label: string;
     description: string;
-  }> = [
+  }[] = [
     { key: "light", label: "ライトモード", description: "明るい背景のテーマ" },
     { key: "dark", label: "ダークモード", description: "暗い背景のテーマ" },
     { key: "system", label: "システム設定", description: "端末の設定に従う" },
   ];
 
-  const customThemeOptions: Array<{
+  const customThemeOptions: {
     key: keyof typeof customThemeVariants;
     label: string;
     description: string;
-  }> = [
+  }[] = [
     {
       key: "oceanic",
       label: "オーシャニック",
