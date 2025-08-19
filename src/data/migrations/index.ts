@@ -93,13 +93,11 @@ async function loadSampleData(): Promise<void> {
     const { databaseService } = await import("../database");
     const { allQuestions: allSampleQuestions, questionStatistics } =
       await import("../master-questions");
-    const SAMPLE_DATA_VERSION = "2025-08-18-alpha-test-fixes";
+    const SAMPLE_DATA_VERSION =
+      "2025-08-19-phase-12-source-tax-core-patterns-complete";
 
     // 環境変数による強制更新フラグ（開発時のみ）
-    const forceUpdate =
-      __DEV__ &&
-      (process.env.FORCE_UPDATE_QUESTIONS === "true" ||
-        process.env.EXPO_PUBLIC_FORCE_UPDATE_QUESTIONS === "true");
+    const forceUpdate = false; // ユーザーデータ保護
 
     // 現在のデータバージョンを取得
     let currentVersion = null;
