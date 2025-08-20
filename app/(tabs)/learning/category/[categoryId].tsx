@@ -120,26 +120,26 @@ export default function CategoryDetailScreen() {
   const currentCategory =
     categoryConfig[categoryId as QuestionCategory] || categoryConfig.journal;
 
-  // 難易度オプションの定義 (problemsStrategy.md準拠: 3分類)
+  // 難易度オプションの定義 (5段階を3分類にマッピング)
   const difficultyOptions = [
     {
-      level: 1 as QuestionDifficulty,
+      levels: [1, 2] as QuestionDifficulty[],
       name: "基礎",
-      description: "基本的な問題・基礎レベル",
+      description: "基本的な問題・基礎レベル (難易度1-2)",
       color: learningColors.completed,
       icon: "⭐",
     },
     {
-      level: 2 as QuestionDifficulty,
+      levels: [3] as QuestionDifficulty[],
       name: "標準",
-      description: "標準的な問題・中級レベル",
+      description: "標準的な問題・中級レベル (難易度3)",
       color: theme.colors.warning,
       icon: "⭐⭐",
     },
     {
-      level: 3 as QuestionDifficulty,
+      levels: [4, 5] as QuestionDifficulty[],
       name: "応用",
-      description: "応用問題・上級レベル",
+      description: "応用問題・上級レベル (難易度4-5)",
       color: theme.colors.error,
       icon: "⭐⭐⭐",
     },
@@ -885,10 +885,26 @@ export default function CategoryDetailScreen() {
     }
   };
 
-  const toggleDifficultyFilter = (difficulty: QuestionDifficulty) => {
-    const newDifficulties = filters.difficulties.includes(difficulty)
-      ? filters.difficulties.filter((d) => d !== difficulty)
-      : [...filters.difficulties, difficulty];
+  const toggleDifficultyFilter = (levelGroup: QuestionDifficulty[]) => {
+    // 複数レベルのグループを処理
+    const hasAllSelected = levelGroup.every((level) =>
+      filters.difficulties.includes(level),
+    );
+
+    let newDifficulties: QuestionDifficulty[];
+    if (hasAllSelected) {
+      // 全て選択済みの場合は全て除外
+      newDifficulties = filters.difficulties.filter(
+        (d) => !levelGroup.includes(d),
+      );
+    } else {
+      // 一部または全く選択されていない場合は全て追加
+      newDifficulties = [
+        ...filters.difficulties,
+        ...levelGroup.filter((level) => !filters.difficulties.includes(level)),
+      ];
+    }
+
     setFilters({ ...filters, difficulties: newDifficulties });
   };
 
@@ -902,28 +918,32 @@ export default function CategoryDetailScreen() {
   const getDifficultyColor = (difficulty: number) => {
     switch (difficulty) {
       case 1:
-        return learningColors.completed; // 基礎 - 緑
       case 2:
-        return theme.colors.warning; // 標準 - オレンジ
+        return learningColors.completed; // 基礎 - 緑
       case 3:
+        return theme.colors.warning; // 標準 - オレンジ
+      case 4:
+      case 5:
         return theme.colors.error; // 応用 - 赤
       default:
         return theme.colors.textSecondary; // その他 - グレー
     }
-  };
+  };;
 
   const getDifficultyLabel = (difficulty: number) => {
     switch (difficulty) {
       case 1:
-        return "基礎";
       case 2:
-        return "標準";
+        return "基礎";
       case 3:
+        return "標準";
+      case 4:
+      case 5:
         return "応用";
       default:
         return "";
     }
-  };
+  };;
 
   // 問題のタグから表示用のラベルを生成する関数
   const generateQuestionTags = (question: Question): string[] => {
@@ -1008,9 +1028,11 @@ export default function CategoryDetailScreen() {
         </Text>
         <View style={styles.difficultyGrid}>
           {difficultyOptions.map((option, index) => {
-            const isSelected = filters.difficulties.includes(option.level);
-            const levelQuestions = questions.filter(
-              (q) => q.difficulty === option.level,
+            const isSelected = option.levels.every((level) =>
+              filters.difficulties.includes(level),
+            );
+            const levelQuestions = questions.filter((q) =>
+              option.levels.includes(q.difficulty),
             );
 
             return (
@@ -1025,7 +1047,7 @@ export default function CategoryDetailScreen() {
                       : theme.colors.surface,
                   },
                 ]}
-                onPress={() => toggleDifficultyFilter(option.level)}
+                onPress={() => toggleDifficultyFilter(option.levels)}
               >
                 <Text
                   style={[

@@ -159,11 +159,11 @@ export function useScreenReaderOptimization() {
 
       const difficultyNames: Record<number, string> = {
         1: "基礎",
-        2: "標準",
-        3: "応用",
-        4: "上級",
-        5: "最上級",
-      };
+        2: "基礎", 
+        3: "標準",
+        4: "応用",
+        5: "応用",
+      };;
 
       const message = [
         `${typeNames[questionType]}`,
