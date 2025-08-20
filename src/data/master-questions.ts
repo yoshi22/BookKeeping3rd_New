@@ -3469,16 +3469,17 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_156",
     category_id: "journal",
-    question_text: "法人税等500円を当座預金から納付した。",
+    question_text:
+      "給与支給時に社会保険料（健康保険・厚生年金）の従業員負担分15,000円を天引きし、預り金として計上した。",
     answer_template_json:
       '{"type":"journal_entry","journalEntry":{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"法人税等","debit_amount":500,"credit_account":"当座預金","credit_amount":500}}',
+      '{"journalEntry":{"debit_account":"給料","debit_amount":15000,"credit_account":"預り金","credit_amount":15000}}',
     explanation:
-      "【基本概念】\n商品の仕入れと売上に関する基本的な取引。三分法では仕入・売上・繰越商品の3つの勘定を使用し、仕入は費用、売上は収益、繰越商品は資産として扱います。\n\n【具体例・イメージ】\nスーパーやコンビニでの商品の仕入れと販売をイメージしてください。仕入時は商品代金を支払い、売上時は販売価格で収益を計上します。\n\n【仕訳パターン】\n・仕入時: 借方に仕入、貸方に現金/買掛金\n・売上時: 借方に現金/売掛金、貸方に売上\n・返品時: 逆仕訳で処理\n・値引時: 売上値引/仕入値引勘定で処理\n\n【間違えやすいポイント】\n・分記法と三分法を混同しやすい\n・期末商品の振替処理を忘れがち\n・返品と値引の処理方法を間違える\n・売上原価の計算方法を理解していない\n\n【覚え方のコツ】\n・三分法は「仕入・売上・繰越商品」の3つで管理\n・仕入は費用（左側）、売上は収益（右側）\n・期末は「しくりくりし」（仕訳・繰越・繰越・仕訳）\n・返品は「逆仕訳」、値引は「専用勘定」\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【基本概念】\n社会保険料は健康保険・厚生年金保険・雇用保険・労災保険の総称で、従業員と会社が負担を分担します。従業員負担分は給与から天引きし預り金として処理します。\n\n【具体例・イメージ】\n毎月の給与明細で「健康保険料」「厚生年金保険料」が天引きされているのをイメージしてください。会社が従業員に代わって預かり、後で納付します。\n\n【仕訳パターン】\n・従業員負担分天引き: 借方に給料、貸方に預り金\n・会社負担分計上: 借方に法定福利費、貸方に未払金\n・納付時: 借方に預り金・未払金、貸方に現金・預金\n\n【間違えやすいポイント】\n・従業員負担分と会社負担分を混同する\n・預り金と未払金の使い分けを間違える\n・雇用保険と労災保険の負担割合を間違える\n・賞与からの特別保険料を忘れる\n\n【覚え方のコツ】\n・従業員負担分は「預り金」\n・会社負担分は「法定福利費」\n・納付時は「預り金・未払金の消込」\n・健康保険・厚生年金は「労使折半」\n\n【この問題の解き方】\n従業員負担分の社会保険料天引きなので、給料（借方）と預り金（貸方）で仕訳します。",
     difficulty: 2,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
+      '{"subcategory":"payroll","pattern":"社会保険料天引き","accounts":["給料","預り金"],"keywords":["社会保険料","従業員負担","天引き","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
     updated_at: "2025-08-19T06:30:10.192Z",
   },
@@ -3486,16 +3487,16 @@ export const masterQuestions: Question[] = [
     id: "Q_J_157",
     category_id: "journal",
     question_text:
-      "従業員に給料400円を支払った。なお、源泉所得税10円を差し引いて現金で支払った。",
+      "社会保険料の会社負担分18,000円を法定福利費として計上し、未払金とした。",
     answer_template_json:
-      '{"type":"journal_entry","journalEntry":{"entries":[{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}]}}',
+      '{"type":"journal_entry","journalEntry":{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}}',
     correct_answer_json:
-      '{"journalEntry":{"entries":[{"debit_account":"給料","debit_amount":500,"credit_account":"現金","credit_amount":500},{"debit_account":"","debit_amount":0,"credit_account":"預り金","credit_amount":500}],"debit_amount":null,"credit_amount":null}}',
+      '{"journalEntry":{"debit_account":"法定福利費","debit_amount":18000,"credit_account":"未払金","credit_amount":18000}}',
     explanation:
-      "【基本概念】\n従業員への給与支払いと関連する社会保険料・源泉徴収の処理。給与総額から各種控除額を差し引いた手取額を支給します。\n\n【具体例・イメージ】\n毎月の給与明細で天引きされる項目をイメージしてください。総支給額から健康保険料、厚生年金保険料、雇用保険料、所得税が控除されます。\n\n【仕訳パターン】\n・給与支給時: 借方に給料、貸方に各種預り金と現金\n・社会保険料納付時: 借方に法定福利費・預り金、貸方に現金\n・源泉所得税納付時: 借方に預り金、貸方に現金\n\n【間違えやすいポイント】\n・総支給額と手取額を混同する\n・会社負担分と従業員負担分を間違える\n・預り金の処理を忘れる\n・賞与の社会保険料計算を間違える\n\n【覚え方のコツ】\n・給料は「総額で計上、差額は預り金」\n・社会保険料は「労使折半」\n・源泉徴収は「会社が代理納付」\n・預り金は負債（いずれ支払う義務）\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【基本概念】\n社会保険料の会社負担分は法定福利費として費用計上します。健康保険・厚生年金は労使折半、労災保険は会社負担、雇用保険は一定比率で負担します。\n\n【具体例・イメージ】\n従業員が負担する社会保険料と同額（またはそれ以上）を会社も負担し、従業員の福利厚生として処理します。給与計算時に同時に発生する費用です。\n\n【仕訳パターン】\n・会社負担分計上: 借方に法定福利費、貸方に未払金\n・従業員負担分天引き: 借方に給料、貸方に預り金\n・納付時: 借方に未払金・預り金、貸方に現金・預金\n\n【間違えやすいポイント】\n・法定福利費と福利厚生費を混同する\n・労災保険の全額会社負担を忘れる\n・雇用保険の負担割合を間違える\n・未払金と預り金の区別を間違える\n\n【覚え方のコツ】\n・会社負担分は「法定福利費」\n・従業員負担分は「預り金」\n・労災保険は「会社が全額負担」\n・健康保険・厚生年金は「労使折半」\n\n【この問題の解き方】\n会社負担分の社会保険料計上なので、法定福利費（借方）と未払金（貸方）で仕訳します。",
     difficulty: 2,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
+      '{"subcategory":"payroll","pattern":"社会保険料会社負担","accounts":["法定福利費","未払金"],"keywords":["社会保険料","会社負担","法定福利費","未払金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
     updated_at: "2025-08-19T06:30:10.192Z",
   },
@@ -3503,27 +3504,28 @@ export const masterQuestions: Question[] = [
     id: "Q_J_158",
     category_id: "journal",
     question_text:
-      "社会保険料150円（会社負担150円、従業員負担10円）を現金で支払った。",
+      "社会保険料33,000円（会社負担18,000円、従業員負担15,000円）を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","journalEntry":{"entries":[{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}]}}',
+      '{"type":"journal_entry","journalEntry":[{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}]}',
     correct_answer_json:
-      '{"journalEntry":{"entries":[{"debit_account":"法定福利費","debit_amount":500,"credit_account":"現金","credit_amount":500},{"debit_account":"預り金","debit_amount":500,"credit_account":"","credit_amount":0}],"debit_amount":null,"credit_amount":null}}',
+      '{"journalEntry":[{"debit_account":"未払金","debit_amount":18000,"credit_account":"","credit_amount":0},{"debit_account":"預り金","debit_amount":15000,"credit_account":"","credit_amount":0},{"debit_account":"","debit_amount":0,"credit_account":"現金","credit_amount":33000}]}',
     explanation:
-      "【基本概念】\n従業員への給与支払いと関連する社会保険料・源泉徴収の処理。給与総額から各種控除額を差し引いた手取額を支給します。\n\n【具体例・イメージ】\n毎月の給与明細で天引きされる項目をイメージしてください。総支給額から健康保険料、厚生年金保険料、雇用保険料、所得税が控除されます。\n\n【仕訳パターン】\n・給与支給時: 借方に給料、貸方に各種預り金と現金\n・社会保険料納付時: 借方に法定福利費・預り金、貸方に現金\n・源泉所得税納付時: 借方に預り金、貸方に現金\n\n【間違えやすいポイント】\n・総支給額と手取額を混同する\n・会社負担分と従業員負担分を間違える\n・預り金の処理を忘れる\n・賞与の社会保険料計算を間違える\n\n【覚え方のコツ】\n・給料は「総額で計上、差額は預り金」\n・社会保険料は「労使折半」\n・源泉徴収は「会社が代理納付」\n・預り金は負債（いずれ支払う義務）\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【基本概念】\n社会保険料の納付時は、事前に計上した会社負担分（未払金）と従業員から預かった分（預り金）を合計して納付します。\n\n【具体例・イメージ】\n月末に給与計算で発生した社会保険料を翌月納付するイメージです。会社負担分と従業員負担分を一括して年金事務所等に納付します。\n\n【仕訳パターン】\n・納付時: 借方に未払金・預り金、貸方に現金・預金\n・会社負担分計上時: 借方に法定福利費、貸方に未払金\n・従業員負担分天引き時: 借方に給料、貸方に預り金\n\n【間違えやすいポイント】\n・未払金と預り金を混同する\n・納付時に法定福利費を使用してしまう\n・会社負担分と従業員負担分の金額を間違える\n・複数月分をまとめて処理する際の計算ミス\n\n【覚え方のコツ】\n・納付時は「未払金・預り金の消込」\n・会社負担分は「未払金」\n・従業員負担分は「預り金」\n・合計額が現金・預金から減少\n\n【この問題の解き方】\n社会保険料納付なので、未払金18,000円と預り金15,000円（借方）、現金33,000円（貸方）の3行仕訳です。",
     difficulty: 2,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
+      '{"subcategory":"payroll","pattern":"社会保険料納付","accounts":["未払金","預り金","現金"],"keywords":["社会保険料","納付","未払金","預り金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
     updated_at: "2025-08-19T06:30:10.193Z",
   },
   {
     id: "Q_J_159",
     category_id: "journal",
-    question_text: "固定資産税500円を現金で納付した。",
+    question_text:
+      "標準報酬月額の改定により、社会保険料が増額改定された。従業員負担分の増額3,000円を追加で預り金に計上した。",
     answer_template_json:
       '{"type":"journal_entry","journalEntry":{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"租税公課","debit_amount":500,"credit_account":"現金","credit_amount":500}}',
+      '{"journalEntry":{"debit_account":"給料","debit_amount":3000,"credit_account":"預り金","credit_amount":3000}}',
     explanation:
       "【基本概念】\n銀行に開設した決済専用の預金口座で、小切手や手形の決済に使用されます。利息は付きません。法人が開設する専用の銀行口座です。\n\n【具体例・イメージ】\n法人が開設する専用の銀行口座で、小切手を振り出したり、取引先からの振込を受けたりする口座をイメージしてください。\n\n【仕訳パターン】\n・入金時: 借方に当座預金、貸方に売掛金等\n・支払時（残高あり）: 借方に買掛金等、貸方に当座預金\n・支払時（残高不足）: 借方に買掛金等、貸方に当座借越\n\n【間違えやすいポイント】\n・普通預金と当座預金を混同しやすい\n・他人振出小切手は「現金」として扱う\n・当座借越の処理方法（決算時の振替が必要）\n\n【覚え方のコツ】\n・「当座」= その場での決済用\n・小切手 = 当座預金から支払う\n・入金で当座預金増加（借方）\n・残高不足でも小切手振出可能（当座借越契約時）\n\n【この問題の仕訳】\n【この問題の仕訳】\n（仕訳データの解析に失敗しました）",
     difficulty: 2,
@@ -3535,11 +3537,12 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_160",
     category_id: "journal",
-    question_text: "法人税等500円を当座預金から納付した。",
+    question_text:
+      "賞与支給時に社会保険料（健康保険・厚生年金）の従業員負担分8,000円を天引きした。",
     answer_template_json:
       '{"type":"journal_entry","journalEntry":{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"法人税等","debit_amount":500,"credit_account":"当座預金","credit_amount":500}}',
+      '{"journalEntry":{"debit_account":"賞与","debit_amount":8000,"credit_account":"預り金","credit_amount":8000}}',
     explanation:
       "【基本概念】\n商品の仕入れと売上に関する基本的な取引。三分法では仕入・売上・繰越商品の3つの勘定を使用し、仕入は費用、売上は収益、繰越商品は資産として扱います。\n\n【具体例・イメージ】\nスーパーやコンビニでの商品の仕入れと販売をイメージしてください。仕入時は商品代金を支払い、売上時は販売価格で収益を計上します。\n\n【仕訳パターン】\n・仕入時: 借方に仕入、貸方に現金/買掛金\n・売上時: 借方に現金/売掛金、貸方に売上\n・返品時: 逆仕訳で処理\n・値引時: 売上値引/仕入値引勘定で処理\n\n【間違えやすいポイント】\n・分記法と三分法を混同しやすい\n・期末商品の振替処理を忘れがち\n・返品と値引の処理方法を間違える\n・売上原価の計算方法を理解していない\n\n【覚え方のコツ】\n・三分法は「仕入・売上・繰越商品」の3つで管理\n・仕入は費用（左側）、売上は収益（右側）\n・期末は「しくりくりし」（仕訳・繰越・繰越・仕訳）\n・返品は「逆仕訳」、値引は「専用勘定」\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
     difficulty: 2,
@@ -3552,16 +3555,16 @@ export const masterQuestions: Question[] = [
     id: "Q_J_161",
     category_id: "journal",
     question_text:
-      "従業員に給料500円を支払った。なお、源泉所得税10円を差し引いて現金で支払った。",
+      "社会保険の資格喪失により、従業員負担分の社会保険料5,000円を返還し、現金で支払った。",
     answer_template_json:
-      '{"type":"journal_entry","journalEntry":{"entries":[{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}]}}',
+      '{"type":"journal_entry","journalEntry":{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}}',
     correct_answer_json:
-      '{"journalEntry":{"entries":[{"debit_account":"給料","debit_amount":500,"credit_account":"現金","credit_amount":500},{"debit_account":"","debit_amount":0,"credit_account":"預り金","credit_amount":500}],"debit_amount":null,"credit_amount":null}}',
+      '{"journalEntry":{"debit_account":"預り金","debit_amount":5000,"credit_account":"現金","credit_amount":5000}}',
     explanation:
-      "【基本概念】\n従業員への給与支払いと関連する社会保険料・源泉徴収の処理。給与総額から各種控除額を差し引いた手取額を支給します。\n\n【具体例・イメージ】\n毎月の給与明細で天引きされる項目をイメージしてください。総支給額から健康保険料、厚生年金保険料、雇用保険料、所得税が控除されます。\n\n【仕訳パターン】\n・給与支給時: 借方に給料、貸方に各種預り金と現金\n・社会保険料納付時: 借方に法定福利費・預り金、貸方に現金\n・源泉所得税納付時: 借方に預り金、貸方に現金\n\n【間違えやすいポイント】\n・総支給額と手取額を混同する\n・会社負担分と従業員負担分を間違える\n・預り金の処理を忘れる\n・賞与の社会保険料計算を間違える\n\n【覚え方のコツ】\n・給料は「総額で計上、差額は預り金」\n・社会保険料は「労使折半」\n・源泉徴収は「会社が代理納付」\n・預り金は負債（いずれ支払う義務）\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【基本概念】\n社会保険の資格喪失に伴う保険料返還処理。退職や雇用期間変更により、過払いとなった社会保険料を従業員に返還します。\n\n【具体例・イメージ】\n社員が月途中で退職した場合、月初に天引きした社会保険料のうち、資格喪失後の期間分を返還するケースです。預り金として計上していた社会保険料を現金で返還します。\n\n【仕訳パターン】\n・社会保険料返還時: 借方に預り金、貸方に現金\n・雇用保険料返還時: 借方に預り金、貸方に現金\n・労災保険料関連: 会社負担のため従業員への返還なし\n\n【間違えやすいポイント】\n・会社負担分と従業員負担分を混同する\n・返還すべき保険料の計算を間違える\n・預り金勘定の減少処理を忘れる\n・返還時期の判定を間違える\n\n【覚え方のコツ】\n・資格喪失＝保険料の返還が発生\n・預り金の減少は借方記入\n・社会保険料は「退職月は不要」\n・返還処理は「預り金→現金」のパターン\n\n【この問題の解き方】\n社会保険の資格喪失により過払いとなった従業員負担分の保険料を現金で返還する処理です。預り金の減少として処理します。",
     difficulty: 3,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
+      '{"subcategory":"social_insurance","pattern":"社会保険料返還","accounts":["預り金","現金"],"keywords":["社会保険","資格喪失","返還"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
     updated_at: "2025-08-19T06:30:10.196Z",
   },
@@ -3569,65 +3572,66 @@ export const masterQuestions: Question[] = [
     id: "Q_J_162",
     category_id: "journal",
     question_text:
-      "社会保険料500円（会社負担500円、従業員負担10円）を現金で支払った。",
+      "社会保険料15,000円（会社負担7,500円、従業員負担7,500円）を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","journalEntry":{"entries":[{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}]}}',
+      '{"type":"journal_entry","journalEntry":[{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}]}',
     correct_answer_json:
-      '{"journalEntry":{"entries":[{"debit_account":"法定福利費","debit_amount":500,"credit_account":"現金","credit_amount":500},{"debit_account":"預り金","debit_amount":500,"credit_account":"","credit_amount":0}],"debit_amount":null,"credit_amount":null}}',
+      '{"journalEntry":[{"debit_account":"法定福利費","debit_amount":7500,"credit_account":"","credit_amount":0},{"debit_account":"預り金","debit_amount":7500,"credit_account":"","credit_amount":0},{"debit_account":"","debit_amount":0,"credit_account":"現金","credit_amount":15000}]}',
     explanation:
-      "【基本概念】\n従業員への給与支払いと関連する社会保険料・源泉徴収の処理。給与総額から各種控除額を差し引いた手取額を支給します。\n\n【具体例・イメージ】\n毎月の給与明細で天引きされる項目をイメージしてください。総支給額から健康保険料、厚生年金保険料、雇用保険料、所得税が控除されます。\n\n【仕訳パターン】\n・給与支給時: 借方に給料、貸方に各種預り金と現金\n・社会保険料納付時: 借方に法定福利費・預り金、貸方に現金\n・源泉所得税納付時: 借方に預り金、貸方に現金\n\n【間違えやすいポイント】\n・総支給額と手取額を混同する\n・会社負担分と従業員負担分を間違える\n・預り金の処理を忘れる\n・賞与の社会保険料計算を間違える\n\n【覚え方のコツ】\n・給料は「総額で計上、差額は預り金」\n・社会保険料は「労使折半」\n・源泉徴収は「会社が代理納付」\n・預り金は負債（いずれ支払う義務）\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【基本概念】\n社会保険料の納付処理。会社負担分と従業員負担分を合算して納付する際の仕訳です。会社負担分は法定福利費、従業員負担分は預り金として処理します。\n\n【具体例・イメージ】\n毎月の給与から天引きした健康保険料・厚生年金保険料と、会社負担分を合わせて年金事務所等に納付するケースです。労使で折半した保険料を一括納付します。\n\n【仕訳パターン】\n・社会保険料納付時: 借方に法定福利費・預り金、貸方に現金\n・雇用保険料納付時: 借方に法定福利費・預り金、貸方に現金\n・労災保険料納付時: 借方に法定福利費、貸方に現金（全額会社負担）\n\n【間違えやすいポイント】\n・会社負担分と従業員負担分の勘定科目を間違える\n・合計金額の計算を間違える\n・預り金の減少処理を忘れる\n・労災保険料を従業員負担と誤解する\n\n【覚え方のコツ】\n・社会保険料は「労使折半」が基本\n・会社負担分＝法定福利費（費用）\n・従業員負担分＝預り金（負債の減少）\n・納付時は「合算して一括納付」\n\n【この問題の解き方】\n会社負担分7,500円は法定福利費、従業員負担分7,500円は預り金の減少、合計15,000円を現金で納付する処理です。",
     difficulty: 3,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"社会保険料","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","法定福利費","預り金"],"examSection":1}',
+      '{"subcategory":"social_insurance","pattern":"社会保険料納付","accounts":["法定福利費","預り金","現金"],"keywords":["社会保険料","納付","労使折半"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
     updated_at: "2025-08-19T06:30:10.197Z",
   },
   {
     id: "Q_J_163",
     category_id: "journal",
-    question_text: "固定資産税2250円を現金で納付した。",
+    question_text:
+      "労働保険料8,000円（雇用保険料6,000円、労災保険料2,000円）を現金で納付した。",
     answer_template_json:
       '{"type":"journal_entry","journalEntry":{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"租税公課","debit_amount":2250,"credit_account":"現金","credit_amount":2250}}',
+      '{"journalEntry":{"debit_account":"法定福利費","debit_amount":8000,"credit_account":"現金","credit_amount":8000}}',
     explanation:
-      "【基本概念】\n銀行に開設した決済専用の預金口座で、小切手や手形の決済に使用されます。利息は付きません。法人が開設する専用の銀行口座です。\n\n【具体例・イメージ】\n法人が開設する専用の銀行口座で、小切手を振り出したり、取引先からの振込を受けたりする口座をイメージしてください。\n\n【仕訳パターン】\n・入金時: 借方に当座預金、貸方に売掛金等\n・支払時（残高あり）: 借方に買掛金等、貸方に当座預金\n・支払時（残高不足）: 借方に買掛金等、貸方に当座借越\n\n【間違えやすいポイント】\n・普通預金と当座預金を混同しやすい\n・他人振出小切手は「現金」として扱う\n・当座借越の処理方法（決算時の振替が必要）\n\n【覚え方のコツ】\n・「当座」= その場での決済用\n・小切手 = 当座預金から支払う\n・入金で当座預金増加（借方）\n・残高不足でも小切手振出可能（当座借越契約時）\n\n【この問題の仕訳】\n【この問題の仕訳】\n（仕訳データの解析に失敗しました）",
+      "【基本概念】\n労働保険料（雇用保険料・労災保険料）の納付処理。労働保険料は原則として全額会社負担ですが、雇用保険料の一部は従業員も負担します。\n\n【具体例・イメージ】\n年度初めに労働基準監督署やハローワークに納付する労働保険料をイメージしてください。雇用保険は労使で負担割合が決まっており、労災保険は全額会社負担です。\n\n【仕訳パターン】\n・労働保険料一括納付時: 借方に法定福利費、貸方に現金\n・雇用保険料分割納付時: 借方に法定福利費・預り金、貸方に現金\n・労災保険料納付時: 借方に法定福利費、貸方に現金（全額会社負担）\n\n【間違えやすいポイント】\n・雇用保険料の従業員負担分を預り金処理し忘れる\n・労災保険料を従業員負担と誤解する\n・社会保険料と労働保険料を混同する\n・納付先（労働基準監督署・ハローワーク）を間違える\n\n【覚え方のコツ】\n・労災保険料は「全額会社負担」\n・雇用保険料は「労使で負担分担」\n・労働保険料は「まとめて法定福利費」\n・年度更新時は「概算・確定同時処理」\n\n【この問題の解き方】\n労働保険料8,000円を一括して現金で納付する処理です。労働保険料は法定福利費として全額費用計上します。",
     difficulty: 3,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"租税公課","accounts":["租税公課","現金"],"keywords":["固定資産税","租税公課","納付"],"examSection":1}',
+      '{"subcategory":"social_insurance","pattern":"労働保険料納付","accounts":["法定福利費","現金"],"keywords":["労働保険料","雇用保険","労災保険"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
     updated_at: "2025-08-19T06:30:10.197Z",
   },
   {
     id: "Q_J_164",
     category_id: "journal",
-    question_text: "法人税等4000円を当座預金から納付した。",
+    question_text:
+      "雇用保険料3,000円（会社負担2,000円、従業員負担1,000円）を普通預金から納付した。",
     answer_template_json:
-      '{"type":"journal_entry","journalEntry":{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}}',
+      '{"type":"journal_entry","journalEntry":[{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}]}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"法人税等","debit_amount":4000,"credit_account":"当座預金","credit_amount":4000}}',
+      '{"journalEntry":[{"debit_account":"法定福利費","debit_amount":2000,"credit_account":"","credit_amount":0},{"debit_account":"預り金","debit_amount":1000,"credit_account":"","credit_amount":0},{"debit_account":"","debit_amount":0,"credit_account":"普通預金","credit_amount":3000}]}',
     explanation:
-      "【基本概念】\n商品の仕入れと売上に関する基本的な取引。三分法では仕入・売上・繰越商品の3つの勘定を使用し、仕入は費用、売上は収益、繰越商品は資産として扱います。\n\n【具体例・イメージ】\nスーパーやコンビニでの商品の仕入れと販売をイメージしてください。仕入時は商品代金を支払い、売上時は販売価格で収益を計上します。\n\n【仕訳パターン】\n・仕入時: 借方に仕入、貸方に現金/買掛金\n・売上時: 借方に現金/売掛金、貸方に売上\n・返品時: 逆仕訳で処理\n・値引時: 売上値引/仕入値引勘定で処理\n\n【間違えやすいポイント】\n・分記法と三分法を混同しやすい\n・期末商品の振替処理を忘れがち\n・返品と値引の処理方法を間違える\n・売上原価の計算方法を理解していない\n\n【覚え方のコツ】\n・三分法は「仕入・売上・繰越商品」の3つで管理\n・仕入は費用（左側）、売上は収益（右側）\n・期末は「しくりくりし」（仕訳・繰越・繰越・仕訳）\n・返品は「逆仕訳」、値引は「専用勘定」\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【基本概念】\n雇用保険料の納付処理。雇用保険料は労使で負担割合が決まっており、会社負担分は法定福利費、従業員負担分は預り金として処理します。\n\n【具体例・イメージ】\nハローワークに毎月納付する雇用保険料をイメージしてください。失業給付等の財源となる保険料で、会社と従業員が決められた割合で負担します。\n\n【仕訳パターン】\n・雇用保険料納付時: 借方に法定福利費・預り金、貸方に普通預金\n・労働保険料一括納付時: 借方に法定福利費、貸方に現金\n・年度更新時: 概算と確定の差額を調整\n\n【間違えやすいポイント】\n・会社負担分と従業員負担分の勘定科目を間違える\n・雇用保険料率の計算を間違える\n・労災保険料と混同する（労災は全額会社負担）\n・従業員負担分の預り金処理を忘れる\n\n【覚え方のコツ】\n・雇用保険料は「労使で分担」\n・会社負担分＝法定福利費（費用）\n・従業員負担分＝預り金（負債の減少）\n・納付先は「ハローワーク」\n\n【この問題の解き方】\n会社負担分2,000円は法定福利費、従業員負担分1,000円は預り金の減少、合計3,000円を普通預金から納付する処理です。",
     difficulty: 3,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"法人税等","accounts":["法人税等","当座預金"],"keywords":["法人税","納付","当座預金"],"examSection":1}',
+      '{"subcategory":"social_insurance","pattern":"雇用保険料納付","accounts":["法定福利費","預り金","普通預金"],"keywords":["雇用保険料","納付","労使負担"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
     updated_at: "2025-08-19T06:30:10.198Z",
   },
   {
     id: "Q_J_165",
     category_id: "journal",
-    question_text:
-      "従業員に給料300円を支払った。なお、源泉所得税10円を差し引いて現金で支払った。",
+    question_text: "法人税等50,000円を現金で納付した。",
     answer_template_json:
-      '{"type":"journal_entry","journalEntry":{"entries":[{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}]}}',
+      '{"type":"journal_entry","journalEntry":{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}}',
     correct_answer_json:
-      '{"journalEntry":{"entries":[{"debit_account":"給料","debit_amount":500,"credit_account":"現金","credit_amount":500},{"debit_account":"","debit_amount":0,"credit_account":"預り金","credit_amount":500}],"debit_amount":null,"credit_amount":null}}',
+      '{"journalEntry":{"debit_account":"法人税等","debit_amount":50000,"credit_account":"現金","credit_amount":50000}}',
     explanation:
-      "【基本概念】\n従業員への給与支払いと関連する社会保険料・源泉徴収の処理。給与総額から各種控除額を差し引いた手取額を支給します。\n\n【具体例・イメージ】\n毎月の給与明細で天引きされる項目をイメージしてください。総支給額から健康保険料、厚生年金保険料、雇用保険料、所得税が控除されます。\n\n【仕訳パターン】\n・給与支給時: 借方に給料、貸方に各種預り金と現金\n・社会保険料納付時: 借方に法定福利費・預り金、貸方に現金\n・源泉所得税納付時: 借方に預り金、貸方に現金\n\n【間違えやすいポイント】\n・総支給額と手取額を混同する\n・会社負担分と従業員負担分を間違える\n・預り金の処理を忘れる\n・賞与の社会保険料計算を間違える\n\n【覚え方のコツ】\n・給料は「総額で計上、差額は預り金」\n・社会保険料は「労使折半」\n・源泉徴収は「会社が代理納付」\n・預り金は負債（いずれ支払う義務）\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【基本概念】\n法人税等の納付処理。法人税、住民税、事業税を含む法人にかかる税金の納付を処理します。法人税等は費用として計上します。\n\n【具体例・イメージ】\n決算後に税務署や都道府県税事務所に納付する税金をイメージしてください。法人の所得に対して課税される法人税、住民税、事業税などです。\n\n【仕訳パターン】\n・法人税等納付時: 借方に法人税等、貸方に現金/当座預金\n・中間納付時: 借方に法人税等、貸方に現金（年度末に最終調整）\n・延滞税納付時: 借方に租税公課、貸方に現金\n\n【間違えやすいポイント】\n・消費税と法人税等を混同する\n・中間納付と確定納付の処理を間違える\n・延滞税を法人税等勘定で処理してしまう\n・源泉所得税と法人税を混同する\n\n【覚え方のコツ】\n・法人税等は「会社の所得税」\n・納付時は費用計上（借方）\n・延滞税・加算税は「租税公課」\n・中間納付も「法人税等」で処理\n\n【この問題の解き方】\n法人税等50,000円を現金で納付する基本的な処理です。法人税等は費用として借方に計上し、現金は資産の減少として貸方に計上します。",
     difficulty: 3,
     tags_json:
-      '{"subcategory":"salary_tax","pattern":"給料支払","accounts":["給料","現金","預り金"],"keywords":["給料","源泉所得税","預り金"],"examSection":1}',
+      '{"subcategory":"corporate_tax","pattern":"法人税等納付","accounts":["法人税等","現金"],"keywords":["法人税","納付","現金"],"examSection":1}',
     created_at: "2025-08-07T00:31:25.368Z",
     updated_at: "2025-08-19T06:30:10.199Z",
   },
