@@ -94,7 +94,7 @@ async function loadSampleData(): Promise<void> {
     const { allQuestions: allSampleQuestions, questionStatistics } =
       await import("../master-questions");
     const SAMPLE_DATA_VERSION =
-      "2025-08-19-phase-15-key-fixed-asset-acquisition-patterns";
+      "2025-08-19-phase-16-depreciation-patterns-start";
 
     // 環境変数による強制更新フラグ（開発時のみ）
     const forceUpdate = false; // ユーザーデータ保護

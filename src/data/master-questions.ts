@@ -3985,11 +3985,12 @@ export const masterQuestions: Question[] = [
   {
     id: "Q_J_187",
     category_id: "journal",
-    question_text: "備品500円を購入し、代金は現金で支払った。",
+    question_text:
+      "9月1日に機械装置1,800,000円（耐用年数6年、残存価額ゼロ）を購入した。当期決算（12月31日）において減価償却費を定額法で計上した。",
     answer_template_json:
       '{"type":"journal_entry","journalEntry":{"debit_account":"","debit_amount":0,"credit_account":"","credit_amount":0}}',
     correct_answer_json:
-      '{"journalEntry":{"debit_account":"備品","debit_amount":500,"credit_account":"現金","credit_amount":500}}',
+      '{"journalEntry":{"debit_account":"減価償却費","debit_amount":100000,"credit_account":"機械装置減価償却累計額","credit_amount":100000}}',
     explanation:
       "【基本概念】\n固定資産の時間経過による価値減少を金額で表したもの。簿記3級では定額法（毎期一定額）を使用し、間接法で減価償却累計額勘定を用います。\n\n【具体例・イメージ】\n車や機械が年々古くなって価値が下がることをイメージしてください。取得原価を耐用年数で割って、毎年一定額ずつ費用計上します。\n\n【仕訳パターン】\n・減価償却時: 借方に減価償却費、貸方に減価償却累計額\n・計算式: (取得原価-残存価額)÷耐用年数\n・月割計算: 年間償却額×利用月数÷12\n\n【間違えやすいポイント】\n・直接法と間接法を混同する\n・残存価額を忘れて計算する\n・期中取得の月割計算を間違える\n・土地は減価償却しないことを忘れる\n\n【覚え方のコツ】\n・間接法は「累計額」を使用\n・定額法は「毎年同じ金額」\n・土地は「価値が減らない」\n・期中取得は「月割り計算」\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
     difficulty: 2,
