@@ -335,11 +335,18 @@ export default function QuestionDisplay({
     (questionId.startsWith("Q_L_") &&
       isMultiEntryLedgerQuestion(questionId, questionText));
 
-  // Q_L_001〜Q_L_020は新しいプルダウン対応フォームを使用
+  // Q_L_001〜Q_L_010（勘定記入問題）は新しいプルダウン対応フォームを使用
   const shouldUseLedgerEntryFormWithDropdown =
     answerTemplate?.type === "ledger_account" ||
     (questionId.startsWith("Q_L_") &&
       parseInt(questionId.split("_")[2]) >= 1 &&
+      parseInt(questionId.split("_")[2]) <= 10);
+
+  // Q_L_011〜Q_L_020（現金出納帳等の補助簿問題）は統合フォームを使用
+  const shouldUseSubsidiaryBookForm =
+    answerTemplate?.type === "subsidiary_book" ||
+    (questionId.startsWith("Q_L_") &&
+      parseInt(questionId.split("_")[2]) >= 11 &&
       parseInt(questionId.split("_")[2]) <= 20);
 
   // Determine if should use enhanced journal entry form for complex journal entries
@@ -501,6 +508,18 @@ export default function QuestionDisplay({
           startTime={startTime}
           onSubmitAnswer={onSubmitAnswer}
           showSubmitButton={true}
+          mode="learning"
+        />
+      ) : shouldUseSubsidiaryBookForm ? (
+        <UnifiedLedgerEntryForm
+          questionId={questionId}
+          questionText={questionText}
+          sessionType={sessionType}
+          sessionId={sessionId}
+          startTime={startTime}
+          onSubmitAnswer={onSubmitAnswer}
+          showSubmitButton={true}
+          expectedEntries={getExpectedEntryCount(questionText)}
           mode="learning"
         />
       ) : shouldUseLedgerEntryFormWithDropdown ? (

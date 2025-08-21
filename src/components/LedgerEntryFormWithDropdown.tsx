@@ -18,7 +18,13 @@ import {
   Modal,
   FlatList,
 } from "react-native";
-import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../context/ThemeContext";
 import NumberInput from "./NumberInput";
 import AnswerGuide from "./AnswerGuide";
 import {
@@ -28,13 +34,11 @@ import {
 } from "../services/answer-service";
 import { SessionType } from "../types/database";
 
-interface LedgerEntry {
+interface DynamicLedgerEntry {
   date: string;
   description: string;
   ref?: string;
-  receipt: number;
-  payment: number;
-  balance?: number;
+  [key: string]: any; // 動的フィールド対応（debit/credit, receipt/payment など）
 }
 
 interface ColumnDefinition {
@@ -151,7 +155,26 @@ export default function LedgerEntryFormWithDropdown({
   const colors = useColors();
   const dynamicColors = useDynamicColors();
   const styles = useThemedStyles(createStyles);
-  // answer_templateからcolumn定義を取得
+
+  // answer_templateからcolumn定義を取得し、ログ出力
+  React.useEffect(() => {
+    if (answerTemplate) {
+      logger.debug(
+        `[LedgerEntryFormWithDropdown] answerTemplate for ${questionId}:`,
+        {
+          type: answerTemplate.type,
+          columns: answerTemplate.columns
+            ?.map((col: any) => `${col.name}(${col.label})`)
+            .join(", "),
+        },
+      );
+    } else {
+      logger.debug(
+        `[LedgerEntryFormWithDropdown] No answerTemplate for ${questionId}, using fallback`,
+      );
+    }
+  }, [questionId, answerTemplate]);
+
   const columns: ColumnDefinition[] = answerTemplate?.columns || [
     { name: "date", label: "日付", type: "text" },
     { name: "description", label: "摘要", type: "text" },
@@ -161,25 +184,34 @@ export default function LedgerEntryFormWithDropdown({
     { name: "balance", label: "残高", type: "number" },
   ];
 
-  const [entries, setEntries] = useState<LedgerEntry[]>([
-    { date: "", description: "", ref: "", receipt: 0, payment: 0, balance: 0 },
+  // 列定義から動的に空のエントリを生成する関数
+  const createEmptyEntry = (
+    columns: ColumnDefinition[],
+  ): DynamicLedgerEntry => {
+    const entry: DynamicLedgerEntry = {
+      date: "",
+      description: "",
+      ref: "",
+    };
+
+    columns.forEach((col) => {
+      if (!["date", "description", "ref"].includes(col.name)) {
+        entry[col.name] = col.type === "number" ? 0 : "";
+      }
+    });
+
+    return entry;
+  };
+
+  const [entries, setEntries] = useState<DynamicLedgerEntry[]>(() => [
+    createEmptyEntry(columns),
   ]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
 
   // エントリを追加
   const addEntry = () => {
-    setEntries([
-      ...entries,
-      {
-        date: "",
-        description: "",
-        ref: "",
-        receipt: 0,
-        payment: 0,
-        balance: 0,
-      },
-    ]);
+    setEntries([...entries, createEmptyEntry(columns)]);
   };
 
   // エントリを削除
@@ -190,7 +222,11 @@ export default function LedgerEntryFormWithDropdown({
   };
 
   // エントリ値を更新
-  const updateEntry = (index: number, field: keyof LedgerEntry, value: any) => {
+  const updateEntry = (
+    index: number,
+    field: keyof DynamicLedgerEntry,
+    value: any,
+  ) => {
     setEntries((prev) =>
       prev.map((entry, i) =>
         i === index ? { ...entry, [field]: value } : entry,
@@ -205,13 +241,17 @@ export default function LedgerEntryFormWithDropdown({
     try {
       setIsSubmitting(true);
 
+      // 数値列を特定（残高以外の数値フィールド）
+      const numericColumns = columns.filter(
+        (col) => col.type === "number" && col.name !== "balance",
+      );
+
       // 空のエントリを除外
       const validEntries = entries.filter(
         (entry) =>
           entry.date.trim() ||
           entry.description.trim() ||
-          entry.receipt > 0 ||
-          entry.payment > 0,
+          numericColumns.some((col) => entry[col.name] > 0),
       );
 
       if (validEntries.length === 0) {
@@ -232,15 +272,33 @@ export default function LedgerEntryFormWithDropdown({
         return;
       }
 
-      // 金額チェック（収入または支出のどちらかは必須）
-      const invalidEntries = validEntries.filter(
-        (entry) => entry.receipt === 0 && entry.payment === 0,
+      // 金額チェック（いずれかの数値フィールドは必須）
+      const invalidEntries = validEntries.filter((entry) =>
+        numericColumns.every(
+          (col) => !entry[col.name] || entry[col.name] === 0,
+        ),
       );
 
       if (invalidEntries.length > 0) {
+        const fieldNames = numericColumns
+          .map((col) => col.label)
+          .join("または");
+
+        logger.debug(
+          `[LedgerEntryFormWithDropdown] Numeric field validation error:`,
+          {
+            questionId,
+            numericColumns: numericColumns.map(
+              (col) => `${col.name}(${col.label})`,
+            ),
+            fieldNames,
+            errorMessage: `各エントリで${fieldNames}のいずれかを入力してください`,
+          },
+        );
+
         Alert.alert(
           "入力エラー",
-          "各エントリで収入金額または支出金額のいずれかを入力してください",
+          `各エントリで${fieldNames}のいずれかを入力してください`,
         );
         return;
       }
@@ -276,7 +334,10 @@ export default function LedgerEntryFormWithDropdown({
         );
       }
     } catch (error) {
-      logger.error("[LedgerEntryFormWithDropdown] 解答送信エラー:", error  as Error);
+      logger.error(
+        "[LedgerEntryFormWithDropdown] 解答送信エラー:",
+        error as Error,
+      );
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);
@@ -296,7 +357,11 @@ export default function LedgerEntryFormWithDropdown({
               value={entry[column.name] || ""}
               options={column.options || []}
               onChange={(value) =>
-                updateEntry(index, column.name as keyof LedgerEntry, value)
+                updateEntry(
+                  index,
+                  column.name as keyof DynamicLedgerEntry,
+                  value,
+                )
               }
               placeholder={`${column.label}を選択`}
             />
@@ -311,7 +376,11 @@ export default function LedgerEntryFormWithDropdown({
               label=""
               value={entry[column.name] || 0}
               onChange={(value) =>
-                updateEntry(index, column.name as keyof LedgerEntry, value || 0)
+                updateEntry(
+                  index,
+                  column.name as keyof DynamicLedgerEntry,
+                  value || 0,
+                )
               }
               required={false}
               format="currency"
@@ -336,7 +405,11 @@ export default function LedgerEntryFormWithDropdown({
               style={styles.textInput}
               value={entry[column.name] || ""}
               onChangeText={(value) =>
-                updateEntry(index, column.name as keyof LedgerEntry, value)
+                updateEntry(
+                  index,
+                  column.name as keyof DynamicLedgerEntry,
+                  value,
+                )
               }
               placeholder={
                 column.name === "date" ? "例: 4/8" : `${column.label}を入力`
@@ -354,7 +427,7 @@ export default function LedgerEntryFormWithDropdown({
   };
 
   // 各エントリのレンダリング
-  const renderEntry = (entry: LedgerEntry, index: number) => {
+  const renderEntry = (entry: DynamicLedgerEntry, index: number) => {
     return (
       <View key={index} style={styles.entryContainer}>
         {/* エントリヘッダー */}
