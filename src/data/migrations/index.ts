@@ -93,7 +93,7 @@ async function loadSampleData(): Promise<void> {
     const { databaseService } = await import("../database");
     const { allQuestions: allSampleQuestions, questionStatistics } =
       await import("../master-questions");
-    const SAMPLE_DATA_VERSION = "2025-08-21-settlement-to-sales-purchase";
+    const SAMPLE_DATA_VERSION = "2025-08-21-q-l-002-maxentries-fix";
 
     // 環境変数による強制更新フラグ（開発時のみ）
     const forceUpdate = false; // ユーザーデータ保護のためfalse
