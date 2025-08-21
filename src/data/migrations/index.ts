@@ -93,10 +93,11 @@ async function loadSampleData(): Promise<void> {
     const { databaseService } = await import("../database");
     const { allQuestions: allSampleQuestions, questionStatistics } =
       await import("../master-questions");
-    const SAMPLE_DATA_VERSION = "2025-08-20-display-logic-fix";
+    const SAMPLE_DATA_VERSION =
+      "2025-08-21-qj244-250-final-verification-completion";
 
     // 環境変数による強制更新フラグ（開発時のみ）
-    const forceUpdate = false; // ✅ 修正完了: ユーザーデータ保護のため無効化 (2025-08-20)
+    const forceUpdate = false;
 
     // 現在のデータバージョンを取得
     let currentVersion = null;
