@@ -150,7 +150,7 @@ describe("QuestionRepository", () => {
 
       expect(result).toEqual(journalQuestions);
       expect(mockExecuteSql).toHaveBeenCalledWith(
-        "SELECT * FROM questions WHERE category_id = ? ORDER BY difficulty ASC, id ASC",
+        "SELECT * FROM questions WHERE category_id = ? ORDER BY id ASC",
         ["journal"],
       );
     });
@@ -167,7 +167,7 @@ describe("QuestionRepository", () => {
       });
 
       expect(mockExecuteSql).toHaveBeenCalledWith(
-        "SELECT * FROM questions WHERE category_id = ? AND difficulty = ? ORDER BY difficulty ASC, id ASC LIMIT ?",
+        "SELECT * FROM questions WHERE category_id = ? AND difficulty = ? ORDER BY id ASC LIMIT ?",
         ["journal", 1, 10],
       );
     });
@@ -183,7 +183,7 @@ describe("QuestionRepository", () => {
       });
 
       expect(mockExecuteSql).toHaveBeenCalledWith(
-        "SELECT * FROM questions WHERE category_id = ? AND id NOT IN (?, ?) ORDER BY difficulty ASC, id ASC",
+        "SELECT * FROM questions WHERE category_id = ? AND id NOT IN (?, ?) ORDER BY id ASC",
         ["journal", "Q_J_001", "Q_J_002"],
       );
     });
@@ -336,41 +336,40 @@ describe("QuestionRepository", () => {
 
   describe("コンテンツ構成検証", () => {
     test("validateContentStructure()が正常な構成を検証する", async () => {
-      // 統計情報のモック
-      mockExecuteSql
-        .mockResolvedValueOnce({
-          rows: [{ count: 302 }],
-          rowsAffected: 1,
-        })
-        .mockResolvedValueOnce({
-          rows: [
-            { category_id: "journal", count: 250 },
-            { category_id: "ledger", count: 40 },
-            { category_id: "trial_balance", count: 12 },
-          ],
-          rowsAffected: 3,
-        })
-        .mockResolvedValueOnce({
-          rows: [
-            { difficulty: 1, count: 100 },
-            { difficulty: 2, count: 102 },
-            { difficulty: 3, count: 100 },
-          ],
-          rowsAffected: 3,
-        })
-        .mockResolvedValueOnce({
-          rows: [{ avg_difficulty: 2.01 }],
-          rowsAffected: 1,
-        })
-        // ID形式検証
-        .mockResolvedValueOnce({
-          rows: [
-            { id: "Q_J_001", category_id: "journal" },
-            { id: "Q_L_001", category_id: "ledger" },
-            { id: "Q_T_001", category_id: "trial_balance" },
-          ],
-          rowsAffected: 3,
-        });
+      // getStats()のmockを準備
+      const mockStats = {
+        totalQuestions: 302,
+        categoryBreakdown: {
+          journal: 250,
+          ledger: 40,
+          trial_balance: 12,
+          financial_statement: 2,
+          voucher_entry: 0,
+          multiple_blank_choice: 0,
+        },
+        difficultyBreakdown: {
+          1: 100,
+          2: 102,
+          3: 100,
+          4: 0,
+          5: 0,
+        },
+        averageDifficulty: 2.01,
+      };
+
+      // getStatsメソッドをmock
+      jest.spyOn(questionRepository, "getStats").mockResolvedValue(mockStats);
+
+      // ID形式検証のクエリ
+      mockExecuteSql.mockResolvedValueOnce({
+        rows: [
+          { id: "Q_J_001", category_id: "journal" },
+          { id: "Q_L_001", category_id: "ledger" },
+          { id: "Q_T_001", category_id: "trial_balance" },
+          { id: "Q_F_001", category_id: "financial_statement" },
+        ],
+        rowsAffected: 4,
+      });
 
       const validation = await questionRepository.validateContentStructure();
 
@@ -472,7 +471,9 @@ describe("QuestionRepository", () => {
     });
 
     test("SQL実行エラーが適切にログ出力される", async () => {
-      const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+      const loggerSpy = jest
+        .spyOn(require("../../../src/utils/logger").logger, "error")
+        .mockImplementation();
       mockExecuteSql.mockRejectedValue(new Error("SQL syntax error"));
 
       try {
@@ -481,12 +482,12 @@ describe("QuestionRepository", () => {
         // エラーが投げられることを確認
       }
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining("[QuestionRepository] findByCategory エラー:"),
+      expect(loggerSpy).toHaveBeenCalledWith(
+        "[QuestionRepository] findByCategory エラー:",
         expect.any(Error),
       );
 
-      consoleSpy.mockRestore();
+      loggerSpy.mockRestore();
     });
   });
 });
