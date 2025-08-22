@@ -403,14 +403,20 @@ export default function QuestionDisplay({
       answerTemplate?.type !== "financial_statement");
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="question-screen">
       {/* ヘッダー */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={onBack}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={onBack}
+          testID="question-back-button"
+        >
           <Text style={styles.backButtonText}>← 戻る</Text>
         </TouchableOpacity>
         <View style={styles.questionInfo}>
-          <Text style={styles.questionId}>{questionId}</Text>
+          <Text style={styles.questionId} testID="question-id">
+            {questionId}
+          </Text>
           <Text style={styles.categoryName}>{categoryName}</Text>
         </View>
         <Text style={styles.difficulty}>難易度: {difficulty}</Text>

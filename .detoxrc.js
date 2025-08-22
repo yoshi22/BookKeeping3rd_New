@@ -6,47 +6,49 @@
 module.exports = {
   testRunner: {
     args: {
-      '$0': 'jest',
-      config: 'e2e/jest.config.js'
+      $0: "jest",
+      config: "e2e/jest.config.js",
     },
     jest: {
-      setupFilesAfterEnv: ['<rootDir>/e2e/setup.ts']
-    }
+      setupFilesAfterEnv: ["<rootDir>/e2e/setup.ts"],
+    },
   },
   apps: {
-    'ios.debug': {
-      type: 'ios.app',
-      binaryPath: 'ios/build/Build/Products/Debug-iphonesimulator/BookKeeping3rd.app',
-      build: 'xcodebuild -workspace ios/BookKeeping3rd.xcworkspace -scheme BookKeeping3rd -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build'
+    "ios.debug": {
+      type: "ios.app",
+      binaryPath: "ios/build/Build/Products/Debug-iphonesimulator/3Alpha.app",
+      build:
+        "xcodebuild -workspace ios/3Alpha.xcworkspace -scheme 3Alpha -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
     },
-    'android.debug': {
-      type: 'android.apk',
-      binaryPath: 'android/app/build/outputs/apk/debug/app-debug.apk',
-      build: 'cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug'
-    }
+    "android.debug": {
+      type: "android.apk",
+      binaryPath: "android/app/build/outputs/apk/debug/app-debug.apk",
+      build:
+        "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug",
+    },
   },
   devices: {
     simulator: {
-      type: 'ios.simulator',
+      type: "ios.simulator",
       device: {
-        type: 'iPhone 12'
-      }
+        type: "iPhone 16",
+      },
     },
     emulator: {
-      type: 'android.emulator',
+      type: "android.emulator",
       device: {
-        avdName: 'Pixel_4_API_30'
-      }
-    }
+        avdName: "Pixel_4_API_30",
+      },
+    },
   },
   configurations: {
-    'ios.sim.debug': {
-      device: 'simulator',
-      app: 'ios.debug'
+    "ios.sim.debug": {
+      device: "simulator",
+      app: "ios.debug",
     },
-    'android.emu.debug': {
-      device: 'emulator',
-      app: 'android.debug'
-    }
-  }
+    "android.emu.debug": {
+      device: "emulator",
+      app: "android.debug",
+    },
+  },
 };

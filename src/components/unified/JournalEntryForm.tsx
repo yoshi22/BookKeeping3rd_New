@@ -258,6 +258,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
               <TouchableOpacity
                 style={formStyles.accountButton}
                 onPress={() => showAccountSelector("debit", index)}
+                testID={`debit-account-dropdown-${index}`}
               >
                 <Text style={formStyles.accountButtonText}>
                   {debit.account || "勘定科目を選択"}
@@ -269,6 +270,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
                 onChangeText={(text) => updateDebit(index, "amount", text)}
                 placeholder="金額"
                 keyboardType="numeric"
+                testID={`debit-amount-input-${index}`}
               />
               {debits.length > 1 && (
                 <TouchableOpacity
@@ -293,6 +295,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
               <TouchableOpacity
                 style={formStyles.accountButton}
                 onPress={() => showAccountSelector("credit", index)}
+                testID={`credit-account-dropdown-${index}`}
               >
                 <Text style={formStyles.accountButtonText}>
                   {credit.account || "勘定科目を選択"}
@@ -304,6 +307,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
                 onChangeText={(text) => updateCredit(index, "amount", text)}
                 placeholder="金額"
                 keyboardType="numeric"
+                testID={`credit-amount-input-${index}`}
               />
               {credits.length > 1 && (
                 <TouchableOpacity
@@ -337,6 +341,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
               onPress={validateAndSubmit}
               disabled={formState.isSubmitting}
               style={formStyles.submitButton}
+              testID="submit-answer-button"
             />
           )}
 
@@ -346,6 +351,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
               onPress={onNext}
               variant="secondary"
               style={formStyles.navButton}
+              testID="next-question-button"
             />
           )}
         </View>

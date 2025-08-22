@@ -12,7 +12,13 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native";
-import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../context/ThemeContext";
 
 interface ExplanationPanelProps {
   explanation: string;
@@ -841,7 +847,7 @@ export default function ExplanationPanel({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="explanation-screen">
       {/* ヘッダー */}
       <TouchableOpacity
         style={styles.header}

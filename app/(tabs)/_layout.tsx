@@ -57,7 +57,12 @@ function TabLayout() {
           title: "ホーム",
           headerShown: false, // ヘッダー非表示
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="home" color={color} focused={focused} />
+            <TabBarIcon
+              name="home"
+              color={color}
+              focused={focused}
+              testID="tab-home"
+            />
           ),
         }}
       />
@@ -67,7 +72,12 @@ function TabLayout() {
           title: "学習",
           headerShown: false, // ヘッダー非表示
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="book" color={color} focused={focused} />
+            <TabBarIcon
+              name="book"
+              color={color}
+              focused={focused}
+              testID="tab-learning"
+            />
           ),
         }}
       />
@@ -77,7 +87,12 @@ function TabLayout() {
           title: "復習・進捗",
           headerShown: false, // ヘッダー非表示
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="bar-chart" color={color} focused={focused} />
+            <TabBarIcon
+              name="bar-chart"
+              color={color}
+              focused={focused}
+              testID="tab-review"
+            />
           ),
         }}
       />
@@ -87,7 +102,12 @@ function TabLayout() {
           title: "設定",
           headerShown: false, // ヘッダー非表示
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="settings" color={color} focused={focused} />
+            <TabBarIcon
+              name="settings"
+              color={color}
+              focused={focused}
+              testID="tab-settings"
+            />
           ),
         }}
       />
@@ -95,7 +115,12 @@ function TabLayout() {
   );
 }
 
-function TabBarIcon(props: { name: string; color: string; focused: boolean }) {
+function TabBarIcon(props: {
+  name: string;
+  color: string;
+  focused: boolean;
+  testID?: string;
+}) {
   const { theme } = useTheme();
 
   const iconMap: { [key: string]: string } = {
@@ -123,6 +148,7 @@ function TabBarIcon(props: { name: string; color: string; focused: boolean }) {
       accessible={true}
       accessibilityRole="tab"
       accessibilityState={{ selected: props.focused }}
+      testID={props.testID}
     >
       <Text
         style={{
