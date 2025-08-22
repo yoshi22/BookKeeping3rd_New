@@ -19,8 +19,8 @@ import {
 import { Button } from "../ui/Button";
 import { logger } from "../../utils/logger";
 import { UnifiedFormProps } from "../shared/FormTypes";
-// 削除されたコンポーネントのインポートを除去
-import { AccountSelector, showIOSAccountSelector } from "./AccountSelector";
+// 統合されたコンポーネントのインポート
+import { UnifiedAccountSelector } from "./UnifiedAccountSelector";
 import {
   LedgerEntry,
   MockExamLedgerEntry,
@@ -28,16 +28,16 @@ import {
   AccountSelectionState,
 } from "./LedgerFormTypes";
 import {
-  createInitialLedgerFormState,
-  createInitialLearningEntry,
-  createInitialMockExamEntry,
-  validateLearningEntries,
-  validateMockExamEntries,
-  createLearningAnswerRequest,
-  createMockExamAnswerRequest,
+  createInitialFormState as createInitialLedgerFormState,
+  createInitialLedgerEntry as createInitialLearningEntry,
+  createInitialMockExamLedgerEntry as createInitialMockExamEntry,
+  validateLedgerEntries as validateLearningEntries,
+  validateMockExamJournalEntries as validateMockExamEntries,
+  createLedgerAnswerRequest as createLearningAnswerRequest,
+  createMockExamLedgerAnswerRequest as createMockExamAnswerRequest,
   submitLearningAnswer,
   showValidationErrors,
-} from "./LedgerFormUtils";
+} from "./UnifiedFormUtils";
 
 export interface UnifiedLedgerEntryFormProps extends UnifiedFormProps {
   expectedEntries?: number; // 期待されるエントリ数
@@ -137,18 +137,8 @@ const UnifiedLedgerEntryForm = React.memo(function UnifiedLedgerEntryForm({
 
   // Account selection for learning mode
   const showLearningAccountSelector = (index: number) => {
-    if (Platform.OS === "ios") {
-      showIOSAccountSelector(
-        "debitAccount",
-        index,
-        (type: any, idx: number, account: string) => {
-          updateLearningEntry(idx, "account", account);
-        },
-      );
-    } else {
-      setCurrentSelection({ type: "debitAccount", index });
-      setModalVisible(true);
-    }
+    setCurrentSelection({ type: "account", index });
+    setModalVisible(true);
   };
 
   // Account selection for mock exam mode
@@ -156,12 +146,8 @@ const UnifiedLedgerEntryForm = React.memo(function UnifiedLedgerEntryForm({
     type: "debitAccount" | "creditAccount",
     index: number,
   ) => {
-    if (Platform.OS === "ios") {
-      showIOSAccountSelector(type, index, handleIOSAccountSelection);
-    } else {
-      setCurrentSelection({ type, index });
-      setModalVisible(true);
-    }
+    setCurrentSelection({ type, index });
+    setModalVisible(true);
   };
 
   const handleIOSAccountSelection = (
@@ -350,12 +336,13 @@ const UnifiedLedgerEntryForm = React.memo(function UnifiedLedgerEntryForm({
       </View>
 
       {/* Account selection modal */}
-      <AccountSelector
+      <UnifiedAccountSelector
+        mode="modal"
         visible={modalVisible}
         onSelect={selectAccountFromModal}
         onClose={() => setModalVisible(false)}
-        currentSelection={currentSelection}
-        onAccountSelect={handleIOSAccountSelection}
+        questionType="ledger"
+        label="勘定科目を選択"
       />
     </View>
   );

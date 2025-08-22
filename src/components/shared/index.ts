@@ -22,7 +22,7 @@ export {
   getAccountType,
 } from "./AccountOptions";
 
-// フォームユーティリティ
+// フォームユーティリティ（統合版から取得）
 export {
   createInitialFormState,
   FormErrorManager,
@@ -36,4 +36,4 @@ export {
   removeDuplicateEntries,
   resetFormState,
   debounce,
-} from "./FormUtils";
+} from "../unified/UnifiedFormUtils";

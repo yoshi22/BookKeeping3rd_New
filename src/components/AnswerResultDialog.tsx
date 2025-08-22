@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 import { SubmitAnswerResponse } from "../services/answer-service";
-import ExplanationPanel from "./ExplanationPanel";
+import { UnifiedExplanation } from "./unified/UnifiedExplanation";
 
 interface AnswerResultDialogProps {
   visible: boolean;
@@ -155,12 +155,14 @@ export default function AnswerResultDialog({
           )}
 
           {/* 解説パネル */}
-          <ExplanationPanel
+          <UnifiedExplanation
             explanation={result.explanation}
+            mode="panel"
             isVisible={true}
             isCorrect={result.isCorrect}
             correctAnswer={formatCorrectAnswer(result.correctAnswer)}
             showAnswerComparison={true}
+            sessionMode="learning"
           />
         </ScrollView>
 

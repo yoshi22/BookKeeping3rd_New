@@ -26,7 +26,7 @@ import TrialBalanceForm, {
 } from "./mock-exam/TrialBalanceForm";
 import FinancialStatementForm from "./FinancialStatementForm";
 import QuestionText from "./QuestionText";
-import ExplanationPanel from "./ExplanationPanel";
+import { UnifiedExplanation } from "./unified/UnifiedExplanation";
 import {
   answerService,
   SubmitAnswerRequest,
@@ -577,8 +577,9 @@ export default function QuestionDisplay({
       )}
 
       {/* 解説パネル */}
-      <ExplanationPanel
+      <UnifiedExplanation
         explanation={explanation || ""}
+        mode="panel"
         isVisible={showExplanation}
         isCorrect={isCorrect}
         userAnswer={answers}
@@ -586,6 +587,7 @@ export default function QuestionDisplay({
         showAnswerComparison={
           showExplanation && Object.keys(answers).length > 0
         }
+        sessionMode={sessionType}
       />
     </View>
   );

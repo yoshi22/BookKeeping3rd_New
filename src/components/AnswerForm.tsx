@@ -21,7 +21,7 @@ import {
   useDynamicColors,
   type Theme,
 } from "../context/ThemeContext";
-import AccountDropdown from "./AccountDropdown";
+import { UnifiedAccountSelector } from "./unified/UnifiedAccountSelector";
 import NumberInput from "./NumberInput";
 import AnswerGuide from "./AnswerGuide";
 import {
@@ -159,7 +159,7 @@ export default function AnswerForm({
     switch (field.type) {
       case "dropdown":
         return (
-          <AccountDropdown
+          <UnifiedAccountSelector
             key={field.name}
             label={field.label}
             value={answers[field.name]}
@@ -168,6 +168,8 @@ export default function AnswerForm({
             excludeAccounts={getSelectedAccounts().filter(
               (account) => account !== answers[field.name],
             )}
+            mode="dropdown"
+            questionType="journal"
           />
         );
 

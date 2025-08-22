@@ -18,7 +18,7 @@ import {
   useThemedStyles,
   type Theme,
 } from "../../context/ThemeContext";
-import ExplanationModal from "./ExplanationModal";
+import { UnifiedExplanation } from "../unified/UnifiedExplanation";
 import {
   MockExamFormProps,
   STANDARD_ACCOUNT_OPTIONS,
@@ -614,15 +614,15 @@ export default function TrialBalanceForm({
       </Modal>
 
       {/* 解説Modal */}
-      <ExplanationModal
-        visible={explanationModalVisible}
+      <UnifiedExplanation
+        mode="modal"
+        isVisible={explanationModalVisible}
         onClose={() => setExplanationModalVisible(false)}
         explanation={explanation || ""}
-        questionText={questionText || ""}
         correctAnswer={correctAnswer}
         userAnswer={userAnswer}
         isCorrect={isCorrect}
-        questionType="trial_balance"
+        sessionMode="mock_exam"
       />
     </ScrollView>
   );

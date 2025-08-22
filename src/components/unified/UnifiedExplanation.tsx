@@ -1,0 +1,475 @@
+/**
+ * 統合解説表示コンポーネント
+ * Phase 12: Component Integration
+ *
+ * ExplanationPanel、ExplanationModalを統合
+ * パネル/モーダル表示モードの切り替えに対応
+ */
+
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Modal,
+  Animated,
+} from "react-native";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../../context/ThemeContext";
+import CorrectAnswerExample from "../CorrectAnswerExample";
+
+export type ExplanationMode = "panel" | "modal";
+export type SessionMode = "learning" | "review" | "mock_exam";
+
+export interface UnifiedExplanationProps {
+  // Core content
+  explanation: string;
+  questionText?: string;
+
+  // Display control
+  mode?: ExplanationMode;
+  visible?: boolean;
+  isVisible?: boolean; // For panel mode backward compatibility
+  onClose?: () => void;
+
+  // Answer comparison
+  correctAnswer?: any;
+  userAnswer?: any;
+  isCorrect?: boolean;
+  showAnswerComparison?: boolean;
+  questionType?: "journal" | "ledger" | "trial_balance";
+
+  // Session context
+  sessionMode?: SessionMode;
+
+  // Panel specific props
+  expandable?: boolean;
+  defaultExpanded?: boolean;
+
+  // Test ID for E2E testing
+  testID?: string;
+}
+
+export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
+  explanation,
+  questionText,
+  mode = "panel",
+  visible = false,
+  isVisible = false,
+  onClose,
+  correctAnswer,
+  userAnswer,
+  isCorrect,
+  showAnswerComparison = false,
+  questionType,
+  sessionMode = "learning",
+  expandable = true,
+  defaultExpanded = true,
+  testID,
+}) => {
+  const { theme } = useTheme();
+  const colors = useColors();
+  const styles = useThemedStyles(createStyles);
+
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+
+  // Determine visibility based on mode
+  const isComponentVisible = mode === "modal" ? visible : isVisible || true;
+
+  // Format explanation text
+  const formatExplanationText = (text: string): string => {
+    return text.replace(/\\n/g, "\n").trim();
+  };
+
+  // Get result status color and text
+  const getResultStyle = () => {
+    if (isCorrect === undefined) return null;
+
+    return {
+      color: isCorrect
+        ? colors.success || "#28a745"
+        : colors.error || "#dc3545",
+      text: isCorrect ? "正解" : "不正解",
+      icon: isCorrect ? "✓" : "✗",
+    };
+  };
+
+  const resultStyle = getResultStyle();
+
+  // Render answer comparison section
+  const renderAnswerComparison = () => {
+    if (!showAnswerComparison || !correctAnswer) return null;
+
+    return (
+      <View style={styles.comparisonSection}>
+        <Text style={styles.comparisonTitle}>解答比較</Text>
+
+        {/* Correct Answer */}
+        <View style={styles.answerSection}>
+          <Text
+            style={[styles.answerLabel, { color: colors.success || "#28a745" }]}
+          >
+            正解:
+          </Text>
+          <CorrectAnswerExample
+            correctAnswer={correctAnswer}
+            questionType={questionType || "journal"}
+            show={true}
+          />
+        </View>
+
+        {/* User Answer */}
+        {userAnswer && (
+          <View style={styles.answerSection}>
+            <Text style={[styles.answerLabel, { color: colors.text }]}>
+              あなたの解答:
+            </Text>
+            <CorrectAnswerExample
+              correctAnswer={userAnswer}
+              questionType={questionType || "journal"}
+              show={true}
+            />
+          </View>
+        )}
+      </View>
+    );
+  };
+
+  // Render explanation content
+  const renderExplanationContent = () => (
+    <ScrollView
+      style={styles.scrollContent}
+      showsVerticalScrollIndicator={false}
+      testID={`${testID}-scroll`}
+    >
+      {/* Session Context Header */}
+      {sessionMode === "mock_exam" && (
+        <View style={styles.contextHeader}>
+          <Text style={styles.contextText}>模試解説</Text>
+        </View>
+      )}
+
+      {/* Result Status */}
+      {resultStyle && (
+        <View
+          style={[
+            styles.resultStatus,
+            { backgroundColor: resultStyle.color + "20" },
+          ]}
+        >
+          <Text style={[styles.resultIcon, { color: resultStyle.color }]}>
+            {resultStyle.icon}
+          </Text>
+          <Text style={[styles.resultText, { color: resultStyle.color }]}>
+            {resultStyle.text}
+          </Text>
+        </View>
+      )}
+
+      {/* Question Text (for modal mode) */}
+      {mode === "modal" && questionText && (
+        <View style={styles.questionSection}>
+          <Text style={styles.questionTitle}>問題</Text>
+          <Text style={styles.questionText}>
+            {formatExplanationText(questionText)}
+          </Text>
+        </View>
+      )}
+
+      {/* Answer Comparison */}
+      {renderAnswerComparison()}
+
+      {/* Explanation Content */}
+      <View style={styles.explanationSection}>
+        <Text style={styles.explanationTitle}>解説</Text>
+        <Text style={styles.explanationText}>
+          {formatExplanationText(explanation)}
+        </Text>
+      </View>
+
+      {/* Additional Learning Tips */}
+      {sessionMode === "learning" && (
+        <View style={styles.tipsSection}>
+          <Text style={styles.tipsTitle}>💡 学習のポイント</Text>
+          <Text style={styles.tipsText}>
+            この問題を確実に解けるようになるまで、解説をしっかり読み返しましょう。
+          </Text>
+        </View>
+      )}
+    </ScrollView>
+  );
+
+  // Render panel mode
+  if (mode === "panel") {
+    if (!isComponentVisible) return null;
+
+    return (
+      <View style={styles.panelContainer} testID={testID}>
+        {/* Panel Header */}
+        {expandable && (
+          <TouchableOpacity
+            style={styles.panelHeader}
+            onPress={() => setIsExpanded(!isExpanded)}
+            testID={`${testID}-toggle`}
+          >
+            <Text style={styles.panelHeaderText}>
+              解説 {resultStyle ? `(${resultStyle.text})` : ""}
+            </Text>
+            <Text
+              style={[
+                styles.expandIcon,
+                !isExpanded && styles.expandIconCollapsed,
+              ]}
+            >
+              ▼
+            </Text>
+          </TouchableOpacity>
+        )}
+
+        {/* Panel Content */}
+        {(!expandable || isExpanded) && (
+          <Animated.View style={styles.panelContent}>
+            {renderExplanationContent()}
+          </Animated.View>
+        )}
+      </View>
+    );
+  }
+
+  // Render modal mode
+  return (
+    <Modal
+      visible={visible}
+      animationType="slide"
+      presentationStyle="pageSheet"
+      onRequestClose={onClose}
+      testID={`${testID}-modal`}
+    >
+      <View
+        style={[
+          styles.modalContainer,
+          { backgroundColor: theme.colors.background },
+        ]}
+      >
+        {/* Modal Header */}
+        <View
+          style={[
+            styles.modalHeader,
+            { backgroundColor: theme.colors.primary },
+          ]}
+        >
+          <Text
+            style={[
+              styles.modalHeaderTitle,
+              { color: theme.colors.surface || "#fff" },
+            ]}
+          >
+            解説 {resultStyle ? `(${resultStyle.text})` : ""}
+          </Text>
+          <TouchableOpacity
+            style={styles.modalCloseButton}
+            onPress={onClose}
+            testID={`${testID}-close`}
+          >
+            <Text
+              style={[
+                styles.modalCloseText,
+                { color: theme.colors.surface || "#fff" },
+              ]}
+            >
+              ✕
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Modal Content */}
+        <View style={styles.modalContent}>{renderExplanationContent()}</View>
+      </View>
+    </Modal>
+  );
+};
+
+// Backward compatibility exports
+export { UnifiedExplanation as ExplanationPanel };
+export { UnifiedExplanation as ExplanationModal };
+
+const createStyles = (theme: Theme): StyleSheet.NamedStyles<any> =>
+  StyleSheet.create({
+    // Panel styles
+    panelContainer: {
+      backgroundColor: theme.colors.surface || "#fff",
+      borderRadius: 12,
+      marginVertical: 8,
+      marginHorizontal: 16,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+    panelHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border || "#e0e0e0",
+    },
+    panelHeaderText: {
+      fontSize: 18,
+      fontWeight: "600",
+      color: theme.colors.text,
+    },
+    expandIcon: {
+      fontSize: 16,
+      color: theme.colors.text,
+      transform: [{ rotate: "0deg" }],
+    },
+    expandIconCollapsed: {
+      transform: [{ rotate: "-90deg" }],
+    },
+    panelContent: {
+      maxHeight: 400,
+    },
+
+    // Modal styles
+    modalContainer: {
+      flex: 1,
+    },
+    modalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 20,
+      paddingVertical: 16,
+      paddingTop: 60, // Account for status bar
+    },
+    modalHeaderTitle: {
+      fontSize: 20,
+      fontWeight: "bold",
+    },
+    modalCloseButton: {
+      width: 32,
+      height: 32,
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 16,
+      backgroundColor: "rgba(255, 255, 255, 0.2)",
+    },
+    modalCloseText: {
+      fontSize: 18,
+      fontWeight: "bold",
+    },
+    modalContent: {
+      flex: 1,
+      paddingHorizontal: 20,
+    },
+
+    // Content styles
+    scrollContent: {
+      paddingVertical: 16,
+    },
+    contextHeader: {
+      backgroundColor: theme.colors.primary + "20" || "#007AFF20",
+      padding: 12,
+      borderRadius: 8,
+      marginBottom: 16,
+    },
+    contextText: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.primary || "#007AFF",
+      textAlign: "center",
+    },
+    resultStatus: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 12,
+      borderRadius: 8,
+      marginBottom: 16,
+    },
+    resultIcon: {
+      fontSize: 20,
+      fontWeight: "bold",
+      marginRight: 8,
+    },
+    resultText: {
+      fontSize: 18,
+      fontWeight: "600",
+    },
+    questionSection: {
+      marginBottom: 20,
+    },
+    questionTitle: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+      marginBottom: 8,
+    },
+    questionText: {
+      fontSize: 14,
+      color: theme.colors.text,
+      lineHeight: 20,
+      backgroundColor: theme.colors.surface || "#f8f9fa",
+      padding: 12,
+      borderRadius: 8,
+    },
+    comparisonSection: {
+      marginBottom: 20,
+    },
+    comparisonTitle: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+      marginBottom: 12,
+    },
+    answerSection: {
+      marginBottom: 16,
+    },
+    answerLabel: {
+      fontSize: 14,
+      fontWeight: "600",
+      marginBottom: 8,
+    },
+    explanationSection: {
+      marginBottom: 20,
+    },
+    explanationTitle: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+      marginBottom: 8,
+    },
+    explanationText: {
+      fontSize: 14,
+      color: theme.colors.text,
+      lineHeight: 22,
+    },
+    tipsSection: {
+      backgroundColor: theme.colors.primary + "10" || "#007AFF10",
+      padding: 16,
+      borderRadius: 8,
+      marginBottom: 16,
+    },
+    tipsTitle: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+      marginBottom: 8,
+    },
+    tipsText: {
+      fontSize: 14,
+      color: theme.colors.text,
+      lineHeight: 20,
+      fontStyle: "italic",
+    },
+  });
+
+export default UnifiedExplanation;

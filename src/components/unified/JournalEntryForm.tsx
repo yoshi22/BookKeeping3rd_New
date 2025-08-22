@@ -21,8 +21,8 @@ import { useTheme } from "../../context/ThemeContext";
 import { STANDARD_ACCOUNT_OPTIONS } from "../shared/AccountOptions";
 import { SessionType } from "../../types/database";
 
-// 削除されたコンポーネントのインポートを除去
-import { JournalAccountSelector } from "./JournalAccountSelector";
+// 統合されたコンポーネントのインポート
+import { UnifiedAccountSelector } from "./UnifiedAccountSelector";
 
 // 型定義とユーティリティのインポート
 import {
@@ -32,13 +32,13 @@ import {
   UnifiedJournalEntryFormProps,
 } from "./JournalFormTypes";
 import {
-  createInitialJournalFormState,
+  createInitialFormState as createInitialJournalFormState,
   createInitialJournalEntry,
   validateJournalEntries,
-  createLearningJournalAnswerRequest,
-  submitLearningJournalAnswer,
-  showJournalValidationErrors,
-} from "./JournalFormUtils";
+  createJournalAnswerRequest as createLearningJournalAnswerRequest,
+  submitLearningAnswer as submitLearningJournalAnswer,
+  showValidationErrors as showJournalValidationErrors,
+} from "./UnifiedFormUtils";
 
 const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
   questionId,
@@ -358,11 +358,13 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
       </View>
 
       {/* Account selection modal */}
-      <JournalAccountSelector
+      <UnifiedAccountSelector
+        mode="modal"
         visible={modalVisible}
         onSelect={selectAccountFromModal}
         onClose={() => setModalVisible(false)}
-        currentSelection={currentSelection}
+        questionType="journal"
+        label="勘定科目を選択"
       />
     </View>
   );
