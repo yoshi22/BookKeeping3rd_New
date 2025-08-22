@@ -20,6 +20,7 @@ import {
 import {
   useTheme,
   useThemedStyles,
+  useDynamicColors,
   type Theme,
 } from "../../../src/context/ThemeContext";
 

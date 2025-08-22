@@ -19,6 +19,7 @@ import QuestionNavigation from "../../../../src/components/QuestionNavigation";
 import AnswerResultDialog from "../../../../src/components/AnswerResultDialog";
 import { useQuestionNavigation } from "../../../../src/hooks/useQuestionNavigation";
 import { SubmitAnswerResponse } from "../../../../src/services/answer-service";
+import { ReviewService } from "../../../../src/services/review-service";
 import { QuestionRepository } from "../../../../src/data/repositories/question-repository";
 import type { Question } from "../../../../src/types/models";
 import {
@@ -35,6 +36,10 @@ export default function ReviewQuestionScreen() {
   const { id, sessionId, sessionType, filteredQuestions } =
     useLocalSearchParams();
   const router = useRouter();
+
+  // サービスインスタンス
+  const reviewService = new ReviewService();
+  const questionRepository = new QuestionRepository();
 
   const [isLoading, setIsLoading] = useState(true);
   const [showExplanation] = useState(false);
