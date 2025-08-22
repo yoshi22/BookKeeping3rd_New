@@ -18,11 +18,11 @@ import {
   safeJsonParse,
 } from "../types/enhanced-types";
 import {
-  learningHistoryRepository,
+  LearningHistoryRepository,
   CBTAnswerRecord,
 } from "../data/repositories/learning-history-repository";
-import { questionRepository } from "../data/repositories/question-repository";
-import { reviewService, ReviewUpdateResult } from "./review-service";
+import { QuestionRepository } from "../data/repositories/question-repository";
+import { ReviewService, ReviewUpdateResult } from "./review-service";
 import { statisticsCache } from "./statistics-cache";
 import { v4 as uuidv4 } from "../utils/uuid";
 
@@ -56,6 +56,26 @@ export interface SubmitAnswerResponse {
  * 解答処理サービスクラス
  */
 export class AnswerService {
+  private questionRepository: QuestionRepository;
+  private learningHistoryRepository: LearningHistoryRepository;
+  private reviewService: ReviewService;
+
+  constructor(
+    questionRepository?: QuestionRepository,
+    learningHistoryRepository?: LearningHistoryRepository,
+    reviewService?: ReviewService,
+  ) {
+    // 依存性注入対応 - テスト時にはモックを、通常実行時にはデフォルトインスタンスを使用
+    this.questionRepository =
+      questionRepository ||
+      require("../data/repositories/question-repository").questionRepository;
+    this.learningHistoryRepository =
+      learningHistoryRepository ||
+      require("../data/repositories/learning-history-repository")
+        .learningHistoryRepository;
+    this.reviewService =
+      reviewService || require("./review-service").reviewService;
+  }
   /**
    * 解答送信処理
    */
@@ -68,7 +88,9 @@ export class AnswerService {
       logger.debug("[AnswerService] 解答送信開始: ${request.questionId}");
 
       // 1. 問題データ取得
-      const question = await questionRepository.findById(request.questionId);
+      const question = await this.questionRepository.findById(
+        request.questionId,
+      );
       if (!question) {
         throw new Error(`問題が見つかりません: ${request.questionId}`);
       }
@@ -107,7 +129,7 @@ export class AnswerService {
       };
 
       const historyRecord =
-        await learningHistoryRepository.recordAnswer(answerRecord);
+        await this.learningHistoryRepository.recordAnswer(answerRecord);
 
       // 7. 統計キャッシュ無効化
       statisticsCache.invalidateOnAnswerSubmit();
@@ -126,7 +148,7 @@ export class AnswerService {
           !isCorrect; // 間違えた問題は全セッションで復習リストに追加
 
         if (shouldUpdate) {
-          reviewUpdate = await reviewService.updateReviewStatus(
+          reviewUpdate = await this.reviewService.updateReviewStatus(
             request.questionId,
             isCorrect,
             answerTimeMs,
@@ -1343,7 +1365,7 @@ export class AnswerService {
   }> {
     try {
       const history =
-        await learningHistoryRepository.findBySessionId(sessionId);
+        await this.learningHistoryRepository.findBySessionId(sessionId);
 
       const totalQuestions = history.length;
       const correctAnswers = history.filter((h) => h.is_correct).length;

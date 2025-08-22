@@ -4,9 +4,9 @@
  * Step 3.1: 学習統計機能実装
  */
 
-import { learningHistoryRepository } from "../data/repositories/learning-history-repository";
-import { questionRepository } from "../data/repositories/question-repository";
-import { reviewItemRepository } from "../data/repositories/review-item-repository";
+import { LearningHistoryRepository } from "../data/repositories/learning-history-repository";
+import { QuestionRepository } from "../data/repositories/question-repository";
+import { ReviewItemRepository } from "../data/repositories/review-item-repository";
 import { statisticsCache } from "./statistics-cache";
 import { QuestionCategory } from "../types/models";
 import { logger } from "../utils/logger";
@@ -128,6 +128,29 @@ export interface LearningGoals {
  * 統計サービスクラス
  */
 export class StatisticsService {
+  private learningHistoryRepository: LearningHistoryRepository;
+  private questionRepository: QuestionRepository;
+  private reviewItemRepository: ReviewItemRepository;
+
+  constructor(
+    learningHistoryRepository?: LearningHistoryRepository,
+    questionRepository?: QuestionRepository,
+    reviewItemRepository?: ReviewItemRepository,
+  ) {
+    // 依存性注入対応
+    this.learningHistoryRepository =
+      learningHistoryRepository ||
+      require("../data/repositories/learning-history-repository")
+        .learningHistoryRepository;
+    this.questionRepository =
+      questionRepository ||
+      require("../data/repositories/question-repository").questionRepository;
+    this.reviewItemRepository =
+      reviewItemRepository ||
+      require("../data/repositories/review-item-repository")
+        .reviewItemRepository;
+  }
+
   /**
    * 全体学習統計取得
    */
@@ -142,11 +165,11 @@ export class StatisticsService {
       logger.debug("[StatisticsService] 全体学習統計取得開始");
 
       // 基本統計取得（回答数ベース）
-      const basicStats = await learningHistoryRepository.getStatistics();
+      const basicStats = await this.learningHistoryRepository.getStatistics();
 
       // ユニーク問題数取得（重複除外）
       const uniqueStats =
-        await learningHistoryRepository.getUniqueAnsweredQuestions();
+        await this.learningHistoryRepository.getUniqueAnsweredQuestions();
 
       // 総問題数取得
       const totalQuestions = await this.getTotalQuestionsCount();
@@ -237,7 +260,7 @@ export class StatisticsService {
       for (const category of categories) {
         // カテゴリ別ユニーク問題数（重複回答を除外した一意の問題数）
         const categoryUniqueStats =
-          await learningHistoryRepository.getUniqueAnsweredQuestions({
+          await this.learningHistoryRepository.getUniqueAnsweredQuestions({
             category,
           });
 
@@ -245,14 +268,15 @@ export class StatisticsService {
         const totalQuestions = await this.getCategoryQuestionsCount(category);
 
         // 復習アイテム数
-        const reviewStats = await reviewItemRepository.getReviewStatistics();
+        const reviewStats =
+          await this.reviewItemRepository.getReviewStatistics();
         const categoryReviewStats = reviewStats.categoryBreakdown[category];
 
         // 難易度別統計
         const difficultyBreakdown = await this.getDifficultyBreakdown(category);
 
         // 平均回答時間（基本統計から取得）
-        const basicStats = await learningHistoryRepository.getStatistics({
+        const basicStats = await this.learningHistoryRepository.getStatistics({
           category,
         });
 
@@ -310,7 +334,7 @@ export class StatisticsService {
       const startDate = new Date();
       startDate.setDate(endDate.getDate() - days);
 
-      const basicStats = await learningHistoryRepository.getStatistics({
+      const basicStats = await this.learningHistoryRepository.getStatistics({
         dateFrom: startDate.toISOString(),
         dateTo: endDate.toISOString(),
       });
@@ -498,10 +522,9 @@ export class StatisticsService {
    * 総問題数取得
    */
   private async getTotalQuestionsCount(): Promise<number> {
-    const result = await questionRepository.executeQuery<{ count: number }>(
-      "SELECT COUNT(*) as count FROM questions",
-      [],
-    );
+    const result = await this.questionRepository.executeQuery<{
+      count: number;
+    }>("SELECT COUNT(*) as count FROM questions", []);
     return result.rows[0]?.count || 302; // デフォルトは仕様書の値
   }
 
@@ -511,10 +534,11 @@ export class StatisticsService {
   private async getCategoryQuestionsCount(
     category: QuestionCategory,
   ): Promise<number> {
-    const result = await questionRepository.executeQuery<{ count: number }>(
-      "SELECT COUNT(*) as count FROM questions WHERE category_id = ?",
-      [category],
-    );
+    const result = await this.questionRepository.executeQuery<{
+      count: number;
+    }>("SELECT COUNT(*) as count FROM questions WHERE category_id = ?", [
+      category,
+    ]);
 
     // デフォルト値（仕様書ベース）
     const defaults: Record<QuestionCategory, number> = {
@@ -532,7 +556,7 @@ export class StatisticsService {
    * 学習日数計算
    */
   private async calculateStudyDays(): Promise<number> {
-    const result = await learningHistoryRepository.executeQuery<{
+    const result = await this.learningHistoryRepository.executeQuery<{
       days: number;
     }>(
       "SELECT COUNT(DISTINCT DATE(answered_at)) as days FROM learning_history",
@@ -548,7 +572,7 @@ export class StatisticsService {
     currentStreak: number;
     maxStreak: number;
   }> {
-    const result = await learningHistoryRepository.executeQuery<{
+    const result = await this.learningHistoryRepository.executeQuery<{
       date: string;
     }>(
       "SELECT DISTINCT DATE(answered_at) as date FROM learning_history ORDER BY date DESC",
@@ -606,7 +630,7 @@ export class StatisticsService {
     firstStudiedAt?: string;
     lastStudiedAt?: string;
   }> {
-    const result = await learningHistoryRepository.executeQuery<{
+    const result = await this.learningHistoryRepository.executeQuery<{
       first: string;
       last: string;
     }>(
@@ -625,7 +649,7 @@ export class StatisticsService {
    * 難易度別統計取得
    */
   private async getDifficultyBreakdown(category: QuestionCategory) {
-    const result = await learningHistoryRepository.executeQuery<{
+    const result = await this.learningHistoryRepository.executeQuery<{
       difficulty: number;
       answered: number;
       correct: number;
@@ -663,7 +687,7 @@ export class StatisticsService {
   private async getMasteredQuestionsCount(
     category: QuestionCategory,
   ): Promise<number> {
-    const result = await learningHistoryRepository.executeQuery<{
+    const result = await this.learningHistoryRepository.executeQuery<{
       count: number;
     }>(
       `SELECT COUNT(DISTINCT lh.question_id) as count
@@ -693,7 +717,7 @@ export class StatisticsService {
     ];
 
     for (const category of categories) {
-      const result = await learningHistoryRepository.executeQuery<{
+      const result = await this.learningHistoryRepository.executeQuery<{
         date: string;
         answered: number;
         correct: number;
@@ -801,7 +825,7 @@ export class StatisticsService {
     startOfWeek.setDate(now.getDate() - now.getDay());
     startOfWeek.setHours(0, 0, 0, 0);
 
-    const result = await learningHistoryRepository.executeQuery<{
+    const result = await this.learningHistoryRepository.executeQuery<{
       count: number;
     }>(
       "SELECT COUNT(*) as count FROM learning_history WHERE answered_at >= ?",
@@ -818,7 +842,7 @@ export class StatisticsService {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-    const result = await learningHistoryRepository.executeQuery<{
+    const result = await this.learningHistoryRepository.executeQuery<{
       count: number;
     }>(
       "SELECT COUNT(*) as count FROM learning_history WHERE answered_at >= ?",

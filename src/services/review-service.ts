@@ -5,15 +5,16 @@
  */
 
 import {
-  reviewItemRepository,
+  ReviewItemRepository,
   ReviewFilter,
   ReviewStatistics,
   ReviewStatus,
 } from "../data/repositories/review-item-repository";
-import { learningHistoryRepository } from "../data/repositories/learning-history-repository";
-import { questionRepository } from "../data/repositories/question-repository";
+import { LearningHistoryRepository } from "../data/repositories/learning-history-repository";
+import { QuestionRepository } from "../data/repositories/question-repository";
 import { Question, QuestionCategory } from "../types/models";
 import { logger } from "../utils/logger";
+import { statisticsCache } from "./statistics-cache";
 
 /**
  * 復習優先度アルゴリズム設定
@@ -69,6 +70,29 @@ export interface GenerateReviewListOptions {
  * 復習管理サービスクラス
  */
 export class ReviewService {
+  private reviewItemRepository: ReviewItemRepository;
+  private learningHistoryRepository: LearningHistoryRepository;
+  private questionRepository: QuestionRepository;
+
+  constructor(
+    reviewItemRepository?: ReviewItemRepository,
+    learningHistoryRepository?: LearningHistoryRepository,
+    questionRepository?: QuestionRepository,
+  ) {
+    // 依存性注入対応
+    this.reviewItemRepository =
+      reviewItemRepository ||
+      require("../data/repositories/review-item-repository")
+        .reviewItemRepository;
+    this.learningHistoryRepository =
+      learningHistoryRepository ||
+      require("../data/repositories/learning-history-repository")
+        .learningHistoryRepository;
+    this.questionRepository =
+      questionRepository ||
+      require("../data/repositories/question-repository").questionRepository;
+  }
+
   private readonly priorityConfig: PriorityConfig = {
     incorrectCountWeight: 25, // 20→25: 基本スコアを上げて重点復習対象に入りやすくする
     timeDecayWeight: 0.1,
@@ -97,7 +121,8 @@ export class ReviewService {
         `[ReviewService] 復習状況更新開始: ${questionId}, 正解=${isCorrect}`,
       );
 
-      const existing = await reviewItemRepository.findByQuestionId(questionId);
+      const existing =
+        await this.reviewItemRepository.findByQuestionId(questionId);
       const now = new Date().toISOString();
 
       let result: ReviewUpdateResult;
@@ -110,7 +135,7 @@ export class ReviewService {
 
           if (isMastered) {
             // 克服済み → 復習リストから除外
-            await reviewItemRepository.deleteByQuestionId(questionId);
+            await this.reviewItemRepository.deleteByQuestionId(questionId);
 
             result = {
               questionId,
@@ -130,15 +155,13 @@ export class ReviewService {
               category: await this.getQuestionCategory(questionId),
             });
 
-            const updatedItem = await reviewItemRepository.updateByQuestionId(
-              questionId,
-              {
+            const updatedItem =
+              await this.reviewItemRepository.updateByQuestionId(questionId, {
                 consecutiveCorrectCount: newConsecutiveCount,
                 priorityScore: newPriority,
                 lastAnsweredAt: now,
                 lastReviewedAt: now,
-              },
-            );
+              });
 
             result = {
               questionId,
@@ -176,7 +199,7 @@ export class ReviewService {
             category: await this.getQuestionCategory(questionId),
           });
 
-          await reviewItemRepository.updateByQuestionId(questionId, {
+          await this.reviewItemRepository.updateByQuestionId(questionId, {
             incorrectCount: newIncorrectCount,
             consecutiveCorrectCount: 0,
             status: newStatus,
@@ -222,14 +245,15 @@ export class ReviewService {
             details: createData,
           });
 
-          const newItem = await reviewItemRepository.createOrUpdate(createData);
+          const newItem =
+            await this.reviewItemRepository.createOrUpdate(createData);
           logger.debug("[ReviewService] 復習アイテム作成完了:", {
             details: newItem,
           });
 
           // 作成後の確認
           const verification =
-            await reviewItemRepository.findByQuestionId(questionId);
+            await this.reviewItemRepository.findByQuestionId(questionId);
           logger.debug("[ReviewService] 作成確認クエリ結果:", {
             details: verification,
           });
@@ -345,7 +369,7 @@ export class ReviewService {
       logger.debug("[ReviewService] 復習アイテム取得フィルター:", {
         details: filter,
       });
-      const reviewItems = await reviewItemRepository.getReviewList(filter);
+      const reviewItems = await this.reviewItemRepository.getReviewList(filter);
       logger.debug(
         `[ReviewService] 復習アイテム取得結果: ${reviewItems.length}件`,
         reviewItems,
@@ -361,7 +385,7 @@ export class ReviewService {
       const questions: Question[] = [];
 
       for (const questionId of questionIds) {
-        const question = await questionRepository.findById(questionId);
+        const question = await this.questionRepository.findById(questionId);
         if (question) {
           questions.push(question);
         }
@@ -384,7 +408,7 @@ export class ReviewService {
   public async getReviewStatistics(): Promise<ReviewStatistics> {
     try {
       logger.debug("[ReviewService] 復習統計取得開始");
-      const result = await reviewItemRepository.getReviewStatistics();
+      const result = await this.reviewItemRepository.getReviewStatistics();
       logger.debug("[ReviewService] 復習統計取得完了:", {
         component: "ReviewService",
         operation: "getReviewStatistics",
@@ -516,7 +540,7 @@ export class ReviewService {
   private async getQuestionCategory(
     questionId: string,
   ): Promise<QuestionCategory> {
-    const question = await questionRepository.findById(questionId);
+    const question = await this.questionRepository.findById(questionId);
     return (question?.category_id as QuestionCategory) || "journal";
   }
 
@@ -567,11 +591,11 @@ export class ReviewService {
 
       // 克服済みアイテムの削除（7日間保持）
       const masteredItemsDeleted =
-        await reviewItemRepository.cleanupMasteredItems(7);
+        await this.reviewItemRepository.cleanupMasteredItems(7);
 
       // 古い学習履歴の削除（1年間保持）
       const oldHistoryDeleted =
-        await learningHistoryRepository.cleanupOldHistory(365);
+        await this.learningHistoryRepository.cleanupOldHistory(365);
 
       logger.info(
         `[ReviewService] クリーンアップ完了: 克服済み${masteredItemsDeleted}件, 古い履歴${oldHistoryDeleted}件削除`,
