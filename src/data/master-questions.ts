@@ -147,12 +147,12 @@ export const masterQuestions: Question[] = [
     correct_answer_json:
       '{"entries":[{"accountName":"水道光熱費","debitAmount":900,"creditAmount":0},{"accountName":"現金","debitAmount":0,"creditAmount":900},{"accountName":"旅費交通費","debitAmount":900,"creditAmount":0},{"accountName":"広告宣伝費","debitAmount":900,"creditAmount":0},{"accountName":"消耗品費","debitAmount":900,"creditAmount":0},{"accountName":"仕入","debitAmount":900,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":900},{"accountName":"貸倒引当金繰入","debitAmount":900,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":900},{"accountName":"減価償却費","debitAmount":900,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":900},{"accountName":"前払費用","debitAmount":800,"creditAmount":0},{"accountName":"保険料","debitAmount":0,"creditAmount":800}]}',
     explanation:
-      "【基本概念】\n商品やサービスを購入した際の掛け取引で使用する勘定科目で、あとから支払わなければならないお金（代金を支払う義務）を表す負債勘定です。\n\n【具体例・イメージ】\nツケで食事をした時の、お客側が持つ「代金を払う義務」をイメージしてください。後日、お店に代金を支払います。\n\n【仕訳パターン】\n・掛仕入時: 借方に仕入、貸方に買掛金\n・代金支払時: 借方に買掛金、貸方に現金\n\n【間違えやすいポイント】\n・買掛金（負債）と売掛金（資産）を混同しやすい\n・支払時に買掛金を貸方に書いてしまうミス\n・未払金との区別（本業以外の支出は未払金）\n\n【覚え方のコツ】\n・「買」掛金 = 「買った」ツケ = 払う義務（負債）\n・支払うと買掛金は減る（借方）\n・「義務」は負債、「権利」は資産\n・買う側に発生するのが「買掛金」\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【基本概念】\n財務諸表作成問題の応用レベルです。複数の決算整理事項（貸倒引当金・減価償却・前払費用）を含む総合的な財務諸表作成で、実務的な判断力と処理能力が問われます。期中取引の処理から決算整理まで体系的に理解し、正確な貸借対照表・損益計算書を作成することが目標です。\n\n【具体例・イメージ】\n12月決算の中小企業で、経理担当者が年末の決算作業を進めています。期中の各種費用支払いや仕入・売上の記録に加え、決算特有の引当金設定、減価償却計算、経過勘定項目の整理を行い、最終的に株主や税務署に提出する財務諸表を完成させる状況です。\n\n【応用レベルの特徴】\n・決算整理10項目程度の複合処理\n・前払費用など経過勘定項目の理解\n・複数の費用科目が混在した期中取引\n・報告式財務諸表への対応\n・実務レベルの総合判断力\n\n【処理手順】\n1. 期中取引の勘定科目別集計\n2. 各決算整理仕訳の実行：\n   - 貸倒引当金：将来の貸倒損失に備える\n   - 減価償却：固定資産の価値減少を計上\n   - 前払費用：翌期に属する費用を資産計上\n3. 修正後残高の算出\n4. 財務諸表科目への分類・表示\n\n【CBT試験での解答ポイント】\n・決算整理の優先順位を理解\n・経過勘定項目の期間按分計算\n・財務諸表の表示区分（流動・固定等）\n・貸借一致の最終確認\n・時間配分：計算25分、入力10分程度\n\n【間違えやすいポイント】\n・前払費用と前受収益の混同\n・減価償却累計額の表示方法（資産控除）\n・引当金と引当金繰入の関係性理解不足\n・費用・収益の期間帰属判定ミス\n・財務諸表間での数値不整合\n\n【覚え方のコツ】\n・決算整理は「期間損益の適正化」が目的\n・前払費用：「まだ受けていないサービスの対価」\n・引当金：「将来の損失に備える積立」\n・減価償却：「固定資産の使用による価値減少」\n・財務諸表：「経営状況の数値による可視化」\n\n【この問題の解き方】\n期中取引8件と決算整理3件を正確に処理し、各勘定科目の期末残高を算出して財務諸表形式で表示します。特に前払費用800円の処理では、保険料の一部が翌期に属することを理解して適切に資産計上することがポイントです。",
     difficulty: 2,
     tags_json:
       '{"subcategory":"financial_statement","pattern":"財務諸表作成","accounts":[],"keywords":["財務諸表","貸借対照表","損益計算書"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
-    updated_at: "2025-08-19T07:00:49.131Z",
+    updated_at: "2025-08-22T18:30:00Z",
   },
   {
     id: "Q_J_004",
@@ -198,12 +198,12 @@ export const masterQuestions: Question[] = [
     correct_answer_json:
       '{"entries":[{"accountName":"前払金","debitAmount":900,"creditAmount":0},{"accountName":"現金","debitAmount":0,"creditAmount":900},{"accountName":"商品","debitAmount":900,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":900},{"accountName":"借入金","debitAmount":900,"creditAmount":0},{"accountName":"給料","debitAmount":900,"creditAmount":0},{"accountName":"水道光熱費","debitAmount":900,"creditAmount":0},{"accountName":"仕入","debitAmount":900,"creditAmount":0},{"accountName":"資本金","debitAmount":0,"creditAmount":900},{"accountName":"前受金","debitAmount":0,"creditAmount":900},{"accountName":"貸倒引当金繰入","debitAmount":900,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":900},{"accountName":"減価償却費","debitAmount":900,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":900},{"accountName":"前払費用","debitAmount":900,"creditAmount":0},{"accountName":"保険料","debitAmount":0,"creditAmount":900}]}',
     explanation:
-      "【基本概念】\n商品やサービスを購入した際の掛け取引で使用する勘定科目で、あとから支払わなければならないお金（代金を支払う義務）を表す負債勘定です。\n\n【具体例・イメージ】\nツケで食事をした時の、お客側が持つ「代金を払う義務」をイメージしてください。後日、お店に代金を支払います。\n\n【仕訳パターン】\n・掛仕入時: 借方に仕入、貸方に買掛金\n・代金支払時: 借方に買掛金、貸方に現金\n\n【間違えやすいポイント】\n・買掛金（負債）と売掛金（資産）を混同しやすい\n・支払時に買掛金を貸方に書いてしまうミス\n・未払金との区別（本業以外の支出は未払金）\n\n【覚え方のコツ】\n・「買」掛金 = 「買った」ツケ = 払う義務（負債）\n・支払うと買掛金は減る（借方）\n・「義務」は負債、「権利」は資産\n・買う側に発生するのが「買掛金」\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【基本概念】\n財務諸表作成問題の発展レベルです。最高レベルの総合問題として、複雑な期中取引と12項目レベルの決算整理事項を組み合わせた完全な財務諸表作成を実施します。実務での決算実務能力、注記事項の理解、税務調整なども含む包括的な会計処理能力が求められる最難関問題です。\n\n【具体例・イメージ】\n上場を検討している成長企業で、会計監査対応レベルの正確性が要求される決算業務です。投資家や金融機関への開示資料として、監査法人の厳格なチェックを通過できる品質の財務諸表を作成する必要があります。CFOが最終確認する重要書類のイメージです。\n\n【発展レベルの特徴】\n・決算整理12項目以上の複合処理\n・固定資産売却や特殊整理項目\n・引出金整理など個人企業特有の処理\n・注記事項を含む完全な財務諸表作成\n・税務調整や法人税計算の理解\n・実務レベルの高度な判断力\n\n【高度な処理項目例】\n・固定資産の売却損益計算\n・複数年度の引当金累計額管理\n・税効果会計の基礎概念\n・資本と負債の境界線理解\n・実務的な表示科目選択\n・監査で指摘されやすい論点の回避\n\n【CBT試験での最難関ポイント】\n・制限時間内での高速かつ正確な計算\n・複雑な決算整理の優先順位判断\n・財務諸表間の数値整合性確保\n・実務的な勘定科目分類判断\n・注記情報の的確な理解と反映\n・簿記1級レベルの理論的背景知識\n\n【間違えやすい上級ポイント】\n・複数の経過勘定項目の期間按分計算\n・減価償却方法の違いによる影響\n・引当金の洗替法と差額補充法の使い分け\n・固定資産除却時の複合仕訳\n・資本勘定と利益剰余金の関係性\n・税務上の損金・益金算入タイミング\n\n【実務応用レベルの知識】\n・会社法における財務諸表の位置づけ\n・金融商品取引法での開示要件\n・法人税法との相違点理解\n・監査での重要性の原則\n・内部統制の観点からのチェック体制\n・経営分析での財務諸表活用法\n\n【この問題の攻略法】\n複数の資金決済取引（借入金返済・資本金受入・前受金）と経過勘定項目（前払金・前払費用・前受金）を含む複合処理を、決算整理3項目と合わせて体系的に整理することが鍵です。特に商品勘定と仕入勘定の使い分け、前払費用900円の期間按分理解が合否を分けるポイントになります。",
     difficulty: 3,
     tags_json:
       '{"subcategory":"financial_statement","pattern":"財務諸表作成","accounts":[],"keywords":["財務諸表","貸借対照表","損益計算書"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
-    updated_at: "2025-08-19T07:00:49.132Z",
+    updated_at: "2025-08-22T18:31:00Z",
   },
   {
     id: "Q_J_005",
@@ -248,12 +248,12 @@ export const masterQuestions: Question[] = [
     correct_answer_json:
       '{"entries":[{"accountName":"現金","debitAmount":200,"creditAmount":0},{"accountName":"小口現金","debitAmount":300,"creditAmount":0},{"accountName":"当座預金","debitAmount":400,"creditAmount":0},{"accountName":"普通預金","debitAmount":450,"creditAmount":0},{"accountName":"受取手形","debitAmount":450,"creditAmount":0},{"accountName":"売掛金","debitAmount":500,"creditAmount":0},{"accountName":"商品","debitAmount":350,"creditAmount":0},{"accountName":"繰越商品","debitAmount":450,"creditAmount":0},{"accountName":"仕入","debitAmount":300,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":150},{"accountName":"支払手形","debitAmount":0,"creditAmount":150},{"accountName":"買掛金","debitAmount":0,"creditAmount":600},{"accountName":"貸倒引当金繰入","debitAmount":800,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":800},{"accountName":"減価償却費","debitAmount":250,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":250}]}',
     explanation:
-      "【基本概念】\n日常の少額支払いに備えて、担当者に前渡しする現金です。定額資金前渡制度（インプレスト・システム）で管理され、営業部や企画部などの各部署に、あらかじめ少額の現金を渡して、電車代などの細かな支払いをまかなってもらいます。\n\n【具体例・イメージ】\n大きな企業で、営業部の担当者が出張するための切符を買う時に、いちいち経理部まで行って現金をもらうのは大変です。そこで、各部署に一定額の現金を預けておく状況をイメージしてください。\n\n【仕訳パターン】\n・前渡し時: 借方に小口現金、貸方に現金\n・支払報告時: 借方に各種費用、貸方に小口現金\n・補給時: 借方に小口現金、貸方に現金（使用分のみ）\n・即時補給: 借方に各種費用、貸方に現金（まとめて処理）\n\n【間違えやすいポイント】\n・「前渡し」と「補給」の処理を混同しやすい\n・補給時は使用した金額分だけを処理する\n・小口現金は資産勘定で、常に一定額を保持する\n・仕訳は会計係の立場から行う（小口係の処理は仕訳対象外）\n\n【覚え方のコツ】\n・「小口現金を渡す」→「小口現金が増える（借方）」\n・「小さな支払い用の現金」→「小口現金」\n・定額制なので、使った分だけ補給する\n・①前渡し→②支払い→③報告→④補給のサイクル\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【基本概念】\n8桁精算表は、決算整理前試算表・決算整理仕訳・決算整理後試算表・損益計算書・貸借対照表の各欄を持つ表形式の決算書類です。決算作業を体系的に整理し、財務諸表作成の基礎となる重要な作業です。\n\n【8桁精算表の構造】\n1. 決算整理前試算表欄（借方・貸方）\n2. 決算整理仕訳欄（借方・貸方）\n3. 決算整理後試算表欄（借方・貸方）\n4. 損益計算書欄（借方・貸方）\n5. 貸借対照表欄（借方・貸方）\n\n【基礎レベルでの重要ポイント】\n・決算整理前試算表の残高を正確に転記する\n・基本的な決算整理仕訳（貸倒引当金・減価償却）を理解する\n・各勘定科目が損益計算書と貸借対照表のどちらに属するかを判断する\n・計算ミスを防ぐため、各欄の借方・貸方の合計を必ず確認する\n\n【具体的な作成手順】\n1. 決算整理前試算表欄に既存の残高を記入\n2. 貸倒引当金設定：（借）貸倒引当金繰入800 （貸）貸倒引当金800\n3. 減価償却：（借）減価償却費250 （貸）減価償却累計額250\n4. 決算整理後試算表欄で各勘定の最終残高を計算\n5. 収益・費用勘定を損益計算書欄に、資産・負債・資本勘定を貸借対照表欄に分類\n\n【間違えやすいポイント】\n・決算整理仕訳の借方・貸方を逆にしやすい\n・勘定科目の分類（損益計算書か貸借対照表か）を間違えやすい\n・計算過程で転記ミスが発生しやすい\n・各欄の合計額が一致しない場合の原因特定\n\n【この問題の解き方】\n基礎レベルなので、まず決算整理仕訳の基本パターンを確実に理解し、各勘定科目の性質を把握してから体系的に作業を進めましょう。",
     difficulty: 1,
     tags_json:
       '{"subcategory":"worksheet","pattern":"精算表作成","accounts":[],"keywords":["精算表","8桁","決算整理"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
-    updated_at: "2025-08-19T07:00:49.133Z",
+    updated_at: "2025-08-22T18:33:00Z",
   },
   {
     id: "Q_J_006",
@@ -299,12 +299,12 @@ export const masterQuestions: Question[] = [
     correct_answer_json:
       '{"entries":[{"accountName":"現金","debitAmount":450,"creditAmount":0},{"accountName":"小口現金","debitAmount":400,"creditAmount":0},{"accountName":"当座預金","debitAmount":800,"creditAmount":0},{"accountName":"普通預金","debitAmount":350,"creditAmount":0},{"accountName":"受取手形","debitAmount":400,"creditAmount":0},{"accountName":"売掛金","debitAmount":800,"creditAmount":0},{"accountName":"商品","debitAmount":10,"creditAmount":0},{"accountName":"繰越商品","debitAmount":450,"creditAmount":0},{"accountName":"仕入","debitAmount":250,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":800},{"accountName":"支払手形","debitAmount":0,"creditAmount":500},{"accountName":"買掛金","debitAmount":0,"creditAmount":300},{"accountName":"貸倒引当金繰入","debitAmount":450,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":450},{"accountName":"減価償却費","debitAmount":500,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":500},{"accountName":"前払費用","debitAmount":800,"creditAmount":0},{"accountName":"保険料","debitAmount":0,"creditAmount":800}]}',
     explanation:
-      "【基本概念】\n日常の少額支払いに備えて、担当者に前渡しする現金です。定額資金前渡制度（インプレスト・システム）で管理され、営業部や企画部などの各部署に、あらかじめ少額の現金を渡して、電車代などの細かな支払いをまかなってもらいます。\n\n【具体例・イメージ】\n大きな企業で、営業部の担当者が出張するための切符を買う時に、いちいち経理部まで行って現金をもらうのは大変です。そこで、各部署に一定額の現金を預けておく状況をイメージしてください。\n\n【仕訳パターン】\n・前渡し時: 借方に小口現金、貸方に現金\n・支払報告時: 借方に各種費用、貸方に小口現金\n・補給時: 借方に小口現金、貸方に現金（使用分のみ）\n・即時補給: 借方に各種費用、貸方に現金（まとめて処理）\n\n【間違えやすいポイント】\n・「前渡し」と「補給」の処理を混同しやすい\n・補給時は使用した金額分だけを処理する\n・小口現金は資産勘定で、常に一定額を保持する\n・仕訳は会計係の立場から行う（小口係の処理は仕訳対象外）\n\n【覚え方のコツ】\n・「小口現金を渡す」→「小口現金が増える（借方）」\n・「小さな支払い用の現金」→「小口現金」\n・定額制なので、使った分だけ補給する\n・①前渡し→②支払い→③報告→④補給のサイクル\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【標準概念】\n8桁精算表の標準レベルでは、複数の決算整理仕訳を組み合わせた総合的な処理能力が求められます。貸倒引当金・減価償却・前払費用の3つの決算整理を通じて、会計期間対応の原則を実践的に理解することが重要です。\n\n【この問題の決算整理項目】\n1. 貸倒引当金設定450円：将来の貸倒リスクに備えた引当金計上\n2. 減価償却500円：固定資産の使用による価値減少の費用化\n3. 前払費用計上800円：次期分の費用を当期から除外する調整\n\n【標準レベルでの処理要求】\n・複数の決算整理を系統立てて処理する能力\n・各決算整理の会計的意味を理解した上での仕訳作成\n・収益・費用の期間対応原則に基づく適切な調整\n・損益計算書科目と貸借対照表科目の正確な分類\n\n【具体的な仕訳処理】\n1. 貸倒引当金：（借）貸倒引当金繰入450 （貸）貸倒引当金450\n2. 減価償却：（借）減価償却費500 （貸）減価償却累計額500\n3. 前払費用：（借）前払費用800 （貸）保険料800\n\n【前払費用処理のポイント】\n・当期に支払ったが次期分に相当する費用を調整\n・費用の過大計上を防ぎ、適正な期間損益を算出\n・前払費用（資産）の増加と当期費用の減少を同時に処理\n・翌期首に再振替仕訳で元に戻す処理が一般的\n\n【8桁精算表での注意点】\n・決算整理後の各勘定残高を正確に計算する\n・貸倒引当金繰入・減価償却費は損益計算書の借方（費用）\n・貸倒引当金・減価償却累計額は貸借対照表の貸方（資産控除）\n・前払費用は貸借対照表の借方（資産）\n・保険料（費用減少）は損益計算書で調整\n\n【間違えやすいポイント】\n・前払費用の処理方向（費用→資産への振替）\n・評価勘定（貸倒引当金・減価償却累計額）の表示場所\n・複合的な決算整理での転記ミス\n・各欄の合計バランスの確認忘れ\n\n【この問題の解き方】\n標準レベルなので、3つの決算整理を体系的に処理し、各勘定科目の性質を理解して損益計算書と貸借対照表に適切に分類することが求められます。",
     difficulty: 2,
     tags_json:
       '{"subcategory":"worksheet","pattern":"精算表作成","accounts":[],"keywords":["精算表","8桁","決算整理"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
-    updated_at: "2025-08-19T07:00:49.134Z",
+    updated_at: "2025-08-22T18:34:00Z",
   },
   {
     id: "Q_J_007",
@@ -349,12 +349,12 @@ export const masterQuestions: Question[] = [
     correct_answer_json:
       '{"entries":[{"accountName":"現金","debitAmount":900,"creditAmount":0},{"accountName":"小口現金","debitAmount":0,"creditAmount":900},{"accountName":"当座預金","debitAmount":0,"creditAmount":900},{"accountName":"普通預金","debitAmount":0,"creditAmount":900},{"accountName":"受取手形","debitAmount":0,"creditAmount":900},{"accountName":"売掛金","debitAmount":900,"creditAmount":0},{"accountName":"商品","debitAmount":900,"creditAmount":0},{"accountName":"繰越商品","debitAmount":0,"creditAmount":900},{"accountName":"仕入","debitAmount":900,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":900},{"accountName":"支払手形","debitAmount":0,"creditAmount":900},{"accountName":"買掛金","debitAmount":0,"creditAmount":900},{"accountName":"貸倒引当金繰入","debitAmount":900,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":900},{"accountName":"減価償却費","debitAmount":900,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":900},{"accountName":"調整勘定","debitAmount":900,"creditAmount":0}]}',
     explanation:
-      "【基本概念】\n日常の少額支払いに備えて、担当者に前渡しする現金です。定額資金前渡制度（インプレスト・システム）で管理され、営業部や企画部などの各部署に、あらかじめ少額の現金を渡して、電車代などの細かな支払いをまかなってもらいます。\n\n【具体例・イメージ】\n大きな企業で、営業部の担当者が出張するための切符を買う時に、いちいち経理部まで行って現金をもらうのは大変です。そこで、各部署に一定額の現金を預けておく状況をイメージしてください。\n\n【仕訳パターン】\n・前渡し時: 借方に小口現金、貸方に現金\n・支払報告時: 借方に各種費用、貸方に小口現金\n・補給時: 借方に小口現金、貸方に現金（使用分のみ）\n・即時補給: 借方に各種費用、貸方に現金（まとめて処理）\n\n【間違えやすいポイント】\n・「前渡し」と「補給」の処理を混同しやすい\n・補給時は使用した金額分だけを処理する\n・小口現金は資産勘定で、常に一定額を保持する\n・仕訳は会計係の立場から行う（小口係の処理は仕訳対象外）\n\n【覚え方のコツ】\n・「小口現金を渡す」→「小口現金が増える（借方）」\n・「小さな支払い用の現金」→「小口現金」\n・定額制なので、使った分だけ補給する\n・①前渡し→②支払い→③報告→④補給のサイクル\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【標準実践】\n8桁精算表の標準レベルでは、決算整理前試算表に借方・貸方が混在する複雑なケースへの対応力が求められます。この問題では残高の正負を正確に判断し、複数の決算整理項目を体系的に処理する実務的な能力を養成します。\n\n【この問題の特徴】\n・決算整理前試算表に借方・貸方の混在（実務的なケース）\n・貸倒引当金800円・減価償却450円・前払費用150円の組み合わせ処理\n・各勘定科目の性質を理解した上での残高計算\n・複数の決算整理を通じた総合的な精算表作成能力\n\n【残高処理の注意点】\n・小口現金（貸方500円）→実際には不足状態を示す\n・当座預金（貸方250円）→当座借越の可能性\n・各勘定の正常な残高位置を理解して処理する\n・異常な残高は実務では要確認事項\n\n【決算整理の実践ポイント】\n1. 貸倒引当金設定：（借）貸倒引当金繰入800 （貸）貸倒引当金800\n2. 減価償却計上：（借）減価償却費450 （貸）減価償却累計額450\n3. 前払費用調整：（借）前払費用150 （貸）該当費用勘定150\n\n【実務レベルでの判断力】\n・異常残高への対応方法\n・決算整理の優先順位と相互関係\n・精算表各欄での借方・貸方の適切な記入\n・損益計算書科目と貸借対照表科目の分類精度\n\n【精算表作成での実践技法】\n・決算整理前の残高を正確に各欄に転記\n・複数の決算整理仕訳を体系的に整理\n・転記ミスを防ぐための検算手法\n・最終的な借方・貸方合計の一致確認\n\n【間違えやすい実務ポイント】\n・異常残高（小口現金の貸方残高等）の解釈\n・複数決算整理での勘定科目の重複チェック\n・前払費用の対象となる勘定科目の特定\n・評価勘定の表示位置と金額の関係性\n\n【この問題の実践的解法】\n標準レベルとして、残高の異常性を認識しつつも決算整理を正確に処理し、各勘定科目の最終残高を損益計算書と貸借対照表に適切に分類することが求められます。",
     difficulty: 2,
     tags_json:
       '{"subcategory":"worksheet","pattern":"精算表作成","accounts":[],"keywords":["精算表","8桁","決算整理"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
-    updated_at: "2025-08-19T07:00:49.135Z",
+    updated_at: "2025-08-22T18:35:00Z",
   },
   {
     id: "Q_J_008",
@@ -399,12 +399,12 @@ export const masterQuestions: Question[] = [
     correct_answer_json:
       '{"entries":[{"accountName":"現金","debitAmount":900,"creditAmount":0},{"accountName":"小口現金","debitAmount":0,"creditAmount":900},{"accountName":"当座預金","debitAmount":0,"creditAmount":900},{"accountName":"普通預金","debitAmount":0,"creditAmount":900},{"accountName":"受取手形","debitAmount":0,"creditAmount":900},{"accountName":"売掛金","debitAmount":900,"creditAmount":0},{"accountName":"商品","debitAmount":900,"creditAmount":0},{"accountName":"繰越商品","debitAmount":0,"creditAmount":900},{"accountName":"仕入","debitAmount":900,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":900},{"accountName":"支払手形","debitAmount":0,"creditAmount":900},{"accountName":"買掛金","debitAmount":0,"creditAmount":900},{"accountName":"貸倒引当金繰入","debitAmount":900,"creditAmount":0},{"accountName":"貸倒引当金","debitAmount":0,"creditAmount":900},{"accountName":"減価償却費","debitAmount":900,"creditAmount":0},{"accountName":"減価償却累計額","debitAmount":0,"creditAmount":900},{"accountName":"調整勘定","debitAmount":900,"creditAmount":0}]}',
     explanation:
-      "【基本概念】\n日常の少額支払いに備えて、担当者に前渡しする現金です。定額資金前渡制度（インプレスト・システム）で管理され、営業部や企画部などの各部署に、あらかじめ少額の現金を渡して、電車代などの細かな支払いをまかなってもらいます。\n\n【具体例・イメージ】\n大きな企業で、営業部の担当者が出張するための切符を買う時に、いちいち経理部まで行って現金をもらうのは大変です。そこで、各部署に一定額の現金を預けておく状況をイメージしてください。\n\n【仕訳パターン】\n・前渡し時: 借方に小口現金、貸方に現金\n・支払報告時: 借方に各種費用、貸方に小口現金\n・補給時: 借方に小口現金、貸方に現金（使用分のみ）\n・即時補給: 借方に各種費用、貸方に現金（まとめて処理）\n\n【間違えやすいポイント】\n・「前渡し」と「補給」の処理を混同しやすい\n・補給時は使用した金額分だけを処理する\n・小口現金は資産勘定で、常に一定額を保持する\n・仕訳は会計係の立場から行う（小口係の処理は仕訳対象外）\n\n【覚え方のコツ】\n・「小口現金を渡す」→「小口現金が増える（借方）」\n・「小さな支払い用の現金」→「小口現金」\n・定額制なので、使った分だけ補給する\n・①前渡し→②支払い→③報告→④補給のサイクル\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "【応用統合】\n8桁精算表の応用レベルでは、複雑な残高構造を持つ決算整理前試算表から、会計原則に基づく適切な判断を下し、総合的な決算整理処理を行う能力が求められます。複数の評価・調整項目を統合的に理解し、財務諸表への影響を予測する高度な実務能力を養成します。\n\n【高次の問題解決能力】\n・異常残高の会計的解釈と対応方針の決定\n・複数決算整理項目の相互関係と優先順位の判断\n・期間損益計算の適正性確保のための総合的調整\n・財務諸表表示への影響を考慮した決算整理方針\n\n【応用レベルの決算整理統合】\n1. 貸倒引当金450円：信用リスク評価に基づく将来損失見積り\n2. 減価償却200円：固定資産の経済価値減少の費用配分処理\n3. 前払費用250円：費用収益対応の原則に基づく期間調整\n・3項目の総合的な損益・財政状態への影響分析が必要\n\n【実務応用での判断基準】\n・小口現金貸方残高800円の業務上の意味と修正要否\n・当座預金貸方残高500円の当座借越処理の妥当性\n・受取手形貸方残高300円の取引実態との整合性確認\n・各異常残高が財務諸表利用者へ与える情報価値\n\n【統合的な精算表作成技法】\n・決算整理前後の勘定残高変動の論理的整合性\n・損益計算書・貸借対照表への勘定科目分類の精密性\n・会計基準・会計原則との適合性確保\n・内部統制の観点からの異常値検知と対応\n\n【応用レベルでの分析視点】\n・各決算整理の会計理論的根拠と実務上の必要性\n・財務諸表利用者のニーズを踏まえた情報開示の適切性\n・次期以降への影響を考慮した継続性の原則適用\n・税務会計との差異調整の必要性検討\n\n【高度な実務課題】\n・複数の会計処理選択肢からの最適解選定\n・リスク管理の観点からの引当金設定妥当性\n・資産の実質価値評価と帳簿価額の適正性\n・経営成績・財政状態の真実性・明瞭性確保\n\n【この問題の応用的解法】\n応用レベルとして、複雑な残高構造を会計原則に基づき解釈し、複数の決算整理を統合的に処理して、経営実態を適切に反映した財務諸表作成基礎となる精算表を完成させることが求められます。",
     difficulty: 3,
     tags_json:
       '{"subcategory":"worksheet","pattern":"精算表作成","accounts":[],"keywords":["精算表","8桁","決算整理"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
-    updated_at: "2025-08-19T07:00:49.135Z",
+    updated_at: "2025-08-22T18:36:00Z",
   },
   {
     id: "Q_J_009",
@@ -450,12 +450,12 @@ export const masterQuestions: Question[] = [
     correct_answer_json:
       '{"entries":[{"accountName":"現金","debitAmount":0,"creditAmount":900},{"accountName":"借入金","debitAmount":900,"creditAmount":0},{"accountName":"給料","debitAmount":900,"creditAmount":0},{"accountName":"売掛金","debitAmount":900,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":900},{"accountName":"仕入","debitAmount":900,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":900},{"accountName":"前払金","debitAmount":900,"creditAmount":0},{"accountName":"水道光熱費","debitAmount":900,"creditAmount":0},{"accountName":"前受金","debitAmount":0,"creditAmount":900}]}',
     explanation:
-      "【基本概念】\n銀行に開設した決済専用の預金口座で、小切手や手形の決済に使用されます。利息は付きません。法人が開設する専用の銀行口座です。\n\n【具体例・イメージ】\n法人が開設する専用の銀行口座で、小切手を振り出したり、取引先からの振込を受けたりする口座をイメージしてください。\n\n【仕訳パターン】\n・入金時: 借方に当座預金、貸方に売掛金等\n・支払時（残高あり）: 借方に買掛金等、貸方に当座預金\n・支払時（残高不足）: 借方に買掛金等、貸方に当座借越\n\n【間違えやすいポイント】\n・普通預金と当座預金を混同しやすい\n・他人振出小切手は「現金」として扱う\n・当座借越の処理方法（決算時の振替が必要）\n\n【覚え方のコツ】\n・「当座」= その場での決済用\n・小切手 = 当座預金から支払う\n・入金で当座預金増加（借方）\n・残高不足でも小切手振出可能（当座借越契約時）\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "基礎レベルの合計試算表作成問題です。期首残高と期中取引を基に、各勘定科目の借方合計・貸方合計を集計し、借方合計と貸方合計が一致することを確認します。仕訳から試算表への転記過程を理解し、基本的な勘定科目（現金・商品・売掛金・買掛金等）の合計集計能力を身につけます。期中取引を一つずつ各勘定に転記し、合計欄で借貸平均の原則が成立することを確認する基礎的な簿記技能の習得を目指します。",
     difficulty: 1,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"合計試算表","accounts":[],"keywords":["合計試算表","期中取引","集計"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
-    updated_at: "2025-08-19T07:00:49.136Z",
+    updated_at: "2025-08-22T18:37:00Z",
   },
   {
     id: "Q_L_010",
@@ -484,12 +484,12 @@ export const masterQuestions: Question[] = [
     correct_answer_json:
       '{"entries":[{"accountName":"現金","debitAmount":0,"creditAmount":900},{"accountName":"売上","debitAmount":0,"creditAmount":900},{"accountName":"仕入","debitAmount":900,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":900},{"accountName":"借入金","debitAmount":0,"creditAmount":900},{"accountName":"売掛金","debitAmount":0,"creditAmount":900},{"accountName":"通信費","debitAmount":900,"creditAmount":0},{"accountName":"消耗品費","debitAmount":900,"creditAmount":0},{"accountName":"広告宣伝費","debitAmount":900,"creditAmount":0}]}',
     explanation:
-      "【基本概念】\n銀行に開設した決済専用の預金口座で、小切手や手形の決済に使用されます。利息は付きません。法人が開設する専用の銀行口座です。\n\n【具体例・イメージ】\n法人が開設する専用の銀行口座で、小切手を振り出したり、取引先からの振込を受けたりする口座をイメージしてください。\n\n【仕訳パターン】\n・入金時: 借方に当座預金、貸方に売掛金等\n・支払時（残高あり）: 借方に買掛金等、貸方に当座預金\n・支払時（残高不足）: 借方に買掛金等、貸方に当座借越\n\n【間違えやすいポイント】\n・普通預金と当座預金を混同しやすい\n・他人振出小切手は「現金」として扱う\n・当座借越の処理方法（決算時の振替が必要）\n\n【覚え方のコツ】\n・「当座」= その場での決済用\n・小切手 = 当座預金から支払う\n・入金で当座預金増加（借方）\n・残高不足でも小切手振出可能（当座借越契約時）\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
+      "標準レベルの合計試算表作成問題です。期首残高と複数の期中取引を基に、各勘定科目の借方合計・貸方合計を正確に集計します。売上・仕入・借入金・各種費用科目が含まれる実務的な取引パターンで、勘定科目の性質を理解した転記能力が求められます。複数回発生する同一科目（現金・借入金等）の合計計算や、費用科目の種類別識別など、標準的な簿記実務で必要な試算表作成技能を習得します。",
     difficulty: 2,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"合計試算表","accounts":[],"keywords":["合計試算表","期中取引","集計"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
-    updated_at: "2025-08-19T07:00:49.137Z",
+    updated_at: "2025-08-22T18:38:00Z",
   },
   {
     id: "Q_J_010",
@@ -550,12 +550,12 @@ export const masterQuestions: Question[] = [
     correct_answer_json:
       '{"entries":[{"accountName":"前払金","debitAmount":900,"creditAmount":0},{"accountName":"現金","debitAmount":0,"creditAmount":900},{"accountName":"買掛金","debitAmount":900,"creditAmount":0},{"accountName":"通信費","debitAmount":900,"creditAmount":0},{"accountName":"前受金","debitAmount":0,"creditAmount":900},{"accountName":"旅費交通費","debitAmount":900,"creditAmount":0},{"accountName":"売掛金","debitAmount":900,"creditAmount":0},{"accountName":"売上","debitAmount":0,"creditAmount":900},{"accountName":"消耗品費","debitAmount":900,"creditAmount":0}]}',
     explanation:
-      "【基本概念】\n一定期間内の全取引を勘定科目ごとに集計し、各勘定の借方合計・貸方合計・残高を一覧表示した計算表です。簿記の記録が正確かどうかを確認する重要な帳簿です。\n\n【具体例・イメージ】\n家計簿で各項目（食費、交通費など）の入金・支出の合計を月末に計算して、通帳残高と合うかチェックするイメージです。企業版では全勘定科目が対象になります。\n\n【合計試算表の特徴】\n・各勘定の借方合計・貸方合計を表示\n・期首残高＋期中取引合計の形\n・借方合計と貸方合計が必ず一致\n・残高は別途計算が必要\n\n【作成手順】\n1. 期首残高を各勘定に記入\n2. 期中取引を勘定科目ごとに集計\n3. 借方・貸方それぞれの合計を計算\n4. 全体の借方合計＝貸方合計を確認\n\n【間違えやすいポイント】\n・期首残高の記入漏れ\n・借方・貸方の取引集計ミス\n・勘定科目の分類間違い\n・合計の計算ミス\n\n【覚え方のコツ】\n・「合計」試算表 = 各勘定の「合計」を表示\n・借方合計＝貸方合計は複式簿記の原則\n・期首残高＋期中取引＝期末残高\n・試算表は簿記記録の「健康診断書」\n\n【この問題の解き方】\n期首残高から始めて、各取引を正しい勘定科目に振り分け、借方・貸方の合計を正確に計算しましょう。",
-    difficulty: 2,
+      "応用レベルの合計試算表作成問題です。複数の経過勘定（前払金・前受金）と各種費用科目が混在する実務的な取引パターンから、高度な勘定科目判断と正確な集計能力が求められます。同一科目の複数取引（通信費・消耗品費の複数回発生）や、異なる性質の勘定科目（前払金・前受金）の適切な処理を通じて、応用レベルの試算表作成技能を習得します。",
+    difficulty: 3,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"合計試算表","accounts":[],"keywords":["合計試算表","期中取引","集計"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
-    updated_at: "2025-08-19T07:00:49.138Z",
+    updated_at: "2025-08-22T18:39:00Z",
   },
   {
     id: "Q_J_012",
@@ -601,12 +601,12 @@ export const masterQuestions: Question[] = [
     correct_answer_json:
       '{"entries":[{"accountName":"水道光熱費","debitAmount":900,"creditAmount":0},{"accountName":"現金","debitAmount":0,"creditAmount":900},{"accountName":"給料","debitAmount":900,"creditAmount":0},{"accountName":"商品","debitAmount":900,"creditAmount":0},{"accountName":"買掛金","debitAmount":0,"creditAmount":900},{"accountName":"消耗品費","debitAmount":900,"creditAmount":0},{"accountName":"売掛金","debitAmount":0,"creditAmount":900},{"accountName":"借入金","debitAmount":900,"creditAmount":0},{"accountName":"家賃","debitAmount":900,"creditAmount":0}]}',
     explanation:
-      "【基本概念】\n銀行に開設した決済専用の預金口座で、小切手や手形の決済に使用されます。利息は付きません。法人が開設する専用の銀行口座です。\n\n【具体例・イメージ】\n法人が開設する専用の銀行口座で、小切手を振り出したり、取引先からの振込を受けたりする口座をイメージしてください。\n\n【仕訳パターン】\n・入金時: 借方に当座預金、貸方に売掛金等\n・支払時（残高あり）: 借方に買掛金等、貸方に当座預金\n・支払時（残高不足）: 借方に買掛金等、貸方に当座借越\n\n【間違えやすいポイント】\n・普通預金と当座預金を混同しやすい\n・他人振出小切手は「現金」として扱う\n・当座借越の処理方法（決算時の振替が必要）\n\n【覚え方のコツ】\n・「当座」= その場での決済用\n・小切手 = 当座預金から支払う\n・入金で当座預金増加（借方）\n・残高不足でも小切手振出可能（当座借越契約時）\n\n【この問題の解き方】\n問題文をよく読み、取引の内容を理解して適切な勘定科目と金額で仕訳しましょう。",
-    difficulty: 3,
+      "発展レベルの合計試算表作成問題です。多様な費用科目（水道光熱費・給料・消耗品費・家賃）と複雑な債権債務取引（売掛金回収・借入金返済の複数回）を含む高度な実務シナリオから、総合的な簿記技能が求められます。同一科目の複数回取引や、異なる性質の勘定科目の正確な分類・集計を通じて、発展レベルの合計試算表作成における高度な分析能力と実務対応力を養成します。",
+    difficulty: 4,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"合計試算表","accounts":[],"keywords":["合計試算表","期中取引","集計"],"examSection":3}',
     created_at: "2025-08-07T00:31:25.369Z",
-    updated_at: "2025-08-19T07:00:49.139Z",
+    updated_at: "2025-08-22T18:40:00Z",
   },
   {
     id: "Q_J_013",
