@@ -58,11 +58,6 @@ export const useHapticFeedback = () => {
 
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
 
-  // ハプティック機能の可用性チェック
-  useEffect(() => {
-    checkHapticAvailability();
-  }, [checkHapticAvailability]);
-
   const checkHapticAvailability = useCallback(async () => {
     try {
       // Expo Hapticsの基本機能をテスト
@@ -82,6 +77,11 @@ export const useHapticFeedback = () => {
       setIsAvailable(false);
     }
   }, []);
+
+  // ハプティック機能の可用性チェック
+  useEffect(() => {
+    checkHapticAvailability();
+  }, [checkHapticAvailability]);
 
   /**
    * 基本的なインパクトフィードバック

@@ -75,6 +75,34 @@ export function useAppInitialization() {
   });
 
   /**
+   * バックグラウンドタスクの実行（非同期）
+   */
+  const performBackgroundTasks = useCallback(async () => {
+    try {
+      logger.debug("[AppInit] バックグラウンドタスク開始");
+
+      // タスク1: 統計キャッシュの温機
+      await warmupStatisticsCache();
+
+      // タスク2: 最近の学習データのプリロード
+      await preloadRecentLearningData();
+
+      // タスク3: データベース最適化
+      await optimizeDatabaseInBackground();
+
+      logger.debug("[AppInit] バックグラウンドタスク完了");
+
+      setState((prev) => ({
+        ...prev,
+        details: { ...prev.details, backgroundTasksCompleted: true },
+      }));
+    } catch (error) {
+      logger.warn("[AppInit] バックグラウンドタスクエラー:", error as Error);
+      // バックグラウンドタスクの失敗は初期化をブロックしない
+    }
+  }, []);
+
+  /**
    * 段階的初期化の実行
    */
   const initializeApp = useCallback(async () => {
@@ -177,34 +205,6 @@ export function useAppInitialization() {
       appSettings: appSettings.rows,
     };
   };
-
-  /**
-   * バックグラウンドタスクの実行（非同期）
-   */
-  const performBackgroundTasks = useCallback(async () => {
-    try {
-      logger.debug("[AppInit] バックグラウンドタスク開始");
-
-      // タスク1: 統計キャッシュの温機
-      await warmupStatisticsCache();
-
-      // タスク2: 最近の学習データのプリロード
-      await preloadRecentLearningData();
-
-      // タスク3: データベース最適化
-      await optimizeDatabaseInBackground();
-
-      logger.debug("[AppInit] バックグラウンドタスク完了");
-
-      setState((prev) => ({
-        ...prev,
-        details: { ...prev.details, backgroundTasksCompleted: true },
-      }));
-    } catch (error) {
-      logger.warn("[AppInit] バックグラウンドタスク警告:", { details: error });
-      // バックグラウンドタスクのエラーはアプリ起動を阻止しない
-    }
-  }, []);
 
   /**
    * 統計キャッシュの温機

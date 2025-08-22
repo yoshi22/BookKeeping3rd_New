@@ -195,6 +195,26 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, [isDark, colors.surface]);
 
+  // テーマ設定の読み込み（Phase 4拡張）
+  const loadThemeSettings = useCallback(async () => {
+    try {
+      const [savedMode, savedHighContrast] = await Promise.all([
+        AsyncStorage.getItem(THEME_STORAGE_KEY),
+        AsyncStorage.getItem(HIGH_CONTRAST_STORAGE_KEY),
+      ]);
+
+      if (savedMode && ["light", "dark", "system"].includes(savedMode)) {
+        setThemeModeState(savedMode as ThemeMode);
+      }
+
+      if (savedHighContrast) {
+        setIsHighContrastMode(savedHighContrast === "true");
+      }
+    } catch (error) {
+      logger.error("[ThemeProvider] テーマ設定読み込みエラー:", error as Error);
+    }
+  }, []);
+
   // データベース初期化とテーマ設定復元
   useEffect(() => {
     const initializeApp = async () => {
@@ -234,26 +254,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
     initializeApp();
   }, [loadThemeSettings]);
-
-  // テーマ設定の読み込み（Phase 4拡張）
-  const loadThemeSettings = useCallback(async () => {
-    try {
-      const [savedMode, savedHighContrast] = await Promise.all([
-        AsyncStorage.getItem(THEME_STORAGE_KEY),
-        AsyncStorage.getItem(HIGH_CONTRAST_STORAGE_KEY),
-      ]);
-
-      if (savedMode && ["light", "dark", "system"].includes(savedMode)) {
-        setThemeModeState(savedMode as ThemeMode);
-      }
-
-      if (savedHighContrast) {
-        setIsHighContrastMode(savedHighContrast === "true");
-      }
-    } catch (error) {
-      logger.error("[ThemeProvider] テーマ設定読み込みエラー:", error as Error);
-    }
-  }, []);
 
   // テーマモード設定（Phase 4拡張）
   const setThemeMode = useCallback(async (mode: ThemeMode) => {
