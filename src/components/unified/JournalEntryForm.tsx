@@ -1,7 +1,7 @@
 /**
- * 統合版仕訳入力フォーム - 分割リファクタリング版
- * 学習モードと模試モードの両方をサポート
- * JournalEntryForm分割 - Phase 3
+ * 統合版仕訳入力フォーム - 復旧版
+ * リファクタリング前の機能を復旧（水平レイアウト、NumericPad、貸借合計表示）
+ * 2025-08-22 復旧実施
  */
 
 import React, { useState } from "react";
@@ -14,12 +14,19 @@ import {
   Platform,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
+  ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { Button } from "../ui/Button";
-import { useTheme } from "../../context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  type Theme,
+} from "../../context/ThemeContext";
 import { STANDARD_ACCOUNT_OPTIONS } from "../shared/AccountOptions";
 import { SessionType } from "../../types/database";
+import NumericPad from "../ui/NumericPad";
+import { answerService } from "../../services/answer-service";
 
 // 統合されたコンポーネントのインポート
 import { UnifiedAccountSelector } from "./UnifiedAccountSelector";
@@ -67,7 +74,8 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
   onSubmit,
 }: UnifiedJournalEntryFormProps) {
   // Theme system integration
-  useTheme();
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createThemedStyles);
 
   // Form state
   const [formState, setFormState] = useState<JournalFormState>(
@@ -86,6 +94,14 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
   const [modalVisible, setModalVisible] = useState(false);
   const [currentSelection, setCurrentSelection] =
     useState<JournalSelectionState | null>(null);
+
+  // Numeric pad state
+  const [numericPadVisible, setNumericPadVisible] = useState(false);
+  const [currentAmountEdit, setCurrentAmountEdit] = useState<{
+    type: "debit" | "credit";
+    index: number;
+  } | null>(null);
+  const [tempAmount, setTempAmount] = useState("");
 
   // Entry management functions
   const addDebitRow = () => {
@@ -142,6 +158,36 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
     setCredits(newCredits);
   };
 
+  // Numeric pad functions
+  const openNumericPad = (type: "debit" | "credit", index: number) => {
+    const currentValue =
+      type === "debit"
+        ? debits[index].amount.toString()
+        : credits[index].amount.toString();
+    setTempAmount(currentValue === "0" ? "" : currentValue);
+    setCurrentAmountEdit({ type, index });
+    setNumericPadVisible(true);
+  };
+
+  const confirmAmount = () => {
+    if (currentAmountEdit && tempAmount) {
+      const numericAmount = parseInt(tempAmount) || 0;
+      if (currentAmountEdit.type === "debit") {
+        updateDebit(currentAmountEdit.index, "amount", numericAmount);
+      } else {
+        updateCredit(currentAmountEdit.index, "amount", numericAmount);
+      }
+    }
+    setNumericPadVisible(false);
+    setCurrentAmountEdit(null);
+    setTempAmount("");
+  };
+
+  // Amount formatting helper
+  const formatAmountDisplay = (amount: number): string => {
+    return amount > 0 ? amount.toLocaleString() : "";
+  };
+
   // Account selection
   const showAccountSelector = (type: "debit" | "credit", index: number) => {
     if (Platform.OS === "ios") {
@@ -186,11 +232,39 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
 
   // Validation and submission
   const validateAndSubmit = async () => {
-    if (formState.isSubmitting) return;
+    logger.debug("[JournalEntryForm] validateAndSubmit called");
+    logger.debug("[JournalEntryForm] Current form state:", formState);
+    logger.debug("[JournalEntryForm] Current debits:", debits);
+    logger.debug("[JournalEntryForm] Current credits:", credits);
 
-    // Validate entries
-    const validation = validateJournalEntries(debits, credits);
+    if (formState.isSubmitting) {
+      logger.debug("[JournalEntryForm] Already submitting, returning");
+      return;
+    }
+
+    // Validate entries - combine debits and credits into single array
+    const allEntries = [
+      ...debits.map((d) => ({
+        account: d.account,
+        amount: d.amount,
+        type: "debit" as const,
+      })),
+      ...credits.map((c) => ({
+        account: c.account,
+        amount: c.amount,
+        type: "credit" as const,
+      })),
+    ];
+    logger.debug(
+      "[JournalEntryForm] Combined entries for validation:",
+      allEntries,
+    );
+
+    const validation = validateJournalEntries(allEntries);
+    logger.debug("[JournalEntryForm] Validation result:", validation);
+
     if (!validation.isValid) {
+      logger.warn("[JournalEntryForm] Validation failed:", validation.errors);
       showJournalValidationErrors(validation.errors);
       return;
     }
@@ -217,8 +291,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
         // 学習モード: answerService経由
         const request = createLearningJournalAnswerRequest(
           questionId,
-          debits,
-          credits,
+          allEntries,
           sessionType as SessionType,
           sessionId,
           startTime,
@@ -248,114 +321,217 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
         </View>
       )}
 
-      {/* 統合されたフォーム表示 */}
-      <View style={formStyles.container}>
-        {/* 借方セクション */}
-        <View style={formStyles.section}>
-          <Text style={formStyles.sectionTitle}>借方</Text>
-          {debits.map((debit, index) => (
-            <View key={index} style={formStyles.entryRow}>
-              <TouchableOpacity
-                style={formStyles.accountButton}
-                onPress={() => showAccountSelector("debit", index)}
-                testID={`debit-account-dropdown-${index}`}
-              >
-                <Text style={formStyles.accountButtonText}>
-                  {debit.account || "勘定科目を選択"}
-                </Text>
-              </TouchableOpacity>
-              <TextInput
-                style={formStyles.amountInput}
-                value={debit.amount > 0 ? debit.amount.toString() : ""}
-                onChangeText={(text) => updateDebit(index, "amount", text)}
-                placeholder="金額"
-                keyboardType="numeric"
-                testID={`debit-amount-input-${index}`}
-              />
-              {debits.length > 1 && (
+      {/* 統合されたフォーム表示 - テーブル形式 */}
+      <ScrollView
+        style={styles.container}
+        testID="unified-journal-entry-form-content"
+      >
+        {/* Journal table */}
+        <View style={styles.journalTable}>
+          <View style={styles.tableHeader}>
+            <Text style={[styles.headerText, styles.debitHeader]}>借方</Text>
+            <Text style={[styles.headerText, styles.creditHeader]}>貸方</Text>
+          </View>
+
+          <View style={styles.tableContent}>
+            {/* Debit section */}
+            <View style={styles.debitSection}>
+              <Text style={styles.sectionLabel}>借方</Text>
+              {debits.map((debit, index) => (
+                <View key={index} style={styles.entryRow}>
+                  <TouchableOpacity
+                    style={styles.accountButton}
+                    onPress={() => showAccountSelector("debit", index)}
+                    testID={
+                      index === 0
+                        ? "debit-account-dropdown"
+                        : `debit-account-dropdown-${index}`
+                    }
+                    accessibilityLabel={`借方勘定科目選択 ${index + 1}`}
+                  >
+                    <Text style={styles.accountButtonText}>
+                      {debit.account || "勘定科目を選択"}
+                    </Text>
+                  </TouchableOpacity>
+
+                  <View style={styles.amountRow}>
+                    <TouchableOpacity
+                      style={[
+                        styles.amountInput,
+                        debits.length > 1 ? styles.amountInputWithButton : {},
+                      ]}
+                      onPress={() => openNumericPad("debit", index)}
+                      testID={
+                        index === 0
+                          ? "debit-amount-input"
+                          : `debit-amount-input-${index}`
+                      }
+                      accessibilityLabel={`借方金額入力 ${index + 1}`}
+                    >
+                      <Text style={styles.amountText}>
+                        {debit.amount > 0
+                          ? formatAmountDisplay(debit.amount)
+                          : "金額を入力"}
+                      </Text>
+                    </TouchableOpacity>
+
+                    {debits.length > 1 && (
+                      <TouchableOpacity
+                        style={styles.removeButton}
+                        onPress={() => removeDebitRow(index)}
+                      >
+                        <Text style={styles.removeButtonText}>×</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                </View>
+              ))}
+
+              {debits.length < 4 && (
                 <TouchableOpacity
-                  style={formStyles.removeButton}
-                  onPress={() => removeDebitRow(index)}
+                  style={styles.addButton}
+                  onPress={addDebitRow}
                 >
-                  <Text>×</Text>
+                  <Text style={styles.addButtonText}>+ 借方を追加</Text>
                 </TouchableOpacity>
               )}
             </View>
-          ))}
-          <TouchableOpacity style={formStyles.addButton} onPress={addDebitRow}>
-            <Text>+ 行を追加</Text>
-          </TouchableOpacity>
-        </View>
 
-        {/* 貸方セクション */}
-        <View style={formStyles.section}>
-          <Text style={formStyles.sectionTitle}>貸方</Text>
-          {credits.map((credit, index) => (
-            <View key={index} style={formStyles.entryRow}>
-              <TouchableOpacity
-                style={formStyles.accountButton}
-                onPress={() => showAccountSelector("credit", index)}
-                testID={`credit-account-dropdown-${index}`}
-              >
-                <Text style={formStyles.accountButtonText}>
-                  {credit.account || "勘定科目を選択"}
-                </Text>
-              </TouchableOpacity>
-              <TextInput
-                style={formStyles.amountInput}
-                value={credit.amount > 0 ? credit.amount.toString() : ""}
-                onChangeText={(text) => updateCredit(index, "amount", text)}
-                placeholder="金額"
-                keyboardType="numeric"
-                testID={`credit-amount-input-${index}`}
-              />
-              {credits.length > 1 && (
+            {/* Credit section */}
+            <View style={styles.creditSection}>
+              <Text style={styles.sectionLabel}>貸方</Text>
+              {credits.map((credit, index) => (
+                <View key={index} style={styles.entryRow}>
+                  <TouchableOpacity
+                    style={styles.accountButton}
+                    onPress={() => showAccountSelector("credit", index)}
+                    testID={
+                      index === 0
+                        ? "credit-account-dropdown"
+                        : `credit-account-dropdown-${index}`
+                    }
+                    accessibilityLabel={`貸方勘定科目選択 ${index + 1}`}
+                  >
+                    <Text style={styles.accountButtonText}>
+                      {credit.account || "勘定科目を選択"}
+                    </Text>
+                  </TouchableOpacity>
+
+                  <View style={styles.amountRow}>
+                    <TouchableOpacity
+                      style={[
+                        styles.amountInput,
+                        credits.length > 1 ? styles.amountInputWithButton : {},
+                      ]}
+                      onPress={() => openNumericPad("credit", index)}
+                      testID={
+                        index === 0
+                          ? "credit-amount-input"
+                          : `credit-amount-input-${index}`
+                      }
+                      accessibilityLabel={`貸方金額入力 ${index + 1}`}
+                    >
+                      <Text style={styles.amountText}>
+                        {credit.amount > 0
+                          ? formatAmountDisplay(credit.amount)
+                          : "金額を入力"}
+                      </Text>
+                    </TouchableOpacity>
+
+                    {credits.length > 1 && (
+                      <TouchableOpacity
+                        style={styles.removeButton}
+                        onPress={() => removeCreditRow(index)}
+                      >
+                        <Text style={styles.removeButtonText}>×</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                </View>
+              ))}
+
+              {credits.length < 4 && (
                 <TouchableOpacity
-                  style={formStyles.removeButton}
-                  onPress={() => removeCreditRow(index)}
+                  style={styles.addButton}
+                  onPress={addCreditRow}
                 >
-                  <Text>×</Text>
+                  <Text style={styles.addButtonText}>+ 貸方を追加</Text>
                 </TouchableOpacity>
               )}
             </View>
-          ))}
-          <TouchableOpacity style={formStyles.addButton} onPress={addCreditRow}>
-            <Text>+ 行を追加</Text>
-          </TouchableOpacity>
+          </View>
         </View>
 
-        {/* ボタンセクション */}
-        <View style={formStyles.buttonContainer}>
-          {mode === "mock_exam" && onPrevious && (
-            <Button
-              title="前の問題"
-              onPress={onPrevious}
-              variant="secondary"
-              style={formStyles.navButton}
-            />
-          )}
+        {/* Totals - 貸借合計表示 */}
+        <View style={styles.totalContainer}>
+          <View style={styles.totalRow}>
+            <Text style={styles.totalLabel}>借方合計:</Text>
+            <Text style={styles.totalAmount}>
+              {formatAmountDisplay(
+                debits.reduce((sum, entry) => sum + (entry.amount || 0), 0),
+              )}
+              円
+            </Text>
+          </View>
+          <View style={styles.totalRow}>
+            <Text style={styles.totalLabel}>貸方合計:</Text>
+            <Text style={styles.totalAmount}>
+              {formatAmountDisplay(
+                credits.reduce((sum, entry) => sum + (entry.amount || 0), 0),
+              )}
+              円
+            </Text>
+          </View>
+        </View>
 
-          {showSubmitButton && (
-            <Button
-              title="解答する"
-              onPress={validateAndSubmit}
+        {/* Submit button */}
+        {showSubmitButton && (
+          <View style={styles.submitContainer}>
+            <TouchableOpacity
+              style={[
+                styles.submitButton,
+                formState.isSubmitting && styles.submitButtonDisabled,
+              ]}
+              onPress={() => {
+                logger.debug("[JournalEntryForm] Submit button pressed");
+                validateAndSubmit();
+              }}
               disabled={formState.isSubmitting}
-              style={formStyles.submitButton}
               testID="submit-answer-button"
-            />
-          )}
+              accessibilityLabel="解答を送信"
+            >
+              {formState.isSubmitting ? (
+                <ActivityIndicator color={theme.colors.surface} />
+              ) : (
+                <Text style={styles.submitButtonText}>解答を送信</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+        )}
 
-          {mode === "mock_exam" && onNext && (
-            <Button
-              title="次の問題"
-              onPress={onNext}
-              variant="secondary"
-              style={formStyles.navButton}
-              testID="next-question-button"
-            />
-          )}
-        </View>
-      </View>
+        {/* 模試モードのナビゲーションボタン */}
+        {mode === "mock_exam" && (onPrevious || onNext) && (
+          <View style={styles.navButtonContainer}>
+            {onPrevious && (
+              <Button
+                title="前の問題"
+                onPress={onPrevious}
+                variant="secondary"
+                style={styles.navButton}
+              />
+            )}
+            {onNext && (
+              <Button
+                title="次の問題"
+                onPress={onNext}
+                variant="secondary"
+                style={styles.navButton}
+                testID="next-question-button"
+              />
+            )}
+          </View>
+        )}
+      </ScrollView>
 
       {/* Account selection modal */}
       <UnifiedAccountSelector
@@ -365,6 +541,17 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
         onClose={() => setModalVisible(false)}
         questionType="journal"
         label="勘定科目を選択"
+      />
+
+      {/* Numeric pad */}
+      <NumericPad
+        visible={numericPadVisible}
+        value={tempAmount}
+        onValueChange={setTempAmount}
+        onClose={confirmAmount}
+        placeholder="金額を入力"
+        label="金額入力"
+        maxLength={10}
       />
     </View>
   );
@@ -395,79 +582,176 @@ const headerStyles = {
   },
 };
 
-// Form styles
-const formStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  section: {
-    marginBottom: 24,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 12,
-  },
-  entryRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  accountButton: {
-    flex: 2,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 6,
-    padding: 12,
-    marginRight: 8,
-    backgroundColor: "#f9f9f9",
-  },
-  accountButtonText: {
-    color: "#333",
-    fontSize: 16,
-  },
-  amountInput: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 6,
-    padding: 12,
-    fontSize: 16,
-    textAlign: "right",
-    backgroundColor: "#fff",
-  },
-  removeButton: {
-    marginLeft: 8,
-    width: 30,
-    height: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ff4444",
-    borderRadius: 15,
-  },
-  addButton: {
-    backgroundColor: "#e0e0e0",
-    padding: 12,
-    borderRadius: 6,
-    alignItems: "center",
-    marginTop: 8,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 24,
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: "#e0e0e0",
-  },
-  submitButton: {
-    flex: 1,
-    marginHorizontal: 8,
-  },
-  navButton: {
-    flex: 0.4,
-    marginHorizontal: 4,
-  },
-});
+// テーマ統合スタイル
+const createThemedStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    journalTable: {
+      margin: 16,
+      backgroundColor: theme.colors.surface,
+      borderRadius: 8,
+      overflow: "hidden",
+      ...theme.shadows.medium,
+    },
+    tableHeader: {
+      flexDirection: "row",
+      backgroundColor: theme.colors.primary,
+      paddingVertical: 12,
+    },
+    headerText: {
+      flex: 1,
+      textAlign: "center",
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.background,
+    },
+    debitHeader: {
+      borderRightWidth: 1,
+      borderRightColor: theme.colors.background,
+    },
+    creditHeader: {},
+    tableContent: {
+      flexDirection: "row",
+      minHeight: 200,
+    },
+    debitSection: {
+      flex: 1,
+      padding: 12,
+      borderRightWidth: 1,
+      borderRightColor: theme.colors.border,
+    },
+    creditSection: {
+      flex: 1,
+      padding: 12,
+    },
+    sectionLabel: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.text,
+      marginBottom: 12,
+      textAlign: "center",
+    },
+    entryRow: {
+      flexDirection: "column",
+      marginBottom: 12,
+      gap: 8,
+    },
+    accountButton: {
+      width: "100%",
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      borderRadius: 6,
+      padding: 12,
+      backgroundColor: theme.colors.background,
+      justifyContent: "center",
+    },
+    accountButtonText: {
+      color: theme.colors.text,
+      fontSize: 14,
+      textAlign: "center",
+    },
+    amountRow: {
+      flexDirection: "row",
+      width: "100%",
+      gap: 8,
+      alignItems: "center",
+    },
+    amountInput: {
+      flex: 1,
+      height: 50,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      borderRadius: 4,
+      paddingHorizontal: 12,
+      backgroundColor: theme.colors.background,
+      justifyContent: "center",
+      alignItems: "flex-end",
+    },
+    amountText: {
+      color: theme.colors.text,
+      fontSize: 16,
+      fontWeight: "600",
+    },
+    amountInputWithButton: {},
+    removeButton: {
+      width: 36,
+      height: 36,
+      backgroundColor: theme.colors.error,
+      borderRadius: 18,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    removeButtonText: {
+      color: theme.colors.background,
+      fontSize: 18,
+      fontWeight: "bold",
+    },
+    addButton: {
+      padding: 8,
+      backgroundColor: theme.colors.primary + "20",
+      borderRadius: 4,
+      alignItems: "center",
+      marginTop: 8,
+    },
+    addButtonText: {
+      color: theme.colors.primary,
+      fontSize: 14,
+      fontWeight: "600",
+    },
+    totalContainer: {
+      margin: 16,
+      padding: 16,
+      backgroundColor: theme.colors.surface,
+      borderRadius: 8,
+      ...theme.shadows.medium,
+    },
+    totalRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 8,
+    },
+    totalLabel: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+    },
+    totalAmount: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+    },
+    submitContainer: {
+      padding: 16,
+      backgroundColor: theme.colors.background,
+    },
+    submitButton: {
+      padding: 15,
+      backgroundColor: theme.colors.primary,
+      borderRadius: 8,
+      alignItems: "center",
+      justifyContent: "center",
+      minHeight: 50,
+    },
+    submitButtonDisabled: {
+      backgroundColor: theme.colors.border,
+    },
+    submitButtonText: {
+      fontSize: 16,
+      color: theme.colors.background,
+      fontWeight: "bold",
+    },
+    navButtonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      padding: 16,
+      backgroundColor: theme.colors.background,
+    },
+    navButton: {
+      flex: 0.4,
+      marginHorizontal: 8,
+    },
+  });

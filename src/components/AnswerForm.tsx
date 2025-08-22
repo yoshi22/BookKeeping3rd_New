@@ -226,6 +226,90 @@ export default function AnswerForm({
     }
   };
 
+  // 仕訳問題かどうかを判定し、特別なレイアウトを適用
+  const isJournalEntryQuestion =
+    questionId.startsWith("Q_J_") && fields.length === 4;
+  const journalFields = isJournalEntryQuestion
+    ? {
+        debitAccount: fields.find(
+          (f) =>
+            f.name.includes("debit_account") ||
+            f.name.includes("借方") ||
+            f.label.includes("借方科目"),
+        ),
+        debitAmount: fields.find(
+          (f) =>
+            f.name.includes("debit_amount") ||
+            f.name.includes("借方金額") ||
+            f.label.includes("借方金額"),
+        ),
+        creditAccount: fields.find(
+          (f) =>
+            f.name.includes("credit_account") ||
+            f.name.includes("貸方") ||
+            f.label.includes("貸方科目"),
+        ),
+        creditAmount: fields.find(
+          (f) =>
+            f.name.includes("credit_amount") ||
+            f.name.includes("貸方金額") ||
+            f.label.includes("貸方金額"),
+        ),
+      }
+    : null;
+
+  const renderJournalEntryLayout = () => {
+    if (
+      !journalFields ||
+      !journalFields.debitAccount ||
+      !journalFields.debitAmount ||
+      !journalFields.creditAccount ||
+      !journalFields.creditAmount
+    ) {
+      return fields.map(renderField); // フォールバック
+    }
+
+    return (
+      <View>
+        {/* 借方・貸方のヘッダー */}
+        <View style={styles.journalHeaderRow}>
+          <View style={styles.journalSide}>
+            <Text style={styles.journalSideTitle}>借方</Text>
+          </View>
+          <View style={styles.journalSide}>
+            <Text style={styles.journalSideTitle}>貸方</Text>
+          </View>
+        </View>
+
+        {/* 借方・貸方の左右レイアウト */}
+        <View style={styles.journalEntryMainRow}>
+          {/* 左側：借方 */}
+          <View style={styles.journalSide}>
+            <View style={styles.journalFieldContainer}>
+              {renderField(journalFields.debitAccount)}
+            </View>
+            <View style={styles.journalFieldContainer}>
+              {renderField(journalFields.debitAmount)}
+            </View>
+          </View>
+
+          {/* 中央の仕切り線 */}
+          <View style={styles.journalDivider} />
+
+          {/* 右側：貸方 */}
+          <View style={styles.journalSide}>
+            <View style={styles.journalFieldContainer}>
+              {renderField(journalFields.creditAccount)}
+            </View>
+            <View style={styles.journalFieldContainer}>
+              {renderField(journalFields.creditAmount)}
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -237,7 +321,9 @@ export default function AnswerForm({
           <Text style={styles.helpButtonText}>❓</Text>
         </TouchableOpacity>
       </View>
-      {fields.map(renderField)}
+      {isJournalEntryQuestion
+        ? renderJournalEntryLayout()
+        : fields.map(renderField)}
 
       {showSubmitButton && (
         <TouchableOpacity
@@ -325,6 +411,35 @@ const createStyles = (theme: Theme) =>
       minHeight: 48,
       fontSize: 16,
       color: theme.colors.text,
+    },
+    // 仕訳問題用の左右レイアウトスタイル（Phase 12以前の形式を復元）
+    journalHeaderRow: {
+      flexDirection: "row",
+      marginBottom: 10,
+    },
+    journalSideTitle: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+      textAlign: "center",
+      paddingBottom: 8,
+    },
+    journalEntryMainRow: {
+      flexDirection: "row",
+      alignItems: "flex-start",
+    },
+    journalSide: {
+      flex: 1,
+      paddingHorizontal: 8,
+    },
+    journalDivider: {
+      width: 1,
+      backgroundColor: theme.colors.borderLight,
+      marginHorizontal: 8,
+      alignSelf: "stretch",
+    },
+    journalFieldContainer: {
+      marginBottom: 12,
     },
     hintText: {
       fontSize: 12,

@@ -119,7 +119,9 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
   testID,
 }) => {
   const styles = useThemedStyles(createStyles);
-  const [modalVisible, setModalVisible] = useState(visible);
+  // For dropdown mode, use internal state only. For modal mode, use visible prop.
+  const [internalModalVisible, setInternalModalVisible] = useState(false);
+  const modalVisible = mode === "modal" ? visible : internalModalVisible;
 
   // Get appropriate account options based on question type
   const getAccountOptions = (): AccountOption[] => {
@@ -160,24 +162,37 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
   };
 
   const handleAccountSelect = (account: AccountOption) => {
+    console.log("[UnifiedAccountSelector] Account selected:", account.value);
     onChange(account.value);
     if (mode === "modal") {
-      setModalVisible(false);
+      setInternalModalVisible(false);
       onClose?.();
+    } else if (mode === "dropdown") {
+      setInternalModalVisible(false);
     }
   };
 
   const openModal = () => {
+    console.log("[UnifiedAccountSelector] Opening modal, mode:", mode);
     if (mode === "actionsheet" && Platform.OS === "ios") {
       showIOSActionSheet();
     } else {
-      setModalVisible(true);
+      if (mode === "dropdown") {
+        setInternalModalVisible(true);
+      } else {
+        setInternalModalVisible(true);
+      }
     }
   };
 
   const closeModal = () => {
-    setModalVisible(false);
-    onClose?.();
+    console.log("[UnifiedAccountSelector] Closing modal");
+    if (mode === "dropdown") {
+      setInternalModalVisible(false);
+    } else {
+      setInternalModalVisible(false);
+      onClose?.();
+    }
   };
 
   // Render dropdown mode
@@ -191,8 +206,12 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
         )}
         <TouchableOpacity
           style={[styles.dropdown, !value && styles.placeholder]}
-          onPress={openModal}
+          onPress={() => {
+            console.log("[UnifiedAccountSelector] TouchableOpacity pressed");
+            openModal();
+          }}
           testID={testID}
+          activeOpacity={0.7}
         >
           <Text style={[styles.dropdownText, !value && styles.placeholderText]}>
             {value || placeholder}
@@ -204,9 +223,28 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
           visible={modalVisible}
           transparent
           animationType="slide"
-          onRequestClose={closeModal}
+          onRequestClose={() => {
+            console.log(
+              "[UnifiedAccountSelector] Modal onRequestClose triggered",
+            );
+            closeModal();
+          }}
         >
           <View style={styles.modalOverlay}>
+            <TouchableOpacity
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              }}
+              onPress={() => {
+                console.log("[UnifiedAccountSelector] Modal overlay pressed");
+                closeModal();
+              }}
+              activeOpacity={1}
+            />
             <View style={styles.modalContent}>
               <View style={styles.modalHeader}>
                 <Text style={styles.modalTitle}>
@@ -378,6 +416,14 @@ const createStyles = (theme: Theme): StyleSheet.NamedStyles<any> =>
       width: "90%",
       maxHeight: "80%",
       overflow: "hidden",
+      elevation: 10,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 5,
+      },
+      shadowOpacity: 0.3,
+      shadowRadius: 10,
     },
     modalHeader: {
       flexDirection: "row",

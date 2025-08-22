@@ -350,21 +350,6 @@ export default function QuestionDisplay({
       parseInt(questionId.split("_")[2]) >= 11 &&
       parseInt(questionId.split("_")[2]) <= 20);
 
-  // Determine if should use enhanced journal entry form for complex journal entries only
-  // Simple journal entries should use AnswerForm to maintain horizontal layout
-  // FIXED: Only use UnifiedJournalEntryForm for explicitly complex entries
-  const shouldUseJournalEntryForm =
-    answerTemplate?.type === "journal_entry" &&
-    answerTemplate?.allowMultipleEntries === true;
-
-  // レンダリング判定ログ（必要時のみ有効化）
-  if (process.env.NODE_ENV === "development" && process.env.DEBUG_RENDERING) {
-    logger.debug(`[QuestionDisplay] レンダリング: ${questionId}`, {
-      answerTemplateType: answerTemplate?.type,
-      shouldUseJournalEntryForm,
-    });
-  }
-
   // Determine if should use ChoiceAnswerForm for choice questions (traditional single dropdown)
   const shouldUseChoiceForm =
     (answerTemplate?.type === "single_choice" ||
@@ -380,19 +365,6 @@ export default function QuestionDisplay({
   // Determine if should use VoucherEntryForm for voucher entry questions
   const shouldUseVoucherEntryForm = answerTemplate?.type === "voucher_entry";
 
-  // バウチャー問題のテンプレート確認（デバッグ時のみ）
-  if (
-    process.env.NODE_ENV === "development" &&
-    process.env.DEBUG_VOUCHER &&
-    questionId.startsWith("Q_L_02") &&
-    answerTemplate
-  ) {
-    logger.debug(
-      "[QuestionDisplay] answerTemplate for voucher:",
-      answerTemplate,
-    );
-  }
-
   // Determine if should use FinancialStatementForm for financial statement questions
   const shouldUseFinancialStatementForm =
     answerTemplate?.type === "financial_statement";
@@ -402,6 +374,27 @@ export default function QuestionDisplay({
     answerTemplate?.type === "trial_balance" ||
     (questionId.startsWith("Q_T_") &&
       answerTemplate?.type !== "financial_statement");
+
+  // Determine if should use enhanced journal entry form for journal entries
+  // UnifiedJournalEntryForm now supports horizontal layout and NumericPad (restored 2025-08-22)
+  const shouldUseJournalEntryForm = answerTemplate?.type === "journal_entry";
+  // Original condition restored after horizontal layout fix
+
+  // レンダリング判定ログ（デバッグ用に一時有効化）
+  if (process.env.NODE_ENV === "development") {
+    console.log(`[QuestionDisplay] レンダリング判定: ${questionId}`, {
+      answerTemplateType: answerTemplate?.type,
+      allowMultipleEntries: answerTemplate?.allowMultipleEntries,
+      shouldUseJournalEntryForm,
+      shouldUseTrialBalanceForm,
+      shouldUseSubsidiaryBookForm,
+      shouldUseLedgerEntryFormWithDropdown,
+      shouldUseLedgerEntryForm,
+      shouldUseChoiceForm,
+      answerFieldsLength: answerFields.length,
+      hasOnAnswerChange: !!onAnswerChange,
+    });
+  }
 
   return (
     <View style={styles.container} testID="question-screen">
