@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // Jest setup file for React Native + Expo
 // React Native関連のモック設定
 
@@ -25,7 +26,7 @@ jest.mock("expo-sqlite", () => ({
   openDatabase: jest.fn(() => ({
     transaction: jest.fn((callback) => {
       const mockTx = {
-        executeSql: jest.fn((sql, params, success, error) => {
+        executeSql: jest.fn((sql, params, success) => {
           if (success) {
             success(mockTx, {
               rows: { length: 0, item: () => ({}) },

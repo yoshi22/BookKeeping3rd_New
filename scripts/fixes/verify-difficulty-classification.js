@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-var-requires, no-console */
 /**
  * 難易度分類ロジック検証スクリプト
  * アプリ内表示とデータファイルの整合性を確認

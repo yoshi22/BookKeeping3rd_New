@@ -1,4 +1,5 @@
 /**
+/* eslint-disable */
  * 直接データベーステストスクリプト
  * TypeScript依存関係を回避してSQLiteを直接テスト
  */

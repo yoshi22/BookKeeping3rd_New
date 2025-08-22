@@ -6,29 +6,21 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  Alert,
 } from "react-native";
 import { Screen } from "../../src/components/layout/ResponsiveLayout";
 import { AppIcon, IconContextSizes } from "../../src/theme/icons";
 import {
   useTheme,
   useThemedStyles,
-  useColors,
-  useDynamicColors,
   ThemeMode,
-  CustomThemeVariant,
   type Theme,
 } from "../../src/context/ThemeContext";
 import { confirmResetDatabase } from "../../src/utils/reset-database";
-import { customThemeVariants } from "../../src/theme/colors";
 import { TestDataCreator } from "../../src/components/dev-tools/TestDataCreator";
 
 export default function SettingsScreen() {
   // Phase 4: ダークモード対応のテーマシステム
-  const { theme, isDark, getStatusBarStyle, themeMode, setThemeMode } =
-    useTheme();
-  const colors = useColors();
-  const dynamicColors = useDynamicColors();
+  const { theme, getStatusBarStyle, themeMode, setThemeMode } = useTheme();
   const styles = useThemedStyles(createStyles);
 
   // カスタムテーマ選択モーダル状態
@@ -49,37 +41,7 @@ export default function SettingsScreen() {
     { key: "system", label: "システム設定", description: "端末の設定に従う" },
   ];
 
-  const customThemeOptions: {
-    key: keyof typeof customThemeVariants;
-    label: string;
-    description: string;
-  }[] = [
-    {
-      key: "oceanic",
-      label: "オーシャニック",
-      description: "海の青を基調とした爽やかなテーマ",
-    },
-    {
-      key: "forest",
-      label: "フォレスト",
-      description: "森の緑を基調とした自然なテーマ",
-    },
-    {
-      key: "sunset",
-      label: "サンセット",
-      description: "夕焼けの暖色を基調とした温かいテーマ",
-    },
-    {
-      key: "professional",
-      label: "プロフェッショナル",
-      description: "落ち着いたグレーの洗練されたテーマ",
-    },
-    {
-      key: "high-contrast",
-      label: "ハイコントラスト",
-      description: "高コントラストなアクセシブルテーマ",
-    },
-  ];
+  // Custom theme options removed as unused
 
   const handleThemeChange = (mode: ThemeMode) => {
     setSelectedTheme(mode);

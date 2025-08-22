@@ -12,13 +12,15 @@ import { useRouter } from "expo-router";
 import { MockExam } from "../src/types/models";
 import { MockExamRepository } from "../src/data/repositories/mock-exam-repository";
 import { Screen } from "../src/components/layout/ResponsiveLayout";
-import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../src/context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  type Theme,
+} from "../src/context/ThemeContext";
 
 export default function MockExamScreen() {
   // Phase 4: ダークモード対応のテーマシステム
-  const { theme, isDark, getStatusBarStyle } = useTheme();
-  const colors = useColors();
-  const dynamicColors = useDynamicColors();
+  const { theme, getStatusBarStyle } = useTheme();
   const styles = useThemedStyles(createStyles);
 
   const router = useRouter();
@@ -35,7 +37,7 @@ export default function MockExamScreen() {
       const exams = await mockExamRepo.findAll();
       const activeExams = exams.filter((exam) => exam.is_active);
       setMockExams(activeExams);
-    } catch (error) {
+    } catch {
       Alert.alert("エラー", "模試データの読み込みに失敗しました");
     } finally {
       setLoading(false);
@@ -43,22 +45,18 @@ export default function MockExamScreen() {
   };
 
   const startMockExam = (exam: MockExam) => {
-    Alert.alert(
-      "模試開始確認",
-      `${exam.name}を開始しますか？\n\n制限時間: ${exam.time_limit_minutes}分\n合格基準: ${exam.passing_score}点以上`,
-      [
-        { text: "キャンセル", style: "cancel" },
-        {
-          text: "開始",
-          onPress: () => {
-            router.push({
-              pathname: "/mock-exam/[examId]",
-              params: { examId: exam.id },
-            });
-          },
+    Alert.alert("模試開始確認", [
+      { text: "キャンセル", style: "cancel" },
+      {
+        text: "開始",
+        onPress: () => {
+          router.push({
+            pathname: "/mock-exam/[examId]",
+            params: { examId: exam.id },
+          });
         },
-      ],
-    );
+      },
+    ]);
   };
 
   return (
@@ -145,9 +143,7 @@ export default function MockExamScreen() {
   );
 }
 
-const createStyles = (
-  theme: Theme,
-) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,

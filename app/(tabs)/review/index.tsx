@@ -1,18 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { router } from "expo-router";
 import { logger } from "../../../src/utils/logger";
 import { useFocusEffect } from "@react-navigation/native";
 import { reviewService } from "../../../src/services/review-service";
 import { ReviewStatistics } from "../../../src/data/repositories/review-item-repository";
 import { statisticsService } from "../../../src/services/statistics-service";
+import { statisticsCache } from "../../../src/services/statistics-cache";
 import { Screen } from "../../../src/components/layout/ResponsiveLayout";
 import { setupDatabase } from "../../../src/data/migrations";
 import { WithScreenTransition } from "../../../src/hooks/useScreenTransitions";
@@ -26,13 +20,10 @@ import {
   ResponsiveContainer,
   ResponsiveGrid,
   ResponsiveGridItem,
-  OrientationAwareView,
-  RotationAwareContainer,
 } from "../../../src/hooks/useTabletLayout";
 import {
   useTheme,
   useThemedStyles,
-  useColors,
   useDynamicColors,
   type Theme,
 } from "../../../src/context/ThemeContext";
@@ -46,24 +37,17 @@ export default function ReviewScreen() {
   const [loadingStatistics, setLoadingStatistics] = useState(false);
 
   // Phase 4: ダークモード対応のテーマシステム
-  const { theme, isDark, getStatusBarStyle } = useTheme();
-  const colors = useColors();
+  const { theme, getStatusBarStyle } = useTheme();
   const dynamicColors = useDynamicColors();
 
   // タブレットレイアウト対応（オリエンテーション対応）
-  const {
-    deviceInfo,
-    getValueByDevice,
-    shouldUseMasterDetail,
-    getOrientationSpecificValue,
-    getOrientationLayout,
-  } = useTabletLayout();
+  const { deviceInfo, getValueByDevice } = useTabletLayout();
 
   // Phase 4: テーマに応じたスタイル生成
   const styles = useThemedStyles(createStyles);
 
   // データベース初期化確認
-  const ensureDatabaseInitialized = async (): Promise<boolean> => {
+  const ensureDatabaseInitialized = useCallback(async (): Promise<boolean> => {
     try {
       logger.debug("[ReviewScreen] データベース初期化確認開始");
       await setupDatabase();
@@ -80,7 +64,7 @@ export default function ReviewScreen() {
       const resetSuccess = await tryDatabaseReset(error);
       return resetSuccess; // リセット経由での初期化成功
     }
-  };
+  }, []);
 
   // データベースリセット試行
   const tryDatabaseReset = async (originalError: any) => {
@@ -110,17 +94,13 @@ export default function ReviewScreen() {
       });
 
       // リセットも失敗した場合はより詳細なエラー情報を提供
-      const errorDetails =
-        resetError instanceof Error ? resetError.message : String(resetError);
 
-      throw new Error(
-        `データベースの完全復旧に失敗しました。アプリを再起動してください。\n詳細: ${errorDetails}`,
-      );
+      throw new Error();
     }
   };
 
   // 復習統計データ読み込み
-  const loadReviewData = async () => {
+  const loadReviewData = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -285,29 +265,11 @@ export default function ReviewScreen() {
     } catch (error) {
       logger.error("[ReviewScreen] 復習データ読み込みエラー:", error as Error);
 
-      let errorMessage = "復習データの読み込みに失敗しました";
       if (error instanceof Error) {
         logger.error("[ReviewScreen] Error details:", error as Error, {
           message: error.message,
           stack: error.stack,
         });
-
-        if (error.message.includes("データベースの初期化に失敗しました")) {
-          errorMessage = `復讐データ読み込みエラー：Error: データベースの初期化に失敗しました`;
-        } else if (error.message.includes("Database setup failed")) {
-          errorMessage =
-            "復習データ読み込みエラー：Error: データベースの初期化に失敗しました";
-        } else if (error.message.includes("database initialization failed")) {
-          errorMessage =
-            "データベースの初期化に失敗しました。アプリを再起動してください。";
-        } else if (
-          error.message.includes("sqlite") ||
-          error.message.includes("SQLite")
-        ) {
-          errorMessage = "データベースに接続できませんでした。";
-        } else {
-          errorMessage = `復習データ読み込みエラー：${error.message}`;
-        }
       }
 
       // フォールバックデータでUI表示を継続
@@ -406,18 +368,18 @@ export default function ReviewScreen() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [ensureDatabaseInitialized]);
 
   useEffect(() => {
     loadReviewData();
-  }, []);
+  }, [loadReviewData]);
 
   // 統計タブが選択されたときに統計データを読み込み
   useEffect(() => {
     if (activeTab === "statistics" && !statisticsData) {
       loadStatisticsData();
     }
-  }, [activeTab]);
+  }, [activeTab, statisticsData]);
 
   // 画面がフォーカスされたときに最新データを再取得
   useFocusEffect(
@@ -425,9 +387,6 @@ export default function ReviewScreen() {
       logger.debug("[ReviewScreen] 画面フォーカス - 最新データを取得");
       // キャッシュをクリアして最新のデータを取得
       try {
-        const {
-          statisticsCache,
-        } = require("../../../src/services/statistics-cache");
         statisticsCache.clearAll();
       } catch (error) {
         logger.warn("[ReviewScreen] キャッシュクリアに失敗:", {
@@ -435,7 +394,7 @@ export default function ReviewScreen() {
         });
       }
       loadReviewData();
-    }, []),
+    }, [loadReviewData]),
   );
 
   // 統計データ読み込み

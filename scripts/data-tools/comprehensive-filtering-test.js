@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable */
 
 /**
  * problemsStrategy.md準拠の総合フィルタリング機能テスト

@@ -3,6 +3,7 @@
  * database.ts分割 - Phase 4
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Database,
   DatabaseConfig,

@@ -79,7 +79,7 @@ export default function AccountDropdown({
   excludeAccounts = [],
   placeholder = "勘定科目を選択してください",
 }: AccountDropdownProps) {
-  const { theme } = useTheme();
+  useTheme();
   const styles = useThemedStyles(createStyles);
   const [isModalVisible, setIsModalVisible] = useState(false);
 

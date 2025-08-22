@@ -905,6 +905,7 @@ export class QuestionRepository extends BaseRepository<Question> {
         try {
           // JSONの妥当性チェック
           const template = JSON.parse(question.answer_template_json);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const correctAnswer = JSON.parse(question.correct_answer_json);
 
           // 基本構造の検証

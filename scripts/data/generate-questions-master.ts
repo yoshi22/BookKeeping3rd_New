@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, no-console */
 /**
  * 問題データマスター生成スクリプト
  * problemsStrategy.mdの要件を完全に満たす問題データを生成
@@ -65,7 +66,7 @@ const QUESTION_TARGETS = {
         patterns: {
           // 現金取引パターン（12問）
           cash_transaction: 12,
-          // 当座預金パターン（15問）  
+          // 当座預金パターン（15問）
           checking_account: 15,
           // 普通預金・定期預金パターン（15問）
           savings_deposit: 15,
@@ -182,13 +183,15 @@ const JOURNAL_TEMPLATES = {
       // 現金取引パターン（12問）
       {
         name: "現金過不足_原因不明",
-        template: "現金実査の結果、現金の実際有高が{amount1}円であったが、帳簿残高は{amount2}円であった。",
+        template:
+          "現金実査の結果、現金の実際有高が{amount1}円であったが、帳簿残高は{amount2}円であった。",
         accounts: ["現金過不足", "現金"],
         keywords: ["現金実査", "実際有高", "帳簿残高"],
       },
       {
         name: "現金過不足_原因判明",
-        template: "現金過不足{amount}円の原因を調査したところ、通信費の支払漏れであることが判明した。",
+        template:
+          "現金過不足{amount}円の原因を調査したところ、通信費の支払漏れであることが判明した。",
         accounts: ["通信費", "現金過不足"],
         keywords: ["現金過不足", "原因判明", "通信費"],
       },
@@ -200,7 +203,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "現金実査_差額発見",
-        template: "現金の帳簿残高{amount1}円に対し、実際有高は{amount2}円であった。",
+        template:
+          "現金の帳簿残高{amount1}円に対し、実際有高は{amount2}円であった。",
         accounts: ["現金", "現金過不足"],
         keywords: ["現金実査", "帳簿残高", "実際有高"],
       },
@@ -236,7 +240,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "給与支払_現金",
-        template: "従業員への給料{amount1}円を現金で支払った。なお、源泉所得税{amount2}円を差し引いた。",
+        template:
+          "従業員への給料{amount1}円を現金で支払った。なお、源泉所得税{amount2}円を差し引いた。",
         accounts: ["給料", "現金", "預り金"],
         keywords: ["給料", "現金支払", "源泉所得税"],
       },
@@ -298,7 +303,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "当座借越_発生",
-        template: "当座預金残高が不足したため、小切手{amount}円の振出で当座借越となった。",
+        template:
+          "当座預金残高が不足したため、小切手{amount}円の振出で当座借越となった。",
         accounts: ["買掛金", "当座借越"],
         keywords: ["当座借越", "残高不足", "小切手"],
       },
@@ -328,7 +334,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "当座預金_利息",
-        template: "当座預金の利息{amount1}円が入金された。なお、源泉徴収税{amount2}円が差し引かれた。",
+        template:
+          "当座預金の利息{amount1}円が入金された。なお、源泉徴収税{amount2}円が差し引かれた。",
         accounts: ["当座預金", "受取利息", "預り金"],
         keywords: ["当座預金", "利息", "源泉徴収"],
       },
@@ -372,7 +379,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "普通預金_利息",
-        template: "普通預金の利息{amount1}円が入金された。なお、源泉徴収税{amount2}円が差し引かれた。",
+        template:
+          "普通預金の利息{amount1}円が入金された。なお、源泉徴収税{amount2}円が差し引かれた。",
         accounts: ["普通預金", "受取利息", "預り金"],
         keywords: ["普通預金", "利息", "源泉徴収"],
       },
@@ -402,13 +410,15 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "定期預金_満期解約",
-        template: "定期預金{amount1}円が満期となり、利息{amount2}円とともに普通預金に入金された。",
+        template:
+          "定期預金{amount1}円が満期となり、利息{amount2}円とともに普通預金に入金された。",
         accounts: ["普通預金", "定期預金", "受取利息"],
         keywords: ["定期預金", "満期", "利息"],
       },
       {
         name: "定期預金_中途解約",
-        template: "定期預金{amount1}円を中途解約し、違約金{amount2}円を差し引かれた。",
+        template:
+          "定期預金{amount1}円を中途解約し、違約金{amount2}円を差し引かれた。",
         accounts: ["普通預金", "雑損", "定期預金"],
         keywords: ["定期預金", "中途解約", "違約金"],
       },
@@ -479,7 +489,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "混合取引_仕入",
-        template: "商品{amount1}円を仕入れ、代金の一部{amount2}円を現金で支払い、残額は掛けとした。",
+        template:
+          "商品{amount1}円を仕入れ、代金の一部{amount2}円を現金で支払い、残額は掛けとした。",
         accounts: ["仕入", "現金", "買掛金"],
         keywords: ["仕入", "混合取引", "現金掛け"],
       },
@@ -497,7 +508,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "前払金決済_仕入",
-        template: "前払金{amount1}円を支払済みの商品{amount2}円を受け取り、残額を現金で支払った。",
+        template:
+          "前払金{amount1}円を支払済みの商品{amount2}円を受け取り、残額を現金で支払った。",
         accounts: ["仕入", "前払金", "現金"],
         keywords: ["前払金", "決済", "仕入"],
       },
@@ -509,7 +521,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "前受金決済_売上",
-        template: "前受金{amount1}円を受取済みの商品{amount2}円を引き渡し、残額を現金で受け取った。",
+        template:
+          "前受金{amount1}円を受取済みの商品{amount2}円を引き渡し、残額を現金で受け取った。",
         accounts: ["現金", "前受金", "売上"],
         keywords: ["前受金", "決済", "売上"],
       },
@@ -521,13 +534,15 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "分割売上",
-        template: "商品を{amount}円で分割販売し、第1回分として現金で受け取った。",
+        template:
+          "商品を{amount}円で分割販売し、第1回分として現金で受け取った。",
         accounts: ["現金", "売上"],
         keywords: ["分割売上", "分割", "第1回"],
       },
       {
         name: "割賦販売",
-        template: "商品を{amount}円で割賦販売し、手付金として現金を受け取った。",
+        template:
+          "商品を{amount}円で割賦販売し、手付金として現金を受け取った。",
         accounts: ["現金", "売上"],
         keywords: ["割賦販売", "手付金", "現金"],
       },
@@ -535,13 +550,15 @@ const JOURNAL_TEMPLATES = {
       // 返品・値引きパターン（10問）
       {
         name: "現金仕入返品",
-        template: "現金で仕入れた商品のうち{amount}円分を品違いのため返品し、返金を受けた。",
+        template:
+          "現金で仕入れた商品のうち{amount}円分を品違いのため返品し、返金を受けた。",
         accounts: ["現金", "仕入"],
         keywords: ["仕入返品", "品違い", "返金"],
       },
       {
         name: "掛仕入返品",
-        template: "掛けで仕入れた商品のうち{amount}円分を品質不良のため返品した。",
+        template:
+          "掛けで仕入れた商品のうち{amount}円分を品質不良のため返品した。",
         accounts: ["買掛金", "仕入"],
         keywords: ["仕入返品", "品質不良", "買掛金"],
       },
@@ -553,7 +570,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "前払金仕入返品",
-        template: "前払金を支払済みの商品{amount}円分を返品し、前払金を回収した。",
+        template:
+          "前払金を支払済みの商品{amount}円分を返品し、前払金を回収した。",
         accounts: ["現金", "前払金"],
         keywords: ["前払金", "仕入返品", "回収"],
       },
@@ -577,13 +595,15 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "売上値引",
-        template: "販売した商品にクレームがあったため、{amount}円の値引きを行った。",
+        template:
+          "販売した商品にクレームがあったため、{amount}円の値引きを行った。",
         accounts: ["売上", "売掛金"],
         keywords: ["売上値引", "クレーム", "値引"],
       },
       {
         name: "前受金売上返品",
-        template: "前受金を受取済みの商品{amount}円分が返品され、前受金を返金した。",
+        template:
+          "前受金を受取済みの商品{amount}円分が返品され、前受金を返金した。",
         accounts: ["前受金", "現金"],
         keywords: ["前受金", "売上返品", "返金"],
       },
@@ -597,13 +617,15 @@ const JOURNAL_TEMPLATES = {
       // 諸掛り・特殊取引パターン（12問）
       {
         name: "仕入諸掛_当社負担",
-        template: "商品{amount1}円を仕入れ、引取運賃{amount2}円（当社負担）を現金で支払った。",
+        template:
+          "商品{amount1}円を仕入れ、引取運賃{amount2}円（当社負担）を現金で支払った。",
         accounts: ["仕入", "現金"],
         keywords: ["仕入諸掛", "引取運賃", "当社負担"],
       },
       {
         name: "仕入諸掛_先方負担立替",
-        template: "商品仕入時に運賃{amount}円（先方負担）を立て替えて支払った。",
+        template:
+          "商品仕入時に運賃{amount}円（先方負担）を立て替えて支払った。",
         accounts: ["立替金", "現金"],
         keywords: ["仕入諸掛", "先方負担", "立替金"],
       },
@@ -639,7 +661,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "売上諸掛_先方負担",
-        template: "商品{amount1}円を販売し、配送費{amount2}円は顧客負担として売上に加算した。",
+        template:
+          "商品{amount1}円を販売し、配送費{amount2}円は顧客負担として売上に加算した。",
         accounts: ["売掛金", "売上"],
         keywords: ["配送費", "先方負担", "売上加算"],
       },
@@ -671,19 +694,22 @@ const JOURNAL_TEMPLATES = {
       // 決算関連パターン（8問）
       {
         name: "売上原価_対立法",
-        template: "決算において、期首商品{amount1}円を仕入に振り替え、期末商品{amount2}円を仕入から控除した。",
+        template:
+          "決算において、期首商品{amount1}円を仕入に振り替え、期末商品{amount2}円を仕入から控除した。",
         accounts: ["仕入", "繰越商品"],
         keywords: ["売上原価", "対立法", "期首商品"],
       },
       {
         name: "分記法転換",
-        template: "分記法から三分法に転換するため、商品勘定{amount}円を仕入勘定に振り替えた。",
+        template:
+          "分記法から三分法に転換するため、商品勘定{amount}円を仕入勘定に振り替えた。",
         accounts: ["仕入", "商品"],
         keywords: ["分記法", "三分法", "転換"],
       },
       {
         name: "商品決算振替",
-        template: "決算において、繰越商品勘定を使用して売上原価を算定した。期末商品{amount}円。",
+        template:
+          "決算において、繰越商品勘定を使用して売上原価を算定した。期末商品{amount}円。",
         accounts: ["繰越商品", "仕入"],
         keywords: ["決算振替", "繰越商品", "売上原価"],
       },
@@ -736,7 +762,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "売掛金一部回収",
-        template: "売掛金のうち{amount}円を現金で回収し、残額は次月回収予定とした。",
+        template:
+          "売掛金のうち{amount}円を現金で回収し、残額は次月回収予定とした。",
         accounts: ["現金", "売掛金"],
         keywords: ["売掛金", "一部回収", "残額"],
       },
@@ -766,7 +793,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "売掛金延滞",
-        template: "売掛金{amount}円の回収期限が延滞したため、延滞利息を請求した。",
+        template:
+          "売掛金{amount}円の回収期限が延滞したため、延滞利息を請求した。",
         accounts: ["売掛金", "受取利息"],
         keywords: ["売掛金", "延滞", "延滞利息"],
       },
@@ -784,7 +812,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "買掛金一部支払",
-        template: "買掛金のうち{amount}円を現金で支払い、残額は翌月支払予定とした。",
+        template:
+          "買掛金のうち{amount}円を現金で支払い、残額は翌月支払予定とした。",
         accounts: ["買掛金", "現金"],
         keywords: ["買掛金", "一部支払", "残額"],
       },
@@ -822,7 +851,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "受取手形決済",
-        template: "受取手形{amount}円が満期日に決済され、当座預金に入金された。",
+        template:
+          "受取手形{amount}円が満期日に決済され、当座預金に入金された。",
         accounts: ["当座預金", "受取手形"],
         keywords: ["受取手形", "満期決済", "当座預金"],
       },
@@ -834,7 +864,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "手形割引",
-        template: "受取手形{amount1}円を銀行で割り引き、手形割引料{amount2}円を差し引かれた。",
+        template:
+          "受取手形{amount1}円を銀行で割り引き、手形割引料{amount2}円を差し引かれた。",
         accounts: ["当座預金", "手形割引料", "受取手形"],
         keywords: ["手形割引", "割引料", "銀行"],
       },
@@ -858,7 +889,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "手形取立依頼",
-        template: "受取手形{amount1}円の取立を銀行に依頼し、取立手数料{amount2}円を支払った。",
+        template:
+          "受取手形{amount1}円の取立を銀行に依頼し、取立手数料{amount2}円を支払った。",
         accounts: ["当座預金", "支払手数料", "受取手形"],
         keywords: ["手形取立", "取立手数料", "銀行"],
       },
@@ -870,25 +902,29 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "支払手形決済",
-        template: "支払手形{amount}円が満期日に決済され、当座預金から支払われた。",
+        template:
+          "支払手形{amount}円が満期日に決済され、当座預金から支払われた。",
         accounts: ["支払手形", "当座預金"],
         keywords: ["支払手形", "満期決済", "当座預金"],
       },
       {
         name: "手形期日前決済",
-        template: "支払手形{amount1}円を期日前に決済し、割引料{amount2}円の収益が発生した。",
+        template:
+          "支払手形{amount1}円を期日前に決済し、割引料{amount2}円の収益が発生した。",
         accounts: ["支払手形", "現金", "受取利息"],
         keywords: ["期日前決済", "割引料", "収益"],
       },
       {
         name: "手形書替",
-        template: "支払手形{amount1}円を更新し、利息{amount2}円を現金で支払った。",
+        template:
+          "支払手形{amount1}円を更新し、利息{amount2}円を現金で支払った。",
         accounts: ["支払手形", "支払利息", "現金"],
         keywords: ["手形更新", "書替え", "利息"],
       },
       {
         name: "支払手形不渡",
-        template: "支払手形{amount}円が不渡りとなり、当座預金取引が停止された。",
+        template:
+          "支払手形{amount}円が不渡りとなり、当座預金取引が停止された。",
         accounts: ["支払手形", "当座預金"],
         keywords: ["支払手形", "不渡り", "取引停止"],
       },
@@ -962,7 +998,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "借入金繰上返済",
-        template: "借入金{amount1}円を期限前に返済し、経過利息{amount2}円を支払った。",
+        template:
+          "借入金{amount1}円を期限前に返済し、経過利息{amount2}円を支払った。",
         accounts: ["借入金", "支払利息", "当座預金"],
         keywords: ["借入金", "繰上返済", "経過利息"],
       },
@@ -979,13 +1016,15 @@ const JOURNAL_TEMPLATES = {
       // 給与支払パターン（15問）
       {
         name: "月次給与_基本",
-        template: "従業員への給料{amount1}円を支給し、源泉所得税{amount2}円を差し引いた。",
+        template:
+          "従業員への給料{amount1}円を支給し、源泉所得税{amount2}円を差し引いた。",
         accounts: ["給料", "現金", "預り金"],
         keywords: ["給料", "源泉所得税", "預り金"],
       },
       {
         name: "基本給_諸手当",
-        template: "基本給{amount1}円と残業代{amount2}円の合計を給料として支給した。",
+        template:
+          "基本給{amount1}円と残業代{amount2}円の合計を給料として支給した。",
         accounts: ["給料", "現金"],
         keywords: ["基本給", "残業代", "諸手当"],
       },
@@ -1003,13 +1042,15 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "社会保険料_従業員",
-        template: "給料支払時に社会保険料（従業員負担分）{amount}円を差し引いた。",
+        template:
+          "給料支払時に社会保険料（従業員負担分）{amount}円を差し引いた。",
         accounts: ["給料", "預り金", "現金"],
         keywords: ["社会保険料", "従業員負担", "預り金"],
       },
       {
         name: "雇用保険料_従業員",
-        template: "給料支払時に雇用保険料（従業員負担分）{amount}円を差し引いた。",
+        template:
+          "給料支払時に雇用保険料（従業員負担分）{amount}円を差し引いた。",
         accounts: ["給料", "預り金", "現金"],
         keywords: ["雇用保険料", "従業員負担", "預り金"],
       },
@@ -1027,7 +1068,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "賞与支給",
-        template: "従業員に賞与{amount1}円を支給し、各種控除{amount2}円を差し引いた。",
+        template:
+          "従業員に賞与{amount1}円を支給し、各種控除{amount2}円を差し引いた。",
         accounts: ["賞与", "現金", "預り金"],
         keywords: ["賞与", "控除", "預り金"],
       },
@@ -1039,19 +1081,22 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "退職金支給",
-        template: "退職者に退職金{amount1}円を支給し、退職所得控除後の源泉税{amount2}円を差し引いた。",
+        template:
+          "退職者に退職金{amount1}円を支給し、退職所得控除後の源泉税{amount2}円を差し引いた。",
         accounts: ["退職金", "現金", "預り金"],
         keywords: ["退職金", "退職所得控除", "源泉税"],
       },
       {
         name: "役員報酬",
-        template: "役員報酬{amount1}円を支給し、源泉所得税{amount2}円を差し引いた。",
+        template:
+          "役員報酬{amount1}円を支給し、源泉所得税{amount2}円を差し引いた。",
         accounts: ["役員報酬", "現金", "預り金"],
         keywords: ["役員報酬", "源泉所得税", "役員"],
       },
       {
         name: "法定福利費",
-        template: "社会保険料の会社負担分{amount}円を法定福利費として計上した。",
+        template:
+          "社会保険料の会社負担分{amount}円を法定福利費として計上した。",
         accounts: ["法定福利費", "未払金"],
         keywords: ["法定福利費", "会社負担", "社会保険料"],
       },
@@ -1095,13 +1140,15 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "退職金_源泉税",
-        template: "退職金から源泉所得税{amount}円（退職所得控除後）を天引きした。",
+        template:
+          "退職金から源泉所得税{amount}円（退職所得控除後）を天引きした。",
         accounts: ["退職金", "預り金", "現金"],
         keywords: ["退職金", "源泉税", "退職所得控除"],
       },
       {
         name: "報酬_源泉税",
-        template: "外注費{amount1}円の支払時に源泉所得税{amount2}円（10.21%）を天引きした。",
+        template:
+          "外注費{amount1}円の支払時に源泉所得税{amount2}円（10.21%）を天引きした。",
         accounts: ["外注費", "預り金", "現金"],
         keywords: ["報酬", "外注費", "10.21%"],
       },
@@ -1137,7 +1184,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "住民税_退職者",
-        template: "退職者の住民税{amount}円を一括徴収し、普通徴収に切り替えた。",
+        template:
+          "退職者の住民税{amount}円を一括徴収し、普通徴収に切り替えた。",
         accounts: ["預り金", "現金"],
         keywords: ["住民税", "退職者", "普通徴収"],
       },
@@ -1151,19 +1199,22 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "厚生年金_従業員負担",
-        template: "厚生年金保険料の従業員負担分{amount}円を給料から天引きした。",
+        template:
+          "厚生年金保険料の従業員負担分{amount}円を給料から天引きした。",
         accounts: ["給料", "預り金", "現金"],
         keywords: ["厚生年金", "従業員負担", "天引き"],
       },
       {
         name: "社会保険料_会社負担",
-        template: "社会保険料の会社負担分{amount}円を法定福利費として計上した。",
+        template:
+          "社会保険料の会社負担分{amount}円を法定福利費として計上した。",
         accounts: ["法定福利費", "未払金"],
         keywords: ["社会保険料", "会社負担", "法定福利費"],
       },
       {
         name: "社会保険料_納付",
-        template: "社会保険料{amount1}円（従業員負担{amount2}円、会社負担{amount3}円）を納付した。",
+        template:
+          "社会保険料{amount1}円（従業員負担{amount2}円、会社負担{amount3}円）を納付した。",
         accounts: ["預り金", "未払金", "現金"],
         keywords: ["社会保険料", "納付", "従業員会社負担"],
       },
@@ -1181,7 +1232,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "労災保険料",
-        template: "労災保険料{amount}円を全額会社負担として法定福利費に計上した。",
+        template:
+          "労災保険料{amount}円を全額会社負担として法定福利費に計上した。",
         accounts: ["法定福利費", "未払金"],
         keywords: ["労災保険料", "全額会社負担", "法定福利費"],
       },
@@ -1193,7 +1245,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "労働保険料_年度更新",
-        template: "労働保険料の年度更新により、概算保険料{amount}円を納付した。",
+        template:
+          "労働保険料の年度更新により、概算保険料{amount}円を納付した。",
         accounts: ["法定福利費", "現金"],
         keywords: ["労働保険料", "年度更新", "概算保険料"],
       },
@@ -1213,13 +1266,15 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "法人税_修正申告",
-        template: "過年度法人税等の修正申告により追徴課税{amount}円を納付した。",
+        template:
+          "過年度法人税等の修正申告により追徴課税{amount}円を納付した。",
         accounts: ["租税公課", "現金"],
         keywords: ["法人税", "修正申告", "追徴課税"],
       },
       {
         name: "法人税_還付",
-        template: "法人税等の還付{amount1}円と還付加算金{amount2}円を受け取った。",
+        template:
+          "法人税等の還付{amount1}円と還付加算金{amount2}円を受け取った。",
         accounts: ["現金", "法人税等", "雑収入"],
         keywords: ["法人税", "還付", "還付加算金"],
       },
@@ -1254,7 +1309,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "固定資産_付随費用",
-        template: "建物{amount1}円を購入し、登記費用{amount2}円を現金で支払った。",
+        template:
+          "建物{amount1}円を購入し、登記費用{amount2}円を現金で支払った。",
         accounts: ["建物", "現金"],
         keywords: ["建物", "付随費用", "登記費用"],
       },
@@ -1272,7 +1328,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "固定資産_交換",
-        template: "旧備品{amount1}円と新備品{amount2}円を交換し、差額を現金で支払った。",
+        template:
+          "旧備品{amount1}円と新備品{amount2}円を交換し、差額を現金で支払った。",
         accounts: ["備品", "現金", "備品"],
         keywords: ["固定資産", "交換", "差額"],
       },
@@ -1314,13 +1371,15 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "リース資産",
-        template: "リース資産{amount1}円を取得し、リース料{amount2}円を支払った。",
+        template:
+          "リース資産{amount1}円を取得し、リース料{amount2}円を支払った。",
         accounts: ["リース資産", "現金", "リース債務"],
         keywords: ["リース資産", "リース料", "リース債務"],
       },
       {
         name: "無形固定資産",
-        template: "ソフトウェア{amount}円を購入し、無形固定資産として計上した。",
+        template:
+          "ソフトウェア{amount}円を購入し、無形固定資産として計上した。",
         accounts: ["ソフトウェア", "現金"],
         keywords: ["ソフトウェア", "無形固定資産", "購入"],
       },
@@ -1334,61 +1393,71 @@ const JOURNAL_TEMPLATES = {
       // 減価償却パターン（15問）
       {
         name: "定額法_年間",
-        template: "建物（取得原価{amount1}円、耐用年数{years}年）の定額法による年間減価償却費を計算した。",
+        template:
+          "建物（取得原価{amount1}円、耐用年数{years}年）の定額法による年間減価償却費を計算した。",
         accounts: ["減価償却費", "建物減価償却累計額"],
         keywords: ["定額法", "年間", "減価償却費"],
       },
       {
         name: "定額法_月割",
-        template: "期中取得した車両の定額法による減価償却費{amount}円を月割計算した。",
+        template:
+          "期中取得した車両の定額法による減価償却費{amount}円を月割計算した。",
         accounts: ["減価償却費", "車両減価償却累計額"],
         keywords: ["定額法", "月割計算", "期中取得"],
       },
       {
         name: "定額法_残存価額",
-        template: "機械装置（取得原価{amount1}円、残存価額{amount2}円）の減価償却費を計算した。",
+        template:
+          "機械装置（取得原価{amount1}円、残存価額{amount2}円）の減価償却費を計算した。",
         accounts: ["減価償却費", "機械装置減価償却累計額"],
         keywords: ["定額法", "残存価額", "機械装置"],
       },
       {
         name: "定額法_累計額",
-        template: "備品の減価償却累計額が{amount}円となり、帳簿価額を算定した。",
+        template:
+          "備品の減価償却累計額が{amount}円となり、帳簿価額を算定した。",
         accounts: ["減価償却費", "備品減価償却累計額"],
         keywords: ["定額法", "累計額", "帳簿価額"],
       },
       {
         name: "定額法_耐用年数変更",
-        template: "車両の耐用年数変更により、減価償却費{amount}円を再計算した。",
+        template:
+          "車両の耐用年数変更により、減価償却費{amount}円を再計算した。",
         accounts: ["減価償却費", "車両減価償却累計額"],
         keywords: ["定額法", "耐用年数変更", "再計算"],
       },
       {
         name: "少額減価償却資産",
-        template: "30万円未満の備品{amount}円を少額減価償却資産として即時償却した。",
+        template:
+          "30万円未満の備品{amount}円を少額減価償却資産として即時償却した。",
         accounts: ["減価償却費", "備品"],
         keywords: ["少額減価償却", "30万円未満", "即時償却"],
       },
       {
         name: "定率法_年間",
-        template: "機械装置（取得原価{amount}円）の定率法による年間減価償却費を計算した。",
+        template:
+          "機械装置（取得原価{amount}円）の定率法による年間減価償却費を計算した。",
         accounts: ["減価償却費", "機械装置減価償却累計額"],
         keywords: ["定率法", "年間", "機械装置"],
       },
       {
         name: "定率法_月割",
-        template: "期中取得した備品の定率法による減価償却費{amount}円を月割計算した。",
+        template:
+          "期中取得した備品の定率法による減価償却費{amount}円を月割計算した。",
         accounts: ["減価償却費", "備品減価償却累計額"],
         keywords: ["定率法", "月割計算", "期中取得"],
       },
       {
         name: "定率法_改定取得価額",
-        template: "定率法の改定取得価額により、減価償却費{amount}円を計算した。",
+        template:
+          "定率法の改定取得価額により、減価償却費{amount}円を計算した。",
         accounts: ["減価償却費", "車両減価償却累計額"],
         keywords: ["定率法", "改定取得価額", "保証率"],
       },
       {
         name: "定率法_定額法切替",
-        template: "定率法の償却保証額により、定額法に切り替えて{amount}円を計算した。",
+        template:
+          "定率法の償却保証額により、定額法に切り替えて{amount}円を計算した。",
         accounts: ["減価償却費", "機械装置減価償却累計額"],
         keywords: ["定率法", "定額法切替", "償却保証額"],
       },
@@ -1400,19 +1469,22 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "中古資産_定率法",
-        template: "中古機械装置の定率法による耐用年数短縮で{amount}円を計算した。",
+        template:
+          "中古機械装置の定率法による耐用年数短縮で{amount}円を計算した。",
         accounts: ["減価償却費", "機械装置減価償却累計額"],
         keywords: ["中古資産", "定率法", "耐用年数短縮"],
       },
       {
         name: "一括償却資産",
-        template: "20万円未満の備品{amount}円を一括償却資産として3年均等償却した。",
+        template:
+          "20万円未満の備品{amount}円を一括償却資産として3年均等償却した。",
         accounts: ["減価償却費", "一括償却資産"],
         keywords: ["一括償却資産", "20万円未満", "3年均等"],
       },
       {
         name: "少額資産",
-        template: "10万円未満の消耗品{amount}円を少額資産として即時損金算入した。",
+        template:
+          "10万円未満の消耗品{amount}円を少額資産として即時損金算入した。",
         accounts: ["消耗品費", "現金"],
         keywords: ["少額資産", "10万円未満", "即時損金"],
       },
@@ -1426,14 +1498,21 @@ const JOURNAL_TEMPLATES = {
       // 売却・除却パターン（10問）
       {
         name: "固定資産_売却益",
-        template: "帳簿価額{amount1}円の車両を{amount2}円で売却し、売却益が発生した。",
+        template:
+          "帳簿価額{amount1}円の車両を{amount2}円で売却し、売却益が発生した。",
         accounts: ["現金", "車両減価償却累計額", "車両", "固定資産売却益"],
         keywords: ["固定資産売却", "車両", "売却益"],
       },
       {
         name: "固定資産_売却損",
-        template: "帳簿価額{amount1}円の機械装置を{amount2}円で売却し、売却損が発生した。",
-        accounts: ["現金", "機械装置減価償却累計額", "固定資産売却損", "機械装置"],
+        template:
+          "帳簿価額{amount1}円の機械装置を{amount2}円で売却し、売却損が発生した。",
+        accounts: [
+          "現金",
+          "機械装置減価償却累計額",
+          "固定資産売却損",
+          "機械装置",
+        ],
         keywords: ["固定資産売却", "機械装置", "売却損"],
       },
       {
@@ -1444,19 +1523,22 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "分割売却",
-        template: "建物{amount1}円を分割売却し、第1回分{amount2}円を受け取った。",
+        template:
+          "建物{amount1}円を分割売却し、第1回分{amount2}円を受け取った。",
         accounts: ["現金", "売掛金", "建物減価償却累計額", "建物"],
         keywords: ["分割売却", "割賦売却", "建物"],
       },
       {
         name: "固定資産_交換",
-        template: "旧車両と新車両を交換し、交換差金{amount}円で交換損益を計算した。",
+        template:
+          "旧車両と新車両を交換し、交換差金{amount}円で交換損益を計算した。",
         accounts: ["車両", "現金", "車両減価償却累計額", "車両"],
         keywords: ["固定資産", "交換", "交換損益"],
       },
       {
         name: "売却時消費税",
-        template: "建物{amount1}円を売却し、消費税{amount2}円を課税売上として処理した。",
+        template:
+          "建物{amount1}円を売却し、消費税{amount2}円を課税売上として処理した。",
         accounts: ["現金", "建物減価償却累計額", "建物", "固定資産売却益"],
         keywords: ["売却", "消費税", "課税売上"],
       },
@@ -1491,7 +1573,8 @@ const JOURNAL_TEMPLATES = {
       // 引当金パターン（10問）
       {
         name: "貸倒引当金_設定",
-        template: "売掛金{amount1}円に対して{percent}%の貸倒引当金を差額補充法で設定する。",
+        template:
+          "売掛金{amount1}円に対して{percent}%の貸倒引当金を差額補充法で設定する。",
         accounts: ["貸倒引当金繰入", "貸倒引当金"],
         keywords: ["貸倒引当金", "差額補充法", "売掛金"],
       },
@@ -1503,13 +1586,15 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "実際貸倒_引当金充当",
-        template: "売掛金{amount1}円が貸倒れ、引当金{amount2}円を充当し、不足分は損失とした。",
+        template:
+          "売掛金{amount1}円が貸倒れ、引当金{amount2}円を充当し、不足分は損失とした。",
         accounts: ["貸倒引当金", "貸倒損失", "売掛金"],
         keywords: ["実際貸倒", "引当金充当", "不足分"],
       },
       {
         name: "償却債権取立益",
-        template: "既に償却した債権{amount}円が回収され、償却債権取立益とした。",
+        template:
+          "既に償却した債権{amount}円が回収され、償却債権取立益とした。",
         accounts: ["現金", "償却債権取立益"],
         keywords: ["償却債権", "取立益", "回収"],
       },
@@ -1645,7 +1730,8 @@ const JOURNAL_TEMPLATES = {
       // その他決算整理パターン（15問）
       {
         name: "消耗品棚卸",
-        template: "消耗品費{amount1}円のうち、期末在庫{amount2}円を資産に振り替える。",
+        template:
+          "消耗品費{amount1}円のうち、期末在庫{amount2}円を資産に振り替える。",
         accounts: ["消耗品", "消耗品費"],
         keywords: ["消耗品", "棚卸", "資産計上"],
       },
@@ -1711,7 +1797,8 @@ const JOURNAL_TEMPLATES = {
       },
       {
         name: "売上原価_算定",
-        template: "期首商品{amount1}円と期末商品{amount2}円により売上原価を算定する。",
+        template:
+          "期首商品{amount1}円と期末商品{amount2}円により売上原価を算定する。",
         accounts: ["仕入", "繰越商品"],
         keywords: ["売上原価", "期首期末", "算定"],
       },
@@ -1852,7 +1939,7 @@ function serializeTags(tags: QuestionTags): string {
 function getCategoryLayer1(subcategory: string): string {
   const categoryMap: Record<string, string> = {
     cash_deposit: "現金・預金取引",
-    sales_purchase: "商品売買取引", 
+    sales_purchase: "商品売買取引",
     receivable_payable: "債権・債務",
     salary_tax: "給与・税金",
     fixed_asset: "固定資産",
@@ -1865,7 +1952,7 @@ function getCategoryLayer2(subcategory: string, patternName: string): string {
   const patternMap: Record<string, Record<string, string>> = {
     cash_deposit: {
       cash_transaction: "現金取引パターン",
-      checking_account: "当座預金パターン", 
+      checking_account: "当座預金パターン",
       savings_deposit: "普通預金・定期預金パターン",
     },
     sales_purchase: {
@@ -1876,7 +1963,7 @@ function getCategoryLayer2(subcategory: string, patternName: string): string {
     },
     receivable_payable: {
       accounts_receivable_payable: "売掛金・買掛金パターン",
-      promissory_notes: "手形取引パターン", 
+      promissory_notes: "手形取引パターン",
       loans_borrowings: "貸借取引パターン",
     },
     salary_tax: {
@@ -1892,11 +1979,11 @@ function getCategoryLayer2(subcategory: string, patternName: string): string {
     },
     adjustment: {
       allowances: "引当金パターン",
-      accrual_accounts: "経過勘定パターン", 
+      accrual_accounts: "経過勘定パターン",
       other_adjustments: "その他決算整理パターン",
     },
   };
-  
+
   return patternMap[subcategory]?.[patternName] || patternName;
 }
 
@@ -1905,35 +1992,38 @@ function getCategoryLayer2(subcategory: string, patternName: string): string {
 function generateJournalQuestions(): Question[] {
   const questions: Question[] = [];
   let questionIndex = 1;
-  
+
   // 総問題数を計算
   const totalQuestions = QUESTION_TARGETS.journal.total;
 
   // problemsStrategy.mdの順序に従って問題を生成
   const orderedSubcategories = [
-    'cash_deposit',
-    'sales_purchase', 
-    'receivable_payable',
-    'salary_tax',
-    'fixed_asset',
-    'adjustment'
+    "cash_deposit",
+    "sales_purchase",
+    "receivable_payable",
+    "salary_tax",
+    "fixed_asset",
+    "adjustment",
   ];
 
   // 各サブカテゴリーごとに問題を生成
   for (const subcategory of orderedSubcategories) {
-    const subcategoryConfig = QUESTION_TARGETS.journal.subcategories[subcategory as JournalSubCategory];
+    const subcategoryConfig =
+      QUESTION_TARGETS.journal.subcategories[subcategory as JournalSubCategory];
     const templates = JOURNAL_TEMPLATES[subcategory as JournalSubCategory];
-    
+
     if (!subcategoryConfig || !templates) continue;
 
     // 通常の処理でmodulo使用を防ぐため、全subcategoryで統一処理
     const targetCount = subcategoryConfig.total;
-    
+
     for (let i = 0; i < targetCount; i++) {
       // パターンを順番に選択（modulo使用を避ける）
-      const patternIndex = Math.floor(i * templates.patterns.length / targetCount);
+      const patternIndex = Math.floor(
+        (i * templates.patterns.length) / targetCount,
+      );
       const pattern = templates.patterns[patternIndex] || templates.patterns[0];
-      
+
       if (!pattern) continue;
 
       const difficulty = calculateDifficulty(
@@ -2003,30 +2093,45 @@ function generateJournalQuestions(): Question[] {
 
       // パターンカテゴリーを取得（現金過不足、小口現金など）
       let patternCategory = pattern.name;
-      if (pattern.name.includes('現金過不足')) {
-        patternCategory = '現金過不足';
-      } else if (pattern.name.includes('小口現金')) {
-        patternCategory = '小口現金';
-      } else if (pattern.name.includes('当座')) {
-        patternCategory = '当座預金';
-      } else if (pattern.name.includes('普通預金')) {
-        patternCategory = '普通預金';
-      } else if (pattern.name.includes('定期預金')) {
-        patternCategory = '定期預金';
-      } else if (pattern.name.includes('売上') || pattern.name.includes('仕入')) {
-        patternCategory = '商品売買';
-      } else if (pattern.name.includes('売掛金') || pattern.name.includes('買掛金')) {
-        patternCategory = '売掛買掛';
-      } else if (pattern.name.includes('手形')) {
-        patternCategory = '手形取引';
-      } else if (pattern.name.includes('給与')) {
-        patternCategory = '給与';
-      } else if (pattern.name.includes('税金') || pattern.name.includes('源泉')) {
-        patternCategory = '税金';
-      } else if (pattern.name.includes('固定資産') || pattern.name.includes('減価償却')) {
-        patternCategory = '固定資産';
-      } else if (pattern.name.includes('決算') || pattern.name.includes('整理')) {
-        patternCategory = '決算整理';
+      if (pattern.name.includes("現金過不足")) {
+        patternCategory = "現金過不足";
+      } else if (pattern.name.includes("小口現金")) {
+        patternCategory = "小口現金";
+      } else if (pattern.name.includes("当座")) {
+        patternCategory = "当座預金";
+      } else if (pattern.name.includes("普通預金")) {
+        patternCategory = "普通預金";
+      } else if (pattern.name.includes("定期預金")) {
+        patternCategory = "定期預金";
+      } else if (
+        pattern.name.includes("売上") ||
+        pattern.name.includes("仕入")
+      ) {
+        patternCategory = "商品売買";
+      } else if (
+        pattern.name.includes("売掛金") ||
+        pattern.name.includes("買掛金")
+      ) {
+        patternCategory = "売掛買掛";
+      } else if (pattern.name.includes("手形")) {
+        patternCategory = "手形取引";
+      } else if (pattern.name.includes("給与")) {
+        patternCategory = "給与";
+      } else if (
+        pattern.name.includes("税金") ||
+        pattern.name.includes("源泉")
+      ) {
+        patternCategory = "税金";
+      } else if (
+        pattern.name.includes("固定資産") ||
+        pattern.name.includes("減価償却")
+      ) {
+        patternCategory = "固定資産";
+      } else if (
+        pattern.name.includes("決算") ||
+        pattern.name.includes("整理")
+      ) {
+        patternCategory = "決算整理";
       }
 
       // problemsStrategy.md準拠の階層タグを生成

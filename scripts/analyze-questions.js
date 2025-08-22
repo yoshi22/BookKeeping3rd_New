@@ -1,3 +1,4 @@
+/* eslint-disable no-undef, @typescript-eslint/no-unused-vars, @typescript-eslint/no-var-requires */
 const fs = require("fs");
 const path = require("path");
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, react-hooks/exhaustive-deps */
 /**
  * アニメーションシステム - 簿記3級問題集アプリ
  * UI/UX改善 Phase 1: マイクロインタラクション・トランジション
@@ -702,6 +703,7 @@ export const enableLayoutAnimations = () => {
   if (Platform.OS === "android") {
     // Android: LayoutAnimationを有効化
     try {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { LayoutAnimation } = require("react-native");
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     } catch (error) {

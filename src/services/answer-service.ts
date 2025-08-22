@@ -11,7 +11,6 @@ import {
   QuestionTemplate,
   QuestionField,
   AnswerData,
-  JournalEntry,
   LedgerEntry,
   TrialBalanceEntry,
   FinancialStatementEntry,
@@ -476,7 +475,7 @@ export class AnswerService {
         } else if (answerTemplate?.type === "voucher_entry") {
           return this.isVoucherAnswerCorrect(answerData, correctAnswer);
         }
-      } catch (templateError) {}
+      } catch {}
 
       // Fall back to category-based routing
       switch (question.category_id) {

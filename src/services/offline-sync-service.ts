@@ -8,8 +8,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AppState, AppStateStatus } from "react-native";
 import { databaseService } from "../data/database";
 import { offlineCacheService } from "./offline-cache-service";
-import { StatisticsService } from "./statistics-service";
-import { ReviewService } from "./review-service";
 import { logger } from "../utils/logger";
 
 export interface SyncConfig {

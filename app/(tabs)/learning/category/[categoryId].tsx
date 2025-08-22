@@ -3,7 +3,7 @@
  * 仕訳・帳簿・試算表の各カテゴリに対応した問題選択UI
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { Screen } from "../../../../src/components/layout/ResponsiveLayout";
@@ -264,92 +264,18 @@ export default function CategoryDetailScreen() {
     if (categoryId) {
       loadData();
     }
-  }, [categoryId]);
+  }, [categoryId, loadLearningStats]);
 
   // フィルターが変更されたときに問題を再フィルタリング
   useEffect(() => {
     if (questions.length > 0) {
       applyFilters();
     }
-  }, [filters, questions]);
+  }, [filters, questions, applyFilters]);
 
-  // カテゴリ情報
-  const categoryInfo = {
-    journal: {
-      name: "第1問：仕訳問題",
-      description: "基本的な仕訳15問（各3点）",
-      icon: "📝",
-      color: categoryColors.journal,
-      examInfo: "本試験：15問・45点・20分",
-      levels: [
-        {
-          name: "基礎",
-          description: "基本的な商品売買・現金取引",
-          difficulty: 1 as QuestionDifficulty,
-        },
-        {
-          name: "応用",
-          description: "手形・固定資産・決算整理",
-          difficulty: 2 as QuestionDifficulty,
-        },
-        {
-          name: "総合",
-          description: "複合取引・応用問題",
-          difficulty: 3 as QuestionDifficulty,
-        },
-      ],
-    },
-    ledger: {
-      name: "第2問：帳簿・補助簿",
-      description: "帳簿記入・補助簿・伝票処理",
-      icon: "📋",
-      color: categoryColors.ledger,
-      examInfo: "本試験：2問・20点・20分",
-      levels: [
-        {
-          name: "基礎",
-          description: "勘定記入・補助簿記入",
-          difficulty: 1 as QuestionDifficulty,
-        },
-        {
-          name: "応用",
-          description: "伝票記入・理論問題",
-          difficulty: 2 as QuestionDifficulty,
-        },
-        {
-          name: "総合",
-          description: "複合的な帳簿処理",
-          difficulty: 3 as QuestionDifficulty,
-        },
-      ],
-    },
-    trial_balance: {
-      name: "第3問：決算書作成",
-      description: "財務諸表・精算表・試算表",
-      icon: "📊",
-      color: categoryColors.trialBalance,
-      examInfo: "本試験：1問・35点・20分",
-      levels: [
-        {
-          name: "基礎",
-          description: "財務諸表作成（基礎レベル）",
-          difficulty: 1 as QuestionDifficulty,
-        },
-        {
-          name: "応用",
-          description: "精算表作成（標準レベル）",
-          difficulty: 2 as QuestionDifficulty,
-        },
-        {
-          name: "総合",
-          description: "試算表作成（応用レベル）",
-          difficulty: 3 as QuestionDifficulty,
-        },
-      ],
-    },
-  };
+  // Category information removed as it was unused
 
-  const loadLearningStats = async () => {
+  const loadLearningStats = useCallback(async () => {
     try {
       const historyRepository = new LearningHistoryRepository();
 
@@ -392,7 +318,7 @@ export default function CategoryDetailScreen() {
     } catch (error) {
       logger.error("学習統計の読み込みに失敗:", error as Error);
     }
-  };
+  }, [categoryId]);
 
   // 学習状況別の問題数を取得する関数
   const getQuestionsForStatus = (
@@ -424,7 +350,7 @@ export default function CategoryDetailScreen() {
     }
   };
 
-  const applyFilters = () => {
+  const applyFilters = useCallback(() => {
     let filtered = [...questions];
 
     // 難易度フィルター（複数選択対応）
@@ -487,91 +413,100 @@ export default function CategoryDetailScreen() {
     }
 
     setFilteredQuestions(filtered);
-  };
+  }, [questions, filters, learningStats, getQuestionTypeFromQuestion]);
 
   // 問題から類型を推測する関数 (tags_jsonベース・動的分類)
-  const getQuestionTypeFromQuestion = (question: Question): string[] => {
-    try {
-      if (categoryId === "journal") {
-        // tags_jsonからsubcategoryを取得して分類
-        const tags = JSON.parse(question.tags_json || "{}");
-        const subcategory = tags.subcategory;
+  const getQuestionTypeFromQuestion = useCallback(
+    (question: Question): string[] => {
+      try {
+        if (categoryId === "journal") {
+          // tags_jsonからsubcategoryを取得して分類
+          const tags = JSON.parse(question.tags_json || "{}");
+          const subcategory = tags.subcategory;
 
-        // subcategoryからquestion typeへのマッピング
-        const subcategoryToType: Record<string, string> = {
-          // 現金・預金関連
-          cash_deposit: "cash_deposit",
+          // subcategoryからquestion typeへのマッピング
+          const subcategoryToType: Record<string, string> = {
+            // 現金・預金関連
+            cash_deposit: "cash_deposit",
 
-          // 商品売買関連
-          sales_purchase: "sales_purchase",
-          merchandise: "sales_purchase",
-          shipping_special: "sales_purchase",
+            // 商品売買関連
+            sales_purchase: "sales_purchase",
+            merchandise: "sales_purchase",
+            shipping_special: "sales_purchase",
 
-          // 債権・債務関連
-          receivable_payable: "receivable_payable",
-          bill_of_exchange: "receivable_payable",
-          lending_borrowing: "receivable_payable",
+            // 債権・債務関連
+            receivable_payable: "receivable_payable",
+            bill_of_exchange: "receivable_payable",
+            lending_borrowing: "receivable_payable",
 
-          // 給与・税金関連
-          salary_tax: "salary_tax",
-          salary_payment: "salary_tax",
-          salary_withholding: "salary_tax",
-          payroll: "salary_tax",
-          social_insurance: "salary_tax",
-          source_tax: "salary_tax",
-          corporate_tax: "salary_tax",
+            // 給与・税金関連
+            salary_tax: "salary_tax",
+            salary_payment: "salary_tax",
+            salary_withholding: "salary_tax",
+            payroll: "salary_tax",
+            social_insurance: "salary_tax",
+            source_tax: "salary_tax",
+            corporate_tax: "salary_tax",
 
-          // 固定資産関連
-          fixed_asset: "fixed_asset",
-          fixed_asset_disposal: "fixed_asset",
+            // 固定資産関連
+            fixed_asset: "fixed_asset",
+            fixed_asset_disposal: "fixed_asset",
 
-          // 決算整理関連
-          adjustment: "adjustment",
-        };
+            // 決算整理関連
+            adjustment: "adjustment",
+          };
 
-        const questionType = subcategoryToType[subcategory];
-        return questionType ? [questionType] : ["other"];
-      } else if (categoryId === "ledger") {
-        // Use tags_json for dynamic categorization
-        const tags = JSON.parse(question.tags_json || "{}");
-        const subcategory = tags.subcategory;
+          const questionType = subcategoryToType[subcategory];
+          return questionType ? [questionType] : ["other"];
+        } else if (categoryId === "ledger") {
+          // Use tags_json for dynamic categorization
+          const tags = JSON.parse(question.tags_json || "{}");
+          const subcategory = tags.subcategory;
 
-        const subcategoryToType: Record<string, string> = {
-          general_ledger: "account_entry", // Q_L_001-010: 勘定記入問題
-          subsidiary_ledger: "subsidiary_books", // Q_L_011-020: 補助簿記入問題
-          voucher: "voucher_entry", // Q_L_021-030: 伝票記入問題
-          theory: "theory_selection", // Q_L_031-040: 理論・選択問題
-        };
+          const subcategoryToType: Record<string, string> = {
+            general_ledger: "account_entry", // Q_L_001-010: 勘定記入問題
+            subsidiary_ledger: "subsidiary_books", // Q_L_011-020: 補助簿記入問題
+            voucher: "voucher_entry", // Q_L_021-030: 伝票記入問題
+            theory: "theory_selection", // Q_L_031-040: 理論・選択問題
+          };
 
-        const questionType = subcategoryToType[subcategory];
-        return questionType ? [questionType] : ["other"];
-      } else if (categoryId === "trial_balance") {
-        // 第3問の分類（3パターン×4難易度=12問）
-        const questionId = question.id;
+          const questionType = subcategoryToType[subcategory];
+          return questionType ? [questionType] : ["other"];
+        } else if (categoryId === "trial_balance") {
+          // 第3問の分類（3パターン×4難易度=12問）
+          const questionId = question.id;
 
-        // パターン1: 財務諸表作成 (4問)
-        if (["Q_T_001", "Q_T_002", "Q_T_003", "Q_T_004"].includes(questionId)) {
-          return ["financial_statements"];
-        }
+          // パターン1: 財務諸表作成 (4問)
+          if (
+            ["Q_T_001", "Q_T_002", "Q_T_003", "Q_T_004"].includes(questionId)
+          ) {
+            return ["financial_statements"];
+          }
 
-        // パターン2: 精算表作成 (4問)
-        if (["Q_T_005", "Q_T_006", "Q_T_007", "Q_T_008"].includes(questionId)) {
-          return ["worksheet"];
-        }
+          // パターン2: 精算表作成 (4問)
+          if (
+            ["Q_T_005", "Q_T_006", "Q_T_007", "Q_T_008"].includes(questionId)
+          ) {
+            return ["worksheet"];
+          }
 
-        // パターン3: 試算表作成 (4問)
-        if (["Q_T_009", "Q_T_010", "Q_T_011", "Q_T_012"].includes(questionId)) {
+          // パターン3: 試算表作成 (4問)
+          if (
+            ["Q_T_009", "Q_T_010", "Q_T_011", "Q_T_012"].includes(questionId)
+          ) {
+            return ["trial_balance"];
+          }
+
+          // フォールバック: デフォルトは試算表
           return ["trial_balance"];
         }
-
-        // フォールバック: デフォルトは試算表
-        return ["trial_balance"];
+        return ["other"];
+      } catch {
+        return ["other"];
       }
-      return ["other"];
-    } catch (e) {
-      return ["other"];
-    }
-  };
+    },
+    [categoryId],
+  );
 
   const toggleDifficultyFilter = (levelGroup: QuestionDifficulty[]) => {
     // 複数レベルのグループを処理
@@ -687,7 +622,7 @@ export default function CategoryDetailScreen() {
       }
 
       return tagLabels.slice(0, 3); // 最大3つまで
-    } catch (e) {
+    } catch {
       logger.error("タグ解析エラー:", e as Error);
       return [];
     }
@@ -999,11 +934,8 @@ export default function CategoryDetailScreen() {
               style={styles.questionCard}
               onPress={() => {
                 // フィルタ済み問題リストをクエリパラメータとして渡す
-                const filteredIds = filteredQuestions
-                  .map((q) => q.id)
-                  .join(",");
                 router.push(
-                  `/(tabs)/learning/question/${question.id}?filteredQuestions=${filteredIds}&sessionType=learning`,
+                  `/(tabs)/learning/question/${question.id}?sessionType=learning&categoryId=${categoryId}`,
                 );
               }}
             >

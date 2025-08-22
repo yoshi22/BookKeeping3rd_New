@@ -4,7 +4,6 @@
  */
 
 import { QuestionDifficulty } from "@/types/models";
-import { LearningCategory } from "./learning-paths";
 
 export interface DifficultyMatrix {
   categoryId: string;

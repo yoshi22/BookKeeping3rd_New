@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from "react-native";
-import { useTheme, useThemedStyles, type Theme } from "../../context/ThemeContext";
+import { useTheme, useThemedStyles } from "../../context/ThemeContext";
 import {
   useAccessibility,
   useFocusManagement,
@@ -57,7 +57,7 @@ export function Card({
   elementId,
   ...props
 }: CardProps) {
-  const { theme } = useTheme();
+  useTheme();
   const styles = useThemedStyles(createStyles);
 
   // アクセシビリティフック（Phase 1）

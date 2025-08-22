@@ -4,9 +4,6 @@
  */
 
 import { databaseService } from "../data/database";
-import { learningHistoryRepository } from "../data/repositories/learning-history-repository";
-import { reviewItemRepository } from "../data/repositories/review-item-repository";
-import { questionRepository } from "../data/repositories/question-repository";
 import { logger } from "../utils/logger";
 import { QuestionCategory } from "../types/models";
 

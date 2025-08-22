@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable */
 
 /**
  * problemsStrategy.mdに合わせた強制バランス調整分類ロジック

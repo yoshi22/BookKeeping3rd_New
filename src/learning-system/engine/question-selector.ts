@@ -3,7 +3,7 @@
  * 学習戦略に基づいて適切な問題を選択
  */
 
-import { Question, QuestionCategory, QuestionDifficulty } from "@/types/models";
+import { Question, QuestionDifficulty } from "@/types/models";
 import { LearningPhase, LEARNING_PHASES } from "../strategy/learning-paths";
 import {
   getRecommendedPhase,

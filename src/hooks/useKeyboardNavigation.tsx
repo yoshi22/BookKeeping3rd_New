@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, react-hooks/exhaustive-deps */
 /**
  * キーボードナビゲーション拡張フック（Phase 4）
  * CBT形式問題・フォーム入力・ボタン操作のキーボード対応

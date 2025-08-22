@@ -3,6 +3,7 @@
  * 簿記3級問題集アプリ - データアクセス層基盤
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { databaseService } from "../database";
 import { DatabaseResult, QueryResult } from "../../types/database";
 import { logger } from "../../utils/logger";

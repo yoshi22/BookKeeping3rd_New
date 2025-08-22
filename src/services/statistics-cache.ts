@@ -309,15 +309,9 @@ export class StatisticsCacheService {
   public performMaintenance(): void {
     logger.debug("[StatisticsCache] 定期メンテナンス開始");
 
-    const beforeCount = this.cache.size;
     this.cleanupExpiredEntries();
-    const afterCount = this.cache.size;
 
-    const cacheInfo = this.getCacheInfo();
-
-    logger.debug(
-      "[StatisticsCache] メンテナンス完了: ${beforeCount} -> ${afterCount}エントリ",
-    );
+    logger.debug("[StatisticsCache] メンテナンス完了");
     logger.debug(
       "[StatisticsCache] メモリ使用量: ${cacheInfo.memoryUsageKB}KB",
     );

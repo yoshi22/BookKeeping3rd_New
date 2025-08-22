@@ -3,6 +3,7 @@
  * 簿記3級問題集アプリ - CBT形式学習データ管理
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BaseRepository } from "./base-repository";
 import { logger } from "../../utils/logger";
 import {

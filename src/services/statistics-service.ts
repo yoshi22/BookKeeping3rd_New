@@ -185,16 +185,21 @@ export class StatisticsService {
       statisticsCache.setOverallStats(statistics);
 
       logger.debug("[StatisticsService] 全体学習統計取得完了");
-      logger.debug("[StatisticsService] 統計データ:", { details: {
-        totalQuestions: statistics.totalQuestions,
-        answeredQuestions: statistics.answeredQuestions,
-        correctAnswers: statistics.correctAnswers,
-        incorrectAnswers: statistics.incorrectAnswers,
-      } });
+      logger.debug("[StatisticsService] 統計データ:", {
+        details: {
+          totalQuestions: statistics.totalQuestions,
+          answeredQuestions: statistics.answeredQuestions,
+          correctAnswers: statistics.correctAnswers,
+          incorrectAnswers: statistics.incorrectAnswers,
+        },
+      });
 
       return statistics;
     } catch (error) {
-      logger.error("[StatisticsService] getOverallStatistics エラー:", error  as Error);
+      logger.error(
+        "[StatisticsService] getOverallStatistics エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -284,7 +289,10 @@ export class StatisticsService {
       logger.debug("[StatisticsService] カテゴリ別統計取得完了");
       return statistics;
     } catch (error) {
-      logger.error("[StatisticsService] getCategoryStatistics エラー:", error  as Error);
+      logger.error(
+        "[StatisticsService] getCategoryStatistics エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -356,7 +364,10 @@ export class StatisticsService {
       logger.debug("[StatisticsService] 日別学習統計取得完了");
       return result;
     } catch (error) {
-      logger.error("[StatisticsService] getDailyStatistics エラー:", error  as Error);
+      logger.error(
+        "[StatisticsService] getDailyStatistics エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -398,7 +409,10 @@ export class StatisticsService {
       logger.debug("[StatisticsService] 学習傾向分析完了");
       return trends;
     } catch (error) {
-      logger.error("[StatisticsService] getLearningTrends エラー:", error  as Error);
+      logger.error(
+        "[StatisticsService] getLearningTrends エラー:",
+        error as Error,
+      );
       throw error;
     }
   }
@@ -425,7 +439,6 @@ export class StatisticsService {
       };
 
       // 今日の実績
-      const today = new Date().toISOString().split("T")[0];
       const todayStats = await this.getDailyStatistics(1);
       const dailyAchieved = todayStats[0]?.questionsAnswered || 0;
 
@@ -473,7 +486,10 @@ export class StatisticsService {
       logger.debug("[StatisticsService] 学習目標進捗取得完了");
       return goals;
     } catch (error) {
-      logger.error("[StatisticsService] getLearningGoals エラー:", error  as Error);
+      logger.error(
+        "[StatisticsService] getLearningGoals エラー:",
+        error as Error,
+      );
       throw error;
     }
   }

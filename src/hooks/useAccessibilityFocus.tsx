@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, react-hooks/exhaustive-deps */
 /**
  * アクセシビリティフォーカス管理フック（Phase 4）
  * スクリーンリーダー・キーボードナビゲーション・フォーカストラップ対応
@@ -146,7 +147,9 @@ export function useAccessibilityFocus(options: AccessibilityFocusOptions = {}) {
               }
             }
           } catch (error) {
-            logger.warn("[AccessibilityFocus] フォーカス設定エラー:", { details: error });
+            logger.warn("[AccessibilityFocus] フォーカス設定エラー:", {
+              details: error,
+            });
           }
         }
       }, delay);

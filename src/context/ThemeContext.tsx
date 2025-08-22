@@ -3,6 +3,7 @@
  * ダークモード完全対応・システム設定連携・テーマ永続化
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   createContext,
   useContext,
@@ -208,9 +209,15 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         logger.debug("[ThemeProvider] テーマ設定復元完了");
       } catch (error) {
         const errorMessage =
-          error instanceof Error ? (error instanceof Error ? error : new Error(String(error))).message : String(error);
-        logger.error("[ThemeProvider] アプリ初期化エラー:", new Error(errorMessage));
-        logger.error("[ThemeProvider] エラー詳細:", error  as Error);
+          error instanceof Error
+            ? (error instanceof Error ? error : new Error(String(error)))
+                .message
+            : String(error);
+        logger.error(
+          "[ThemeProvider] アプリ初期化エラー:",
+          new Error(errorMessage),
+        );
+        logger.error("[ThemeProvider] エラー詳細:", error as Error);
         // エラーメッセージを短縮して表示
         const shortMessage =
           errorMessage.length > 100
@@ -226,7 +233,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     };
 
     initializeApp();
-  }, []);
+  }, [loadThemeSettings]);
 
   // テーマ設定の読み込み（Phase 4拡張）
   const loadThemeSettings = useCallback(async () => {
@@ -244,7 +251,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         setIsHighContrastMode(savedHighContrast === "true");
       }
     } catch (error) {
-      logger.error("[ThemeProvider] テーマ設定読み込みエラー:", error  as Error);
+      logger.error("[ThemeProvider] テーマ設定読み込みエラー:", error as Error);
     }
   }, []);
 
@@ -254,7 +261,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       setThemeModeState(mode);
       await AsyncStorage.setItem(THEME_STORAGE_KEY, mode);
     } catch (error) {
-      logger.error("[ThemeProvider] テーマモード保存エラー:", error  as Error);
+      logger.error("[ThemeProvider] テーマモード保存エラー:", error as Error);
     }
   }, []);
 
@@ -264,7 +271,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       setIsHighContrastMode(enabled);
       await AsyncStorage.setItem(HIGH_CONTRAST_STORAGE_KEY, enabled.toString());
     } catch (error) {
-      logger.error("[ThemeProvider] ハイコントラスト設定保存エラー:", error  as Error);
+      logger.error(
+        "[ThemeProvider] ハイコントラスト設定保存エラー:",
+        error as Error,
+      );
     }
   }, []);
 
@@ -274,7 +284,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       setCustomVariantState(variant);
       await AsyncStorage.setItem(CUSTOM_VARIANT_STORAGE_KEY, variant);
     } catch (error) {
-      logger.error("[ThemeProvider] カスタムテーマ設定保存エラー:", error  as Error);
+      logger.error(
+        "[ThemeProvider] カスタムテーマ設定保存エラー:",
+        error as Error,
+      );
     }
   }, []);
 

@@ -1,4 +1,5 @@
 const path = require("path");
+/* eslint-disable */
 const Database = require("better-sqlite3");
 
 /**

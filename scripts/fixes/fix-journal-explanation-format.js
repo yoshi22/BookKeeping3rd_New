@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-var-requires, no-console */
 /**
  * 第一問（仕訳問題）250問の詳細解説フォーマット統一スクリプト
  *

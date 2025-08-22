@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -30,9 +30,9 @@ export default function MockExamResultScreen() {
 
   useEffect(() => {
     calculateResults();
-  }, []);
+  }, [calculateResults]);
 
-  const calculateResults = async () => {
+  const calculateResults = useCallback(async () => {
     try {
       if (!sessionResult) {
         Alert.alert("エラー", "模試結果データが見つかりません");
@@ -43,20 +43,14 @@ export default function MockExamResultScreen() {
       // Parse the real session result from MockExamService
       const parsedResult = JSON.parse(sessionResult) as MockExamSessionResult;
 
-        totalScore: parsedResult.totalScore,
-        maxScore: parsedResult.maxScore,
-        isPassed: parsedResult.isPassed,
-        duration: parsedResult.duration,
-      });
-
       setResult(parsedResult);
-    } catch (error) {
+    } catch {
       Alert.alert("エラー", "結果データの解析に失敗しました");
       router.back();
     } finally {
       setLoading(false);
     }
-  };
+  }, [sessionResult, router]);
 
   const formatTime = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);

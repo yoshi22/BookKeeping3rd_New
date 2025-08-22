@@ -11,7 +11,6 @@
 
 import { useState, useEffect, useCallback } from "react";
 // 最適化版を統一版に置換
-import { statisticsCache } from "../services/statistics-cache";
 import { databaseService } from "../data/database";
 import { logger } from "../utils/logger";
 
@@ -146,7 +145,7 @@ export function useAppInitialization() {
         isReady: false,
       }));
     }
-  }, []);
+  }, [performBackgroundTasks]);
 
   /**
    * 必須データの事前読み込み
@@ -182,7 +181,7 @@ export function useAppInitialization() {
   /**
    * バックグラウンドタスクの実行（非同期）
    */
-  const performBackgroundTasks = async () => {
+  const performBackgroundTasks = useCallback(async () => {
     try {
       logger.debug("[AppInit] バックグラウンドタスク開始");
 
@@ -205,7 +204,7 @@ export function useAppInitialization() {
       logger.warn("[AppInit] バックグラウンドタスク警告:", { details: error });
       // バックグラウンドタスクのエラーはアプリ起動を阻止しない
     }
-  };
+  }, []);
 
   /**
    * 統計キャッシュの温機

@@ -380,9 +380,8 @@ export class MemoryOptimizer {
    * 弱参照の全クリア
    */
   private clearWeakRefs(): void {
-    const count = this.weakRefs.size;
     this.weakRefs.clear();
-    logger.debug("[MemoryOptimizer] 弱参照全クリア: ${count}件削除");
+    logger.debug("[MemoryOptimizer] 弱参照全クリア完了");
   }
 
   /**

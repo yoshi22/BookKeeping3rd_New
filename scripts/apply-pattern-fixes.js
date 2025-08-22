@@ -5,7 +5,7 @@
  * 生成された新しいパターンをmaster-questions.tsに適用
  */
 
-const fs = require("fs");
+// fs module imported but not used in this script
 const { cashPatterns } = require("./fix-duplicate-questions");
 
 // 詳細な説明を生成する関数

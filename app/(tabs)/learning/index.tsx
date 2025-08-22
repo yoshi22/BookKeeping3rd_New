@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { Screen } from "../../../src/components/layout/ResponsiveLayout";
 import { QuestionRepository } from "../../../src/data/repositories/question-repository";
@@ -14,7 +8,6 @@ import { WithScreenTransition } from "../../../src/hooks/useScreenTransitions";
 import {
   LinearProgress,
   SkeletonLoader,
-  LearningProgress,
 } from "../../../src/hooks/useProgressIndicators";
 import {
   useTabletLayout,
@@ -27,8 +20,6 @@ import {
 import {
   useTheme,
   useThemedStyles,
-  useColors,
-  useDynamicColors,
   type Theme,
 } from "../../../src/context/ThemeContext";
 
@@ -47,19 +38,11 @@ export default function LearningScreen() {
   const [loading, setLoading] = useState(true);
 
   // Phase 4: ダークモード対応のテーマシステム
-  const { theme, isDark, getStatusBarStyle } = useTheme();
-  const colors = useColors();
+  const { theme, getStatusBarStyle } = useTheme();
   const dynamicColors = useDynamicColors();
 
   // タブレットレイアウト対応（オリエンテーション対応）
-  const {
-    deviceInfo,
-    responsiveStyles,
-    getValueByDevice,
-    shouldUseMasterDetail,
-    getOrientationSpecificValue,
-    getOrientationLayout,
-  } = useTabletLayout();
+  const { deviceInfo, getValueByDevice } = useTabletLayout();
 
   // Phase 4: テーマに応じたスタイル生成
   const styles = useThemedStyles(createStyles);
@@ -125,8 +108,6 @@ export default function LearningScreen() {
           !counts.trial_balance &&
           !counts.financial_statement
         ) {
-            "[Learning] 問題データが存在しません。デフォルト値を設定します。",
-          );
           setQuestionCounts({
             journal: 0,
             ledger: 0,
@@ -136,7 +117,7 @@ export default function LearningScreen() {
             multiple_blank_choice: 0,
           });
         }
-      } catch (error) {
+      } catch {
         // エラー時はデフォルト値を設定
         setQuestionCounts({
           journal: 0,

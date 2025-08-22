@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable */
 
 // 全勘定科目を抽出するスクリプト
 const fs = require("fs");

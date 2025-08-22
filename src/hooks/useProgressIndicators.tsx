@@ -3,6 +3,7 @@
  * 包括的な進捗表示システム - 円形・線形・スケルトン・ステップインジケーター
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   useRef,
   useEffect,

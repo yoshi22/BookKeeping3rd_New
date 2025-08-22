@@ -1,4 +1,5 @@
 // データベースサービス用のモック実装（スクリプト実行用）
+/* eslint-disable */
 const path = require("path");
 const fs = require("fs");
 

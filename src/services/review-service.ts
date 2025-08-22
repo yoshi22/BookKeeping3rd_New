@@ -176,16 +176,13 @@ export class ReviewService {
             category: await this.getQuestionCategory(questionId),
           });
 
-          const updatedItem = await reviewItemRepository.updateByQuestionId(
-            questionId,
-            {
-              incorrectCount: newIncorrectCount,
-              consecutiveCorrectCount: 0,
-              status: newStatus,
-              priorityScore: newPriority,
-              lastAnsweredAt: now,
-            },
-          );
+          await reviewItemRepository.updateByQuestionId(questionId, {
+            incorrectCount: newIncorrectCount,
+            consecutiveCorrectCount: 0,
+            status: newStatus,
+            priorityScore: newPriority,
+            lastAnsweredAt: now,
+          });
 
           result = {
             questionId,
@@ -252,7 +249,7 @@ export class ReviewService {
       // 復習アイテムが変更された場合は統計キャッシュをクリア
       if (result.action !== "no_change") {
         try {
-          const { statisticsCache } = require("./statistics-cache");
+          // Clear cache after review updates
           statisticsCache.clearAll();
           logger.debug(
             "[ReviewService] 復習アイテム変更により統計キャッシュをクリア",

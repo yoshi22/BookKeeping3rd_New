@@ -3,6 +3,7 @@
  * VoiceOver・TalkBack・NVDA対応・構造化ナビゲーション・コンテキスト情報提供
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, Platform } from "react-native";
 import { useAccessibility } from "./useAccessibility";

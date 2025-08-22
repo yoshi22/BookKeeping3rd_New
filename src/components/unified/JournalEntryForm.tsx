@@ -36,7 +36,6 @@ import {
   createInitialJournalEntry,
   validateJournalEntries,
   createLearningJournalAnswerRequest,
-  createMockExamJournalAnswerRequest,
   submitLearningJournalAnswer,
   showJournalValidationErrors,
 } from "./JournalFormUtils";
@@ -68,7 +67,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
   onSubmit,
 }: UnifiedJournalEntryFormProps) {
   // Theme system integration
-  const { theme } = useTheme();
+  useTheme();
 
   // Form state
   const [formState, setFormState] = useState<JournalFormState>(

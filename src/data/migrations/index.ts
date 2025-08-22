@@ -3,6 +3,7 @@
  * 簿記3級問題集アプリ - データベースマイグレーション管理
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { migrationManager } from "./migration-manager";
 import { migration001 } from "./001-initial-schema";
 import { addExamSectionsMigration } from "./002-add-exam-sections";

@@ -12,10 +12,8 @@ const MASTER_QUESTIONS_PATH = path.join(
   __dirname,
   "../src/data/master-questions.ts",
 );
-const STRATEGY_PATH = path.join(
-  __dirname,
-  "../docs/product/problemsStrategy.md",
-);
+// Strategy path defined but not used in current implementation
+// const STRATEGY_PATH = path.join(__dirname, "../docs/product/problemsStrategy.md");
 
 // problemsStrategy.mdで定義されている問題パターン
 const EXPECTED_PATTERNS = {

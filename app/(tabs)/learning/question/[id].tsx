@@ -19,41 +19,25 @@ import QuestionNavigation from "../../../../src/components/QuestionNavigation";
 import AnswerResultDialog from "../../../../src/components/AnswerResultDialog";
 import { useQuestionNavigation } from "../../../../src/hooks/useQuestionNavigation";
 import { SubmitAnswerResponse } from "../../../../src/services/answer-service";
-import { SessionType } from "../../../../src/types/database";
 import { QuestionRepository } from "../../../../src/data/repositories/question-repository";
 import type { Question } from "../../../../src/types/models";
-import { reviewService } from "../../../../src/services/review-service";
 import {
   useTheme,
   useThemedStyles,
-  useColors,
-  useDynamicColors,
   type Theme,
 } from "../../../../src/context/ThemeContext";
 
 export default function LearningQuestionScreen() {
   // Phase 4: ダークモード対応のテーマシステム
-  const { theme, isDark, getStatusBarStyle } = useTheme();
-  const colors = useColors();
-  const dynamicColors = useDynamicColors();
+  const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
-
-  // Q_J_001デバッグ: 学習画面レンダリング追跡
-  const { id: questionId } = useLocalSearchParams();
-  if (questionId === "Q_J_001") {
-    const screenRenderId = Math.random().toString(36).substr(2, 9);
-      screenRenderId,
-      questionId,
-      timestamp: Date.now(),
-    });
-  }
 
   const { id, sessionId, sessionType, filteredQuestions } =
     useLocalSearchParams();
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [showExplanation, setShowExplanation] = useState(false);
+  const [showExplanation] = useState(false);
   const [userAnswers, setUserAnswers] = useState<Record<string, any>>({});
   const [submitResult, setSubmitResult] = useState<SubmitAnswerResponse | null>(
     null,
@@ -109,18 +93,12 @@ export default function LearningQuestionScreen() {
 
         // フィルター済み問題リストがある場合はそれを使用
         if (filteredQuestions && typeof filteredQuestions === "string") {
-            "[LearningQuestionScreen] フィルター済み問題リストを使用:",
-            filteredQuestions,
-          );
-
           const filteredIds = filteredQuestions.split(",");
           const questionRepository = new QuestionRepository();
 
           // フィルター済み問題IDから問題を取得（バッチクエリ使用でパフォーマンス向上）
           const cleanFilteredIds = filteredIds.map((id) => id.trim());
           questions = await questionRepository.findByIds(cleanFilteredIds);
-            `[LearningQuestionScreen] フィルター済み問題: ${questions.length}件`,
-          );
         } else {
           // 通常の学習モードの場合は全問題を取得（全302問を順次進行）
           const questionRepository = new QuestionRepository();
@@ -134,8 +112,6 @@ export default function LearningQuestionScreen() {
           questions = allQuestions
             .flat()
             .sort((a, b) => a.id.localeCompare(b.id));
-            `[LearningQuestionScreen] 全302問を順次進行モードで読み込み: ${questions.length}件`,
-          );
         }
 
         if (questions.length === 0) {
@@ -150,14 +126,14 @@ export default function LearningQuestionScreen() {
         setQuestionStartTime(Date.now());
 
         setIsLoading(false);
-      } catch (error) {
+      } catch {
         Alert.alert("エラー", "問題の読み込みに失敗しました");
         router.back();
       }
     };
 
     loadQuestions();
-  }, [id, category, sessionType, sessionId, filteredQuestions]);
+  }, [id, category, sessionType, sessionId, filteredQuestions, router]);
 
   // 解答変更処理
   const handleAnswerChange = (fieldName: string, value: any) => {
@@ -174,7 +150,6 @@ export default function LearningQuestionScreen() {
 
     // 間違いの場合は復習リストに自動追加する処理を追加可能
     if (!result.isCorrect) {
-      
     }
   };
 
@@ -228,12 +203,9 @@ export default function LearningQuestionScreen() {
 
     try {
       const template = JSON.parse(question.answer_template_json);
-      
+
       return template;
-    } catch (error) {
-        "[LearningQuestionScreen] answer_template_json解析エラー:",
-        error,
-      );
+    } catch {
       return undefined;
     }
   };
@@ -252,10 +224,6 @@ export default function LearningQuestionScreen() {
           answerTemplate.fields &&
           Array.isArray(answerTemplate.fields)
         ) {
-            "[LearningQuestionScreen] answer_template_jsonからフィールドを生成:",
-            answerTemplate,
-          );
-
           return answerTemplate.fields.map((field: any) => ({
             label: field.label,
             type: field.type as "dropdown" | "number" | "text",
@@ -266,15 +234,9 @@ export default function LearningQuestionScreen() {
           }));
         }
       }
-    } catch (error) {
-        "[LearningQuestionScreen] answer_template_json解析エラー:",
-        error,
-      );
-    }
+    } catch {}
 
     // フォールバック: カテゴリごとのデフォルトフィールド
-      "[LearningQuestionScreen] フォールバック: デフォルトフィールドを使用",
-    );
     switch (question.category_id) {
       case "journal":
         return [

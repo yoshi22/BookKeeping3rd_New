@@ -64,9 +64,8 @@ export default function AnswerForm({
   showSubmitButton = true,
 }: AnswerFormProps) {
   // Theme system integration for dark mode support
-  const { theme, isDark, getStatusBarStyle } = useTheme();
+  const { theme } = useTheme();
   const colors = useColors();
-  const dynamicColors = useDynamicColors();
   const styles = useThemedStyles(createStyles);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -138,7 +137,7 @@ export default function AnswerForm({
         );
       }
     } catch (error) {
-      logger.error("[AnswerForm] 解答送信エラー:", error  as Error);
+      logger.error("[AnswerForm] 解答送信エラー:", error as Error);
       Alert.alert(
         "エラー",
         "解答の送信に失敗しました。もう一度お試しください。",

@@ -61,7 +61,7 @@ export const useHapticFeedback = () => {
   // ハプティック機能の可用性チェック
   useEffect(() => {
     checkHapticAvailability();
-  }, []);
+  }, [checkHapticAvailability]);
 
   const checkHapticAvailability = useCallback(async () => {
     try {
@@ -236,7 +236,9 @@ export const useHapticFeedback = () => {
             break;
         }
       } catch (error) {
-        logger.warn("Learning haptic failed for context ${context}:", { details: error });
+        logger.warn("Learning haptic failed for context ${context}:", {
+          details: error,
+        });
       }
     },
     [settings.enabled, isAvailable, notification, impact, selection],
@@ -354,7 +356,7 @@ export const withHapticFeedback = <T extends object>(
   WrappedComponent: React.ComponentType<T>,
   hapticType: LearningHapticContext = "button_press",
 ) => {
-  return React.forwardRef<any, T>((props, ref) => {
+  const HapticWrappedComponent = React.forwardRef<any, T>((props, ref) => {
     const { learningFeedback } = useHapticFeedback();
 
     const handlePress = useCallback(
@@ -369,6 +371,10 @@ export const withHapticFeedback = <T extends object>(
       <WrappedComponent {...(props as any)} ref={ref} onPress={handlePress} />
     );
   });
+
+  HapticWrappedComponent.displayName = `withHapticFeedback(${WrappedComponent.displayName || WrappedComponent.name})`;
+
+  return HapticWrappedComponent;
 };
 
 /**

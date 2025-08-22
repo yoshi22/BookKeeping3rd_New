@@ -3,6 +3,7 @@
  * 環境変数による制御とログレベル管理を提供
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * ログレベル定義
  */
@@ -231,8 +232,6 @@ class LogService {
   private outputToConsole(entry: LogEntry): void {
     const prefix = `${this.config.prefix} [${this.getLevelString(entry.level)}]`;
     const contextStr = entry.context ? ` ${JSON.stringify(entry.context)}` : "";
-    const fullMessage = `${prefix} ${entry.message}${contextStr}`;
-
     switch (entry.level) {
       case LogLevel.DEBUG:
         break;

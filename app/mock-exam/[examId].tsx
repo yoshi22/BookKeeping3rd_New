@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,10 +9,7 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useRouter, Stack } from "expo-router";
 import { Screen } from "../../src/components/layout/ResponsiveLayout";
-import { useTheme, type Theme } from "../../src/context/ThemeContext";
-import { MockExamRepository } from "../../src/data/repositories/mock-exam-repository";
-import { QuestionRepository } from "../../src/data/repositories/question-repository";
-import { MockExam, Question } from "../../src/types/models";
+import { useTheme } from "../../src/context/ThemeContext";
 import {
   MockExamService,
   MockExamSession,
@@ -23,16 +20,6 @@ import TrialBalanceForm from "../../src/components/mock-exam/TrialBalanceForm";
 import { JournalEntry } from "../../src/components/shared/FormTypes";
 import { MockExamLedgerEntry } from "../../src/components/unified/LedgerFormTypes";
 import { TrialBalanceEntry } from "../../src/components/mock-exam/TrialBalanceForm";
-
-interface MockExamAnswer {
-  questionId: string;
-  sectionNumber: number;
-  questionOrder: number;
-  userAnswer: any;
-  timeSpent: number;
-  isCorrect?: boolean;
-  score?: number;
-}
 
 interface TimerState {
   remainingSeconds: number;
@@ -62,7 +49,7 @@ export default function MockExamExecutionScreen() {
   // Load mock exam and questions
   useEffect(() => {
     loadMockExamData();
-  }, [examId]);
+  }, [examId, loadMockExamData]);
 
   // Timer effect
   useEffect(() => {
@@ -80,7 +67,7 @@ export default function MockExamExecutionScreen() {
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [timer.remainingSeconds, timer.isRunning]);
+  }, [timer.remainingSeconds, timer.isRunning, handleTimeUp]);
 
   // Handle back button
   useEffect(() => {
@@ -94,20 +81,13 @@ export default function MockExamExecutionScreen() {
       backAction,
     );
     return () => backHandler.remove();
-  }, []);
+  }, [handleExitExam]);
 
-  const loadMockExamData = async () => {
+  const loadMockExamData = useCallback(async () => {
     try {
-      
-
       // Start mock exam session using MockExamService
       const mockExamSession =
         await mockExamService.startMockExamSession(examId);
-
-        examId: mockExamSession.examId,
-        questionCount: mockExamSession.questions.length,
-        timeLimit: mockExamSession.timeLimit,
-      });
 
       setSession(mockExamSession);
       setTimer({
@@ -118,11 +98,11 @@ export default function MockExamExecutionScreen() {
       startTimeRef.current = Date.now();
       questionStartTimeRef.current = Date.now();
       setLoading(false);
-    } catch (error) {
+    } catch {
       Alert.alert("エラー", "模試セッションの開始に失敗しました");
       router.back();
     }
-  };
+  }, [examId, router, mockExamService]);
 
   const formatTime = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
@@ -157,22 +137,14 @@ export default function MockExamExecutionScreen() {
         answerTime,
       );
 
-        "Answer recorded for question:",
-        currentQuestion.question_id || currentQuestion.id,
-      );
-
       // Show confirmation
-      Alert.alert(
-        "解答を保存しました",
-        `問${currentQuestionIndex + 1}の解答を保存しました。`,
-        [
-          {
-            text: "次の問題へ",
-            onPress: () => handleNextQuestion(),
-          },
-        ],
-      );
-    } catch (error) {
+      Alert.alert("解答を保存しました", [
+        {
+          text: "次の問題へ",
+          onPress: () => handleNextQuestion(),
+        },
+      ]);
+    } catch {
       Alert.alert("エラー", "解答の保存に失敗しました");
     }
   };
@@ -207,22 +179,14 @@ export default function MockExamExecutionScreen() {
         answerTime,
       );
 
-        "Ledger answer recorded for question:",
-        currentQuestion.question_id || currentQuestion.id,
-      );
-
       // Show confirmation
-      Alert.alert(
-        "解答を保存しました",
-        `問${currentQuestionIndex + 1}の解答を保存しました。`,
-        [
-          {
-            text: "次の問題へ",
-            onPress: () => handleNextQuestion(),
-          },
-        ],
-      );
-    } catch (error) {
+      Alert.alert("解答を保存しました", [
+        {
+          text: "次の問題へ",
+          onPress: () => handleNextQuestion(),
+        },
+      ]);
+    } catch {
       Alert.alert("エラー", "解答の保存に失敗しました");
     }
   };
@@ -254,22 +218,14 @@ export default function MockExamExecutionScreen() {
         answerTime,
       );
 
-        "Trial balance answer recorded for question:",
-        currentQuestion.question_id || currentQuestion.id,
-      );
-
       // Show confirmation
-      Alert.alert(
-        "解答を保存しました",
-        `問${currentQuestionIndex + 1}の解答を保存しました。`,
-        [
-          {
-            text: "次の問題へ",
-            onPress: () => handleNextQuestion(),
-          },
-        ],
-      );
-    } catch (error) {
+      Alert.alert("解答を保存しました", [
+        {
+          text: "次の問題へ",
+          onPress: () => handleNextQuestion(),
+        },
+      ]);
+    } catch {
       Alert.alert("エラー", "解答の保存に失敗しました");
     }
   };
@@ -294,41 +250,37 @@ export default function MockExamExecutionScreen() {
     }
   };
 
-  const handleTimeUp = () => {
+  const handleTimeUp = useCallback(() => {
     Alert.alert("時間終了", "制限時間が終了しました。自動的に提出します。", [
       { text: "OK", onPress: () => handleFinishExam() },
     ]);
-  };
+  }, [handleFinishExam]);
 
-  const handleFinishExam = () => {
+  const handleFinishExam = useCallback(() => {
     if (isSubmitting || !session) return;
 
     setIsSubmitting(true);
     setTimer((prev) => ({ ...prev, isRunning: false }));
 
-    Alert.alert(
-      "試験終了",
-      `解答済み: ${session.answers.size}問 / ${session.questions.length}問\n\n本当に終了しますか？`,
-      [
-        {
-          text: "続行",
-          style: "cancel",
-          onPress: () => {
-            setIsSubmitting(false);
-            if (timer.remainingSeconds > 0) {
-              setTimer((prev) => ({ ...prev, isRunning: true }));
-            }
-          },
+    Alert.alert("試験終了", [
+      {
+        text: "続行",
+        style: "cancel",
+        onPress: () => {
+          setIsSubmitting(false);
+          if (timer.remainingSeconds > 0) {
+            setTimer((prev) => ({ ...prev, isRunning: true }));
+          }
         },
-        {
-          text: "終了",
-          onPress: () => submitExam(),
-        },
-      ],
-    );
-  };
+      },
+      {
+        text: "終了",
+        onPress: () => submitExam(),
+      },
+    ]);
+  }, [isSubmitting, session, submitExam, timer.remainingSeconds]);
 
-  const handleExitExam = () => {
+  const handleExitExam = useCallback(() => {
     if (isSubmitting) return;
 
     Alert.alert(
@@ -346,22 +298,14 @@ export default function MockExamExecutionScreen() {
         },
       ],
     );
-  };
+  }, [isSubmitting, router]);
 
   const submitExam = async () => {
     if (!session) return;
 
     try {
-      
-
       // Complete the mock exam session and get real scoring results
       const result = await mockExamService.completeMockExamSession(session);
-
-        totalScore: result.totalScore,
-        maxScore: result.maxScore,
-        isPassed: result.isPassed,
-        duration: result.duration,
-      });
 
       // Navigate to result screen with the session result
       router.push({
@@ -371,7 +315,7 @@ export default function MockExamExecutionScreen() {
           sessionResult: JSON.stringify(result),
         },
       });
-    } catch (error) {
+    } catch {
       Alert.alert("エラー", "模試の完了処理に失敗しました");
       setIsSubmitting(false);
     }

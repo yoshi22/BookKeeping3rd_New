@@ -8,10 +8,6 @@
  * Math.random()を使用した疑似ランダムUUID生成
  */
 export function generateUUID(): string {
-  // タイムスタンプベースの一意性確保
-  const timestamp = Date.now().toString(36);
-  const randomPart = Math.random().toString(36).substr(2, 9);
-
   // UUID v4フォーマットに近い形式で生成
   const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
     /[xy]/g,

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 /**
  * 難易度を5分類から3分類に変更するスクリプト

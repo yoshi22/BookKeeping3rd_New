@@ -1,4 +1,5 @@
 const { databaseService } = require("./src/data/database");
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 async function checkDatabase() {
   try {

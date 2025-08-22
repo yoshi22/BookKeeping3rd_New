@@ -3,17 +3,14 @@
  * 簿記3級問題集アプリ - 新コンテンツ構成対応
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   QuestionCategory,
   QuestionDifficulty,
   QuestionSubcategory,
-  JournalSubcategory,
-  LedgerSubcategory,
-  TrialBalanceSubcategory,
   SessionType,
   ReviewStatus,
   CBTAnswerData,
-  ValidationErrorData,
   MockExamDetailedResults,
 } from "./database";
 
@@ -22,13 +19,9 @@ export type {
   QuestionCategory,
   QuestionDifficulty,
   QuestionSubcategory,
-  JournalSubcategory,
-  LedgerSubcategory,
-  TrialBalanceSubcategory,
   SessionType,
   ReviewStatus,
   CBTAnswerData,
-  ValidationErrorData,
   MockExamDetailedResults,
 } from "./database";
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable */
 
 /**
  * タグデータとproblemsStrategy.mdの分類を詳細分析

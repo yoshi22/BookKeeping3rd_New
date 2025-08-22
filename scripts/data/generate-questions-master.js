@@ -1,4 +1,5 @@
 "use strict";
+/* eslint-disable */
 /**
  * 問題データマスター生成スクリプト
  * problemsStrategy.mdの要件を完全に満たす問題データを生成

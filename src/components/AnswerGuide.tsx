@@ -3,7 +3,7 @@
  * 各問題タイプの回答方法と入力例を表示
  */
 
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -38,9 +38,7 @@ export default function AnswerGuide({
   onClose,
 }: AnswerGuideProps) {
   // Theme system integration for dark mode support
-  const { theme, isDark, getStatusBarStyle } = useTheme();
   const colors = useColors();
-  const dynamicColors = useDynamicColors();
   const styles = useThemedStyles(createStyles);
   const getGuideContent = (): GuideSection => {
     switch (questionType) {

@@ -6,7 +6,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { databaseService } from "../data/database";
 import { statisticsService } from "./statistics-service";
-import { ReviewService } from "./review-service";
 import { logger } from "../utils/logger";
 
 export interface CacheConfig {

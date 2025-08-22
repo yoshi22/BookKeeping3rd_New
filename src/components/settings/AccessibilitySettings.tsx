@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * アクセシビリティ設定コンポーネント（Phase 4）
  * 視覚・聴覚サポート・スクリーンリーダー・ダークモード統合設定

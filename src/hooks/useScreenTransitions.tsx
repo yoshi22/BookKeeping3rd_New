@@ -3,7 +3,7 @@
  * Expo Router用のカスタム画面遷移アニメーション
  */
 
-import React, { useRef, useCallback, useEffect } from "react";
+import React, { useRef, useCallback, useEffect, useMemo } from "react";
 import { Animated, Dimensions, Platform, Easing } from "react-native";
 import { useAccessibility } from "./useAccessibility";
 
@@ -49,11 +49,14 @@ export function useScreenTransitions(): ScreenTransitionAnimations {
   const { isReduceMotionEnabled } = useAccessibility();
 
   // デフォルト設定
-  const defaultConfig: TransitionConfig = {
-    duration: isReduceMotionEnabled ? 150 : 300,
-    easing: Easing.bezier(0.25, 0.46, 0.45, 0.94), // easeOutQuart
-    delay: 0,
-  };
+  const defaultConfig: TransitionConfig = useMemo(
+    () => ({
+      duration: isReduceMotionEnabled ? 150 : 300,
+      easing: Easing.bezier(0.25, 0.46, 0.45, 0.94), // easeOutQuart
+      delay: 0,
+    }),
+    [isReduceMotionEnabled],
+  );
 
   const animateValue = useCallback(
     (

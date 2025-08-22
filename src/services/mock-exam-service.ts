@@ -14,7 +14,6 @@ import {
   MockExam,
   MockExamQuestion,
   MockExamResult,
-  MockExamStructure,
   Question,
 } from "../types/models";
 import {

@@ -1,4 +1,5 @@
 /**
+/* eslint-disable @typescript-eslint/no-unused-vars */
  * 学習統計システム動作確認テスト
  * Step 3.1: 学習統計機能実装 - 動作確認
  */

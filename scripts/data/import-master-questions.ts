@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, no-console, @typescript-eslint/no-require-imports */
 /**
  * マスター問題データをデータベースに投入するスクリプト
  * problemsStrategy.md準拠の302問を一括インポート

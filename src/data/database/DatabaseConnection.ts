@@ -3,6 +3,7 @@
  * database.ts分割 - Phase 4
  */
 
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { Platform } from "react-native";
 import { logger } from "../../utils/logger";
 import { DATABASE_CONFIG } from "./DatabaseConfig";

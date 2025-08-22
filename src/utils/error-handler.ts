@@ -3,7 +3,7 @@
  * 簿記3級問題集アプリ - 統一的なエラー処理
  */
 
-import { DatabaseError, LogLevel } from "../types/database";
+import { LogLevel } from "../types/database";
 import { logger } from "../utils/logger";
 
 /**

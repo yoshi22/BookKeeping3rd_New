@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, no-console */
 /**
  * 問題構造更新スクリプト
  * problemsStrategy.mdに基づく詳細分類・順序制御・タグ付けを実行

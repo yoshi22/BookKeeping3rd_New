@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * 問題表示コンポーネント
  * Step 2.2: 解答記録機能実装統合

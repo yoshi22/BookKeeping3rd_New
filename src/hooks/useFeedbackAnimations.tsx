@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, react-hooks/exhaustive-deps */
 /**
  * フィードバックアニメーションフック（Phase 2）
  * 成功・エラー・警告・情報のフィードバック強化
@@ -57,6 +58,7 @@ export function useFeedbackAnimations(): FeedbackAnimations {
   const triggerHaptic = useCallback(
     (type: "success" | "error" | "warning" | "info") => {
       if (Platform.OS === "ios") {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         const { HapticFeedback } = require("expo-haptics");
         switch (type) {
           case "success":

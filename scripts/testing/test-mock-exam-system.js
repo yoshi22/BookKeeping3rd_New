@@ -1,4 +1,5 @@
 /**
+/* eslint-disable @typescript-eslint/no-unused-vars */
  * 模試システム動作確認テスト
  * 模試の開始・実行・採点・結果表示の統合テスト
  */

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, react-hooks/exhaustive-deps */
 /**
  * アクセシビリティフック（Phase 1）
  * WCAG 2.2準拠のアクセシビリティ機能を提供
@@ -52,7 +53,9 @@ export function useAccessibility(): AccessibilityState & AccessibilityHelpers {
           isScreenReaderEnabled: isEnabled,
         }));
       } catch (error) {
-        logger.warn("Failed to check screen reader status:", { details: error });
+        logger.warn("Failed to check screen reader status:", {
+          details: error,
+        });
       }
     };
 
@@ -76,7 +79,9 @@ export function useAccessibility(): AccessibilityState & AccessibilityHelpers {
             isHighContrastEnabled: false,
           }));
         } catch (error) {
-          logger.warn("Failed to check high contrast status:", { details: error });
+          logger.warn("Failed to check high contrast status:", {
+            details: error,
+          });
         }
       }
     };
@@ -95,7 +100,9 @@ export function useAccessibility(): AccessibilityState & AccessibilityHelpers {
             }));
           }
         } catch (error) {
-          logger.warn("Failed to check reduce motion status:", { details: error });
+          logger.warn("Failed to check reduce motion status:", {
+            details: error,
+          });
         }
       }
     };

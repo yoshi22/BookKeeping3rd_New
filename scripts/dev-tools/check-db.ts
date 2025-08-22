@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-var-requires, no-console */
 import { databaseService } from "./src/data/database";
 
 async function checkDatabase() {

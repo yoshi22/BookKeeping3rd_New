@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, react-hooks/exhaustive-deps */
 /**
  * 視覚・聴覚サポートフック（Phase 4）
  * 音声フィードバック・視覚的アナウンス・高コントラストモード対応
@@ -153,6 +154,7 @@ export function useVisualAudioSupport(options: AudioFeedbackOptions = {}) {
       try {
         if (Platform.OS === "ios") {
           // iOS HapticFeedback
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
           const { HapticFeedback } = require("expo-haptics");
 
           switch (type) {

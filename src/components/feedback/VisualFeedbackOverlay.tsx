@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * 視覚的フィードバックオーバーレイコンポーネント（Phase 4）
  * スクリーンリーダー対応・ダークモード対応・アニメーション対応
