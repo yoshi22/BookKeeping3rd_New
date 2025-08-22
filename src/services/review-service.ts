@@ -613,6 +613,81 @@ export class ReviewService {
       throw error;
     }
   }
+
+  /**
+   * 正答問題を強制的に復習対象に追加
+   * 学習者が自信のない問題を手動で復習リストに追加する際に使用
+   */
+  public async forceAddToReview(
+    questionId: string,
+    reason: string = "自信なし",
+  ): Promise<ReviewUpdateResult> {
+    try {
+      logger.debug(
+        `[ReviewService] 強制復習追加開始: ${questionId}, 理由=${reason}`,
+      );
+
+      const existing =
+        await this.reviewItemRepository.findByQuestionId(questionId);
+      const now = new Date().toISOString();
+
+      if (existing) {
+        // 既に復習対象の場合は優先度を少し上げる
+        const newPriority = Math.min(
+          existing.priority_score + 10,
+          this.priorityConfig.maxPriorityScore,
+        );
+
+        await this.reviewItemRepository.updateByQuestionId(questionId, {
+          priorityScore: newPriority,
+          lastAnsweredAt: now,
+        });
+
+        return {
+          questionId,
+          previousStatus: existing.status as ReviewStatus,
+          newStatus: existing.status as ReviewStatus,
+          previousPriority: existing.priority_score,
+          newPriority: newPriority,
+          action: "updated",
+          message: `既存復習アイテム優先度更新 (理由: ${reason})`,
+        };
+      } else {
+        // 新規復習アイテム作成（誤答数1として扱う）
+        const category = await this.getQuestionCategory(questionId);
+        const initialPriority = this.calculatePriority({
+          incorrectCount: 1,
+          consecutiveCorrectCount: 0,
+          lastAnsweredAt: now,
+          category,
+        });
+
+        const createData = {
+          questionId,
+          incorrectCount: 0, // 手動追加のため誤答数は0
+          consecutiveCorrectCount: 0,
+          status: "needs_review" as ReviewStatus,
+          priorityScore: initialPriority * 0.7, // 手動追加は優先度を少し下げる
+          lastAnsweredAt: now,
+        };
+
+        await this.reviewItemRepository.createOrUpdate(createData);
+
+        return {
+          questionId,
+          previousStatus: "needs_review",
+          newStatus: "needs_review",
+          previousPriority: 0,
+          newPriority: createData.priorityScore,
+          action: "created",
+          message: `手動復習追加完了 (理由: ${reason})`,
+        };
+      }
+    } catch (error) {
+      logger.error("[ReviewService] forceAddToReview エラー:", error as Error);
+      throw error;
+    }
+  }
 }
 
 /**

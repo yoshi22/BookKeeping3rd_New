@@ -23,6 +23,8 @@ interface AnswerResultDialogProps {
   onClose: () => void;
   showNextButton?: boolean;
   onNextQuestion?: () => void;
+  questionId?: string;
+  onAddToReview?: (questionId: string) => void;
 }
 
 export default function AnswerResultDialog({
@@ -31,6 +33,8 @@ export default function AnswerResultDialog({
   onClose,
   onNextQuestion,
   showNextButton = true,
+  questionId,
+  onAddToReview,
 }: AnswerResultDialogProps) {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
@@ -168,6 +172,15 @@ export default function AnswerResultDialog({
 
         {/* アクションボタン */}
         <View style={styles.actionButtons}>
+          {/* 正解時のみ復習対象追加ボタンを表示 */}
+          {result.isCorrect && questionId && onAddToReview && (
+            <TouchableOpacity
+              style={[styles.actionButton, styles.reviewButton]}
+              onPress={() => onAddToReview(questionId)}
+            >
+              <Text style={styles.reviewButtonText}>復習対象に追加</Text>
+            </TouchableOpacity>
+          )}
           {showNextButton && (
             <TouchableOpacity
               style={[styles.actionButton, styles.nextButton]}
@@ -289,6 +302,16 @@ const createStyles = (theme: Theme) =>
       backgroundColor: theme.colors.primary,
     },
     nextButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    reviewButton: {
+      backgroundColor: theme.colors.warning,
+      borderWidth: 1,
+      borderColor: theme.colors.warning,
+    },
+    reviewButtonText: {
       color: theme.colors.surface,
       fontSize: 16,
       fontWeight: "bold",

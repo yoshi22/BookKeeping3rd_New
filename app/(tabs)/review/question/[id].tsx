@@ -19,7 +19,10 @@ import QuestionNavigation from "../../../../src/components/QuestionNavigation";
 import AnswerResultDialog from "../../../../src/components/AnswerResultDialog";
 import { useQuestionNavigation } from "../../../../src/hooks/useQuestionNavigation";
 import { SubmitAnswerResponse } from "../../../../src/services/answer-service";
-import { ReviewService } from "../../../../src/services/review-service";
+import {
+  ReviewService,
+  reviewService,
+} from "../../../../src/services/review-service";
 import { QuestionRepository } from "../../../../src/data/repositories/question-repository";
 import type { Question } from "../../../../src/types/models";
 import {
@@ -172,6 +175,24 @@ export default function ReviewQuestionScreen() {
   const handleCloseResultDialog = () => {
     setShowResultDialog(false);
     setSubmitResult(null);
+  };
+
+  // 復習対象に追加
+  const handleAddToReview = async (questionId: string) => {
+    try {
+      await reviewService.forceAddToReview(questionId, "自信なし");
+      Alert.alert(
+        "復習対象に追加",
+        "この問題を復習対象に追加しました。復習タブで確認できます。",
+        [{ text: "OK" }],
+      );
+    } catch (error) {
+      Alert.alert(
+        "エラー",
+        "復習対象への追加に失敗しました。もう一度お試しください。",
+        [{ text: "OK" }],
+      );
+    }
   };
 
   // 次の問題へ
@@ -350,6 +371,8 @@ export default function ReviewQuestionScreen() {
         onClose={handleCloseResultDialog}
         onNextQuestion={handleNextQuestion}
         showNextButton={canGoNext}
+        questionId={currentQuestion.id}
+        onAddToReview={handleAddToReview}
       />
     </ScrollView>
   );

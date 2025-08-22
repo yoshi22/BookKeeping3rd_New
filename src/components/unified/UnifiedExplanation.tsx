@@ -71,7 +71,7 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
   questionType,
   sessionMode = "learning",
   expandable = true,
-  defaultExpanded = true,
+  defaultExpanded = false,
   testID,
 }) => {
   const { theme } = useTheme();

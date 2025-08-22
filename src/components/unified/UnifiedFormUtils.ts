@@ -460,30 +460,49 @@ export const showValidationErrors = (errors: string[]): void => {
  */
 export const createJournalAnswerRequest = (
   questionId: string,
-  entries: JournalEntry[],
+  entries: JournalEntry[] | Record<string, any>,
   sessionType: SessionType = "learning",
   sessionId?: string,
   startTime: number = Date.now(),
 ): SubmitAnswerRequest => {
-  // JournalEntryを適切な形式に変換
-  const debitEntry = entries.find((e) => e.type === "debit");
-  const creditEntry = entries.find((e) => e.type === "credit");
+  // Handle both JournalEntry array format and AnswerForm field format
+  let answerData: any = { questionType: "journal" };
+
+  if (Array.isArray(entries)) {
+    // UnifiedJournalEntryForm format: JournalEntry[]
+    const debitEntry = entries.find((e) => e.type === "debit");
+    const creditEntry = entries.find((e) => e.type === "credit");
+
+    answerData.journalEntry =
+      debitEntry && creditEntry
+        ? {
+            debit: { account: debitEntry.account, amount: debitEntry.amount },
+            credit: {
+              account: creditEntry.account,
+              amount: creditEntry.amount,
+            },
+          }
+        : undefined;
+  } else {
+    // AnswerForm format: Record<string, any>
+    const data = entries as Record<string, any>;
+    if (data.debit_account && data.credit_account) {
+      answerData.journalEntry = {
+        debit: {
+          account: data.debit_account,
+          amount: parseInt(data.debit_amount) || 0,
+        },
+        credit: {
+          account: data.credit_account,
+          amount: parseInt(data.credit_amount) || 0,
+        },
+      };
+    }
+  }
 
   return {
     questionId,
-    answerData: {
-      questionType: "journal",
-      journalEntry:
-        debitEntry && creditEntry
-          ? {
-              debit: { account: debitEntry.account, amount: debitEntry.amount },
-              credit: {
-                account: creditEntry.account,
-                amount: creditEntry.amount,
-              },
-            }
-          : undefined,
-    },
+    answerData,
     sessionType,
     sessionId,
     startTime,

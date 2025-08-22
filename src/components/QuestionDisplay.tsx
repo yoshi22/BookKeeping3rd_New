@@ -350,11 +350,12 @@ export default function QuestionDisplay({
       parseInt(questionId.split("_")[2]) >= 11 &&
       parseInt(questionId.split("_")[2]) <= 20);
 
-  // Determine if should use enhanced journal entry form for complex journal entries
+  // Determine if should use enhanced journal entry form for complex journal entries only
+  // Simple journal entries should use AnswerForm to maintain horizontal layout
+  // FIXED: Only use UnifiedJournalEntryForm for explicitly complex entries
   const shouldUseJournalEntryForm =
-    (answerTemplate?.type === "journal_entry" &&
-      answerTemplate?.allowMultipleEntries) ||
-    (questionId.startsWith("Q_J_") && answerTemplate?.type === "journal_entry");
+    answerTemplate?.type === "journal_entry" &&
+    answerTemplate?.allowMultipleEntries === true;
 
   // レンダリング判定ログ（必要時のみ有効化）
   if (process.env.NODE_ENV === "development" && process.env.DEBUG_RENDERING) {
