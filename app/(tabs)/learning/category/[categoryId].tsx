@@ -538,8 +538,10 @@ export default function CategoryDetailScreen() {
         const subcategory = tags.subcategory;
 
         const subcategoryToType: Record<string, string> = {
-          account_entry: "account_entry",
-          subsidiary_book: "subsidiary_book",
+          general_ledger: "account_entry", // Q_L_001-010: 勘定記入問題
+          subsidiary_ledger: "subsidiary_books", // Q_L_011-020: 補助簿記入問題
+          voucher: "voucher_entry", // Q_L_021-030: 伝票記入問題
+          theory: "theory_selection", // Q_L_031-040: 理論・選択問題
         };
 
         const questionType = subcategoryToType[subcategory];
