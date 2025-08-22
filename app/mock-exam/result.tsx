@@ -43,7 +43,6 @@ export default function MockExamResultScreen() {
       // Parse the real session result from MockExamService
       const parsedResult = JSON.parse(sessionResult) as MockExamSessionResult;
 
-      console.log("Parsed mock exam result:", {
         totalScore: parsedResult.totalScore,
         maxScore: parsedResult.maxScore,
         isPassed: parsedResult.isPassed,
@@ -52,7 +51,6 @@ export default function MockExamResultScreen() {
 
       setResult(parsedResult);
     } catch (error) {
-      console.error("Failed to parse session results:", error);
       Alert.alert("エラー", "結果データの解析に失敗しました");
       router.back();
     } finally {

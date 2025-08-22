@@ -7,11 +7,19 @@
  */
 
 import React, { useState } from "react";
-import { Alert, Platform } from "react-native";
+import {
+  Alert,
+  Platform,
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+} from "react-native";
+import { Button } from "../ui/Button";
 import { logger } from "../../utils/logger";
 import { UnifiedFormProps } from "../shared/FormTypes";
-import { LearningModeEntryForm } from "./LearningModeEntryForm";
-import { MockExamModeEntryForm } from "./MockExamModeEntryForm";
+// 削除されたコンポーネントのインポートを除去
 import { AccountSelector, showIOSAccountSelector } from "./AccountSelector";
 import {
   LedgerEntry,
@@ -127,6 +135,22 @@ const UnifiedLedgerEntryForm = React.memo(function UnifiedLedgerEntryForm({
     setMockExamEntries(newEntries);
   };
 
+  // Account selection for learning mode
+  const showLearningAccountSelector = (index: number) => {
+    if (Platform.OS === "ios") {
+      showIOSAccountSelector(
+        "debitAccount",
+        index,
+        (type: any, idx: number, account: string) => {
+          updateLearningEntry(idx, "account", account);
+        },
+      );
+    } else {
+      setCurrentSelection({ type: "debitAccount", index });
+      setModalVisible(true);
+    }
+  };
+
   // Account selection for mock exam mode
   const showAccountSelector = (
     type: "debitAccount" | "creditAccount",
@@ -221,46 +245,207 @@ const UnifiedLedgerEntryForm = React.memo(function UnifiedLedgerEntryForm({
     }
   };
 
-  // Render appropriate form based on mode
-  if (mode === "learning") {
-    return (
-      <LearningModeEntryForm
-        entries={learningEntries}
-        onAddEntry={addLearningEntry}
-        onRemoveEntry={removeLearningEntry}
-        onUpdateEntry={updateLearningEntry}
-        onSubmit={validateAndSubmit}
-        isSubmitting={formState.isSubmitting}
-        showSubmitButton={showSubmitButton}
-      />
-    );
-  } else {
-    return (
-      <>
-        <MockExamModeEntryForm
-          entries={mockExamEntries}
-          onAddEntry={addMockExamEntry}
-          onRemoveEntry={removeMockExamEntry}
-          onUpdateEntry={updateMockExamEntry}
-          onAccountSelect={showAccountSelector}
-          onSubmit={validateAndSubmit}
-          onNext={onNext}
-          onPrevious={onPrevious}
-          explanation={explanation}
-          questionText={questionText}
-        />
+  // 統合されたフォーム表示
+  return (
+    <View style={formStyles.container}>
+      {/* エントリセクション */}
+      <View style={formStyles.section}>
+        <Text style={formStyles.sectionTitle}>帳簿エントリ</Text>
+        {mode === "learning"
+          ? learningEntries.map((entry, index) => (
+              <View key={index} style={formStyles.entryRow}>
+                <TouchableOpacity
+                  style={formStyles.accountButton}
+                  onPress={() => showLearningAccountSelector(index)}
+                >
+                  <Text style={formStyles.accountButtonText}>
+                    {entry.account || "勘定科目を選択"}
+                  </Text>
+                </TouchableOpacity>
+                <TextInput
+                  style={formStyles.amountInput}
+                  value={entry.amount > 0 ? entry.amount.toString() : ""}
+                  onChangeText={(text) =>
+                    updateLearningEntry(index, "amount", text)
+                  }
+                  placeholder="金額"
+                  keyboardType="numeric"
+                />
+                {learningEntries.length > 1 && (
+                  <TouchableOpacity
+                    style={formStyles.removeButton}
+                    onPress={() => removeLearningEntry(index)}
+                  >
+                    <Text style={formStyles.removeButtonText}>×</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            ))
+          : mockExamEntries.map((entry, index) => (
+              <View key={index} style={formStyles.entryRow}>
+                <TouchableOpacity
+                  style={formStyles.accountButton}
+                  onPress={() => showAccountSelector("debitAccount", index)}
+                >
+                  <Text style={formStyles.accountButtonText}>
+                    {entry.account || "勘定科目を選択"}
+                  </Text>
+                </TouchableOpacity>
+                <TextInput
+                  style={formStyles.amountInput}
+                  value={entry.amount > 0 ? entry.amount.toString() : ""}
+                  onChangeText={(text) =>
+                    updateMockExamEntry(index, "amount", text)
+                  }
+                  placeholder="金額"
+                  keyboardType="numeric"
+                />
+                {mockExamEntries.length > 1 && (
+                  <TouchableOpacity
+                    style={formStyles.removeButton}
+                    onPress={() => removeMockExamEntry(index)}
+                  >
+                    <Text style={formStyles.removeButtonText}>×</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            ))}
 
-        {/* Account selection modal (模試モード用) */}
-        <AccountSelector
-          visible={modalVisible}
-          onSelect={selectAccountFromModal}
-          onClose={() => setModalVisible(false)}
-          currentSelection={currentSelection}
-          onAccountSelect={handleIOSAccountSelection}
-        />
-      </>
-    );
-  }
+        <TouchableOpacity
+          style={formStyles.addButton}
+          onPress={mode === "learning" ? addLearningEntry : addMockExamEntry}
+        >
+          <Text style={formStyles.addButtonText}>+ エントリを追加</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* ボタンセクション */}
+      <View style={formStyles.buttonContainer}>
+        {mode === "mock_exam" && onPrevious && (
+          <Button
+            title="前の問題"
+            onPress={onPrevious}
+            variant="secondary"
+            style={formStyles.navButton}
+          />
+        )}
+
+        {showSubmitButton && (
+          <Button
+            title="解答する"
+            onPress={validateAndSubmit}
+            disabled={formState.isSubmitting}
+            style={formStyles.submitButton}
+          />
+        )}
+
+        {mode === "mock_exam" && onNext && (
+          <Button
+            title="次の問題"
+            onPress={onNext}
+            variant="secondary"
+            style={formStyles.navButton}
+          />
+        )}
+      </View>
+
+      {/* Account selection modal */}
+      <AccountSelector
+        visible={modalVisible}
+        onSelect={selectAccountFromModal}
+        onClose={() => setModalVisible(false)}
+        currentSelection={currentSelection}
+        onAccountSelect={handleIOSAccountSelection}
+      />
+    </View>
+  );
+});
+
+// Form styles
+const formStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  section: {
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 12,
+  },
+  entryRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  accountButton: {
+    flex: 2,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 6,
+    padding: 12,
+    marginRight: 8,
+    backgroundColor: "#f9f9f9",
+  },
+  accountButtonText: {
+    color: "#333",
+    fontSize: 16,
+  },
+  amountInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 6,
+    padding: 12,
+    fontSize: 16,
+    textAlign: "right",
+    backgroundColor: "#fff",
+  },
+  removeButton: {
+    marginLeft: 8,
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ff4444",
+    borderRadius: 15,
+  },
+  removeButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  addButton: {
+    backgroundColor: "#e0e0e0",
+    padding: 12,
+    borderRadius: 6,
+    alignItems: "center",
+    marginTop: 8,
+  },
+  addButtonText: {
+    color: "#333",
+    fontSize: 16,
+    fontWeight: "500",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 24,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: "#e0e0e0",
+  },
+  submitButton: {
+    flex: 1,
+    marginHorizontal: 8,
+  },
+  navButton: {
+    flex: 0.4,
+    marginHorizontal: 4,
+  },
 });
 
 export default UnifiedLedgerEntryForm;

@@ -42,7 +42,6 @@ export default function LearningQuestionScreen() {
   const { id: questionId } = useLocalSearchParams();
   if (questionId === "Q_J_001") {
     const screenRenderId = Math.random().toString(36).substr(2, 9);
-    console.log("[LearningQuestionScreen] Q_J_001 Render:", {
       screenRenderId,
       questionId,
       timestamp: Date.now(),
@@ -110,7 +109,6 @@ export default function LearningQuestionScreen() {
 
         // フィルター済み問題リストがある場合はそれを使用
         if (filteredQuestions && typeof filteredQuestions === "string") {
-          console.log(
             "[LearningQuestionScreen] フィルター済み問題リストを使用:",
             filteredQuestions,
           );
@@ -121,7 +119,6 @@ export default function LearningQuestionScreen() {
           // フィルター済み問題IDから問題を取得（バッチクエリ使用でパフォーマンス向上）
           const cleanFilteredIds = filteredIds.map((id) => id.trim());
           questions = await questionRepository.findByIds(cleanFilteredIds);
-          console.log(
             `[LearningQuestionScreen] フィルター済み問題: ${questions.length}件`,
           );
         } else {
@@ -137,7 +134,6 @@ export default function LearningQuestionScreen() {
           questions = allQuestions
             .flat()
             .sort((a, b) => a.id.localeCompare(b.id));
-          console.log(
             `[LearningQuestionScreen] 全302問を順次進行モードで読み込み: ${questions.length}件`,
           );
         }
@@ -155,7 +151,6 @@ export default function LearningQuestionScreen() {
 
         setIsLoading(false);
       } catch (error) {
-        console.error("[LearningQuestionScreen] 問題読み込みエラー:", error);
         Alert.alert("エラー", "問題の読み込みに失敗しました");
         router.back();
       }
@@ -179,7 +174,7 @@ export default function LearningQuestionScreen() {
 
     // 間違いの場合は復習リストに自動追加する処理を追加可能
     if (!result.isCorrect) {
-      console.log(`[LearningQuestionScreen] 復習対象問題: ${id}`);
+      
     }
   };
 
@@ -233,10 +228,9 @@ export default function LearningQuestionScreen() {
 
     try {
       const template = JSON.parse(question.answer_template_json);
-      console.log("[LearningQuestionScreen] Parsed answer template:", template);
+      
       return template;
     } catch (error) {
-      console.warn(
         "[LearningQuestionScreen] answer_template_json解析エラー:",
         error,
       );
@@ -258,7 +252,6 @@ export default function LearningQuestionScreen() {
           answerTemplate.fields &&
           Array.isArray(answerTemplate.fields)
         ) {
-          console.log(
             "[LearningQuestionScreen] answer_template_jsonからフィールドを生成:",
             answerTemplate,
           );
@@ -274,14 +267,12 @@ export default function LearningQuestionScreen() {
         }
       }
     } catch (error) {
-      console.warn(
         "[LearningQuestionScreen] answer_template_json解析エラー:",
         error,
       );
     }
 
     // フォールバック: カテゴリごとのデフォルトフィールド
-    console.log(
       "[LearningQuestionScreen] フォールバック: デフォルトフィールドを使用",
     );
     switch (question.category_id) {

@@ -1,2 +1,0 @@
-Filtering the log data using "composedMessage CONTAINS "bookkeeping" OR composedMessage CONTAINS "Book" OR composedMessage CONTAINS "React" OR composedMessage CONTAINS "Expo""
-Timestamp                       (process)[PID]    

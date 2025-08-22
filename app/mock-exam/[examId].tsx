@@ -98,13 +98,12 @@ export default function MockExamExecutionScreen() {
 
   const loadMockExamData = async () => {
     try {
-      console.log("Starting mock exam session for:", examId);
+      
 
       // Start mock exam session using MockExamService
       const mockExamSession =
         await mockExamService.startMockExamSession(examId);
 
-      console.log("Mock exam session started:", {
         examId: mockExamSession.examId,
         questionCount: mockExamSession.questions.length,
         timeLimit: mockExamSession.timeLimit,
@@ -120,7 +119,6 @@ export default function MockExamExecutionScreen() {
       questionStartTimeRef.current = Date.now();
       setLoading(false);
     } catch (error) {
-      console.error("Failed to start mock exam session:", error);
       Alert.alert("エラー", "模試セッションの開始に失敗しました");
       router.back();
     }
@@ -159,7 +157,6 @@ export default function MockExamExecutionScreen() {
         answerTime,
       );
 
-      console.log(
         "Answer recorded for question:",
         currentQuestion.question_id || currentQuestion.id,
       );
@@ -176,7 +173,6 @@ export default function MockExamExecutionScreen() {
         ],
       );
     } catch (error) {
-      console.error("Failed to record answer:", error);
       Alert.alert("エラー", "解答の保存に失敗しました");
     }
   };
@@ -211,7 +207,6 @@ export default function MockExamExecutionScreen() {
         answerTime,
       );
 
-      console.log(
         "Ledger answer recorded for question:",
         currentQuestion.question_id || currentQuestion.id,
       );
@@ -228,7 +223,6 @@ export default function MockExamExecutionScreen() {
         ],
       );
     } catch (error) {
-      console.error("Failed to record ledger answer:", error);
       Alert.alert("エラー", "解答の保存に失敗しました");
     }
   };
@@ -260,7 +254,6 @@ export default function MockExamExecutionScreen() {
         answerTime,
       );
 
-      console.log(
         "Trial balance answer recorded for question:",
         currentQuestion.question_id || currentQuestion.id,
       );
@@ -277,7 +270,6 @@ export default function MockExamExecutionScreen() {
         ],
       );
     } catch (error) {
-      console.error("Failed to record trial balance answer:", error);
       Alert.alert("エラー", "解答の保存に失敗しました");
     }
   };
@@ -360,12 +352,11 @@ export default function MockExamExecutionScreen() {
     if (!session) return;
 
     try {
-      console.log("Completing mock exam session...");
+      
 
       // Complete the mock exam session and get real scoring results
       const result = await mockExamService.completeMockExamSession(session);
 
-      console.log("Mock exam completed with results:", {
         totalScore: result.totalScore,
         maxScore: result.maxScore,
         isPassed: result.isPassed,
@@ -381,7 +372,6 @@ export default function MockExamExecutionScreen() {
         },
       });
     } catch (error) {
-      console.error("Failed to complete mock exam session:", error);
       Alert.alert("エラー", "模試の完了処理に失敗しました");
       setIsSubmitting(false);
     }

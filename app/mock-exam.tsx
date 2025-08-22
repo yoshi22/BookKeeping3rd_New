@@ -36,7 +36,6 @@ export default function MockExamScreen() {
       const activeExams = exams.filter((exam) => exam.is_active);
       setMockExams(activeExams);
     } catch (error) {
-      console.error("Error loading mock exams:", error);
       Alert.alert("エラー", "模試データの読み込みに失敗しました");
     } finally {
       setLoading(false);

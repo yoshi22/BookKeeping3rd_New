@@ -12,7 +12,6 @@ import { LearningHistoryRepository } from "../../../../src/data/repositories/lea
 import {
   useTheme,
   useThemedStyles,
-  useColors,
   useCategoryColors,
   useLearningColors,
   type Theme,

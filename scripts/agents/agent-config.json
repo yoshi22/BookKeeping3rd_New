@@ -1,0 +1,82 @@
+{
+  "agents": {
+    "web-search": {
+      "maxResults": 10,
+      "timeout": 30000,
+      "allowedDomains": [
+        "kentei.ne.jp",
+        "tac-school.co.jp",
+        "o-hara.jp",
+        "lec-jp.com",
+        "jcci.or.jp",
+        "wikipedia.org",
+        "ja.wikipedia.org"
+      ],
+      "blockedDomains": ["ads.google.com", "doubleclick.net"],
+      "defaultContext": "簿記3級",
+      "searchLanguage": "ja",
+      "description": "Dedicated web search agent for finding information related to bookkeeping, accounting, and Japanese business certification exams"
+    }
+  },
+  "defaultAgent": "web-search",
+  "verbose": false,
+  "retryAttempts": 3,
+  "retryDelay": 1000,
+  "userAgent": "BookKeeping3rd-WebSearchAgent/1.0",
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2025-08-21",
+    "description": "Configuration for the BookKeeping3rd web search agent system",
+    "supportedLanguages": ["ja", "en"],
+    "primaryDomain": "Japanese bookkeeping and accounting education"
+  },
+  "searchPresets": {
+    "bookkeeping-basics": {
+      "query": "簿記3級 基礎",
+      "allowedDomains": ["kentei.ne.jp", "tac-school.co.jp", "o-hara.jp"]
+    },
+    "cbt-exam": {
+      "query": "簿記 CBT 試験",
+      "allowedDomains": ["kentei.ne.jp", "jcci.or.jp"]
+    },
+    "journal-entries": {
+      "query": "仕訳 簿記3級",
+      "allowedDomains": ["kentei.ne.jp", "tac-school.co.jp"]
+    },
+    "trial-balance": {
+      "query": "試算表 作成方法",
+      "allowedDomains": ["kentei.ne.jp", "tac-school.co.jp", "o-hara.jp"]
+    },
+    "past-questions": {
+      "query": "簿記3級 過去問",
+      "allowedDomains": [
+        "kentei.ne.jp",
+        "tac-school.co.jp",
+        "o-hara.jp",
+        "lec-jp.com"
+      ]
+    }
+  },
+  "commonQueries": [
+    "簿記3級 試験対策",
+    "簿記3級 過去問",
+    "簿記3級 仕訳",
+    "簿記3級 勉強法",
+    "商業簿記 基礎",
+    "CBT 簿記",
+    "日商簿記 3級",
+    "簿記 独学",
+    "簿記 テキスト おすすめ",
+    "簿記 問題集",
+    "仕訳 練習問題",
+    "試算表 作成",
+    "帳簿 転記",
+    "勘定科目 一覧",
+    "決算整理仕訳"
+  ],
+  "domainCategories": {
+    "official": ["kentei.ne.jp", "jcci.or.jp"],
+    "educational": ["tac-school.co.jp", "o-hara.jp", "lec-jp.com"],
+    "reference": ["wikipedia.org", "ja.wikipedia.org"]
+  }
+}

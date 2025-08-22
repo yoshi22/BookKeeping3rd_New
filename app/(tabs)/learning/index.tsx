@@ -113,10 +113,10 @@ export default function LearningScreen() {
   useEffect(() => {
     const loadQuestionCounts = async () => {
       try {
-        console.log("[Learning] 問題数の取得開始");
+        // 問題数の取得を開始
         const questionRepository = new QuestionRepository();
         const counts = await questionRepository.getQuestionCountsByCategory();
-        console.log("[Learning] 問題数取得成功:", counts);
+        // 問題数取得成功
         setQuestionCounts(counts);
         // データがない場合のデフォルト値を設定
         if (
@@ -125,7 +125,6 @@ export default function LearningScreen() {
           !counts.trial_balance &&
           !counts.financial_statement
         ) {
-          console.warn(
             "[Learning] 問題データが存在しません。デフォルト値を設定します。",
           );
           setQuestionCounts({
@@ -138,7 +137,6 @@ export default function LearningScreen() {
           });
         }
       } catch (error) {
-        console.error("[Learning] 問題数の取得に失敗しました:", error);
         // エラー時はデフォルト値を設定
         setQuestionCounts({
           journal: 0,

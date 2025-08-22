@@ -99,7 +99,6 @@ export default function ReviewQuestionScreen() {
 
         // フィルター済み問題リストがある場合はそれを使用
         if (filteredQuestions && typeof filteredQuestions === "string") {
-          console.log(
             "[ReviewQuestionScreen] フィルター済み問題リストを使用:",
             filteredQuestions,
           );
@@ -116,13 +115,11 @@ export default function ReviewQuestionScreen() {
 
           // nullでない問題のみを抽出
           questions = questionsData.filter((q) => q !== null) as Question[];
-          console.log(
             `[ReviewQuestionScreen] フィルター済み問題: ${questions.length}件`,
           );
         }
         // 復習セッションの場合は復習対象問題のみを取得
         else if (sessionType === "review" && sessionId) {
-          console.log("[ReviewQuestionScreen] 復習セッション用の問題を取得:", {
             sessionId,
             category,
           });
@@ -134,7 +131,6 @@ export default function ReviewQuestionScreen() {
           });
 
           questions = reviewQuestions;
-          console.log(
             `[ReviewQuestionScreen] 復習対象問題: ${questions.length}件`,
           );
         } else {
@@ -144,7 +140,6 @@ export default function ReviewQuestionScreen() {
           });
 
           questions = reviewQuestions;
-          console.log(
             `[ReviewQuestionScreen] 復習対象問題: ${questions.length}件`,
           );
         }
@@ -162,7 +157,6 @@ export default function ReviewQuestionScreen() {
 
         setIsLoading(false);
       } catch (error) {
-        console.error("[ReviewQuestionScreen] 問題読み込みエラー:", error);
         Alert.alert("エラー", "問題の読み込みに失敗しました");
         router.back();
       }
@@ -186,7 +180,7 @@ export default function ReviewQuestionScreen() {
 
     // 間違いの場合は復習リストに自動追加する処理を追加可能
     if (!result.isCorrect) {
-      console.log(`[ReviewQuestionScreen] 復習対象問題: ${id}`);
+      
     }
   };
 
@@ -241,10 +235,9 @@ export default function ReviewQuestionScreen() {
 
     try {
       const template = JSON.parse(question.answer_template_json);
-      console.log("[ReviewQuestionScreen] Parsed answer template:", template);
+      
       return template;
     } catch (error) {
-      console.warn(
         "[ReviewQuestionScreen] answer_template_json解析エラー:",
         error,
       );
@@ -266,7 +259,6 @@ export default function ReviewQuestionScreen() {
           answerTemplate.fields &&
           Array.isArray(answerTemplate.fields)
         ) {
-          console.log(
             "[ReviewQuestionScreen] answer_template_jsonからフィールドを生成:",
             answerTemplate,
           );
@@ -282,14 +274,12 @@ export default function ReviewQuestionScreen() {
         }
       }
     } catch (error) {
-      console.warn(
         "[ReviewQuestionScreen] answer_template_json解析エラー:",
         error,
       );
     }
 
     // フォールバック: カテゴリごとのデフォルトフィールド
-    console.log(
       "[ReviewQuestionScreen] フォールバック: デフォルトフィールドを使用",
     );
     switch (question.category_id) {

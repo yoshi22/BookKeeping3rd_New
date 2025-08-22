@@ -6,6 +6,8 @@
 export interface MockExamLedgerEntry {
   date: string;
   description: string;
+  account: string;
+  amount: number;
   debitAccount: string;
   debitAmount: number;
   creditAccount: string;
@@ -15,6 +17,8 @@ export interface MockExamLedgerEntry {
 export interface LedgerEntry {
   date: string;
   description: string;
+  account: string;
+  amount: number;
   receipt_amount: number;
   payment_amount: number;
 }

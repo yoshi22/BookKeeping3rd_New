@@ -31,6 +31,8 @@ export const createInitialLedgerFormState = (): LedgerFormState => ({
 export const createInitialLearningEntry = (): LedgerEntry => ({
   date: "",
   description: "",
+  account: "",
+  amount: 0,
   receipt_amount: 0,
   payment_amount: 0,
 });
@@ -41,6 +43,8 @@ export const createInitialLearningEntry = (): LedgerEntry => ({
 export const createInitialMockExamEntry = (): MockExamLedgerEntry => ({
   date: "",
   description: "",
+  account: "",
+  amount: 0,
   debitAccount: "",
   debitAmount: 0,
   creditAccount: "",

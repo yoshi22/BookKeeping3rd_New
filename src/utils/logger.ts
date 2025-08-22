@@ -235,18 +235,13 @@ class LogService {
 
     switch (entry.level) {
       case LogLevel.DEBUG:
-        console.debug(fullMessage);
         break;
       case LogLevel.INFO:
-        console.info(fullMessage);
         break;
       case LogLevel.WARN:
-        console.warn(fullMessage);
         break;
       case LogLevel.ERROR:
-        console.error(fullMessage);
         if (entry.error) {
-          console.error("Error details:", entry.error);
         }
         break;
     }
@@ -305,7 +300,6 @@ class LogService {
 export const logger = new LogService();
 
 /**
- * 従来のconsole.log置き換え用ヘルパー
  */
 export const log = {
   debug: (message: string, ...args: any[]) => {

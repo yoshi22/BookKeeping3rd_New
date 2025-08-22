@@ -13,14 +13,15 @@ import {
   ActionSheetIOS,
   Platform,
   StyleSheet,
+  TouchableOpacity,
+  TextInput,
 } from "react-native";
+import { Button } from "../ui/Button";
 import { useTheme } from "../../context/ThemeContext";
 import { STANDARD_ACCOUNT_OPTIONS } from "../shared/AccountOptions";
 import { SessionType } from "../../types/database";
 
-// 分割コンポーネントのインポート
-import { LearningModeJournalForm } from "./LearningModeJournalForm";
-import { MockExamModeJournalForm } from "./MockExamModeJournalForm";
+// 削除されたコンポーネントのインポートを除去
 import { JournalAccountSelector } from "./JournalAccountSelector";
 
 // 型定義とユーティリティのインポート
@@ -248,40 +249,108 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
         </View>
       )}
 
-      {/* Mode-specific form rendering */}
-      {mode === "learning" ? (
-        <LearningModeJournalForm
-          debits={debits}
-          credits={credits}
-          onAddDebit={addDebitRow}
-          onRemoveDebit={removeDebitRow}
-          onUpdateDebit={updateDebit}
-          onAddCredit={addCreditRow}
-          onRemoveCredit={removeCreditRow}
-          onUpdateCredit={updateCredit}
-          onAccountSelect={showAccountSelector}
-          onSubmit={validateAndSubmit}
-          isSubmitting={formState.isSubmitting}
-          showSubmitButton={showSubmitButton}
-        />
-      ) : (
-        <MockExamModeJournalForm
-          debits={debits}
-          credits={credits}
-          onAddDebit={addDebitRow}
-          onRemoveDebit={removeDebitRow}
-          onUpdateDebit={updateDebit}
-          onAddCredit={addCreditRow}
-          onRemoveCredit={removeCreditRow}
-          onUpdateCredit={updateCredit}
-          onAccountSelect={showAccountSelector}
-          onSubmit={validateAndSubmit}
-          onNext={onNext}
-          onPrevious={onPrevious}
-          explanation={explanation}
-          questionText={questionText}
-        />
-      )}
+      {/* 統合されたフォーム表示 */}
+      <View style={formStyles.container}>
+        {/* 借方セクション */}
+        <View style={formStyles.section}>
+          <Text style={formStyles.sectionTitle}>借方</Text>
+          {debits.map((debit, index) => (
+            <View key={index} style={formStyles.entryRow}>
+              <TouchableOpacity
+                style={formStyles.accountButton}
+                onPress={() => showAccountSelector("debit", index)}
+              >
+                <Text style={formStyles.accountButtonText}>
+                  {debit.account || "勘定科目を選択"}
+                </Text>
+              </TouchableOpacity>
+              <TextInput
+                style={formStyles.amountInput}
+                value={debit.amount > 0 ? debit.amount.toString() : ""}
+                onChangeText={(text) => updateDebit(index, "amount", text)}
+                placeholder="金額"
+                keyboardType="numeric"
+              />
+              {debits.length > 1 && (
+                <TouchableOpacity
+                  style={formStyles.removeButton}
+                  onPress={() => removeDebitRow(index)}
+                >
+                  <Text>×</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          ))}
+          <TouchableOpacity style={formStyles.addButton} onPress={addDebitRow}>
+            <Text>+ 行を追加</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* 貸方セクション */}
+        <View style={formStyles.section}>
+          <Text style={formStyles.sectionTitle}>貸方</Text>
+          {credits.map((credit, index) => (
+            <View key={index} style={formStyles.entryRow}>
+              <TouchableOpacity
+                style={formStyles.accountButton}
+                onPress={() => showAccountSelector("credit", index)}
+              >
+                <Text style={formStyles.accountButtonText}>
+                  {credit.account || "勘定科目を選択"}
+                </Text>
+              </TouchableOpacity>
+              <TextInput
+                style={formStyles.amountInput}
+                value={credit.amount > 0 ? credit.amount.toString() : ""}
+                onChangeText={(text) => updateCredit(index, "amount", text)}
+                placeholder="金額"
+                keyboardType="numeric"
+              />
+              {credits.length > 1 && (
+                <TouchableOpacity
+                  style={formStyles.removeButton}
+                  onPress={() => removeCreditRow(index)}
+                >
+                  <Text>×</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          ))}
+          <TouchableOpacity style={formStyles.addButton} onPress={addCreditRow}>
+            <Text>+ 行を追加</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* ボタンセクション */}
+        <View style={formStyles.buttonContainer}>
+          {mode === "mock_exam" && onPrevious && (
+            <Button
+              title="前の問題"
+              onPress={onPrevious}
+              variant="secondary"
+              style={formStyles.navButton}
+            />
+          )}
+
+          {showSubmitButton && (
+            <Button
+              title="解答する"
+              onPress={validateAndSubmit}
+              disabled={formState.isSubmitting}
+              style={formStyles.submitButton}
+            />
+          )}
+
+          {mode === "mock_exam" && onNext && (
+            <Button
+              title="次の問題"
+              onPress={onNext}
+              variant="secondary"
+              style={formStyles.navButton}
+            />
+          )}
+        </View>
+      </View>
 
       {/* Account selection modal */}
       <JournalAccountSelector
@@ -318,3 +387,80 @@ const headerStyles = {
     fontWeight: "600" as const,
   },
 };
+
+// Form styles
+const formStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  section: {
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 12,
+  },
+  entryRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  accountButton: {
+    flex: 2,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 6,
+    padding: 12,
+    marginRight: 8,
+    backgroundColor: "#f9f9f9",
+  },
+  accountButtonText: {
+    color: "#333",
+    fontSize: 16,
+  },
+  amountInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 6,
+    padding: 12,
+    fontSize: 16,
+    textAlign: "right",
+    backgroundColor: "#fff",
+  },
+  removeButton: {
+    marginLeft: 8,
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ff4444",
+    borderRadius: 15,
+  },
+  addButton: {
+    backgroundColor: "#e0e0e0",
+    padding: 12,
+    borderRadius: 6,
+    alignItems: "center",
+    marginTop: 8,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 24,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: "#e0e0e0",
+  },
+  submitButton: {
+    flex: 1,
+    marginHorizontal: 8,
+  },
+  navButton: {
+    flex: 0.4,
+    marginHorizontal: 4,
+  },
+});

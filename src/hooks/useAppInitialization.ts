@@ -10,7 +10,7 @@
  */
 
 import { useState, useEffect, useCallback } from "react";
-import { optimizedDatabaseService } from "../data/database-optimized";
+// 最適化版を統一版に置換
 import { statisticsCache } from "../services/statistics-cache";
 import { databaseService } from "../data/database";
 import { logger } from "../utils/logger";
@@ -91,7 +91,7 @@ export function useAppInitialization() {
 
       // Stage 1: 高速データベース初期化
       logger.debug("[AppInit] Stage 1: 高速データベース初期化開始");
-      await optimizedDatabaseService.quickInitialize();
+      await databaseService.initialize();
 
       const quickInitTime = performance.now() - startTime;
       logger.debug(`[AppInit] Stage 1 完了: ${quickInitTime.toFixed(2)}ms`);
@@ -154,19 +154,19 @@ export function useAppInitialization() {
   const loadEssentialData = async (): Promise<EssentialData> => {
     const [categories, accountItems, appSettings] = await Promise.all([
       // カテゴリ情報（軽量）
-      optimizedDatabaseService.executeSql(
+      databaseService.executeSql(
         "SELECT id, name, total_questions FROM categories WHERE is_active = 1 ORDER BY sort_order",
         [],
       ),
 
       // 勘定科目（頻繁に使用）
-      optimizedDatabaseService.executeSql(
+      databaseService.executeSql(
         "SELECT code, name, category FROM account_items WHERE is_active = 1 ORDER BY sort_order LIMIT 50",
         [],
       ),
 
       // アプリ設定（UI表示に必要）
-      optimizedDatabaseService.executeSql(
+      databaseService.executeSql(
         "SELECT key, value, type FROM app_settings",
         [],
       ),
@@ -213,7 +213,7 @@ export function useAppInitialization() {
   const warmupStatisticsCache = async () => {
     try {
       // よく使用される統計データを事前にキャッシュ
-      await optimizedDatabaseService.executeSql(
+      await databaseService.executeSql(
         `SELECT 
            COUNT(*) as total_answered,
            AVG(CASE WHEN is_correct = 1 THEN 1.0 ELSE 0.0 END) as overall_accuracy
@@ -234,7 +234,7 @@ export function useAppInitialization() {
   const preloadRecentLearningData = async () => {
     try {
       // 最近の学習履歴（復習画面で使用）
-      await optimizedDatabaseService.executeSql(
+      await databaseService.executeSql(
         `SELECT question_id, is_correct, answered_at 
          FROM learning_history 
          WHERE answered_at >= DATE('now', '-7 days')
@@ -244,7 +244,7 @@ export function useAppInitialization() {
       );
 
       // 復習対象問題（復習画面で使用）
-      await optimizedDatabaseService.executeSql(
+      await databaseService.executeSql(
         `SELECT ri.question_id, ri.priority_score, q.category_id
          FROM review_items ri
          JOIN questions q ON ri.question_id = q.id
@@ -266,10 +266,10 @@ export function useAppInitialization() {
   const optimizeDatabaseInBackground = async () => {
     try {
       // ANALYZE実行（統計情報更新）
-      await optimizedDatabaseService.executeSql("ANALYZE", []);
+      await databaseService.executeSql("ANALYZE", []);
 
       // 古い一時データのクリーンアップ
-      await optimizedDatabaseService.executeSql(
+      await databaseService.executeSql(
         'DELETE FROM learning_history WHERE answered_at < DATE("now", "-90 days")',
         [],
       );
@@ -287,12 +287,9 @@ export function useAppInitialization() {
     totalTime: number,
     essentialData: EssentialData,
   ) => {
-    const stats = optimizedDatabaseService.getPerformanceStats();
-
     logger.debug("[AppInit] パフォーマンス統計:", {
       details: {
         totalInitTime: `${totalTime.toFixed(2)}ms`,
-        databaseStats: stats,
         preloadedData: {
           categories: essentialData.categories.length,
           accountItems: essentialData.accountItems.length,

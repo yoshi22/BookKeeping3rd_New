@@ -18,14 +18,7 @@ function TabLayout() {
       ? 60 + tabBarBottomPadding // 基本高さ + 最小SafeArea
       : 60;
 
-  // デバッグログ
-  if (__DEV__ && Platform.OS === "ios") {
-    console.log("TabBar SafeArea Debug:", {
-      insetsBottom: insets.bottom,
-      tabBarBottomPadding,
-      tabBarHeight,
-    });
-  }
+  // SafeArea情報は開発時のデバッグで使用
 
   return (
     <Tabs
