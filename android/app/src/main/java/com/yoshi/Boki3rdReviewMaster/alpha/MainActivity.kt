@@ -1,4 +1,4 @@
-package com.bookkeepingapp.app
+package com.yoshi.Boki3rdReviewMaster.alpha
 
 import android.os.Build
 import android.os.Bundle

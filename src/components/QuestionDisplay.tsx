@@ -32,6 +32,7 @@ import {
   SubmitAnswerRequest,
   SubmitAnswerResponse,
 } from "../services/answer-service";
+import { reviewService } from "../services/review-service";
 import { SessionType } from "../types/database";
 
 interface AnswerField {
@@ -396,6 +397,24 @@ export default function QuestionDisplay({
     });
   }
 
+  // 解説展開時のハンドラー（復習対象追加）
+  const handleExplanationExpand = useCallback(
+    async (expanded: boolean) => {
+      if (expanded && sessionType !== "mock_exam" && questionId) {
+        try {
+          await reviewService.forceAddToReview(questionId, "解説を見た");
+          logger.debug(
+            `[QuestionDisplay] 解説展開で復習対象に追加: ${questionId}`,
+          );
+        } catch (error) {
+          logger.warn(`[QuestionDisplay] 復習対象追加エラー: ${error}`);
+          // エラーでもUIには影響させない
+        }
+      }
+    },
+    [questionId, sessionType],
+  );
+
   return (
     <View style={styles.container} testID="question-screen">
       {/* ヘッダー */}
@@ -582,6 +601,10 @@ export default function QuestionDisplay({
           showExplanation && Object.keys(answers).length > 0
         }
         sessionMode={sessionType}
+        expandable={true}
+        defaultExpanded={false}
+        questionId={questionId}
+        onExpand={handleExplanationExpand}
       />
     </View>
   );

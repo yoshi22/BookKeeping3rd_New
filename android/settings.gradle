@@ -21,7 +21,7 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
   }
 }
 
-rootProject.name = '簿記3級問題集「確実復習」'
+rootProject.name = '簿記3級「復習マスター」Alpha'
 
 dependencyResolutionManagement {
   versionCatalogs {

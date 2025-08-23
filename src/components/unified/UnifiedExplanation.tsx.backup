@@ -52,8 +52,6 @@ export interface UnifiedExplanationProps {
   // Panel specific props
   expandable?: boolean;
   defaultExpanded?: boolean;
-  onExpand?: (expanded: boolean) => void;
-  questionId?: string;
 
   // Test ID for E2E testing
   testID?: string;
@@ -74,8 +72,6 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
   sessionMode = "learning",
   expandable = false,
   defaultExpanded = true,
-  onExpand,
-  questionId,
   testID,
 }) => {
   const { theme } = useTheme();
@@ -83,7 +79,6 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
   const styles = useThemedStyles(createStyles);
 
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
-  const [hasBeenExpanded, setHasBeenExpanded] = useState(defaultExpanded);
 
   // Determine visibility based on mode
   const isComponentVisible = mode === "modal" ? visible : isVisible || true;
@@ -221,21 +216,7 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
         {expandable && (
           <TouchableOpacity
             style={styles.panelHeader}
-            onPress={() => {
-              const newExpanded = !isExpanded;
-              setIsExpanded(newExpanded);
-
-              // 初回展開時にコールバックを呼び出し（学習・復習モードのみ）
-              if (
-                newExpanded &&
-                !hasBeenExpanded &&
-                onExpand &&
-                sessionMode !== "mock_exam"
-              ) {
-                setHasBeenExpanded(true);
-                onExpand(true);
-              }
-            }}
+            onPress={() => setIsExpanded(!isExpanded)}
             testID={`${testID}-toggle`}
           >
             <Text style={styles.panelHeaderText}>
