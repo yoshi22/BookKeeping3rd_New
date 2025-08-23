@@ -279,9 +279,9 @@ export default function LearningScreen() {
                         },
                       ]}
                       onPress={() => {
-                        // 第一問から順次進行（Q_J_001から開始）
+                        // 第一問から順次進行（Q_J_001から開始）- 全問題順次進行モード
                         router.push(
-                          "/(tabs)/learning/question/Q_J_001?sessionType=learning",
+                          "/(tabs)/learning/question/Q_J_001?sessionType=learning&learningMode=all",
                         );
                       }}
                       testID="learning-all-questions-button"

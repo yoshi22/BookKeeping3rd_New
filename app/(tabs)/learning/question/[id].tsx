@@ -33,8 +33,14 @@ export default function LearningQuestionScreen() {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
 
-  const { id, sessionId, sessionType, filteredQuestions } =
-    useLocalSearchParams();
+  const {
+    id,
+    sessionId,
+    sessionType,
+    filteredQuestions,
+    categoryId,
+    learningMode,
+  } = useLocalSearchParams();
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -92,16 +98,27 @@ export default function LearningQuestionScreen() {
 
         let questions: Question[] = [];
 
-        // フィルター済み問題リストがある場合はそれを使用
+        // 学習モードの判定
+        const currentLearningMode = learningMode || "all";
+
         if (filteredQuestions && typeof filteredQuestions === "string") {
+          // フィルター済み問題リストがある場合は優先的に使用
           const filteredIds = filteredQuestions.split(",");
           const questionRepository = new QuestionRepository();
 
-          // フィルター済み問題IDから問題を取得（バッチクエリ使用でパフォーマンス向上）
+          // フィルター済み問題IDから問題を取得（順序維持）
           const cleanFilteredIds = filteredIds.map((id) => id.trim());
-          questions = await questionRepository.findByIds(cleanFilteredIds);
+          questions =
+            await questionRepository.findByIdsInOrder(cleanFilteredIds);
+        } else if (currentLearningMode === "category" && categoryId) {
+          // フィルターがない場合のみカテゴリ別学習モード：指定されたカテゴリの問題のみ取得
+          const questionRepository = new QuestionRepository();
+          questions = await questionRepository.findByCategory(
+            categoryId as any,
+            { useProblemsStrategyOrder: true },
+          );
         } else {
-          // 通常の学習モードの場合は全問題を取得（全302問を順次進行）
+          // 全問題順次進行モード（全302問を順次進行）
           const questionRepository = new QuestionRepository();
           // カテゴリ別ではなく、全問題を取得して順次進行させる
           const allQuestions = await Promise.all([

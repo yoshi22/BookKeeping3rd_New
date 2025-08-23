@@ -221,9 +221,10 @@ export default function CategoryDetailScreen() {
     ],
   };
 
+  // フィルター初期状態を修正：空配列 = 全選択として扱う
   const [filters, setFilters] = useState<FilterOptions>({
-    difficulties: [],
-    questionTypes: [],
+    difficulties: [], // 空配列 = 全選択（全難易度が選択された状態）
+    questionTypes: [], // 空配列 = 全選択（全問題タイプが選択された状態）
     learningStatus: "all",
     excludeRecent: false,
   });
@@ -264,18 +265,18 @@ export default function CategoryDetailScreen() {
     if (categoryId) {
       loadData();
     }
-  }, [categoryId, loadLearningStats]);
+  }, [categoryId]);
 
   // フィルターが変更されたときに問題を再フィルタリング
   useEffect(() => {
     if (questions.length > 0) {
       applyFilters();
     }
-  }, [filters, questions, applyFilters]);
+  }, [filters, questions, learningStats]);
 
   // Category information removed as it was unused
 
-  const loadLearningStats = useCallback(async () => {
+  const loadLearningStats = async () => {
     try {
       const historyRepository = new LearningHistoryRepository();
 
@@ -318,7 +319,7 @@ export default function CategoryDetailScreen() {
     } catch (error) {
       logger.error("学習統計の読み込みに失敗:", error as Error);
     }
-  }, [categoryId]);
+  };
 
   // 学習状況別の問題数を取得する関数
   const getQuestionsForStatus = (
@@ -350,17 +351,18 @@ export default function CategoryDetailScreen() {
     }
   };
 
-  const applyFilters = useCallback(() => {
+  // applyFilters関数を改善：空配列=全選択として扱う
+  const applyFilters = () => {
     let filtered = [...questions];
 
-    // 難易度フィルター（複数選択対応）
+    // 難易度フィルター（空配列 = 全選択、要素あり = 選択されたもののみ）
     if (filters.difficulties.length > 0) {
       filtered = filtered.filter((q) =>
         filters.difficulties.includes(q.difficulty),
       );
     }
 
-    // 問題類型フィルター（problemsStrategy.md準拠の分類ロジック使用）
+    // 問題類型フィルター（空配列 = 全選択、要素あり = 選択されたもののみ）
     if (filters.questionTypes.length > 0) {
       filtered = filtered.filter((q) =>
         filters.questionTypes.some((type) =>
@@ -413,102 +415,100 @@ export default function CategoryDetailScreen() {
     }
 
     setFilteredQuestions(filtered);
-  }, [questions, filters, learningStats, getQuestionTypeFromQuestion]);
+  };
 
   // 問題から類型を推測する関数 (tags_jsonベース・動的分類)
-  const getQuestionTypeFromQuestion = useCallback(
-    (question: Question): string[] => {
-      try {
-        if (categoryId === "journal") {
-          // tags_jsonからsubcategoryを取得して分類
-          const tags = JSON.parse(question.tags_json || "{}");
-          const subcategory = tags.subcategory;
+  const getQuestionTypeFromQuestion = (question: Question): string[] => {
+    try {
+      if (categoryId === "journal") {
+        // tags_jsonからsubcategoryを取得して分類
+        const tags = JSON.parse(question.tags_json || "{}");
+        const subcategory = tags.subcategory;
 
-          // subcategoryからquestion typeへのマッピング
-          const subcategoryToType: Record<string, string> = {
-            // 現金・預金関連
-            cash_deposit: "cash_deposit",
+        // subcategoryからquestion typeへのマッピング
+        const subcategoryToType: Record<string, string> = {
+          // 現金・預金関連
+          cash_deposit: "cash_deposit",
 
-            // 商品売買関連
-            sales_purchase: "sales_purchase",
-            merchandise: "sales_purchase",
-            shipping_special: "sales_purchase",
+          // 商品売買関連
+          sales_purchase: "sales_purchase",
+          merchandise: "sales_purchase",
+          shipping_special: "sales_purchase",
 
-            // 債権・債務関連
-            receivable_payable: "receivable_payable",
-            bill_of_exchange: "receivable_payable",
-            lending_borrowing: "receivable_payable",
+          // 債権・債務関連
+          receivable_payable: "receivable_payable",
+          bill_of_exchange: "receivable_payable",
+          lending_borrowing: "receivable_payable",
 
-            // 給与・税金関連
-            salary_tax: "salary_tax",
-            salary_payment: "salary_tax",
-            salary_withholding: "salary_tax",
-            payroll: "salary_tax",
-            social_insurance: "salary_tax",
-            source_tax: "salary_tax",
-            corporate_tax: "salary_tax",
+          // 給与・税金関連
+          salary_tax: "salary_tax",
+          salary_payment: "salary_tax",
+          salary_withholding: "salary_tax",
+          payroll: "salary_tax",
+          social_insurance: "salary_tax",
+          source_tax: "salary_tax",
+          corporate_tax: "salary_tax",
 
-            // 固定資産関連
-            fixed_asset: "fixed_asset",
-            fixed_asset_disposal: "fixed_asset",
+          // 固定資産関連
+          fixed_asset: "fixed_asset",
+          fixed_asset_disposal: "fixed_asset",
 
-            // 決算整理関連
-            adjustment: "adjustment",
-          };
+          // 決算整理関連
+          adjustment: "adjustment",
+        };
 
-          const questionType = subcategoryToType[subcategory];
-          return questionType ? [questionType] : ["other"];
-        } else if (categoryId === "ledger") {
-          // Use tags_json for dynamic categorization
-          const tags = JSON.parse(question.tags_json || "{}");
-          const subcategory = tags.subcategory;
+        const questionType = subcategoryToType[subcategory];
+        return questionType ? [questionType] : ["other"];
+      } else if (categoryId === "ledger") {
+        // Use tags_json for dynamic categorization
+        const tags = JSON.parse(question.tags_json || "{}");
+        const subcategory = tags.subcategory;
 
-          const subcategoryToType: Record<string, string> = {
-            general_ledger: "account_entry", // Q_L_001-010: 勘定記入問題
-            subsidiary_ledger: "subsidiary_books", // Q_L_011-020: 補助簿記入問題
-            voucher: "voucher_entry", // Q_L_021-030: 伝票記入問題
-            theory: "theory_selection", // Q_L_031-040: 理論・選択問題
-          };
+        const subcategoryToType: Record<string, string> = {
+          general_ledger: "account_entry", // Q_L_001-010: 勘定記入問題
+          subsidiary_ledger: "subsidiary_books", // Q_L_011-020: 補助簿記入問題
+          voucher: "voucher_entry", // Q_L_021-030: 伝票記入問題
+          theory: "theory_selection", // Q_L_031-040: 理論・選択問題
+        };
 
-          const questionType = subcategoryToType[subcategory];
-          return questionType ? [questionType] : ["other"];
-        } else if (categoryId === "trial_balance") {
-          // 第3問の分類（3パターン×4難易度=12問）
-          const questionId = question.id;
+        const questionType = subcategoryToType[subcategory];
+        return questionType ? [questionType] : ["other"];
+      } else if (categoryId === "trial_balance") {
+        // 第3問の分類（3パターン×4難易度=12問）
+        const questionId = question.id;
 
-          // パターン1: 財務諸表作成 (4問)
-          if (
-            ["Q_T_001", "Q_T_002", "Q_T_003", "Q_T_004"].includes(questionId)
-          ) {
-            return ["financial_statements"];
-          }
+        // パターン1: 財務諸表作成 (4問)
+        if (["Q_T_001", "Q_T_002", "Q_T_003", "Q_T_004"].includes(questionId)) {
+          return ["financial_statements"];
+        }
 
-          // パターン2: 精算表作成 (4問)
-          if (
-            ["Q_T_005", "Q_T_006", "Q_T_007", "Q_T_008"].includes(questionId)
-          ) {
-            return ["worksheet"];
-          }
+        // パターン2: 精算表作成 (4問)
+        if (["Q_T_005", "Q_T_006", "Q_T_007", "Q_T_008"].includes(questionId)) {
+          return ["worksheet"];
+        }
 
-          // パターン3: 試算表作成 (4問)
-          if (
-            ["Q_T_009", "Q_T_010", "Q_T_011", "Q_T_012"].includes(questionId)
-          ) {
-            return ["trial_balance"];
-          }
-
-          // フォールバック: デフォルトは試算表
+        // パターン3: 試算表作成 (4問)
+        if (["Q_T_009", "Q_T_010", "Q_T_011", "Q_T_012"].includes(questionId)) {
           return ["trial_balance"];
         }
-        return ["other"];
-      } catch {
-        return ["other"];
-      }
-    },
-    [categoryId],
-  );
 
+        // フォールバック: デフォルトは試算表
+        return ["trial_balance"];
+      }
+      return ["other"];
+    } catch {
+      return ["other"];
+    }
+  };
+
+  // toggleDifficultyFilter関数を改善：空配列対応
   const toggleDifficultyFilter = (levelGroup: QuestionDifficulty[]) => {
+    // 空配列の場合（全選択状態）、クリックされたグループのみを選択
+    if (filters.difficulties.length === 0) {
+      setFilters({ ...filters, difficulties: [...levelGroup] });
+      return;
+    }
+
     // 複数レベルのグループを処理
     const hasAllSelected = levelGroup.every((level) =>
       filters.difficulties.includes(level),
@@ -531,7 +531,14 @@ export default function CategoryDetailScreen() {
     setFilters({ ...filters, difficulties: newDifficulties });
   };
 
+  // toggleQuestionTypeFilter関数を改善：空配列対応
   const toggleQuestionTypeFilter = (questionType: string) => {
+    // 空配列の場合（全選択状態）、クリックされたタイプのみを選択
+    if (filters.questionTypes.length === 0) {
+      setFilters({ ...filters, questionTypes: [questionType] });
+      return;
+    }
+
     const newQuestionTypes = filters.questionTypes.includes(questionType)
       ? filters.questionTypes.filter((t) => t !== questionType)
       : [...filters.questionTypes, questionType];
@@ -622,8 +629,8 @@ export default function CategoryDetailScreen() {
       }
 
       return tagLabels.slice(0, 3); // 最大3つまで
-    } catch {
-      logger.error("タグ解析エラー:", e as Error);
+    } catch (error) {
+      logger.error("タグ解析エラー:", error as Error);
       return [];
     }
   };
@@ -656,9 +663,13 @@ export default function CategoryDetailScreen() {
         </Text>
         <View style={styles.difficultyGrid}>
           {difficultyOptions.map((option, index) => {
-            const isSelected = option.levels.every((level) =>
-              filters.difficulties.includes(level),
-            );
+            // 空配列の場合は全選択、要素ありの場合は選択状況をチェック
+            const isSelected =
+              filters.difficulties.length === 0
+                ? true // 空配列 = 全選択状態
+                : option.levels.every((level) =>
+                    filters.difficulties.includes(level),
+                  );
             const levelQuestions = questions.filter((q) =>
               option.levels.includes(q.difficulty),
             );
@@ -723,7 +734,11 @@ export default function CategoryDetailScreen() {
         </Text>
         <View style={styles.questionTypeGrid}>
           {questionTypeOptions[categoryId!]?.map((option, index) => {
-            const isSelected = filters.questionTypes.includes(option.type);
+            // 空配列の場合は全選択、要素ありの場合は選択状況をチェック
+            const isSelected =
+              filters.questionTypes.length === 0
+                ? true // 空配列 = 全選択状態
+                : filters.questionTypes.includes(option.type);
             const typeQuestions = questions.filter((q) =>
               getQuestionTypeFromQuestion(q).includes(option.type),
             );
@@ -933,9 +948,12 @@ export default function CategoryDetailScreen() {
               key={question.id}
               style={styles.questionCard}
               onPress={() => {
-                // フィルタ済み問題リストをクエリパラメータとして渡す
+                // カテゴリ別学習モードとして遷移、フィルタ済み問題IDリストも渡す
+                const filteredIds = filteredQuestions
+                  .map((q) => q.id)
+                  .join(",");
                 router.push(
-                  `/(tabs)/learning/question/${question.id}?sessionType=learning&categoryId=${categoryId}`,
+                  `/(tabs)/learning/question/${question.id}?sessionType=learning&categoryId=${categoryId}&learningMode=category&filteredQuestions=${filteredIds}`,
                 );
               }}
             >

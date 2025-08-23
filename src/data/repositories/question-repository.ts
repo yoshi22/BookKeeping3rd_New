@@ -203,6 +203,40 @@ export class QuestionRepository extends BaseRepository<Question> {
   }
 
   /**
+   * 指定されたIDリストの順序を維持して問題を取得
+   * フィルター適用後の問題順序を保持するために使用
+   */
+  public async findByIdsInOrder(questionIds: string[]): Promise<Question[]> {
+    try {
+      if (questionIds.length === 0) {
+        return [];
+      }
+
+      // まず全ての問題をIDで取得
+      const placeholders = questionIds.map(() => "?").join(", ");
+      const sql = `SELECT * FROM questions WHERE id IN (${placeholders})`;
+
+      const result = await this.executeQuery<Question>(sql, questionIds);
+      
+      // 結果を入力IDの順序でソート
+      const questionMap = new Map<string, Question>();
+      result.rows.forEach(question => {
+        questionMap.set(question.id, question);
+      });
+      
+      const orderedQuestions = questionIds
+        .map(id => questionMap.get(id))
+        .filter((question): question is Question => question !== undefined);
+
+      logger.debug(`[QuestionRepository] ID指定（順序維持）で ${orderedQuestions.length}問取得`);
+      return orderedQuestions;
+    } catch (error) {
+      logger.error("[QuestionRepository] findByIdsInOrder エラー:", error as Error);
+      throw error;
+    }
+  }
+
+  /**
    * タグによる検索
    */
   public async findByTag(
