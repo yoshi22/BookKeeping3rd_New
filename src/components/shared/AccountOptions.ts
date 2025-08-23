@@ -63,6 +63,7 @@ export const STANDARD_ACCOUNT_OPTIONS: AccountOption[] = [
   { label: "受取手数料", value: "受取手数料" },
   { label: "有価証券売却益", value: "有価証券売却益" },
   { label: "雑収入", value: "雑収入" },
+  { label: "雑益", value: "雑益" },
 
   // 費用勘定
   { label: "仕入", value: "仕入" },
@@ -78,6 +79,7 @@ export const STANDARD_ACCOUNT_OPTIONS: AccountOption[] = [
   { label: "支払手数料", value: "支払手数料" },
   { label: "有価証券売却損", value: "有価証券売却損" },
   { label: "雑損失", value: "雑損失" },
+  { label: "雑損", value: "雑損" },
   { label: "租税公課", value: "租税公課" },
   { label: "保険料", value: "保険料" },
   { label: "広告宣伝費", value: "広告宣伝費" },
@@ -149,6 +151,7 @@ export const getAccountsByCategory = (
       "受取手数料",
       "有価証券売却益",
       "雑収入",
+      "雑益",
     ].includes(option.value),
   );
 
@@ -167,6 +170,7 @@ export const getAccountsByCategory = (
       "支払手数料",
       "有価証券売却損",
       "雑損失",
+      "雑損",
       "租税公課",
       "保険料",
       "広告宣伝費",
@@ -248,6 +252,7 @@ export const getAccountType = (
     "受取手数料",
     "有価証券売却益",
     "雑収入",
+    "雑益",
   ];
 
   const expenseAccounts = [
@@ -264,6 +269,7 @@ export const getAccountType = (
     "支払手数料",
     "有価証券売却損",
     "雑損失",
+    "雑損",
     "租税公課",
     "保険料",
     "広告宣伝費",

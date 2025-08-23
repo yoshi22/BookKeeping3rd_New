@@ -61,6 +61,7 @@ const EXTENDED_ACCOUNT_ITEMS = [
   { code: "412", name: "受取利息", category: "revenue" },
   { code: "413", name: "雑収入", category: "revenue" },
   { code: "414", name: "固定資産売却益", category: "revenue" },
+  { code: "415", name: "雑益", category: "revenue" },
   { code: "511", name: "仕入", category: "expense" },
   { code: "512", name: "給料", category: "expense" },
   { code: "513", name: "旅費交通費", category: "expense" },
@@ -75,6 +76,7 @@ const EXTENDED_ACCOUNT_ITEMS = [
   { code: "522", name: "租税公課", category: "expense" },
   { code: "523", name: "貸倒引当金繰入", category: "expense" },
   { code: "524", name: "固定資産除却損", category: "expense" },
+  { code: "525", name: "雑損", category: "expense" },
 ];
 
 export type AccountSelectionMode = "dropdown" | "modal" | "actionsheet";
