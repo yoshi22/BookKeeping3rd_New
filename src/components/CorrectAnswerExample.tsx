@@ -25,31 +25,85 @@ export default function CorrectAnswerExample({
   if (!show || !correctAnswer) return null;
 
   const renderJournalExample = () => {
+    // 新形式: journalEntries 配列（複合仕訳対応）
+    if (
+      correctAnswer.journalEntries &&
+      Array.isArray(correctAnswer.journalEntries)
+    ) {
+      return (
+        <View style={styles.exampleContainer}>
+          <Text style={styles.exampleTitle}>📝 正解例</Text>
+          {correctAnswer.journalEntries.map((entry: any, index: number) => (
+            <View key={index} style={styles.entryContainer}>
+              {index > 0 && <View style={styles.entrySeparator} />}
+              <View style={styles.journalRow}>
+                {/* 借方（左側） */}
+                <View style={styles.debitColumn}>
+                  <View style={styles.columnHeader}>
+                    <Text style={styles.columnHeaderText}>借方</Text>
+                  </View>
+                  <View style={styles.accountRow}>
+                    <Text style={styles.accountName}>
+                      {entry.debit_account}
+                    </Text>
+                    <Text style={styles.amount}>
+                      {entry.debit_amount?.toLocaleString()}
+                    </Text>
+                  </View>
+                </View>
+                {/* 貸方（右側） */}
+                <View style={styles.creditColumn}>
+                  <View style={styles.columnHeader}>
+                    <Text style={styles.columnHeaderText}>貸方</Text>
+                  </View>
+                  <View style={styles.accountRow}>
+                    <Text style={styles.accountName}>
+                      {entry.credit_account}
+                    </Text>
+                    <Text style={styles.amount}>
+                      {entry.credit_amount?.toLocaleString()}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          ))}
+        </View>
+      );
+    }
+
+    // 旧形式: journalEntry 単一オブジェクト（後方互換性）
     const entry = correctAnswer.journalEntry;
     if (!entry) return null;
 
     return (
       <View style={styles.exampleContainer}>
         <Text style={styles.exampleTitle}>📝 正解例</Text>
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>借方勘定科目:</Text>
-          <Text style={styles.fieldValue}>{entry.debit_account}</Text>
-        </View>
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>借方金額:</Text>
-          <Text style={styles.fieldValue}>
-            {entry.debit_amount?.toLocaleString()}円
-          </Text>
-        </View>
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>貸方勘定科目:</Text>
-          <Text style={styles.fieldValue}>{entry.credit_account}</Text>
-        </View>
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>貸方金額:</Text>
-          <Text style={styles.fieldValue}>
-            {entry.credit_amount?.toLocaleString()}円
-          </Text>
+        <View style={styles.journalRow}>
+          {/* 借方（左側） */}
+          <View style={styles.debitColumn}>
+            <View style={styles.columnHeader}>
+              <Text style={styles.columnHeaderText}>借方</Text>
+            </View>
+            <View style={styles.accountRow}>
+              <Text style={styles.accountName}>{entry.debit_account}</Text>
+              <Text style={styles.amount}>
+                {entry.debit_amount?.toLocaleString()}
+              </Text>
+            </View>
+          </View>
+          {/* 貸方（右側） */}
+          <View style={styles.creditColumn}>
+            <View style={styles.columnHeader}>
+              <Text style={styles.columnHeaderText}>貸方</Text>
+            </View>
+            <View style={styles.accountRow}>
+              <Text style={styles.accountName}>{entry.credit_account}</Text>
+              <Text style={styles.amount}>
+                {entry.credit_amount?.toLocaleString()}
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
     );
@@ -285,15 +339,7 @@ export default function CorrectAnswerExample({
     }
   };
 
-  return (
-    <View style={styles.container}>
-      {renderExample()}
-      <Text style={styles.hintText}>
-        💡
-        上記の形式で入力してください。不明な点があれば❓ボタンを押してヘルプをご覧ください。
-      </Text>
-    </View>
-  );
+  return <View style={styles.container}>{renderExample()}</View>;
 }
 
 const createStyles = (theme: Theme) =>
@@ -308,6 +354,60 @@ const createStyles = (theme: Theme) =>
     },
     exampleContainer: {
       marginBottom: 10,
+    },
+    entryContainer: {
+      marginBottom: 8,
+    },
+    entrySeparator: {
+      height: 1,
+      backgroundColor: theme.colors.border,
+      marginVertical: 8,
+      marginHorizontal: 10,
+    },
+    journalRow: {
+      flexDirection: "row",
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      borderRadius: 6,
+      backgroundColor: theme.colors.surface,
+    },
+    debitColumn: {
+      flex: 1,
+      borderRightWidth: 1,
+      borderRightColor: theme.colors.border,
+    },
+    creditColumn: {
+      flex: 1,
+    },
+    columnHeader: {
+      backgroundColor: theme.colors.surfaceVariant,
+      paddingVertical: 6,
+      paddingHorizontal: 10,
+      alignItems: "center",
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    columnHeaderText: {
+      fontSize: 12,
+      fontWeight: "600",
+      color: theme.colors.textSecondary,
+    },
+    accountRow: {
+      padding: 10,
+      alignItems: "center",
+    },
+    accountName: {
+      fontSize: 14,
+      fontWeight: "500",
+      color: theme.colors.text,
+      textAlign: "center",
+      marginBottom: 4,
+    },
+    amount: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: theme.colors.text,
+      textAlign: "center",
     },
     exampleTitle: {
       fontSize: 16,
