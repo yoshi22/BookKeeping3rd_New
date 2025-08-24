@@ -526,6 +526,17 @@ export class AnswerService {
     answerData: CBTAnswerData,
     correctAnswer: QuestionCorrectAnswer,
   ): boolean {
+    // Check for new compound journal entries format (journalEntries array)
+    if (
+      correctAnswer.journalEntries &&
+      Array.isArray(correctAnswer.journalEntries)
+    ) {
+      return this.isCompoundJournalEntriesCorrect(
+        answerData,
+        correctAnswer.journalEntries,
+      );
+    }
+
     const entry = correctAnswer.journalEntry;
     if (!entry) return false;
 
@@ -666,6 +677,59 @@ export class AnswerService {
         userEntry.amount === correctEntry.amount
       );
     });
+  }
+
+  /**
+   * 複合仕訳（journalEntries配列）の正解判定
+   */
+  private isCompoundJournalEntriesCorrect(
+    answerData: CBTAnswerData,
+    correctEntries: any[],
+  ): boolean {
+    const data = answerData as AnswerData & {
+      debit_account?: string;
+      debit_amount?: number;
+      credit_account?: string;
+      credit_amount?: number;
+      debits?: { account: string; amount: number }[];
+      credits?: { account: string; amount: number }[];
+    };
+
+    // Check if the answer data is in the new array format (from JournalEntryForm)
+    if (
+      data.debits &&
+      data.credits &&
+      Array.isArray(data.debits) &&
+      Array.isArray(data.credits)
+    ) {
+      // Filter out empty entries
+      const validDebits = data.debits.filter((d) => d.account && d.amount > 0);
+      const validCredits = data.credits.filter(
+        (c) => c.account && c.amount > 0,
+      );
+
+      // Convert correctEntries array to debits and credits arrays
+      const expectedDebits = correctEntries
+        .filter((entry) => entry.debit_account && entry.debit_amount > 0)
+        .map((entry) => ({
+          account: entry.debit_account,
+          amount: entry.debit_amount,
+        }));
+
+      const expectedCredits = correctEntries
+        .filter((entry) => entry.credit_account && entry.credit_amount > 0)
+        .map((entry) => ({
+          account: entry.credit_account,
+          amount: entry.credit_amount,
+        }));
+
+      return (
+        this.compareJournalEntryArrays(validDebits, expectedDebits) &&
+        this.compareJournalEntryArrays(validCredits, expectedCredits)
+      );
+    }
+
+    return false;
   }
 
   /**

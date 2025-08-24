@@ -27,56 +27,6 @@ import {
 import { STANDARD_ACCOUNT_OPTIONS } from "../shared/AccountOptions";
 import type { AccountOption } from "../shared/FormTypes";
 
-// 簿記3級レベルの基本勘定科目データ（拡張版）
-const EXTENDED_ACCOUNT_ITEMS = [
-  { code: "111", name: "現金", category: "asset" },
-  { code: "111-1", name: "現金過不足", category: "asset" },
-  { code: "111-2", name: "小口現金", category: "asset" },
-  { code: "112", name: "預金", category: "asset" },
-  { code: "112-1", name: "当座預金", category: "asset" },
-  { code: "112-2", name: "当座借越", category: "liability" },
-  { code: "112-3", name: "普通預金", category: "asset" },
-  { code: "113", name: "売掛金", category: "asset" },
-  { code: "113-1", name: "貸倒引当金", category: "asset" },
-  { code: "114", name: "受取手形", category: "asset" },
-  { code: "115", name: "商品", category: "asset" },
-  { code: "116", name: "繰越商品", category: "asset" },
-  { code: "117", name: "前払費用", category: "asset" },
-  { code: "118", name: "建物", category: "asset" },
-  { code: "118-1", name: "建物減価償却累計額", category: "asset" },
-  { code: "119", name: "備品", category: "asset" },
-  { code: "119-1", name: "備品減価償却累計額", category: "asset" },
-  { code: "120", name: "車両", category: "asset" },
-  { code: "120-1", name: "車両運搬具", category: "asset" },
-  { code: "120-2", name: "車両運搬具減価償却累計額", category: "asset" },
-  { code: "211", name: "買掛金", category: "liability" },
-  { code: "212", name: "支払手形", category: "liability" },
-  { code: "213", name: "借入金", category: "liability" },
-  { code: "214", name: "未払金", category: "liability" },
-  { code: "214-1", name: "未払費用", category: "liability" },
-  { code: "215", name: "前受金", category: "liability" },
-  { code: "216", name: "預り金", category: "liability" },
-  { code: "311", name: "資本金", category: "equity" },
-  { code: "411", name: "売上", category: "revenue" },
-  { code: "412", name: "受取利息", category: "revenue" },
-  { code: "413", name: "雑収入", category: "revenue" },
-  { code: "414", name: "固定資産売却益", category: "revenue" },
-  { code: "511", name: "仕入", category: "expense" },
-  { code: "512", name: "給料", category: "expense" },
-  { code: "513", name: "旅費交通費", category: "expense" },
-  { code: "514", name: "通信費", category: "expense" },
-  { code: "515", name: "水道光熱費", category: "expense" },
-  { code: "516", name: "減価償却費", category: "expense" },
-  { code: "517", name: "支払利息", category: "expense" },
-  { code: "518", name: "雑費", category: "expense" },
-  { code: "519", name: "保険料", category: "expense" },
-  { code: "520", name: "法人税等", category: "expense" },
-  { code: "521", name: "法定福利費", category: "expense" },
-  { code: "522", name: "租税公課", category: "expense" },
-  { code: "523", name: "貸倒引当金繰入", category: "expense" },
-  { code: "524", name: "固定資産除却損", category: "expense" },
-];
-
 export type AccountSelectionMode = "dropdown" | "modal" | "actionsheet";
 export type QuestionType = "journal" | "ledger" | "trial_balance";
 
@@ -123,16 +73,10 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
   const [internalModalVisible, setInternalModalVisible] = useState(false);
   const modalVisible = mode === "modal" ? visible : internalModalVisible;
 
-  // Get appropriate account options based on question type
+  // Get appropriate account options - use STANDARD_ACCOUNT_OPTIONS for all cases
   const getAccountOptions = (): AccountOption[] => {
-    if (questionType === "journal" && mode === "dropdown") {
-      // Use extended account items for journal questions in dropdown mode
-      return EXTENDED_ACCOUNT_ITEMS.filter(
-        (item) => !excludeAccounts.includes(item.name),
-      ).map((item) => ({ label: item.name, value: item.name }));
-    }
-
-    // Use standard options for other cases
+    // Use standard options for all cases to ensure consistency
+    // STANDARD_ACCOUNT_OPTIONS contains all necessary account items
     return STANDARD_ACCOUNT_OPTIONS.filter(
       (option) => !excludeAccounts.includes(option.value),
     );
