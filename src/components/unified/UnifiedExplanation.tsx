@@ -198,16 +198,6 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
           {formatExplanationText(explanation)}
         </Text>
       </View>
-
-      {/* Additional Learning Tips */}
-      {sessionMode === "learning" && (
-        <View style={styles.tipsSection}>
-          <Text style={styles.tipsTitle}>💡 学習のポイント</Text>
-          <Text style={styles.tipsText}>
-            この問題を確実に解けるようになるまで、解説をしっかり読み返しましょう。
-          </Text>
-        </View>
-      )}
     </ScrollView>
   );
 
@@ -337,7 +327,8 @@ const createStyles = (theme: Theme): StyleSheet.NamedStyles<any> =>
       transform: [{ rotate: "-90deg" }],
     },
     panelContent: {
-      maxHeight: 400,
+      // maxHeightを削除して親コンテナに合わせて自動拡張
+      flex: 1,
     },
 
     // Modal styles
@@ -452,24 +443,6 @@ const createStyles = (theme: Theme): StyleSheet.NamedStyles<any> =>
       fontSize: 14,
       color: theme.colors.text,
       lineHeight: 22,
-    },
-    tipsSection: {
-      backgroundColor: theme.colors.primary + "10" || "#007AFF10",
-      padding: 16,
-      borderRadius: 8,
-      marginBottom: 16,
-    },
-    tipsTitle: {
-      fontSize: 16,
-      fontWeight: "600",
-      color: theme.colors.text,
-      marginBottom: 8,
-    },
-    tipsText: {
-      fontSize: 14,
-      color: theme.colors.text,
-      lineHeight: 20,
-      fontStyle: "italic",
     },
   });
 
