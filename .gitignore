@@ -64,3 +64,6 @@ scripts/archive/
 
 # Compiled JavaScript files (TypeScript project)
 src/**/*.js
+
+# WebDriverAgent (development dependency)
+WebDriverAgent/

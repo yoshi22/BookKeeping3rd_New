@@ -211,6 +211,7 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
                       value === option.value && styles.selectedOption,
                     ]}
                     onPress={() => handleAccountSelect(option)}
+                    testID={`account-option-${option.value}`}
                   >
                     <Text
                       style={[
@@ -256,6 +257,7 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
                 <TouchableOpacity
                   style={styles.optionItem}
                   onPress={() => handleAccountSelect(item)}
+                  testID={`account-option-${item.value}`}
                 >
                   <Text style={styles.optionText}>{item.label}</Text>
                 </TouchableOpacity>

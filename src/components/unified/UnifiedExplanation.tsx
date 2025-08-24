@@ -226,7 +226,7 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
                 onExpand(true);
               }
             }}
-            testID={`${testID}-toggle`}
+            testID={testID ? `${testID}-toggle` : "explanation-toggle"}
           >
             <Text style={styles.panelHeaderText}>
               解説 {resultStyle ? `(${resultStyle.text})` : ""}

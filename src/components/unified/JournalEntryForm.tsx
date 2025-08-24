@@ -391,6 +391,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
                 <TouchableOpacity
                   style={styles.addButton}
                   onPress={addDebitRow}
+                  testID="add-debit-entry-button"
                 >
                   <Text style={styles.addButtonText}>+ 借方を追加</Text>
                 </TouchableOpacity>
@@ -454,6 +455,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
                 <TouchableOpacity
                   style={styles.addButton}
                   onPress={addCreditRow}
+                  testID="add-credit-entry-button"
                 >
                   <Text style={styles.addButtonText}>+ 貸方を追加</Text>
                 </TouchableOpacity>

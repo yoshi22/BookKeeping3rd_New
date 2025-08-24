@@ -73,7 +73,11 @@ export default function NumericPad({
             {/* ヘッダー */}
             <View style={styles.header}>
               <Text style={styles.headerText}>{label}</Text>
-              <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+              <TouchableOpacity
+                onPress={onClose}
+                style={styles.closeButton}
+                testID="numeric-pad-close"
+              >
                 <Text style={styles.closeButtonText}>×</Text>
               </TouchableOpacity>
             </View>
@@ -93,18 +97,21 @@ export default function NumericPad({
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("1")}
+                  testID="numeric-pad-1"
                 >
                   <Text style={styles.buttonText}>1</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("2")}
+                  testID="numeric-pad-2"
                 >
                   <Text style={styles.buttonText}>2</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("3")}
+                  testID="numeric-pad-3"
                 >
                   <Text style={styles.buttonText}>3</Text>
                 </TouchableOpacity>
@@ -114,18 +121,21 @@ export default function NumericPad({
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("4")}
+                  testID="numeric-pad-4"
                 >
                   <Text style={styles.buttonText}>4</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("5")}
+                  testID="numeric-pad-5"
                 >
                   <Text style={styles.buttonText}>5</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("6")}
+                  testID="numeric-pad-6"
                 >
                   <Text style={styles.buttonText}>6</Text>
                 </TouchableOpacity>
@@ -135,18 +145,21 @@ export default function NumericPad({
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("7")}
+                  testID="numeric-pad-7"
                 >
                   <Text style={styles.buttonText}>7</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("8")}
+                  testID="numeric-pad-8"
                 >
                   <Text style={styles.buttonText}>8</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("9")}
+                  testID="numeric-pad-9"
                 >
                   <Text style={styles.buttonText}>9</Text>
                 </TouchableOpacity>
@@ -157,18 +170,21 @@ export default function NumericPad({
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("00")}
+                  testID="numeric-pad-00"
                 >
                   <Text style={styles.buttonText}>00</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("0")}
+                  testID="numeric-pad-0"
                 >
                   <Text style={styles.buttonText}>0</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleNumberPress("000")}
+                  testID="numeric-pad-000"
                 >
                   <Text style={styles.buttonText}>000</Text>
                 </TouchableOpacity>
@@ -179,6 +195,7 @@ export default function NumericPad({
                 <TouchableOpacity
                   style={[styles.button, styles.clearButton]}
                   onPress={handleClear}
+                  testID="numeric-pad-clear"
                 >
                   <Text style={[styles.buttonText, styles.clearText]}>
                     クリア
@@ -187,6 +204,7 @@ export default function NumericPad({
                 <TouchableOpacity
                   style={[styles.button, styles.deleteButton]}
                   onPress={handleDelete}
+                  testID="numeric-pad-delete"
                 >
                   <Text style={[styles.buttonText, styles.deleteText]}>
                     削除
@@ -195,6 +213,7 @@ export default function NumericPad({
                 <TouchableOpacity
                   style={[styles.button, styles.confirmButton]}
                   onPress={handleConfirm}
+                  testID="numeric-pad-confirm"
                 >
                   <Text style={[styles.buttonText, styles.confirmText]}>
                     確定

@@ -544,6 +544,20 @@ src/
 - `numeric-pad-confirm` - 確定ボタン
 - `numeric-pad-close` - 閉じるボタン
 
+#### 問題ナビゲーション（2025-08-24 新規追加）
+
+- `previous-question-button` - 前の問題ボタン
+- `next-question-button` - 次の問題ボタン
+
+#### 複合仕訳コントロール（2025-08-24 新規追加）
+
+- `add-debit-entry-button` - 借方エントリ追加ボタン
+- `add-credit-entry-button` - 貸方エントリ追加ボタン
+
+#### 解説表示（2025-08-24 修正）
+
+- `explanation-toggle` - 解説の展開・折りたたみ（undefined問題修正済み）
+
 #### 勘定科目選択
 
 - `account-option-{勘定科目名}` - 各勘定科目オプション（動的）

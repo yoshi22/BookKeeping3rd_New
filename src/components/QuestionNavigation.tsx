@@ -111,6 +111,7 @@ export default function QuestionNavigation({
           ]}
           onPress={onPrevious}
           disabled={!canGoPrevious}
+          testID="previous-question-button"
         >
           <Text
             style={[
@@ -130,6 +131,7 @@ export default function QuestionNavigation({
           ]}
           onPress={onNext}
           disabled={!canGoNext}
+          testID="next-question-button"
         >
           <Text
             style={[
