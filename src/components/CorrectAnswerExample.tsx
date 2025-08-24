@@ -30,44 +30,68 @@ export default function CorrectAnswerExample({
       correctAnswer.journalEntries &&
       Array.isArray(correctAnswer.journalEntries)
     ) {
+      // 借方と貸方のエントリを分離
+      const debits = correctAnswer.journalEntries
+        .filter((entry: any) => entry.debit_account && entry.debit_amount > 0)
+        .map((entry: any) => ({
+          account: entry.debit_account,
+          amount: entry.debit_amount,
+        }));
+
+      const credits = correctAnswer.journalEntries
+        .filter((entry: any) => entry.credit_account && entry.credit_amount > 0)
+        .map((entry: any) => ({
+          account: entry.credit_account,
+          amount: entry.credit_amount,
+        }));
+
       return (
         <View style={styles.exampleContainer}>
           <Text style={styles.exampleTitle}>📝 正解例</Text>
-          {correctAnswer.journalEntries.map((entry: any, index: number) => (
-            <View key={index} style={styles.entryContainer}>
-              {index > 0 && <View style={styles.entrySeparator} />}
-              <View style={styles.journalRow}>
-                {/* 借方（左側） */}
-                <View style={styles.debitColumn}>
-                  <View style={styles.columnHeader}>
-                    <Text style={styles.columnHeaderText}>借方</Text>
-                  </View>
-                  <View style={styles.accountRow}>
-                    <Text style={styles.accountName}>
-                      {entry.debit_account}
-                    </Text>
-                    <Text style={styles.amount}>
-                      {entry.debit_amount?.toLocaleString()}
-                    </Text>
-                  </View>
-                </View>
-                {/* 貸方（右側） */}
-                <View style={styles.creditColumn}>
-                  <View style={styles.columnHeader}>
-                    <Text style={styles.columnHeaderText}>貸方</Text>
-                  </View>
-                  <View style={styles.accountRow}>
-                    <Text style={styles.accountName}>
-                      {entry.credit_account}
-                    </Text>
-                    <Text style={styles.amount}>
-                      {entry.credit_amount?.toLocaleString()}
-                    </Text>
-                  </View>
-                </View>
+          <View style={styles.journalRow}>
+            {/* 借方（左側） */}
+            <View style={styles.debitColumn}>
+              <View style={styles.columnHeader}>
+                <Text style={styles.columnHeaderText}>借方</Text>
               </View>
+              {debits.map((debit: any, index: number) => (
+                <View key={`debit-${index}`} style={styles.accountRow}>
+                  <Text style={styles.accountName}>{debit.account}</Text>
+                  <Text style={styles.amount}>
+                    {debit.amount?.toLocaleString()}円
+                  </Text>
+                </View>
+              ))}
             </View>
-          ))}
+
+            {/* 貸方（右側） */}
+            <View style={styles.creditColumn}>
+              <View style={styles.columnHeader}>
+                <Text style={styles.columnHeaderText}>貸方</Text>
+              </View>
+              {credits.map((credit: any, index: number) => (
+                <View key={`credit-${index}`} style={styles.accountRow}>
+                  <Text style={styles.accountName}>{credit.account}</Text>
+                  <Text style={styles.amount}>
+                    {credit.amount?.toLocaleString()}円
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </View>
+
+          {/* 合計表示 */}
+          {debits.length > 0 && credits.length > 0 && (
+            <View style={styles.totalsRow}>
+              <Text style={styles.totalsText}>
+                借方合計:{" "}
+                {debits.reduce((sum, d) => sum + d.amount, 0).toLocaleString()}
+                円　 貸方合計:{" "}
+                {credits.reduce((sum, c) => sum + c.amount, 0).toLocaleString()}
+                円
+              </Text>
+            </View>
+          )}
         </View>
       );
     }
@@ -443,5 +467,17 @@ const createStyles = (theme: Theme) =>
       fontStyle: "italic",
       marginTop: 5,
       lineHeight: 16,
+    },
+    totalsRow: {
+      marginTop: 12,
+      paddingTop: 8,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.border,
+    },
+    totalsText: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: theme.colors.primary,
+      textAlign: "center",
     },
   });

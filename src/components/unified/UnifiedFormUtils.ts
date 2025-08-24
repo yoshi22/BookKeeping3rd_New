@@ -470,19 +470,42 @@ export const createJournalAnswerRequest = (
 
   if (Array.isArray(entries)) {
     // UnifiedJournalEntryForm format: JournalEntry[]
-    const debitEntry = entries.find((e) => e.type === "debit");
-    const creditEntry = entries.find((e) => e.type === "credit");
+    const debitEntries = entries.filter(
+      (e) => e.type === "debit" && e.account && e.amount > 0,
+    );
+    const creditEntries = entries.filter(
+      (e) => e.type === "credit" && e.account && e.amount > 0,
+    );
 
-    answerData.journalEntry =
-      debitEntry && creditEntry
-        ? {
-            debit: { account: debitEntry.account, amount: debitEntry.amount },
-            credit: {
-              account: creditEntry.account,
-              amount: creditEntry.amount,
-            },
-          }
-        : undefined;
+    // Check if this is a compound entry (multiple debits or credits)
+    const isCompoundEntry = debitEntries.length > 1 || creditEntries.length > 1;
+
+    if (isCompoundEntry) {
+      // For compound entries, format as debits/credits arrays (what isCompoundJournalEntriesCorrect expects)
+      answerData.debits = debitEntries.map((e) => ({
+        account: e.account,
+        amount: e.amount,
+      }));
+      answerData.credits = creditEntries.map((e) => ({
+        account: e.account,
+        amount: e.amount,
+      }));
+    } else {
+      // For single entries, use the old format
+      const debitEntry = debitEntries[0];
+      const creditEntry = creditEntries[0];
+
+      answerData.journalEntry =
+        debitEntry && creditEntry
+          ? {
+              debit: { account: debitEntry.account, amount: debitEntry.amount },
+              credit: {
+                account: creditEntry.account,
+                amount: creditEntry.amount,
+              },
+            }
+          : undefined;
+    }
   } else {
     // AnswerForm format: Record<string, any>
     const data = entries as Record<string, any>;
