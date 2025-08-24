@@ -39,6 +39,7 @@ export const STANDARD_ACCOUNT_OPTIONS: AccountOption[] = [
   { label: "貸付金", value: "貸付金" },
   { label: "有価証券", value: "有価証券" },
   { label: "保険積立金", value: "保険積立金" },
+  { label: "定期預金", value: "定期預金" },
 
   // 負債勘定
   { label: "買掛金", value: "買掛金" },
@@ -62,6 +63,9 @@ export const STANDARD_ACCOUNT_OPTIONS: AccountOption[] = [
   { label: "受取配当金", value: "受取配当金" },
   { label: "受取手数料", value: "受取手数料" },
   { label: "有価証券売却益", value: "有価証券売却益" },
+  { label: "為替差益", value: "為替差益" },
+  { label: "固定資産売却益", value: "固定資産売却益" },
+  { label: "償却債権取立益", value: "償却債権取立益" },
   { label: "雑収入", value: "雑収入" },
 
   // 費用勘定
@@ -77,6 +81,9 @@ export const STANDARD_ACCOUNT_OPTIONS: AccountOption[] = [
   { label: "支払利息", value: "支払利息" },
   { label: "支払手数料", value: "支払手数料" },
   { label: "有価証券売却損", value: "有価証券売却損" },
+  { label: "為替差損", value: "為替差損" },
+  { label: "固定資産売却損", value: "固定資産売却損" },
+  { label: "固定資産除却損", value: "固定資産除却損" },
   { label: "雑損失", value: "雑損失" },
   { label: "租税公課", value: "租税公課" },
   { label: "保険料", value: "保険料" },
@@ -120,6 +127,7 @@ export const getAccountsByCategory = (
       "貸付金",
       "有価証券",
       "保険積立金",
+      "定期預金",
     ].includes(option.value),
   );
 
@@ -148,6 +156,9 @@ export const getAccountsByCategory = (
       "受取配当金",
       "受取手数料",
       "有価証券売却益",
+      "為替差益",
+      "固定資産売却益",
+      "償却債権取立益",
       "雑収入",
     ].includes(option.value),
   );
@@ -166,6 +177,9 @@ export const getAccountsByCategory = (
       "支払利息",
       "支払手数料",
       "有価証券売却損",
+      "為替差損",
+      "固定資産売却損",
+      "固定資産除却損",
       "雑損失",
       "租税公課",
       "保険料",
@@ -225,6 +239,7 @@ export const getAccountType = (
     "貸付金",
     "有価証券",
     "保険積立金",
+    "定期預金",
   ];
 
   const liabilityAccounts = [
@@ -247,6 +262,9 @@ export const getAccountType = (
     "受取配当金",
     "受取手数料",
     "有価証券売却益",
+    "為替差益",
+    "固定資産売却益",
+    "償却債権取立益",
     "雑収入",
   ];
 
@@ -263,6 +281,9 @@ export const getAccountType = (
     "支払利息",
     "支払手数料",
     "有価証券売却損",
+    "為替差損",
+    "固定資産売却損",
+    "固定資産除却損",
     "雑損失",
     "租税公課",
     "保険料",
