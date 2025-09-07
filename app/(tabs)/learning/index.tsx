@@ -268,7 +268,7 @@ export default function LearningScreen() {
                 </ResponsiveGrid>
               ) : (
                 <ResponsiveGrid>
-                  {/* 全302問順次進行ボタン（problemsStrategy.md対応） */}
+                  {/* 全302問順次進行ボタン */}
                   <ResponsiveGridItem>
                     <TouchableOpacity
                       style={[
@@ -329,7 +329,7 @@ export default function LearningScreen() {
                           </Text>
                         </View>
                         <Text style={styles.categoryDetails}>
-                          🎯 problemsStrategy.md準拠の完全版問題集
+                          🎯 体系的に学べる完全版問題集
                         </Text>
                         <Text style={styles.categoryProgress}>
                           全
@@ -346,8 +346,14 @@ export default function LearningScreen() {
                           styles.categoryAction,
                           { backgroundColor: theme.colors.secondary },
                         ]}
+                        testID="learning-all-questions-start"
                       >
-                        <Text style={styles.actionText}>開始</Text>
+                        <Text
+                          style={styles.actionText}
+                          testID="learning-all-questions-start-text"
+                        >
+                          開始
+                        </Text>
                       </View>
                     </TouchableOpacity>
                   </ResponsiveGridItem>
@@ -446,8 +452,14 @@ export default function LearningScreen() {
                             styles.categoryAction,
                             { backgroundColor: category.color },
                           ]}
+                          testID={`category-${category.id}-select`}
                         >
-                          <Text style={styles.actionText}>選択</Text>
+                          <Text
+                            style={styles.actionText}
+                            testID={`category-${category.id}-select-text`}
+                          >
+                            選択
+                          </Text>
                         </View>
                       </TouchableOpacity>
                     </ResponsiveGridItem>
@@ -524,8 +536,13 @@ export default function LearningScreen() {
                     第3問（決算書1問35点）
                   </Text>
                 </View>
-                <View style={styles.examAction}>
-                  <Text style={styles.examActionText}>開始</Text>
+                <View style={styles.examAction} testID="mock-exam-start">
+                  <Text
+                    style={styles.examActionText}
+                    testID="mock-exam-start-text"
+                  >
+                    開始
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
