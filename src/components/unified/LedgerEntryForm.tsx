@@ -6,7 +6,7 @@
  * 学習モードと模試モードを分離したコンポーネントで構成
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Alert,
   Platform,
@@ -90,6 +90,15 @@ const UnifiedLedgerEntryForm = React.memo(function UnifiedLedgerEntryForm({
   const [mockExamEntries, setMockExamEntries] = useState<MockExamLedgerEntry[]>(
     [createInitialMockExamEntry()],
   );
+
+  // Reset form state when questionId changes
+  useEffect(() => {
+    setFormState(createInitialLedgerFormState());
+    setModalVisible(false);
+    setCurrentSelection(null);
+    setLearningEntries([createInitialLearningEntry()]);
+    setMockExamEntries([createInitialMockExamEntry()]);
+  }, [questionId]);
 
   // Entry management for learning mode
   const addLearningEntry = () => {

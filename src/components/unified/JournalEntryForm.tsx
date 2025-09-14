@@ -4,7 +4,7 @@
  * 2025-08-22 復旧実施
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { logger } from "../../utils/logger";
 import {
   View,
@@ -102,6 +102,18 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
     index: number;
   } | null>(null);
   const [tempAmount, setTempAmount] = useState("");
+
+  // Reset form state when questionId changes
+  useEffect(() => {
+    setFormState(createInitialJournalFormState());
+    setDebits([createInitialJournalEntry()]);
+    setCredits([createInitialJournalEntry()]);
+    setModalVisible(false);
+    setCurrentSelection(null);
+    setNumericPadVisible(false);
+    setCurrentAmountEdit(null);
+    setTempAmount("");
+  }, [questionId]);
 
   // Entry management functions
   const addDebitRow = () => {

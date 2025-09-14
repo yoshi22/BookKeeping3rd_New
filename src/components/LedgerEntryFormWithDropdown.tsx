@@ -3,7 +3,7 @@
  * answer_template_jsonのcolumn定義に基づいて動的にフォームを生成
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { logger } from "../utils/logger";
 import {
   View,
@@ -208,6 +208,13 @@ export default function LedgerEntryFormWithDropdown({
   ]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
+
+  // Reset entries when questionId changes
+  useEffect(() => {
+    setEntries([createEmptyEntry(columns)]);
+    setIsSubmitting(false);
+    setShowGuide(false);
+  }, [questionId]);
 
   // エントリを追加
   const addEntry = () => {
