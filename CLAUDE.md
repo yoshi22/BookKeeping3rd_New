@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🚨 重要: シミュレーター操作の絶対ルール（2025-08-24確立）
+
+**座標ベース操作は完全禁止**: x, y座標を指定したタップ・クリック操作は一切使用しないでください。本プロジェクトはtestIDベースの安定したUI自動化インフラを構築済みです。詳細は「シミュレーター操作ガイドライン」セクションを必ず参照してください。
+
 ## プロジェクト概要
 
 これは Expo、TypeScript、SQLite で構築された React Native 簿記練習アプリ（簿記3級問題集「確実復習」）です。間違えた問題の反復練習を通してユーザーの簿記習得を支援することに焦点を当てています。最新版では CBT 形式の模試機能が完全実装済みです。
@@ -379,44 +383,75 @@ src/
    mcp__xcodebuild__tap --simulatorUuid "UUID" --testID "submit-answer-button"
    ```
 
-### 座標ベース操作の禁止
+### 🚨 座標ベース操作の完全禁止（2025-08-24重要更新）
 
-- **x, y座標を使った直接的なタップ・クリック操作は絶対に行わないでください**
-- `tap`, `click_on_screen_at_coordinates` 等の座標指定ツールの使用を禁止します
-- スクリーンショットから目視で座標を推測する操作も禁止です
+**重要**: この禁止事項は絶対に遵守してください。違反は品質とテスト精度に重大な影響を与えます。
 
-### 推奨するアクセス方法
+#### 禁止事項（絶対厳守）
 
-1. **Mobile MCPツールの活用**:
+- **❌ x, y座標を使った直接的なタップ・クリック操作は絶対に行わないでください**
+- **❌ `mcp__xcodebuild__tap --x [数値] --y [数値]` のような座標指定は完全禁止**
+- **❌ `mobile_click_on_screen_at_coordinates` 等の座標指定ツールの使用を禁止**
+- **❌ スクリーンショットから目視で座標を推測する操作も完全禁止**
+- **❌ describe_uiの結果から座標を抽出してタップ操作することも禁止**
 
-   ```bash
-   # 座標を使わないtestIDベースの直接アクセス
-   mobile_click_on_element_by_id "learning-all-questions-button"
-   mobile_click_on_element_by_id "debit-account-dropdown-0"
-   mobile_click_on_element_by_text "現金"
-   mobile_click_on_element_by_id "submit-answer-button"
-   ```
+#### 禁止理由
 
-2. **UI階層ベースのアクセス**:
+1. **不安定性**: 座標は画面サイズ、解像度、UIの変更により容易に変化
+2. **保守性**: 座標ベースのテストは壊れやすく、メンテナンスコストが高い
+3. **再現性**: 異なる環境での動作が保証されない
+4. **testID体系の意義**: せっかく実装したtestIDベースインフラが無駄になる
 
-   ```bash
-   # 要素一覧を取得してから選択
-   mobile_list_elements_on_screen  # 要素一覧を取得
-   mobile_click_on_element_by_text "学習を開始"  # テキストベース
-   ```
+#### 長期記憶事項
 
-3. **describe_ui ツールの活用**:
+この禁止事項は本プロジェクトの重要な技術方針です：
 
-   ```bash
-   # UI構造を理解してからアクセス
-   mcp__xcodebuild__describe_ui --simulatorUuid "SIMULATOR_UUID"
-   ```
+- 座標ベース操作は技術的負債となり、テスト品質を損なう
+- testIDベース操作が唯一の推奨アプローチ
+- Mobile MCPツールの復旧まで待機するか、testIDベース手動確認を実施
+- 将来の開発者・AI支援システムもこの方針を継承すること
 
-4. **レガシーXcodeBuildツール**（座標必須のため非推奨）:
-   ```bash
-   # 非推奨: 座標が必要なため使用しない
-   # mcp__xcodebuild__tap --simulatorUuid "UUID" --testID "home-learning-button"
-   ```
+### ✅ 推奨するアクセス方法（座標フリー）
+
+#### 優先度1: Mobile MCPツールの活用（推奨）
+
+```bash
+# testIDベースの直接アクセス（座標計算不要）
+mobile_click_on_element_by_id "learning-all-questions-button"
+mobile_click_on_element_by_id "debit-account-dropdown-0"
+mobile_click_on_element_by_text "現金"
+mobile_click_on_element_by_id "submit-answer-button"
+
+# UI階層ベースのアクセス
+mobile_list_elements_on_screen  # 要素一覧を取得
+mobile_click_on_element_by_text "学習を開始"  # テキストベース
+```
+
+#### 優先度2: WebDriverAgent describe_ui（構造把握のみ）
+
+```bash
+# UI構造を理解・testID確認専用（操作はMobile MCPで実行）
+mcp__xcodebuild__describe_ui --simulatorUuid "SIMULATOR_UUID"
+```
+
+#### Mobile MCPツールが利用不可の場合の対処法
+
+Mobile MCPツールが利用できない場合は、以下の手順で対応：
+
+1. **テスト実施の一時中断**: 座標ベース操作ではなく、ツール復旧まで待機
+2. **手動検証への切り替え**: testIDの存在確認のみを実施
+3. **代替ツール検討**: 他のtestIDベースUI自動化ツールの評価
+4. **品質重視の判断**: 不安定なテストよりも品質を優先
+
+#### ❌ 完全削除済み: 座標ベースツール
+
+以下のツールは座標が必要なため、**使用厳禁**：
+
+```bash
+# ❌ 絶対使用禁止
+# mcp__xcodebuild__tap --simulatorUuid "UUID" --x 100 --y 200
+# mobile_click_on_screen_at_coordinates x y
+```
 
 ### 実証済み推奨操作（testIDベース）
 
@@ -499,8 +534,14 @@ src/
 **学習画面**
 
 - `learning-all-questions-button` - 全問題順次進行
+- `learning-all-questions-start` - 全問題順次進行の開始ボタン（2025-08-24 新規追加）
+- `learning-all-questions-start-text` - 全問題順次進行の開始ボタンテキスト（2025-08-24 新規追加）
 - `category-{categoryId}` - カテゴリ別学習（動的ID）
+- `category-{categoryId}-select` - カテゴリ選択ボタン（2025-08-24 新規追加）
+- `category-{categoryId}-select-text` - カテゴリ選択ボタンテキスト（2025-08-24 新規追加）
 - `learning-mock-exam-button` - 模試へ移動
+- `mock-exam-start` - 模試開始ボタン（2025-08-24 新規追加）
+- `mock-exam-start-text` - 模試開始ボタンテキスト（2025-08-24 新規追加）
 
 **復習画面**
 
