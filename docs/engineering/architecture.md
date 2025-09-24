@@ -140,7 +140,104 @@ interface QuestionState {
 }
 ```
 
-### 3.2 データ永続化層
+### 3.2 動的勘定科目フィルタリングシステム
+
+```typescript
+// 勘定科目動的フィルタリングサービス（2025-09-24 実装完了）
+interface AccountFilterService {
+  // 問題に応じた勘定科目フィルタリング（71個→10-15個に最適化）
+  filterAccounts(options: AccountFilterOptions): FilteredAccountOptions
+
+  // 3段階フィルタリングアルゴリズム
+  private performThreeStageFiltering(
+    questionId: string,
+    category: AccountCategory,
+    questionText: string,
+    maxAccounts: number
+  ): AccountOption[]
+}
+
+// フィルタリングオプション
+interface AccountFilterOptions {
+  questionId?: string              // 問題ID（Q_J_001等）
+  questionText?: string            // 問題文（キーワード抽出用）
+  maxAccounts?: number            // 最大表示数（デフォルト15）
+  includeShowAll?: boolean        // 「その他を表示」オプション
+  enableCaching?: boolean         // LRUキャッシュ使用
+  excludeAccounts?: string[]      // 除外勘定科目
+}
+
+// フィルタリング結果
+interface FilteredAccountOptions {
+  accounts: AccountOption[]       // フィルタリング済み勘定科目
+  totalCount: number             // 表示数
+  hasShowAllOption: boolean      // 「その他を表示」オプション有無
+  category: AccountCategory      // 判定されたカテゴリ
+}
+
+// 6つの問題カテゴリ体系
+enum AccountCategory {
+  CASH_DEPOSIT = 'cash_deposit',           // 現金・預金系（146問）
+  MERCHANDISE = 'merchandise',             // 商品・売買系（27問）
+  FIXED_ASSETS = 'fixed_assets',          // 固定資産系（18問）
+  PAYROLL = 'payroll',                    // 給与系（12問）
+  SETTLEMENT = 'settlement',              // 決算整理系（12問）
+  RECEIVABLES_PAYABLES = 'receivables_payables', // 債権・債務系（14問）
+  OTHER = 'other'                         // その他（73問）
+}
+
+// 3段階フィルタリングアルゴリズム
+class ThreeStageFiltering {
+  // Stage 1: 正答科目の取得（必須表示）
+  private getPrimaryAccounts(questionId: string): string[] {
+    // 自動生成マッピング優先 → 手動マッピングフォールバック
+    const generated = GENERATED_QUESTION_ACCOUNT_MAPPINGS[questionId]
+    const manual = QUESTION_ACCOUNT_MAPPINGS[questionId]
+    return generated?.primaryAccounts || manual?.primaryAccounts || []
+  }
+
+  // Stage 2: 関連科目の追加（カテゴリベース）
+  private getRelatedAccounts(category: AccountCategory): string[] {
+    // カテゴリ定義から関連科目を取得
+    // 対になる勘定科目の自動追加（売掛金↔買掛金等）
+  }
+
+  // Stage 3: 補完科目の追加（学習効果向上）
+  private getSupplementaryAccounts(existingAccounts: string[]): string[] {
+    // 類似科目の追加（学習効果のため）
+    // 汎用的によく使われる科目（現金・預金等）
+  }
+}
+
+// パフォーマンス最適化
+class FilteringOptimization {
+  private filterCache = new Map<string, FilteredAccountOptions>() // LRUキャッシュ
+  private readonly MAX_CACHE_SIZE = 100
+
+  // キャッシュキー生成
+  private generateCacheKey(options: AccountFilterOptions): string {
+    return `${questionId}|${questionText}|${maxAccounts}|${excludeAccounts.join(',')}`
+  }
+}
+
+// 自動マッピング生成統計（全302問対応）
+interface MappingGenerationStats {
+  totalQuestions: 302
+  categoryDistribution: {
+    cash_deposit: 146,      // 48.3%
+    other: 73,             // 24.2%
+    merchandise: 27,       // 8.9%
+    receivables_payables: 14, // 4.6%
+    payroll: 12,           // 4.0%
+    settlement: 12,        // 4.0%
+    fixed_assets: 18       // 6.0%
+  }
+  avgPrimaryAccounts: 0.2    // 問題あたり平均正答科目数
+  avgRelatedAccounts: 8.2    // 問題あたり平均関連科目数
+}
+```
+
+### 3.3 データ永続化層
 ```typescript
 // SQLite データベース設計
 interface DatabaseService {

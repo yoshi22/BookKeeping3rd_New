@@ -10,8 +10,6 @@ import {
   View,
   Text,
   Alert,
-  ActionSheetIOS,
-  Platform,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
@@ -23,7 +21,7 @@ import {
   useThemedStyles,
   type Theme,
 } from "../../context/ThemeContext";
-import { STANDARD_ACCOUNT_OPTIONS } from "../shared/AccountOptions";
+// STANDARD_ACCOUNT_OPTIONS import removed - now using dynamic filtering via UnifiedAccountSelector
 import { SessionType } from "../../types/database";
 import NumericPad from "../ui/NumericPad";
 import { answerService } from "../../services/answer-service";
@@ -90,10 +88,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
     createInitialJournalEntry(),
   ]);
 
-  // Account selection state
-  const [modalVisible, setModalVisible] = useState(false);
-  const [currentSelection, setCurrentSelection] =
-    useState<JournalSelectionState | null>(null);
+  // Account selection state - removed (now using dropdown mode directly)
 
   // Numeric pad state
   const [numericPadVisible, setNumericPadVisible] = useState(false);
@@ -108,8 +103,6 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
     setFormState(createInitialJournalFormState());
     setDebits([createInitialJournalEntry()]);
     setCredits([createInitialJournalEntry()]);
-    setModalVisible(false);
-    setCurrentSelection(null);
     setNumericPadVisible(false);
     setCurrentAmountEdit(null);
     setTempAmount("");
@@ -200,47 +193,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
     return amount > 0 ? amount.toLocaleString() : "";
   };
 
-  // Account selection
-  const showAccountSelector = (type: "debit" | "credit", index: number) => {
-    if (Platform.OS === "ios") {
-      const options = STANDARD_ACCOUNT_OPTIONS.map((option) => option.label);
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          title: "勘定科目を選択",
-          options: ["キャンセル", ...options],
-          cancelButtonIndex: 0,
-        },
-        (buttonIndex) => {
-          if (buttonIndex > 0) {
-            const selectedAccount = STANDARD_ACCOUNT_OPTIONS[buttonIndex - 1];
-            if (type === "debit") {
-              updateDebit(index, "account", selectedAccount.value);
-            } else {
-              updateCredit(index, "account", selectedAccount.value);
-            }
-          }
-        },
-      );
-    } else {
-      setCurrentSelection({ type, index });
-      setModalVisible(true);
-    }
-  };
-
-  const selectAccountFromModal = (account: {
-    label: string;
-    value: string;
-  }) => {
-    if (currentSelection) {
-      if (currentSelection.type === "debit") {
-        updateDebit(currentSelection.index, "account", account.value);
-      } else {
-        updateCredit(currentSelection.index, "account", account.value);
-      }
-    }
-    setModalVisible(false);
-    setCurrentSelection(null);
-  };
+  // Account selection functions removed - now using UnifiedAccountSelector directly
 
   // Validation and submission
   const validateAndSubmit = async () => {
@@ -351,20 +304,24 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
               <Text style={styles.sectionLabel}>借方</Text>
               {debits.map((debit, index) => (
                 <View key={index} style={styles.entryRow}>
-                  <TouchableOpacity
-                    style={styles.accountButton}
-                    onPress={() => showAccountSelector("debit", index)}
+                  <UnifiedAccountSelector
+                    label=""
+                    value={debit.account}
+                    onChange={(account) => updateDebit(index, "account", account)}
+                    placeholder="勘定科目を選択"
+                    mode="dropdown"
+                    questionType="journal"
+                    questionId={questionId}
+                    questionText={questionText}
+                    enableDynamicFiltering={true}
+                    showAllAccountsOption={true}
+                    maxFilteredAccounts={15}
                     testID={
                       index === 0
                         ? "debit-account-dropdown"
                         : `debit-account-dropdown-${index}`
                     }
-                    accessibilityLabel={`借方勘定科目選択 ${index + 1}`}
-                  >
-                    <Text style={styles.accountButtonText}>
-                      {debit.account || "勘定科目を選択"}
-                    </Text>
-                  </TouchableOpacity>
+                  />
 
                   <View style={styles.amountRow}>
                     <TouchableOpacity
@@ -415,20 +372,24 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
               <Text style={styles.sectionLabel}>貸方</Text>
               {credits.map((credit, index) => (
                 <View key={index} style={styles.entryRow}>
-                  <TouchableOpacity
-                    style={styles.accountButton}
-                    onPress={() => showAccountSelector("credit", index)}
+                  <UnifiedAccountSelector
+                    label=""
+                    value={credit.account}
+                    onChange={(account) => updateCredit(index, "account", account)}
+                    placeholder="勘定科目を選択"
+                    mode="dropdown"
+                    questionType="journal"
+                    questionId={questionId}
+                    questionText={questionText}
+                    enableDynamicFiltering={true}
+                    showAllAccountsOption={true}
+                    maxFilteredAccounts={15}
                     testID={
                       index === 0
                         ? "credit-account-dropdown"
                         : `credit-account-dropdown-${index}`
                     }
-                    accessibilityLabel={`貸方勘定科目選択 ${index + 1}`}
-                  >
-                    <Text style={styles.accountButtonText}>
-                      {credit.account || "勘定科目を選択"}
-                    </Text>
-                  </TouchableOpacity>
+                  />
 
                   <View style={styles.amountRow}>
                     <TouchableOpacity
@@ -547,15 +508,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
         )}
       </ScrollView>
 
-      {/* Account selection modal */}
-      <UnifiedAccountSelector
-        mode="modal"
-        visible={modalVisible}
-        onSelect={selectAccountFromModal}
-        onClose={() => setModalVisible(false)}
-        questionType="journal"
-        label="勘定科目を選択"
-      />
+      {/* Account selection modal removed - now using dropdown mode directly */}
 
       {/* Numeric pad */}
       <NumericPad
@@ -653,20 +606,7 @@ const createThemedStyles = (theme: Theme) =>
       marginBottom: 12,
       gap: 8,
     },
-    accountButton: {
-      width: "100%",
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      borderRadius: 6,
-      padding: 12,
-      backgroundColor: theme.colors.background,
-      justifyContent: "center",
-    },
-    accountButtonText: {
-      color: theme.colors.text,
-      fontSize: 14,
-      textAlign: "center",
-    },
+    // accountButton and accountButtonText styles removed - now using UnifiedAccountSelector
     amountRow: {
       flexDirection: "row",
       width: "100%",

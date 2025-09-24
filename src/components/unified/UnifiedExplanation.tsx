@@ -24,6 +24,7 @@ import {
   type Theme,
 } from "../../context/ThemeContext";
 import CorrectAnswerExample from "../CorrectAnswerExample";
+import { parseExplanation, hasSteppedContent } from "../../utils/explanation-parser";
 
 export type ExplanationMode = "panel" | "modal";
 export type SessionMode = "learning" | "review" | "mock_exam";
@@ -84,6 +85,12 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
 
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const [hasBeenExpanded, setHasBeenExpanded] = useState(defaultExpanded);
+
+  const [detailsExpanded, setDetailsExpanded] = useState(false);
+  const [referenceExpanded, setReferenceExpanded] = useState(false);
+
+  const steppedExplanation = parseExplanation(explanation);
+  const isSteppedMode = hasSteppedContent(steppedExplanation);
 
   // Determine visibility based on mode
   const isComponentVisible = mode === "modal" ? visible : isVisible || true;
@@ -147,6 +154,90 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
     );
   };
 
+  // Render stepped explanation sections
+  const renderSteppedExplanation = () => {
+    if (!isSteppedMode) {
+      return (
+        <View style={styles.explanationSection}>
+          <Text style={styles.explanationTitle}>解説</Text>
+          <Text style={styles.explanationText}>
+            {formatExplanationText(explanation)}
+          </Text>
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.explanationSection}>
+        <Text style={styles.explanationTitle}>解説</Text>
+
+        {/* 要点 (Summary) - Always visible */}
+        <View style={styles.steppedSection}>
+          <Text style={styles.steppedSectionTitle}>📌 要点</Text>
+          <Text style={styles.explanationText}>
+            {formatExplanationText(steppedExplanation.summary)}
+          </Text>
+        </View>
+
+        {/* 詳細 (Details) - Expandable */}
+        {steppedExplanation.details && (
+          <View style={styles.steppedSection}>
+            <TouchableOpacity
+              style={styles.accordionHeader}
+              onPress={() => setDetailsExpanded(!detailsExpanded)}
+              testID="explanation-details-toggle"
+            >
+              <Text style={styles.accordionTitle}>📖 詳しく見る</Text>
+              <Text
+                style={[
+                  styles.accordionIcon,
+                  detailsExpanded && styles.accordionIconExpanded,
+                ]}
+              >
+                ▼
+              </Text>
+            </TouchableOpacity>
+            {detailsExpanded && (
+              <Animated.View style={styles.accordionContent}>
+                <Text style={styles.explanationText}>
+                  {formatExplanationText(steppedExplanation.details)}
+                </Text>
+              </Animated.View>
+            )}
+          </View>
+        )}
+
+        {/* 参考 (Reference) - Expandable */}
+        {steppedExplanation.reference && (
+          <View style={styles.steppedSection}>
+            <TouchableOpacity
+              style={styles.accordionHeader}
+              onPress={() => setReferenceExpanded(!referenceExpanded)}
+              testID="explanation-reference-toggle"
+            >
+              <Text style={styles.accordionTitle}>💡 参考・補足</Text>
+              <Text
+                style={[
+                  styles.accordionIcon,
+                  referenceExpanded && styles.accordionIconExpanded,
+                ]}
+              >
+                ▼
+              </Text>
+            </TouchableOpacity>
+            {referenceExpanded && (
+              <Animated.View style={styles.accordionContent}>
+                <Text style={styles.explanationText}>
+                  {formatExplanationText(steppedExplanation.reference)}
+                </Text>
+              </Animated.View>
+            )}
+          </View>
+        )}
+      </View>
+    );
+  };
+
   // Render explanation content
   const renderExplanationContent = () => (
     <ScrollView
@@ -191,13 +282,8 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
       {/* Answer Comparison */}
       {renderAnswerComparison()}
 
-      {/* Explanation Content */}
-      <View style={styles.explanationSection}>
-        <Text style={styles.explanationTitle}>解説</Text>
-        <Text style={styles.explanationText}>
-          {formatExplanationText(explanation)}
-        </Text>
-      </View>
+      {/* Explanation Content - Stepped or Regular */}
+      {renderSteppedExplanation()}
     </ScrollView>
   );
 
@@ -443,6 +529,47 @@ const createStyles = (theme: Theme): StyleSheet.NamedStyles<any> =>
       fontSize: 14,
       color: theme.colors.text,
       lineHeight: 22,
+    },
+
+    // Stepped explanation styles
+    steppedSection: {
+      marginTop: 12,
+      marginBottom: 8,
+    },
+    steppedSectionTitle: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: theme.colors.text,
+      marginBottom: 8,
+      opacity: 0.8,
+    },
+    accordionHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      backgroundColor: theme.colors.surface || "#f8f9fa",
+      padding: 12,
+      borderRadius: 8,
+      marginBottom: 4,
+    },
+    accordionTitle: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: theme.colors.primary || "#007AFF",
+    },
+    accordionIcon: {
+      fontSize: 12,
+      color: theme.colors.primary || "#007AFF",
+      transform: [{ rotate: "0deg" }],
+    },
+    accordionIconExpanded: {
+      transform: [{ rotate: "180deg" }],
+    },
+    accordionContent: {
+      backgroundColor: theme.colors.surface || "#f8f9fa",
+      padding: 12,
+      borderRadius: 8,
+      marginTop: 4,
     },
   });
 

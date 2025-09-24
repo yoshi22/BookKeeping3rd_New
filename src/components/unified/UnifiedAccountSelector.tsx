@@ -6,7 +6,7 @@
  * 全ての問題タイプ（仕訳・帳簿・試算表）に対応
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -26,6 +26,10 @@ import {
 } from "../../context/ThemeContext";
 import { STANDARD_ACCOUNT_OPTIONS } from "../shared/AccountOptions";
 import type { AccountOption } from "../shared/FormTypes";
+import {
+  filterAccountsForQuestion,
+  type FilteredAccountOptions
+} from "../../services/account-filter-service";
 
 export type AccountSelectionMode = "dropdown" | "modal" | "actionsheet";
 export type QuestionType = "journal" | "ledger" | "trial_balance";
@@ -50,6 +54,13 @@ export interface UnifiedAccountSelectorProps {
     index: number;
   };
 
+  // Dynamic filtering props
+  questionId?: string;
+  questionText?: string;
+  enableDynamicFiltering?: boolean;
+  showAllAccountsOption?: boolean;
+  maxFilteredAccounts?: number;
+
   // Test ID for E2E testing
   testID?: string;
 }
@@ -66,6 +77,11 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
   visible = false,
   onClose,
   currentSelection,
+  questionId,
+  questionText,
+  enableDynamicFiltering = false,
+  showAllAccountsOption = true,
+  maxFilteredAccounts = 15,
   testID,
 }) => {
   const styles = useThemedStyles(createStyles);
@@ -73,22 +89,67 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
   const [internalModalVisible, setInternalModalVisible] = useState(false);
   const modalVisible = mode === "modal" ? visible : internalModalVisible;
 
-  // Get appropriate account options - use STANDARD_ACCOUNT_OPTIONS for all cases
+  // State for dynamic filtering
+  const [showAllAccounts, setShowAllAccounts] = useState(false);
+  const [filteredResult, setFilteredResult] = useState<FilteredAccountOptions | null>(null);
+
+  // Effect to update filtered accounts when questionId or questionText changes
+  useEffect(() => {
+    if (enableDynamicFiltering && (questionId || questionText)) {
+      try {
+        const result = filterAccountsForQuestion(
+          questionId,
+          questionText,
+          maxFilteredAccounts
+        );
+        setFilteredResult(result);
+        setShowAllAccounts(false); // Reset show all when filtering updates
+      } catch (error) {
+        console.warn("[UnifiedAccountSelector] Dynamic filtering failed:", error);
+        setFilteredResult(null);
+      }
+    } else {
+      setFilteredResult(null);
+    }
+  }, [enableDynamicFiltering, questionId, questionText, maxFilteredAccounts]);
+
+  // Get appropriate account options
   const getAccountOptions = (): AccountOption[] => {
-    // Use standard options for all cases to ensure consistency
-    // STANDARD_ACCOUNT_OPTIONS contains all necessary account items
-    return STANDARD_ACCOUNT_OPTIONS.filter(
+    let baseOptions: AccountOption[];
+
+    // Use dynamic filtering if enabled and available
+    if (enableDynamicFiltering && filteredResult && !showAllAccounts) {
+      baseOptions = filteredResult.accounts;
+    } else {
+      // Use standard options for all cases to ensure consistency
+      baseOptions = STANDARD_ACCOUNT_OPTIONS;
+    }
+
+    // Apply excludeAccounts filter
+    return baseOptions.filter(
       (option) => !excludeAccounts.includes(option.value),
     );
   };
 
   const accountOptions = getAccountOptions();
 
+  // Check if "Show All" option should be displayed
+  const shouldShowAllOption = enableDynamicFiltering &&
+    filteredResult &&
+    showAllAccountsOption &&
+    !showAllAccounts &&
+    filteredResult.hasShowAllOption;
+
   // iOS ActionSheet implementation
   const showIOSActionSheet = () => {
     if (Platform.OS !== "ios") return;
 
-    const options = ["キャンセル", ...accountOptions.map((opt) => opt.label)];
+    let options = ["キャンセル", ...accountOptions.map((opt) => opt.label)];
+
+    // Add "Show All" option if needed
+    if (shouldShowAllOption) {
+      options.push("その他の勘定科目を表示");
+    }
 
     ActionSheetIOS.showActionSheetWithOptions(
       {
@@ -98,8 +159,15 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
       },
       (buttonIndex) => {
         if (buttonIndex > 0) {
-          const selectedAccount = accountOptions[buttonIndex - 1];
-          onChange(selectedAccount.value);
+          // Check if "Show All" option was selected
+          if (shouldShowAllOption && buttonIndex === options.length - 1) {
+            setShowAllAccounts(true);
+            // Re-show ActionSheet with all accounts
+            setTimeout(() => showIOSActionSheet(), 100);
+          } else {
+            const selectedAccount = accountOptions[buttonIndex - 1];
+            onChange(selectedAccount.value);
+          }
         }
       },
     );
@@ -223,6 +291,19 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
                     </Text>
                   </TouchableOpacity>
                 ))}
+
+                {/* Show All option */}
+                {shouldShowAllOption && (
+                  <TouchableOpacity
+                    style={styles.showAllOption}
+                    onPress={() => setShowAllAccounts(true)}
+                    testID="show-all-accounts-option"
+                  >
+                    <Text style={styles.showAllOptionText}>
+                      その他の勘定科目を表示
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </ScrollView>
             </View>
           </View>
@@ -262,6 +343,19 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
                   <Text style={styles.optionText}>{item.label}</Text>
                 </TouchableOpacity>
               )}
+              ListFooterComponent={
+                shouldShowAllOption ? (
+                  <TouchableOpacity
+                    style={styles.showAllOption}
+                    onPress={() => setShowAllAccounts(true)}
+                    testID="show-all-accounts-option"
+                  >
+                    <Text style={styles.showAllOptionText}>
+                      その他の勘定科目を表示
+                    </Text>
+                  </TouchableOpacity>
+                ) : null
+              }
             />
           </View>
         </View>
@@ -416,6 +510,20 @@ const createStyles = (theme: Theme): StyleSheet.NamedStyles<any> =>
     selectedOptionText: {
       color: theme.colors.primary || "#007AFF",
       fontWeight: "600",
+    },
+    showAllOption: {
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      borderTopWidth: 2,
+      borderTopColor: theme.colors.primary || "#007AFF",
+      backgroundColor: (theme.colors.primary || "#007AFF") + "10",
+      marginTop: 8,
+    },
+    showAllOptionText: {
+      fontSize: 16,
+      color: theme.colors.primary || "#007AFF",
+      fontWeight: "600",
+      textAlign: "center",
     },
   });
 

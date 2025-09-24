@@ -5,6 +5,9 @@
 
 import { AccountOption } from "./FormTypes";
 
+// Re-export AccountOption for external use
+export type { AccountOption };
+
 /**
  * 標準勘定科目オプション
  */
@@ -90,6 +93,29 @@ export const STANDARD_ACCOUNT_OPTIONS: AccountOption[] = [
   { label: "広告宣伝費", value: "広告宣伝費" },
   { label: "修繕費", value: "修繕費" },
   { label: "外注費", value: "外注費" },
+
+  // 追加の勘定科目（動的フィルタリング対応）
+  { label: "ソフトウェア", value: "ソフトウェア" },
+  { label: "一括償却資産減価償却累計額", value: "一括償却資産減価償却累計額" },
+  { label: "仕掛品", value: "仕掛品" },
+  { label: "修繕引当金", value: "修繕引当金" },
+  { label: "修繕引当金繰入", value: "修繕引当金繰入" },
+  { label: "商品評価損", value: "商品評価損" },
+  { label: "圧縮損", value: "圧縮損" },
+  { label: "受贈益", value: "受贈益" },
+  { label: "建設仮勘定", value: "建設仮勘定" },
+  { label: "引出金", value: "引出金" },
+  { label: "当期純利益", value: "当期純利益" },
+  { label: "未払法人税等", value: "未払法人税等" },
+  { label: "未払消費税", value: "未払消費税" },
+  { label: "未払賞与", value: "未払賞与" },
+  { label: "材料費", value: "材料費" },
+  { label: "棚卸減耗損", value: "棚卸減耗損" },
+  { label: "製品", value: "製品" },
+  { label: "貯蔵品", value: "貯蔵品" },
+  { label: "賃借料", value: "賃借料" },
+  { label: "賃貸料", value: "賃貸料" },
+  { label: "開業費", value: "開業費" },
 ];
 
 /**
@@ -128,6 +154,13 @@ export const getAccountsByCategory = (
       "有価証券",
       "保険積立金",
       "定期預金",
+      "ソフトウェア",
+      "一括償却資産減価償却累計額",
+      "仕掛品",
+      "建設仮勘定",
+      "製品",
+      "貯蔵品",
+      "開業費",
     ].includes(option.value),
   );
 
@@ -142,11 +175,15 @@ export const getAccountsByCategory = (
       "預り金",
       "仮受金",
       "退職給付引当金",
+      "修繕引当金",
+      "未払法人税等",
+      "未払消費税",
+      "未払賞与",
     ].includes(option.value),
   );
 
   const equityAccounts = STANDARD_ACCOUNT_OPTIONS.filter((option) =>
-    ["資本金", "繰越利益剰余金", "資本準備金"].includes(option.value),
+    ["資本金", "繰越利益剰余金", "資本準備金", "引出金", "当期純利益"].includes(option.value),
   );
 
   const revenueAccounts = STANDARD_ACCOUNT_OPTIONS.filter((option) =>
@@ -160,6 +197,8 @@ export const getAccountsByCategory = (
       "固定資産売却益",
       "償却債権取立益",
       "雑収入",
+      "受贈益",
+      "賃貸料",
     ].includes(option.value),
   );
 
@@ -186,6 +225,12 @@ export const getAccountsByCategory = (
       "広告宣伝費",
       "修繕費",
       "外注費",
+      "修繕引当金繰入",
+      "商品評価損",
+      "圧縮損",
+      "材料費",
+      "棚卸減耗損",
+      "賃借料",
     ].includes(option.value),
   );
 
@@ -240,6 +285,13 @@ export const getAccountType = (
     "有価証券",
     "保険積立金",
     "定期預金",
+    "ソフトウェア",
+    "一括償却資産減価償却累計額",
+    "仕掛品",
+    "建設仮勘定",
+    "製品",
+    "貯蔵品",
+    "開業費",
   ];
 
   const liabilityAccounts = [
@@ -252,9 +304,13 @@ export const getAccountType = (
     "預り金",
     "仮受金",
     "退職給付引当金",
+    "修繕引当金",
+    "未払法人税等",
+    "未払消費税",
+    "未払賞与",
   ];
 
-  const equityAccounts = ["資本金", "繰越利益剰余金", "資本準備金"];
+  const equityAccounts = ["資本金", "繰越利益剰余金", "資本準備金", "引出金", "当期純利益"];
 
   const revenueAccounts = [
     "売上",
@@ -266,6 +322,8 @@ export const getAccountType = (
     "固定資産売却益",
     "償却債権取立益",
     "雑収入",
+    "受贈益",
+    "賃貸料",
   ];
 
   const expenseAccounts = [
@@ -290,6 +348,12 @@ export const getAccountType = (
     "広告宣伝費",
     "修繕費",
     "外注費",
+    "修繕引当金繰入",
+    "商品評価損",
+    "圧縮損",
+    "材料費",
+    "棚卸減耗損",
+    "賃借料",
   ];
 
   if (assetAccounts.includes(account)) return "asset";
