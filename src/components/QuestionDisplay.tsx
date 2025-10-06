@@ -21,9 +21,7 @@ import UnifiedJournalEntryForm from "./unified/JournalEntryForm";
 import ChoiceAnswerForm from "./ChoiceAnswerForm";
 import MultipleBlankChoiceForm from "./MultipleBlankChoiceForm";
 import VoucherEntryForm from "./VoucherEntryForm";
-import TrialBalanceForm, {
-  TrialBalanceEntry,
-} from "./mock-exam/TrialBalanceForm";
+import TrialBalanceForm, { TrialBalanceEntry } from "./cbt/TrialBalanceForm";
 import FinancialStatementForm from "./FinancialStatementForm";
 import VocabularyForm from "./VocabularyForm";
 import FillInLedgerForm from "./FillInLedgerForm";

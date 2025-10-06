@@ -16,7 +16,6 @@ export default function RootLayout() {
             name="category/[categoryId]"
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="mock-exam" options={{ headerShown: false }} />
         </Stack>
       </ThemeProvider>
     </SafeAreaProvider>

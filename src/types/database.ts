@@ -87,7 +87,7 @@ export type CBTAnswerFormat = "dropdown_input" | "number_input" | "text_input";
 export type QuestionDifficulty = 1 | 2 | 3 | 4 | 5;
 
 // セッション種別型
-export type SessionType = "learning" | "review" | "mock_exam";
+export type SessionType = "learning" | "review";
 
 // 復習ステータス型
 export type ReviewStatus = "needs_review" | "priority_review" | "mastered";
@@ -198,49 +198,6 @@ export interface ValidationErrorData {
   code: string;
   message: string;
   severity: "ERROR" | "WARNING";
-}
-
-// 模試詳細結果（JSON格納用）
-export interface MockExamDetailedResults {
-  examId: string;
-  startedAt: string;
-  completedAt: string;
-  timeLimit: number; // 分
-  actualDuration: number; // 秒
-
-  // セクション別結果
-  sectionResults: {
-    sectionNumber: 1 | 2 | 3;
-    sectionName: string;
-    score: number;
-    maxScore: number;
-    questions: MockExamQuestionResult[];
-  }[];
-
-  // 全体統計
-  totalCorrect: number;
-  totalQuestions: number;
-  accuracyRate: number;
-
-  // 合格判定
-  passJudgment: {
-    isPassed: boolean;
-    requiredScore: number;
-    actualScore: number;
-  };
-}
-
-// 模試問題結果詳細
-export interface MockExamQuestionResult {
-  questionId: string;
-  sectionNumber: 1 | 2 | 3;
-  questionOrder: number;
-  maxPoints: number;
-  earnedPoints: number;
-  isCorrect: boolean;
-  userAnswer: CBTAnswerData | null;
-  correctAnswer: any;
-  answerTime: number; // ミリ秒
 }
 
 // マイグレーション情報型

@@ -109,34 +109,6 @@ export default function HomeScreen() {
                 間違えた問題を重点的に
               </Text>
             </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.menuButton,
-                { backgroundColor: theme.colors.surface },
-              ]}
-              onPress={() => router.push("/mock-exam")}
-              testID="home-mock-exam-button"
-              accessibilityLabel="CBT模擬試験を開始"
-            >
-              <Text style={styles.menuIcon}>🎯</Text>
-              <Text
-                style={[
-                  TypographyUtils.getTextStyle("h6"),
-                  { color: theme.colors.text, marginBottom: theme.spacing.xs },
-                ]}
-              >
-                CBT模擬試験
-              </Text>
-              <Text
-                style={[
-                  TypographyUtils.getTextStyle("body2"),
-                  { color: theme.colors.textSecondary, textAlign: "center" },
-                ]}
-              >
-                本番形式で実力試験
-              </Text>
-            </TouchableOpacity>
           </Flex>
         </Flex>
       </Container>

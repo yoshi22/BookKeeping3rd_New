@@ -11,7 +11,6 @@ import {
   SessionType,
   ReviewStatus,
   CBTAnswerData,
-  MockExamDetailedResults,
 } from "./database";
 
 // Re-export types for external use
@@ -22,7 +21,6 @@ export type {
   SessionType,
   ReviewStatus,
   CBTAnswerData,
-  MockExamDetailedResults,
 } from "./database";
 
 // === 問題関連モデル ===
@@ -123,49 +121,6 @@ export interface UserProgress {
   updated_at: string;
 }
 
-// === 模試関連モデル ===
-
-/**
- * 模試定義テーブルモデル
- */
-export interface MockExam {
-  id: string; // MOCK_001〜005
-  name: string;
-  description: string;
-  time_limit_minutes: number; // 60分固定
-  total_score: number; // 100点満点
-  passing_score: number; // 70点合格
-  structure_json: string; // 問題構成JSON
-  is_active: boolean;
-  created_at: string;
-}
-
-/**
- * 模試問題関連テーブルモデル
- */
-export interface MockExamQuestion {
-  id: number;
-  mock_exam_id: string;
-  question_id: string;
-  section_number: 1 | 2 | 3; // 1(仕訳15問)/2(帳簿2問)/3(試算表1問)
-  question_order: number;
-  points: number; // 配点
-}
-
-/**
- * 模試結果テーブルモデル
- */
-export interface MockExamResult {
-  id: number;
-  exam_id: string;
-  total_score: number; // 獲得点数(0-100)
-  max_score: number; // 満点(100)
-  is_passed: boolean; // 合格判定(70点以上)
-  duration_seconds: number; // 所要時間
-  detailed_results_json: string; // 詳細結果JSON
-  taken_at: string;
-}
-
 // === アプリ設定モデル ===
 
 /**
@@ -196,6 +151,40 @@ export interface QuestionAnswerTemplate {
     placeholder?: string;
     options?: string[]; // ドロップダウンの選択肢
   }[];
+}
+
+/**
+ * CBT解答テンプレート（テーブル形式問題用）
+ */
+export interface CBTAnswerTemplate {
+  template_type: string;
+  layout_variant: string;
+  rows: RowDefinition[];
+  columns: ColumnDefinition[];
+  allowed_accounts?: string[];
+}
+
+/**
+ * 列定義（CBTテーブル形式用）
+ */
+export interface ColumnDefinition {
+  key: string;
+  label: string;
+  input: "text" | "dropdown" | "number" | "currency" | "computed";
+  width?: string | number;
+  options?: string[];
+  formula?: string;
+  readonly?: boolean;
+}
+
+/**
+ * 行定義（CBTテーブル形式用）
+ */
+export interface RowDefinition {
+  row_id: string | number;
+  default_values?: Record<string, any>;
+  label?: string;
+  readonly?: boolean;
 }
 
 /**
@@ -273,30 +262,6 @@ export interface QuestionCorrectAnswer {
 }
 
 /**
- * 模試構成データ（JSON格納データ）
- */
-export interface MockExamStructure {
-  section1: {
-    count: number; // 15問
-    maxScore: number; // 60点
-    questionCategory: "journal";
-    timeRecommendation: number; // 推奨時間（分）
-  };
-  section2: {
-    count: number; // 2問
-    maxScore: number; // 20点
-    questionCategory: "ledger";
-    timeRecommendation: number;
-  };
-  section3: {
-    count: number; // 1問
-    maxScore: number; // 20点
-    questionCategory: "trial_balance";
-    timeRecommendation: number;
-  };
-}
-
-/**
  * 統計計算用の集計データ
  */
 export interface StudyStatistics {
@@ -344,16 +309,6 @@ export interface StudyStatistics {
     mastered: number;
     totalReviewSessions: number;
     averageImprovementRate: number;
-  };
-
-  // 模試統計
-  mockExams: {
-    totalAttempts: number;
-    passedAttempts: number;
-    passRate: number;
-    averageScore: number;
-    bestScore: number;
-    averageTime: number; // 秒
   };
 }
 

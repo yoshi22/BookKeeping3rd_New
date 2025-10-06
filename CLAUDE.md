@@ -75,7 +75,6 @@ npx detox test --configuration android.emu.debug  # Android E2Eテスト実行
 node scripts/testing/test-database.js              # データベース接続テスト
 node scripts/testing/test-review-system.js         # 復習システム単体テスト
 node scripts/testing/test-answer-service.js        # 解答サービステスト
-node scripts/testing/test-mock-exam-system.js      # 模試システムテスト
 node scripts/testing/test-statistics-system.js     # 統計システムテスト
 node scripts/data/insert-sample-questions.js       # サンプル問題データ投入
 node scripts/testing/web-smoke-test.js             # Web版スモークテスト
@@ -133,9 +132,8 @@ npx expo start --clear
 
 ```
 ├── app/               # Expo Router - ファイルベースルーティング
-│   ├── (tabs)/       # タブナビゲーション（学習・復習・統計・模試等）
+│   ├── (tabs)/       # タブナビゲーション（学習・復習・統計等）
 │   ├── question/     # 動的ルート（問題詳細）
-│   ├── mock-exam.tsx # 模試実行画面
 │   └── _layout.tsx   # ルートレイアウト
 ├── src/              # メインソースコード
 │   ├── data/         # データアクセス層
@@ -174,7 +172,6 @@ src/
 │   ├── answer-service.ts     # 解答処理・採点
 │   ├── review-service.ts     # 復習アルゴリズム・優先度管理
 │   ├── statistics-service.ts # 統計計算
-│   ├── mock-exam-service.ts  # 模試実行
 │   ├── statistics-cache.ts   # 統計キャッシュ
 │   └── memory-optimizer.ts   # メモリ最適化
 ├── components/        # UIコンポーネント
@@ -215,24 +212,21 @@ src/
 
 ## データベーススキーマ
 
-アプリは10個の主要テーブルを持つSQLiteを使用:
+アプリは7個の主要テーブルを持つSQLiteを使用:
 
 - `questions` - 問題内容とメタデータ
 - `learning_history` - ユーザーの解答記録
 - `review_items` - 復習対象項目（優先度付き）
-- `mock_exams` - 模試定義
-- `mock_exam_results` - 模試完了記録
 - `categories` - 問題カテゴリ管理
 - `account_items` - 勘定科目マスタ
 - `user_progress` - 学習進捗管理
-- `mock_exam_questions` - 模試問題関連
 - `app_settings` - アプリ設定
 
 **重要**: データベースアクセスには必ずリポジトリ層を使用してください。コンポーネント内で生SQLを書いてはいけません。
 
 **データベースマイグレーション**: `src/data/migrations/` でスキーマ変更を管理。新しいマイグレーションは連番で作成し、`migration-manager.ts` で実行。
 
-**サンプルデータ**: 開発用のサンプル問題は `src/data/sample-questions.ts`、模試は `src/data/sample-mock-exams.ts` で管理。サンプルデータは `src/data/migrations/index.ts` の `loadSampleData()` 関数で自動読み込みされます。
+**サンプルデータ**: 開発用のサンプル問題は `src/data/sample-questions.ts` で管理。サンプルデータは `src/data/migrations/index.ts` の `loadSampleData()` 関数で自動読み込みされます。
 
 ## テスト戦略
 
@@ -544,7 +538,6 @@ Mobile MCPツールが利用できない場合は、以下の手順で対応：
 
 - `home-learning-button` - 学習開始
 - `home-review-button` - 復習開始
-- `home-mock-exam-button` - 模試開始
 
 **学習画面**
 
@@ -554,9 +547,6 @@ Mobile MCPツールが利用できない場合は、以下の手順で対応：
 - `category-{categoryId}` - カテゴリ別学習（動的ID）
 - `category-{categoryId}-select` - カテゴリ選択ボタン（2025-08-24 新規追加）
 - `category-{categoryId}-select-text` - カテゴリ選択ボタンテキスト（2025-08-24 新規追加）
-- `learning-mock-exam-button` - 模試へ移動
-- `mock-exam-start` - 模試開始ボタン（2025-08-24 新規追加）
-- `mock-exam-start-text` - 模試開始ボタンテキスト（2025-08-24 新規追加）
 
 **復習画面**
 
@@ -741,12 +731,10 @@ node scripts/testing/validate-all-answers-v2.js
 2. **learning.tsx** - 学習画面（新規問題の学習）
 3. **review.tsx** - 復習画面（間違えた問題の優先復習）
 4. **statistics.tsx** - 統計画面（詳細な学習進捗）
-5. **mock-exams.tsx** - 模試一覧画面
 
 **問題解答フロー:**
 
 - 学習/復習タブ → 問題選択 → `app/question/[id].tsx` で解答
-- 模試タブ → 模試選択 → `app/mock-exam.tsx` で時間制限付き解答
 
 ---
 

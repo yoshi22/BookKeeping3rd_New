@@ -135,10 +135,14 @@ export default function LearningQuestionScreen() {
           // 全問題を1つの配列にまとめる（problemsStrategy.mdに従い302問順次進行）
           questions = allQuestions.flat().sort((a, b) => {
             // section_number → question_order の順でソート
-            if (a.section_number !== b.section_number) {
-              return a.section_number - b.section_number;
+            const aSection = a.section_number ?? 0;
+            const bSection = b.section_number ?? 0;
+            if (aSection !== bSection) {
+              return aSection - bSection;
             }
-            return a.question_order - b.question_order;
+            const aOrder = a.question_order ?? 0;
+            const bOrder = b.question_order ?? 0;
+            return aOrder - bOrder;
           });
 
           // Q2問題のデバッグ用：ソート後の最初の15問を確認

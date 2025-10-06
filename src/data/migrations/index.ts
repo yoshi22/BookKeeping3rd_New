@@ -9,6 +9,7 @@ import { migration001 } from "./001-initial-schema";
 import { addExamSectionsMigration } from "./002-add-exam-sections";
 import { migration003 } from "./003-add-question-structure";
 import { migration004 } from "./004-populate-question-structure";
+import { migration005 } from "./005-remove-mock-exams";
 import { logger } from "../../utils/logger";
 
 /**
@@ -28,6 +29,7 @@ export async function initializeDatabase(): Promise<void> {
     migrationManager.registerMigration(addExamSectionsMigration);
     migrationManager.registerMigration(migration003);
     migrationManager.registerMigration(migration004);
+    migrationManager.registerMigration(migration005);
 
     // マイグレーション実行
     logger.debug("[Database] マイグレーション実行");
@@ -506,3 +508,4 @@ async function performDatabaseSetup(): Promise<void> {
  */
 export { migrationManager } from "./migration-manager";
 export { migration001 } from "./001-initial-schema";
+export { migration005 } from "./005-remove-mock-exams";

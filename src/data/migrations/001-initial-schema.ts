@@ -77,7 +77,7 @@ export const migration001: MigrationInfo = {
       FOREIGN KEY (question_id) REFERENCES questions (id),
       CHECK (json_valid(user_answer_json)),
       CHECK (validation_errors_json IS NULL OR json_valid(validation_errors_json)),
-      CHECK (session_type IN ('learning', 'review', 'mock_exam')),
+      CHECK (session_type IN ('learning', 'review')),
       CHECK (answer_time_ms > 0)
     )`,
 
@@ -116,59 +116,6 @@ export const migration001: MigrationInfo = {
       CHECK (answered_questions <= total_questions),
       CHECK (correct_answers <= answered_questions),
       CHECK (accuracy_rate BETWEEN 0.0 AND 1.0)
-    )`,
-
-    // === 模試定義テーブル作成 ===
-    `CREATE TABLE IF NOT EXISTS mock_exams (
-      id TEXT PRIMARY KEY,
-      name TEXT NOT NULL,
-      description TEXT,
-      time_limit_minutes INTEGER NOT NULL DEFAULT 60,
-      total_score INTEGER NOT NULL DEFAULT 100,
-      passing_score INTEGER NOT NULL DEFAULT 70,
-      structure_json TEXT NOT NULL,
-      is_active BOOLEAN NOT NULL DEFAULT 1,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      
-      CHECK (time_limit_minutes > 0),
-      CHECK (total_score > 0),
-      CHECK (passing_score > 0 AND passing_score <= total_score),
-      CHECK (json_valid(structure_json))
-    )`,
-
-    // === 模試問題関連テーブル作成 ===
-    `CREATE TABLE IF NOT EXISTS mock_exam_questions (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      mock_exam_id TEXT NOT NULL,
-      question_id TEXT NOT NULL,
-      section_number INTEGER NOT NULL,
-      question_order INTEGER NOT NULL,
-      points INTEGER NOT NULL DEFAULT 1,
-      
-      FOREIGN KEY (mock_exam_id) REFERENCES mock_exams (id),
-      FOREIGN KEY (question_id) REFERENCES questions (id),
-      CHECK (section_number BETWEEN 1 AND 3),
-      CHECK (question_order > 0),
-      CHECK (points > 0),
-      
-      UNIQUE(mock_exam_id, section_number, question_order)
-    )`,
-
-    // === 模試結果テーブル作成 ===
-    `CREATE TABLE IF NOT EXISTS mock_exam_results (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      exam_id TEXT NOT NULL,
-      total_score INTEGER NOT NULL,
-      max_score INTEGER NOT NULL DEFAULT 100,
-      is_passed BOOLEAN NOT NULL,
-      duration_seconds INTEGER NOT NULL,
-      detailed_results_json TEXT NOT NULL,
-      taken_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      
-      CHECK (total_score >= 0),
-      CHECK (total_score <= max_score),
-      CHECK (duration_seconds > 0),
-      CHECK (json_valid(detailed_results_json))
     )`,
 
     // === アプリ設定テーブル作成 ===
