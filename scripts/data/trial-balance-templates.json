@@ -1,0 +1,1272 @@
+[
+  {
+    "questionId": "Q_T_007",
+    "template": {
+      "template_type": "extended_trial_balance",
+      "layout_variant": "8digit_worksheet",
+      "allowed_accounts": [
+        "現金",
+        "小口現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "繰越商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "資本金",
+        "利益剰余金",
+        "繰越利益剰余金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費",
+        "消耗品費",
+        "広告宣伝費",
+        "貸倒引当金",
+        "減価償却累計額",
+        "前払費用",
+        "未払費用"
+      ],
+      "rows": [
+        {
+          "row_id": "account_1",
+          "label": "勘定科目1",
+          "locked": false
+        },
+        {
+          "row_id": "account_2",
+          "label": "勘定科目2",
+          "locked": false
+        },
+        {
+          "row_id": "account_3",
+          "label": "勘定科目3",
+          "locked": false
+        },
+        {
+          "row_id": "account_4",
+          "label": "勘定科目4",
+          "locked": false
+        },
+        {
+          "row_id": "account_5",
+          "label": "勘定科目5",
+          "locked": false
+        },
+        {
+          "row_id": "account_6",
+          "label": "勘定科目6",
+          "locked": false
+        },
+        {
+          "row_id": "account_7",
+          "label": "勘定科目7",
+          "locked": false
+        },
+        {
+          "row_id": "account_8",
+          "label": "勘定科目8",
+          "locked": false
+        },
+        {
+          "row_id": "account_9",
+          "label": "勘定科目9",
+          "locked": false
+        },
+        {
+          "row_id": "account_10",
+          "label": "勘定科目10",
+          "locked": false
+        },
+        {
+          "row_id": "account_11",
+          "label": "勘定科目11",
+          "locked": false
+        },
+        {
+          "row_id": "account_12",
+          "label": "勘定科目12",
+          "locked": false
+        },
+        {
+          "row_id": "account_13",
+          "label": "勘定科目13",
+          "locked": false
+        },
+        {
+          "row_id": "account_14",
+          "label": "勘定科目14",
+          "locked": false
+        },
+        {
+          "row_id": "account_15",
+          "label": "勘定科目15",
+          "locked": false
+        },
+        {
+          "row_id": "account_16",
+          "label": "勘定科目16",
+          "locked": false
+        },
+        {
+          "row_id": "account_17",
+          "label": "勘定科目17",
+          "locked": false
+        },
+        {
+          "row_id": "account_18",
+          "label": "勘定科目18",
+          "locked": false
+        },
+        {
+          "row_id": "account_19",
+          "label": "勘定科目19",
+          "locked": false
+        },
+        {
+          "row_id": "account_20",
+          "label": "勘定科目20",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "trial_balance_debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120,
+          "group": "trial_balance"
+        },
+        {
+          "key": "trial_balance_credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120,
+          "group": "trial_balance"
+        },
+        {
+          "key": "adjustment_debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120,
+          "group": "adjustment"
+        },
+        {
+          "key": "adjustment_credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120,
+          "group": "adjustment"
+        },
+        {
+          "key": "pl_debit",
+          "label": "借方",
+          "input": "computed",
+          "width": 120,
+          "group": "profit_loss",
+          "formula": "pl_debit_calc"
+        },
+        {
+          "key": "pl_credit",
+          "label": "貸方",
+          "input": "computed",
+          "width": 120,
+          "group": "profit_loss",
+          "formula": "pl_credit_calc"
+        },
+        {
+          "key": "bs_debit",
+          "label": "借方",
+          "input": "computed",
+          "width": 120,
+          "group": "balance_sheet",
+          "formula": "bs_debit_calc"
+        },
+        {
+          "key": "bs_credit",
+          "label": "貸方",
+          "input": "computed",
+          "width": 120,
+          "group": "balance_sheet",
+          "formula": "bs_credit_calc"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "決算整理前試算表の転記",
+          "body": "問題文から各勘定科目の残高を決算整理前試算表欄に転記します。"
+        },
+        {
+          "stage": 2,
+          "title": "決算整理仕訳の記入",
+          "body": "決算整理事項に基づいて、該当する勘定科目に調整額を記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "損益・貸借の自動計算確認",
+          "body": "損益計算書欄と貸借対照表欄の金額が自動計算されることを確認します。"
+        }
+      ],
+      "max_rows": 25,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "column_balance_check",
+        "pl_bs_balance"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_T_008",
+    "template": {
+      "template_type": "extended_trial_balance",
+      "layout_variant": "8digit_worksheet_alt",
+      "allowed_accounts": [
+        "現金",
+        "小口現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "繰越商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "資本金",
+        "利益剰余金",
+        "繰越利益剰余金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費",
+        "消耗品費",
+        "広告宣伝費",
+        "貸倒引当金",
+        "減価償却累計額",
+        "前払費用",
+        "未払費用"
+      ],
+      "rows": [
+        {
+          "row_id": "account_1",
+          "label": "勘定科目1",
+          "locked": false
+        },
+        {
+          "row_id": "account_2",
+          "label": "勘定科目2",
+          "locked": false
+        },
+        {
+          "row_id": "account_3",
+          "label": "勘定科目3",
+          "locked": false
+        },
+        {
+          "row_id": "account_4",
+          "label": "勘定科目4",
+          "locked": false
+        },
+        {
+          "row_id": "account_5",
+          "label": "勘定科目5",
+          "locked": false
+        },
+        {
+          "row_id": "account_6",
+          "label": "勘定科目6",
+          "locked": false
+        },
+        {
+          "row_id": "account_7",
+          "label": "勘定科目7",
+          "locked": false
+        },
+        {
+          "row_id": "account_8",
+          "label": "勘定科目8",
+          "locked": false
+        },
+        {
+          "row_id": "account_9",
+          "label": "勘定科目9",
+          "locked": false
+        },
+        {
+          "row_id": "account_10",
+          "label": "勘定科目10",
+          "locked": false
+        },
+        {
+          "row_id": "account_11",
+          "label": "勘定科目11",
+          "locked": false
+        },
+        {
+          "row_id": "account_12",
+          "label": "勘定科目12",
+          "locked": false
+        },
+        {
+          "row_id": "account_13",
+          "label": "勘定科目13",
+          "locked": false
+        },
+        {
+          "row_id": "account_14",
+          "label": "勘定科目14",
+          "locked": false
+        },
+        {
+          "row_id": "account_15",
+          "label": "勘定科目15",
+          "locked": false
+        },
+        {
+          "row_id": "account_16",
+          "label": "勘定科目16",
+          "locked": false
+        },
+        {
+          "row_id": "account_17",
+          "label": "勘定科目17",
+          "locked": false
+        },
+        {
+          "row_id": "account_18",
+          "label": "勘定科目18",
+          "locked": false
+        },
+        {
+          "row_id": "account_19",
+          "label": "勘定科目19",
+          "locked": false
+        },
+        {
+          "row_id": "account_20",
+          "label": "勘定科目20",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "trial_balance_debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120,
+          "group": "trial_balance"
+        },
+        {
+          "key": "trial_balance_credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120,
+          "group": "trial_balance"
+        },
+        {
+          "key": "adjustment_debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120,
+          "group": "adjustment"
+        },
+        {
+          "key": "adjustment_credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120,
+          "group": "adjustment"
+        },
+        {
+          "key": "pl_debit",
+          "label": "借方",
+          "input": "computed",
+          "width": 120,
+          "group": "profit_loss",
+          "formula": "pl_debit_calc"
+        },
+        {
+          "key": "pl_credit",
+          "label": "貸方",
+          "input": "computed",
+          "width": 120,
+          "group": "profit_loss",
+          "formula": "pl_credit_calc"
+        },
+        {
+          "key": "bs_debit",
+          "label": "借方",
+          "input": "computed",
+          "width": 120,
+          "group": "balance_sheet",
+          "formula": "bs_debit_calc"
+        },
+        {
+          "key": "bs_credit",
+          "label": "貸方",
+          "input": "computed",
+          "width": 120,
+          "group": "balance_sheet",
+          "formula": "bs_credit_calc"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "決算整理前試算表の転記",
+          "body": "問題文から各勘定科目の残高を決算整理前試算表欄に転記します。"
+        },
+        {
+          "stage": 2,
+          "title": "決算整理仕訳の記入",
+          "body": "決算整理事項に基づいて、該当する勘定科目に調整額を記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "損益・貸借の自動計算確認",
+          "body": "損益計算書欄と貸借対照表欄の金額が自動計算されることを確認します。"
+        }
+      ],
+      "max_rows": 25,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "column_balance_check",
+        "pl_bs_balance"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_T_009",
+    "template": {
+      "template_type": "total_trial_balance",
+      "layout_variant": "total_balance",
+      "allowed_accounts": [
+        "現金",
+        "小口現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "繰越商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "資本金",
+        "利益剰余金",
+        "繰越利益剰余金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費",
+        "消耗品費",
+        "広告宣伝費"
+      ],
+      "rows": [
+        {
+          "row_id": "account_1",
+          "label": "勘定科目1",
+          "locked": false
+        },
+        {
+          "row_id": "account_2",
+          "label": "勘定科目2",
+          "locked": false
+        },
+        {
+          "row_id": "account_3",
+          "label": "勘定科目3",
+          "locked": false
+        },
+        {
+          "row_id": "account_4",
+          "label": "勘定科目4",
+          "locked": false
+        },
+        {
+          "row_id": "account_5",
+          "label": "勘定科目5",
+          "locked": false
+        },
+        {
+          "row_id": "account_6",
+          "label": "勘定科目6",
+          "locked": false
+        },
+        {
+          "row_id": "account_7",
+          "label": "勘定科目7",
+          "locked": false
+        },
+        {
+          "row_id": "account_8",
+          "label": "勘定科目8",
+          "locked": false
+        },
+        {
+          "row_id": "account_9",
+          "label": "勘定科目9",
+          "locked": false
+        },
+        {
+          "row_id": "account_10",
+          "label": "勘定科目10",
+          "locked": false
+        },
+        {
+          "row_id": "account_11",
+          "label": "勘定科目11",
+          "locked": false
+        },
+        {
+          "row_id": "account_12",
+          "label": "勘定科目12",
+          "locked": false
+        },
+        {
+          "row_id": "account_13",
+          "label": "勘定科目13",
+          "locked": false
+        },
+        {
+          "row_id": "account_14",
+          "label": "勘定科目14",
+          "locked": false
+        },
+        {
+          "row_id": "account_15",
+          "label": "勘定科目15",
+          "locked": false
+        },
+        {
+          "row_id": "total_row",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit_total",
+          "label": "借方合計",
+          "input": "currency",
+          "width": 140,
+          "required": true
+        },
+        {
+          "key": "credit_total",
+          "label": "貸方合計",
+          "input": "currency",
+          "width": 140,
+          "required": true
+        },
+        {
+          "key": "balance_debit",
+          "label": "差引残高（借方）",
+          "input": "computed",
+          "width": 140,
+          "formula": "balance_debit_calc"
+        },
+        {
+          "key": "balance_credit",
+          "label": "差引残高（貸方）",
+          "input": "computed",
+          "width": 140,
+          "formula": "balance_credit_calc"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "期首残高の確認",
+          "body": "各勘定科目の期首残高を確認し、取引による変動を把握します。"
+        },
+        {
+          "stage": 2,
+          "title": "合計額の計算",
+          "body": "各勘定科目の借方合計・貸方合計を期首残高と期中取引から計算します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高の算出・検証",
+          "body": "差引残高を算出し、借方合計と貸方合計が一致することを確認します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "total_balance_check",
+        "debit_credit_match"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_T_010",
+    "template": {
+      "template_type": "total_trial_balance",
+      "layout_variant": "total_balance_alt",
+      "allowed_accounts": [
+        "現金",
+        "小口現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "繰越商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "資本金",
+        "利益剰余金",
+        "繰越利益剰余金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費",
+        "消耗品費",
+        "広告宣伝費"
+      ],
+      "rows": [
+        {
+          "row_id": "account_1",
+          "label": "勘定科目1",
+          "locked": false
+        },
+        {
+          "row_id": "account_2",
+          "label": "勘定科目2",
+          "locked": false
+        },
+        {
+          "row_id": "account_3",
+          "label": "勘定科目3",
+          "locked": false
+        },
+        {
+          "row_id": "account_4",
+          "label": "勘定科目4",
+          "locked": false
+        },
+        {
+          "row_id": "account_5",
+          "label": "勘定科目5",
+          "locked": false
+        },
+        {
+          "row_id": "account_6",
+          "label": "勘定科目6",
+          "locked": false
+        },
+        {
+          "row_id": "account_7",
+          "label": "勘定科目7",
+          "locked": false
+        },
+        {
+          "row_id": "account_8",
+          "label": "勘定科目8",
+          "locked": false
+        },
+        {
+          "row_id": "account_9",
+          "label": "勘定科目9",
+          "locked": false
+        },
+        {
+          "row_id": "account_10",
+          "label": "勘定科目10",
+          "locked": false
+        },
+        {
+          "row_id": "account_11",
+          "label": "勘定科目11",
+          "locked": false
+        },
+        {
+          "row_id": "account_12",
+          "label": "勘定科目12",
+          "locked": false
+        },
+        {
+          "row_id": "account_13",
+          "label": "勘定科目13",
+          "locked": false
+        },
+        {
+          "row_id": "account_14",
+          "label": "勘定科目14",
+          "locked": false
+        },
+        {
+          "row_id": "account_15",
+          "label": "勘定科目15",
+          "locked": false
+        },
+        {
+          "row_id": "total_row",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit_total",
+          "label": "借方合計",
+          "input": "currency",
+          "width": 140,
+          "required": true
+        },
+        {
+          "key": "credit_total",
+          "label": "貸方合計",
+          "input": "currency",
+          "width": 140,
+          "required": true
+        },
+        {
+          "key": "balance_debit",
+          "label": "差引残高（借方）",
+          "input": "computed",
+          "width": 140,
+          "formula": "balance_debit_calc"
+        },
+        {
+          "key": "balance_credit",
+          "label": "差引残高（貸方）",
+          "input": "computed",
+          "width": 140,
+          "formula": "balance_credit_calc"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "期首残高の確認",
+          "body": "各勘定科目の期首残高を確認し、取引による変動を把握します。"
+        },
+        {
+          "stage": 2,
+          "title": "合計額の計算",
+          "body": "各勘定科目の借方合計・貸方合計を期首残高と期中取引から計算します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高の算出・検証",
+          "body": "差引残高を算出し、借方合計と貸方合計が一致することを確認します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "total_balance_check",
+        "debit_credit_match"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_T_011",
+    "template": {
+      "template_type": "total_trial_balance",
+      "layout_variant": "total_balance",
+      "allowed_accounts": [
+        "現金",
+        "小口現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "繰越商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "資本金",
+        "利益剰余金",
+        "繰越利益剰余金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費",
+        "消耗品費",
+        "広告宣伝費"
+      ],
+      "rows": [
+        {
+          "row_id": "account_1",
+          "label": "勘定科目1",
+          "locked": false
+        },
+        {
+          "row_id": "account_2",
+          "label": "勘定科目2",
+          "locked": false
+        },
+        {
+          "row_id": "account_3",
+          "label": "勘定科目3",
+          "locked": false
+        },
+        {
+          "row_id": "account_4",
+          "label": "勘定科目4",
+          "locked": false
+        },
+        {
+          "row_id": "account_5",
+          "label": "勘定科目5",
+          "locked": false
+        },
+        {
+          "row_id": "account_6",
+          "label": "勘定科目6",
+          "locked": false
+        },
+        {
+          "row_id": "account_7",
+          "label": "勘定科目7",
+          "locked": false
+        },
+        {
+          "row_id": "account_8",
+          "label": "勘定科目8",
+          "locked": false
+        },
+        {
+          "row_id": "account_9",
+          "label": "勘定科目9",
+          "locked": false
+        },
+        {
+          "row_id": "account_10",
+          "label": "勘定科目10",
+          "locked": false
+        },
+        {
+          "row_id": "account_11",
+          "label": "勘定科目11",
+          "locked": false
+        },
+        {
+          "row_id": "account_12",
+          "label": "勘定科目12",
+          "locked": false
+        },
+        {
+          "row_id": "account_13",
+          "label": "勘定科目13",
+          "locked": false
+        },
+        {
+          "row_id": "account_14",
+          "label": "勘定科目14",
+          "locked": false
+        },
+        {
+          "row_id": "account_15",
+          "label": "勘定科目15",
+          "locked": false
+        },
+        {
+          "row_id": "total_row",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit_total",
+          "label": "借方合計",
+          "input": "currency",
+          "width": 140,
+          "required": true
+        },
+        {
+          "key": "credit_total",
+          "label": "貸方合計",
+          "input": "currency",
+          "width": 140,
+          "required": true
+        },
+        {
+          "key": "balance_debit",
+          "label": "差引残高（借方）",
+          "input": "computed",
+          "width": 140,
+          "formula": "balance_debit_calc"
+        },
+        {
+          "key": "balance_credit",
+          "label": "差引残高（貸方）",
+          "input": "computed",
+          "width": 140,
+          "formula": "balance_credit_calc"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "期首残高の確認",
+          "body": "各勘定科目の期首残高を確認し、取引による変動を把握します。"
+        },
+        {
+          "stage": 2,
+          "title": "合計額の計算",
+          "body": "各勘定科目の借方合計・貸方合計を期首残高と期中取引から計算します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高の算出・検証",
+          "body": "差引残高を算出し、借方合計と貸方合計が一致することを確認します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "total_balance_check",
+        "debit_credit_match"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_T_012",
+    "template": {
+      "template_type": "total_trial_balance",
+      "layout_variant": "total_balance_alt",
+      "allowed_accounts": [
+        "現金",
+        "小口現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "繰越商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "資本金",
+        "利益剰余金",
+        "繰越利益剰余金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費",
+        "消耗品費",
+        "広告宣伝費"
+      ],
+      "rows": [
+        {
+          "row_id": "account_1",
+          "label": "勘定科目1",
+          "locked": false
+        },
+        {
+          "row_id": "account_2",
+          "label": "勘定科目2",
+          "locked": false
+        },
+        {
+          "row_id": "account_3",
+          "label": "勘定科目3",
+          "locked": false
+        },
+        {
+          "row_id": "account_4",
+          "label": "勘定科目4",
+          "locked": false
+        },
+        {
+          "row_id": "account_5",
+          "label": "勘定科目5",
+          "locked": false
+        },
+        {
+          "row_id": "account_6",
+          "label": "勘定科目6",
+          "locked": false
+        },
+        {
+          "row_id": "account_7",
+          "label": "勘定科目7",
+          "locked": false
+        },
+        {
+          "row_id": "account_8",
+          "label": "勘定科目8",
+          "locked": false
+        },
+        {
+          "row_id": "account_9",
+          "label": "勘定科目9",
+          "locked": false
+        },
+        {
+          "row_id": "account_10",
+          "label": "勘定科目10",
+          "locked": false
+        },
+        {
+          "row_id": "account_11",
+          "label": "勘定科目11",
+          "locked": false
+        },
+        {
+          "row_id": "account_12",
+          "label": "勘定科目12",
+          "locked": false
+        },
+        {
+          "row_id": "account_13",
+          "label": "勘定科目13",
+          "locked": false
+        },
+        {
+          "row_id": "account_14",
+          "label": "勘定科目14",
+          "locked": false
+        },
+        {
+          "row_id": "account_15",
+          "label": "勘定科目15",
+          "locked": false
+        },
+        {
+          "row_id": "total_row",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit_total",
+          "label": "借方合計",
+          "input": "currency",
+          "width": 140,
+          "required": true
+        },
+        {
+          "key": "credit_total",
+          "label": "貸方合計",
+          "input": "currency",
+          "width": 140,
+          "required": true
+        },
+        {
+          "key": "balance_debit",
+          "label": "差引残高（借方）",
+          "input": "computed",
+          "width": 140,
+          "formula": "balance_debit_calc"
+        },
+        {
+          "key": "balance_credit",
+          "label": "差引残高（貸方）",
+          "input": "computed",
+          "width": 140,
+          "formula": "balance_credit_calc"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "期首残高の確認",
+          "body": "各勘定科目の期首残高を確認し、取引による変動を把握します。"
+        },
+        {
+          "stage": 2,
+          "title": "合計額の計算",
+          "body": "各勘定科目の借方合計・貸方合計を期首残高と期中取引から計算します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高の算出・検証",
+          "body": "差引残高を算出し、借方合計と貸方合計が一致することを確認します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "total_balance_check",
+        "debit_credit_match"
+      ]
+    }
+  }
+]

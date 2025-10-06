@@ -180,9 +180,30 @@ export class AnswerService {
       }
 
       // 9. 正解データ取得
-      const correctAnswer = JSON.parse(
+      let correctAnswer = JSON.parse(
         question.correct_answer_json,
       ) as QuestionCorrectAnswer;
+
+      // auxiliary_book問題の場合、正答データはanswer_template_jsonに埋め込まれている
+      try {
+        const answerTemplate = safeJsonParse<QuestionTemplate>(
+          question.answer_template_json,
+          {} as QuestionTemplate,
+        );
+        if (
+          answerTemplate?.type === "auxiliary_book" &&
+          answerTemplate.correctAnswers
+        ) {
+          correctAnswer = {
+            correctAnswers: answerTemplate.correctAnswers,
+          } as QuestionCorrectAnswer;
+        }
+      } catch (error) {
+        logger.error(
+          "[AnswerService] auxiliary_book正解データ取得エラー:",
+          error as Error,
+        );
+      }
 
       const response: SubmitAnswerResponse = {
         success: true,
@@ -227,6 +248,42 @@ export class AnswerService {
       // 各問題タイプに応じた専用バリデーション
       if (template.type === "voucher_entry") {
         return this.validateVoucherAnswer(answerData, template);
+      }
+
+      // 用語穴埋め問題の場合は専用バリデーションを使用
+      if (template.type === "vocabulary") {
+        return this.validateVocabularyAnswer(answerData, template);
+      }
+
+      // 勘定記入空欄補充問題の場合は専用バリデーションを使用
+      if (template.type === "fill_in_ledger") {
+        return this.validateFillInLedgerAnswer(answerData, template);
+      }
+
+      // 補助簿記入問題の場合は専用バリデーションを使用
+      if (template.type === "auxiliary_book") {
+        return this.validateAuxiliaryBookAnswer(answerData, template);
+      }
+
+      // 試算表穴埋め問題の場合は専用バリデーションを使用
+      if (template.type === "fill_in_trial_balance") {
+        return this.validateFillInTrialBalanceAnswer(answerData, template);
+      }
+
+      // 合計残高試算表穴埋め問題の場合は専用バリデーションを使用
+      if (template.type === "fill_in_comprehensive_trial_balance") {
+        return this.validateFillInComprehensiveTrialBalanceAnswer(
+          answerData,
+          template,
+        );
+      }
+
+      // 財務諸表穴埋め問題の場合は専用バリデーションを使用
+      if (template.type === "fill_in_financial_statement") {
+        return this.validateFillInFinancialStatementAnswer(
+          answerData,
+          template,
+        );
       }
 
       // 複数空欄選択問題の場合は専用バリデーションを使用
@@ -372,6 +429,46 @@ export class AnswerService {
   }
 
   /**
+   * 用語穴埋め問題（vocabulary）専用バリデーション
+   */
+  private validateVocabularyAnswer(
+    answerData: CBTAnswerData,
+    template: QuestionTemplate & {
+      blanks?: Array<{
+        index: number;
+        choices: string[];
+      }>;
+    },
+  ): string[] {
+    const errors: string[] = [];
+    const data = answerData as AnswerData & {
+      blanks?: Array<{
+        index: number;
+        selectedIndex: number;
+      }>;
+    };
+
+    if (!data.blanks || data.blanks.length === 0) {
+      errors.push("解答が入力されていません");
+      return errors;
+    }
+
+    // すべての空欄に解答が入力されているかチェック
+    const templateBlanks = template.blanks || [];
+    const unansweredBlanks = templateBlanks.filter(
+      (blank) => !data.blanks?.some((b) => b.index === blank.index - 1),
+    );
+
+    if (unansweredBlanks.length > 0) {
+      errors.push(
+        `空欄 ${unansweredBlanks.map((b) => `(${b.index})`).join(", ")} に解答を選択してください`,
+      );
+    }
+
+    return errors;
+  }
+
+  /**
    * 複数空欄選択問題専用バリデーション
    */
   private validateMultipleBlankChoiceAnswer(
@@ -496,6 +593,33 @@ export class AnswerService {
           return this.isTrialBalanceAnswerCorrect(answerData, correctAnswer);
         } else if (answerTemplate?.type === "voucher_entry") {
           return this.isVoucherAnswerCorrect(answerData, correctAnswer);
+        } else if (answerTemplate?.type === "vocabulary") {
+          return this.isVocabularyAnswerCorrect(answerData, correctAnswer);
+        } else if (answerTemplate?.type === "fill_in_ledger") {
+          return this.isFillInLedgerAnswerCorrect(answerData, correctAnswer);
+        } else if (answerTemplate?.type === "auxiliary_book") {
+          return this.isAuxiliaryBookAnswerCorrect(
+            answerData,
+            correctAnswer,
+            answerTemplate,
+          );
+        } else if (answerTemplate?.type === "fill_in_trial_balance") {
+          return this.isFillInTrialBalanceAnswerCorrect(
+            answerData,
+            correctAnswer,
+          );
+        } else if (
+          answerTemplate?.type === "fill_in_comprehensive_trial_balance"
+        ) {
+          return this.isFillInComprehensiveTrialBalanceAnswerCorrect(
+            answerData,
+            correctAnswer,
+          );
+        } else if (answerTemplate?.type === "fill_in_financial_statement") {
+          return this.isFillInFinancialStatementAnswerCorrect(
+            answerData,
+            correctAnswer,
+          );
         }
       } catch {}
 
@@ -1448,6 +1572,532 @@ export class AnswerService {
     } catch (error) {
       logger.error("[AnswerService] セッション統計取得エラー:", error as Error);
       throw error;
+    }
+  }
+
+  /**
+   * 用語穴埋め問題の正解判定
+   */
+  private isVocabularyAnswerCorrect(
+    answerData: CBTAnswerData,
+    correctAnswer: QuestionCorrectAnswer,
+  ): boolean {
+    try {
+      // answerData: { questionType: "vocabulary", blanks: [{index: 0, selectedIndex: 1}, ...] }
+      // correctAnswer: { blanks: [{index: 0, correctIndex: 1}, ...] }
+      const userBlanks = (answerData as any).blanks as Array<{
+        index: number;
+        selectedIndex: number;
+      }>;
+      const correctBlanks = (correctAnswer as any).blanks as Array<{
+        index: number;
+        correctIndex: number;
+      }>;
+
+      if (!userBlanks || !correctBlanks) {
+        logger.error("[AnswerService] vocabulary問題のデータ形式が不正です");
+        return false;
+      }
+
+      // すべての空欄が正解かチェック
+      return correctBlanks.every((correctBlank) => {
+        const userBlank = userBlanks.find(
+          (b) => b.index === correctBlank.index,
+        );
+        if (!userBlank) {
+          logger.debug(
+            `[AnswerService] 空欄${correctBlank.index}の解答がありません`,
+          );
+          return false;
+        }
+
+        const isCorrect = userBlank.selectedIndex === correctBlank.correctIndex;
+        logger.debug(
+          `[AnswerService] 空欄${correctBlank.index}: user=${userBlank.selectedIndex}, correct=${correctBlank.correctIndex}, match=${isCorrect}`,
+        );
+
+        return isCorrect;
+      });
+    } catch (error) {
+      logger.error(
+        "[AnswerService] vocabulary問題の正解判定エラー:",
+        error as Error,
+      );
+      return false;
+    }
+  }
+
+  /**
+   * 勘定記入空欄補充問題（fill_in_ledger）専用バリデーション
+   */
+  private validateFillInLedgerAnswer(
+    answerData: CBTAnswerData,
+    template: QuestionTemplate & {
+      blanks?: Array<{
+        index: number;
+        choices: number[];
+      }>;
+    },
+  ): string[] {
+    const errors: string[] = [];
+    const data = answerData as any;
+
+    if (!data.blanks || !Array.isArray(data.blanks)) {
+      errors.push("解答が入力されていません");
+      return errors;
+    }
+
+    // すべての空欄に解答が入力されているかチェック
+    const templateBlanks = template.blanks || [];
+    const unansweredBlanks = templateBlanks.filter(
+      (blank) =>
+        !data.blanks.some(
+          (b: any) => b.index === blank.index && b.selectedValue !== undefined,
+        ),
+    );
+
+    if (unansweredBlanks.length > 0) {
+      errors.push(
+        `空欄 ${unansweredBlanks.map((b) => `(${b.index + 1})`).join(", ")} に解答を選択してください`,
+      );
+    }
+
+    return errors;
+  }
+
+  /**
+   * 補助簿記入問題（auxiliary_book）専用バリデーション
+   */
+  private validateAuxiliaryBookAnswer(
+    answerData: CBTAnswerData,
+    template: QuestionTemplate & {
+      transactions?: Array<{
+        index: number;
+        description: string;
+      }>;
+    },
+  ): string[] {
+    const errors: string[] = [];
+    const data = answerData as any;
+
+    if (
+      !data.auxiliaryBookSelections ||
+      !Array.isArray(data.auxiliaryBookSelections)
+    ) {
+      errors.push("解答が入力されていません");
+      return errors;
+    }
+
+    // すべての取引に対して補助簿が選択されているかチェック
+    const templateTransactions = template.transactions || [];
+    const unansweredTransactions = templateTransactions.filter(
+      (transaction) =>
+        !data.auxiliaryBookSelections.some(
+          (s: any) =>
+            s.transactionIndex === transaction.index &&
+            s.bookIds &&
+            s.bookIds.length > 0,
+        ),
+    );
+
+    if (unansweredTransactions.length > 0) {
+      errors.push(
+        `取引 ${unansweredTransactions.map((t) => t.index).join(", ")} について補助簿を選択してください`,
+      );
+    }
+
+    return errors;
+  }
+
+  /**
+   * 勘定記入空欄補充問題の正解判定
+   */
+  private isFillInLedgerAnswerCorrect(
+    answerData: CBTAnswerData,
+    correctAnswer: QuestionCorrectAnswer,
+  ): boolean {
+    try {
+      // answerData: { questionType: "ledger", blanks: [{index: 0, selectedIndex: 1, selectedValue: 1000}, ...] }
+      // correctAnswer: { blanks: [{index: 0, correctIndex: 1}, ...] }
+      const userBlanks = (answerData as any).blanks as Array<{
+        index: number;
+        selectedIndex: number;
+        selectedValue: number;
+      }>;
+      const correctBlanks = (correctAnswer as any).blanks as Array<{
+        index: number;
+        correctIndex: number;
+      }>;
+
+      if (!userBlanks || !correctBlanks) {
+        logger.error(
+          "[AnswerService] fill_in_ledger問題のデータ形式が不正です",
+        );
+        return false;
+      }
+
+      // すべての空欄が正解かチェック
+      return correctBlanks.every((correctBlank) => {
+        const userBlank = userBlanks.find(
+          (b) => b.index === correctBlank.index,
+        );
+        if (!userBlank) {
+          logger.debug(
+            `[AnswerService] 空欄${correctBlank.index}の解答がありません`,
+          );
+          return false;
+        }
+
+        const isCorrect = userBlank.selectedIndex === correctBlank.correctIndex;
+        logger.debug(
+          `[AnswerService] 空欄${correctBlank.index}: user=${userBlank.selectedIndex}, correct=${correctBlank.correctIndex}, match=${isCorrect}`,
+        );
+
+        return isCorrect;
+      });
+    } catch (error) {
+      logger.error(
+        "[AnswerService] fill_in_ledger問題の正解判定エラー:",
+        error as Error,
+      );
+      return false;
+    }
+  }
+
+  /**
+   * 補助簿記入問題の正解判定
+   * Note: auxiliary_book問題では、正答データがanswer_template_jsonに埋め込まれている
+   */
+  private isAuxiliaryBookAnswerCorrect(
+    answerData: CBTAnswerData,
+    correctAnswer: QuestionCorrectAnswer,
+    answerTemplate?: QuestionTemplate & {
+      correctAnswers?: Array<{
+        transactionIndex: number;
+        bookIds: string[];
+      }>;
+    },
+  ): boolean {
+    try {
+      // answerData: { questionType: "ledger", auxiliaryBookSelections: [{transactionIndex: 1, bookIds: ["cash_book"]}, ...] }
+      const userSelections = (answerData as any)
+        .auxiliaryBookSelections as Array<{
+        transactionIndex: number;
+        bookIds: string[];
+      }>;
+
+      if (!userSelections) {
+        logger.error(
+          "[AnswerService] auxiliary_book問題のユーザー解答データが不正です",
+        );
+        return false;
+      }
+
+      // 正答データは answer_template の correctAnswers から取得
+      // （correct_answer_json ではなく answer_template_json に含まれている）
+      const correctSelections = answerTemplate?.correctAnswers;
+
+      if (!correctSelections) {
+        logger.error(
+          "[AnswerService] auxiliary_book問題の正答データが見つかりません",
+        );
+        return false;
+      }
+
+      // すべての取引が正解かチェック
+      return correctSelections.every((correctSelection) => {
+        const userSelection = userSelections.find(
+          (s) => s.transactionIndex === correctSelection.transactionIndex,
+        );
+        if (!userSelection) {
+          logger.debug(
+            `[AnswerService] 取引${correctSelection.transactionIndex}の解答がありません`,
+          );
+          return false;
+        }
+
+        // 選択された補助簿をソートして比較
+        const sortedUserBooks = [...(userSelection.bookIds || [])].sort();
+        const sortedCorrectBooks = [...correctSelection.bookIds].sort();
+
+        if (sortedUserBooks.length !== sortedCorrectBooks.length) {
+          logger.debug(
+            `[AnswerService] 取引${correctSelection.transactionIndex}: 補助簿数不一致 user=${sortedUserBooks.length}, correct=${sortedCorrectBooks.length}`,
+          );
+          return false;
+        }
+
+        const isCorrect = sortedUserBooks.every(
+          (book, index) => book === sortedCorrectBooks[index],
+        );
+        logger.debug(
+          `[AnswerService] 取引${correctSelection.transactionIndex}: user=${sortedUserBooks.join(",")}, correct=${sortedCorrectBooks.join(",")}, match=${isCorrect}`,
+        );
+
+        return isCorrect;
+      });
+    } catch (error) {
+      logger.error(
+        "[AnswerService] auxiliary_book問題の正解判定エラー:",
+        error as Error,
+      );
+      return false;
+    }
+  }
+
+  /**
+   * 試算表穴埋め問題専用バリデーション
+   */
+  private validateFillInTrialBalanceAnswer(
+    answerData: CBTAnswerData,
+    template: QuestionTemplate & {
+      blanks?: Array<{
+        index: number;
+        choices: number[];
+      }>;
+    },
+  ): string[] {
+    const errors: string[] = [];
+    const data = answerData as any;
+
+    if (!data.blanks || typeof data.blanks !== "object") {
+      errors.push("解答が入力されていません");
+      return errors;
+    }
+
+    // すべての空欄に解答が入力されているかチェック
+    const templateBlanks = template.blanks || [];
+    const userBlanks = data.blanks as Record<number, number>;
+
+    const unansweredBlanks = templateBlanks.filter(
+      (blank) => userBlanks[blank.index] === undefined,
+    );
+
+    if (unansweredBlanks.length > 0) {
+      errors.push(
+        `空欄 ${unansweredBlanks.map((b) => `(${b.index + 1})`).join(", ")} に解答を選択してください`,
+      );
+    }
+
+    return errors;
+  }
+
+  /**
+   * 合計残高試算表穴埋め問題専用バリデーション
+   */
+  private validateFillInComprehensiveTrialBalanceAnswer(
+    answerData: CBTAnswerData,
+    template: QuestionTemplate & {
+      blanks?: Array<{
+        accountIndex: number;
+        column: string;
+        choices: number[];
+      }>;
+    },
+  ): string[] {
+    const errors: string[] = [];
+    const data = answerData as any;
+
+    if (!data.blanks || typeof data.blanks !== "object") {
+      errors.push("解答が入力されていません");
+      return errors;
+    }
+
+    // すべての空欄に解答が入力されているかチェック
+    const templateBlanks = template.blanks || [];
+    const userBlanks = data.blanks as Record<number, number>;
+
+    const unansweredBlanks = templateBlanks.filter(
+      (blank, index) => userBlanks[index] === undefined,
+    );
+
+    if (unansweredBlanks.length > 0) {
+      errors.push(`空欄 ${unansweredBlanks.length}個 に解答を選択してください`);
+    }
+
+    return errors;
+  }
+
+  /**
+   * 財務諸表穴埋め問題専用バリデーション
+   */
+  private validateFillInFinancialStatementAnswer(
+    answerData: CBTAnswerData,
+    template: QuestionTemplate & {
+      blanks?: Array<{
+        itemIndex: number;
+        field: string;
+        choices: (string | number)[];
+      }>;
+    },
+  ): string[] {
+    const errors: string[] = [];
+    const data = answerData as any;
+
+    if (!data.blanks || typeof data.blanks !== "object") {
+      errors.push("解答が入力されていません");
+      return errors;
+    }
+
+    // すべての空欄に解答が入力されているかチェック
+    const templateBlanks = template.blanks || [];
+    const userBlanks = data.blanks as Record<number, number>;
+
+    const unansweredBlanks = templateBlanks.filter(
+      (blank, index) => userBlanks[index] === undefined,
+    );
+
+    if (unansweredBlanks.length > 0) {
+      errors.push(`空欄 ${unansweredBlanks.length}個 に解答を選択してください`);
+    }
+
+    return errors;
+  }
+
+  /**
+   * 試算表穴埋め問題の正解判定
+   */
+  private isFillInTrialBalanceAnswerCorrect(
+    answerData: CBTAnswerData,
+    correctAnswer: QuestionCorrectAnswer,
+  ): boolean {
+    try {
+      // answerData: { blanks: Record<number, number> }
+      // correctAnswer: { blanks: Array<{index: number, correctIndex: number}> }
+      const userBlanks = (answerData as any).blanks as Record<number, number>;
+      const correctBlanks = (correctAnswer as any).blanks as Array<{
+        index: number;
+        correctIndex: number;
+      }>;
+
+      if (!userBlanks || !correctBlanks) {
+        logger.error(
+          "[AnswerService] fill_in_trial_balance問題のデータ形式が不正です",
+        );
+        return false;
+      }
+
+      // すべての空欄が正解かチェック
+      return correctBlanks.every((correctBlank) => {
+        const userSelectedIndex = userBlanks[correctBlank.index];
+        if (userSelectedIndex === undefined) {
+          logger.debug(
+            `[AnswerService] 空欄${correctBlank.index}の解答がありません`,
+          );
+          return false;
+        }
+
+        const isCorrect = userSelectedIndex === correctBlank.correctIndex;
+        logger.debug(
+          `[AnswerService] 空欄${correctBlank.index}: user=${userSelectedIndex}, correct=${correctBlank.correctIndex}, match=${isCorrect}`,
+        );
+
+        return isCorrect;
+      });
+    } catch (error) {
+      logger.error(
+        "[AnswerService] fill_in_trial_balance問題の正解判定エラー:",
+        error as Error,
+      );
+      return false;
+    }
+  }
+
+  /**
+   * 合計残高試算表穴埋め問題の正解判定
+   */
+  private isFillInComprehensiveTrialBalanceAnswerCorrect(
+    answerData: CBTAnswerData,
+    correctAnswer: QuestionCorrectAnswer,
+  ): boolean {
+    try {
+      // answerData: { blanks: Record<number, number> }
+      // correctAnswer: { blanks: Array<{index: number, correctIndex: number}> }
+      const userBlanks = (answerData as any).blanks as Record<number, number>;
+      const correctBlanks = (correctAnswer as any).blanks as Array<{
+        index: number;
+        correctIndex: number;
+      }>;
+
+      if (!userBlanks || !correctBlanks) {
+        logger.error(
+          "[AnswerService] fill_in_comprehensive_trial_balance問題のデータ形式が不正です",
+        );
+        return false;
+      }
+
+      // すべての空欄が正解かチェック
+      return correctBlanks.every((correctBlank) => {
+        const userSelectedIndex = userBlanks[correctBlank.index];
+        if (userSelectedIndex === undefined) {
+          logger.debug(
+            `[AnswerService] 空欄${correctBlank.index}の解答がありません`,
+          );
+          return false;
+        }
+
+        const isCorrect = userSelectedIndex === correctBlank.correctIndex;
+        logger.debug(
+          `[AnswerService] 空欄${correctBlank.index}: user=${userSelectedIndex}, correct=${correctBlank.correctIndex}, match=${isCorrect}`,
+        );
+
+        return isCorrect;
+      });
+    } catch (error) {
+      logger.error(
+        "[AnswerService] fill_in_comprehensive_trial_balance問題の正解判定エラー:",
+        error as Error,
+      );
+      return false;
+    }
+  }
+
+  /**
+   * 財務諸表穴埋め問題の正解判定
+   */
+  private isFillInFinancialStatementAnswerCorrect(
+    answerData: CBTAnswerData,
+    correctAnswer: QuestionCorrectAnswer,
+  ): boolean {
+    try {
+      // answerData: { blanks: Record<number, number> }
+      // correctAnswer: { blanks: Array<{index: number, correctIndex: number}> }
+      const userBlanks = (answerData as any).blanks as Record<number, number>;
+      const correctBlanks = (correctAnswer as any).blanks as Array<{
+        index: number;
+        correctIndex: number;
+      }>;
+
+      if (!userBlanks || !correctBlanks) {
+        logger.error(
+          "[AnswerService] fill_in_financial_statement問題のデータ形式が不正です",
+        );
+        return false;
+      }
+
+      // すべての空欄が正解かチェック
+      return correctBlanks.every((correctBlank) => {
+        const userSelectedIndex = userBlanks[correctBlank.index];
+        if (userSelectedIndex === undefined) {
+          logger.debug(
+            `[AnswerService] 空欄${correctBlank.index}の解答がありません`,
+          );
+          return false;
+        }
+
+        const isCorrect = userSelectedIndex === correctBlank.correctIndex;
+        logger.debug(
+          `[AnswerService] 空欄${correctBlank.index}: user=${userSelectedIndex}, correct=${correctBlank.correctIndex}, match=${isCorrect}`,
+        );
+
+        return isCorrect;
+      });
+    } catch (error) {
+      logger.error(
+        "[AnswerService] fill_in_financial_statement問題の正解判定エラー:",
+        error as Error,
+      );
+      return false;
     }
   }
 }

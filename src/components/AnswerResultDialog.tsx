@@ -25,6 +25,7 @@ interface AnswerResultDialogProps {
   onNextQuestion?: () => void;
   questionId?: string;
   onAddToReview?: (questionId: string) => void;
+  answerTemplate?: any; // Q2 vocabulary/fill_in_ledger形式の正解表示に必要
 }
 
 export default function AnswerResultDialog({
@@ -35,6 +36,7 @@ export default function AnswerResultDialog({
   showNextButton = true,
   questionId,
   onAddToReview,
+  answerTemplate,
 }: AnswerResultDialogProps) {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
@@ -159,15 +161,44 @@ export default function AnswerResultDialog({
           )}
 
           {/* 解説パネル */}
-          <UnifiedExplanation
-            explanation={result.explanation}
-            mode="panel"
-            isVisible={true}
-            isCorrect={result.isCorrect}
-            correctAnswer={formatCorrectAnswer(result.correctAnswer)}
-            showAnswerComparison={true}
-            sessionMode="learning"
-          />
+          {(() => {
+            const determinedQuestionType =
+              answerTemplate?.type === "fill_in_ledger" ||
+              answerTemplate?.type === "vocabulary"
+                ? "ledger"
+                : answerTemplate?.type === "auxiliary_book"
+                  ? "auxiliary_book"
+                  : answerTemplate?.type === "fill_in_trial_balance" ||
+                      answerTemplate?.type ===
+                        "fill_in_comprehensive_trial_balance" ||
+                      answerTemplate?.type === "fill_in_financial_statement"
+                    ? "trial_balance"
+                    : "journal";
+
+            console.log("[AnswerResultDialog] Debug Info:", {
+              answerTemplateType: answerTemplate?.type,
+              determinedQuestionType,
+              hasAnswerTemplate: !!answerTemplate,
+              hasTransactions: !!answerTemplate?.transactions,
+              correctAnswerKeys: result.correctAnswer
+                ? Object.keys(result.correctAnswer)
+                : [],
+            });
+
+            return (
+              <UnifiedExplanation
+                explanation={result.explanation}
+                mode="panel"
+                isVisible={true}
+                isCorrect={result.isCorrect}
+                correctAnswer={formatCorrectAnswer(result.correctAnswer)}
+                showAnswerComparison={true}
+                questionType={determinedQuestionType}
+                questionTemplate={answerTemplate}
+                sessionMode="learning"
+              />
+            );
+          })()}
         </ScrollView>
 
         {/* アクションボタン */}

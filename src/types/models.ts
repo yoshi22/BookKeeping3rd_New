@@ -184,7 +184,7 @@ export interface AppSetting {
  * 問題解答テンプレート（JSON格納データ）
  */
 export interface QuestionAnswerTemplate {
-  type: "journal_entry" | "ledger_entry" | "trial_balance";
+  type: "journal_entry" | "ledger_entry" | "trial_balance" | "vocabulary";
   allowMultipleEntries?: boolean;
   maxEntries?: number;
   fields: {
@@ -249,6 +249,12 @@ export interface QuestionCorrectAnswer {
     customer?: string;
     supplier?: string;
     payment_type?: string;
+  }[];
+
+  // 用語穴埋め問題の正解
+  blanks?: {
+    index: number;
+    correctIndex: number;
   }[];
 
   // 財務諸表形式（複雑な試算表問題用）

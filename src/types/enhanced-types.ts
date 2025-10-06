@@ -90,7 +90,8 @@ export interface QuestionTemplate {
     | "financial_statement"
     | "voucher_entry"
     | "multiple_choice"
-    | "single_choice";
+    | "single_choice"
+    | "vocabulary";
   fields?: QuestionField[];
   questions?: {
     id: string;

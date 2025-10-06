@@ -94,6 +94,17 @@ export class QuestionRepository extends BaseRepository<Question> {
       logger.debug(
         `[QuestionRepository] カテゴリ ${category} から ${result.rows.length}問取得 (problemsStrategy順序: ${options.useProblemsStrategyOrder || false})`,
       );
+
+      // Q2問題のデバッグ用：最初の10問のIDとquestion_orderを出力
+      if (category === "ledger" && result.rows.length > 0) {
+        const first10 = result.rows
+          .slice(0, 10)
+          .map((q) => `${q.id}(order:${q.question_order})`);
+        logger.debug(
+          `[DEBUG-Q2-REPO] ledgerカテゴリ取得結果: ${first10.join(", ")}`,
+        );
+      }
+
       return result.rows;
     } catch (error) {
       logger.error(
@@ -217,21 +228,26 @@ export class QuestionRepository extends BaseRepository<Question> {
       const sql = `SELECT * FROM questions WHERE id IN (${placeholders})`;
 
       const result = await this.executeQuery<Question>(sql, questionIds);
-      
+
       // 結果を入力IDの順序でソート
       const questionMap = new Map<string, Question>();
-      result.rows.forEach(question => {
+      result.rows.forEach((question) => {
         questionMap.set(question.id, question);
       });
-      
+
       const orderedQuestions = questionIds
-        .map(id => questionMap.get(id))
+        .map((id) => questionMap.get(id))
         .filter((question): question is Question => question !== undefined);
 
-      logger.debug(`[QuestionRepository] ID指定（順序維持）で ${orderedQuestions.length}問取得`);
+      logger.debug(
+        `[QuestionRepository] ID指定（順序維持）で ${orderedQuestions.length}問取得`,
+      );
       return orderedQuestions;
     } catch (error) {
-      logger.error("[QuestionRepository] findByIdsInOrder エラー:", error as Error);
+      logger.error(
+        "[QuestionRepository] findByIdsInOrder エラー:",
+        error as Error,
+      );
       throw error;
     }
   }

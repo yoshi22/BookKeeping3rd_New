@@ -153,6 +153,14 @@ export default function ReviewQuestionScreen() {
     loadQuestions();
   }, [id, category, sessionType, sessionId, filteredQuestions, router]);
 
+  // 問題が切り替わった時にuserAnswersをリセット
+  useEffect(() => {
+    if (currentQuestion?.id) {
+      setUserAnswers({});
+      setQuestionStartTime(Date.now());
+    }
+  }, [currentQuestion?.id]);
+
   // 解答変更処理
   const handleAnswerChange = (fieldName: string, value: any) => {
     setUserAnswers((prev) => ({
@@ -352,7 +360,7 @@ export default function ReviewQuestionScreen() {
         difficulty={currentQuestion.difficulty}
         answerFields={getAnswerFields(currentQuestion)}
         answers={userAnswers}
-        explanation={currentQuestion.explanation}
+        explanation={submitResult?.explanation || currentQuestion.explanation}
         showExplanation={showExplanation}
         isCorrect={submitResult?.isCorrect}
         correctAnswer={submitResult?.correctAnswer}
@@ -373,6 +381,7 @@ export default function ReviewQuestionScreen() {
         showNextButton={canGoNext}
         questionId={currentQuestion.id}
         onAddToReview={handleAddToReview}
+        answerTemplate={getAnswerTemplate(currentQuestion)}
       />
     </ScrollView>
   );

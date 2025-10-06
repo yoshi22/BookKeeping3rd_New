@@ -9,18 +9,32 @@ import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 import { QuestionCorrectAnswer } from "../types/models";
 
 interface CorrectAnswerExampleProps {
-  questionType: "journal" | "ledger" | "trial_balance";
+  questionType: "journal" | "ledger" | "trial_balance" | "auxiliary_book";
   correctAnswer: QuestionCorrectAnswer;
   show: boolean;
+  questionTemplate?: any; // fill_in_ledger形式の正解表示に必要
 }
 
 export default function CorrectAnswerExample({
   questionType,
   correctAnswer,
   show,
+  questionTemplate,
 }: CorrectAnswerExampleProps) {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
+
+  // デバッグログ
+  console.log("[CorrectAnswerExample] Props:", {
+    questionType,
+    hasCorrectAnswer: !!correctAnswer,
+    correctAnswerKeys: correctAnswer ? Object.keys(correctAnswer) : [],
+    hasBlanks: !!correctAnswer?.blanks,
+    blanksLength: correctAnswer?.blanks?.length,
+    hasQuestionTemplate: !!questionTemplate,
+    questionTemplateType: questionTemplate?.type,
+    templateBlanksLength: questionTemplate?.blanks?.length,
+  });
 
   if (!show || !correctAnswer) return null;
 
@@ -164,6 +178,147 @@ export default function CorrectAnswerExample({
     );
   };
 
+  const renderFillInLedgerExample = () => {
+    // fill_in_ledger形式の正解データを表示
+    if (!correctAnswer.blanks || !questionTemplate) return null;
+
+    const { blanks: correctBlanks } = correctAnswer;
+    const { blanks: templateBlanks, entries } = questionTemplate;
+
+    if (!correctBlanks || !templateBlanks || !entries) return null;
+
+    return (
+      <View style={styles.exampleContainer}>
+        <Text style={styles.exampleTitle}>📝 正解例</Text>
+        {correctBlanks.map((blank: any, blankArrayIndex: number) => {
+          // 配列の順序でマッピング（indexの不一致に対応）
+          const templateBlank = templateBlanks[blankArrayIndex];
+          const entry = entries[templateBlank.index];
+
+          if (!templateBlank || !entry) return null;
+
+          const correctValue = templateBlank.choices[blank.correctIndex];
+
+          return (
+            <View key={`blank-${blankArrayIndex}`} style={styles.fieldRow}>
+              <Text style={styles.fieldLabel}>
+                空欄{blankArrayIndex + 1} ({entry.date || entry.description}):
+              </Text>
+              <Text style={styles.fieldValue}>
+                {correctValue?.toLocaleString()}円
+              </Text>
+            </View>
+          );
+        })}
+      </View>
+    );
+  };
+
+  const renderVocabularyExample = () => {
+    console.log("[renderVocabularyExample] Called", {
+      hasBlanks: !!correctAnswer.blanks,
+      hasQuestionTemplate: !!questionTemplate,
+      correctBlanks: correctAnswer.blanks,
+      templateBlanks: questionTemplate?.blanks,
+    });
+
+    // vocabulary形式の正解データを表示
+    if (!correctAnswer.blanks || !questionTemplate) {
+      console.log("[renderVocabularyExample] Early return - missing data");
+      return null;
+    }
+
+    const { blanks: correctBlanks } = correctAnswer;
+    const { blanks: templateBlanks } = questionTemplate;
+
+    if (!correctBlanks || !templateBlanks) {
+      console.log(
+        "[renderVocabularyExample] Early return - blanks validation failed",
+      );
+      return null;
+    }
+
+    return (
+      <View style={styles.exampleContainer}>
+        <Text style={styles.exampleTitle}>📝 正解例</Text>
+        {correctBlanks.map((blank: any, blankArrayIndex: number) => {
+          // 配列の順序でマッピング（indexの不一致に対応）
+          const templateBlank = templateBlanks[blankArrayIndex];
+
+          if (!templateBlank) return null;
+
+          const correctValue = templateBlank.choices[blank.correctIndex];
+
+          return (
+            <View key={`blank-${blankArrayIndex}`} style={styles.fieldRow}>
+              <Text style={styles.fieldLabel}>
+                空欄{blankArrayIndex + 1} (①②③の{blankArrayIndex + 1}番目):
+              </Text>
+              <Text style={styles.fieldValue}>{correctValue}</Text>
+            </View>
+          );
+        })}
+      </View>
+    );
+  };
+
+  /**
+   * Q3 fill-in形式（試算表・合計残高試算表・財務諸表）の正解表示
+   * blanks形式の問題に対応
+   */
+  const renderFillInExample = () => {
+    console.log("[renderFillInExample] Called", {
+      hasBlanks: !!correctAnswer.blanks,
+      hasQuestionTemplate: !!questionTemplate,
+      correctBlanks: correctAnswer.blanks,
+      templateBlanks: questionTemplate?.blanks,
+      templateType: questionTemplate?.type,
+    });
+
+    // blanks形式の正解データを表示
+    if (!correctAnswer.blanks || !questionTemplate) {
+      console.log("[renderFillInExample] Early return - missing data");
+      return null;
+    }
+
+    const { blanks: correctBlanks } = correctAnswer;
+    const { blanks: templateBlanks } = questionTemplate;
+
+    if (!correctBlanks || !templateBlanks) {
+      console.log(
+        "[renderFillInExample] Early return - blanks validation failed",
+      );
+      return null;
+    }
+
+    return (
+      <View style={styles.exampleContainer}>
+        <Text style={styles.exampleTitle}>📝 正解例</Text>
+        {correctBlanks.map((blank: any, blankArrayIndex: number) => {
+          // 配列の順序でマッピング（indexの不一致に対応）
+          const templateBlank = templateBlanks[blankArrayIndex];
+
+          if (!templateBlank) return null;
+
+          const correctValue = templateBlank.choices[blank.correctIndex];
+
+          // 金額の場合はフォーマット、それ以外はそのまま表示
+          const displayValue =
+            typeof correctValue === "number"
+              ? `${correctValue.toLocaleString("ja-JP")}円`
+              : correctValue;
+
+          return (
+            <View key={`blank-${blankArrayIndex}`} style={styles.fieldRow}>
+              <Text style={styles.fieldLabel}>空欄{blankArrayIndex + 1}:</Text>
+              <Text style={styles.fieldValue}>{displayValue}</Text>
+            </View>
+          );
+        })}
+      </View>
+    );
+  };
+
   const renderEntriesFromArray = (
     entriesArray: {
       accountName: string;
@@ -255,6 +410,82 @@ export default function CorrectAnswerExample({
       }));
 
     return renderEntriesFromArray(validEntries);
+  };
+
+  /**
+   * 補助簿記入問題の正解表示
+   */
+  const renderAuxiliaryBookExample = () => {
+    console.log("[renderAuxiliaryBookExample] Called with:", {
+      correctAnswer,
+      correctAnswerKeys: correctAnswer ? Object.keys(correctAnswer) : [],
+      questionTemplate,
+      questionTemplateKeys: questionTemplate
+        ? Object.keys(questionTemplate)
+        : [],
+    });
+
+    // 補助簿名のマッピング
+    const bookNameMapping: Record<string, string> = {
+      cash_book: "現金出納帳",
+      purchase_book: "仕入帳",
+      sales_book: "売上帳",
+      inventory_book: "商品有高帳",
+      accounts_receivable_ledger: "売掛金元帳",
+      accounts_payable_ledger: "買掛金元帳",
+    };
+
+    // correctAnswerにcorrectAnswers配列があるか確認
+    const correctAnswersArray = (correctAnswer as any).correctAnswers;
+    const transactions = questionTemplate?.transactions;
+
+    console.log("[renderAuxiliaryBookExample] Data check:", {
+      hasCorrectAnswersArray: !!correctAnswersArray,
+      isCorrectAnswersArray: Array.isArray(correctAnswersArray),
+      correctAnswersArrayLength: correctAnswersArray?.length,
+      hasTransactions: !!transactions,
+      isTransactionsArray: Array.isArray(transactions),
+      transactionsLength: transactions?.length,
+    });
+
+    if (!correctAnswersArray || !Array.isArray(correctAnswersArray)) {
+      console.log("[renderAuxiliaryBookExample] No correctAnswers array found");
+      return null;
+    }
+
+    if (!transactions || !Array.isArray(transactions)) {
+      console.log("[renderAuxiliaryBookExample] No transactions found");
+      return null;
+    }
+
+    return (
+      <View style={styles.exampleContainer}>
+        <Text style={styles.exampleTitle}>📝 正解例</Text>
+        {correctAnswersArray.map((answerItem: any, index: number) => {
+          const transaction = transactions.find(
+            (t: any) => t.index === answerItem.transactionIndex,
+          );
+
+          if (!transaction) {
+            return null;
+          }
+
+          // bookIdsを日本語名に変換
+          const bookNames = answerItem.bookIds
+            .map((bookId: string) => bookNameMapping[bookId] || bookId)
+            .join("、");
+
+          return (
+            <View key={`transaction-${index}`} style={styles.fieldRow}>
+              <Text style={styles.fieldLabel}>
+                取引{answerItem.transactionIndex}: {transaction.description}
+              </Text>
+              <Text style={styles.fieldValue}>→ {bookNames}</Text>
+            </View>
+          );
+        })}
+      </View>
+    );
   };
 
   /**
@@ -351,13 +582,59 @@ export default function CorrectAnswerExample({
   };
 
   const renderExample = () => {
+    console.log("[renderExample] Routing decision:", {
+      questionType,
+      hasBlanks: !!correctAnswer.blanks,
+      templateType: questionTemplate?.type,
+      willUseVocabulary:
+        questionType === "ledger" &&
+        correctAnswer.blanks &&
+        questionTemplate?.type === "vocabulary",
+      willUseFillInLedger:
+        questionType === "ledger" &&
+        correctAnswer.blanks &&
+        questionTemplate?.type === "fill_in_ledger",
+    });
+
     switch (questionType) {
       case "journal":
+        console.log("[renderExample] Using renderJournalExample");
         return renderJournalExample();
       case "ledger":
+        // vocabulary形式の場合
+        if (correctAnswer.blanks && questionTemplate?.type === "vocabulary") {
+          console.log("[renderExample] Using renderVocabularyExample");
+          return renderVocabularyExample();
+        }
+        // fill_in_ledger形式の場合は専用レンダリングを使用
+        if (
+          correctAnswer.blanks &&
+          questionTemplate?.type === "fill_in_ledger"
+        ) {
+          console.log("[renderExample] Using renderFillInLedgerExample");
+          return renderFillInLedgerExample();
+        }
+        console.log("[renderExample] Using renderLedgerExample (fallback)");
         return renderLedgerExample();
       case "trial_balance":
+        // Q3 fill-in形式（blanks）の場合は専用レンダリング
+        if (correctAnswer.blanks) {
+          const templateType = questionTemplate?.type;
+          if (
+            templateType === "fill_in_trial_balance" ||
+            templateType === "fill_in_comprehensive_trial_balance" ||
+            templateType === "fill_in_financial_statement"
+          ) {
+            console.log("[renderExample] Using renderFillInExample for Q3");
+            return renderFillInExample();
+          }
+        }
+        // 従来の試算表形式（Q_T_001など）
+        console.log("[renderExample] Using renderTrialBalanceExample");
         return renderTrialBalanceExample();
+      case "auxiliary_book":
+        console.log("[renderExample] Using renderAuxiliaryBookExample");
+        return renderAuxiliaryBookExample();
       default:
         return null;
     }
@@ -440,15 +717,15 @@ const createStyles = (theme: Theme) =>
       marginBottom: 10,
     },
     fieldRow: {
-      flexDirection: "row",
-      marginBottom: 5,
-      alignItems: "center",
+      flexDirection: "column",
+      marginBottom: 10,
+      alignItems: "flex-start",
+      width: "100%",
     },
     fieldLabel: {
       fontSize: 14,
       fontWeight: "500",
       color: theme.colors.textSecondary,
-      minWidth: 100,
     },
     fieldValue: {
       fontSize: 14,
@@ -459,7 +736,9 @@ const createStyles = (theme: Theme) =>
       paddingHorizontal: 8,
       paddingVertical: 2,
       borderRadius: 4,
-      marginLeft: 10,
+      marginTop: 4,
+      flexShrink: 1,
+      maxWidth: "100%",
     },
     hintText: {
       fontSize: 12,

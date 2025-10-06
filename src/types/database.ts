@@ -154,6 +154,12 @@ export interface CBTAnswerData {
     creditAmount: number;
   }[];
 
+  // 用語穴埋め問題の解答
+  blanks?: {
+    index: number;
+    selectedIndex: number;
+  }[];
+
   // 財務諸表問題の解答
   financialStatements?: {
     balanceSheet: {

@@ -1,0 +1,808 @@
+[
+  {
+    "id": "Q2_L_001",
+    "templateIndices": [
+      1,
+      2
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 2,
+        "choices": [
+          20000,
+          25000,
+          30000,
+          35000
+        ],
+        "correctIndex": 1
+      },
+      {
+        "index": 1,
+        "choices": [
+          40000,
+          45000,
+          50000,
+          55000
+        ],
+        "correctIndex": 2
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 1
+      },
+      {
+        "index": 1,
+        "correctIndex": 2
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_002",
+    "templateIndices": [
+      1,
+      5
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 1,
+        "choices": [
+          35000,
+          40000,
+          45000,
+          50000
+        ],
+        "correctIndex": 1
+      },
+      {
+        "index": 5,
+        "choices": [
+          85000,
+          87000,
+          92000,
+          95000
+        ],
+        "correctIndex": 2
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 1
+      },
+      {
+        "index": 1,
+        "correctIndex": 2
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_003",
+    "templateIndices": [
+      1,
+      4
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 1,
+        "choices": [
+          70000,
+          75000,
+          80000,
+          85000
+        ],
+        "correctIndex": 2
+      },
+      {
+        "index": 4,
+        "choices": [
+          75000,
+          80000,
+          85000,
+          90000
+        ],
+        "correctIndex": 1
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "correctIndex": 1
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_004",
+    "templateIndices": [
+      1,
+      5
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 1,
+        "choices": [
+          40000,
+          50000,
+          55000,
+          60000
+        ],
+        "correctIndex": 2
+      },
+      {
+        "index": 5,
+        "choices": [
+          75000,
+          80000,
+          85000,
+          90000
+        ],
+        "correctIndex": 1
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "correctIndex": 1
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_005",
+    "templateIndices": [
+      1,
+      5,
+      6
+    ],
+    "correctIndices": [
+      0,
+      1,
+      2
+    ],
+    "templateBlanks": [
+      {
+        "index": 1,
+        "choices": [
+          45000,
+          50000,
+          55000,
+          60000
+        ],
+        "correctIndex": 1
+      },
+      {
+        "index": 5,
+        "choices": [
+          5000,
+          8000,
+          10000,
+          12000
+        ],
+        "correctIndex": 2
+      },
+      {
+        "index": 6,
+        "choices": [
+          80000,
+          85000,
+          90000,
+          95000
+        ],
+        "correctIndex": 2
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 1
+      },
+      {
+        "index": 1,
+        "correctIndex": 2
+      },
+      {
+        "index": 2,
+        "correctIndex": 2
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_006",
+    "templateIndices": [
+      3,
+      5
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 3,
+        "choices": [
+          50000,
+          60000,
+          70000,
+          80000
+        ],
+        "correctIndex": 1
+      },
+      {
+        "index": 5,
+        "choices": [
+          100000,
+          110000,
+          120000,
+          130000
+        ],
+        "correctIndex": 1
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 1
+      },
+      {
+        "index": 1,
+        "correctIndex": 1
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_007",
+    "templateIndices": [
+      1,
+      3
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 1,
+        "choices": [
+          60000,
+          70000,
+          80000,
+          90000
+        ],
+        "correctIndex": 2
+      },
+      {
+        "index": 3,
+        "choices": [
+          40000,
+          50000,
+          60000,
+          70000
+        ],
+        "correctIndex": 1
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "correctIndex": 1
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_008",
+    "templateIndices": [
+      3,
+      4,
+      5
+    ],
+    "correctIndices": [
+      0,
+      1,
+      2
+    ],
+    "templateBlanks": [
+      {
+        "index": 3,
+        "choices": [
+          60000,
+          70000,
+          80000,
+          90000
+        ],
+        "correctIndex": 2
+      },
+      {
+        "index": 4,
+        "choices": [
+          50000,
+          60000,
+          70000,
+          80000
+        ],
+        "correctIndex": 1
+      },
+      {
+        "index": 5,
+        "choices": [
+          240000,
+          250000,
+          260000,
+          270000
+        ],
+        "correctIndex": 2
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "correctIndex": 1
+      },
+      {
+        "index": 2,
+        "correctIndex": 2
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_009",
+    "templateIndices": [
+      1,
+      4
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 1,
+        "choices": [
+          80000,
+          90000,
+          100000,
+          110000
+        ],
+        "correctIndex": 2
+      },
+      {
+        "index": 4,
+        "choices": [
+          140000,
+          150000,
+          160000,
+          170000
+        ],
+        "correctIndex": 2
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "correctIndex": 2
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_010",
+    "templateIndices": [
+      1,
+      4
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 1,
+        "choices": [
+          140000,
+          150000,
+          160000,
+          170000
+        ],
+        "correctIndex": 1
+      },
+      {
+        "index": 4,
+        "choices": [
+          190000,
+          196000,
+          200000,
+          210000
+        ],
+        "correctIndex": 2
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 1
+      },
+      {
+        "index": 1,
+        "correctIndex": 2
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_011",
+    "templateIndices": [
+      1,
+      4
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 1,
+        "choices": [
+          50000,
+          60000,
+          70000,
+          80000
+        ],
+        "correctIndex": 2
+      },
+      {
+        "index": 4,
+        "choices": [
+          80000,
+          90000,
+          100000,
+          110000
+        ],
+        "correctIndex": 2
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "correctIndex": 2
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_013",
+    "templateIndices": [
+      1,
+      2
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 1,
+        "choices": [
+          15000,
+          20000,
+          25000,
+          30000
+        ],
+        "correctIndex": 2
+      },
+      {
+        "index": 2,
+        "choices": [
+          185000,
+          195000,
+          205000,
+          215000
+        ],
+        "correctIndex": 1
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "correctIndex": 1
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_014",
+    "templateIndices": [
+      0,
+      4
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 0,
+        "choices": [
+          120000,
+          130000,
+          140000,
+          150000
+        ],
+        "correctIndex": 3
+      },
+      {
+        "index": 4,
+        "choices": [
+          120000,
+          130000,
+          140000,
+          150000
+        ],
+        "correctIndex": 0
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 3
+      },
+      {
+        "index": 1,
+        "correctIndex": 0
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_015",
+    "templateIndices": [
+      1,
+      2
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 2,
+        "choices": [
+          150000,
+          160000,
+          170000,
+          180000
+        ],
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "choices": [
+          170000,
+          180000,
+          190000,
+          200000
+        ],
+        "correctIndex": 2
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "correctIndex": 2
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_016",
+    "templateIndices": [
+      2,
+      4
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 2,
+        "choices": [
+          200000,
+          210000,
+          220000,
+          230000
+        ],
+        "correctIndex": 2
+      },
+      {
+        "index": 4,
+        "choices": [
+          205000,
+          215000,
+          225000,
+          235000
+        ],
+        "correctIndex": 2
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "correctIndex": 2
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_017",
+    "templateIndices": [
+      2,
+      5
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 2,
+        "choices": [
+          260000,
+          270000,
+          280000,
+          290000
+        ],
+        "correctIndex": 1
+      },
+      {
+        "index": 5,
+        "choices": [
+          225000,
+          235000,
+          245000,
+          255000
+        ],
+        "correctIndex": 0
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 1
+      },
+      {
+        "index": 1,
+        "correctIndex": 0
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_018",
+    "templateIndices": [
+      1,
+      2
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 2,
+        "choices": [
+          60000,
+          70000,
+          80000,
+          90000
+        ],
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "choices": [
+          100000,
+          110000,
+          120000,
+          130000
+        ],
+        "correctIndex": 1
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 2
+      },
+      {
+        "index": 1,
+        "correctIndex": 1
+      }
+    ]
+  },
+  {
+    "id": "Q2_L_020",
+    "templateIndices": [
+      1,
+      2
+    ],
+    "correctIndices": [
+      0,
+      1
+    ],
+    "templateBlanks": [
+      {
+        "index": 2,
+        "choices": [
+          50000,
+          60000,
+          70000,
+          80000
+        ],
+        "correctIndex": 3
+      },
+      {
+        "index": 1,
+        "choices": [
+          120000,
+          180000,
+          240000,
+          300000
+        ],
+        "correctIndex": 1
+      }
+    ],
+    "correctBlanks": [
+      {
+        "index": 0,
+        "correctIndex": 3
+      },
+      {
+        "index": 1,
+        "correctIndex": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,4448 @@
+[
+  {
+    "questionId": "Q_L_011",
+    "template": {
+      "template_type": "subsidiary_ledger",
+      "layout_variant": "customer",
+      "allowed_accounts": [
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "期首残高",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "customer_code": "C001",
+            "customer_name": "㈱田中商事",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "customer_code",
+          "label": "顧客コード",
+          "input": "code",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "customer_name",
+          "label": "顧客名",
+          "input": "dropdown",
+          "width": 160,
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 120,
+          "options_ref": "allowed_accounts"
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "running_total"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "顧客別確認",
+          "body": "顧客ごとの売掛金残高と取引明細を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "詳細記入",
+          "body": "日付、コード、名称、摘要を正確に記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高更新",
+          "body": "各取引後の残高が自動更新されることを確認します。"
+        }
+      ],
+      "max_rows": 15,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "code_format",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_012",
+    "template": {
+      "template_type": "subsidiary_ledger",
+      "layout_variant": "supplier",
+      "allowed_accounts": [
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "期首残高",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "customer_code": "S001",
+            "customer_name": "㈱ABC商事",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "supplier_code",
+          "label": "仕入先コード",
+          "input": "code",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "supplier_name",
+          "label": "仕入先名",
+          "input": "dropdown",
+          "width": 160,
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 120,
+          "options_ref": "allowed_accounts"
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "running_total"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "仕入先別確認",
+          "body": "仕入先ごとの買掛金残高と取引明細を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "詳細記入",
+          "body": "日付、コード、名称、摘要を正確に記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高更新",
+          "body": "各取引後の残高が自動更新されることを確認します。"
+        }
+      ],
+      "max_rows": 15,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "code_format",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_013",
+    "template": {
+      "template_type": "subsidiary_ledger",
+      "layout_variant": "customer",
+      "allowed_accounts": [
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "期首残高",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "customer_code": "C001",
+            "customer_name": "㈱田中商事",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "customer_code",
+          "label": "顧客コード",
+          "input": "code",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "customer_name",
+          "label": "顧客名",
+          "input": "dropdown",
+          "width": 160,
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 120,
+          "options_ref": "allowed_accounts"
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "running_total"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "顧客別確認",
+          "body": "顧客ごとの売掛金残高と取引明細を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "詳細記入",
+          "body": "日付、コード、名称、摘要を正確に記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高更新",
+          "body": "各取引後の残高が自動更新されることを確認します。"
+        }
+      ],
+      "max_rows": 15,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "code_format",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_014",
+    "template": {
+      "template_type": "subsidiary_ledger",
+      "layout_variant": "supplier",
+      "allowed_accounts": [
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "期首残高",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "customer_code": "S001",
+            "customer_name": "㈱ABC商事",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "supplier_code",
+          "label": "仕入先コード",
+          "input": "code",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "supplier_name",
+          "label": "仕入先名",
+          "input": "dropdown",
+          "width": 160,
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 120,
+          "options_ref": "allowed_accounts"
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "running_total"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "仕入先別確認",
+          "body": "仕入先ごとの買掛金残高と取引明細を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "詳細記入",
+          "body": "日付、コード、名称、摘要を正確に記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高更新",
+          "body": "各取引後の残高が自動更新されることを確認します。"
+        }
+      ],
+      "max_rows": 15,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "code_format",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_015",
+    "template": {
+      "template_type": "subsidiary_ledger",
+      "layout_variant": "customer",
+      "allowed_accounts": [
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "期首残高",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "customer_code": "C001",
+            "customer_name": "㈱田中商事",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "customer_code",
+          "label": "顧客コード",
+          "input": "code",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "customer_name",
+          "label": "顧客名",
+          "input": "dropdown",
+          "width": 160,
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 120,
+          "options_ref": "allowed_accounts"
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "running_total"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "顧客別確認",
+          "body": "顧客ごとの売掛金残高と取引明細を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "詳細記入",
+          "body": "日付、コード、名称、摘要を正確に記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高更新",
+          "body": "各取引後の残高が自動更新されることを確認します。"
+        }
+      ],
+      "max_rows": 15,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "code_format",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_016",
+    "template": {
+      "template_type": "subsidiary_ledger",
+      "layout_variant": "supplier",
+      "allowed_accounts": [
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "期首残高",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "customer_code": "S001",
+            "customer_name": "㈱ABC商事",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "supplier_code",
+          "label": "仕入先コード",
+          "input": "code",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "supplier_name",
+          "label": "仕入先名",
+          "input": "dropdown",
+          "width": 160,
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 120,
+          "options_ref": "allowed_accounts"
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "running_total"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "仕入先別確認",
+          "body": "仕入先ごとの買掛金残高と取引明細を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "詳細記入",
+          "body": "日付、コード、名称、摘要を正確に記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高更新",
+          "body": "各取引後の残高が自動更新されることを確認します。"
+        }
+      ],
+      "max_rows": 15,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "code_format",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_017",
+    "template": {
+      "template_type": "subsidiary_ledger",
+      "layout_variant": "customer",
+      "allowed_accounts": [
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "期首残高",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "customer_code": "C001",
+            "customer_name": "㈱田中商事",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "customer_code",
+          "label": "顧客コード",
+          "input": "code",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "customer_name",
+          "label": "顧客名",
+          "input": "dropdown",
+          "width": 160,
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 120,
+          "options_ref": "allowed_accounts"
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "running_total"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "顧客別確認",
+          "body": "顧客ごとの売掛金残高と取引明細を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "詳細記入",
+          "body": "日付、コード、名称、摘要を正確に記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高更新",
+          "body": "各取引後の残高が自動更新されることを確認します。"
+        }
+      ],
+      "max_rows": 15,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "code_format",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_018",
+    "template": {
+      "template_type": "subsidiary_ledger",
+      "layout_variant": "supplier",
+      "allowed_accounts": [
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "期首残高",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "customer_code": "S001",
+            "customer_name": "㈱ABC商事",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "supplier_code",
+          "label": "仕入先コード",
+          "input": "code",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "supplier_name",
+          "label": "仕入先名",
+          "input": "dropdown",
+          "width": 160,
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 120,
+          "options_ref": "allowed_accounts"
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "running_total"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "仕入先別確認",
+          "body": "仕入先ごとの買掛金残高と取引明細を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "詳細記入",
+          "body": "日付、コード、名称、摘要を正確に記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高更新",
+          "body": "各取引後の残高が自動更新されることを確認します。"
+        }
+      ],
+      "max_rows": 15,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "code_format",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_019",
+    "template": {
+      "template_type": "subsidiary_ledger",
+      "layout_variant": "customer",
+      "allowed_accounts": [
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "期首残高",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "customer_code": "C001",
+            "customer_name": "㈱田中商事",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "customer_code",
+          "label": "顧客コード",
+          "input": "code",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "customer_name",
+          "label": "顧客名",
+          "input": "dropdown",
+          "width": 160,
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 120,
+          "options_ref": "allowed_accounts"
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "running_total"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "顧客別確認",
+          "body": "顧客ごとの売掛金残高と取引明細を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "詳細記入",
+          "body": "日付、コード、名称、摘要を正確に記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高更新",
+          "body": "各取引後の残高が自動更新されることを確認します。"
+        }
+      ],
+      "max_rows": 15,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "code_format",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_020",
+    "template": {
+      "template_type": "subsidiary_ledger",
+      "layout_variant": "supplier",
+      "allowed_accounts": [
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "期首残高",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "customer_code": "S001",
+            "customer_name": "㈱ABC商事",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "supplier_code",
+          "label": "仕入先コード",
+          "input": "code",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "supplier_name",
+          "label": "仕入先名",
+          "input": "dropdown",
+          "width": 160,
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 120,
+          "options_ref": "allowed_accounts"
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "running_total"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "仕入先別確認",
+          "body": "仕入先ごとの買掛金残高と取引明細を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "詳細記入",
+          "body": "日付、コード、名称、摘要を正確に記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "残高更新",
+          "body": "各取引後の残高が自動更新されることを確認します。"
+        }
+      ],
+      "max_rows": 15,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "code_format",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_021",
+    "template": {
+      "template_type": "voucher",
+      "layout_variant": "journal",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "明細1",
+          "locked": false
+        },
+        {
+          "row_id": "r2",
+          "label": "明細2",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "明細3",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "明細4",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "voucher_number",
+          "label": "伝票番号",
+          "input": "number",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "date",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "text",
+          "width": 160
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "伝票種別確認",
+          "body": "仕訳伝票の記入方法を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "勘定科目選択",
+          "body": "適切な勘定科目を選択し、借方・貸方を正しく記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "合計確認",
+          "body": "借方合計と貸方合計が一致することを確認します。"
+        }
+      ],
+      "max_rows": 10,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_022",
+    "template": {
+      "template_type": "voucher",
+      "layout_variant": "receipt",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "明細1",
+          "locked": false
+        },
+        {
+          "row_id": "r2",
+          "label": "明細2",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "明細3",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "明細4",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "voucher_number",
+          "label": "伝票番号",
+          "input": "number",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "date",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "text",
+          "width": 160
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "伝票種別確認",
+          "body": "入金伝票の記入方法を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "勘定科目選択",
+          "body": "適切な勘定科目を選択し、借方・貸方を正しく記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "合計確認",
+          "body": "伝票の金額合計を確認します。"
+        }
+      ],
+      "max_rows": 10,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "voucher_total_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_023",
+    "template": {
+      "template_type": "voucher",
+      "layout_variant": "payment",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "明細1",
+          "locked": false
+        },
+        {
+          "row_id": "r2",
+          "label": "明細2",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "明細3",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "明細4",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "voucher_number",
+          "label": "伝票番号",
+          "input": "number",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "date",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "text",
+          "width": 160
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "伝票種別確認",
+          "body": "出金伝票の記入方法を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "勘定科目選択",
+          "body": "適切な勘定科目を選択し、借方・貸方を正しく記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "合計確認",
+          "body": "伝票の金額合計を確認します。"
+        }
+      ],
+      "max_rows": 10,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "voucher_total_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_024",
+    "template": {
+      "template_type": "voucher",
+      "layout_variant": "transfer",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "明細1",
+          "locked": false
+        },
+        {
+          "row_id": "r2",
+          "label": "明細2",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "明細3",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "明細4",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "voucher_number",
+          "label": "伝票番号",
+          "input": "number",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "date",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "text",
+          "width": 160
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "伝票種別確認",
+          "body": "振替伝票の記入方法を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "勘定科目選択",
+          "body": "適切な勘定科目を選択し、借方・貸方を正しく記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "合計確認",
+          "body": "伝票の金額合計を確認します。"
+        }
+      ],
+      "max_rows": 10,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "voucher_total_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_025",
+    "template": {
+      "template_type": "voucher",
+      "layout_variant": "journal",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "明細1",
+          "locked": false
+        },
+        {
+          "row_id": "r2",
+          "label": "明細2",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "明細3",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "明細4",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "voucher_number",
+          "label": "伝票番号",
+          "input": "number",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "date",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "text",
+          "width": 160
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "伝票種別確認",
+          "body": "仕訳伝票の記入方法を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "勘定科目選択",
+          "body": "適切な勘定科目を選択し、借方・貸方を正しく記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "合計確認",
+          "body": "借方合計と貸方合計が一致することを確認します。"
+        }
+      ],
+      "max_rows": 10,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_026",
+    "template": {
+      "template_type": "voucher",
+      "layout_variant": "receipt",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "明細1",
+          "locked": false
+        },
+        {
+          "row_id": "r2",
+          "label": "明細2",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "明細3",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "明細4",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "voucher_number",
+          "label": "伝票番号",
+          "input": "number",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "date",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "text",
+          "width": 160
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "伝票種別確認",
+          "body": "入金伝票の記入方法を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "勘定科目選択",
+          "body": "適切な勘定科目を選択し、借方・貸方を正しく記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "合計確認",
+          "body": "伝票の金額合計を確認します。"
+        }
+      ],
+      "max_rows": 10,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "voucher_total_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_027",
+    "template": {
+      "template_type": "voucher",
+      "layout_variant": "payment",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "明細1",
+          "locked": false
+        },
+        {
+          "row_id": "r2",
+          "label": "明細2",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "明細3",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "明細4",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "voucher_number",
+          "label": "伝票番号",
+          "input": "number",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "date",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "text",
+          "width": 160
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "伝票種別確認",
+          "body": "出金伝票の記入方法を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "勘定科目選択",
+          "body": "適切な勘定科目を選択し、借方・貸方を正しく記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "合計確認",
+          "body": "伝票の金額合計を確認します。"
+        }
+      ],
+      "max_rows": 10,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "voucher_total_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_028",
+    "template": {
+      "template_type": "voucher",
+      "layout_variant": "transfer",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "明細1",
+          "locked": false
+        },
+        {
+          "row_id": "r2",
+          "label": "明細2",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "明細3",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "明細4",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "voucher_number",
+          "label": "伝票番号",
+          "input": "number",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "date",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "text",
+          "width": 160
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "伝票種別確認",
+          "body": "振替伝票の記入方法を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "勘定科目選択",
+          "body": "適切な勘定科目を選択し、借方・貸方を正しく記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "合計確認",
+          "body": "伝票の金額合計を確認します。"
+        }
+      ],
+      "max_rows": 10,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "voucher_total_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_029",
+    "template": {
+      "template_type": "voucher",
+      "layout_variant": "journal",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "明細1",
+          "locked": false
+        },
+        {
+          "row_id": "r2",
+          "label": "明細2",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "明細3",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "明細4",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "voucher_number",
+          "label": "伝票番号",
+          "input": "number",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "date",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "text",
+          "width": 160
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "伝票種別確認",
+          "body": "仕訳伝票の記入方法を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "勘定科目選択",
+          "body": "適切な勘定科目を選択し、借方・貸方を正しく記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "合計確認",
+          "body": "借方合計と貸方合計が一致することを確認します。"
+        }
+      ],
+      "max_rows": 10,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_030",
+    "template": {
+      "template_type": "voucher",
+      "layout_variant": "receipt",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "明細1",
+          "locked": false
+        },
+        {
+          "row_id": "r2",
+          "label": "明細2",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "明細3",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "明細4",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "合計",
+          "locked": true
+        }
+      ],
+      "columns": [
+        {
+          "key": "voucher_number",
+          "label": "伝票番号",
+          "input": "number",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "date",
+          "width": 100,
+          "required": true
+        },
+        {
+          "key": "account_name",
+          "label": "勘定科目",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "text",
+          "width": 160
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "伝票種別確認",
+          "body": "入金伝票の記入方法を確認します。"
+        },
+        {
+          "stage": 2,
+          "title": "勘定科目選択",
+          "body": "適切な勘定科目を選択し、借方・貸方を正しく記入します。"
+        },
+        {
+          "stage": 3,
+          "title": "合計確認",
+          "body": "伝票の金額合計を確認します。"
+        }
+      ],
+      "max_rows": 10,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "voucher_total_check"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_031",
+    "template": {
+      "template_type": "general_ledger",
+      "layout_variant": "ledger_B",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "貯蔵品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "前月繰越",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "description": "前月繰越",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        },
+        {
+          "row_id": "r10",
+          "label": "取引9",
+          "locked": false
+        },
+        {
+          "row_id": "r11",
+          "label": "取引10",
+          "locked": false
+        },
+        {
+          "row_id": "r12",
+          "label": "取引11",
+          "locked": false
+        },
+        {
+          "row_id": "r13",
+          "label": "取引12",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "voucher_number",
+          "label": "伝票No",
+          "input": "number",
+          "width": 80
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "prev + debit - credit"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "取引整理",
+          "body": "月次取引を日付順に整理し、伝票番号と照合します。"
+        },
+        {
+          "stage": 2,
+          "title": "元帳転記",
+          "body": "各取引を適切な勘定科目で転記し、残高を更新します。"
+        },
+        {
+          "stage": 3,
+          "title": "月末残高確認",
+          "body": "月末残高を確認し、試算表との一致を検証します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check",
+        "voucher_reference"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_032",
+    "template": {
+      "template_type": "general_ledger",
+      "layout_variant": "ledger_C",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "貯蔵品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "前月繰越",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "description": "前月繰越",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        },
+        {
+          "row_id": "r10",
+          "label": "取引9",
+          "locked": false
+        },
+        {
+          "row_id": "r11",
+          "label": "取引10",
+          "locked": false
+        },
+        {
+          "row_id": "r12",
+          "label": "取引11",
+          "locked": false
+        },
+        {
+          "row_id": "r13",
+          "label": "取引12",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "voucher_number",
+          "label": "伝票No",
+          "input": "number",
+          "width": 80
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "prev + debit - credit"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "取引整理",
+          "body": "月次取引を日付順に整理し、伝票番号と照合します。"
+        },
+        {
+          "stage": 2,
+          "title": "元帳転記",
+          "body": "各取引を適切な勘定科目で転記し、残高を更新します。"
+        },
+        {
+          "stage": 3,
+          "title": "月末残高確認",
+          "body": "月末残高を確認し、試算表との一致を検証します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check",
+        "voucher_reference"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_033",
+    "template": {
+      "template_type": "general_ledger",
+      "layout_variant": "ledger_D",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "貯蔵品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "前月繰越",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "description": "前月繰越",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        },
+        {
+          "row_id": "r10",
+          "label": "取引9",
+          "locked": false
+        },
+        {
+          "row_id": "r11",
+          "label": "取引10",
+          "locked": false
+        },
+        {
+          "row_id": "r12",
+          "label": "取引11",
+          "locked": false
+        },
+        {
+          "row_id": "r13",
+          "label": "取引12",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "voucher_number",
+          "label": "伝票No",
+          "input": "number",
+          "width": 80
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "prev + debit - credit"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "取引整理",
+          "body": "月次取引を日付順に整理し、伝票番号と照合します。"
+        },
+        {
+          "stage": 2,
+          "title": "元帳転記",
+          "body": "各取引を適切な勘定科目で転記し、残高を更新します。"
+        },
+        {
+          "stage": 3,
+          "title": "月末残高確認",
+          "body": "月末残高を確認し、試算表との一致を検証します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check",
+        "voucher_reference"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_034",
+    "template": {
+      "template_type": "general_ledger",
+      "layout_variant": "ledger_B",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "貯蔵品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "前月繰越",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "description": "前月繰越",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        },
+        {
+          "row_id": "r10",
+          "label": "取引9",
+          "locked": false
+        },
+        {
+          "row_id": "r11",
+          "label": "取引10",
+          "locked": false
+        },
+        {
+          "row_id": "r12",
+          "label": "取引11",
+          "locked": false
+        },
+        {
+          "row_id": "r13",
+          "label": "取引12",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "voucher_number",
+          "label": "伝票No",
+          "input": "number",
+          "width": 80
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "prev + debit - credit"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "取引整理",
+          "body": "月次取引を日付順に整理し、伝票番号と照合します。"
+        },
+        {
+          "stage": 2,
+          "title": "元帳転記",
+          "body": "各取引を適切な勘定科目で転記し、残高を更新します。"
+        },
+        {
+          "stage": 3,
+          "title": "月末残高確認",
+          "body": "月末残高を確認し、試算表との一致を検証します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check",
+        "voucher_reference"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_035",
+    "template": {
+      "template_type": "general_ledger",
+      "layout_variant": "ledger_C",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "貯蔵品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "前月繰越",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "description": "前月繰越",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        },
+        {
+          "row_id": "r10",
+          "label": "取引9",
+          "locked": false
+        },
+        {
+          "row_id": "r11",
+          "label": "取引10",
+          "locked": false
+        },
+        {
+          "row_id": "r12",
+          "label": "取引11",
+          "locked": false
+        },
+        {
+          "row_id": "r13",
+          "label": "取引12",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "voucher_number",
+          "label": "伝票No",
+          "input": "number",
+          "width": 80
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "prev + debit - credit"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "取引整理",
+          "body": "月次取引を日付順に整理し、伝票番号と照合します。"
+        },
+        {
+          "stage": 2,
+          "title": "元帳転記",
+          "body": "各取引を適切な勘定科目で転記し、残高を更新します。"
+        },
+        {
+          "stage": 3,
+          "title": "月末残高確認",
+          "body": "月末残高を確認し、試算表との一致を検証します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check",
+        "voucher_reference"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_036",
+    "template": {
+      "template_type": "general_ledger",
+      "layout_variant": "ledger_D",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "貯蔵品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "前月繰越",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "description": "前月繰越",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        },
+        {
+          "row_id": "r10",
+          "label": "取引9",
+          "locked": false
+        },
+        {
+          "row_id": "r11",
+          "label": "取引10",
+          "locked": false
+        },
+        {
+          "row_id": "r12",
+          "label": "取引11",
+          "locked": false
+        },
+        {
+          "row_id": "r13",
+          "label": "取引12",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "voucher_number",
+          "label": "伝票No",
+          "input": "number",
+          "width": 80
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "prev + debit - credit"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "取引整理",
+          "body": "月次取引を日付順に整理し、伝票番号と照合します。"
+        },
+        {
+          "stage": 2,
+          "title": "元帳転記",
+          "body": "各取引を適切な勘定科目で転記し、残高を更新します。"
+        },
+        {
+          "stage": 3,
+          "title": "月末残高確認",
+          "body": "月末残高を確認し、試算表との一致を検証します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check",
+        "voucher_reference"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_037",
+    "template": {
+      "template_type": "general_ledger",
+      "layout_variant": "ledger_B",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "貯蔵品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "前月繰越",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "description": "前月繰越",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        },
+        {
+          "row_id": "r10",
+          "label": "取引9",
+          "locked": false
+        },
+        {
+          "row_id": "r11",
+          "label": "取引10",
+          "locked": false
+        },
+        {
+          "row_id": "r12",
+          "label": "取引11",
+          "locked": false
+        },
+        {
+          "row_id": "r13",
+          "label": "取引12",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "voucher_number",
+          "label": "伝票No",
+          "input": "number",
+          "width": 80
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "prev + debit - credit"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "取引整理",
+          "body": "月次取引を日付順に整理し、伝票番号と照合します。"
+        },
+        {
+          "stage": 2,
+          "title": "元帳転記",
+          "body": "各取引を適切な勘定科目で転記し、残高を更新します。"
+        },
+        {
+          "stage": 3,
+          "title": "月末残高確認",
+          "body": "月末残高を確認し、試算表との一致を検証します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check",
+        "voucher_reference"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_038",
+    "template": {
+      "template_type": "general_ledger",
+      "layout_variant": "ledger_C",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "貯蔵品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "前月繰越",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "description": "前月繰越",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        },
+        {
+          "row_id": "r10",
+          "label": "取引9",
+          "locked": false
+        },
+        {
+          "row_id": "r11",
+          "label": "取引10",
+          "locked": false
+        },
+        {
+          "row_id": "r12",
+          "label": "取引11",
+          "locked": false
+        },
+        {
+          "row_id": "r13",
+          "label": "取引12",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "voucher_number",
+          "label": "伝票No",
+          "input": "number",
+          "width": 80
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "prev + debit - credit"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "取引整理",
+          "body": "月次取引を日付順に整理し、伝票番号と照合します。"
+        },
+        {
+          "stage": 2,
+          "title": "元帳転記",
+          "body": "各取引を適切な勘定科目で転記し、残高を更新します。"
+        },
+        {
+          "stage": 3,
+          "title": "月末残高確認",
+          "body": "月末残高を確認し、試算表との一致を検証します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check",
+        "voucher_reference"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_039",
+    "template": {
+      "template_type": "general_ledger",
+      "layout_variant": "ledger_D",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "貯蔵品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "前月繰越",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "description": "前月繰越",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        },
+        {
+          "row_id": "r10",
+          "label": "取引9",
+          "locked": false
+        },
+        {
+          "row_id": "r11",
+          "label": "取引10",
+          "locked": false
+        },
+        {
+          "row_id": "r12",
+          "label": "取引11",
+          "locked": false
+        },
+        {
+          "row_id": "r13",
+          "label": "取引12",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "voucher_number",
+          "label": "伝票No",
+          "input": "number",
+          "width": 80
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "prev + debit - credit"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "取引整理",
+          "body": "月次取引を日付順に整理し、伝票番号と照合します。"
+        },
+        {
+          "stage": 2,
+          "title": "元帳転記",
+          "body": "各取引を適切な勘定科目で転記し、残高を更新します。"
+        },
+        {
+          "stage": 3,
+          "title": "月末残高確認",
+          "body": "月末残高を確認し、試算表との一致を検証します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check",
+        "voucher_reference"
+      ]
+    }
+  },
+  {
+    "questionId": "Q_L_040",
+    "template": {
+      "template_type": "general_ledger",
+      "layout_variant": "ledger_B",
+      "allowed_accounts": [
+        "現金",
+        "普通預金",
+        "当座預金",
+        "定期預金",
+        "現金過不足",
+        "売掛金",
+        "受取手形",
+        "貸付金",
+        "前払金",
+        "立替金",
+        "商品",
+        "製品",
+        "原材料",
+        "仕掛品",
+        "貯蔵品",
+        "建物",
+        "土地",
+        "車両",
+        "備品",
+        "ソフトウェア",
+        "買掛金",
+        "支払手形",
+        "借入金",
+        "未払金",
+        "預り金",
+        "売上",
+        "受取利息",
+        "受取配当金",
+        "雑収入",
+        "仕入",
+        "給料",
+        "家賃",
+        "水道光熱費",
+        "通信費",
+        "交通費"
+      ],
+      "rows": [
+        {
+          "row_id": "r1",
+          "label": "前月繰越",
+          "locked": true,
+          "default_values": {
+            "date": "4/1",
+            "description": "前月繰越",
+            "debit": 0,
+            "credit": 0
+          }
+        },
+        {
+          "row_id": "r2",
+          "label": "取引1",
+          "locked": false
+        },
+        {
+          "row_id": "r3",
+          "label": "取引2",
+          "locked": false
+        },
+        {
+          "row_id": "r4",
+          "label": "取引3",
+          "locked": false
+        },
+        {
+          "row_id": "r5",
+          "label": "取引4",
+          "locked": false
+        },
+        {
+          "row_id": "r6",
+          "label": "取引5",
+          "locked": false
+        },
+        {
+          "row_id": "r7",
+          "label": "取引6",
+          "locked": false
+        },
+        {
+          "row_id": "r8",
+          "label": "取引7",
+          "locked": false
+        },
+        {
+          "row_id": "r9",
+          "label": "取引8",
+          "locked": false
+        },
+        {
+          "row_id": "r10",
+          "label": "取引9",
+          "locked": false
+        },
+        {
+          "row_id": "r11",
+          "label": "取引10",
+          "locked": false
+        },
+        {
+          "row_id": "r12",
+          "label": "取引11",
+          "locked": false
+        },
+        {
+          "row_id": "r13",
+          "label": "取引12",
+          "locked": false
+        }
+      ],
+      "columns": [
+        {
+          "key": "date",
+          "label": "日付",
+          "input": "text",
+          "width": 80,
+          "required": true
+        },
+        {
+          "key": "voucher_number",
+          "label": "伝票No",
+          "input": "number",
+          "width": 80
+        },
+        {
+          "key": "description",
+          "label": "摘要",
+          "input": "dropdown",
+          "width": 160,
+          "options_ref": "allowed_accounts",
+          "required": true
+        },
+        {
+          "key": "debit",
+          "label": "借方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "credit",
+          "label": "貸方",
+          "input": "currency",
+          "width": 120
+        },
+        {
+          "key": "balance",
+          "label": "残高",
+          "input": "computed",
+          "width": 120,
+          "formula": "prev + debit - credit"
+        }
+      ],
+      "guidance": [
+        {
+          "stage": 1,
+          "title": "取引整理",
+          "body": "月次取引を日付順に整理し、伝票番号と照合します。"
+        },
+        {
+          "stage": 2,
+          "title": "元帳転記",
+          "body": "各取引を適切な勘定科目で転記し、残高を更新します。"
+        },
+        {
+          "stage": 3,
+          "title": "月末残高確認",
+          "body": "月末残高を確認し、試算表との一致を検証します。"
+        }
+      ],
+      "max_rows": 20,
+      "auto_calculate": true,
+      "validation_rules": [
+        "required_fields",
+        "balance_check",
+        "voucher_reference"
+      ]
+    }
+  }
+]

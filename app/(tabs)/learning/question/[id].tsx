@@ -122,14 +122,35 @@ export default function LearningQuestionScreen() {
           const questionRepository = new QuestionRepository();
           // カテゴリ別ではなく、全問題を取得して順次進行させる
           const allQuestions = await Promise.all([
-            questionRepository.findByCategory("journal"), // 仕訳問題（250問）
-            questionRepository.findByCategory("ledger"), // 帳簿問題（40問）
-            questionRepository.findByCategory("trial_balance"), // 試算表問題（12問）
+            questionRepository.findByCategory("journal", {
+              useProblemsStrategyOrder: true,
+            }), // 仕訳問題（250問）
+            questionRepository.findByCategory("ledger", {
+              useProblemsStrategyOrder: true,
+            }), // 帳簿問題（40問）
+            questionRepository.findByCategory("trial_balance", {
+              useProblemsStrategyOrder: true,
+            }), // 試算表問題（12問）
           ]);
           // 全問題を1つの配列にまとめる（problemsStrategy.mdに従い302問順次進行）
-          questions = allQuestions
-            .flat()
-            .sort((a, b) => a.id.localeCompare(b.id));
+          questions = allQuestions.flat().sort((a, b) => {
+            // section_number → question_order の順でソート
+            if (a.section_number !== b.section_number) {
+              return a.section_number - b.section_number;
+            }
+            return a.question_order - b.question_order;
+          });
+
+          // Q2問題のデバッグ用：ソート後の最初の15問を確認
+          const q2Questions = questions
+            .filter((q) => q.category_id === "ledger")
+            .slice(0, 15);
+          if (q2Questions.length > 0) {
+            console.log(
+              "[DEBUG-Q2-APP] ソート後のQ2順序:",
+              q2Questions.map((q) => `${q.id}(${q.question_order})`).join(", "),
+            );
+          }
         }
 
         if (questions.length === 0) {
@@ -152,6 +173,14 @@ export default function LearningQuestionScreen() {
 
     loadQuestions();
   }, [id, category, sessionType, sessionId, filteredQuestions, router]);
+
+  // 問題が切り替わった時にuserAnswersをリセット
+  useEffect(() => {
+    if (currentQuestion?.id) {
+      setUserAnswers({});
+      setQuestionStartTime(Date.now());
+    }
+  }, [currentQuestion?.id]);
 
   // 解答変更処理
   const handleAnswerChange = (fieldName: string, value: any) => {
@@ -351,7 +380,7 @@ export default function LearningQuestionScreen() {
         difficulty={currentQuestion.difficulty}
         answerFields={getAnswerFields(currentQuestion)}
         answers={userAnswers}
-        explanation={currentQuestion.explanation}
+        explanation={submitResult?.explanation || currentQuestion.explanation}
         showExplanation={showExplanation}
         isCorrect={submitResult?.isCorrect}
         correctAnswer={submitResult?.correctAnswer}
@@ -372,6 +401,7 @@ export default function LearningQuestionScreen() {
         showNextButton={canGoNext}
         questionId={currentQuestion.id}
         onAddToReview={handleAddToReview}
+        answerTemplate={getAnswerTemplate(currentQuestion)}
       />
     </ScrollView>
   );

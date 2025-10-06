@@ -158,19 +158,18 @@ export default function CategoryDetailScreen() {
       { type: "adjustment", name: "決算整理", icon: "📊", count: 40 },
     ],
     ledger: [
-      { type: "account_entry", name: "勘定記入問題", icon: "✏️", count: 10 },
+      { type: "account_entry", name: "勘定記入問題", icon: "✏️", count: 20 },
       {
         type: "subsidiary_books",
         name: "補助簿記入問題",
         icon: "📓",
-        count: 10,
+        count: 20,
       },
-      { type: "voucher_entry", name: "伝票記入問題", icon: "📄", count: 10 },
       {
         type: "theory_selection",
         name: "理論・選択問題",
         icon: "📖",
-        count: 10,
+        count: 30,
       },
     ],
     trial_balance: [
@@ -182,6 +181,12 @@ export default function CategoryDetailScreen() {
       },
       { type: "worksheet", name: "精算表作成", icon: "📋", count: 4 },
       { type: "trial_balance", name: "試算表作成", icon: "📝", count: 4 },
+      {
+        type: "fill_in_trial_balance",
+        name: "試算表穴埋め",
+        icon: "✏️",
+        count: 20,
+      },
     ],
     financial_statement: [
       {
@@ -465,31 +470,31 @@ export default function CategoryDetailScreen() {
         const subcategory = tags.subcategory;
 
         const subcategoryToType: Record<string, string> = {
-          general_ledger: "account_entry", // Q_L_001-010: 勘定記入問題
-          subsidiary_ledger: "subsidiary_books", // Q_L_011-020: 補助簿記入問題
-          voucher: "voucher_entry", // Q_L_021-030: 伝票記入問題
-          theory: "theory_selection", // Q_L_031-040: 理論・選択問題
+          fill_in_ledger: "account_entry", // 勘定記入問題（20問）
+          auxiliary_book: "subsidiary_books", // 補助簿記入問題（16問→20問）
+          vocabulary: "theory_selection", // 理論・選択問題（27問→30問）
         };
 
         const questionType = subcategoryToType[subcategory];
         return questionType ? [questionType] : ["other"];
       } else if (categoryId === "trial_balance") {
-        // 第3問の分類（3パターン×4難易度=12問）
-        const questionId = question.id;
+        // 第3問の分類: answer_template_jsonのtypeフィールドを使用
+        try {
+          const template = JSON.parse(question.answer_template_json || "{}");
+          const answerType = template.type;
 
-        // パターン1: 財務諸表作成 (4問)
-        if (["Q_T_001", "Q_T_002", "Q_T_003", "Q_T_004"].includes(questionId)) {
-          return ["financial_statements"];
-        }
-
-        // パターン2: 精算表作成 (4問)
-        if (["Q_T_005", "Q_T_006", "Q_T_007", "Q_T_008"].includes(questionId)) {
-          return ["worksheet"];
-        }
-
-        // パターン3: 試算表作成 (4問)
-        if (["Q_T_009", "Q_T_010", "Q_T_011", "Q_T_012"].includes(questionId)) {
-          return ["trial_balance"];
+          // typeフィールドを直接使用して分類
+          if (answerType === "fill_in_trial_balance") {
+            return ["fill_in_trial_balance"];
+          } else if (answerType === "trial_balance") {
+            return ["trial_balance"];
+          } else if (answerType === "fill_in_comprehensive_trial_balance") {
+            return ["worksheet"]; // 精算表
+          } else if (answerType === "fill_in_financial_statement") {
+            return ["financial_statements"]; // 財務諸表
+          }
+        } catch {
+          // JSONパースエラー時はフォールバック
         }
 
         // フォールバック: デフォルトは試算表

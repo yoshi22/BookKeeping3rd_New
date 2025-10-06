@@ -25,6 +25,12 @@ import TrialBalanceForm, {
   TrialBalanceEntry,
 } from "./mock-exam/TrialBalanceForm";
 import FinancialStatementForm from "./FinancialStatementForm";
+import VocabularyForm from "./VocabularyForm";
+import FillInLedgerForm from "./FillInLedgerForm";
+import AuxiliaryBookForm from "./AuxiliaryBookForm";
+import FillInTrialBalanceForm from "./cbt/FillInTrialBalanceForm";
+import FillInComprehensiveTrialBalanceForm from "./cbt/FillInComprehensiveTrialBalanceForm";
+import FillInFinancialStatementForm from "./cbt/FillInFinancialStatementForm";
 import QuestionText from "./QuestionText";
 import { UnifiedExplanation } from "./unified/UnifiedExplanation";
 import {
@@ -282,6 +288,291 @@ function FinancialStatementFormWrapper({
   );
 }
 
+// Wrapper for FillInTrialBalanceForm
+interface FillInTrialBalanceFormWrapperProps {
+  questionId: string;
+  question: {
+    id: string;
+    question_text: string;
+    answer_template_json: string;
+    correct_answer_json: string;
+  };
+  sessionType?: SessionType;
+  sessionId?: string;
+  startTime?: number;
+  onSubmitAnswer?: (response: SubmitAnswerResponse) => void;
+}
+
+function FillInTrialBalanceFormWrapper({
+  questionId,
+  question,
+  sessionType = "learning",
+  sessionId,
+  startTime = Date.now(),
+  onSubmitAnswer,
+}: FillInTrialBalanceFormWrapperProps) {
+  const [selectedAnswers, setSelectedAnswers] = useState<
+    Record<number, number>
+  >({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleAnswerChange = (answers: Record<number, number>) => {
+    setSelectedAnswers(answers);
+  };
+
+  const handleSubmit = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    try {
+      const submitRequest: SubmitAnswerRequest = {
+        questionId,
+        answerData: { blanks: selectedAnswers },
+        sessionType,
+        sessionId,
+        startTime,
+      };
+
+      const response = await answerService.submitAnswer(submitRequest);
+
+      if (onSubmitAnswer) {
+        onSubmitAnswer(response);
+      } else {
+        Alert.alert(
+          response.isCorrect ? "正解！" : "不正解",
+          response.isCorrect
+            ? "正解です。よくできました！"
+            : "不正解です。解説を確認して復習しましょう。",
+        );
+      }
+    } catch (error) {
+      logger.error(
+        "[FillInTrialBalanceFormWrapper] 解答送信エラー:",
+        error as Error,
+      );
+      Alert.alert("エラー", "解答の送信に失敗しました");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <View style={{ flex: 1 }}>
+      <FillInTrialBalanceForm
+        question={question}
+        initialAnswer={selectedAnswers}
+        onAnswerChange={handleAnswerChange}
+        disabled={isSubmitting}
+      />
+      <TouchableOpacity
+        style={{
+          backgroundColor: "#007AFF",
+          padding: 16,
+          margin: 16,
+          borderRadius: 8,
+          alignItems: "center",
+        }}
+        onPress={handleSubmit}
+        disabled={isSubmitting}
+      >
+        <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "bold" }}>
+          {isSubmitting ? "送信中..." : "解答を送信"}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+// Wrapper for FillInComprehensiveTrialBalanceForm
+interface FillInComprehensiveTrialBalanceFormWrapperProps {
+  questionId: string;
+  question: {
+    id: string;
+    question_text: string;
+    answer_template_json: string;
+    correct_answer_json: string;
+  };
+  sessionType?: SessionType;
+  sessionId?: string;
+  startTime?: number;
+  onSubmitAnswer?: (response: SubmitAnswerResponse) => void;
+}
+
+function FillInComprehensiveTrialBalanceFormWrapper({
+  questionId,
+  question,
+  sessionType = "learning",
+  sessionId,
+  startTime = Date.now(),
+  onSubmitAnswer,
+}: FillInComprehensiveTrialBalanceFormWrapperProps) {
+  const [selectedAnswers, setSelectedAnswers] = useState<
+    Record<number, number>
+  >({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleAnswerChange = (answers: Record<number, number>) => {
+    setSelectedAnswers(answers);
+  };
+
+  const handleSubmit = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    try {
+      const submitRequest: SubmitAnswerRequest = {
+        questionId,
+        answerData: { blanks: selectedAnswers },
+        sessionType,
+        sessionId,
+        startTime,
+      };
+
+      const response = await answerService.submitAnswer(submitRequest);
+
+      if (onSubmitAnswer) {
+        onSubmitAnswer(response);
+      } else {
+        Alert.alert(
+          response.isCorrect ? "正解！" : "不正解",
+          response.isCorrect
+            ? "正解です。よくできました！"
+            : "不正解です。解説を確認して復習しましょう。",
+        );
+      }
+    } catch (error) {
+      logger.error(
+        "[FillInComprehensiveTrialBalanceFormWrapper] 解答送信エラー:",
+        error as Error,
+      );
+      Alert.alert("エラー", "解答の送信に失敗しました");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <View style={{ flex: 1 }}>
+      <FillInComprehensiveTrialBalanceForm
+        question={question}
+        initialAnswer={selectedAnswers}
+        onAnswerChange={handleAnswerChange}
+        disabled={isSubmitting}
+      />
+      <TouchableOpacity
+        style={{
+          backgroundColor: "#007AFF",
+          padding: 16,
+          margin: 16,
+          borderRadius: 8,
+          alignItems: "center",
+        }}
+        onPress={handleSubmit}
+        disabled={isSubmitting}
+      >
+        <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "bold" }}>
+          {isSubmitting ? "送信中..." : "解答を送信"}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+// Wrapper for FillInFinancialStatementForm
+interface FillInFinancialStatementFormWrapperProps {
+  questionId: string;
+  question: {
+    id: string;
+    question_text: string;
+    answer_template_json: string;
+    correct_answer_json: string;
+  };
+  sessionType?: SessionType;
+  sessionId?: string;
+  startTime?: number;
+  onSubmitAnswer?: (response: SubmitAnswerResponse) => void;
+}
+
+function FillInFinancialStatementFormWrapper({
+  questionId,
+  question,
+  sessionType = "learning",
+  sessionId,
+  startTime = Date.now(),
+  onSubmitAnswer,
+}: FillInFinancialStatementFormWrapperProps) {
+  const [selectedAnswers, setSelectedAnswers] = useState<
+    Record<number, number>
+  >({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleAnswerChange = (answers: Record<number, number>) => {
+    setSelectedAnswers(answers);
+  };
+
+  const handleSubmit = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    try {
+      const submitRequest: SubmitAnswerRequest = {
+        questionId,
+        answerData: { blanks: selectedAnswers },
+        sessionType,
+        sessionId,
+        startTime,
+      };
+
+      const response = await answerService.submitAnswer(submitRequest);
+
+      if (onSubmitAnswer) {
+        onSubmitAnswer(response);
+      } else {
+        Alert.alert(
+          response.isCorrect ? "正解！" : "不正解",
+          response.isCorrect
+            ? "正解です。よくできました！"
+            : "不正解です。解説を確認して復習しましょう。",
+        );
+      }
+    } catch (error) {
+      logger.error(
+        "[FillInFinancialStatementFormWrapper] 解答送信エラー:",
+        error as Error,
+      );
+      Alert.alert("エラー", "解答の送信に失敗しました");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <View style={{ flex: 1 }}>
+      <FillInFinancialStatementForm
+        question={question}
+        initialAnswer={selectedAnswers}
+        onAnswerChange={handleAnswerChange}
+        disabled={isSubmitting}
+      />
+      <TouchableOpacity
+        style={{
+          backgroundColor: "#007AFF",
+          padding: 16,
+          margin: 16,
+          borderRadius: 8,
+          alignItems: "center",
+        }}
+        onPress={handleSubmit}
+        disabled={isSubmitting}
+      >
+        <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "bold" }}>
+          {isSubmitting ? "送信中..." : "解答を送信"}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 export default function QuestionDisplay({
   questionId,
   categoryName,
@@ -363,6 +654,15 @@ export default function QuestionDisplay({
     answerTemplate?.questions && // Has questions array
     Array.isArray(answerTemplate.questions);
 
+  // Determine if should use VocabularyForm for vocabulary questions
+  const shouldUseVocabularyForm = answerTemplate?.type === "vocabulary";
+
+  // Determine if should use FillInLedgerForm for fill-in ledger questions (Q2_L_)
+  const shouldUseFillInLedgerForm = answerTemplate?.type === "fill_in_ledger";
+
+  // Determine if should use AuxiliaryBookForm for auxiliary book questions (Q2_B_)
+  const shouldUseAuxiliaryBookForm = answerTemplate?.type === "auxiliary_book";
+
   // Determine if should use VoucherEntryForm for voucher entry questions
   const shouldUseVoucherEntryForm = answerTemplate?.type === "voucher_entry";
 
@@ -376,6 +676,18 @@ export default function QuestionDisplay({
     (questionId.startsWith("Q_T_") &&
       answerTemplate?.type !== "financial_statement");
 
+  // Determine if should use fill-in trial balance form (Q3_TB problems)
+  const shouldUseFillInTrialBalanceForm =
+    answerTemplate?.type === "fill_in_trial_balance";
+
+  // Determine if should use fill-in comprehensive trial balance form (Q3_CTB problems)
+  const shouldUseFillInComprehensiveTrialBalanceForm =
+    answerTemplate?.type === "fill_in_comprehensive_trial_balance";
+
+  // Determine if should use fill-in financial statement form (Q3_FS problems)
+  const shouldUseFillInFinancialStatementForm =
+    answerTemplate?.type === "fill_in_financial_statement";
+
   // Determine if should use enhanced journal entry form for journal entries
   // UnifiedJournalEntryForm now supports horizontal layout and NumericPad (restored 2025-08-22)
   const shouldUseJournalEntryForm = answerTemplate?.type === "journal_entry";
@@ -388,10 +700,16 @@ export default function QuestionDisplay({
       allowMultipleEntries: answerTemplate?.allowMultipleEntries,
       shouldUseJournalEntryForm,
       shouldUseTrialBalanceForm,
+      shouldUseFillInTrialBalanceForm,
+      shouldUseFillInComprehensiveTrialBalanceForm,
+      shouldUseFillInFinancialStatementForm,
       shouldUseSubsidiaryBookForm,
       shouldUseLedgerEntryFormWithDropdown,
       shouldUseLedgerEntryForm,
       shouldUseChoiceForm,
+      shouldUseVocabularyForm,
+      shouldUseFillInLedgerForm,
+      shouldUseAuxiliaryBookForm,
       answerFieldsLength: answerFields.length,
       hasOnAnswerChange: !!onAnswerChange,
     });
@@ -435,13 +753,17 @@ export default function QuestionDisplay({
         <Text style={styles.difficulty}>難易度: {difficulty}</Text>
       </View>
 
-      {/* 問題文 */}
-      <QuestionText
-        key={`question-text-${questionId}`}
-        questionText={questionText}
-        questionId={questionId}
-        difficulty={difficulty}
-      />
+      {/* 問題文 - VocabularyForm, FillInLedgerForm, AuxiliaryBookFormは自己完結型なので除外 */}
+      {!shouldUseVocabularyForm &&
+        !shouldUseFillInLedgerForm &&
+        !shouldUseAuxiliaryBookForm && (
+          <QuestionText
+            key={`question-text-${questionId}`}
+            questionText={questionText}
+            questionId={questionId}
+            difficulty={difficulty}
+          />
+        )}
 
       {/* 解答エリア */}
       {shouldUseChoiceForm ? (
@@ -460,6 +782,36 @@ export default function QuestionDisplay({
           questionId={questionId}
           questions={answerTemplate?.questions || []}
           options={answerTemplate?.options || []}
+          sessionType={sessionType}
+          sessionId={sessionId}
+          startTime={startTime}
+          onSubmitAnswer={onSubmitAnswer}
+          showSubmitButton={true}
+        />
+      ) : shouldUseVocabularyForm ? (
+        <VocabularyForm
+          questionId={questionId}
+          answerTemplate={answerTemplate as any}
+          sessionType={sessionType}
+          sessionId={sessionId}
+          startTime={startTime}
+          onSubmitAnswer={onSubmitAnswer}
+          showSubmitButton={true}
+        />
+      ) : shouldUseFillInLedgerForm ? (
+        <FillInLedgerForm
+          questionId={questionId}
+          answerTemplate={answerTemplate as any}
+          sessionType={sessionType}
+          sessionId={sessionId}
+          startTime={startTime}
+          onSubmitAnswer={onSubmitAnswer}
+          showSubmitButton={true}
+        />
+      ) : shouldUseAuxiliaryBookForm ? (
+        <AuxiliaryBookForm
+          questionId={questionId}
+          answerTemplate={answerTemplate as any}
           sessionType={sessionType}
           sessionId={sessionId}
           startTime={startTime}
@@ -507,6 +859,60 @@ export default function QuestionDisplay({
           onSubmitAnswer={onSubmitAnswer}
           explanation={explanation}
           correctAnswer={correctAnswer}
+        />
+      ) : shouldUseFillInTrialBalanceForm ? (
+        <FillInTrialBalanceFormWrapper
+          questionId={questionId}
+          question={{
+            id: questionId,
+            question_text: questionText,
+            answer_template_json: answerTemplate
+              ? JSON.stringify(answerTemplate)
+              : "{}",
+            correct_answer_json: correctAnswer
+              ? JSON.stringify(correctAnswer)
+              : "{}",
+          }}
+          sessionType={sessionType}
+          sessionId={sessionId}
+          startTime={startTime}
+          onSubmitAnswer={onSubmitAnswer}
+        />
+      ) : shouldUseFillInComprehensiveTrialBalanceForm ? (
+        <FillInComprehensiveTrialBalanceFormWrapper
+          questionId={questionId}
+          question={{
+            id: questionId,
+            question_text: questionText,
+            answer_template_json: answerTemplate
+              ? JSON.stringify(answerTemplate)
+              : "{}",
+            correct_answer_json: correctAnswer
+              ? JSON.stringify(correctAnswer)
+              : "{}",
+          }}
+          sessionType={sessionType}
+          sessionId={sessionId}
+          startTime={startTime}
+          onSubmitAnswer={onSubmitAnswer}
+        />
+      ) : shouldUseFillInFinancialStatementForm ? (
+        <FillInFinancialStatementFormWrapper
+          questionId={questionId}
+          question={{
+            id: questionId,
+            question_text: questionText,
+            answer_template_json: answerTemplate
+              ? JSON.stringify(answerTemplate)
+              : "{}",
+            correct_answer_json: correctAnswer
+              ? JSON.stringify(correctAnswer)
+              : "{}",
+          }}
+          sessionType={sessionType}
+          sessionId={sessionId}
+          startTime={startTime}
+          onSubmitAnswer={onSubmitAnswer}
         />
       ) : shouldUseTrialBalanceForm ? (
         <TrialBalanceFormWrapper
@@ -590,22 +996,46 @@ export default function QuestionDisplay({
       )}
 
       {/* 解説パネル */}
-      <UnifiedExplanation
-        explanation={explanation || ""}
-        mode="panel"
-        isVisible={showExplanation}
-        isCorrect={isCorrect}
-        userAnswer={answers}
-        correctAnswer={correctAnswer}
-        showAnswerComparison={
-          showExplanation && Object.keys(answers).length > 0
-        }
-        sessionMode={sessionType}
-        expandable={true}
-        defaultExpanded={false}
-        questionId={questionId}
-        onExpand={handleExplanationExpand}
-      />
+      {(() => {
+        const determinedQuestionType =
+          answerTemplate?.type === "fill_in_ledger" ||
+          answerTemplate?.type === "vocabulary"
+            ? "ledger"
+            : answerTemplate?.type === "fill_in_trial_balance" ||
+                answerTemplate?.type ===
+                  "fill_in_comprehensive_trial_balance" ||
+                answerTemplate?.type === "fill_in_financial_statement"
+              ? "trial_balance"
+              : "journal";
+
+        console.log("[QuestionDisplay] UnifiedExplanation Props:", {
+          questionId,
+          answerTemplateType: answerTemplate?.type,
+          determinedQuestionType,
+          hasAnswerTemplate: !!answerTemplate,
+        });
+
+        return (
+          <UnifiedExplanation
+            explanation={explanation || ""}
+            mode="panel"
+            isVisible={showExplanation}
+            isCorrect={isCorrect}
+            userAnswer={answers}
+            correctAnswer={correctAnswer}
+            showAnswerComparison={
+              showExplanation && Object.keys(answers).length > 0
+            }
+            questionType={determinedQuestionType}
+            questionTemplate={answerTemplate}
+            sessionMode={sessionType}
+            expandable={true}
+            defaultExpanded={false}
+            questionId={questionId}
+            onExpand={handleExplanationExpand}
+          />
+        );
+      })()}
     </View>
   );
 }

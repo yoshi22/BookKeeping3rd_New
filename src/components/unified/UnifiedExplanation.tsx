@@ -24,7 +24,10 @@ import {
   type Theme,
 } from "../../context/ThemeContext";
 import CorrectAnswerExample from "../CorrectAnswerExample";
-import { parseExplanation, hasSteppedContent } from "../../utils/explanation-parser";
+import {
+  parseExplanation,
+  hasSteppedContent,
+} from "../../utils/explanation-parser";
 
 export type ExplanationMode = "panel" | "modal";
 export type SessionMode = "learning" | "review" | "mock_exam";
@@ -45,7 +48,8 @@ export interface UnifiedExplanationProps {
   userAnswer?: any;
   isCorrect?: boolean;
   showAnswerComparison?: boolean;
-  questionType?: "journal" | "ledger" | "trial_balance";
+  questionType?: "journal" | "ledger" | "trial_balance" | "auxiliary_book";
+  questionTemplate?: any; // fill_in_ledger形式の正解表示に必要
 
   // Session context
   sessionMode?: SessionMode;
@@ -72,6 +76,7 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
   isCorrect,
   showAnswerComparison = false,
   questionType,
+  questionTemplate,
   sessionMode = "learning",
   expandable = false,
   defaultExpanded = true,
@@ -119,6 +124,12 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
   const renderAnswerComparison = () => {
     if (!showAnswerComparison || !correctAnswer) return null;
 
+    console.log("[UnifiedExplanation] renderAnswerComparison", {
+      questionType,
+      hasQuestionTemplate: !!questionTemplate,
+      questionTemplateType: questionTemplate?.type,
+    });
+
     return (
       <View style={styles.comparisonSection}>
         <Text style={styles.comparisonTitle}>解答比較</Text>
@@ -133,6 +144,7 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
           <CorrectAnswerExample
             correctAnswer={correctAnswer}
             questionType={questionType || "journal"}
+            questionTemplate={questionTemplate}
             show={true}
           />
         </View>
@@ -146,6 +158,7 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
             <CorrectAnswerExample
               correctAnswer={userAnswer}
               questionType={questionType || "journal"}
+              questionTemplate={questionTemplate}
               show={true}
             />
           </View>
