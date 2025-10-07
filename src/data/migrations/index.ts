@@ -139,10 +139,10 @@ async function performSampleDataLoad(): Promise<void> {
       allSampleQuestions.length,
     );
 
-    const SAMPLE_DATA_VERSION = "2025-10-06-q3-fs-002-fix";
+    const SAMPLE_DATA_VERSION = "2025-10-07-q2l-hints-removal";
 
     // 環境変数による強制更新フラグ（開発時のみ）
-    const forceUpdate = false; // ✅ Q3_FS_002修正完了、ユーザーデータ保護のためfalseに戻しました
+    const forceUpdate = false; // ✅ Q2_L_001-020のヒント削除完了（2025-10-07）
 
     // 現在のデータバージョンを取得
     let currentVersion = null;
@@ -210,10 +210,25 @@ async function performSampleDataLoad(): Promise<void> {
             await databaseService.executeSql("DELETE FROM review_items");
           }
 
-          console.log("[DEBUG] mock_exam_results 削除中...");
-          await databaseService.executeSql("DELETE FROM mock_exam_results");
-          console.log("[DEBUG] mock_exam_questions 削除中...");
-          await databaseService.executeSql("DELETE FROM mock_exam_questions");
+          // mock_exam関連テーブルは削除（migration 005で削除済みの場合はスキップ）
+          try {
+            console.log("[DEBUG] mock_exam_results 削除試行...");
+            await databaseService.executeSql("DELETE FROM mock_exam_results");
+          } catch (e) {
+            console.log(
+              "[DEBUG] mock_exam_results テーブルが存在しません（スキップ）",
+            );
+          }
+
+          try {
+            console.log("[DEBUG] mock_exam_questions 削除試行...");
+            await databaseService.executeSql("DELETE FROM mock_exam_questions");
+          } catch (e) {
+            console.log(
+              "[DEBUG] mock_exam_questions テーブルが存在しません（スキップ）",
+            );
+          }
+
           console.log("[DEBUG] questions 削除中...");
           await databaseService.executeSql("DELETE FROM questions");
           console.log("[DEBUG] questions 削除完了");
@@ -355,7 +370,8 @@ async function performSampleDataLoad(): Promise<void> {
       `[Database] 全問題データ読み込み完了: ${allQuestions.length}件の問題を追加`,
     );
 
-    // サンプル模試データの読み込み
+    // サンプル模試データの読み込み（一時的にスキップ - Q3問題順序確認のため）
+    /*
     try {
       const { generateMockExamData } = await import("../sample-mock-exams");
       const mockExamData = generateMockExamData();
@@ -414,6 +430,7 @@ async function performSampleDataLoad(): Promise<void> {
       });
       // 模試データの失敗は致命的でない
     }
+    */
 
     // バージョン情報を保存
     try {

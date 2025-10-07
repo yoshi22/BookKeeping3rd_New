@@ -4221,7 +4221,7 @@ export const masterQuestions: Question[] = [
     question_order: 31,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_001","type":"fill_in_ledger","accountName":"現金","problemStatement":"以下の取引が行われました。仕入と売上の金額を計算してください。\\n\\n• 4/1: 前月繰越 50,000円\\n• 4/3: 商品を現金で売り上げた\\n• 4/5: 商品を現金25,000円で仕入れた\\n• 4/10: 給料15,000円を現金で支払った\\n• 4/30: 次月繰越 60,000円\\n\\nなお、借方合計と貸方合計は必ず一致します。","entries":[{"date":"4/1","description":"前月繰越","amount":50000,"side":"debit"},{"date":"4/3","description":"売上","amount":null,"side":"debit"},{"date":"4/5","description":"仕入","amount":null,"side":"credit"},{"date":"4/10","description":"給料","amount":15000,"side":"credit"},{"date":"4/30","description":"次月繰越","amount":60000,"side":"credit"}],"blanks":[{"index":2,"choices":[20000,25000,30000,35000],"correctIndex":1},{"index":1,"choices":[40000,45000,50000,55000],"correctIndex":2}],"hints":["T勘定の借方（左側）は現金の増加、貸方（右側）は現金の減少を表します","借方合計と貸方合計は必ず一致します","4/5の仕入は25,000円です"]}',
+      '{"id":"Q2_L_001","type":"fill_in_ledger","accountName":"現金","problemStatement":"以下の取引が行われました。仕入と売上の金額を計算してください。\\n\\n• 4/1: 前月繰越 50,000円\\n• 4/3: 商品を現金で売り上げた\\n• 4/5: 商品を現金25,000円で仕入れた\\n• 4/10: 給料15,000円を現金で支払った\\n• 4/30: 次月繰越 60,000円\\n\\nなお、借方合計と貸方合計は必ず一致します。","entries":[{"date":"4/1","description":"前月繰越","amount":50000,"side":"debit"},{"date":"4/3","description":"売上","amount":null,"side":"debit"},{"date":"4/5","description":"仕入","amount":null,"side":"credit"},{"date":"4/10","description":"給料","amount":15000,"side":"credit"},{"date":"4/30","description":"次月繰越","amount":60000,"side":"credit"}],"blanks":[{"index":2,"choices":[20000,25000,30000,35000],"correctIndex":1},{"index":1,"choices":[40000,45000,50000,55000],"correctIndex":2}]}',
     correct_answer_json:
       '{"blanks":[{"index":2,"correctIndex":1},{"index":1,"correctIndex":2}]}',
     explanation:
@@ -4258,7 +4258,7 @@ export const masterQuestions: Question[] = [
     question_order: 32,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_002","type":"fill_in_ledger","accountName":"現金","entries":[{"date":"5/1","description":"前月繰越","amount":80000,"side":"debit"},{"date":"5/8","description":"売上","amount":null,"side":"debit"},{"date":"5/20","description":"現金過不足","amount":2000,"side":"debit"},{"date":"5/10","description":"仕入","amount":10000,"side":"credit"},{"date":"5/15","description":"給料","amount":20000,"side":"credit"},{"date":"5/31","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":1,"choices":[35000,40000,45000,50000],"correctIndex":1},{"index":5,"choices":[85000,87000,92000,95000],"correctIndex":2}],"hints":["T勘定の借方（左側）は現金の増加、貸方（右側）は現金の減少を表します","借方合計と貸方合計は必ず一致します","5/8の売上は40,000円です","現金過不足は実際有高が帳簿残高より多い場合は借方に記録します"]}',
+      '{"id":"Q2_L_002","type":"fill_in_ledger","accountName":"現金","problemStatement":"以下の現金勘定の取引について、空欄に入る金額を計算してください。\\n\\n• 5/1: 前月繰越 80,000円\\n• 5/8: 商品を現金で売り上げた\\n• 5/10: 商品を現金10,000円で仕入れた\\n• 5/15: 給料20,000円を現金で支払った\\n• 5/20: 現金過不足が2,000円発生した\\n• 5/31: 次月繰越を計算してください\\n\\nなお、借方合計と貸方合計は必ず一致します。","entries":[{"date":"5/1","description":"前月繰越","amount":80000,"side":"debit"},{"date":"5/8","description":"売上","amount":null,"side":"debit"},{"date":"5/20","description":"現金過不足","amount":2000,"side":"debit"},{"date":"5/10","description":"仕入","amount":10000,"side":"credit"},{"date":"5/15","description":"給料","amount":20000,"side":"credit"},{"date":"5/31","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":1,"choices":[35000,40000,45000,50000],"correctIndex":1},{"index":5,"choices":[85000,87000,92000,95000],"correctIndex":2}]}',
     correct_answer_json:
       '{"blanks":[{"index":1,"correctIndex":1},{"index":5,"correctIndex":2}]}',
     explanation: "現金過不足は実際有高と帳簿残高の差額を調整する勘定です。",
@@ -4294,7 +4294,7 @@ export const masterQuestions: Question[] = [
     question_order: 33,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_003","type":"fill_in_ledger","accountName":"現金","entries":[{"date":"6/1","description":"前月繰越","amount":100000,"side":"debit"},{"date":"6/10","description":"売掛金回収","amount":null,"side":"debit"},{"date":"6/5","description":"買掛金支払","amount":60000,"side":"credit"},{"date":"6/15","description":"仕入","amount":40000,"side":"credit"},{"date":"6/30","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":1,"choices":[70000,75000,80000,85000],"correctIndex":2},{"index":4,"choices":[75000,80000,85000,90000],"correctIndex":1}],"hints":["T勘定の借方（左側）は現金の増加、貸方（右側）は現金の減少を表します","借方合計と貸方合計は必ず一致します","6/10に売掛金80,000円を回収しました","6/30の次月繰越は80,000円です"]}',
+      '{"id":"Q2_L_003","type":"fill_in_ledger","accountName":"現金","problemStatement":"以下の現金勘定の取引について、空欄に入る金額を計算してください。\\n\\n• 6/1: 前月繰越 100,000円\\n• 6/5: 買掛金60,000円を現金で支払った\\n• 6/10: 売掛金を現金で回収した\\n• 6/15: 商品を現金40,000円で仕入れた\\n• 6/30: 次月繰越を計算してください\\n\\nなお、借方合計と貸方合計は必ず一致します。","entries":[{"date":"6/1","description":"前月繰越","amount":100000,"side":"debit"},{"date":"6/10","description":"売掛金回収","amount":null,"side":"debit"},{"date":"6/5","description":"買掛金支払","amount":60000,"side":"credit"},{"date":"6/15","description":"仕入","amount":40000,"side":"credit"},{"date":"6/30","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":1,"choices":[70000,75000,80000,85000],"correctIndex":2},{"index":4,"choices":[75000,80000,85000,90000],"correctIndex":1}]}',
     correct_answer_json:
       '{"blanks":[{"index":1,"correctIndex":2},{"index":4,"correctIndex":1}]}',
     explanation:
@@ -4348,7 +4348,7 @@ export const masterQuestions: Question[] = [
     question_order: 34,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_004","type":"fill_in_ledger","accountName":"現金","entries":[{"date":"6/1","description":"前月繰越","amount":120000,"side":"debit"},{"date":"6/10","description":"売掛金","amount":null,"side":"debit"},{"date":"6/25","description":"受取利息","amount":5000,"side":"debit"},{"date":"6/5","description":"買掛金","amount":60000,"side":"credit"},{"date":"6/15","description":"支払家賃","amount":30000,"side":"credit"},{"date":"6/30","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":1,"choices":[40000,50000,55000,60000],"correctIndex":2},{"index":5,"choices":[75000,80000,85000,90000],"correctIndex":1}],"hints":["T勘定の借方（左側）は現金の増加、貸方（右側）は現金の減少を表します","借方合計と貸方合計は必ず一致します","6/10の売掛金回収は55,000円です"]}',
+      '{"id":"Q2_L_004","type":"fill_in_ledger","accountName":"現金","problemStatement":"以下の現金勘定の取引について、空欄に入る金額を計算してください。\\n\\n• 6/1: 前月繰越 120,000円\\n• 6/5: 買掛金60,000円を現金で支払った\\n• 6/10: 売掛金を現金で回収した\\n• 6/15: 支払家賃30,000円を現金で支払った\\n• 6/25: 受取利息5,000円を現金で受け取った\\n• 6/30: 次月繰越を計算してください\\n\\nなお、借方合計と貸方合計は必ず一致します。","entries":[{"date":"6/1","description":"前月繰越","amount":120000,"side":"debit"},{"date":"6/10","description":"売掛金","amount":null,"side":"debit"},{"date":"6/25","description":"受取利息","amount":5000,"side":"debit"},{"date":"6/5","description":"買掛金","amount":60000,"side":"credit"},{"date":"6/15","description":"支払家賃","amount":30000,"side":"credit"},{"date":"6/30","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":1,"choices":[40000,50000,55000,60000],"correctIndex":2},{"index":5,"choices":[75000,80000,85000,90000],"correctIndex":1}]}',
     correct_answer_json:
       '{"blanks":[{"index":1,"correctIndex":2},{"index":5,"correctIndex":1}]}',
     explanation:
@@ -4402,7 +4402,7 @@ export const masterQuestions: Question[] = [
     question_order: 35,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_005","type":"fill_in_ledger","accountName":"現金","entries":[{"date":"7/1","description":"前月繰越","amount":90000,"side":"debit"},{"date":"7/12","description":"売上","amount":null,"side":"debit"},{"date":"7/28","description":"小口現金","amount":15000,"side":"debit"},{"date":"7/8","description":"小口現金","amount":20000,"side":"credit"},{"date":"7/15","description":"仕入","amount":40000,"side":"credit"},{"date":"7/20","description":"通信費","amount":null,"side":"credit"},{"date":"7/31","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":1,"choices":[45000,50000,55000,60000],"correctIndex":1},{"index":5,"choices":[5000,8000,10000,12000],"correctIndex":2},{"index":6,"choices":[80000,85000,90000,95000],"correctIndex":2}],"hints":["T勘定の借方（左側）は現金の増加、貸方（右側）は現金の減少を表します","借方合計と貸方合計は必ず一致します","7/20の電話料金は10,000円です","7/31の次月繰越は90,000円です"]}',
+      '{"id":"Q2_L_005","type":"fill_in_ledger","accountName":"現金","problemStatement":"以下の現金勘定の取引について、空欄に入る金額を計算してください。\\n\\n• 7/1: 前月繰越 90,000円\\n• 7/8: 小口現金20,000円を支払った\\n• 7/12: 商品を現金で売り上げた\\n• 7/15: 商品を現金40,000円で仕入れた\\n• 7/20: 通信費を現金で支払った\\n• 7/28: 小口現金15,000円を受け取った\\n• 7/31: 次月繰越を計算してください\\n\\nなお、借方合計と貸方合計は必ず一致します。","entries":[{"date":"7/1","description":"前月繰越","amount":90000,"side":"debit"},{"date":"7/12","description":"売上","amount":null,"side":"debit"},{"date":"7/28","description":"小口現金","amount":15000,"side":"debit"},{"date":"7/8","description":"小口現金","amount":20000,"side":"credit"},{"date":"7/15","description":"仕入","amount":40000,"side":"credit"},{"date":"7/20","description":"通信費","amount":null,"side":"credit"},{"date":"7/31","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":1,"choices":[45000,50000,55000,60000],"correctIndex":1},{"index":5,"choices":[5000,8000,10000,12000],"correctIndex":2},{"index":6,"choices":[80000,85000,90000,95000],"correctIndex":2}]}',
     correct_answer_json:
       '{"blanks":[{"index":1,"correctIndex":1},{"index":5,"correctIndex":2},{"index":6,"correctIndex":2}]}',
     explanation:
@@ -4456,7 +4456,7 @@ export const masterQuestions: Question[] = [
     question_order: 36,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_006","type":"fill_in_ledger","accountName":"現金","entries":[{"date":"8/1","description":"前月繰越","amount":100000,"side":"debit"},{"date":"8/10","description":"当座預金","amount":40000,"side":"debit"},{"date":"8/25","description":"売上","amount":50000,"side":"debit"},{"date":"8/5","description":"当座預金","amount":null,"side":"credit"},{"date":"8/20","description":"買掛金","amount":30000,"side":"credit"},{"date":"8/31","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":3,"choices":[50000,60000,70000,80000],"correctIndex":1},{"index":5,"choices":[100000,110000,120000,130000],"correctIndex":1}],"hints":["T勘定の借方（左側）は現金の増加、貸方（右側）は現金の減少を表します","借方合計と貸方合計は必ず一致します","8/5の当座預金への預入は60,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"現金\",\"problemStatement\":\"以下の取引が行われました。現金勘定の記入を行ってください。\\n\\n• 8/1: 前月繰越 100,000円\\n• 8/10: 当座預金 40,000円\\n• 8/25: 売上 50,000円\\n• 8/5: 当座預金 \\n• 8/20: 買掛金 30,000円\\n• 8/31: 次月繰越 \\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"8/1\",\"description\":\"前月繰越\",\"amount\":100000,\"side\":\"debit\"},{\"date\":\"8/10\",\"description\":\"当座預金\",\"amount\":40000,\"side\":\"debit\"},{\"date\":\"8/25\",\"description\":\"売上\",\"amount\":50000,\"side\":\"debit\"},{\"date\":\"8/5\",\"description\":\"当座預金\",\"amount\":null,\"side\":\"credit\"},{\"date\":\"8/20\",\"description\":\"買掛金\",\"amount\":30000,\"side\":\"credit\"},{\"date\":\"8/31\",\"description\":\"次月繰越\",\"amount\":null,\"side\":\"credit\"}],\"blanks\":[{\"index\":3,\"choices\":[50000,60000,70000,80000],\"correctIndex\":1},{\"index\":5,\"choices\":[100000,110000,120000,130000],\"correctIndex\":1}],\"hints\":[\"T勘定の借方（左側）は現金の増加、貸方（右側）は現金の減少を表します\",\"借方合計と貸方合計は必ず一致します\",\"8/5の当座預金への預入は60,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":3,"correctIndex":1},{"index":5,"correctIndex":1}]}',
     explanation:
@@ -4510,7 +4510,7 @@ export const masterQuestions: Question[] = [
     question_order: 37,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_007","type":"fill_in_ledger","accountName":"売掛金","entries":[{"date":"9/1","description":"前月繰越","amount":150000,"side":"debit"},{"date":"9/15","description":"売上","amount":null,"side":"debit"},{"date":"9/10","description":"現金","amount":80000,"side":"credit"},{"date":"9/25","description":"当座預金","amount":null,"side":"credit"},{"date":"9/30","description":"次月繰越","amount":100000,"side":"credit"}],"blanks":[{"index":1,"choices":[60000,70000,80000,90000],"correctIndex":2},{"index":3,"choices":[40000,50000,60000,70000],"correctIndex":1}],"hints":["T勘定の借方（左側）は売掛金の発生、貸方（右側）は売掛金の回収を表します","借方合計と貸方合計は必ず一致します","9/15の売上は80,000円です","9/30の次月繰越は100,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"売掛金\",\"problemStatement\":\"以下の取引が行われました。売掛金勘定の記入を行ってください。\\n\\n• 9/1: 前月繰越 150,000円\\n• 9/15: 売上 \\n• 9/10: 現金 80,000円\\n• 9/25: 当座預金 \\n• 9/30: 次月繰越 100,000円\\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"9/1\",\"description\":\"前月繰越\",\"amount\":150000,\"side\":\"debit\"},{\"date\":\"9/15\",\"description\":\"売上\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"9/10\",\"description\":\"現金\",\"amount\":80000,\"side\":\"credit\"},{\"date\":\"9/25\",\"description\":\"当座預金\",\"amount\":null,\"side\":\"credit\"},{\"date\":\"9/30\",\"description\":\"次月繰越\",\"amount\":100000,\"side\":\"credit\"}],\"blanks\":[{\"index\":1,\"choices\":[60000,70000,80000,90000],\"correctIndex\":2},{\"index\":3,\"choices\":[40000,50000,60000,70000],\"correctIndex\":1}],\"hints\":[\"T勘定の借方（左側）は売掛金の発生、貸方（右側）は売掛金の回収を表します\",\"借方合計と貸方合計は必ず一致します\",\"9/15の売上は80,000円です\",\"9/30の次月繰越は100,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":1,"correctIndex":2},{"index":3,"correctIndex":1}]}',
     explanation:
@@ -4547,7 +4547,7 @@ export const masterQuestions: Question[] = [
     question_order: 38,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_008","type":"fill_in_ledger","accountName":"売掛金","entries":[{"date":"10/1","description":"前月繰越","amount":200000,"side":"debit"},{"date":"10/12","description":"売上","amount":120000,"side":"debit"},{"date":"10/25","description":"売上","amount":80000,"side":"debit"},{"date":"10/8","description":"現金","amount":null,"side":"credit"},{"date":"10/18","description":"受取手形","amount":null,"side":"credit"},{"date":"10/31","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":3,"choices":[60000,70000,80000,90000],"correctIndex":2},{"index":4,"choices":[50000,60000,70000,80000],"correctIndex":1},{"index":5,"choices":[240000,250000,260000,270000],"correctIndex":2}],"hints":["T勘定の借方（左側）は売掛金の発生、貸方（右側）は売掛金の回収を表します","借方合計と貸方合計は必ず一致します","10/18の約束手形は60,000円です","10/31の次月繰越は260,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"売掛金\",\"problemStatement\":\"以下の取引が行われました。売掛金勘定の記入を行ってください。\\n\\n• 10/1: 前月繰越 200,000円\\n• 10/12: 売上 120,000円\\n• 10/25: 売上 80,000円\\n• 10/8: 現金 \\n• 10/18: 受取手形 \\n• 10/31: 次月繰越 \\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"10/1\",\"description\":\"前月繰越\",\"amount\":200000,\"side\":\"debit\"},{\"date\":\"10/12\",\"description\":\"売上\",\"amount\":120000,\"side\":\"debit\"},{\"date\":\"10/25\",\"description\":\"売上\",\"amount\":80000,\"side\":\"debit\"},{\"date\":\"10/8\",\"description\":\"現金\",\"amount\":null,\"side\":\"credit\"},{\"date\":\"10/18\",\"description\":\"受取手形\",\"amount\":null,\"side\":\"credit\"},{\"date\":\"10/31\",\"description\":\"次月繰越\",\"amount\":null,\"side\":\"credit\"}],\"blanks\":[{\"index\":3,\"choices\":[60000,70000,80000,90000],\"correctIndex\":2},{\"index\":4,\"choices\":[50000,60000,70000,80000],\"correctIndex\":1},{\"index\":5,\"choices\":[240000,250000,260000,270000],\"correctIndex\":2}],\"hints\":[\"T勘定の借方（左側）は売掛金の発生、貸方（右側）は売掛金の回収を表します\",\"借方合計と貸方合計は必ず一致します\",\"10/18の約束手形は60,000円です\",\"10/31の次月繰越は260,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":3,"correctIndex":2},{"index":4,"correctIndex":1},{"index":5,"correctIndex":2}]}',
     explanation:
@@ -4601,7 +4601,7 @@ export const masterQuestions: Question[] = [
     question_order: 39,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_009","type":"fill_in_ledger","accountName":"売掛金","entries":[{"date":"11/1","description":"前月繰越","amount":180000,"side":"debit"},{"date":"11/15","description":"売上","amount":null,"side":"debit"},{"date":"11/10","description":"現金","amount":90000,"side":"credit"},{"date":"11/20","description":"貸倒損失","amount":30000,"side":"credit"},{"date":"11/30","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":1,"choices":[80000,90000,100000,110000],"correctIndex":2},{"index":4,"choices":[140000,150000,160000,170000],"correctIndex":2}],"hints":["T勘定の借方（左側）は売掛金の発生、貸方（右側）は売掛金の回収・貸倒れを表します","借方合計と貸方合計は必ず一致します","11/15の売上は100,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"売掛金\",\"problemStatement\":\"以下の取引が行われました。売掛金勘定の記入を行ってください。\\n\\n• 11/1: 前月繰越 180,000円\\n• 11/15: 売上 \\n• 11/10: 現金 90,000円\\n• 11/20: 貸倒損失 30,000円\\n• 11/30: 次月繰越 \\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"11/1\",\"description\":\"前月繰越\",\"amount\":180000,\"side\":\"debit\"},{\"date\":\"11/15\",\"description\":\"売上\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"11/10\",\"description\":\"現金\",\"amount\":90000,\"side\":\"credit\"},{\"date\":\"11/20\",\"description\":\"貸倒損失\",\"amount\":30000,\"side\":\"credit\"},{\"date\":\"11/30\",\"description\":\"次月繰越\",\"amount\":null,\"side\":\"credit\"}],\"blanks\":[{\"index\":1,\"choices\":[80000,90000,100000,110000],\"correctIndex\":2},{\"index\":4,\"choices\":[140000,150000,160000,170000],\"correctIndex\":2}],\"hints\":[\"T勘定の借方（左側）は売掛金の発生、貸方（右側）は売掛金の回収・貸倒れを表します\",\"借方合計と貸方合計は必ず一致します\",\"11/15の売上は100,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":1,"correctIndex":2},{"index":4,"correctIndex":2}]}',
     explanation:
@@ -4712,7 +4712,7 @@ export const masterQuestions: Question[] = [
     question_order: 40,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_010","type":"fill_in_ledger","accountName":"売掛金","entries":[{"date":"12/1","description":"前月繰越","amount":250000,"side":"debit"},{"date":"12/15","description":"売上","amount":null,"side":"debit"},{"date":"12/10","description":"現金","amount":200000,"side":"credit"},{"date":"12/31","description":"貸倒引当金","amount":4000,"side":"credit"},{"date":"12/31","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":1,"choices":[140000,150000,160000,170000],"correctIndex":1},{"index":4,"choices":[190000,196000,200000,210000],"correctIndex":2}],"hints":["T勘定の借方（左側）は売掛金の発生、貸方（右側）は売掛金の回収・貸倒引当金を表します","借方合計と貸方合計は必ず一致します","12/15に売上150,000円が発生しました","12/10に現金200,000円を回収しました","12/31の次月繰越は196,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"売掛金\",\"problemStatement\":\"以下の取引が行われました。売掛金勘定の記入を行ってください。\\n\\n• 12/1: 前月繰越 250,000円\\n• 12/15: 売上 \\n• 12/10: 現金 200,000円\\n• 12/31: 貸倒引当金 4,000円\\n• 12/31: 次月繰越 \\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"12/1\",\"description\":\"前月繰越\",\"amount\":250000,\"side\":\"debit\"},{\"date\":\"12/15\",\"description\":\"売上\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"12/10\",\"description\":\"現金\",\"amount\":200000,\"side\":\"credit\"},{\"date\":\"12/31\",\"description\":\"貸倒引当金\",\"amount\":4000,\"side\":\"credit\"},{\"date\":\"12/31\",\"description\":\"次月繰越\",\"amount\":null,\"side\":\"credit\"}],\"blanks\":[{\"index\":1,\"choices\":[140000,150000,160000,170000],\"correctIndex\":1},{\"index\":4,\"choices\":[190000,196000,200000,210000],\"correctIndex\":2}],\"hints\":[\"T勘定の借方（左側）は売掛金の発生、貸方（右側）は売掛金の回収・貸倒引当金を表します\",\"借方合計と貸方合計は必ず一致します\",\"12/15に売上150,000円が発生しました\",\"12/10に現金200,000円を回収しました\",\"12/31の次月繰越は196,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":1,"correctIndex":1},{"index":4,"correctIndex":2}]}',
     explanation:
@@ -4747,7 +4747,7 @@ export const masterQuestions: Question[] = [
     question_order: 41,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_011","type":"fill_in_ledger","accountName":"買掛金","entries":[{"date":"1/10","description":"現金","amount":70000,"side":"debit"},{"date":"1/25","description":"当座預金","amount":null,"side":"debit"},{"date":"1/31","description":"次月繰越","amount":140000,"side":"debit"},{"date":"1/1","description":"前月繰越","amount":180000,"side":"credit"},{"date":"1/15","description":"仕入","amount":null,"side":"credit"}],"blanks":[{"index":1,"choices":[50000,60000,70000,80000],"correctIndex":2},{"index":4,"choices":[80000,90000,100000,110000],"correctIndex":2}],"hints":["T勘定の借方（左側）は買掛金の支払、貸方（右側）は買掛金の発生を表します","借方合計と貸方合計は必ず一致します","1/15の仕入は100,000円です","1/31の次月繰越は140,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"買掛金\",\"problemStatement\":\"以下の取引が行われました。買掛金勘定の記入を行ってください。\\n\\n• 1/10: 現金 70,000円\\n• 1/25: 当座預金 \\n• 1/31: 次月繰越 140,000円\\n• 1/1: 前月繰越 180,000円\\n• 1/15: 仕入 \\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"1/10\",\"description\":\"現金\",\"amount\":70000,\"side\":\"debit\"},{\"date\":\"1/25\",\"description\":\"当座預金\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"1/31\",\"description\":\"次月繰越\",\"amount\":140000,\"side\":\"debit\"},{\"date\":\"1/1\",\"description\":\"前月繰越\",\"amount\":180000,\"side\":\"credit\"},{\"date\":\"1/15\",\"description\":\"仕入\",\"amount\":null,\"side\":\"credit\"}],\"blanks\":[{\"index\":1,\"choices\":[50000,60000,70000,80000],\"correctIndex\":2},{\"index\":4,\"choices\":[80000,90000,100000,110000],\"correctIndex\":2}],\"hints\":[\"T勘定の借方（左側）は買掛金の支払、貸方（右側）は買掛金の発生を表します\",\"借方合計と貸方合計は必ず一致します\",\"1/15の仕入は100,000円です\",\"1/31の次月繰越は140,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":1,"correctIndex":2},{"index":4,"correctIndex":2}]}',
     explanation:
@@ -4782,7 +4782,7 @@ export const masterQuestions: Question[] = [
     question_order: 42,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_012","type":"fill_in_ledger","accountName":"買掛金","entries":[{"date":"2/5","description":"現金","amount":null,"side":"debit"},{"date":"2/15","description":"支払手形","amount":null,"side":"debit"},{"date":"2/28","description":"次月繰越","amount":null,"side":"debit"},{"date":"2/1","description":"前月繰越","amount":220000,"side":"credit"},{"date":"2/10","description":"仕入","amount":60000,"side":"credit"},{"date":"2/20","description":"仕入","amount":80000,"side":"credit"}],"blanks":[{"index":0,"choices":[60000,70000,80000,90000],"correctIndex":2},{"index":1,"choices":[70000,80000,90000,100000],"correctIndex":1},{"index":2,"choices":[170000,180000,190000,200000],"correctIndex":3}],"hints":["T勘定の借方（左側）は買掛金の支払、貸方（右側）は買掛金の発生を表します","借方合計と貸方合計は必ず一致します","2/15の支払手形は80,000円です","2/28の次月繰越は200,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"買掛金\",\"problemStatement\":\"以下の取引が行われました。買掛金勘定の記入を行ってください。\\n\\n• 2/5: 現金 \\n• 2/15: 支払手形 \\n• 2/28: 次月繰越 \\n• 2/1: 前月繰越 220,000円\\n• 2/10: 仕入 60,000円\\n• 2/20: 仕入 80,000円\\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"2/5\",\"description\":\"現金\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"2/15\",\"description\":\"支払手形\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"2/28\",\"description\":\"次月繰越\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"2/1\",\"description\":\"前月繰越\",\"amount\":220000,\"side\":\"credit\"},{\"date\":\"2/10\",\"description\":\"仕入\",\"amount\":60000,\"side\":\"credit\"},{\"date\":\"2/20\",\"description\":\"仕入\",\"amount\":80000,\"side\":\"credit\"}],\"blanks\":[{\"index\":0,\"choices\":[60000,70000,80000,90000],\"correctIndex\":2},{\"index\":1,\"choices\":[70000,80000,90000,100000],\"correctIndex\":1},{\"index\":2,\"choices\":[170000,180000,190000,200000],\"correctIndex\":3}],\"hints\":[\"T勘定の借方（左側）は買掛金の支払、貸方（右側）は買掛金の発生を表します\",\"借方合計と貸方合計は必ず一致します\",\"2/15の支払手形は80,000円です\",\"2/28の次月繰越は200,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":1},{"index":2,"correctIndex":3}]}',
     explanation:
@@ -4817,7 +4817,7 @@ export const masterQuestions: Question[] = [
     question_order: 43,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_013","type":"fill_in_ledger","accountName":"買掛金","entries":[{"date":"3/10","description":"現金","amount":100000,"side":"debit"},{"date":"3/20","description":"値引","amount":null,"side":"debit"},{"date":"3/31","description":"次月繰越","amount":null,"side":"debit"},{"date":"3/1","description":"前月繰越","amount":200000,"side":"credit"},{"date":"3/15","description":"仕入","amount":120000,"side":"credit"}],"blanks":[{"index":1,"choices":[15000,20000,25000,30000],"correctIndex":2},{"index":2,"choices":[185000,195000,205000,215000],"correctIndex":1}],"hints":["T勘定の借方（左側）は買掛金の支払・値引、貸方（右側）は買掛金の発生を表します","借方合計と貸方合計は必ず一致します","3/31の次月繰越は195,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"買掛金\",\"problemStatement\":\"以下の取引が行われました。買掛金勘定の記入を行ってください。\\n\\n• 3/10: 現金 100,000円\\n• 3/20: 値引 \\n• 3/31: 次月繰越 \\n• 3/1: 前月繰越 200,000円\\n• 3/15: 仕入 120,000円\\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"3/10\",\"description\":\"現金\",\"amount\":100000,\"side\":\"debit\"},{\"date\":\"3/20\",\"description\":\"値引\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"3/31\",\"description\":\"次月繰越\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"3/1\",\"description\":\"前月繰越\",\"amount\":200000,\"side\":\"credit\"},{\"date\":\"3/15\",\"description\":\"仕入\",\"amount\":120000,\"side\":\"credit\"}],\"blanks\":[{\"index\":1,\"choices\":[15000,20000,25000,30000],\"correctIndex\":2},{\"index\":2,\"choices\":[185000,195000,205000,215000],\"correctIndex\":1}],\"hints\":[\"T勘定の借方（左側）は買掛金の支払・値引、貸方（右側）は買掛金の発生を表します\",\"借方合計と貸方合計は必ず一致します\",\"3/31の次月繰越は195,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":1,"correctIndex":2},{"index":2,"correctIndex":1}]}',
     explanation:
@@ -4871,7 +4871,7 @@ export const masterQuestions: Question[] = [
     question_order: 44,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_014","type":"fill_in_ledger","accountName":"買掛金","entries":[{"date":"4/15","description":"現金","amount":null,"side":"debit"},{"date":"4/25","description":"支払手形","amount":80000,"side":"debit"},{"date":"4/30","description":"次月繰越","amount":230000,"side":"debit"},{"date":"4/1","description":"前月繰越","amount":250000,"side":"credit"},{"date":"4/10","description":"仕入","amount":null,"side":"credit"},{"date":"4/20","description":"仕入","amount":90000,"side":"credit"}],"blanks":[{"index":0,"choices":[120000,130000,140000,150000],"correctIndex":3},{"index":4,"choices":[120000,130000,140000,150000],"correctIndex":0}],"hints":["T勘定の借方（左側）は買掛金の支払、貸方（右側）は買掛金の発生を表します","借方合計と貸方合計は必ず一致します","4/10の仕入は120,000円です","4/30の次月繰越は230,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"買掛金\",\"problemStatement\":\"以下の取引が行われました。買掛金勘定の記入を行ってください。\\n\\n• 4/15: 現金 \\n• 4/25: 支払手形 80,000円\\n• 4/30: 次月繰越 230,000円\\n• 4/1: 前月繰越 250,000円\\n• 4/10: 仕入 \\n• 4/20: 仕入 90,000円\\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"4/15\",\"description\":\"現金\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"4/25\",\"description\":\"支払手形\",\"amount\":80000,\"side\":\"debit\"},{\"date\":\"4/30\",\"description\":\"次月繰越\",\"amount\":230000,\"side\":\"debit\"},{\"date\":\"4/1\",\"description\":\"前月繰越\",\"amount\":250000,\"side\":\"credit\"},{\"date\":\"4/10\",\"description\":\"仕入\",\"amount\":null,\"side\":\"credit\"},{\"date\":\"4/20\",\"description\":\"仕入\",\"amount\":90000,\"side\":\"credit\"}],\"blanks\":[{\"index\":0,\"choices\":[120000,130000,140000,150000],\"correctIndex\":3},{\"index\":4,\"choices\":[120000,130000,140000,150000],\"correctIndex\":0}],\"hints\":[\"T勘定の借方（左側）は買掛金の支払、貸方（右側）は買掛金の発生を表します\",\"借方合計と貸方合計は必ず一致します\",\"4/10の仕入は120,000円です\",\"4/30の次月繰越は230,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":0,"correctIndex":3},{"index":4,"correctIndex":0}]}',
     explanation:
@@ -4908,7 +4908,7 @@ export const masterQuestions: Question[] = [
     question_order: 45,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_015","type":"fill_in_ledger","accountName":"商品","entries":[{"date":"5/1","description":"前月繰越","amount":180000,"side":"debit"},{"date":"5/15","description":"仕入","amount":null,"side":"debit"},{"date":"5/10","description":"売上原価","amount":null,"side":"credit"},{"date":"5/31","description":"次月繰越","amount":200000,"side":"credit"}],"blanks":[{"index":2,"choices":[150000,160000,170000,180000],"correctIndex":2},{"index":1,"choices":[170000,180000,190000,200000],"correctIndex":2}],"hints":["T勘定の借方（左側）は期首商品と仕入、貸方（右側）は売上原価と期末商品を表します","借方合計と貸方合計は必ず一致します","5/15の仕入は190,000円です","5/31の次月繰越は200,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"商品\",\"problemStatement\":\"以下の取引が行われました。商品勘定の記入を行ってください。\\n\\n• 5/1: 前月繰越 180,000円\\n• 5/15: 仕入 \\n• 5/10: 売上原価 \\n• 5/31: 次月繰越 200,000円\\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"5/1\",\"description\":\"前月繰越\",\"amount\":180000,\"side\":\"debit\"},{\"date\":\"5/15\",\"description\":\"仕入\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"5/10\",\"description\":\"売上原価\",\"amount\":null,\"side\":\"credit\"},{\"date\":\"5/31\",\"description\":\"次月繰越\",\"amount\":200000,\"side\":\"credit\"}],\"blanks\":[{\"index\":2,\"choices\":[150000,160000,170000,180000],\"correctIndex\":2},{\"index\":1,\"choices\":[170000,180000,190000,200000],\"correctIndex\":2}],\"hints\":[\"T勘定の借方（左側）は期首商品と仕入、貸方（右側）は売上原価と期末商品を表します\",\"借方合計と貸方合計は必ず一致します\",\"5/15の仕入は190,000円です\",\"5/31の次月繰越は200,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":2,"correctIndex":2},{"index":1,"correctIndex":2}]}',
     explanation:
@@ -4962,7 +4962,7 @@ export const masterQuestions: Question[] = [
     question_order: 46,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_016","type":"fill_in_ledger","accountName":"商品","entries":[{"date":"6/1","description":"前月繰越","amount":200000,"side":"debit"},{"date":"6/10","description":"仕入","amount":250000,"side":"debit"},{"date":"6/20","description":"売上原価","amount":null,"side":"credit"},{"date":"6/30","description":"棚卸減耗損","amount":5000,"side":"credit"},{"date":"6/30","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":2,"choices":[200000,210000,220000,230000],"correctIndex":2},{"index":4,"choices":[205000,215000,225000,235000],"correctIndex":2}],"hints":["T勘定の借方（左側）は期首商品と仕入、貸方（右側）は売上原価と期末商品を表します","借方合計と貸方合計は必ず一致します","6/30の次月繰越は225,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"商品\",\"problemStatement\":\"以下の取引が行われました。商品勘定の記入を行ってください。\\n\\n• 6/1: 前月繰越 200,000円\\n• 6/10: 仕入 250,000円\\n• 6/20: 売上原価 \\n• 6/30: 棚卸減耗損 5,000円\\n• 6/30: 次月繰越 \\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"6/1\",\"description\":\"前月繰越\",\"amount\":200000,\"side\":\"debit\"},{\"date\":\"6/10\",\"description\":\"仕入\",\"amount\":250000,\"side\":\"debit\"},{\"date\":\"6/20\",\"description\":\"売上原価\",\"amount\":null,\"side\":\"credit\"},{\"date\":\"6/30\",\"description\":\"棚卸減耗損\",\"amount\":5000,\"side\":\"credit\"},{\"date\":\"6/30\",\"description\":\"次月繰越\",\"amount\":null,\"side\":\"credit\"}],\"blanks\":[{\"index\":2,\"choices\":[200000,210000,220000,230000],\"correctIndex\":2},{\"index\":4,\"choices\":[205000,215000,225000,235000],\"correctIndex\":2}],\"hints\":[\"T勘定の借方（左側）は期首商品と仕入、貸方（右側）は売上原価と期末商品を表します\",\"借方合計と貸方合計は必ず一致します\",\"6/30の次月繰越は225,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":2,"correctIndex":2},{"index":4,"correctIndex":2}]}',
     explanation:
@@ -5016,7 +5016,7 @@ export const masterQuestions: Question[] = [
     question_order: 47,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_017","type":"fill_in_ledger","accountName":"商品","entries":[{"date":"7/1","description":"前月繰越","amount":225000,"side":"debit"},{"date":"7/10","description":"仕入","amount":280000,"side":"debit"},{"date":"7/20","description":"売上原価","amount":null,"side":"credit"},{"date":"7/31","description":"棚卸減耗損","amount":8000,"side":"credit"},{"date":"7/31","description":"商品評価損","amount":2000,"side":"credit"},{"date":"7/31","description":"次月繰越","amount":null,"side":"credit"}],"blanks":[{"index":2,"choices":[260000,270000,280000,290000],"correctIndex":1},{"index":5,"choices":[225000,235000,245000,255000],"correctIndex":0}],"hints":["T勘定の借方（左側）は期首商品と仕入、貸方（右側）は売上原価と期末商品を表します","借方合計と貸方合計は必ず一致します","7/31の次月繰越は225,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"商品\",\"problemStatement\":\"以下の取引が行われました。商品勘定の記入を行ってください。\\n\\n• 7/1: 前月繰越 225,000円\\n• 7/10: 仕入 280,000円\\n• 7/20: 売上原価 \\n• 7/31: 棚卸減耗損 8,000円\\n• 7/31: 商品評価損 2,000円\\n• 7/31: 次月繰越 \\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"7/1\",\"description\":\"前月繰越\",\"amount\":225000,\"side\":\"debit\"},{\"date\":\"7/10\",\"description\":\"仕入\",\"amount\":280000,\"side\":\"debit\"},{\"date\":\"7/20\",\"description\":\"売上原価\",\"amount\":null,\"side\":\"credit\"},{\"date\":\"7/31\",\"description\":\"棚卸減耗損\",\"amount\":8000,\"side\":\"credit\"},{\"date\":\"7/31\",\"description\":\"商品評価損\",\"amount\":2000,\"side\":\"credit\"},{\"date\":\"7/31\",\"description\":\"次月繰越\",\"amount\":null,\"side\":\"credit\"}],\"blanks\":[{\"index\":2,\"choices\":[260000,270000,280000,290000],\"correctIndex\":1},{\"index\":5,\"choices\":[225000,235000,245000,255000],\"correctIndex\":0}],\"hints\":[\"T勘定の借方（左側）は期首商品と仕入、貸方（右側）は売上原価と期末商品を表します\",\"借方合計と貸方合計は必ず一致します\",\"7/31の次月繰越は225,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":2,"correctIndex":1},{"index":5,"correctIndex":0}]}',
     explanation:
@@ -5070,7 +5070,7 @@ export const masterQuestions: Question[] = [
     question_order: 48,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_018","type":"fill_in_ledger","accountName":"受取手形","entries":[{"date":"8/1","description":"前月繰越","amount":150000,"side":"debit"},{"date":"8/15","description":"売掛金","amount":null,"side":"debit"},{"date":"8/10","description":"当座預金","amount":null,"side":"credit"},{"date":"8/31","description":"次月繰越","amount":180000,"side":"credit"}],"blanks":[{"index":2,"choices":[60000,70000,80000,90000],"correctIndex":2},{"index":1,"choices":[100000,110000,120000,130000],"correctIndex":1}],"hints":["T勘定の借方（左側）は受取手形の受取、貸方（右側）は受取手形の期日決済を表します","借方合計と貸方合計は必ず一致します","8/31の次月繰越は180,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"受取手形\",\"problemStatement\":\"以下の取引が行われました。受取手形勘定の記入を行ってください。\\n\\n• 8/1: 前月繰越 150,000円\\n• 8/15: 売掛金 \\n• 8/10: 当座預金 \\n• 8/31: 次月繰越 180,000円\\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"8/1\",\"description\":\"前月繰越\",\"amount\":150000,\"side\":\"debit\"},{\"date\":\"8/15\",\"description\":\"売掛金\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"8/10\",\"description\":\"当座預金\",\"amount\":null,\"side\":\"credit\"},{\"date\":\"8/31\",\"description\":\"次月繰越\",\"amount\":180000,\"side\":\"credit\"}],\"blanks\":[{\"index\":2,\"choices\":[60000,70000,80000,90000],\"correctIndex\":2},{\"index\":1,\"choices\":[100000,110000,120000,130000],\"correctIndex\":1}],\"hints\":[\"T勘定の借方（左側）は受取手形の受取、貸方（右側）は受取手形の期日決済を表します\",\"借方合計と貸方合計は必ず一致します\",\"8/31の次月繰越は180,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":2,"correctIndex":2},{"index":1,"correctIndex":1}]}',
     explanation:
@@ -5124,7 +5124,7 @@ export const masterQuestions: Question[] = [
     question_order: 49,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_019","type":"fill_in_ledger","accountName":"支払手形","entries":[{"date":"9/10","description":"当座預金","amount":null,"side":"debit"},{"date":"9/31","description":"次月繰越","amount":null,"side":"debit"},{"date":"9/1","description":"前月繰越","amount":200000,"side":"credit"},{"date":"9/15","description":"買掛金","amount":120000,"side":"credit"}],"blanks":[{"index":0,"choices":[80000,90000,100000,110000],"correctIndex":1},{"index":1,"choices":[210000,220000,230000,240000],"correctIndex":2}],"hints":["T勘定の借方（左側）は支払手形の期日決済、貸方（右側）は支払手形の振出を表します","借方合計と貸方合計は必ず一致します","9/15の買掛金支払いとして約束手形を120,000円振り出しました"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"支払手形\",\"problemStatement\":\"以下の取引が行われました。支払手形勘定の記入を行ってください。\\n\\n• 9/10: 当座預金 \\n• 9/31: 次月繰越 \\n• 9/1: 前月繰越 200,000円\\n• 9/15: 買掛金 120,000円\\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"9/10\",\"description\":\"当座預金\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"9/31\",\"description\":\"次月繰越\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"9/1\",\"description\":\"前月繰越\",\"amount\":200000,\"side\":\"credit\"},{\"date\":\"9/15\",\"description\":\"買掛金\",\"amount\":120000,\"side\":\"credit\"}],\"blanks\":[{\"index\":0,\"choices\":[80000,90000,100000,110000],\"correctIndex\":1},{\"index\":1,\"choices\":[210000,220000,230000,240000],\"correctIndex\":2}],\"hints\":[\"T勘定の借方（左側）は支払手形の期日決済、貸方（右側）は支払手形の振出を表します\",\"借方合計と貸方合計は必ず一致します\",\"9/15の買掛金支払いとして約束手形を120,000円振り出しました\"]}',
     correct_answer_json:
       '{"blanks":[{"index":0,"correctIndex":1},{"index":1,"correctIndex":2}]}',
     explanation:
@@ -5178,7 +5178,7 @@ export const masterQuestions: Question[] = [
     question_order: 50,
     question_text: "",
     answer_template_json:
-      '{"id":"Q2_L_020","type":"fill_in_ledger","accountName":"建物","entries":[{"date":"10/1","description":"前月繰越","amount":3000000,"side":"debit"},{"date":"10/10","description":"現金","amount":null,"side":"debit"},{"date":"10/20","description":"減価償却費","amount":null,"side":"credit"},{"date":"10/31","description":"次月繰越","amount":3100000,"side":"credit"}],"blanks":[{"index":2,"choices":[50000,60000,70000,80000],"correctIndex":3},{"index":1,"choices":[120000,180000,240000,300000],"correctIndex":1}],"hints":["T勘定の借方（左側）は建物の取得と資本的支出、貸方（右側）は減価償却を表します","借方合計と貸方合計は必ず一致します","10/31の次月繰越は3,100,000円です"]}',
+      '{\"type\":\"fill_in_ledger\",\"accountName\":\"建物\",\"problemStatement\":\"以下の取引が行われました。建物勘定の記入を行ってください。\\n\\n• 10/1: 前月繰越 3,000,000円\\n• 10/10: 現金 \\n• 10/20: 減価償却費 \\n• 10/31: 次月繰越 3,100,000円\\n\\nなお、借方合計と貸方合計は必ず一致します。\",\"entries\":[{\"date\":\"10/1\",\"description\":\"前月繰越\",\"amount\":3000000,\"side\":\"debit\"},{\"date\":\"10/10\",\"description\":\"現金\",\"amount\":null,\"side\":\"debit\"},{\"date\":\"10/20\",\"description\":\"減価償却費\",\"amount\":null,\"side\":\"credit\"},{\"date\":\"10/31\",\"description\":\"次月繰越\",\"amount\":3100000,\"side\":\"credit\"}],\"blanks\":[{\"index\":2,\"choices\":[50000,60000,70000,80000],\"correctIndex\":3},{\"index\":1,\"choices\":[120000,180000,240000,300000],\"correctIndex\":1}],\"hints\":[\"T勘定の借方（左側）は建物の取得と資本的支出、貸方（右側）は減価償却を表します\",\"借方合計と貸方合計は必ず一致します\",\"10/31の次月繰越は3,100,000円です\"]}',
     correct_answer_json:
       '{"blanks":[{"index":2,"correctIndex":3},{"index":1,"correctIndex":1}]}',
     explanation:
@@ -5340,40 +5340,6 @@ export const masterQuestions: Question[] = [
     updated_at: "2025-10-01T13:48:51.149Z",
   },
   {
-    id: "Q3_CTB_001",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_001","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"合計残高試算表","accounts":[{"name":"現金","debitTotal":800000,"creditTotal":500000,"debitBalance":null,"creditBalance":0,"order":1},{"name":"商品","debitTotal":1200000,"creditTotal":null,"debitBalance":400000,"creditBalance":0,"order":2},{"name":"買掛金","debitTotal":600000,"creditTotal":900000,"debitBalance":0,"creditBalance":null,"order":3},{"name":"資本金","debitTotal":0,"creditTotal":500000,"debitBalance":0,"creditBalance":500000,"order":4}],"blanks":[{"accountIndex":0,"column":"debitBalance","choices":[200000,250000,300000,350000],"hint":"借方合計 - 貸方合計"},{"accountIndex":1,"column":"creditTotal","choices":[600000,700000,800000,900000],"hint":"借方合計 - 借方残高"},{"accountIndex":2,"column":"creditBalance","choices":[200000,250000,300000,350000],"hint":"貸方合計 - 借方合計"}],"context":"残高は合計の差額として計算される"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
-    explanation:
-      "合計残高試算表では、借方合計・貸方合計から残高を計算する能力が求められます。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","差額計算"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_001",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_001","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":null,"amount":2000000,"indent":0,"order":1,"isBold":true},{"label":"売上原価","amount":null,"indent":0,"order":2,"isBold":true},{"label":"期首商品棚卸高","amount":100000,"indent":1,"order":3},{"label":"当期商品仕入高","amount":1200000,"indent":1,"order":4},{"label":"期末商品棚卸高","amount":150000,"indent":1,"order":5},{"label":"売上原価","amount":null,"indent":1,"order":6},{"label":"売上総利益","amount":850000,"indent":1,"order":7,"isBold":true},{"label":"販売費及び一般管理費","amount":null,"indent":0,"order":8,"isBold":true},{"label":"給料","amount":300000,"indent":1,"order":9},{"label":"通信費","amount":50000,"indent":1,"order":10},{"label":"販売費及び一般管理費合計","amount":350000,"indent":1,"order":11},{"label":null,"amount":500000,"indent":1,"order":12,"isBold":true}],"blanks":[{"itemIndex":0,"field":"label","choices":["売上高","営業収益","収益","売上"],"hint":"損益計算書の最初の項目"},{"itemIndex":5,"field":"amount","choices":[1050000,1100000,1150000,1200000],"hint":"期首+仕入-期末"},{"itemIndex":11,"field":"label","choices":["営業利益","経常利益","当期純利益","税引前当期純利益"],"hint":"売上総利益 - 販売費及び一般管理費"}],"context":"売上原価の計算式と営業利益の位置を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":2},{"index":2,"correctIndex":0}]}',
-    explanation:
-      "損益計算書の基本構造は、売上高→売上原価→売上総利益→販売費及び一般管理費→営業利益の順です。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","売上原価","営業利益"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
     id: "Q3_TB_002",
     category_id: "trial_balance",
     question_text:
@@ -5387,40 +5353,6 @@ export const masterQuestions: Question[] = [
     difficulty: 1,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"残高試算表基礎","examSection":2,"keywords":[]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_CTB_002",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_002","type":"fill_in_comprehensive_trial_balance","date":"令和6年4月30日","title":"合計残高試算表","accounts":[{"name":"売掛金","debitTotal":1500000,"creditTotal":null,"debitBalance":300000,"creditBalance":0,"order":1},{"name":"買掛金","debitTotal":null,"creditTotal":1800000,"debitBalance":0,"creditBalance":600000,"order":2},{"name":"売上","debitTotal":0,"creditTotal":2000000,"debitBalance":0,"creditBalance":2000000,"order":3},{"name":"仕入","debitTotal":null,"creditTotal":0,"debitBalance":1400000,"creditBalance":0,"order":4}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[1000000,1100000,1200000,1300000],"hint":"借方合計 - 借方残高"},{"accountIndex":1,"column":"debitTotal","choices":[1000000,1100000,1200000,1300000],"hint":"貸方合計 - 貸方残高"},{"accountIndex":3,"column":"debitTotal","choices":[1300000,1350000,1400000,1450000],"hint":"貸方合計0なら借方合計=借方残高"}],"context":"売掛金・買掛金の合計と残高の関係を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
-    explanation:
-      "合計残高試算表では、債権・債務勘定の合計から残高を導く計算が重要です。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","売掛金","買掛金"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_002",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_002","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年3月31日","items":[{"label":null,"amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":200000,"indent":1,"order":2},{"label":"当座預金","amount":300000,"indent":1,"order":3},{"label":"売掛金","amount":250000,"indent":1,"order":4},{"label":"流動資産合計","amount":750000,"indent":1,"order":5},{"label":"固定資産","amount":null,"indent":0,"order":6,"isBold":true},{"label":"建物","amount":1000000,"indent":1,"order":7},{"label":"減価償却累計額","amount":-200000,"indent":1,"order":8},{"label":"固定資産合計","amount":950000,"indent":1,"order":9},{"label":"資産合計","amount":1700000,"indent":0,"order":10,"isBold":true},{"label":"負債の部","amount":null,"indent":0,"order":11,"isBold":true},{"label":"買掛金","amount":150000,"indent":1,"order":12},{"label":"未払金","amount":null,"indent":1,"order":13},{"label":"負債合計","amount":200000,"indent":1,"order":14},{"label":"純資産の部","amount":null,"indent":0,"order":15,"isBold":true},{"label":"資本金","amount":1000000,"indent":1,"order":16},{"label":"繰越利益剰余金","amount":null,"indent":1,"order":17},{"label":"純資産合計","amount":1500000,"indent":1,"order":18},{"label":"負債・純資産合計","amount":1700000,"indent":0,"order":19,"isBold":true}],"blanks":[{"itemIndex":0,"field":"label","choices":["流動資産","当座資産","現金及び預金","資産"],"hint":"資産の部の最初の大項目"},{"itemIndex":12,"field":"amount","choices":[30000,40000,50000,60000],"hint":"負債合計 - 買掛金"},{"itemIndex":16,"field":"amount","choices":[400000,450000,500000,550000],"hint":"純資産合計 - 資本金"}],"context":"貸借対照表の基本構造（資産・負債・純資産）を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
-    explanation:
-      "貸借対照表は、左側に資産、右側に負債と純資産を表示し、両者の合計は必ず一致します。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","流動資産","繰越利益剰余金"]}',
     created_at: "2025-10-01T13:48:51.149Z",
     updated_at: "2025-10-01T13:48:51.149Z",
   },
@@ -5442,40 +5374,6 @@ export const masterQuestions: Question[] = [
     updated_at: "2025-10-01T13:48:51.149Z",
   },
   {
-    id: "Q3_CTB_003",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_003","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"合計残高試算表","accounts":[{"name":"給料","debitTotal":null,"creditTotal":0,"debitBalance":960000,"creditBalance":0,"order":1},{"name":"通信費","debitTotal":48000,"creditTotal":0,"debitBalance":48000,"creditBalance":0,"order":2},{"name":"水道光熱費","debitTotal":null,"creditTotal":0,"debitBalance":36000,"creditBalance":0,"order":3},{"name":"資本金","debitTotal":0,"creditTotal":1000000,"debitBalance":0,"creditBalance":1000000,"order":4}],"blanks":[{"accountIndex":0,"column":"debitTotal","choices":[900000,920000,940000,960000],"hint":"費用勘定は借方合計=借方残高"},{"accountIndex":2,"column":"debitTotal","choices":[30000,32000,34000,36000],"hint":"費用勘定は借方合計=借方残高"}],"context":"費用勘定の特性（貸方合計ゼロ、借方合計=借方残高）を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":3},{"index":1,"correctIndex":3}]}',
-    explanation:
-      "費用勘定は通常、借方のみに記録されるため、借方合計と借方残高が一致します。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","費用勘定","給料","経費"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_003",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_003","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":"売上高","amount":3000000,"indent":0,"order":1,"isBold":true},{"label":"売上原価","amount":1800000,"indent":0,"order":2},{"label":"売上総利益","amount":1200000,"indent":1,"order":3},{"label":"販売費及び一般管理費","amount":600000,"indent":0,"order":4},{"label":"営業利益","amount":600000,"indent":1,"order":5,"isBold":true},{"label":null,"amount":null,"indent":0,"order":6,"isBold":true},{"label":"受取利息","amount":20000,"indent":1,"order":7},{"label":"受取配当金","amount":null,"indent":1,"order":8},{"label":"営業外収益合計","amount":35000,"indent":1,"order":9},{"label":"営業外費用","amount":null,"indent":0,"order":10,"isBold":true},{"label":"支払利息","amount":15000,"indent":1,"order":11},{"label":"営業外費用合計","amount":15000,"indent":1,"order":12},{"label":null,"amount":620000,"indent":1,"order":13,"isBold":true}],"blanks":[{"itemIndex":5,"field":"label","choices":["営業外収益","特別利益","その他の収益","雑収入"],"hint":"営業利益の次の収益項目"},{"itemIndex":7,"field":"amount","choices":[10000,15000,20000,25000],"hint":"営業外収益合計 - 受取利息"},{"itemIndex":12,"field":"label","choices":["経常利益","税引前当期純利益","当期純利益","営業利益"],"hint":"営業利益 + 営業外収益 - 営業外費用"}],"context":"営業外損益と経常利益の計算を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":1},{"index":2,"correctIndex":0}]}',
-    explanation:
-      "損益計算書では、営業利益に営業外収益を加え、営業外費用を差し引いて経常利益を算出します。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","営業外損益","経常利益"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
     id: "Q3_TB_004",
     category_id: "trial_balance",
     question_text:
@@ -5489,40 +5387,6 @@ export const masterQuestions: Question[] = [
     difficulty: 1,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"残高試算表基礎","examSection":2,"keywords":[]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_CTB_004",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_004","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"建物","debitTotal":2000000,"creditTotal":0,"debitBalance":2000000,"creditBalance":0,"order":1},{"name":"減価償却累計額（建物）","debitTotal":0,"creditTotal":null,"debitBalance":0,"creditBalance":600000,"order":2},{"name":"減価償却費","debitTotal":null,"creditTotal":0,"debitBalance":100000,"creditBalance":0,"order":3}],"blanks":[{"accountIndex":1,"column":"creditTotal","choices":[500000,550000,600000,650000],"hint":"評価勘定は貸方合計=貸方残高"},{"accountIndex":2,"column":"debitTotal","choices":[80000,90000,100000,110000],"hint":"費用勘定は借方合計=借方残高"}],"context":"減価償却関連勘定の特性を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
-    explanation:
-      "減価償却累計額（評価勘定）と減価償却費（費用勘定）は、それぞれ一方向のみに記録されます。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["決算整理","減価償却","評価勘定"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_004",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_004","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年3月31日","items":[{"label":"流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":150000,"indent":1,"order":2},{"label":"当座預金","amount":250000,"indent":1,"order":3},{"label":"流動資産合計","amount":400000,"indent":1,"order":4},{"label":"固定資産","amount":null,"indent":0,"order":5,"isBold":true},{"label":"建物","amount":2000000,"indent":1,"order":6},{"label":"減価償却累計額（建物）","amount":-400000,"indent":1,"order":7},{"label":"備品","amount":500000,"indent":1,"order":8},{"label":"減価償却累計額（備品）","amount":-150000,"indent":1,"order":9},{"label":"土地","amount":3000000,"indent":1,"order":10},{"label":"固定資産合計","amount":null,"indent":1,"order":11},{"label":"資産合計","amount":null,"indent":0,"order":12,"isBold":true}],"blanks":[{"itemIndex":10,"field":"amount","choices":[4500000,4750000,4950000,5150000],"hint":"(建物-減価償却)+(備品-減価償却)+土地"},{"itemIndex":11,"field":"amount","choices":[5200000,5300000,5350000,5450000],"hint":"流動資産合計 + 固定資産合計"}],"context":"固定資産の帳簿価額計算と資産合計の算出"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
-    explanation:
-      "固定資産は取得原価から減価償却累計額を差し引いた帳簿価額で表示されます。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","固定資産","減価償却累計額","帳簿価額"]}',
     created_at: "2025-10-01T13:48:51.149Z",
     updated_at: "2025-10-01T13:48:51.149Z",
   },
@@ -5544,40 +5408,6 @@ export const masterQuestions: Question[] = [
     updated_at: "2025-10-01T13:48:51.149Z",
   },
   {
-    id: "Q3_CTB_005",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_005","type":"fill_in_comprehensive_trial_balance","date":"令和6年4月30日","title":"合計残高試算表","accounts":[{"name":"受取手形","debitTotal":800000,"creditTotal":null,"debitBalance":200000,"creditBalance":0,"order":1},{"name":"支払手形","debitTotal":null,"creditTotal":1200000,"debitBalance":0,"creditBalance":400000,"order":2},{"name":"手形売却損","debitTotal":null,"creditTotal":0,"debitBalance":5000,"creditBalance":0,"order":3}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[500000,550000,600000,650000],"hint":"借方合計 - 借方残高"},{"accountIndex":1,"column":"debitTotal","choices":[700000,750000,800000,850000],"hint":"貸方合計 - 貸方残高"},{"accountIndex":2,"column":"debitTotal","choices":[3000,4000,5000,6000],"hint":"費用勘定は借方合計=借方残高"}],"context":"手形取引の合計と残高の関係を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
-    explanation:
-      "受取手形・支払手形は、発生と決済の両方が記録されるため、合計と残高の差額が重要です。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","手形","手形売却損"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_005",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_005","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":"営業利益","amount":800000,"indent":0,"order":1,"isBold":true},{"label":"営業外収益","amount":50000,"indent":0,"order":2},{"label":"営業外費用","amount":30000,"indent":0,"order":3},{"label":"経常利益","amount":820000,"indent":1,"order":4,"isBold":true},{"label":"特別利益","amount":20000,"indent":0,"order":5},{"label":"特別損失","amount":40000,"indent":0,"order":6},{"label":"税引前当期純利益","amount":null,"indent":1,"order":7,"isBold":true},{"label":"法人税、住民税及び事業税","amount":null,"indent":0,"order":8},{"label":"当期純利益","amount":560000,"indent":1,"order":9,"isBold":true}],"blanks":[{"itemIndex":6,"field":"amount","choices":[750000,780000,800000,820000],"hint":"経常利益 + 特別利益 - 特別損失"},{"itemIndex":7,"field":"amount","choices":[190000,220000,240000,260000],"hint":"税引前当期純利益 - 当期純利益"}],"context":"特別損益と法人税等の処理を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
-    explanation:
-      "損益計算書では、経常利益に特別損益を加減し、法人税等を差し引いて当期純利益を算出します。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","特別損益","法人税","当期純利益"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
     id: "Q3_TB_006",
     category_id: "trial_balance",
     question_text:
@@ -5591,40 +5421,6 @@ export const masterQuestions: Question[] = [
     difficulty: 1,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"残高試算表基礎","examSection":2,"keywords":[]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_CTB_006",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_006","type":"fill_in_comprehensive_trial_balance","date":"令和6年5月31日","title":"合計残高試算表","accounts":[{"name":"貸付金","debitTotal":1500000,"creditTotal":null,"debitBalance":300000,"creditBalance":0,"order":1},{"name":"借入金","debitTotal":null,"creditTotal":800000,"debitBalance":0,"creditBalance":200000,"order":2},{"name":"受取利息","debitTotal":0,"creditTotal":null,"debitBalance":0,"creditBalance":15000,"order":3}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[1100000,1150000,1200000,1250000],"hint":"借方合計 - 借方残高"},{"accountIndex":1,"column":"debitTotal","choices":[500000,550000,600000,650000],"hint":"貸方合計 - 貸方残高"},{"accountIndex":2,"column":"creditTotal","choices":[12000,13000,14000,15000],"hint":"収益勘定は貸方合計=貸方残高"}],"context":"貸付金・借入金の合計と残高の関係を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":3}]}',
-    explanation:
-      "貸付金・借入金は、発生と返済の両方が記録されるため、合計と残高の差額が重要です。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","貸付金","借入金","受取利息"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_006",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_006","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年6月30日","sections":[{"title":"資産の部","items":[{"label":"Ⅰ 流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":200000,"indent":1,"order":2},{"label":"当座預金","amount":500000,"indent":1,"order":3},{"label":"売掛金","amount":300000,"indent":1,"order":4},{"label":"受取手形","amount":250000,"indent":1,"order":5},{"label":"繰越商品","amount":150000,"indent":1,"order":6},{"label":"流動資産合計","amount":1400000,"indent":2,"order":7}]},{"title":"負債の部","items":[{"label":"Ⅰ 流動負債","amount":null,"indent":0,"order":1,"isBold":true},{"label":"買掛金","amount":null,"indent":1,"order":2,"isBold":true},{"label":"支払手形","amount":null,"indent":1,"order":3,"isBold":true},{"label":"未払金","amount":50000,"indent":1,"order":4},{"label":"流動負債合計","amount":800000,"indent":2,"order":5}]}],"blanks":[{"sectionIndex":1,"itemIndex":1,"field":"amount","choices":[400000,420000,450000,480000],"hint":"流動負債合計から未払金を引いた金額の3/5"},{"sectionIndex":1,"itemIndex":2,"field":"amount","choices":[250000,270000,300000,320000],"hint":"流動負債合計から未払金を引いた金額の2/5"}],"context":"流動負債の構成と比率計算を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
-    explanation:
-      "貸借対照表の流動負債には、買掛金、支払手形、未払金などが含まれ、比率計算で各項目を求めます。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","流動負債","買掛金","支払手形","比率計算"]}',
     created_at: "2025-10-01T13:48:51.149Z",
     updated_at: "2025-10-01T13:48:51.149Z",
   },
@@ -5646,40 +5442,6 @@ export const masterQuestions: Question[] = [
     updated_at: "2025-10-01T13:48:51.149Z",
   },
   {
-    id: "Q3_CTB_007",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_007","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"売掛金","debitTotal":800000,"creditTotal":200000,"debitBalance":null,"creditBalance":0,"order":1},{"name":"受取手形","debitTotal":500000,"creditTotal":100000,"debitBalance":400000,"creditBalance":0,"order":2},{"name":"貸倒引当金","debitTotal":8000,"creditTotal":null,"debitBalance":0,"creditBalance":20000,"order":3},{"name":"貸倒引当金繰入","debitTotal":null,"creditTotal":0,"debitBalance":14000,"creditBalance":0,"order":4}],"blanks":[{"accountIndex":0,"column":"debitBalance","choices":[500000,550000,600000,650000],"hint":"借方合計 - 貸方合計"},{"accountIndex":2,"column":"creditTotal","choices":[20000,22000,24000,26000],"hint":"期首残高 + 繰入額 + 調整"},{"accountIndex":3,"column":"debitTotal","choices":[10000,12000,14000,16000],"hint":"費用勘定は借方合計=借方残高"}],"context":"貸倒引当金の設定と合計残高試算表での表示を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":1},{"index":2,"correctIndex":2}]}',
-    explanation:
-      "貸倒引当金は評価性引当金で、売掛債権の期末残高に対して一定率を設定します。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["合計残高試算表","決算整理","貸倒引当金","差額補充法"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_007",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_007","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":"Ⅰ. 売上高","amount":3000000,"indent":0,"order":1},{"label":"Ⅱ. 売上原価","amount":null,"indent":0,"order":2},{"label":"期首商品棚卸高","amount":200000,"indent":1,"order":3},{"label":"当期商品仕入高","amount":null,"indent":1,"order":4},{"label":"期末商品棚卸高","amount":250000,"indent":1,"order":5},{"label":"売上原価","amount":1950000,"indent":2,"order":6,"isBold":true},{"label":"売上総利益","amount":null,"indent":1,"order":7,"isBold":true},{"label":"Ⅲ. 販売費及び一般管理費","amount":700000,"indent":0,"order":8},{"label":"営業利益","amount":350000,"indent":1,"order":9,"isBold":true}],"blanks":[{"itemIndex":3,"field":"amount","choices":[1900000,1950000,2000000,2050000],"hint":"売上原価 - 期首 + 期末"},{"itemIndex":6,"field":"amount","choices":[900000,950000,1050000,1100000],"hint":"売上高 - 売上原価"}],"context":"売上原価と売上総利益の計算方法を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
-    explanation:
-      "売上総利益は売上高から売上原価を差し引いて算出され、商品販売による基本的な利益を表します。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","売上原価","売上総利益","三分法"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
     id: "Q3_TB_008",
     category_id: "trial_balance",
     question_text:
@@ -5693,40 +5455,6 @@ export const masterQuestions: Question[] = [
     difficulty: 1,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"残高試算表基礎","examSection":2,"keywords":[]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_CTB_008",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_008","type":"fill_in_comprehensive_trial_balance","date":"令和6年6月30日","title":"合計残高試算表","accounts":[{"name":"前払保険料","debitTotal":null,"creditTotal":0,"debitBalance":60000,"creditBalance":0,"order":1},{"name":"保険料","debitTotal":120000,"creditTotal":null,"debitBalance":60000,"creditBalance":0,"order":2},{"name":"前受家賃","debitTotal":30000,"creditTotal":90000,"debitBalance":0,"creditBalance":null,"order":3}],"blanks":[{"accountIndex":0,"column":"debitTotal","choices":[50000,60000,70000,80000],"hint":"前払資産の計上額"},{"accountIndex":1,"column":"creditTotal","choices":[50000,60000,70000,80000],"hint":"前払から費用への振替額"},{"accountIndex":2,"column":"creditBalance","choices":[50000,60000,70000,80000],"hint":"前受合計 - 収益化"}],"context":"前払・前受の処理と合計残高試算表での表示を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":1},{"index":1,"correctIndex":1},{"index":2,"correctIndex":1}]}',
-    explanation:
-      "前払・前受は、時の経過に伴い資産・負債から費用・収益に振り替えられます。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","前払","前受","期間按分"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_008",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_008","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年9月30日","sections":[{"title":"資産の部","items":[{"label":"Ⅰ 流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":300000,"indent":1,"order":2},{"label":"売掛金","amount":500000,"indent":1,"order":3},{"label":"前払保険料","amount":null,"indent":1,"order":4,"isBold":true},{"label":"流動資産合計","amount":920000,"indent":2,"order":5}]},{"title":"負債の部","items":[{"label":"Ⅰ 流動負債","amount":null,"indent":0,"order":1,"isBold":true},{"label":"買掛金","amount":400000,"indent":1,"order":2},{"label":"前受金","amount":null,"indent":1,"order":3,"isBold":true},{"label":"流動負債合計","amount":550000,"indent":2,"order":4}]}],"blanks":[{"sectionIndex":1,"itemIndex":2,"field":"amount","choices":[100000,120000,140000,150000],"hint":"3か月分の前受家賃から1か月分を差し引く"},{"sectionIndex":0,"itemIndex":3,"field":"amount","choices":[200000,210000,220000,230000],"hint":"12か月分の保険料から1か月分を差し引く"}],"context":"前払費用と前受収益の決算整理を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":2}]}',
-    explanation:
-      "前払費用は資産、前受収益は負債として計上し、経過分を適切に費用・収益に振り替えます。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","前払費用","前受収益","経過勘定","決算整理"]}',
     created_at: "2025-10-01T13:48:51.149Z",
     updated_at: "2025-10-01T13:48:51.149Z",
   },
@@ -5748,40 +5476,6 @@ export const masterQuestions: Question[] = [
     updated_at: "2025-10-01T13:48:51.149Z",
   },
   {
-    id: "Q3_CTB_009",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_009","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"繰越商品","debitTotal":null,"creditTotal":400000,"debitBalance":350000,"creditBalance":0,"order":1},{"name":"仕入","debitTotal":2800000,"creditTotal":null,"debitBalance":0,"creditBalance":0,"order":2},{"name":"売上","debitTotal":0,"creditTotal":4000000,"debitBalance":0,"creditBalance":4000000,"order":3},{"name":"売上原価","debitTotal":null,"creditTotal":0,"debitBalance":2850000,"creditBalance":0,"order":4}],"blanks":[{"accountIndex":0,"column":"debitTotal","choices":[300000,325000,350000,375000],"hint":"期末商品棚卸高"},{"accountIndex":1,"column":"creditTotal","choices":[3150000,3175000,3200000,3225000],"hint":"期末商品 + 売上原価振替"},{"accountIndex":3,"column":"debitTotal","choices":[2800000,2825000,2850000,2875000],"hint":"期首 + 仕入 - 期末"}],"context":"三分法による売上原価の算定と決算整理を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
-    explanation:
-      "三分法では、決算時に期首・期末商品を振り替えて売上原価を算定します。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["合計残高試算表","決算整理","三分法","売上原価","繰越商品"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_009",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_009","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":"Ⅰ. 売上高","amount":5000000,"indent":0,"order":1},{"label":"Ⅱ. 売上原価","amount":3000000,"indent":0,"order":2},{"label":"売上総利益","amount":null,"indent":1,"order":3,"isBold":true},{"label":"Ⅲ. 販売費及び一般管理費","amount":null,"indent":0,"order":4},{"label":"給料","amount":600000,"indent":1,"order":5},{"label":"旅費交通費","amount":200000,"indent":1,"order":6},{"label":"通信費","amount":100000,"indent":1,"order":7},{"label":"減価償却費","amount":150000,"indent":1,"order":8},{"label":"販売費及び一般管理費合計","amount":1050000,"indent":2,"order":9},{"label":"営業利益","amount":null,"indent":1,"order":10,"isBold":true}],"blanks":[{"itemIndex":2,"field":"amount","choices":[1800000,1900000,2000000,2100000],"hint":"売上高 - 売上原価"},{"itemIndex":9,"field":"amount","choices":[850000,900000,950000,1000000],"hint":"売上総利益 - 販管費"}],"context":"営業利益の算出と営業利益率の理解"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
-    explanation:
-      "営業利益は本業による利益を表し、売上総利益から販売費及び一般管理費を差し引いて算出します。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","営業利益","販売費及び一般管理費","営業利益率"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
     id: "Q3_TB_010",
     category_id: "trial_balance",
     question_text:
@@ -5795,40 +5489,6 @@ export const masterQuestions: Question[] = [
     difficulty: 2,
     tags_json:
       '{"subcategory":"trial_balance","pattern":"残高試算表標準","examSection":2,"keywords":[]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_CTB_010",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_010","type":"fill_in_comprehensive_trial_balance","date":"令和6年7月31日","title":"合計残高試算表","accounts":[{"name":"未収利息","debitTotal":null,"creditTotal":0,"debitBalance":3000,"creditBalance":0,"order":1},{"name":"受取利息","debitTotal":0,"creditTotal":null,"debitBalance":0,"creditBalance":15000,"order":2},{"name":"未払利息","debitTotal":0,"creditTotal":null,"debitBalance":0,"creditBalance":2000,"order":3},{"name":"支払利息","debitTotal":10000,"creditTotal":0,"debitBalance":10000,"creditBalance":0,"order":4}],"blanks":[{"accountIndex":0,"column":"debitTotal","choices":[2000,2500,3000,3500],"hint":"未収利息の計上額"},{"accountIndex":1,"column":"creditTotal","choices":[12000,13000,14000,15000],"hint":"現金受取 + 未収"},{"accountIndex":2,"column":"creditTotal","choices":[1500,2000,2500,3000],"hint":"未払利息の計上額"}],"context":"未収・未払利息の処理を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":3},{"index":2,"correctIndex":1}]}',
-    explanation:
-      "未収・未払利息は、発生主義に基づき期末に計上される経過勘定項目です。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","未収","未払","経過勘定"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_010",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_010","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年12月31日","sections":[{"title":"資産の部","items":[{"label":"Ⅰ 流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":400000,"indent":1,"order":2},{"label":"売掛金","amount":600000,"indent":1,"order":3},{"label":"未収利息","amount":null,"indent":1,"order":4,"isBold":true},{"label":"流動資産合計","amount":1024000,"indent":2,"order":5}]},{"title":"負債の部","items":[{"label":"Ⅰ 流動負債","amount":null,"indent":0,"order":1,"isBold":true},{"label":"買掛金","amount":500000,"indent":1,"order":2},{"label":"未払利息","amount":null,"indent":1,"order":3,"isBold":true},{"label":"流動負債合計","amount":530000,"indent":2,"order":4}]}],"blanks":[{"sectionIndex":1,"itemIndex":2,"field":"amount","choices":[12000,13000,14000,15000],"hint":"借入金 × 年利率 × 月数/12"},{"sectionIndex":0,"itemIndex":3,"field":"amount","choices":[24000,27000,30000,33000],"hint":"貸付金 × 年利率 × 月数/12"}],"context":"未収収益と未払費用の決算整理を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":3},{"index":1,"correctIndex":2}]}',
-    explanation:
-      "未収利息は資産、未払利息は負債として計上し、経過期間に応じた利息を計算します。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","未収収益","未払費用","未収利息","未払利息","経過勘定","決算整理"]}',
     created_at: "2025-10-01T13:48:51.149Z",
     updated_at: "2025-10-01T13:48:51.149Z",
   },
@@ -5849,39 +5509,6 @@ export const masterQuestions: Question[] = [
     updated_at: "2025-10-01T13:48:51.149Z",
   },
   {
-    id: "Q3_CTB_011",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_011","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"消耗品","debitTotal":null,"creditTotal":180000,"debitBalance":50000,"creditBalance":0,"order":1},{"name":"消耗品費","debitTotal":200000,"creditTotal":null,"debitBalance":180000,"creditBalance":0,"order":2}],"blanks":[{"accountIndex":0,"column":"debitTotal","choices":[40000,45000,50000,55000],"hint":"期末未使用分の振替"},{"accountIndex":1,"column":"creditTotal","choices":[15000,20000,25000,30000],"hint":"期末振替 - 期首費用化"}],"context":"消耗品の購入時費用処理法と決算整理を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":1}]}',
-    explanation: "購入時費用処理法では、決算時に未使用分を資産に振り替えます。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["合計残高試算表","決算整理","消耗品","購入時費用処理法"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_011",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_011","type":"fill_in_financial_statement","statementType":"statement_of_changes_in_equity","date":"令和6年3月31日","items":[{"label":"前期末残高","amount":1200000,"indent":0,"order":1},{"label":"当期変動額","amount":null,"indent":0,"order":2},{"label":"剰余金の配当","amount":-60000,"indent":1,"order":3},{"label":"当期純利益","amount":null,"indent":1,"order":4,"isBold":true},{"label":"当期変動額合計","amount":540000,"indent":1,"order":5},{"label":"当期末残高","amount":null,"indent":0,"order":6,"isBold":true}],"blanks":[{"itemIndex":3,"field":"amount","choices":[550000,570000,590000,600000],"hint":"当期変動額合計 + 剰余金の配当"},{"itemIndex":5,"field":"amount","choices":[1650000,1700000,1740000,1800000],"hint":"前期末残高 + 当期変動額合計"}],"context":"繰越利益剰余金の変動を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":3},{"index":1,"correctIndex":2}]}',
-    explanation:
-      "繰越利益剰余金は、前期末残高に当期純利益を加算し、配当を減算して当期末残高を算出します。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["株主資本等変動計算書","繰越利益剰余金","当期純利益","剰余金の配当"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
     id: "Q3_TB_012",
     category_id: "trial_balance",
     question_text:
@@ -5894,40 +5521,6 @@ export const masterQuestions: Question[] = [
     difficulty: 2,
     tags_json:
       '{"subcategory":"fill_in_trial_balance","pattern":"fill_in_trial_balance","examSection":3,"keywords":["有価証券","時価評価","評価益","配当金"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_CTB_012",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_012","type":"fill_in_comprehensive_trial_balance","date":"令和6年8月31日","title":"合計残高試算表","accounts":[{"name":"仮払金","debitTotal":100000,"creditTotal":null,"debitBalance":0,"creditBalance":0,"order":1},{"name":"旅費交通費","debitTotal":null,"creditTotal":0,"debitBalance":70000,"creditBalance":0,"order":2},{"name":"仮受金","debitTotal":null,"creditTotal":80000,"debitBalance":0,"creditBalance":0,"order":3},{"name":"売掛金","debitTotal":0,"creditTotal":80000,"debitBalance":0,"creditBalance":80000,"order":4}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[90000,95000,100000,105000],"hint":"精算 + 返金"},{"accountIndex":1,"column":"debitTotal","choices":[60000,65000,70000,75000],"hint":"実際の旅費"},{"accountIndex":2,"column":"debitTotal","choices":[70000,75000,80000,85000],"hint":"仮受金の振替額"}],"context":"仮払金・仮受金の処理を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
-    explanation:
-      "仮払金・仮受金は、金額または内容が不明な場合の一時的な勘定科目です。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","仮払金","仮受金","経過勘定"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_012",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_012","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年3月31日","sections":[{"title":"決算整理前（負債・純資産の部）","items":[{"label":"Ⅰ 資本金","amount":5000000,"indent":0,"order":1},{"label":"Ⅱ 引出金","amount":null,"indent":0,"order":2,"isBold":true},{"label":"Ⅲ 繰越利益剰余金","amount":2000000,"indent":0,"order":3}]},{"title":"決算整理後（負債・純資産の部）","items":[{"label":"Ⅰ 資本金","amount":5000000,"indent":0,"order":1},{"label":"Ⅱ 繰越利益剰余金","amount":null,"indent":0,"order":2,"isBold":true}]}],"blanks":[{"sectionIndex":0,"itemIndex":1,"field":"amount","choices":[250000,280000,300000,320000],"hint":"店主が生活費として引き出した金額"},{"sectionIndex":1,"itemIndex":1,"field":"amount","choices":[2150000,2180000,2200000,2250000],"hint":"前期繰越 + 当期純利益 - 引出金"}],"context":"個人事業主の引出金と繰越利益剰余金の決算整理"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
-    explanation:
-      "引出金は決算時に繰越利益剰余金から減額され、決算整理後の貸借対照表には表示されません。",
-    difficulty: 1,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","引出金","繰越利益剰余金","個人事業主","決算整理"]}',
     created_at: "2025-10-01T13:48:51.149Z",
     updated_at: "2025-10-01T13:48:51.149Z",
   },
@@ -5948,40 +5541,6 @@ export const masterQuestions: Question[] = [
     updated_at: "2025-10-01T13:48:51.149Z",
   },
   {
-    id: "Q3_CTB_013",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_013","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"引出金","debitTotal":600000,"creditTotal":null,"debitBalance":0,"creditBalance":0,"order":1},{"name":"資本金","debitTotal":null,"creditTotal":1000000,"debitBalance":0,"creditBalance":1000000,"order":2},{"name":"当期純利益","debitTotal":0,"creditTotal":null,"debitBalance":0,"creditBalance":400000,"order":3}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[500000,550000,600000,650000],"hint":"引出金の振替額"},{"accountIndex":1,"column":"debitTotal","choices":[400000,500000,600000,700000],"hint":"引出金の振替額"},{"accountIndex":2,"column":"creditTotal","choices":[300000,350000,400000,450000],"hint":"当期の利益"}],"context":"引出金の決算整理と資本の変動を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
-    explanation:
-      "引出金は決算時に資本金から減額され、当期純利益とともに資本の変動を構成します。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["合計残高試算表","決算整理","引出金","資本金","当期純利益"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_013",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_013","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":"Ⅰ. 売上高","amount":8000000,"indent":0,"order":1},{"label":"Ⅱ. 売上原価","amount":null,"indent":0,"order":2},{"label":"期首商品棚卸高","amount":500000,"indent":1,"order":3},{"label":"当期商品仕入高","amount":5000000,"indent":1,"order":4},{"label":"期末商品棚卸高","amount":600000,"indent":1,"order":5},{"label":"売上原価","amount":null,"indent":2,"order":6,"isBold":true},{"label":"売上総利益","amount":3100000,"indent":1,"order":7,"isBold":true},{"label":"Ⅲ. 販売費及び一般管理費","amount":null,"indent":0,"order":8},{"label":"給料","amount":1200000,"indent":1,"order":9},{"label":"減価償却費","amount":300000,"indent":1,"order":10},{"label":"貸倒引当金繰入","amount":50000,"indent":1,"order":11},{"label":"消耗品費","amount":100000,"indent":1,"order":12},{"label":"支払家賃","amount":480000,"indent":1,"order":13},{"label":"販売費及び一般管理費合計","amount":2130000,"indent":2,"order":14},{"label":"営業利益","amount":null,"indent":1,"order":15,"isBold":true},{"label":"Ⅳ. 営業外収益","amount":null,"indent":0,"order":16},{"label":"受取利息","amount":30000,"indent":1,"order":17},{"label":"Ⅴ. 営業外費用","amount":null,"indent":0,"order":18},{"label":"支払利息","amount":20000,"indent":1,"order":19},{"label":"経常利益","amount":980000,"indent":1,"order":20,"isBold":true}],"blanks":[{"itemIndex":5,"field":"amount","choices":[4700000,4800000,4900000,5000000],"hint":"期首 + 仕入 - 期末"},{"itemIndex":14,"field":"amount","choices":[850000,900000,950000,970000],"hint":"売上総利益 - 販管費"}],"context":"複合決算整理を伴う損益計算書の作成"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":3}]}',
-    explanation:
-      "決算整理項目（減価償却、貸倒引当金、消耗品、前払家賃等）を適切に処理して損益計算書を作成します。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","複合決算整理","売上原価","減価償却費","貸倒引当金繰入","営業利益","経常利益"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
     id: "Q3_TB_014",
     category_id: "trial_balance",
     question_text:
@@ -5998,40 +5557,6 @@ export const masterQuestions: Question[] = [
     updated_at: "2025-10-01T13:48:51.149Z",
   },
   {
-    id: "Q3_CTB_014",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_014","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"繰越商品","debitTotal":400000,"creditTotal":null,"debitBalance":400000,"creditBalance":0,"order":1},{"name":"仕入","debitTotal":3200000,"creditTotal":3200000,"debitBalance":0,"creditBalance":0,"order":2},{"name":"売上","debitTotal":0,"creditTotal":5000000,"debitBalance":0,"creditBalance":5000000,"order":3},{"name":"売上原価","debitTotal":null,"creditTotal":0,"debitBalance":3150000,"creditBalance":0,"order":4},{"name":"建物減価償却累計額","debitTotal":0,"creditTotal":450000,"debitBalance":0,"creditBalance":450000,"order":5},{"name":"減価償却費","debitTotal":100000,"creditTotal":0,"debitBalance":100000,"creditBalance":0,"order":6},{"name":"貸倒引当金","debitTotal":15000,"creditTotal":null,"debitBalance":0,"creditBalance":20000,"order":7},{"name":"貸倒引当金繰入","debitTotal":17000,"creditTotal":0,"debitBalance":17000,"creditBalance":0,"order":8}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[300000,325000,350000,375000],"hint":"期首商品棚卸高"},{"accountIndex":3,"column":"debitTotal","choices":[3100000,3125000,3150000,3175000],"hint":"期首 + 仕入 - 期末"},{"accountIndex":6,"column":"creditTotal","choices":[20000,22000,24000,26000],"hint":"貸倒引当金の貸方合計"}],"context":"複合的な決算整理を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
-    explanation:
-      "売上原価算定、減価償却、貸倒引当金など、複数の決算整理を統合的に処理します。",
-    difficulty: 3,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["合計残高試算表","決算整理","売上原価","減価償却","貸倒引当金","複合問題"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_014",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_014","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年3月31日","sections":[{"title":"資産の部","items":[{"label":"Ⅰ 流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":500000,"indent":1,"order":2},{"label":"当座預金","amount":1200000,"indent":1,"order":3},{"label":"売掛金","amount":2500000,"indent":1,"order":4},{"label":"貸倒引当金","amount":-50000,"indent":1,"order":5},{"label":"繰越商品","amount":600000,"indent":1,"order":6},{"label":"前払保険料","amount":80000,"indent":1,"order":7},{"label":"未収利息","amount":15000,"indent":1,"order":8},{"label":"流動資産合計","amount":null,"indent":2,"order":9,"isBold":true},{"label":"Ⅱ 固定資産","amount":null,"indent":0,"order":10,"isBold":true},{"label":"建物","amount":8000000,"indent":1,"order":11},{"label":"建物減価償却累計額","amount":-2400000,"indent":1,"order":12},{"label":"備品","amount":1000000,"indent":1,"order":13},{"label":"備品減価償却累計額","amount":-400000,"indent":1,"order":14},{"label":"貸付金","amount":500000,"indent":1,"order":15},{"label":"固定資産合計","amount":6700000,"indent":2,"order":16},{"label":"資産合計","amount":11545000,"indent":0,"order":17,"isBold":true}]},{"title":"負債の部","items":[{"label":"Ⅰ 流動負債","amount":null,"indent":0,"order":1,"isBold":true},{"label":"買掛金","amount":800000,"indent":1,"order":2},{"label":"未払金","amount":150000,"indent":1,"order":3},{"label":"前受金","amount":100000,"indent":1,"order":4},{"label":"未払利息","amount":20000,"indent":1,"order":5},{"label":"流動負債合計","amount":1070000,"indent":2,"order":6},{"label":"Ⅱ 固定負債","amount":null,"indent":0,"order":7,"isBold":true},{"label":"借入金","amount":2000000,"indent":1,"order":8},{"label":"固定負債合計","amount":2000000,"indent":2,"order":9},{"label":"負債合計","amount":3070000,"indent":0,"order":10,"isBold":true},{"label":"Ⅲ 純資産の部","amount":null,"indent":0,"order":11,"isBold":true},{"label":"資本金","amount":10000000,"indent":1,"order":12},{"label":"繰越利益剰余金","amount":-1525000,"indent":1,"order":13},{"label":"純資産合計","amount":null,"indent":0,"order":14,"isBold":true}]}],"blanks":[{"sectionIndex":0,"itemIndex":8,"field":"amount","choices":[4745000,4795000,4845000,4895000],"hint":"流動資産各項目の合計（貸倒引当金控除後）"},{"sectionIndex":1,"itemIndex":13,"field":"amount","choices":[8375000,8425000,8475000,8525000],"hint":"資産合計 - 負債合計"}],"context":"複合決算整理を伴う貸借対照表の作成"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
-    explanation:
-      "決算整理項目を適切に処理し、流動資産・固定資産・流動負債・固定負債・純資産を正確に計算します。",
-    difficulty: 2,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","複合決算整理","貸倒引当金","減価償却累計額","経過勘定","純資産"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
     id: "Q3_TB_015",
     category_id: "trial_balance",
     question_text:
@@ -6044,40 +5569,6 @@ export const masterQuestions: Question[] = [
     difficulty: 2,
     tags_json:
       '{"subcategory":"fill_in_trial_balance","pattern":"fill_in_trial_balance","examSection":3,"keywords":["決算整理","消耗品","費用法","棚卸"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_CTB_015",
-    category_id: "trial_balance",
-    question_text:
-      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_CTB_015","type":"fill_in_comprehensive_trial_balance","date":"令和6年9月30日","title":"合計残高試算表","accounts":[{"name":"現金","debitTotal":5000000,"creditTotal":4500000,"debitBalance":null,"creditBalance":0,"order":1},{"name":"売掛金","debitTotal":2000000,"creditTotal":1200000,"debitBalance":800000,"creditBalance":0,"order":2},{"name":"受取手形","debitTotal":1500000,"creditTotal":900000,"debitBalance":600000,"creditBalance":0,"order":3},{"name":"繰越商品","debitTotal":500000,"creditTotal":450000,"debitBalance":50000,"creditBalance":0,"order":4},{"name":"建物","debitTotal":10000000,"creditTotal":0,"debitBalance":10000000,"creditBalance":0,"order":5},{"name":"買掛金","debitTotal":800000,"creditTotal":1300000,"debitBalance":0,"creditBalance":null,"order":6},{"name":"支払手形","debitTotal":null,"creditTotal":1000000,"debitBalance":0,"creditBalance":400000,"order":7},{"name":"借入金","debitTotal":200000,"creditTotal":1000000,"debitBalance":0,"creditBalance":800000,"order":8},{"name":"資本金","debitTotal":0,"creditTotal":15000000,"debitBalance":0,"creditBalance":15000000,"order":9},{"name":"売上","debitTotal":0,"creditTotal":8000000,"debitBalance":0,"creditBalance":8000000,"order":10},{"name":"仕入","debitTotal":5500000,"creditTotal":0,"debitBalance":5500000,"creditBalance":0,"order":11}],"blanks":[{"accountIndex":0,"column":"debitBalance","choices":[400000,450000,500000,550000],"hint":"借方合計 - 貸方合計"},{"accountIndex":5,"column":"creditBalance","choices":[400000,450000,500000,550000],"hint":"貸方合計 - 借方合計"},{"accountIndex":6,"column":"debitTotal","choices":[500000,550000,600000,650000],"hint":"貸方合計 - 貸方残高"}],"context":"合計残高試算表の全体構造を理解する"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
-    explanation:
-      "合計残高試算表は、各勘定の借方合計・貸方合計・借方残高・貸方残高を表示し、勘定の動きと残高を同時に確認できます。",
-    difficulty: 3,
-    tags_json:
-      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","総合問題","資産","負債","資本","収益","費用"]}',
-    created_at: "2025-10-01T13:48:51.149Z",
-    updated_at: "2025-10-01T13:48:51.149Z",
-  },
-  {
-    id: "Q3_FS_015",
-    category_id: "trial_balance",
-    question_text:
-      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
-    answer_template_json:
-      '{"id":"Q3_FS_015","type":"fill_in_financial_statement","statementType":"comprehensive","date":"令和6年3月31日","incomeStatement":{"items":[{"label":"Ⅰ. 売上高","amount":15000000,"indent":0,"order":1},{"label":"Ⅱ. 売上原価","amount":null,"indent":0,"order":2},{"label":"期首商品棚卸高","amount":800000,"indent":1,"order":3},{"label":"当期商品仕入高","amount":9500000,"indent":1,"order":4},{"label":"期末商品棚卸高","amount":900000,"indent":1,"order":5},{"label":"売上原価","amount":null,"indent":2,"order":6,"isBold":true},{"label":"売上総利益","amount":5600000,"indent":1,"order":7,"isBold":true},{"label":"Ⅲ. 販売費及び一般管理費","amount":null,"indent":0,"order":8},{"label":"給料","amount":2400000,"indent":1,"order":9},{"label":"減価償却費","amount":600000,"indent":1,"order":10},{"label":"貸倒引当金繰入","amount":120000,"indent":1,"order":11},{"label":"消耗品費","amount":180000,"indent":1,"order":12},{"label":"その他経費","amount":500000,"indent":1,"order":13},{"label":"販売費及び一般管理費合計","amount":3800000,"indent":2,"order":14},{"label":"営業利益","amount":1800000,"indent":1,"order":15,"isBold":true},{"label":"Ⅳ. 営業外収益","amount":80000,"indent":0,"order":16},{"label":"Ⅴ. 営業外費用","amount":60000,"indent":0,"order":17},{"label":"経常利益","amount":1820000,"indent":1,"order":18,"isBold":true},{"label":"Ⅵ. 特別利益","amount":100000,"indent":0,"order":19},{"label":"Ⅶ. 特別損失","amount":120000,"indent":0,"order":20},{"label":"税引前当期純利益","amount":1800000,"indent":1,"order":21,"isBold":true},{"label":"法人税、住民税及び事業税","amount":600000,"indent":0,"order":22},{"label":"当期純利益","amount":1200000,"indent":1,"order":23,"isBold":true}]},"balanceSheet":{"sections":[{"title":"資産の部","items":[{"label":"Ⅰ 流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":800000,"indent":1,"order":2},{"label":"当座預金","amount":2500000,"indent":1,"order":3},{"label":"売掛金","amount":6000000,"indent":1,"order":4},{"label":"貸倒引当金","amount":-120000,"indent":1,"order":5},{"label":"繰越商品","amount":900000,"indent":1,"order":6},{"label":"前払費用","amount":150000,"indent":1,"order":7},{"label":"未収収益","amount":30000,"indent":1,"order":8},{"label":"流動資産合計","amount":null,"indent":2,"order":9,"isBold":true},{"label":"Ⅱ 固定資産","amount":null,"indent":0,"order":10,"isBold":true},{"label":"建物","amount":15000000,"indent":1,"order":11},{"label":"建物減価償却累計額","amount":-4500000,"indent":1,"order":12},{"label":"備品","amount":2000000,"indent":1,"order":13},{"label":"備品減価償却累計額","amount":-800000,"indent":1,"order":14},{"label":"土地","amount":10000000,"indent":1,"order":15},{"label":"固定資産合計","amount":21700000,"indent":2,"order":16},{"label":"資産合計","amount":29800000,"indent":0,"order":17,"isBold":true}]},{"title":"負債の部","items":[{"label":"Ⅰ 流動負債","amount":null,"indent":0,"order":1,"isBold":true},{"label":"買掛金","amount":1500000,"indent":1,"order":2},{"label":"未払金","amount":300000,"indent":1,"order":3},{"label":"前受金","amount":200000,"indent":1,"order":4},{"label":"未払利息","amount":40000,"indent":1,"order":5},{"label":"未払法人税等","amount":600000,"indent":1,"order":6},{"label":"流動負債合計","amount":2640000,"indent":2,"order":7},{"label":"Ⅱ 固定負債","amount":null,"indent":0,"order":8,"isBold":true},{"label":"借入金","amount":4000000,"indent":1,"order":9},{"label":"固定負債合計","amount":4000000,"indent":2,"order":10},{"label":"負債合計","amount":6640000,"indent":0,"order":11,"isBold":true},{"label":"Ⅲ 純資産の部","amount":null,"indent":0,"order":12,"isBold":true},{"label":"資本金","amount":20000000,"indent":1,"order":13},{"label":"繰越利益剰余金","amount":null,"indent":1,"order":14,"isBold":true},{"label":"純資産合計","amount":23160000,"indent":0,"order":15,"isBold":true}]}]},"blanks":[{"statementType":"incomeStatement","itemIndex":5,"field":"amount","choices":[9200000,9300000,9400000,9500000],"hint":"期首 + 仕入 - 期末"},{"statementType":"balanceSheet","sectionIndex":0,"itemIndex":8,"field":"amount","choices":[10110000,10160000,10210000,10260000],"hint":"流動資産各項目の合計"},{"statementType":"balanceSheet","sectionIndex":1,"itemIndex":13,"field":"amount","choices":[3060000,3110000,3160000,3210000],"hint":"前期繰越 + 当期純利益"}],"context":"損益計算書と貸借対照表を統合的に理解する総合問題"}',
-    correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":3},{"index":2,"correctIndex":2}]}',
-    explanation:
-      "財務諸表の各項目が相互に関連し、決算整理を通じて損益と財政状態を正確に表示します。",
-    difficulty: 3,
-    tags_json:
-      '{"subcategory":"fill_in_financial_statement","pattern":"総合問題","examSection":3,"keywords":["総合問題","損益計算書","貸借対照表","財務諸表","決算整理","当期純利益","繰越利益剰余金"]}',
     created_at: "2025-10-01T13:48:51.149Z",
     updated_at: "2025-10-01T13:48:51.149Z",
   },
@@ -6158,6 +5649,515 @@ export const masterQuestions: Question[] = [
     difficulty: 3,
     tags_json:
       '{"subcategory":"fill_in_trial_balance","pattern":"fill_in_trial_balance","examSection":3,"keywords":["決算整理","売上原価","貸倒引当金","減価償却","総合問題"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_001",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_001","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"合計残高試算表","accounts":[{"name":"現金","debitTotal":800000,"creditTotal":500000,"debitBalance":null,"creditBalance":0,"order":1},{"name":"商品","debitTotal":1200000,"creditTotal":null,"debitBalance":400000,"creditBalance":0,"order":2},{"name":"買掛金","debitTotal":600000,"creditTotal":900000,"debitBalance":0,"creditBalance":null,"order":3},{"name":"資本金","debitTotal":0,"creditTotal":500000,"debitBalance":0,"creditBalance":500000,"order":4}],"blanks":[{"accountIndex":0,"column":"debitBalance","choices":[200000,250000,300000,350000],"hint":"借方合計 - 貸方合計"},{"accountIndex":1,"column":"creditTotal","choices":[600000,700000,800000,900000],"hint":"借方合計 - 借方残高"},{"accountIndex":2,"column":"creditBalance","choices":[200000,250000,300000,350000],"hint":"貸方合計 - 借方合計"}],"context":"残高は合計の差額として計算される"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
+    explanation:
+      "合計残高試算表では、借方合計・貸方合計から残高を計算する能力が求められます。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","差額計算"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_002",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_002","type":"fill_in_comprehensive_trial_balance","date":"令和6年4月30日","title":"合計残高試算表","accounts":[{"name":"売掛金","debitTotal":1500000,"creditTotal":null,"debitBalance":300000,"creditBalance":0,"order":1},{"name":"買掛金","debitTotal":null,"creditTotal":1800000,"debitBalance":0,"creditBalance":600000,"order":2},{"name":"売上","debitTotal":0,"creditTotal":2000000,"debitBalance":0,"creditBalance":2000000,"order":3},{"name":"仕入","debitTotal":null,"creditTotal":0,"debitBalance":1400000,"creditBalance":0,"order":4}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[1000000,1100000,1200000,1300000],"hint":"借方合計 - 借方残高"},{"accountIndex":1,"column":"debitTotal","choices":[1000000,1100000,1200000,1300000],"hint":"貸方合計 - 貸方残高"},{"accountIndex":3,"column":"debitTotal","choices":[1300000,1350000,1400000,1450000],"hint":"貸方合計0なら借方合計=借方残高"}],"context":"売掛金・買掛金の合計と残高の関係を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
+    explanation:
+      "合計残高試算表では、債権・債務勘定の合計から残高を導く計算が重要です。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","売掛金","買掛金"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_003",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_003","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"合計残高試算表","accounts":[{"name":"給料","debitTotal":null,"creditTotal":0,"debitBalance":960000,"creditBalance":0,"order":1},{"name":"通信費","debitTotal":48000,"creditTotal":0,"debitBalance":48000,"creditBalance":0,"order":2},{"name":"水道光熱費","debitTotal":null,"creditTotal":0,"debitBalance":36000,"creditBalance":0,"order":3},{"name":"資本金","debitTotal":0,"creditTotal":1000000,"debitBalance":0,"creditBalance":1000000,"order":4}],"blanks":[{"accountIndex":0,"column":"debitTotal","choices":[900000,920000,940000,960000],"hint":"費用勘定は借方合計=借方残高"},{"accountIndex":2,"column":"debitTotal","choices":[30000,32000,34000,36000],"hint":"費用勘定は借方合計=借方残高"}],"context":"費用勘定の特性（貸方合計ゼロ、借方合計=借方残高）を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":3},{"index":1,"correctIndex":3}]}',
+    explanation:
+      "費用勘定は通常、借方のみに記録されるため、借方合計と借方残高が一致します。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","費用勘定","給料","経費"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_004",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_004","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"建物","debitTotal":2000000,"creditTotal":0,"debitBalance":2000000,"creditBalance":0,"order":1},{"name":"減価償却累計額（建物）","debitTotal":0,"creditTotal":null,"debitBalance":0,"creditBalance":600000,"order":2},{"name":"減価償却費","debitTotal":null,"creditTotal":0,"debitBalance":100000,"creditBalance":0,"order":3}],"blanks":[{"accountIndex":1,"column":"creditTotal","choices":[500000,550000,600000,650000],"hint":"評価勘定は貸方合計=貸方残高"},{"accountIndex":2,"column":"debitTotal","choices":[80000,90000,100000,110000],"hint":"費用勘定は借方合計=借方残高"}],"context":"減価償却関連勘定の特性を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
+    explanation:
+      "減価償却累計額（評価勘定）と減価償却費（費用勘定）は、それぞれ一方向のみに記録されます。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["決算整理","減価償却","評価勘定"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_005",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_005","type":"fill_in_comprehensive_trial_balance","date":"令和6年4月30日","title":"合計残高試算表","accounts":[{"name":"受取手形","debitTotal":800000,"creditTotal":null,"debitBalance":200000,"creditBalance":0,"order":1},{"name":"支払手形","debitTotal":null,"creditTotal":1200000,"debitBalance":0,"creditBalance":400000,"order":2},{"name":"手形売却損","debitTotal":null,"creditTotal":0,"debitBalance":5000,"creditBalance":0,"order":3}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[500000,550000,600000,650000],"hint":"借方合計 - 借方残高"},{"accountIndex":1,"column":"debitTotal","choices":[700000,750000,800000,850000],"hint":"貸方合計 - 貸方残高"},{"accountIndex":2,"column":"debitTotal","choices":[3000,4000,5000,6000],"hint":"費用勘定は借方合計=借方残高"}],"context":"手形取引の合計と残高の関係を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
+    explanation:
+      "受取手形・支払手形は、発生と決済の両方が記録されるため、合計と残高の差額が重要です。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","手形","手形売却損"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_006",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_006","type":"fill_in_comprehensive_trial_balance","date":"令和6年5月31日","title":"合計残高試算表","accounts":[{"name":"貸付金","debitTotal":1500000,"creditTotal":null,"debitBalance":300000,"creditBalance":0,"order":1},{"name":"借入金","debitTotal":null,"creditTotal":800000,"debitBalance":0,"creditBalance":200000,"order":2},{"name":"受取利息","debitTotal":0,"creditTotal":null,"debitBalance":0,"creditBalance":15000,"order":3}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[1100000,1150000,1200000,1250000],"hint":"借方合計 - 借方残高"},{"accountIndex":1,"column":"debitTotal","choices":[500000,550000,600000,650000],"hint":"貸方合計 - 貸方残高"},{"accountIndex":2,"column":"creditTotal","choices":[12000,13000,14000,15000],"hint":"収益勘定は貸方合計=貸方残高"}],"context":"貸付金・借入金の合計と残高の関係を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":3}]}',
+    explanation:
+      "貸付金・借入金は、発生と返済の両方が記録されるため、合計と残高の差額が重要です。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","貸付金","借入金","受取利息"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_007",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_007","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"売掛金","debitTotal":800000,"creditTotal":200000,"debitBalance":null,"creditBalance":0,"order":1},{"name":"受取手形","debitTotal":500000,"creditTotal":100000,"debitBalance":400000,"creditBalance":0,"order":2},{"name":"貸倒引当金","debitTotal":8000,"creditTotal":null,"debitBalance":0,"creditBalance":20000,"order":3},{"name":"貸倒引当金繰入","debitTotal":null,"creditTotal":0,"debitBalance":14000,"creditBalance":0,"order":4}],"blanks":[{"accountIndex":0,"column":"debitBalance","choices":[500000,550000,600000,650000],"hint":"借方合計 - 貸方合計"},{"accountIndex":2,"column":"creditTotal","choices":[20000,22000,24000,26000],"hint":"期首残高 + 繰入額 + 調整"},{"accountIndex":3,"column":"debitTotal","choices":[10000,12000,14000,16000],"hint":"費用勘定は借方合計=借方残高"}],"context":"貸倒引当金の設定と合計残高試算表での表示を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":1},{"index":2,"correctIndex":2}]}',
+    explanation:
+      "貸倒引当金は評価性引当金で、売掛債権の期末残高に対して一定率を設定します。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["合計残高試算表","決算整理","貸倒引当金","差額補充法"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_008",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_008","type":"fill_in_comprehensive_trial_balance","date":"令和6年6月30日","title":"合計残高試算表","accounts":[{"name":"前払保険料","debitTotal":null,"creditTotal":0,"debitBalance":60000,"creditBalance":0,"order":1},{"name":"保険料","debitTotal":120000,"creditTotal":null,"debitBalance":60000,"creditBalance":0,"order":2},{"name":"前受家賃","debitTotal":30000,"creditTotal":90000,"debitBalance":0,"creditBalance":null,"order":3}],"blanks":[{"accountIndex":0,"column":"debitTotal","choices":[50000,60000,70000,80000],"hint":"前払資産の計上額"},{"accountIndex":1,"column":"creditTotal","choices":[50000,60000,70000,80000],"hint":"前払から費用への振替額"},{"accountIndex":2,"column":"creditBalance","choices":[50000,60000,70000,80000],"hint":"前受合計 - 収益化"}],"context":"前払・前受の処理と合計残高試算表での表示を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":1},{"index":1,"correctIndex":1},{"index":2,"correctIndex":1}]}',
+    explanation:
+      "前払・前受は、時の経過に伴い資産・負債から費用・収益に振り替えられます。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","前払","前受","期間按分"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_009",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_009","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"繰越商品","debitTotal":null,"creditTotal":400000,"debitBalance":350000,"creditBalance":0,"order":1},{"name":"仕入","debitTotal":2800000,"creditTotal":null,"debitBalance":0,"creditBalance":0,"order":2},{"name":"売上","debitTotal":0,"creditTotal":4000000,"debitBalance":0,"creditBalance":4000000,"order":3},{"name":"売上原価","debitTotal":null,"creditTotal":0,"debitBalance":2850000,"creditBalance":0,"order":4}],"blanks":[{"accountIndex":0,"column":"debitTotal","choices":[300000,325000,350000,375000],"hint":"期末商品棚卸高"},{"accountIndex":1,"column":"creditTotal","choices":[3150000,3175000,3200000,3225000],"hint":"期末商品 + 売上原価振替"},{"accountIndex":3,"column":"debitTotal","choices":[2800000,2825000,2850000,2875000],"hint":"期首 + 仕入 - 期末"}],"context":"三分法による売上原価の算定と決算整理を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
+    explanation:
+      "三分法では、決算時に期首・期末商品を振り替えて売上原価を算定します。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["合計残高試算表","決算整理","三分法","売上原価","繰越商品"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_010",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_010","type":"fill_in_comprehensive_trial_balance","date":"令和6年7月31日","title":"合計残高試算表","accounts":[{"name":"未収利息","debitTotal":null,"creditTotal":0,"debitBalance":3000,"creditBalance":0,"order":1},{"name":"受取利息","debitTotal":0,"creditTotal":null,"debitBalance":0,"creditBalance":15000,"order":2},{"name":"未払利息","debitTotal":0,"creditTotal":null,"debitBalance":0,"creditBalance":2000,"order":3},{"name":"支払利息","debitTotal":10000,"creditTotal":0,"debitBalance":10000,"creditBalance":0,"order":4}],"blanks":[{"accountIndex":0,"column":"debitTotal","choices":[2000,2500,3000,3500],"hint":"未収利息の計上額"},{"accountIndex":1,"column":"creditTotal","choices":[12000,13000,14000,15000],"hint":"現金受取 + 未収"},{"accountIndex":2,"column":"creditTotal","choices":[1500,2000,2500,3000],"hint":"未払利息の計上額"}],"context":"未収・未払利息の処理を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":3},{"index":2,"correctIndex":1}]}',
+    explanation:
+      "未収・未払利息は、発生主義に基づき期末に計上される経過勘定項目です。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","未収","未払","経過勘定"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_011",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_011","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"消耗品","debitTotal":null,"creditTotal":180000,"debitBalance":50000,"creditBalance":0,"order":1},{"name":"消耗品費","debitTotal":200000,"creditTotal":null,"debitBalance":180000,"creditBalance":0,"order":2}],"blanks":[{"accountIndex":0,"column":"debitTotal","choices":[40000,45000,50000,55000],"hint":"期末未使用分の振替"},{"accountIndex":1,"column":"creditTotal","choices":[15000,20000,25000,30000],"hint":"期末振替 - 期首費用化"}],"context":"消耗品の購入時費用処理法と決算整理を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":1}]}',
+    explanation: "購入時費用処理法では、決算時に未使用分を資産に振り替えます。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["合計残高試算表","決算整理","消耗品","購入時費用処理法"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_012",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_012","type":"fill_in_comprehensive_trial_balance","date":"令和6年8月31日","title":"合計残高試算表","accounts":[{"name":"仮払金","debitTotal":100000,"creditTotal":null,"debitBalance":0,"creditBalance":0,"order":1},{"name":"旅費交通費","debitTotal":null,"creditTotal":0,"debitBalance":70000,"creditBalance":0,"order":2},{"name":"仮受金","debitTotal":null,"creditTotal":80000,"debitBalance":0,"creditBalance":0,"order":3},{"name":"売掛金","debitTotal":0,"creditTotal":80000,"debitBalance":0,"creditBalance":80000,"order":4}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[90000,95000,100000,105000],"hint":"精算 + 返金"},{"accountIndex":1,"column":"debitTotal","choices":[60000,65000,70000,75000],"hint":"実際の旅費"},{"accountIndex":2,"column":"debitTotal","choices":[70000,75000,80000,85000],"hint":"仮受金の振替額"}],"context":"仮払金・仮受金の処理を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
+    explanation:
+      "仮払金・仮受金は、金額または内容が不明な場合の一時的な勘定科目です。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","仮払金","仮受金","経過勘定"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_013",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_013","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"引出金","debitTotal":600000,"creditTotal":null,"debitBalance":0,"creditBalance":0,"order":1},{"name":"資本金","debitTotal":null,"creditTotal":1000000,"debitBalance":0,"creditBalance":1000000,"order":2},{"name":"当期純利益","debitTotal":0,"creditTotal":null,"debitBalance":0,"creditBalance":400000,"order":3}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[500000,550000,600000,650000],"hint":"引出金の振替額"},{"accountIndex":1,"column":"debitTotal","choices":[400000,500000,600000,700000],"hint":"引出金の振替額"},{"accountIndex":2,"column":"creditTotal","choices":[300000,350000,400000,450000],"hint":"当期の利益"}],"context":"引出金の決算整理と資本の変動を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
+    explanation:
+      "引出金は決算時に資本金から減額され、当期純利益とともに資本の変動を構成します。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["合計残高試算表","決算整理","引出金","資本金","当期純利益"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_014",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_014","type":"fill_in_comprehensive_trial_balance","date":"令和6年3月31日","title":"決算整理後合計残高試算表","accounts":[{"name":"繰越商品","debitTotal":400000,"creditTotal":null,"debitBalance":400000,"creditBalance":0,"order":1},{"name":"仕入","debitTotal":3200000,"creditTotal":3200000,"debitBalance":0,"creditBalance":0,"order":2},{"name":"売上","debitTotal":0,"creditTotal":5000000,"debitBalance":0,"creditBalance":5000000,"order":3},{"name":"売上原価","debitTotal":null,"creditTotal":0,"debitBalance":3150000,"creditBalance":0,"order":4},{"name":"建物減価償却累計額","debitTotal":0,"creditTotal":450000,"debitBalance":0,"creditBalance":450000,"order":5},{"name":"減価償却費","debitTotal":100000,"creditTotal":0,"debitBalance":100000,"creditBalance":0,"order":6},{"name":"貸倒引当金","debitTotal":15000,"creditTotal":null,"debitBalance":0,"creditBalance":20000,"order":7},{"name":"貸倒引当金繰入","debitTotal":17000,"creditTotal":0,"debitBalance":17000,"creditBalance":0,"order":8}],"blanks":[{"accountIndex":0,"column":"creditTotal","choices":[300000,325000,350000,375000],"hint":"期首商品棚卸高"},{"accountIndex":3,"column":"debitTotal","choices":[3100000,3125000,3150000,3175000],"hint":"期首 + 仕入 - 期末"},{"accountIndex":6,"column":"creditTotal","choices":[20000,22000,24000,26000],"hint":"貸倒引当金の貸方合計"}],"context":"複合的な決算整理を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
+    explanation:
+      "売上原価算定、減価償却、貸倒引当金など、複数の決算整理を統合的に処理します。",
+    difficulty: 3,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"決算整理後合計残高試算表","examSection":3,"keywords":["合計残高試算表","決算整理","売上原価","減価償却","貸倒引当金","複合問題"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_CTB_015",
+    category_id: "trial_balance",
+    question_text:
+      "以下の合計残高試算表の空欄を埋めてください。借方合計・貸方合計から残高を計算して、適切な金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_CTB_015","type":"fill_in_comprehensive_trial_balance","date":"令和6年9月30日","title":"合計残高試算表","accounts":[{"name":"現金","debitTotal":5000000,"creditTotal":4500000,"debitBalance":null,"creditBalance":0,"order":1},{"name":"売掛金","debitTotal":2000000,"creditTotal":1200000,"debitBalance":800000,"creditBalance":0,"order":2},{"name":"受取手形","debitTotal":1500000,"creditTotal":900000,"debitBalance":600000,"creditBalance":0,"order":3},{"name":"繰越商品","debitTotal":500000,"creditTotal":450000,"debitBalance":50000,"creditBalance":0,"order":4},{"name":"建物","debitTotal":10000000,"creditTotal":0,"debitBalance":10000000,"creditBalance":0,"order":5},{"name":"買掛金","debitTotal":800000,"creditTotal":1300000,"debitBalance":0,"creditBalance":null,"order":6},{"name":"支払手形","debitTotal":null,"creditTotal":1000000,"debitBalance":0,"creditBalance":400000,"order":7},{"name":"借入金","debitTotal":200000,"creditTotal":1000000,"debitBalance":0,"creditBalance":800000,"order":8},{"name":"資本金","debitTotal":0,"creditTotal":15000000,"debitBalance":0,"creditBalance":15000000,"order":9},{"name":"売上","debitTotal":0,"creditTotal":8000000,"debitBalance":0,"creditBalance":8000000,"order":10},{"name":"仕入","debitTotal":5500000,"creditTotal":0,"debitBalance":5500000,"creditBalance":0,"order":11}],"blanks":[{"accountIndex":0,"column":"debitBalance","choices":[400000,450000,500000,550000],"hint":"借方合計 - 貸方合計"},{"accountIndex":5,"column":"creditBalance","choices":[400000,450000,500000,550000],"hint":"貸方合計 - 借方合計"},{"accountIndex":6,"column":"debitTotal","choices":[500000,550000,600000,650000],"hint":"貸方合計 - 貸方残高"}],"context":"合計残高試算表の全体構造を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
+    explanation:
+      "合計残高試算表は、各勘定の借方合計・貸方合計・借方残高・貸方残高を表示し、勘定の動きと残高を同時に確認できます。",
+    difficulty: 3,
+    tags_json:
+      '{"subcategory":"fill_in_comprehensive_trial_balance","pattern":"合計残高試算表","examSection":3,"keywords":["合計残高試算表","総合問題","資産","負債","資本","収益","費用"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_001",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_001","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":null,"amount":2000000,"indent":0,"order":1,"isBold":true},{"label":"売上原価","amount":null,"indent":0,"order":2,"isBold":true},{"label":"期首商品棚卸高","amount":100000,"indent":1,"order":3},{"label":"当期商品仕入高","amount":1200000,"indent":1,"order":4},{"label":"期末商品棚卸高","amount":150000,"indent":1,"order":5},{"label":"売上原価","amount":null,"indent":1,"order":6},{"label":"売上総利益","amount":850000,"indent":1,"order":7,"isBold":true},{"label":"販売費及び一般管理費","amount":null,"indent":0,"order":8,"isBold":true},{"label":"給料","amount":300000,"indent":1,"order":9},{"label":"通信費","amount":50000,"indent":1,"order":10},{"label":"販売費及び一般管理費合計","amount":350000,"indent":1,"order":11},{"label":null,"amount":500000,"indent":1,"order":12,"isBold":true}],"blanks":[{"itemIndex":0,"field":"label","choices":["売上高","営業収益","収益","売上"],"hint":"損益計算書の最初の項目"},{"itemIndex":5,"field":"amount","choices":[1050000,1100000,1150000,1200000],"hint":"期首+仕入-期末"},{"itemIndex":11,"field":"label","choices":["営業利益","経常利益","当期純利益","税引前当期純利益"],"hint":"売上総利益 - 販売費及び一般管理費"}],"context":"売上原価の計算式と営業利益の位置を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":2},{"index":2,"correctIndex":0}]}',
+    explanation:
+      "損益計算書の基本構造は、売上高→売上原価→売上総利益→販売費及び一般管理費→営業利益の順です。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","売上原価","営業利益"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_002",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_002","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年3月31日","items":[{"label":null,"amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":200000,"indent":1,"order":2},{"label":"当座預金","amount":300000,"indent":1,"order":3},{"label":"売掛金","amount":250000,"indent":1,"order":4},{"label":"流動資産合計","amount":750000,"indent":1,"order":5},{"label":"固定資産","amount":null,"indent":0,"order":6,"isBold":true},{"label":"建物","amount":1000000,"indent":1,"order":7},{"label":"減価償却累計額","amount":-200000,"indent":1,"order":8},{"label":"固定資産合計","amount":950000,"indent":1,"order":9},{"label":"資産合計","amount":1700000,"indent":0,"order":10,"isBold":true},{"label":"負債の部","amount":null,"indent":0,"order":11,"isBold":true},{"label":"買掛金","amount":150000,"indent":1,"order":12},{"label":"未払金","amount":null,"indent":1,"order":13},{"label":"負債合計","amount":200000,"indent":1,"order":14},{"label":"純資産の部","amount":null,"indent":0,"order":15,"isBold":true},{"label":"資本金","amount":1000000,"indent":1,"order":16},{"label":"繰越利益剰余金","amount":null,"indent":1,"order":17},{"label":"純資産合計","amount":1500000,"indent":1,"order":18},{"label":"負債・純資産合計","amount":1700000,"indent":0,"order":19,"isBold":true}],"blanks":[{"itemIndex":0,"field":"label","choices":["流動資産","当座資産","現金及び預金","資産"],"hint":"資産の部の最初の大項目"},{"itemIndex":12,"field":"amount","choices":[30000,40000,50000,60000],"hint":"負債合計 - 買掛金"},{"itemIndex":16,"field":"amount","choices":[400000,450000,500000,550000],"hint":"純資産合計 - 資本金"}],"context":"貸借対照表の基本構造（資産・負債・純資産）を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":2},{"index":2,"correctIndex":2}]}',
+    explanation:
+      "貸借対照表は、左側に資産、右側に負債と純資産を表示し、両者の合計は必ず一致します。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","流動資産","繰越利益剰余金"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_003",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_003","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":"売上高","amount":3000000,"indent":0,"order":1,"isBold":true},{"label":"売上原価","amount":1800000,"indent":0,"order":2},{"label":"売上総利益","amount":1200000,"indent":1,"order":3},{"label":"販売費及び一般管理費","amount":600000,"indent":0,"order":4},{"label":"営業利益","amount":600000,"indent":1,"order":5,"isBold":true},{"label":null,"amount":null,"indent":0,"order":6,"isBold":true},{"label":"受取利息","amount":20000,"indent":1,"order":7},{"label":"受取配当金","amount":null,"indent":1,"order":8},{"label":"営業外収益合計","amount":35000,"indent":1,"order":9},{"label":"営業外費用","amount":null,"indent":0,"order":10,"isBold":true},{"label":"支払利息","amount":15000,"indent":1,"order":11},{"label":"営業外費用合計","amount":15000,"indent":1,"order":12},{"label":null,"amount":620000,"indent":1,"order":13,"isBold":true}],"blanks":[{"itemIndex":5,"field":"label","choices":["営業外収益","特別利益","その他の収益","雑収入"],"hint":"営業利益の次の収益項目"},{"itemIndex":7,"field":"amount","choices":[10000,15000,20000,25000],"hint":"営業外収益合計 - 受取利息"},{"itemIndex":12,"field":"label","choices":["経常利益","税引前当期純利益","当期純利益","営業利益"],"hint":"営業利益 + 営業外収益 - 営業外費用"}],"context":"営業外損益と経常利益の計算を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":1},{"index":2,"correctIndex":0}]}',
+    explanation:
+      "損益計算書では、営業利益に営業外収益を加え、営業外費用を差し引いて経常利益を算出します。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","営業外損益","経常利益"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_004",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_004","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年3月31日","items":[{"label":"流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":150000,"indent":1,"order":2},{"label":"当座預金","amount":250000,"indent":1,"order":3},{"label":"流動資産合計","amount":400000,"indent":1,"order":4},{"label":"固定資産","amount":null,"indent":0,"order":5,"isBold":true},{"label":"建物","amount":2000000,"indent":1,"order":6},{"label":"減価償却累計額（建物）","amount":-400000,"indent":1,"order":7},{"label":"備品","amount":500000,"indent":1,"order":8},{"label":"減価償却累計額（備品）","amount":-150000,"indent":1,"order":9},{"label":"土地","amount":3000000,"indent":1,"order":10},{"label":"固定資産合計","amount":null,"indent":1,"order":11},{"label":"資産合計","amount":null,"indent":0,"order":12,"isBold":true}],"blanks":[{"itemIndex":10,"field":"amount","choices":[4500000,4750000,4950000,5150000],"hint":"(建物-減価償却)+(備品-減価償却)+土地"},{"itemIndex":11,"field":"amount","choices":[5200000,5300000,5350000,5450000],"hint":"流動資産合計 + 固定資産合計"}],"context":"固定資産の帳簿価額計算と資産合計の算出"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
+    explanation:
+      "固定資産は取得原価から減価償却累計額を差し引いた帳簿価額で表示されます。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","固定資産","減価償却累計額","帳簿価額"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_005",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_005","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":"営業利益","amount":800000,"indent":0,"order":1,"isBold":true},{"label":"営業外収益","amount":50000,"indent":0,"order":2},{"label":"営業外費用","amount":30000,"indent":0,"order":3},{"label":"経常利益","amount":820000,"indent":1,"order":4,"isBold":true},{"label":"特別利益","amount":20000,"indent":0,"order":5},{"label":"特別損失","amount":40000,"indent":0,"order":6},{"label":"税引前当期純利益","amount":null,"indent":1,"order":7,"isBold":true},{"label":"法人税、住民税及び事業税","amount":null,"indent":0,"order":8},{"label":"当期純利益","amount":560000,"indent":1,"order":9,"isBold":true}],"blanks":[{"itemIndex":6,"field":"amount","choices":[750000,780000,800000,820000],"hint":"経常利益 + 特別利益 - 特別損失"},{"itemIndex":7,"field":"amount","choices":[190000,220000,240000,260000],"hint":"税引前当期純利益 - 当期純利益"}],"context":"特別損益と法人税等の処理を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
+    explanation:
+      "損益計算書では、経常利益に特別損益を加減し、法人税等を差し引いて当期純利益を算出します。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","特別損益","法人税","当期純利益"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_006",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_006","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年6月30日","sections":[{"title":"資産の部","items":[{"label":"Ⅰ 流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":200000,"indent":1,"order":2},{"label":"当座預金","amount":500000,"indent":1,"order":3},{"label":"売掛金","amount":300000,"indent":1,"order":4},{"label":"受取手形","amount":250000,"indent":1,"order":5},{"label":"繰越商品","amount":150000,"indent":1,"order":6},{"label":"流動資産合計","amount":1400000,"indent":2,"order":7}]},{"title":"負債の部","items":[{"label":"Ⅰ 流動負債","amount":null,"indent":0,"order":1,"isBold":true},{"label":"買掛金","amount":null,"indent":1,"order":2,"isBold":true},{"label":"支払手形","amount":null,"indent":1,"order":3,"isBold":true},{"label":"未払金","amount":50000,"indent":1,"order":4},{"label":"流動負債合計","amount":800000,"indent":2,"order":5}]}],"blanks":[{"sectionIndex":1,"itemIndex":1,"field":"amount","choices":[400000,420000,450000,480000],"hint":"流動負債合計から未払金を引いた金額の3/5"},{"sectionIndex":1,"itemIndex":2,"field":"amount","choices":[250000,270000,300000,320000],"hint":"流動負債合計から未払金を引いた金額の2/5"}],"context":"流動負債の構成と比率計算を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
+    explanation:
+      "貸借対照表の流動負債には、買掛金、支払手形、未払金などが含まれ、比率計算で各項目を求めます。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","流動負債","買掛金","支払手形","比率計算"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_007",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_007","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":"Ⅰ. 売上高","amount":3000000,"indent":0,"order":1},{"label":"Ⅱ. 売上原価","amount":null,"indent":0,"order":2},{"label":"期首商品棚卸高","amount":200000,"indent":1,"order":3},{"label":"当期商品仕入高","amount":null,"indent":1,"order":4},{"label":"期末商品棚卸高","amount":250000,"indent":1,"order":5},{"label":"売上原価","amount":1950000,"indent":2,"order":6,"isBold":true},{"label":"売上総利益","amount":null,"indent":1,"order":7,"isBold":true},{"label":"Ⅲ. 販売費及び一般管理費","amount":700000,"indent":0,"order":8},{"label":"営業利益","amount":350000,"indent":1,"order":9,"isBold":true}],"blanks":[{"itemIndex":3,"field":"amount","choices":[1900000,1950000,2000000,2050000],"hint":"売上原価 - 期首 + 期末"},{"itemIndex":6,"field":"amount","choices":[900000,950000,1050000,1100000],"hint":"売上高 - 売上原価"}],"context":"売上原価と売上総利益の計算方法を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
+    explanation:
+      "売上総利益は売上高から売上原価を差し引いて算出され、商品販売による基本的な利益を表します。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","売上原価","売上総利益","三分法"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_008",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_008","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年9月30日","sections":[{"title":"資産の部","items":[{"label":"Ⅰ 流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":300000,"indent":1,"order":2},{"label":"売掛金","amount":500000,"indent":1,"order":3},{"label":"前払保険料","amount":null,"indent":1,"order":4,"isBold":true},{"label":"流動資産合計","amount":920000,"indent":2,"order":5}]},{"title":"負債の部","items":[{"label":"Ⅰ 流動負債","amount":null,"indent":0,"order":1,"isBold":true},{"label":"買掛金","amount":400000,"indent":1,"order":2},{"label":"前受金","amount":null,"indent":1,"order":3,"isBold":true},{"label":"流動負債合計","amount":550000,"indent":2,"order":4}]}],"blanks":[{"sectionIndex":1,"itemIndex":2,"field":"amount","choices":[100000,120000,140000,150000],"hint":"3か月分の前受家賃から1か月分を差し引く"},{"sectionIndex":0,"itemIndex":3,"field":"amount","choices":[200000,210000,220000,230000],"hint":"12か月分の保険料から1か月分を差し引く"}],"context":"前払費用と前受収益の決算整理を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":2}]}',
+    explanation:
+      "前払費用は資産、前受収益は負債として計上し、経過分を適切に費用・収益に振り替えます。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","前払費用","前受収益","経過勘定","決算整理"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_009",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_009","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":"Ⅰ. 売上高","amount":5000000,"indent":0,"order":1},{"label":"Ⅱ. 売上原価","amount":3000000,"indent":0,"order":2},{"label":"売上総利益","amount":null,"indent":1,"order":3,"isBold":true},{"label":"Ⅲ. 販売費及び一般管理費","amount":null,"indent":0,"order":4},{"label":"給料","amount":600000,"indent":1,"order":5},{"label":"旅費交通費","amount":200000,"indent":1,"order":6},{"label":"通信費","amount":100000,"indent":1,"order":7},{"label":"減価償却費","amount":150000,"indent":1,"order":8},{"label":"販売費及び一般管理費合計","amount":1050000,"indent":2,"order":9},{"label":"営業利益","amount":null,"indent":1,"order":10,"isBold":true}],"blanks":[{"itemIndex":2,"field":"amount","choices":[1800000,1900000,2000000,2100000],"hint":"売上高 - 売上原価"},{"itemIndex":9,"field":"amount","choices":[850000,900000,950000,1000000],"hint":"売上総利益 - 販管費"}],"context":"営業利益の算出と営業利益率の理解"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
+    explanation:
+      "営業利益は本業による利益を表し、売上総利益から販売費及び一般管理費を差し引いて算出します。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","営業利益","販売費及び一般管理費","営業利益率"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_010",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_010","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年12月31日","sections":[{"title":"資産の部","items":[{"label":"Ⅰ 流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":400000,"indent":1,"order":2},{"label":"売掛金","amount":600000,"indent":1,"order":3},{"label":"未収利息","amount":null,"indent":1,"order":4,"isBold":true},{"label":"流動資産合計","amount":1024000,"indent":2,"order":5}]},{"title":"負債の部","items":[{"label":"Ⅰ 流動負債","amount":null,"indent":0,"order":1,"isBold":true},{"label":"買掛金","amount":500000,"indent":1,"order":2},{"label":"未払利息","amount":null,"indent":1,"order":3,"isBold":true},{"label":"流動負債合計","amount":530000,"indent":2,"order":4}]}],"blanks":[{"sectionIndex":1,"itemIndex":2,"field":"amount","choices":[12000,13000,14000,15000],"hint":"借入金 × 年利率 × 月数/12"},{"sectionIndex":0,"itemIndex":3,"field":"amount","choices":[24000,27000,30000,33000],"hint":"貸付金 × 年利率 × 月数/12"}],"context":"未収収益と未払費用の決算整理を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":3},{"index":1,"correctIndex":2}]}',
+    explanation:
+      "未収利息は資産、未払利息は負債として計上し、経過期間に応じた利息を計算します。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","未収収益","未払費用","未収利息","未払利息","経過勘定","決算整理"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_011",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_011","type":"fill_in_financial_statement","statementType":"statement_of_changes_in_equity","date":"令和6年3月31日","items":[{"label":"前期末残高","amount":1200000,"indent":0,"order":1},{"label":"当期変動額","amount":null,"indent":0,"order":2},{"label":"剰余金の配当","amount":-60000,"indent":1,"order":3},{"label":"当期純利益","amount":null,"indent":1,"order":4,"isBold":true},{"label":"当期変動額合計","amount":540000,"indent":1,"order":5},{"label":"当期末残高","amount":null,"indent":0,"order":6,"isBold":true}],"blanks":[{"itemIndex":3,"field":"amount","choices":[550000,570000,590000,600000],"hint":"当期変動額合計 + 剰余金の配当"},{"itemIndex":5,"field":"amount","choices":[1650000,1700000,1740000,1800000],"hint":"前期末残高 + 当期変動額合計"}],"context":"繰越利益剰余金の変動を理解する"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":3},{"index":1,"correctIndex":2}]}',
+    explanation:
+      "繰越利益剰余金は、前期末残高に当期純利益を加算し、配当を減算して当期末残高を算出します。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["株主資本等変動計算書","繰越利益剰余金","当期純利益","剰余金の配当"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_012",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_012","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年3月31日","sections":[{"title":"決算整理前（負債・純資産の部）","items":[{"label":"Ⅰ 資本金","amount":5000000,"indent":0,"order":1},{"label":"Ⅱ 引出金","amount":null,"indent":0,"order":2,"isBold":true},{"label":"Ⅲ 繰越利益剰余金","amount":2000000,"indent":0,"order":3}]},{"title":"決算整理後（負債・純資産の部）","items":[{"label":"Ⅰ 資本金","amount":5000000,"indent":0,"order":1},{"label":"Ⅱ 繰越利益剰余金","amount":null,"indent":0,"order":2,"isBold":true}]}],"blanks":[{"sectionIndex":0,"itemIndex":1,"field":"amount","choices":[250000,280000,300000,320000],"hint":"店主が生活費として引き出した金額"},{"sectionIndex":1,"itemIndex":1,"field":"amount","choices":[2150000,2180000,2200000,2250000],"hint":"前期繰越 + 当期純利益 - 引出金"}],"context":"個人事業主の引出金と繰越利益剰余金の決算整理"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
+    explanation:
+      "引出金は決算時に繰越利益剰余金から減額され、決算整理後の貸借対照表には表示されません。",
+    difficulty: 1,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","引出金","繰越利益剰余金","個人事業主","決算整理"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_013",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_013","type":"fill_in_financial_statement","statementType":"income_statement","date":"令和6年3月31日","items":[{"label":"Ⅰ. 売上高","amount":8000000,"indent":0,"order":1},{"label":"Ⅱ. 売上原価","amount":null,"indent":0,"order":2},{"label":"期首商品棚卸高","amount":500000,"indent":1,"order":3},{"label":"当期商品仕入高","amount":5000000,"indent":1,"order":4},{"label":"期末商品棚卸高","amount":600000,"indent":1,"order":5},{"label":"売上原価","amount":null,"indent":2,"order":6,"isBold":true},{"label":"売上総利益","amount":3100000,"indent":1,"order":7,"isBold":true},{"label":"Ⅲ. 販売費及び一般管理費","amount":null,"indent":0,"order":8},{"label":"給料","amount":1200000,"indent":1,"order":9},{"label":"減価償却費","amount":300000,"indent":1,"order":10},{"label":"貸倒引当金繰入","amount":50000,"indent":1,"order":11},{"label":"消耗品費","amount":100000,"indent":1,"order":12},{"label":"支払家賃","amount":480000,"indent":1,"order":13},{"label":"販売費及び一般管理費合計","amount":2130000,"indent":2,"order":14},{"label":"営業利益","amount":null,"indent":1,"order":15,"isBold":true},{"label":"Ⅳ. 営業外収益","amount":null,"indent":0,"order":16},{"label":"受取利息","amount":30000,"indent":1,"order":17},{"label":"Ⅴ. 営業外費用","amount":null,"indent":0,"order":18},{"label":"支払利息","amount":20000,"indent":1,"order":19},{"label":"経常利益","amount":980000,"indent":1,"order":20,"isBold":true}],"blanks":[{"itemIndex":5,"field":"amount","choices":[4700000,4800000,4900000,5000000],"hint":"期首 + 仕入 - 期末"},{"itemIndex":14,"field":"amount","choices":[850000,900000,950000,970000],"hint":"売上総利益 - 販管費"}],"context":"複合決算整理を伴う損益計算書の作成"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":3}]}',
+    explanation:
+      "決算整理項目（減価償却、貸倒引当金、消耗品、前払家賃等）を適切に処理して損益計算書を作成します。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"損益計算書","examSection":3,"keywords":["損益計算書","複合決算整理","売上原価","減価償却費","貸倒引当金繰入","営業利益","経常利益"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_014",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_014","type":"fill_in_financial_statement","statementType":"balance_sheet","date":"令和6年3月31日","sections":[{"title":"資産の部","items":[{"label":"Ⅰ 流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":500000,"indent":1,"order":2},{"label":"当座預金","amount":1200000,"indent":1,"order":3},{"label":"売掛金","amount":2500000,"indent":1,"order":4},{"label":"貸倒引当金","amount":-50000,"indent":1,"order":5},{"label":"繰越商品","amount":600000,"indent":1,"order":6},{"label":"前払保険料","amount":80000,"indent":1,"order":7},{"label":"未収利息","amount":15000,"indent":1,"order":8},{"label":"流動資産合計","amount":null,"indent":2,"order":9,"isBold":true},{"label":"Ⅱ 固定資産","amount":null,"indent":0,"order":10,"isBold":true},{"label":"建物","amount":8000000,"indent":1,"order":11},{"label":"建物減価償却累計額","amount":-2400000,"indent":1,"order":12},{"label":"備品","amount":1000000,"indent":1,"order":13},{"label":"備品減価償却累計額","amount":-400000,"indent":1,"order":14},{"label":"貸付金","amount":500000,"indent":1,"order":15},{"label":"固定資産合計","amount":6700000,"indent":2,"order":16},{"label":"資産合計","amount":11545000,"indent":0,"order":17,"isBold":true}]},{"title":"負債の部","items":[{"label":"Ⅰ 流動負債","amount":null,"indent":0,"order":1,"isBold":true},{"label":"買掛金","amount":800000,"indent":1,"order":2},{"label":"未払金","amount":150000,"indent":1,"order":3},{"label":"前受金","amount":100000,"indent":1,"order":4},{"label":"未払利息","amount":20000,"indent":1,"order":5},{"label":"流動負債合計","amount":1070000,"indent":2,"order":6},{"label":"Ⅱ 固定負債","amount":null,"indent":0,"order":7,"isBold":true},{"label":"借入金","amount":2000000,"indent":1,"order":8},{"label":"固定負債合計","amount":2000000,"indent":2,"order":9},{"label":"負債合計","amount":3070000,"indent":0,"order":10,"isBold":true},{"label":"Ⅲ 純資産の部","amount":null,"indent":0,"order":11,"isBold":true},{"label":"資本金","amount":10000000,"indent":1,"order":12},{"label":"繰越利益剰余金","amount":-1525000,"indent":1,"order":13},{"label":"純資産合計","amount":null,"indent":0,"order":14,"isBold":true}]}],"blanks":[{"sectionIndex":0,"itemIndex":8,"field":"amount","choices":[4745000,4795000,4845000,4895000],"hint":"流動資産各項目の合計（貸倒引当金控除後）"},{"sectionIndex":1,"itemIndex":13,"field":"amount","choices":[8375000,8425000,8475000,8525000],"hint":"資産合計 - 負債合計"}],"context":"複合決算整理を伴う貸借対照表の作成"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":2}]}',
+    explanation:
+      "決算整理項目を適切に処理し、流動資産・固定資産・流動負債・固定負債・純資産を正確に計算します。",
+    difficulty: 2,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"貸借対照表","examSection":3,"keywords":["貸借対照表","複合決算整理","貸倒引当金","減価償却累計額","経過勘定","純資産"]}',
+    created_at: "2025-10-01T13:48:51.149Z",
+    updated_at: "2025-10-01T13:48:51.149Z",
+  },
+  {
+    id: "Q3_FS_015",
+    category_id: "trial_balance",
+    question_text:
+      "以下の財務諸表の空欄を埋めてください。適切な項目名または金額を選択してください。",
+    answer_template_json:
+      '{"id":"Q3_FS_015","type":"fill_in_financial_statement","statementType":"comprehensive","date":"令和6年3月31日","incomeStatement":{"items":[{"label":"Ⅰ. 売上高","amount":15000000,"indent":0,"order":1},{"label":"Ⅱ. 売上原価","amount":null,"indent":0,"order":2},{"label":"期首商品棚卸高","amount":800000,"indent":1,"order":3},{"label":"当期商品仕入高","amount":9500000,"indent":1,"order":4},{"label":"期末商品棚卸高","amount":900000,"indent":1,"order":5},{"label":"売上原価","amount":null,"indent":2,"order":6,"isBold":true},{"label":"売上総利益","amount":5600000,"indent":1,"order":7,"isBold":true},{"label":"Ⅲ. 販売費及び一般管理費","amount":null,"indent":0,"order":8},{"label":"給料","amount":2400000,"indent":1,"order":9},{"label":"減価償却費","amount":600000,"indent":1,"order":10},{"label":"貸倒引当金繰入","amount":120000,"indent":1,"order":11},{"label":"消耗品費","amount":180000,"indent":1,"order":12},{"label":"その他経費","amount":500000,"indent":1,"order":13},{"label":"販売費及び一般管理費合計","amount":3800000,"indent":2,"order":14},{"label":"営業利益","amount":1800000,"indent":1,"order":15,"isBold":true},{"label":"Ⅳ. 営業外収益","amount":80000,"indent":0,"order":16},{"label":"Ⅴ. 営業外費用","amount":60000,"indent":0,"order":17},{"label":"経常利益","amount":1820000,"indent":1,"order":18,"isBold":true},{"label":"Ⅵ. 特別利益","amount":100000,"indent":0,"order":19},{"label":"Ⅶ. 特別損失","amount":120000,"indent":0,"order":20},{"label":"税引前当期純利益","amount":1800000,"indent":1,"order":21,"isBold":true},{"label":"法人税、住民税及び事業税","amount":600000,"indent":0,"order":22},{"label":"当期純利益","amount":1200000,"indent":1,"order":23,"isBold":true}]},"balanceSheet":{"sections":[{"title":"資産の部","items":[{"label":"Ⅰ 流動資産","amount":null,"indent":0,"order":1,"isBold":true},{"label":"現金","amount":800000,"indent":1,"order":2},{"label":"当座預金","amount":2500000,"indent":1,"order":3},{"label":"売掛金","amount":6000000,"indent":1,"order":4},{"label":"貸倒引当金","amount":-120000,"indent":1,"order":5},{"label":"繰越商品","amount":900000,"indent":1,"order":6},{"label":"前払費用","amount":150000,"indent":1,"order":7},{"label":"未収収益","amount":30000,"indent":1,"order":8},{"label":"流動資産合計","amount":null,"indent":2,"order":9,"isBold":true},{"label":"Ⅱ 固定資産","amount":null,"indent":0,"order":10,"isBold":true},{"label":"建物","amount":15000000,"indent":1,"order":11},{"label":"建物減価償却累計額","amount":-4500000,"indent":1,"order":12},{"label":"備品","amount":2000000,"indent":1,"order":13},{"label":"備品減価償却累計額","amount":-800000,"indent":1,"order":14},{"label":"土地","amount":10000000,"indent":1,"order":15},{"label":"固定資産合計","amount":21700000,"indent":2,"order":16},{"label":"資産合計","amount":29800000,"indent":0,"order":17,"isBold":true}]},{"title":"負債の部","items":[{"label":"Ⅰ 流動負債","amount":null,"indent":0,"order":1,"isBold":true},{"label":"買掛金","amount":1500000,"indent":1,"order":2},{"label":"未払金","amount":300000,"indent":1,"order":3},{"label":"前受金","amount":200000,"indent":1,"order":4},{"label":"未払利息","amount":40000,"indent":1,"order":5},{"label":"未払法人税等","amount":600000,"indent":1,"order":6},{"label":"流動負債合計","amount":2640000,"indent":2,"order":7},{"label":"Ⅱ 固定負債","amount":null,"indent":0,"order":8,"isBold":true},{"label":"借入金","amount":4000000,"indent":1,"order":9},{"label":"固定負債合計","amount":4000000,"indent":2,"order":10},{"label":"負債合計","amount":6640000,"indent":0,"order":11,"isBold":true},{"label":"Ⅲ 純資産の部","amount":null,"indent":0,"order":12,"isBold":true},{"label":"資本金","amount":20000000,"indent":1,"order":13},{"label":"繰越利益剰余金","amount":null,"indent":1,"order":14,"isBold":true},{"label":"純資産合計","amount":23160000,"indent":0,"order":15,"isBold":true}]}]},"blanks":[{"statementType":"incomeStatement","itemIndex":5,"field":"amount","choices":[9200000,9300000,9400000,9500000],"hint":"期首 + 仕入 - 期末"},{"statementType":"balanceSheet","sectionIndex":0,"itemIndex":8,"field":"amount","choices":[10110000,10160000,10210000,10260000],"hint":"流動資産各項目の合計"},{"statementType":"balanceSheet","sectionIndex":1,"itemIndex":13,"field":"amount","choices":[3060000,3110000,3160000,3210000],"hint":"前期繰越 + 当期純利益"}],"context":"損益計算書と貸借対照表を統合的に理解する総合問題"}',
+    correct_answer_json:
+      '{"blanks":[{"index":0,"correctIndex":2},{"index":1,"correctIndex":3},{"index":2,"correctIndex":2}]}',
+    explanation:
+      "財務諸表の各項目が相互に関連し、決算整理を通じて損益と財政状態を正確に表示します。",
+    difficulty: 3,
+    tags_json:
+      '{"subcategory":"fill_in_financial_statement","pattern":"総合問題","examSection":3,"keywords":["総合問題","損益計算書","貸借対照表","財務諸表","決算整理","当期純利益","繰越利益剰余金"]}',
     created_at: "2025-10-01T13:48:51.149Z",
     updated_at: "2025-10-01T13:48:51.149Z",
   },

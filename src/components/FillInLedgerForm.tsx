@@ -12,7 +12,10 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
+  Platform,
+  Modal,
 } from "react-native";
+// Pickerは使用しない（カスタム実装）
 import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
 import {
   answerService,
@@ -79,6 +82,12 @@ export default function FillInLedgerForm({
   >({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // モーダルピッカー用のstate
+  const [showPickerModal, setShowPickerModal] = useState<number | null>(null); // どの空欄のPickerを表示中か
+  const [tempSelectedValue, setTempSelectedValue] = useState<number | string>(
+    "",
+  ); // モーダル内の一時選択値
+
   // questionIdが変わった時にselectedAnswersをリセット
   useEffect(() => {
     setSelectedAnswers({});
@@ -108,6 +117,31 @@ export default function FillInLedgerForm({
     },
     [],
   );
+
+  // モーダルを開く
+  const handleOpenPicker = useCallback(
+    (entryIndex: number) => {
+      const currentValue = selectedAnswers[entryIndex];
+      setTempSelectedValue(currentValue || "");
+      setShowPickerModal(entryIndex);
+    },
+    [selectedAnswers],
+  );
+
+  // モーダルで選択を確定
+  const handleConfirmSelection = useCallback(() => {
+    if (showPickerModal !== null && tempSelectedValue !== "") {
+      handleSelectChoice(showPickerModal, tempSelectedValue as number);
+    }
+    setShowPickerModal(null);
+    setTempSelectedValue("");
+  }, [showPickerModal, tempSelectedValue, handleSelectChoice]);
+
+  // モーダルをキャンセル
+  const handleCancelSelection = useCallback(() => {
+    setShowPickerModal(null);
+    setTempSelectedValue("");
+  }, []);
 
   // 解答送信
   const handleSubmit = async () => {
@@ -182,32 +216,18 @@ export default function FillInLedgerForm({
         <Text style={styles.entryDate}>{entry.date}</Text>
         <Text style={styles.entryDescription}>{entry.description}</Text>
         {isBlank && blank ? (
-          <View style={styles.blankContainer}>
-            <View style={styles.choicesContainer}>
-              {blank.choices.map((choice) => (
-                <TouchableOpacity
-                  key={choice}
-                  style={[
-                    styles.choiceButton,
-                    selectedValue === choice && styles.choiceButtonSelected,
-                  ]}
-                  onPress={() =>
-                    handleSelectChoice(entry.originalIndex, choice)
-                  }
-                >
-                  <Text
-                    style={[
-                      styles.choiceButtonText,
-                      selectedValue === choice &&
-                        styles.choiceButtonTextSelected,
-                    ]}
-                  >
-                    {choice.toLocaleString()}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
+          <TouchableOpacity
+            style={styles.dropdownButton}
+            onPress={() => handleOpenPicker(entry.originalIndex)}
+            testID={`ledger-dropdown-button-${entry.originalIndex}`}
+          >
+            <Text style={styles.dropdownButtonText}>
+              {selectedValue
+                ? selectedValue.toLocaleString()
+                : "選択してください"}
+            </Text>
+            <Text style={styles.dropdownArrow}>▼</Text>
+          </TouchableOpacity>
         ) : (
           <Text style={styles.entryAmount}>
             {entry.amount?.toLocaleString()}
@@ -259,18 +279,6 @@ export default function FillInLedgerForm({
         </View>
       </View>
 
-      {/* ヒント表示 */}
-      {answerTemplate.hints && answerTemplate.hints.length > 0 && (
-        <View style={styles.hintsContainer}>
-          <Text style={styles.hintsTitle}>ヒント：</Text>
-          {answerTemplate.hints.map((hint, index) => (
-            <Text key={index} style={styles.hintText}>
-              • {hint}
-            </Text>
-          ))}
-        </View>
-      )}
-
       {/* 解答送信ボタン */}
       {showSubmitButton && (
         <TouchableOpacity
@@ -287,6 +295,91 @@ export default function FillInLedgerForm({
           </Text>
         </TouchableOpacity>
       )}
+
+      {/* 選択肢Pickerモーダル */}
+      <Modal
+        visible={showPickerModal !== null}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={handleCancelSelection}
+        testID="ledger-dropdown-modal"
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>金額を選択</Text>
+            </View>
+            <ScrollView style={styles.optionsList} testID="ledger-options-list">
+              <TouchableOpacity
+                style={[
+                  styles.optionItem,
+                  tempSelectedValue === "" && styles.optionItemSelected,
+                ]}
+                onPress={() => setTempSelectedValue("")}
+                testID="ledger-option-placeholder"
+              >
+                <Text
+                  style={[
+                    styles.optionText,
+                    styles.optionTextPlaceholder,
+                    tempSelectedValue === "" && styles.optionTextSelected,
+                  ]}
+                >
+                  選択してください
+                </Text>
+              </TouchableOpacity>
+              {showPickerModal !== null &&
+                answerTemplate.blanks
+                  .find((b) => b.index === showPickerModal)
+                  ?.choices.map((choice) => (
+                    <TouchableOpacity
+                      key={choice}
+                      style={[
+                        styles.optionItem,
+                        tempSelectedValue === choice &&
+                          styles.optionItemSelected,
+                      ]}
+                      onPress={() => setTempSelectedValue(choice)}
+                      testID={`ledger-option-${choice}`}
+                    >
+                      <Text
+                        style={[
+                          styles.optionText,
+                          tempSelectedValue === choice &&
+                            styles.optionTextSelected,
+                        ]}
+                      >
+                        {choice.toLocaleString()}円
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+            </ScrollView>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.modalButtonCancel]}
+                onPress={handleCancelSelection}
+                testID="ledger-modal-cancel-button"
+              >
+                <Text style={styles.modalButtonText}>キャンセル</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.modalButtonConfirm]}
+                onPress={handleConfirmSelection}
+                testID="ledger-modal-confirm-button"
+              >
+                <Text
+                  style={[
+                    styles.modalButtonText,
+                    styles.modalButtonTextConfirm,
+                  ]}
+                >
+                  完了
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
@@ -378,54 +471,106 @@ const createStyles = (theme: Theme) =>
       color: theme.colors.text,
       textAlign: "right",
     },
-    blankContainer: {
+    dropdownButton: {
       marginTop: 8,
-    },
-    choicesContainer: {
       flexDirection: "row",
-      flexWrap: "wrap",
-      gap: 8,
-    },
-    choiceButton: {
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingVertical: 12,
       paddingHorizontal: 16,
-      paddingVertical: 10,
-      borderRadius: 6,
       borderWidth: 1,
       borderColor: theme.colors.borderLight,
+      borderRadius: 8,
       backgroundColor: theme.colors.surface,
-      minWidth: 100,
     },
-    choiceButtonSelected: {
-      backgroundColor: theme.colors.primary,
-      borderColor: theme.colors.primary,
-    },
-    choiceButtonText: {
+    dropdownButtonText: {
       fontSize: 16,
+      color: theme.colors.text,
+      flex: 1,
+    },
+    dropdownArrow: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginLeft: 8,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      justifyContent: "flex-end",
+    },
+    modalContent: {
+      backgroundColor: theme.colors.background,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      paddingBottom: Platform.OS === "ios" ? 34 : 20,
+    },
+    modalHeader: {
+      padding: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+      alignItems: "center",
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: theme.colors.text,
+    },
+    optionsList: {
+      maxHeight: 300,
+      paddingHorizontal: 16,
+    },
+    optionItem: {
+      paddingVertical: 16,
+      paddingHorizontal: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.borderLight,
+      backgroundColor: theme.colors.surface,
+    },
+    optionItemSelected: {
+      backgroundColor: "rgba(0, 0, 0, 0.05)", // 薄いグレー背景
+      borderLeftWidth: 4, // 左側にアクセントボーダー
+      borderLeftColor: theme.colors.primary, // 青色ボーダーで選択状態を明確に
+    },
+    optionText: {
+      fontSize: 18,
       color: theme.colors.text,
       textAlign: "center",
     },
-    choiceButtonTextSelected: {
-      color: "#fff",
-      fontWeight: "bold",
+    optionTextSelected: {
+      color: theme.colors.text, // 通常のテキスト色（読みやすさ優先）
+      fontWeight: "600", // 太字は維持
     },
-    hintsContainer: {
-      margin: 16,
-      padding: 12,
-      backgroundColor: theme.colors.surfaceLight,
-      borderRadius: 8,
-      borderLeftWidth: 4,
-      borderLeftColor: theme.colors.info,
-    },
-    hintsTitle: {
-      fontSize: 16,
-      fontWeight: "bold",
-      color: theme.colors.text,
-      marginBottom: 8,
-    },
-    hintText: {
-      fontSize: 14,
+    optionTextPlaceholder: {
       color: theme.colors.textSecondary,
-      marginBottom: 4,
+      fontStyle: "italic",
+    },
+    modalButtons: {
+      flexDirection: "row",
+      paddingHorizontal: 16,
+      paddingTop: 16,
+      gap: 12,
+    },
+    modalButton: {
+      flex: 1,
+      paddingVertical: 14,
+      borderRadius: 8,
+      alignItems: "center",
+    },
+    modalButtonCancel: {
+      backgroundColor: theme.colors.surfaceLight,
+      borderWidth: 1,
+      borderColor: theme.colors.borderLight,
+    },
+    modalButtonConfirm: {
+      backgroundColor: theme.colors.primary,
+    },
+    modalButtonText: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: theme.colors.text,
+    },
+    modalButtonTextConfirm: {
+      color: "#fff",
     },
     submitButton: {
       backgroundColor: theme.colors.primary,
