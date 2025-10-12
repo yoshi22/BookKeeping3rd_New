@@ -73,4 +73,13 @@ export interface JournalAccountSelectorProps {
 export interface UnifiedJournalEntryFormProps extends UnifiedFormProps {
   // JournalEntry特有のプロパティ
   onSubmit?: (debits: JournalEntry[], credits: JournalEntry[]) => void;
+  answerTemplate?: {
+    type?: string;
+    journalEntry?: Array<{
+      debit_account: string;
+      debit_amount: number;
+      credit_account: string;
+      credit_amount: number;
+    }>;
+  };
 }

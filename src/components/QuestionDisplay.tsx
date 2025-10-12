@@ -936,6 +936,7 @@ export default function QuestionDisplay({
           onSubmitAnswer={onSubmitAnswer}
           showSubmitButton={true}
           mode="learning"
+          answerTemplate={answerTemplate}
         />
       ) : shouldUseSubsidiaryBookForm ? (
         <UnifiedLedgerEntryForm

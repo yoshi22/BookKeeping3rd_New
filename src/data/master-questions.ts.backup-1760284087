@@ -4423,9 +4423,9 @@ export const masterQuestions: Question[] = [
     answer_template_json:
       '{"id":"Q2_V_006","type":"vocabulary","questionText":"重要性の原則とは、（①）が乏しい項目については、（②）な会計処理を行うことができる原則である。たとえば、少額の（③）を消耗品費として処理することが認められる。","blanks":[{"index":1,"choices":["重要性","金額","影響度","必要性"]},{"index":2,"choices":["簡便","正確","厳密","詳細"]},{"index":3,"choices":["固定資産","備品","工具","機械"]}]}',
     correct_answer_json:
-      '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":0},{"index":2,"correctIndex":1}]}',
+      '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":0},{"index":2,"correctIndex":0}]}',
     explanation:
-      "重要性の原則は、金額が小さく財務諸表に与える影響が小さい項目については、厳密な会計処理を省略し、簡便な方法で処理することを認める原則です。少額の備品を消耗品費として処理することが典型例です。",
+      "重要性の原則は、金額が小さく財務諸表に与える影響が小さい項目については、厳密な会計処理を省略し、簡便な方法で処理することを認める原則です。",
     difficulty: 2,
     tags_json:
       '{"subcategory":"vocabulary","pattern":"会計原則","examSection":2,"keywords":[]}',
@@ -5035,7 +5035,7 @@ export const masterQuestions: Question[] = [
     question_text:
       "期末商品の時価が（①）を下回った場合、その差額を商品評価損として計上する。これは（②）の原則に基づく処理である。商品評価損は（③）として計上される。",
     answer_template_json:
-      '{"id":"Q2_V_018","type":"vocabulary","questionText":"期末商品の時価が（①）を下回った場合、その差額を商品評価損として計上する。これは（②）の原則に基づく処理である。商品評価損は（③）として計上される。","blanks":[{"index":1,"choices":["帳簿価額","売価","取得価額","時価"]},{"index":2,"choices":["保守主義","重要性","継続性","実現主義"]},{"index":3,"choices":["売上原価","販売費","営業外費用","特別損失"]}]}',
+      '{"id":"Q2_V_018","type":"vocabulary","questionText":"期末商品の時価が（①）を下回った場合、その差額を商品評価損として計上する。これは（②）の原則に基づく処理である。商品評価損は（③）として計上される。","blanks":[{"index":1,"choices":["帳簿価額","売価","原価","時価"]},{"index":2,"choices":["保守主義","重要性","継続性","実現主義"]},{"index":3,"choices":["売上原価","販売費","営業外費用","特別損失"]}]}',
     correct_answer_json:
       '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":0},{"index":2,"correctIndex":0}]}',
     explanation:
@@ -5087,9 +5087,9 @@ export const masterQuestions: Question[] = [
     section_number: 2,
     question_order: 19,
     question_text:
-      "株式や社債などを（①）という。取得目的により、（②）とその他有価証券に分類される。売買目的の有価証券は（③）で評価する。",
+      "株式や社債などを（①）という。取得目的により、（②）と有価証券に分類される。売買目的の有価証券は（③）で評価する。",
     answer_template_json:
-      '{"id":"Q2_V_019","type":"vocabulary","questionText":"株式や社債などを（①）という。取得目的により、（②）とその他有価証券に分類される。売買目的の有価証券は（③）で評価する。","blanks":[{"index":1,"choices":["有価証券","金融商品","投資資産","証券"]},{"index":2,"choices":["売買目的有価証券","投資有価証券","その他有価証券","関連会社株式"]},{"index":3,"choices":["時価","取得原価","簿価","公正価値"]}]}',
+      '{"id":"Q2_V_019","type":"vocabulary","questionText":"株式や社債などを（①）という。取得目的により、（②）と有価証券に分類される。売買目的の有価証券は（③）で評価する。","blanks":[{"index":1,"choices":["有価証券","金融商品","投資資産","証券"]},{"index":2,"choices":["売買目的有価証券","投資有価証券","その他有価証券","関連会社株式"]},{"index":3,"choices":["時価","取得原価","簿価","公正価値"]}]}',
     correct_answer_json:
       '{"blanks":[{"index":0,"correctIndex":0},{"index":1,"correctIndex":0},{"index":2,"correctIndex":0}]}',
     explanation:

@@ -313,7 +313,7 @@ const createStyles = (theme: Theme) =>
     },
     choiceButtonSelected: {
       borderColor: theme.colors.primary,
-      backgroundColor: theme.colors.primaryLight,
+      backgroundColor: theme.colors.infoBackground, // #E3F2FD - 淡い青色でテキストの可読性向上
     },
     choiceText: {
       fontSize: 16,

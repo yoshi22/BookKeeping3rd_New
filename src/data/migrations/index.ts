@@ -139,10 +139,10 @@ async function performSampleDataLoad(): Promise<void> {
       allSampleQuestions.length,
     );
 
-    const SAMPLE_DATA_VERSION = "2025-10-07-q2l-hints-removal";
+    const SAMPLE_DATA_VERSION = "2025-10-12-q2-vocabulary-fixes";
 
     // 環境変数による強制更新フラグ（開発時のみ）
-    const forceUpdate = false; // ✅ Q2_L_001-020のヒント削除完了（2025-10-07）
+    const forceUpdate = false; // ✅ Q2_V用語問題修正完了 - ユーザーデータ保護のためfalseに復元
 
     // 現在のデータバージョンを取得
     let currentVersion = null;
@@ -315,8 +315,8 @@ async function performSampleDataLoad(): Promise<void> {
             `INSERT INTO questions (
             id, category_id, question_text, answer_template_json,
             correct_answer_json, explanation, difficulty, tags_json,
-            created_at, updated_at, question_order, section_number, subcategory, pattern_type
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            created_at, updated_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
               question.id,
               question.category_id,
@@ -328,10 +328,6 @@ async function performSampleDataLoad(): Promise<void> {
               question.tags_json,
               question.created_at,
               question.updated_at,
-              question.question_order,
-              question.section_number,
-              question.subcategory,
-              question.pattern_type,
             ],
           );
         } catch (insertError) {

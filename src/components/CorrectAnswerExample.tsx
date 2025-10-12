@@ -39,20 +39,27 @@ export default function CorrectAnswerExample({
   if (!show || !correctAnswer) return null;
 
   const renderJournalExample = () => {
-    // 新形式: journalEntries 配列（複合仕訳対応）
-    if (
+    // 複合仕訳の配列を取得（journalEntries または journalEntry が配列の場合）
+    const journalArray =
       correctAnswer.journalEntries &&
       Array.isArray(correctAnswer.journalEntries)
-    ) {
+        ? correctAnswer.journalEntries
+        : correctAnswer.journalEntry &&
+            Array.isArray(correctAnswer.journalEntry)
+          ? correctAnswer.journalEntry
+          : null;
+
+    // 新形式: journalEntries/journalEntry 配列（複合仕訳対応）
+    if (journalArray) {
       // 借方と貸方のエントリを分離
-      const debits = correctAnswer.journalEntries
+      const debits = journalArray
         .filter((entry: any) => entry.debit_account && entry.debit_amount > 0)
         .map((entry: any) => ({
           account: entry.debit_account,
           amount: entry.debit_amount,
         }));
 
-      const credits = correctAnswer.journalEntries
+      const credits = journalArray
         .filter((entry: any) => entry.credit_account && entry.credit_amount > 0)
         .map((entry: any) => ({
           account: entry.credit_account,
@@ -111,8 +118,9 @@ export default function CorrectAnswerExample({
     }
 
     // 旧形式: journalEntry 単一オブジェクト（後方互換性）
+    // 注: journalEntryが配列の場合は上で処理済み
     const entry = correctAnswer.journalEntry;
-    if (!entry) return null;
+    if (!entry || Array.isArray(entry)) return null;
 
     return (
       <View style={styles.exampleContainer}>

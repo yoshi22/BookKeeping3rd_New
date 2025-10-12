@@ -369,16 +369,32 @@ export const SubsidiaryLedgerForm: React.FC<SubsidiaryLedgerFormProps> = ({
                 template.columns.find(
                   (col) => col.key === selectedDropdown.columnKey,
                 )!,
-              ).map((option, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.dropdownOption}
-                  onPress={() => selectDropdownOption(option)}
-                  testID={`subsidiary-option-${option}`}
-                >
-                  <Text style={styles.dropdownOptionText}>{option}</Text>
-                </TouchableOpacity>
-              ))}
+              ).map((option, index) => {
+                const isSelected =
+                  tableData[selectedDropdown.rowIndex]?.[
+                    selectedDropdown.columnKey
+                  ] === option;
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    style={[
+                      styles.dropdownOption,
+                      isSelected && styles.dropdownOptionSelected,
+                    ]}
+                    onPress={() => selectDropdownOption(option)}
+                    testID={`subsidiary-option-${option}`}
+                  >
+                    <Text
+                      style={[
+                        styles.dropdownOptionText,
+                        isSelected && styles.dropdownOptionTextSelected,
+                      ]}
+                    >
+                      {option}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
             </ScrollView>
           </View>
         </View>
@@ -553,9 +569,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#F0F0F0",
   },
+  dropdownOptionSelected: {
+    backgroundColor: "#E3F2FD", // 淡い青色でテキストの可読性向上
+  },
   dropdownOptionText: {
     fontSize: 14,
     color: "#333333",
+  },
+  dropdownOptionTextSelected: {
+    color: "#1976D2",
+    fontWeight: "600",
   },
   errorContainer: {
     backgroundColor: "#FFEBEE",

@@ -665,6 +665,11 @@ export class AnswerService {
     const entry = correctAnswer.journalEntry;
     if (!entry) return false;
 
+    // Check if journalEntry is an array (compound entries with multiple debits/credits)
+    if (Array.isArray(entry)) {
+      return this.isCompoundJournalEntriesCorrect(answerData, entry);
+    }
+
     const data = answerData as AnswerData & {
       debit_account?: string;
       debit_amount?: number;

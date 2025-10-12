@@ -63,8 +63,15 @@ export default function AnswerResultDialog({
       return correctAnswer; // ExplanationPanelで2列表示するため、そのまま返す
     }
 
-    // 旧形式：journalEntry単一オブジェクト（後方互換性のため残す）- 2列形式に変換
+    // journalEntry形式（配列または単一オブジェクト）
     if (correctAnswer.journalEntry) {
+      // journalEntryが配列の場合（複合仕訳）- そのままjournalEntriesに変換
+      if (Array.isArray(correctAnswer.journalEntry)) {
+        return {
+          journalEntries: correctAnswer.journalEntry,
+        };
+      }
+      // journalEntryが単一オブジェクトの場合（旧形式・後方互換性）
       return {
         journalEntries: [
           {

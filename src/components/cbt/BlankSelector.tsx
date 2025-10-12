@@ -96,6 +96,8 @@ export default function BlankSelector({
             isSelected && styles.buttonTextSelected,
             disabled && styles.buttonTextDisabled,
           ]}
+          numberOfLines={1}
+          ellipsizeMode="tail"
         >
           {getSelectedText()}
         </Text>
@@ -304,7 +306,7 @@ const createStyles = (theme: Theme) =>
       borderBottomColor: theme.colors.borderLight,
     },
     choiceItemSelected: {
-      backgroundColor: theme.colors.primaryLight,
+      backgroundColor: theme.colors.infoBackground, // #E3F2FD - 淡い青色でテキストの可読性向上
     },
     choiceText: {
       flex: 1,

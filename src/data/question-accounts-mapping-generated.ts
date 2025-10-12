@@ -2,8 +2,8 @@
  * 問題-勘定科目マッピングデータ（自動生成）
  * 動的フィルタリング機能で使用する問題別の関連勘定科目
  *
- * 生成日時: 2025-09-23T16:31:10.283Z
- * 総問題数: 302
+ * 生成日時: 2025-10-12T14:34:36.510Z
+ * 総問題数: 370
  * 生成スクリプト: scripts/data/generate-question-mappings.js
  */
 
@@ -47,59 +47,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "実査"
     ]
   },
-  "Q_L_001": {
-    "questionId": "Q_L_001",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "現金",
-      "現金過不足",
-      "小口現金",
-      "当座預金",
-      "普通預金",
-      "定期預金",
-      "当座借越",
-      "雑収入",
-      "雑損失"
-    ],
-    "supplementaryAccounts": [],
-    "category": AccountCategory.CASH_DEPOSIT,
-    "keywords": [
-      "総勘定元帳",
-      "転記",
-      "仕訳帳",
-      "現金",
-      "実査",
-      "売上",
-      "給料"
-    ]
-  },
-  "Q_T_001": {
-    "questionId": "Q_T_001",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "財務諸表",
-      "貸借対照表",
-      "損益計算書",
-      "現金",
-      "商品",
-      "仕入",
-      "売上",
-      "建物",
-      "減価償却",
-      "土地",
-      "決算",
-      "整理",
-      "引当",
-      "償却"
-    ]
-  },
   "Q_J_002": {
     "questionId": "Q_J_002",
     "primaryAccounts": [
@@ -124,57 +71,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "現金過不足",
       "現金",
       "実査"
-    ]
-  },
-  "Q_L_002": {
-    "questionId": "Q_L_002",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "現金",
-      "現金過不足",
-      "小口現金",
-      "当座預金",
-      "普通預金",
-      "定期預金",
-      "当座借越",
-      "雑収入",
-      "雑損失"
-    ],
-    "supplementaryAccounts": [],
-    "category": AccountCategory.CASH_DEPOSIT,
-    "keywords": [
-      "総勘定元帳",
-      "転記",
-      "仕訳帳",
-      "現金",
-      "売上",
-      "手形",
-      "引当"
-    ]
-  },
-  "Q_T_002": {
-    "questionId": "Q_T_002",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "財務諸表",
-      "貸借対照表",
-      "損益計算書",
-      "現金",
-      "商品",
-      "仕入",
-      "売上",
-      "減価償却",
-      "決算",
-      "整理",
-      "引当",
-      "償却"
     ]
   },
   "Q_J_003": {
@@ -202,57 +98,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "決算"
     ]
   },
-  "Q_L_003": {
-    "questionId": "Q_L_003",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "現金",
-      "現金過不足",
-      "小口現金",
-      "当座預金",
-      "普通預金",
-      "定期預金",
-      "当座借越",
-      "雑収入",
-      "雑損失"
-    ],
-    "supplementaryAccounts": [],
-    "category": AccountCategory.CASH_DEPOSIT,
-    "keywords": [
-      "総勘定元帳",
-      "転記",
-      "仕訳帳",
-      "商品",
-      "仕入",
-      "売上",
-      "売買",
-      "繰越商品"
-    ]
-  },
-  "Q_T_003": {
-    "questionId": "Q_T_003",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "財務諸表",
-      "貸借対照表",
-      "損益計算書",
-      "現金",
-      "商品",
-      "仕入",
-      "減価償却",
-      "決算",
-      "整理",
-      "引当",
-      "償却"
-    ]
-  },
   "Q_J_004": {
     "questionId": "Q_J_004",
     "primaryAccounts": [
@@ -276,58 +121,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "現金過不足",
       "現金",
       "実査"
-    ]
-  },
-  "Q_L_004": {
-    "questionId": "Q_L_004",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "現金",
-      "現金過不足",
-      "小口現金",
-      "当座預金",
-      "普通預金",
-      "定期預金",
-      "当座借越",
-      "雑収入",
-      "雑損失"
-    ],
-    "supplementaryAccounts": [],
-    "category": AccountCategory.CASH_DEPOSIT,
-    "keywords": [
-      "総勘定元帳",
-      "転記",
-      "仕訳帳",
-      "建物",
-      "減価償却",
-      "決算",
-      "償却"
-    ]
-  },
-  "Q_T_004": {
-    "questionId": "Q_T_004",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "財務諸表",
-      "貸借対照表",
-      "損益計算書",
-      "現金",
-      "商品",
-      "仕入",
-      "減価償却",
-      "給料",
-      "決算",
-      "整理",
-      "引当",
-      "償却",
-      "借入"
     ]
   },
   "Q_J_005": {
@@ -355,63 +148,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "小口"
     ]
   },
-  "Q_L_005": {
-    "questionId": "Q_L_005",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "現金",
-      "現金過不足",
-      "小口現金",
-      "当座預金",
-      "普通預金",
-      "定期預金",
-      "当座借越",
-      "雑収入",
-      "雑損失"
-    ],
-    "supplementaryAccounts": [],
-    "category": AccountCategory.CASH_DEPOSIT,
-    "keywords": [
-      "総勘定元帳",
-      "転記",
-      "仕訳帳",
-      "現金",
-      "仕入"
-    ]
-  },
-  "Q_T_005": {
-    "questionId": "Q_T_005",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "精算表",
-      "8桁",
-      "決算整理",
-      "現金",
-      "小口",
-      "預金",
-      "当座",
-      "普通",
-      "商品",
-      "仕入",
-      "売上",
-      "手形",
-      "繰越商品",
-      "減価償却",
-      "決算",
-      "整理",
-      "引当",
-      "償却",
-      "受取手形",
-      "支払手形"
-    ]
-  },
   "Q_J_006": {
     "questionId": "Q_J_006",
     "primaryAccounts": [
@@ -437,62 +173,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "小口"
     ]
   },
-  "Q_L_006": {
-    "questionId": "Q_L_006",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "現金",
-      "現金過不足",
-      "小口現金",
-      "当座預金",
-      "普通預金",
-      "定期預金",
-      "当座借越",
-      "雑収入",
-      "雑損失"
-    ],
-    "supplementaryAccounts": [],
-    "category": AccountCategory.CASH_DEPOSIT,
-    "keywords": [
-      "総勘定元帳",
-      "転記",
-      "仕訳帳",
-      "借入"
-    ]
-  },
-  "Q_T_006": {
-    "questionId": "Q_T_006",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "精算表",
-      "8桁",
-      "決算整理",
-      "現金",
-      "小口",
-      "預金",
-      "当座",
-      "普通",
-      "商品",
-      "仕入",
-      "売上",
-      "手形",
-      "繰越商品",
-      "減価償却",
-      "決算",
-      "整理",
-      "引当",
-      "償却",
-      "受取手形",
-      "支払手形"
-    ]
-  },
   "Q_J_007": {
     "questionId": "Q_J_007",
     "primaryAccounts": [],
@@ -515,63 +195,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "小口現金",
       "現金",
       "小口"
-    ]
-  },
-  "Q_L_007": {
-    "questionId": "Q_L_007",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "現金",
-      "現金過不足",
-      "小口現金",
-      "当座預金",
-      "普通預金",
-      "定期預金",
-      "当座借越",
-      "雑収入",
-      "雑損失"
-    ],
-    "supplementaryAccounts": [],
-    "category": AccountCategory.CASH_DEPOSIT,
-    "keywords": [
-      "総勘定元帳",
-      "転記",
-      "仕訳帳",
-      "決算",
-      "引当"
-    ]
-  },
-  "Q_T_007": {
-    "questionId": "Q_T_007",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "精算表",
-      "8桁",
-      "決算整理",
-      "現金",
-      "小口",
-      "預金",
-      "当座",
-      "普通",
-      "商品",
-      "仕入",
-      "売上",
-      "手形",
-      "繰越商品",
-      "減価償却",
-      "決算",
-      "整理",
-      "引当",
-      "償却",
-      "受取手形",
-      "支払手形"
     ]
   },
   "Q_J_008": {
@@ -600,64 +223,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "商品"
     ]
   },
-  "Q_L_008": {
-    "questionId": "Q_L_008",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "現金",
-      "現金過不足",
-      "小口現金",
-      "当座預金",
-      "普通預金",
-      "定期預金",
-      "当座借越",
-      "雑収入",
-      "雑損失"
-    ],
-    "supplementaryAccounts": [],
-    "category": AccountCategory.CASH_DEPOSIT,
-    "keywords": [
-      "総勘定元帳",
-      "転記",
-      "仕訳帳",
-      "現金",
-      "仕入",
-      "売上"
-    ]
-  },
-  "Q_T_008": {
-    "questionId": "Q_T_008",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "精算表",
-      "8桁",
-      "決算整理",
-      "現金",
-      "小口",
-      "預金",
-      "当座",
-      "普通",
-      "商品",
-      "仕入",
-      "売上",
-      "手形",
-      "繰越商品",
-      "減価償却",
-      "決算",
-      "整理",
-      "引当",
-      "償却",
-      "受取手形",
-      "支払手形"
-    ]
-  },
   "Q_J_009": {
     "questionId": "Q_J_009",
     "primaryAccounts": [],
@@ -680,97 +245,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "その他現金取引",
       "現金",
       "源泉"
-    ]
-  },
-  "Q_L_009": {
-    "questionId": "Q_L_009",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "現金",
-      "現金過不足",
-      "小口現金",
-      "当座預金",
-      "普通預金",
-      "定期預金",
-      "当座借越",
-      "雑収入",
-      "雑損失"
-    ],
-    "supplementaryAccounts": [],
-    "category": AccountCategory.CASH_DEPOSIT,
-    "keywords": [
-      "総勘定元帳",
-      "転記",
-      "仕訳帳",
-      "給料",
-      "決算"
-    ]
-  },
-  "Q_T_009": {
-    "questionId": "Q_T_009",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "合計試算表",
-      "期中取引",
-      "集計",
-      "現金",
-      "商品",
-      "仕入",
-      "売上",
-      "給料",
-      "借入"
-    ]
-  },
-  "Q_L_010": {
-    "questionId": "Q_L_010",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "現金",
-      "現金過不足",
-      "小口現金",
-      "当座預金",
-      "普通預金",
-      "定期預金",
-      "当座借越",
-      "雑収入",
-      "雑損失"
-    ],
-    "supplementaryAccounts": [],
-    "category": AccountCategory.CASH_DEPOSIT,
-    "keywords": [
-      "総勘定元帳",
-      "転記",
-      "仕訳帳",
-      "現金",
-      "仕入"
-    ]
-  },
-  "Q_T_010": {
-    "questionId": "Q_T_010",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "合計試算表",
-      "期中取引",
-      "集計",
-      "現金",
-      "商品",
-      "仕入",
-      "売上",
-      "借入"
     ]
   },
   "Q_J_010": {
@@ -824,46 +298,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "固定資産"
     ]
   },
-  "Q_L_011": {
-    "questionId": "Q_L_011",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "売掛金元帳",
-      "補助簿",
-      "得意先",
-      "現金",
-      "商品",
-      "仕入",
-      "売上",
-      "給料"
-    ]
-  },
-  "Q_T_011": {
-    "questionId": "Q_T_011",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "合計試算表",
-      "期中取引",
-      "集計",
-      "現金",
-      "商品",
-      "売上"
-    ]
-  },
   "Q_J_012": {
     "questionId": "Q_J_012",
     "primaryAccounts": [],
@@ -890,47 +324,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "源泉"
     ]
   },
-  "Q_L_012": {
-    "questionId": "Q_L_012",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "売掛金元帳",
-      "補助簿",
-      "得意先",
-      "現金",
-      "預金",
-      "当座",
-      "売上"
-    ]
-  },
-  "Q_T_012": {
-    "questionId": "Q_T_012",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "合計試算表",
-      "期中取引",
-      "集計",
-      "現金",
-      "商品",
-      "仕入",
-      "給料",
-      "借入"
-    ]
-  },
   "Q_J_013": {
     "questionId": "Q_J_013",
     "primaryAccounts": [
@@ -955,46 +348,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "現金",
       "預金",
       "当座"
-    ]
-  },
-  "Q_L_013": {
-    "questionId": "Q_L_013",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "売掛金元帳",
-      "補助簿",
-      "得意先",
-      "現金",
-      "小口",
-      "商品",
-      "仕入",
-      "手形"
-    ]
-  },
-  "Q_L_014": {
-    "questionId": "Q_L_014",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "売掛金元帳",
-      "補助簿",
-      "得意先",
-      "現金",
-      "預金",
-      "普通"
     ]
   },
   "Q_J_014": {
@@ -1051,24 +404,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "当座"
     ]
   },
-  "Q_L_015": {
-    "questionId": "Q_L_015",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "売掛金元帳",
-      "補助簿",
-      "得意先",
-      "現金",
-      "仕入"
-    ]
-  },
   "Q_J_016": {
     "questionId": "Q_J_016",
     "primaryAccounts": [
@@ -1093,24 +428,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "現金",
       "預金",
       "当座"
-    ]
-  },
-  "Q_L_016": {
-    "questionId": "Q_L_016",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "売掛金元帳",
-      "補助簿",
-      "得意先",
-      "売上",
-      "手形"
     ]
   },
   "Q_J_017": {
@@ -1138,62 +455,31 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "当座"
     ]
   },
-  "Q_L_017": {
-    "questionId": "Q_L_017",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "売掛金元帳",
-      "補助簿",
-      "得意先",
-      "商品",
-      "手形"
-    ]
-  },
   "Q_J_018": {
     "questionId": "Q_J_018",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "当座預金",
+      "支払手数料",
+      "売掛金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "買掛金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "現金・預金",
       "当座預金",
       "当座預金基本取引"
-    ]
-  },
-  "Q_L_018": {
-    "questionId": "Q_L_018",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "売掛金元帳",
-      "補助簿",
-      "得意先",
-      "商品",
-      "仕入"
     ]
   },
   "Q_J_019": {
@@ -1220,23 +506,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "当座借越",
       "預金",
       "当座"
-    ]
-  },
-  "Q_L_019": {
-    "questionId": "Q_L_019",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "売掛金元帳",
-      "補助簿",
-      "得意先",
-      "売上"
     ]
   },
   "Q_J_020": {
@@ -1267,26 +536,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "当座"
     ]
   },
-  "Q_L_020": {
-    "questionId": "Q_L_020",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "売掛金元帳",
-      "補助簿",
-      "得意先",
-      "仕入",
-      "手形",
-      "受取手形",
-      "支払手形"
-    ]
-  },
   "Q_J_021": {
     "questionId": "Q_J_021",
     "primaryAccounts": [
@@ -1311,46 +560,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "当座借越",
       "預金",
       "当座"
-    ]
-  },
-  "Q_L_021": {
-    "questionId": "Q_L_021",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "入金伝票",
-      "現金売上",
-      "3伝票制",
-      "現金",
-      "商品",
-      "手形",
-      "受取手形"
-    ]
-  },
-  "Q_L_022": {
-    "questionId": "Q_L_022",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "入金伝票",
-      "現金売上",
-      "3伝票制",
-      "現金",
-      "商品",
-      "仕入",
-      "給料"
     ]
   },
   "Q_J_022": {
@@ -1380,19 +589,23 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_023": {
     "questionId": "Q_J_023",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "当座預金",
+      "当座借越",
+      "売掛金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
-      "当座借越",
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "買掛金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "現金・預金",
@@ -1400,46 +613,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "当座借越",
       "預金",
       "当座"
-    ]
-  },
-  "Q_L_023": {
-    "questionId": "Q_L_023",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "入金伝票",
-      "現金売上",
-      "3伝票制",
-      "現金",
-      "商品",
-      "仕入",
-      "掛け",
-      "手形",
-      "支払手形"
-    ]
-  },
-  "Q_L_024": {
-    "questionId": "Q_L_024",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "入金伝票",
-      "現金売上",
-      "3伝票制",
-      "現金",
-      "掛け"
     ]
   },
   "Q_J_024": {
@@ -1497,23 +670,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "源泉"
     ]
   },
-  "Q_L_025": {
-    "questionId": "Q_L_025",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "入金伝票",
-      "現金売上",
-      "3伝票制",
-      "現金"
-    ]
-  },
   "Q_J_026": {
     "questionId": "Q_J_026",
     "primaryAccounts": [
@@ -1540,61 +696,31 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "当座"
     ]
   },
-  "Q_L_026": {
-    "questionId": "Q_L_026",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "入金伝票",
-      "現金売上",
-      "3伝票制",
-      "現金"
-    ]
-  },
   "Q_J_027": {
     "questionId": "Q_J_027",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "当座預金",
+      "受取手数料"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "売掛金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "現金・預金",
       "当座預金",
       "当座預金利息・手数料"
-    ]
-  },
-  "Q_L_027": {
-    "questionId": "Q_L_027",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "入金伝票",
-      "現金売上",
-      "3伝票制",
-      "仕入",
-      "売上"
     ]
   },
   "Q_J_028": {
@@ -1623,24 +749,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "普通"
     ]
   },
-  "Q_L_028": {
-    "questionId": "Q_L_028",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "入金伝票",
-      "現金売上",
-      "3伝票制",
-      "仕入",
-      "売上"
-    ]
-  },
   "Q_J_029": {
     "questionId": "Q_J_029",
     "primaryAccounts": [
@@ -1667,24 +775,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "普通"
     ]
   },
-  "Q_L_029": {
-    "questionId": "Q_L_029",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "入金伝票",
-      "現金売上",
-      "3伝票制",
-      "仕入",
-      "売上"
-    ]
-  },
   "Q_J_030": {
     "questionId": "Q_J_030",
     "primaryAccounts": [
@@ -1709,40 +799,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "公共料金",
       "預金",
       "普通"
-    ]
-  },
-  "Q_L_030": {
-    "questionId": "Q_L_030",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "入金伝票",
-      "現金売上",
-      "3伝票制",
-      "仕入",
-      "売上"
-    ]
-  },
-  "Q_L_031": {
-    "questionId": "Q_L_031",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "5要素",
-      "理論",
-      "勘定科目"
     ]
   },
   "Q_J_031": {
@@ -1773,31 +829,18 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "普通"
     ]
   },
-  "Q_L_032": {
-    "questionId": "Q_L_032",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "5要素",
-      "理論",
-      "勘定科目"
-    ]
-  },
   "Q_J_032": {
     "questionId": "Q_J_032",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "普通預金",
+      "租税公課",
+      "受取利息"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
-      "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
@@ -1840,32 +883,17 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "普通"
     ]
   },
-  "Q_L_033": {
-    "questionId": "Q_L_033",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "5要素",
-      "理論",
-      "勘定科目",
-      "現金"
-    ]
-  },
   "Q_J_034": {
     "questionId": "Q_J_034",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "支払手数料",
+      "普通預金"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
-      "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
@@ -1880,40 +908,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "現金",
       "預金",
       "普通"
-    ]
-  },
-  "Q_L_034": {
-    "questionId": "Q_L_034",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "5要素",
-      "理論",
-      "勘定科目",
-      "仕入",
-      "売上"
-    ]
-  },
-  "Q_L_035": {
-    "questionId": "Q_L_035",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "5要素",
-      "理論",
-      "勘定科目"
     ]
   },
   "Q_J_035": {
@@ -1970,40 +964,18 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "定期"
     ]
   },
-  "Q_L_036": {
-    "questionId": "Q_L_036",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "5要素",
-      "理論",
-      "勘定科目",
-      "商品",
-      "減価償却",
-      "固定資産",
-      "決算",
-      "整理",
-      "引当",
-      "償却",
-      "債権"
-    ]
-  },
   "Q_J_037": {
     "questionId": "Q_J_037",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "普通預金",
+      "定期預金",
+      "受取利息"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
-      "普通預金",
-      "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
@@ -2019,51 +991,20 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "定期"
     ]
   },
-  "Q_L_037": {
-    "questionId": "Q_L_037",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "5要素",
-      "理論",
-      "勘定科目"
-    ]
-  },
-  "Q_L_038": {
-    "questionId": "Q_L_038",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "5要素",
-      "理論",
-      "勘定科目"
-    ]
-  },
   "Q_J_038": {
     "questionId": "Q_J_038",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "普通預金",
+      "雑損失",
+      "定期預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
-      "普通預金",
-      "定期預金",
       "当座借越",
-      "雑収入",
-      "雑損失"
+      "雑収入"
     ],
     "supplementaryAccounts": [],
     "category": AccountCategory.CASH_DEPOSIT,
@@ -2076,33 +1017,18 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "定期"
     ]
   },
-  "Q_L_039": {
-    "questionId": "Q_L_039",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "5要素",
-      "理論",
-      "勘定科目",
-      "商品"
-    ]
-  },
   "Q_J_039": {
     "questionId": "Q_J_039",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "定期預金",
+      "受取利息"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
       "普通預金",
-      "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
@@ -2115,22 +1041,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "再預入",
       "預金",
       "定期"
-    ]
-  },
-  "Q_L_040": {
-    "questionId": "Q_L_040",
-    "primaryAccounts": [],
-    "relatedAccounts": [],
-    "supplementaryAccounts": [
-      "現金",
-      "当座預金",
-      "普通預金"
-    ],
-    "category": AccountCategory.OTHER,
-    "keywords": [
-      "5要素",
-      "理論",
-      "勘定科目"
     ]
   },
   "Q_J_040": {
@@ -7899,6 +6809,1714 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "税務",
       "機械"
     ]
+  },
+  "Q2_V_001": {
+    "questionId": "Q2_V_001",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "評価"
+    ]
+  },
+  "Q2_B_001": {
+    "questionId": "Q2_B_001",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_001": {
+    "questionId": "Q2_L_001",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_002": {
+    "questionId": "Q2_V_002",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "商品",
+      "売上"
+    ]
+  },
+  "Q2_L_002": {
+    "questionId": "Q2_L_002",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_003": {
+    "questionId": "Q2_V_003",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "現金",
+      "給料"
+    ]
+  },
+  "Q2_L_003": {
+    "questionId": "Q2_L_003",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_004": {
+    "questionId": "Q2_V_004",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "商品",
+      "評価"
+    ]
+  },
+  "Q2_B_004": {
+    "questionId": "Q2_B_004",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_004": {
+    "questionId": "Q2_L_004",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_005": {
+    "questionId": "Q2_V_005",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "決算"
+    ]
+  },
+  "Q2_B_005": {
+    "questionId": "Q2_B_005",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_005": {
+    "questionId": "Q2_L_005",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_006": {
+    "questionId": "Q2_V_006",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_006": {
+    "questionId": "Q2_B_006",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_006": {
+    "questionId": "Q2_L_006",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_007": {
+    "questionId": "Q2_V_007",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_007": {
+    "questionId": "Q2_B_007",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_007": {
+    "questionId": "Q2_L_007",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_008": {
+    "questionId": "Q2_V_008",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "現金"
+    ]
+  },
+  "Q2_L_008": {
+    "questionId": "Q2_L_008",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_009": {
+    "questionId": "Q2_V_009",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_009": {
+    "questionId": "Q2_B_009",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_009": {
+    "questionId": "Q2_L_009",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_010": {
+    "questionId": "Q2_V_010",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_011": {
+    "questionId": "Q2_V_011",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "現金",
+      "決算"
+    ]
+  },
+  "Q2_V_012": {
+    "questionId": "Q2_V_012",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "手形",
+      "引当",
+      "評価",
+      "債権",
+      "受取手形"
+    ]
+  },
+  "Q2_V_013": {
+    "questionId": "Q2_V_013",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "減価償却",
+      "固定資産",
+      "償却",
+      "評価"
+    ]
+  },
+  "Q2_B_010": {
+    "questionId": "Q2_B_010",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_010": {
+    "questionId": "Q2_L_010",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_011": {
+    "questionId": "Q2_B_011",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_011": {
+    "questionId": "Q2_L_011",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_012": {
+    "questionId": "Q2_B_012",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_012": {
+    "questionId": "Q2_L_012",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_013": {
+    "questionId": "Q2_B_013",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_013": {
+    "questionId": "Q2_L_013",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_014": {
+    "questionId": "Q2_V_014",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_014": {
+    "questionId": "Q2_B_014",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_014": {
+    "questionId": "Q2_L_014",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_015": {
+    "questionId": "Q2_V_015",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "商品"
+    ]
+  },
+  "Q2_L_015": {
+    "questionId": "Q2_L_015",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_016": {
+    "questionId": "Q2_V_016",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_016": {
+    "questionId": "Q2_B_016",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_016": {
+    "questionId": "Q2_L_016",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_017": {
+    "questionId": "Q2_V_017",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "決算",
+      "整理"
+    ]
+  },
+  "Q2_B_017": {
+    "questionId": "Q2_B_017",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_017": {
+    "questionId": "Q2_L_017",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_018": {
+    "questionId": "Q2_V_018",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "商品",
+      "評価"
+    ]
+  },
+  "Q2_B_018": {
+    "questionId": "Q2_B_018",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_018": {
+    "questionId": "Q2_L_018",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_019": {
+    "questionId": "Q2_V_019",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "売買",
+      "評価"
+    ]
+  },
+  "Q2_B_019": {
+    "questionId": "Q2_B_019",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_019": {
+    "questionId": "Q2_L_019",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_020": {
+    "questionId": "Q2_V_020",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_020": {
+    "questionId": "Q2_B_020",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_L_020": {
+    "questionId": "Q2_L_020",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_023": {
+    "questionId": "Q2_V_023",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "整理"
+    ]
+  },
+  "Q2_V_024": {
+    "questionId": "Q2_V_024",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "現金",
+      "仕入",
+      "売上",
+      "手形",
+      "受取手形",
+      "支払手形"
+    ]
+  },
+  "Q2_V_025": {
+    "questionId": "Q2_V_025",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_027": {
+    "questionId": "Q2_V_027",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "整理"
+    ]
+  },
+  "Q2_V_028": {
+    "questionId": "Q2_V_028",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_029": {
+    "questionId": "Q2_V_029",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_030": {
+    "questionId": "Q2_V_030",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "決算"
+    ]
+  },
+  "Q3_TB_001": {
+    "questionId": "Q3_TB_001",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q3_TB_002": {
+    "questionId": "Q3_TB_002",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q3_TB_003": {
+    "questionId": "Q3_TB_003",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q3_TB_004": {
+    "questionId": "Q3_TB_004",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q3_TB_005": {
+    "questionId": "Q3_TB_005",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q3_TB_006": {
+    "questionId": "Q3_TB_006",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q3_TB_007": {
+    "questionId": "Q3_TB_007",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q3_TB_008": {
+    "questionId": "Q3_TB_008",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q3_TB_009": {
+    "questionId": "Q3_TB_009",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q3_TB_010": {
+    "questionId": "Q3_TB_010",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q3_TB_011": {
+    "questionId": "Q3_TB_011",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "決算整理",
+      "売上原価",
+      "三分法",
+      "繰越商品"
+    ]
+  },
+  "Q3_TB_012": {
+    "questionId": "Q3_TB_012",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "有価証券",
+      "時価評価",
+      "評価益",
+      "配当金"
+    ]
+  },
+  "Q3_TB_013": {
+    "questionId": "Q3_TB_013",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "決算整理",
+      "未収利息",
+      "未払費用",
+      "見越し"
+    ]
+  },
+  "Q3_TB_014": {
+    "questionId": "Q3_TB_014",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "仮払金",
+      "仮受金",
+      "精算",
+      "振替処理"
+    ]
+  },
+  "Q3_TB_015": {
+    "questionId": "Q3_TB_015",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "決算整理",
+      "消耗品",
+      "費用法",
+      "棚卸"
+    ]
+  },
+  "Q3_TB_016": {
+    "questionId": "Q3_TB_016",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "決算整理",
+      "貸倒引当金",
+      "貸倒損失",
+      "引当金繰入"
+    ]
+  },
+  "Q3_TB_017": {
+    "questionId": "Q3_TB_017",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "決算整理",
+      "修繕引当金",
+      "引当金繰入",
+      "引当金取崩"
+    ]
+  },
+  "Q3_TB_018": {
+    "questionId": "Q3_TB_018",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "決算整理",
+      "減価償却",
+      "定額法",
+      "複数固定資産",
+      "減価償却累計額"
+    ]
+  },
+  "Q3_TB_019": {
+    "questionId": "Q3_TB_019",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "手形割引",
+      "貸倒引当金",
+      "手形売却損",
+      "売掛債権"
+    ]
+  },
+  "Q3_TB_020": {
+    "questionId": "Q3_TB_020",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "決算整理",
+      "売上原価",
+      "貸倒引当金",
+      "減価償却",
+      "総合問題"
+    ]
+  },
+  "Q3_CTB_001": {
+    "questionId": "Q3_CTB_001",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "差額計算"
+    ]
+  },
+  "Q3_CTB_002": {
+    "questionId": "Q3_CTB_002",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "売掛金",
+      "買掛金"
+    ]
+  },
+  "Q3_CTB_003": {
+    "questionId": "Q3_CTB_003",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "費用勘定",
+      "給料",
+      "経費"
+    ]
+  },
+  "Q3_CTB_004": {
+    "questionId": "Q3_CTB_004",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "決算整理",
+      "減価償却",
+      "評価勘定"
+    ]
+  },
+  "Q3_CTB_005": {
+    "questionId": "Q3_CTB_005",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "手形",
+      "手形売却損"
+    ]
+  },
+  "Q3_CTB_006": {
+    "questionId": "Q3_CTB_006",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "貸付金",
+      "借入金",
+      "受取利息"
+    ]
+  },
+  "Q3_CTB_007": {
+    "questionId": "Q3_CTB_007",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "決算整理",
+      "貸倒引当金",
+      "差額補充法"
+    ]
+  },
+  "Q3_CTB_008": {
+    "questionId": "Q3_CTB_008",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "前払",
+      "前受",
+      "期間按分"
+    ]
+  },
+  "Q3_CTB_009": {
+    "questionId": "Q3_CTB_009",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "決算整理",
+      "三分法",
+      "売上原価",
+      "繰越商品"
+    ]
+  },
+  "Q3_CTB_010": {
+    "questionId": "Q3_CTB_010",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "未収",
+      "未払",
+      "経過勘定"
+    ]
+  },
+  "Q3_CTB_011": {
+    "questionId": "Q3_CTB_011",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "決算整理",
+      "消耗品",
+      "購入時費用処理法"
+    ]
+  },
+  "Q3_CTB_012": {
+    "questionId": "Q3_CTB_012",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "仮払金",
+      "仮受金",
+      "経過勘定"
+    ]
+  },
+  "Q3_CTB_013": {
+    "questionId": "Q3_CTB_013",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "決算整理",
+      "引出金",
+      "資本金",
+      "当期純利益"
+    ]
+  },
+  "Q3_CTB_014": {
+    "questionId": "Q3_CTB_014",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "決算整理",
+      "売上原価",
+      "減価償却",
+      "貸倒引当金",
+      "複合問題"
+    ]
+  },
+  "Q3_CTB_015": {
+    "questionId": "Q3_CTB_015",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "合計残高試算表",
+      "総合問題",
+      "資産",
+      "負債",
+      "資本",
+      "収益",
+      "費用"
+    ]
+  },
+  "Q3_FS_001": {
+    "questionId": "Q3_FS_001",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "損益計算書",
+      "売上原価",
+      "営業利益"
+    ]
+  },
+  "Q3_FS_002": {
+    "questionId": "Q3_FS_002",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "貸借対照表",
+      "流動資産",
+      "繰越利益剰余金"
+    ]
+  },
+  "Q3_FS_003": {
+    "questionId": "Q3_FS_003",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "損益計算書",
+      "営業外損益",
+      "経常利益"
+    ]
+  },
+  "Q3_FS_004": {
+    "questionId": "Q3_FS_004",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "貸借対照表",
+      "固定資産",
+      "減価償却累計額",
+      "帳簿価額"
+    ]
+  },
+  "Q3_FS_005": {
+    "questionId": "Q3_FS_005",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "損益計算書",
+      "特別損益",
+      "法人税",
+      "当期純利益"
+    ]
+  },
+  "Q3_FS_006": {
+    "questionId": "Q3_FS_006",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "貸借対照表",
+      "流動負債",
+      "買掛金",
+      "支払手形",
+      "比率計算"
+    ]
+  },
+  "Q3_FS_007": {
+    "questionId": "Q3_FS_007",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "損益計算書",
+      "売上原価",
+      "売上総利益",
+      "三分法"
+    ]
+  },
+  "Q3_FS_008": {
+    "questionId": "Q3_FS_008",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "貸借対照表",
+      "前払費用",
+      "前受収益",
+      "経過勘定",
+      "決算整理"
+    ]
+  },
+  "Q3_FS_009": {
+    "questionId": "Q3_FS_009",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "損益計算書",
+      "営業利益",
+      "販売費及び一般管理費",
+      "営業利益率"
+    ]
+  },
+  "Q3_FS_010": {
+    "questionId": "Q3_FS_010",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "貸借対照表",
+      "未収収益",
+      "未払費用",
+      "未収利息",
+      "未払利息",
+      "経過勘定",
+      "決算整理"
+    ]
+  },
+  "Q3_FS_011": {
+    "questionId": "Q3_FS_011",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "株主資本等変動計算書",
+      "繰越利益剰余金",
+      "当期純利益",
+      "剰余金の配当"
+    ]
+  },
+  "Q3_FS_012": {
+    "questionId": "Q3_FS_012",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "貸借対照表",
+      "引出金",
+      "繰越利益剰余金",
+      "個人事業主",
+      "決算整理"
+    ]
+  },
+  "Q3_FS_013": {
+    "questionId": "Q3_FS_013",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "損益計算書",
+      "複合決算整理",
+      "売上原価",
+      "減価償却費",
+      "貸倒引当金繰入",
+      "営業利益",
+      "経常利益"
+    ]
+  },
+  "Q3_FS_014": {
+    "questionId": "Q3_FS_014",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "貸借対照表",
+      "複合決算整理",
+      "貸倒引当金",
+      "減価償却累計額",
+      "経過勘定",
+      "純資産"
+    ]
+  },
+  "Q3_FS_015": {
+    "questionId": "Q3_FS_015",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": [
+      "総合問題",
+      "損益計算書",
+      "貸借対照表",
+      "財務諸表",
+      "決算整理",
+      "当期純利益",
+      "繰越利益剰余金"
+    ]
+  },
+  "Q2_V_021": {
+    "questionId": "Q2_V_021",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_022": {
+    "questionId": "Q2_V_022",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_V_026": {
+    "questionId": "Q2_V_026",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_002": {
+    "questionId": "Q2_B_002",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_003": {
+    "questionId": "Q2_B_003",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_008": {
+    "questionId": "Q2_B_008",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
+  },
+  "Q2_B_015": {
+    "questionId": "Q2_B_015",
+    "primaryAccounts": [],
+    "relatedAccounts": [],
+    "supplementaryAccounts": [
+      "現金",
+      "当座預金",
+      "普通預金"
+    ],
+    "category": AccountCategory.OTHER,
+    "keywords": []
   }
 };
 
@@ -7906,18 +8524,18 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
  * 生成統計情報
  */
 export const GENERATION_STATS = {
-  "totalQuestions": 302,
+  "totalQuestions": 370,
   "categoryCount": {
-    "cash_deposit": 146,
-    "other": 73,
+    "cash_deposit": 136,
     "merchandise": 27,
     "receivables_payables": 14,
+    "other": 151,
     "payroll": 12,
     "settlement": 12,
     "fixed_assets": 18
   },
   "avgPrimaryAccounts": 0.2,
-  "avgRelatedAccounts": 8.2
+  "avgRelatedAccounts": 6.4
 };
 
 /**

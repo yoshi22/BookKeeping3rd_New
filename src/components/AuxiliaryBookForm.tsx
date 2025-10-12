@@ -310,7 +310,7 @@ const createStyles = (theme: Theme) =>
       backgroundColor: theme.colors.background,
     },
     bookButtonSelected: {
-      backgroundColor: theme.colors.primaryLight,
+      backgroundColor: theme.colors.infoBackground, // #E3F2FD - 淡い青色でテキストの可読性向上
       borderColor: theme.colors.primary,
     },
     checkboxIcon: {

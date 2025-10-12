@@ -70,6 +70,7 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
   mode = "learning",
   onDirectSubmit,
   onSubmit,
+  answerTemplate,
 }: UnifiedJournalEntryFormProps) {
   // Theme system integration
   const { theme } = useTheme();
@@ -101,8 +102,11 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
   // Reset form state when questionId changes
   useEffect(() => {
     setFormState(createInitialJournalFormState());
+
+    // Always initialize with single entry (users can add more as needed)
     setDebits([createInitialJournalEntry()]);
     setCredits([createInitialJournalEntry()]);
+
     setNumericPadVisible(false);
     setCurrentAmountEdit(null);
     setTempAmount("");
@@ -307,7 +311,9 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
                   <UnifiedAccountSelector
                     label=""
                     value={debit.account}
-                    onChange={(account) => updateDebit(index, "account", account)}
+                    onChange={(account) =>
+                      updateDebit(index, "account", account)
+                    }
                     placeholder="勘定科目を選択"
                     mode="dropdown"
                     questionType="journal"
@@ -375,7 +381,9 @@ const UnifiedJournalEntryForm = React.memo(function UnifiedJournalEntryForm({
                   <UnifiedAccountSelector
                     label=""
                     value={credit.account}
-                    onChange={(account) => updateCredit(index, "account", account)}
+                    onChange={(account) =>
+                      updateCredit(index, "account", account)
+                    }
                     placeholder="勘定科目を選択"
                     mode="dropdown"
                     questionType="journal"
