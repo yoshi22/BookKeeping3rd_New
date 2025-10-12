@@ -150,14 +150,6 @@ export const migration001: MigrationInfo = {
     // 学習進捗
     `CREATE INDEX IF NOT EXISTS idx_progress_category ON user_progress (category_id)`,
 
-    // 模試結果
-    `CREATE INDEX IF NOT EXISTS idx_exam_results_date ON mock_exam_results (taken_at)`,
-    `CREATE INDEX IF NOT EXISTS idx_exam_results_score ON mock_exam_results (total_score)`,
-
-    // 模試問題関連
-    `CREATE INDEX IF NOT EXISTS idx_mock_questions_exam ON mock_exam_questions (mock_exam_id)`,
-    `CREATE INDEX IF NOT EXISTS idx_mock_questions_section ON mock_exam_questions (mock_exam_id, section_number)`,
-
     // === 初期データ投入 ===
     // カテゴリ初期データ（新コンテンツ構成対応）
     `INSERT OR REPLACE INTO categories (id, name, description, sort_order, total_questions) VALUES
@@ -220,14 +212,6 @@ export const migration001: MigrationInfo = {
       ('516', '減価償却費', 'expense', '["journal", "trial_balance"]', 66),
       ('517', '支払利息', 'expense', '["journal", "trial_balance"]', 67),
       ('518', '雑費', 'expense', '["journal", "trial_balance"]', 68)`,
-
-    // 模試定義初期データ（5セット）
-    `INSERT OR REPLACE INTO mock_exams (id, name, description, structure_json) VALUES
-      ('MOCK_001', '基礎レベル模試', '基本的な問題中心の模試', '{"section1":{"count":15,"maxScore":60,"questionCategory":"journal","timeRecommendation":30},"section2":{"count":2,"maxScore":20,"questionCategory":"ledger","timeRecommendation":15},"section3":{"count":1,"maxScore":20,"questionCategory":"trial_balance","timeRecommendation":15}}'),
-      ('MOCK_002', '標準レベル模試', '標準的な難易度の模試', '{"section1":{"count":15,"maxScore":60,"questionCategory":"journal","timeRecommendation":30},"section2":{"count":2,"maxScore":20,"questionCategory":"ledger","timeRecommendation":15},"section3":{"count":1,"maxScore":20,"questionCategory":"trial_balance","timeRecommendation":15}}'),
-      ('MOCK_003', '応用レベル模試', '応用問題を含む模試', '{"section1":{"count":15,"maxScore":60,"questionCategory":"journal","timeRecommendation":30},"section2":{"count":2,"maxScore":20,"questionCategory":"ledger","timeRecommendation":15},"section3":{"count":1,"maxScore":20,"questionCategory":"trial_balance","timeRecommendation":15}}'),
-      ('MOCK_004', '実践レベル模試', '実践的な問題構成の模試', '{"section1":{"count":15,"maxScore":60,"questionCategory":"journal","timeRecommendation":30},"section2":{"count":2,"maxScore":20,"questionCategory":"ledger","timeRecommendation":15},"section3":{"count":1,"maxScore":20,"questionCategory":"trial_balance","timeRecommendation":15}}'),
-      ('MOCK_005', '総合レベル模試', '総合的な実力測定模試', '{"section1":{"count":15,"maxScore":60,"questionCategory":"journal","timeRecommendation":30},"section2":{"count":2,"maxScore":20,"questionCategory":"ledger","timeRecommendation":15},"section3":{"count":1,"maxScore":20,"questionCategory":"trial_balance","timeRecommendation":15}}')`,
   ],
 
   rollbackSql: [

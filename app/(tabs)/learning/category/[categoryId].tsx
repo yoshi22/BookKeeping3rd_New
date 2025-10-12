@@ -177,10 +177,9 @@ export default function CategoryDetailScreen() {
         type: "financial_statements",
         name: "財務諸表作成",
         icon: "📊",
-        count: 4,
+        count: 15,
       },
-      { type: "worksheet", name: "精算表作成", icon: "📋", count: 4 },
-      { type: "trial_balance", name: "試算表作成", icon: "📝", count: 4 },
+      { type: "worksheet", name: "精算表作成", icon: "📋", count: 15 },
       {
         type: "fill_in_trial_balance",
         name: "試算表穴埋め",
@@ -640,6 +639,46 @@ export default function CategoryDetailScreen() {
     }
   };
 
+  // 問題プレビューテキストを生成する関数（Q2_L、Q2_Bの空question_text対応）
+  const generateQuestionPreview = (question: Question): string => {
+    // question_textがある場合はそのまま返す
+    if (question.question_text && question.question_text.trim()) {
+      return question.question_text;
+    }
+
+    // answer_template_jsonからプレビューを生成
+    try {
+      const template = JSON.parse(question.answer_template_json || "{}");
+
+      // Q2_L: fill_in_ledger タイプ（勘定記入問題）
+      if (template.type === "fill_in_ledger" && template.problemStatement) {
+        return template.problemStatement;
+      }
+
+      // Q2_B: auxiliary_book タイプ（補助簿記入問題）
+      if (
+        template.type === "auxiliary_book" &&
+        Array.isArray(template.transactions)
+      ) {
+        // 取引の概要を生成（最初の2-3件）
+        const previewTransactions = template.transactions
+          .slice(0, 3)
+          .map((t: any) => t.description)
+          .join("、");
+        return previewTransactions;
+      }
+
+      // Q2_V: vocabulary タイプ（理論・選択問題）
+      if (template.type === "vocabulary" && template.questionText) {
+        return template.questionText;
+      }
+
+      return "（問題文なし）";
+    } catch {
+      return "（問題文なし）";
+    }
+  };
+
   if (loading) {
     return (
       <Screen safeArea={true}>
@@ -985,7 +1024,7 @@ export default function CategoryDetailScreen() {
               </View>
               {/* 問題文のプレビュー */}
               <Text style={styles.questionText} numberOfLines={2}>
-                {question.question_text}
+                {generateQuestionPreview(question)}
               </Text>
               {/* 学習状況の表示 */}
               <View style={styles.questionStatus}>

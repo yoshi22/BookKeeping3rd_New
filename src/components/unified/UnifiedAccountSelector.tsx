@@ -28,7 +28,7 @@ import { STANDARD_ACCOUNT_OPTIONS } from "../shared/AccountOptions";
 import type { AccountOption } from "../shared/FormTypes";
 import {
   filterAccountsForQuestion,
-  type FilteredAccountOptions
+  type FilteredAccountOptions,
 } from "../../services/account-filter-service";
 
 export type AccountSelectionMode = "dropdown" | "modal" | "actionsheet";
@@ -91,7 +91,8 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
 
   // State for dynamic filtering
   const [showAllAccounts, setShowAllAccounts] = useState(false);
-  const [filteredResult, setFilteredResult] = useState<FilteredAccountOptions | null>(null);
+  const [filteredResult, setFilteredResult] =
+    useState<FilteredAccountOptions | null>(null);
 
   // Effect to update filtered accounts when questionId or questionText changes
   useEffect(() => {
@@ -100,12 +101,15 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
         const result = filterAccountsForQuestion(
           questionId,
           questionText,
-          maxFilteredAccounts
+          maxFilteredAccounts,
         );
         setFilteredResult(result);
         setShowAllAccounts(false); // Reset show all when filtering updates
       } catch (error) {
-        console.warn("[UnifiedAccountSelector] Dynamic filtering failed:", error);
+        console.warn(
+          "[UnifiedAccountSelector] Dynamic filtering failed:",
+          error,
+        );
         setFilteredResult(null);
       }
     } else {
@@ -134,7 +138,8 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
   const accountOptions = getAccountOptions();
 
   // Check if "Show All" option should be displayed
-  const shouldShowAllOption = enableDynamicFiltering &&
+  const shouldShowAllOption =
+    enableDynamicFiltering &&
     filteredResult &&
     showAllAccountsOption &&
     !showAllAccounts &&
@@ -286,6 +291,8 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
                         styles.optionText,
                         value === option.value && styles.selectedOptionText,
                       ]}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
                     >
                       {option.label}
                     </Text>
@@ -340,7 +347,13 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
                   onPress={() => handleAccountSelect(item)}
                   testID={`account-option-${item.value}`}
                 >
-                  <Text style={styles.optionText}>{item.label}</Text>
+                  <Text
+                    style={styles.optionText}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {item.label}
+                  </Text>
                 </TouchableOpacity>
               )}
               ListFooterComponent={

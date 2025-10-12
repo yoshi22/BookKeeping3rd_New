@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-10-06T17:20:19.626Z",
+  "totalQuestions": 120,
+  "summary": {
+    "vocabulary": {
+      "total": 30,
+      "valid": 30,
+      "invalid": 0,
+      "criticalIssues": 0
+    },
+    "ledger": {
+      "total": 40,
+      "valid": 40,
+      "invalid": 0,
+      "criticalIssues": 0
+    },
+    "trialBalance": {
+      "total": 50,
+      "valid": 50,
+      "invalid": 0,
+      "criticalIssues": 0
+    }
+  },
+  "details": []
+}

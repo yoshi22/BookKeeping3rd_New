@@ -1,0 +1,466 @@
+{
+  "timestamp": "2025-10-06T16:56:15.741Z",
+  "totalQuestions": 120,
+  "summary": {
+    "vocabulary": {
+      "total": 30,
+      "valid": 30,
+      "invalid": 0,
+      "criticalIssues": 0
+    },
+    "ledger": {
+      "total": 40,
+      "valid": 20,
+      "invalid": 20,
+      "criticalIssues": 20
+    },
+    "trialBalance": {
+      "total": 50,
+      "valid": 40,
+      "invalid": 10,
+      "criticalIssues": 30
+    }
+  },
+  "details": [
+    {
+      "questionId": "Q2_B_001",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_004",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_005",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_006",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_007",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_009",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_010",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_011",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_012",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_013",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_014",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_016",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_017",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_018",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_019",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_020",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q3_TB_011",
+      "category": "trial_balance",
+      "questionType": "fill_in_trial_balance",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[0] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[1] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[2] に correctIndex がありません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q3_TB_012",
+      "category": "trial_balance",
+      "questionType": "fill_in_trial_balance",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[0] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[1] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[2] に correctIndex がありません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q3_TB_013",
+      "category": "trial_balance",
+      "questionType": "fill_in_trial_balance",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[0] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[1] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[2] に correctIndex がありません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q3_TB_014",
+      "category": "trial_balance",
+      "questionType": "fill_in_trial_balance",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[0] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[1] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[2] に correctIndex がありません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q3_TB_015",
+      "category": "trial_balance",
+      "questionType": "fill_in_trial_balance",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[0] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[1] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[2] に correctIndex がありません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q3_TB_016",
+      "category": "trial_balance",
+      "questionType": "fill_in_trial_balance",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[0] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[1] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[2] に correctIndex がありません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q3_TB_017",
+      "category": "trial_balance",
+      "questionType": "fill_in_trial_balance",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[0] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[1] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[2] に correctIndex がありません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q3_TB_018",
+      "category": "trial_balance",
+      "questionType": "fill_in_trial_balance",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[0] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[1] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[2] に correctIndex がありません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q3_TB_019",
+      "category": "trial_balance",
+      "questionType": "fill_in_trial_balance",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[0] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[1] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[2] に correctIndex がありません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q3_TB_020",
+      "category": "trial_balance",
+      "questionType": "fill_in_trial_balance",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[0] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[1] に correctIndex がありません"
+        },
+        {
+          "severity": "CRITICAL",
+          "message": "Correct answer blank[2] に correctIndex がありません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_002",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_003",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_008",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    },
+    {
+      "questionId": "Q2_B_015",
+      "category": "ledger",
+      "questionType": "auxiliary_book",
+      "valid": false,
+      "issues": [
+        {
+          "severity": "CRITICAL",
+          "message": "answer_template_json に blanks 配列が存在しません"
+        }
+      ]
+    }
+  ]
+}

@@ -751,10 +751,13 @@ export default function QuestionDisplay({
         <Text style={styles.difficulty}>難易度: {difficulty}</Text>
       </View>
 
-      {/* 問題文 - VocabularyForm, FillInLedgerForm, AuxiliaryBookFormは自己完結型なので除外 */}
+      {/* 問題文 - VocabularyForm, FillInLedgerForm, AuxiliaryBookForm, Q3問題フォームは自己完結型なので除外 */}
       {!shouldUseVocabularyForm &&
         !shouldUseFillInLedgerForm &&
-        !shouldUseAuxiliaryBookForm && (
+        !shouldUseAuxiliaryBookForm &&
+        !shouldUseFillInTrialBalanceForm &&
+        !shouldUseFillInComprehensiveTrialBalanceForm &&
+        !shouldUseFillInFinancialStatementForm && (
           <QuestionText
             key={`question-text-${questionId}`}
             questionText={questionText}

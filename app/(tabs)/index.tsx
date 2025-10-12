@@ -109,6 +109,34 @@ export default function HomeScreen() {
                 間違えた問題を重点的に
               </Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.menuButton,
+                { backgroundColor: theme.colors.surface },
+              ]}
+              onPress={() => router.push("/review")}
+              testID="home-statistics-button"
+              accessibilityLabel="統計を確認"
+            >
+              <Text style={styles.menuIcon}>📊</Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("h6"),
+                  { color: theme.colors.text, marginBottom: theme.spacing.xs },
+                ]}
+              >
+                統計・進捗
+              </Text>
+              <Text
+                style={[
+                  TypographyUtils.getTextStyle("body2"),
+                  { color: theme.colors.textSecondary, textAlign: "center" },
+                ]}
+              >
+                学習の進捗を確認
+              </Text>
+            </TouchableOpacity>
           </Flex>
         </Flex>
       </Container>

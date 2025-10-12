@@ -607,6 +607,7 @@ export class AnswerService {
           return this.isFillInTrialBalanceAnswerCorrect(
             answerData,
             correctAnswer,
+            answerTemplate,
           );
         } else if (
           answerTemplate?.type === "fill_in_comprehensive_trial_balance"
@@ -1960,6 +1961,9 @@ export class AnswerService {
   private isFillInTrialBalanceAnswerCorrect(
     answerData: CBTAnswerData,
     correctAnswer: QuestionCorrectAnswer,
+    answerTemplate: QuestionTemplate & {
+      blanks?: Array<{ index: number; choices: number[] }>;
+    },
   ): boolean {
     try {
       // answerData: { blanks: Record<number, number> }
@@ -1969,8 +1973,9 @@ export class AnswerService {
         index: number;
         correctIndex: number;
       }>;
+      const templateBlanks = answerTemplate.blanks || [];
 
-      if (!userBlanks || !correctBlanks) {
+      if (!userBlanks || !correctBlanks || !templateBlanks) {
         logger.error(
           "[AnswerService] fill_in_trial_balance問題のデータ形式が不正です",
         );
@@ -1978,18 +1983,27 @@ export class AnswerService {
       }
 
       // すべての空欄が正解かチェック
-      return correctBlanks.every((correctBlank) => {
-        const userSelectedIndex = userBlanks[correctBlank.index];
-        if (userSelectedIndex === undefined) {
-          logger.debug(
-            `[AnswerService] 空欄${correctBlank.index}の解答がありません`,
+      return correctBlanks.every((correctBlank, arrayIndex) => {
+        // correct_answer_jsonの配列インデックスに対応するtemplateのblankIndexを取得
+        const templateBlank = templateBlanks[arrayIndex];
+        if (!templateBlank) {
+          logger.error(
+            `[AnswerService] template blanks[${arrayIndex}]が存在しません`,
           );
+          return false;
+        }
+
+        const blankIndex = templateBlank.index;
+        const userSelectedIndex = userBlanks[blankIndex];
+
+        if (userSelectedIndex === undefined) {
+          logger.debug(`[AnswerService] 空欄${blankIndex}の解答がありません`);
           return false;
         }
 
         const isCorrect = userSelectedIndex === correctBlank.correctIndex;
         logger.debug(
-          `[AnswerService] 空欄${correctBlank.index}: user=${userSelectedIndex}, correct=${correctBlank.correctIndex}, match=${isCorrect}`,
+          `[AnswerService] 空欄${blankIndex} (array[${arrayIndex}]): user=${userSelectedIndex}, correct=${correctBlank.correctIndex}, match=${isCorrect}`,
         );
 
         return isCorrect;

@@ -1,0 +1,4164 @@
+{
+  "timestamp": "2025-09-29T08:30:26.245Z",
+  "summary": {
+    "totalQuestions": 302,
+    "successCount": 302,
+    "errorCount": 0,
+    "successRate": "100.00%"
+  },
+  "details": [
+    {
+      "questionId": "Q_J_001",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金過不足",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_001",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前月繰越",
+        "売上",
+        "給料",
+        "売掛金",
+        "買掛金",
+        "現金過不足"
+      ],
+      "questionType": "ledger_account",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_001",
+      "categoryId": "trial_balance",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "現金",
+        "資本金",
+        "水道光熱費",
+        "仕入",
+        "買掛金",
+        "売上",
+        "貸倒引当金繰入",
+        "貸倒引当金",
+        "減価償却費",
+        "減価償却累計額"
+      ],
+      "questionType": "financial_statement",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_002",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "通信費",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_002",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前月繰越",
+        "売上",
+        "現金",
+        "受取手形",
+        "貸倒引当金"
+      ],
+      "questionType": "ledger_account",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_002",
+      "categoryId": "trial_balance",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "現金",
+        "資本金",
+        "前払金",
+        "前受金",
+        "仕入",
+        "買掛金",
+        "水道光熱費",
+        "売掛金",
+        "売上",
+        "商品",
+        "貸倒引当金繰入",
+        "貸倒引当金",
+        "減価償却費",
+        "減価償却累計額"
+      ],
+      "questionType": "financial_statement",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_003",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "雑損失",
+        "現金過不足"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_003",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "繰越商品",
+        "仕入"
+      ],
+      "questionType": "ledger_account",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_003",
+      "categoryId": "trial_balance",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "水道光熱費",
+        "現金",
+        "旅費交通費",
+        "広告宣伝費",
+        "消耗品費",
+        "仕入",
+        "買掛金",
+        "貸倒引当金繰入",
+        "貸倒引当金",
+        "減価償却費",
+        "減価償却累計額",
+        "前払費用",
+        "保険料"
+      ],
+      "questionType": "financial_statement",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_004",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "現金過不足"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_004",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前期繰越",
+        "減価償却累計額",
+        "減価償却費"
+      ],
+      "questionType": "ledger_account",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_004",
+      "categoryId": "trial_balance",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "前払金",
+        "現金",
+        "商品",
+        "買掛金",
+        "借入金",
+        "給料",
+        "水道光熱費",
+        "仕入",
+        "資本金",
+        "前受金",
+        "貸倒引当金繰入",
+        "貸倒引当金",
+        "減価償却費",
+        "減価償却累計額",
+        "前払費用",
+        "保険料"
+      ],
+      "questionType": "financial_statement",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_005",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "小口現金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_005",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前月繰越",
+        "仕入",
+        "現金",
+        "売掛金"
+      ],
+      "questionType": "ledger_account",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_005",
+      "categoryId": "trial_balance",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "現金",
+        "小口現金",
+        "当座預金",
+        "普通預金",
+        "受取手形",
+        "売掛金",
+        "商品",
+        "繰越商品",
+        "仕入",
+        "売上",
+        "支払手形",
+        "買掛金",
+        "貸倒引当金繰入",
+        "貸倒引当金",
+        "減価償却費",
+        "減価償却累計額"
+      ],
+      "questionType": "worksheet",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_006",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "小口現金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_006",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前月繰越",
+        "現金"
+      ],
+      "questionType": "ledger_account",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_006",
+      "categoryId": "trial_balance",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "現金",
+        "小口現金",
+        "当座預金",
+        "普通預金",
+        "受取手形",
+        "売掛金",
+        "商品",
+        "繰越商品",
+        "仕入",
+        "売上",
+        "支払手形",
+        "買掛金",
+        "貸倒引当金繰入",
+        "貸倒引当金",
+        "減価償却費",
+        "減価償却累計額",
+        "前払費用",
+        "保険料"
+      ],
+      "questionType": "worksheet",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_007",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_007",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前月繰越",
+        "売掛金",
+        "貸倒引当金繰入",
+        "貸倒引当金戻入"
+      ],
+      "questionType": "ledger_account",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_007",
+      "categoryId": "trial_balance",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "現金",
+        "小口現金",
+        "当座預金",
+        "普通預金",
+        "受取手形",
+        "売掛金",
+        "商品",
+        "繰越商品",
+        "仕入",
+        "売上",
+        "支払手形",
+        "買掛金",
+        "貸倒引当金繰入",
+        "貸倒引当金",
+        "減価償却費",
+        "減価償却累計額",
+        "調整勘定"
+      ],
+      "questionType": "worksheet",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_008",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "売上"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_008",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "売掛金",
+        "買掛金"
+      ],
+      "questionType": "ledger_account",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_008",
+      "categoryId": "trial_balance",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "現金",
+        "小口現金",
+        "当座預金",
+        "普通預金",
+        "受取手形",
+        "売掛金",
+        "商品",
+        "繰越商品",
+        "仕入",
+        "売上",
+        "支払手形",
+        "買掛金",
+        "貸倒引当金繰入",
+        "貸倒引当金",
+        "減価償却費",
+        "減価償却累計額",
+        "調整勘定"
+      ],
+      "questionType": "worksheet",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_009",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_009",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "未払費用"
+      ],
+      "questionType": "ledger_account",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_009",
+      "categoryId": "trial_balance",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "借入金",
+        "給料",
+        "売掛金",
+        "売上",
+        "仕入",
+        "買掛金",
+        "前払金",
+        "水道光熱費",
+        "前受金"
+      ],
+      "questionType": "trial_balance",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_010",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前払費用",
+        "損益"
+      ],
+      "questionType": "ledger_account",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_010",
+      "categoryId": "trial_balance",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "売上",
+        "仕入",
+        "買掛金",
+        "借入金",
+        "売掛金",
+        "通信費",
+        "消耗品費",
+        "広告宣伝費"
+      ],
+      "questionType": "trial_balance",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_010",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "旅費交通費",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_011",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "租税公課",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_011",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "前月繰越",
+        "売掛金",
+        "仕入",
+        "売上",
+        "経費",
+        "給料",
+        "次月繰越"
+      ],
+      "questionType": "subsidiary_book",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_011",
+      "categoryId": "trial_balance",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前払金",
+        "現金",
+        "買掛金",
+        "通信費",
+        "前受金",
+        "旅費交通費",
+        "売掛金",
+        "売上",
+        "消耗品費"
+      ],
+      "questionType": "trial_balance",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_012",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_012",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "前月繰越",
+        "売上",
+        "現金",
+        "買掛金"
+      ],
+      "questionType": "subsidiary_book",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_T_012",
+      "categoryId": "trial_balance",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "水道光熱費",
+        "現金",
+        "給料",
+        "商品",
+        "買掛金",
+        "消耗品費",
+        "売掛金",
+        "借入金",
+        "家賃"
+      ],
+      "questionType": "trial_balance",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_013",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "当座預金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_013",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "前月繰越",
+        "仕入",
+        "現金",
+        "手形"
+      ],
+      "questionType": "subsidiary_book",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_014",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "売掛金",
+        "現金"
+      ],
+      "questionType": "subsidiary_book",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_014",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_015",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "当座預金",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_015",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "買掛金",
+        "現金"
+      ],
+      "questionType": "subsidiary_book",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_016",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_016",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "前月繰越",
+        "振出",
+        "決済"
+      ],
+      "questionType": "subsidiary_book",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_017",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_017",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "前月繰越",
+        "受取",
+        "裏書譲渡",
+        "満期決済"
+      ],
+      "questionType": "subsidiary_book",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_018",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_018",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "前月繰越",
+        "仕入",
+        "仕入返品",
+        "仕入値引"
+      ],
+      "questionType": "subsidiary_book",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_019",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "水道光熱費",
+        "当座借越"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_019",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "前月繰越",
+        "売上",
+        "売上返品",
+        "売上値引"
+      ],
+      "questionType": "subsidiary_book",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_020",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_020",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [
+        "仕入先A",
+        "仕入先B",
+        "仕入先C",
+        "仕入先D"
+      ],
+      "questionType": "subsidiary_book",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_021",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "支払利息",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_021",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "売掛金回収",
+        "現金売上",
+        "手形受取"
+      ],
+      "questionType": "voucher_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_022",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金仕入",
+        "給料支払",
+        "買掛金支払"
+      ],
+      "questionType": "voucher_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_022",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "当座借越",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_023",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_023",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "voucher_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_024",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "voucher_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_024",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_025",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "当座預金",
+        "受取利息"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_025",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "voucher_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_026",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "支払手数料",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_026",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "voucher_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_027",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_027",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "商品売上"
+      ],
+      "questionType": "voucher_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_028",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "普通預金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_028",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "商品仕入"
+      ],
+      "questionType": "voucher_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_029",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "普通預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_029",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "商品仕入",
+        "商品売上",
+        "売掛金回収"
+      ],
+      "questionType": "voucher_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_030",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "水道光熱費",
+        "普通預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_030",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "voucher_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_031",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "multiple_choice",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_031",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "普通預金",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_032",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "multiple_choice",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_032",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_033",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "普通預金",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_033",
+      "categoryId": "ledger",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "multiple_choice",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_034",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_034",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "multiple_choice",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_035",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "multiple_choice",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_035",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "当座預金",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_036",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "定期預金",
+        "普通預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_036",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "multiple_choice",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_037",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_037",
+      "categoryId": "ledger",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "multiple_choice",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_038",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "multiple_choice",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_038",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_039",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "multiple_choice",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_039",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_L_040",
+      "categoryId": "ledger",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "multiple_choice",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_040",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "普通預金",
+        "借入金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_041",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "定期預金",
+        "為替差益"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_042",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "普通預金",
+        "定期預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_043",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_044",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "買掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_045",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "売上"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_046",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "売掛金",
+        "売上"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_047",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_048",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_049",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_050",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_051",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前払金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_052",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "前払金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_053",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "前受金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_054",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前受金",
+        "売上"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_055",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_056",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "売上"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_057",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "売上"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_058",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "仕入"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_059",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "仕入"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_060",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "仕入"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_061",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "前払金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_062",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "仕入"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_063",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "売上",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_064",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "売上",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_065",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "売上",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_066",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前受金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_067",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "売上",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_068",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_069",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "立替金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_070",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_071",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_072",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_073",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "買掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_074",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "発送費",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_075",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_076",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "売上"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_077",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_078",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "売上",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_079",
+      "categoryId": "journal",
+      "difficulty": 5,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "広告宣伝費",
+        "商品"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_080",
+      "categoryId": "journal",
+      "difficulty": 5,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "繰越商品"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_081",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "商品"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_082",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "繰越商品",
+        "仕入"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_083",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "買掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_084",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "売上"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_085",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "仕入"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_086",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "売上",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_087",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "買掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_088",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "売掛金",
+        "売上"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_089",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_090",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_091",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "受取手形",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_092",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_093",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "貸倒損失",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_094",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "貸倒引当金戻入"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_095",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_096",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "買掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_097",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_098",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_099",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "支払手形"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_100",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_101",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_102",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "仕入"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_103",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "受取手形",
+        "売掛金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_104",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "当座預金",
+        "受取手形"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_105",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "受取手形"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_106",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_107",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_108",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_109",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "貸倒損失",
+        "受取手形"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_110",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_111",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "買掛金",
+        "支払手形"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_112",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "支払手形",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_113",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_114",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_115",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_116",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "支払手数料",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_117",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "租税公課",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_118",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_119",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "貸付金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_120",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_121",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "貸付金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_122",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "貸倒損失",
+        "貸付金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_123",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "貸付金",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_124",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "当座預金",
+        "借入金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_125",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_126",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "借入金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_127",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "借入金",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_128",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_129",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "給料",
+        "未払給料"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_130",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "給料",
+        "未払給料"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_131",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_132",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_133",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_134",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_135",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_136",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_137",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_138",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "賞与",
+        "未払賞与"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_139",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_140",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_141",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "法定福利費",
+        "普通預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_142",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "福利厚生費",
+        "普通預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_143",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_144",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_145",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "預り金",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_146",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "給料",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_147",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_148",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_149",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_150",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "預り金",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_151",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_152",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_153",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "預り金",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_154",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_155",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_156",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "給料",
+        "預り金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_157",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "法定福利費",
+        "未払金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_158",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_159",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "給料",
+        "預り金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_160",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "賞与",
+        "預り金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_161",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "預り金",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_162",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_163",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "法定福利費",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_164",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_165",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "法人税等",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_166",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "法人税等",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_167",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_168",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "法人税等",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_169",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "法人税等",
+        "当座預金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_170",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "法人税等",
+        "未払法人税等"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_171",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "備品",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_172",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "建物",
+        "未払金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_173",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "車両運搬具",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_174",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_175",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "車両運搬具",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_176",
+      "categoryId": "journal",
+      "difficulty": 4,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_177",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "建物",
+        "資本金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_178",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "備品",
+        "受贈益"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_179",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "建設仮勘定",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_180",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "建物",
+        "建設仮勘定"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_181",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_182",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_183",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_184",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "ソフトウェア",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_185",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "compound_journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_186",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "車両運搬具減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_187",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "機械装置減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_188",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "建物減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_189",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "機械装置減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_190",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "車両運搬具減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_191",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "消耗品費",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_192",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "機械装置減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_193",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "車両運搬具減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_194",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "機械装置減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_195",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "機械装置減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_196",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "機械装置減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_197",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "機械装置減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_198",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "一括償却資産減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_199",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "消耗品費",
+        "現金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_200",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "繰延資産償却費",
+        "開業費"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_201",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_202",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_203",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "車両運搬具減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_204",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_205",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_206",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_207",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_208",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_209",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_210",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_211",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "貸倒引当金繰入",
+        "貸倒引当金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_212",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "貸倒引当金",
+        "貸倒引当金戻入"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_213",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": " (汎用的な解答データ構築を使用)",
+      "accounts": [],
+      "questionType": "",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_214",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金",
+        "償却債権取立益"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_215",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "貸倒引当金繰入",
+        "貸倒引当金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_216",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "貸倒引当金繰入",
+        "貸倒引当金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_217",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "貸倒引当金繰入",
+        "貸倒引当金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_218",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "貸倒引当金繰入",
+        "貸倒引当金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_219",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "賞与引当金繰入",
+        "賞与引当金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_220",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "修繕引当金繰入",
+        "修繕引当金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_221",
+      "categoryId": "journal",
+      "difficulty": 1,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前払費用",
+        "保険料"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_222",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前払費用",
+        "支払家賃"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_223",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前払費用",
+        "支払利息"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_224",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "前払費用",
+        "広告宣伝費"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_225",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "受取家賃",
+        "前受収益"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_226",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "受取利息",
+        "前受収益"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_227",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "受取手数料",
+        "前受収益"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_228",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "給料",
+        "未払費用"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_229",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "支払利息",
+        "未払費用"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_230",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "賃借料",
+        "未払費用"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_231",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "水道光熱費",
+        "未払費用"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_232",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "未収収益",
+        "賃貸料"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_233",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "未収収益",
+        "受取利息"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_234",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "未収収益",
+        "受取手数料"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_235",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "未収収益",
+        "受取手数料"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_236",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "消耗品",
+        "消耗品費"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_237",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "材料費",
+        "貯蔵品"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_238",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "製品",
+        "仕掛品"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_239",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "棚卸減耗損",
+        "繰越商品"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_240",
+      "categoryId": "journal",
+      "difficulty": 2,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "商品評価損",
+        "繰越商品"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_241",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "現金過不足",
+        "雑収入"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_242",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "当期純利益",
+        "繰越利益剰余金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_243",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "資本金",
+        "引出金"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_244",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_245",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "受取手数料",
+        "雑収入"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_246",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "減価償却費",
+        "減価償却累計額"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_247",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "仕入",
+        "繰越商品"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_248",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "法人税等",
+        "未払法人税等"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_249",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "租税公課",
+        "未払消費税"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    },
+    {
+      "questionId": "Q_J_250",
+      "categoryId": "journal",
+      "difficulty": 3,
+      "validationResult": "OK",
+      "errorMessage": "",
+      "accounts": [
+        "圧縮損",
+        "機械装置"
+      ],
+      "questionType": "journal_entry",
+      "hasValidTemplate": true,
+      "hasValidCorrectAnswer": true
+    }
+  ]
+}
