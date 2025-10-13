@@ -230,7 +230,11 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
           testID={testID}
           activeOpacity={0.7}
         >
-          <Text style={[styles.dropdownText, !value && styles.placeholderText]}>
+          <Text
+            style={[styles.dropdownText, !value && styles.placeholderText]}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
             {value || placeholder}
           </Text>
           <Text style={styles.dropdownArrow}>▼</Text>
@@ -451,6 +455,7 @@ const createStyles = (theme: Theme): StyleSheet.NamedStyles<any> =>
     placeholderText: {
       color: theme.colors.textDisabled || "#999",
       fontStyle: "italic",
+      fontSize: 14,
     },
     dropdownArrow: {
       fontSize: 12,

@@ -268,7 +268,7 @@ export default function LearningScreen() {
                 </ResponsiveGrid>
               ) : (
                 <ResponsiveGrid>
-                  {/* 全302問順次進行ボタン */}
+                  {/* 全370問順次進行ボタン */}
                   <ResponsiveGridItem>
                     <TouchableOpacity
                       style={[
@@ -306,7 +306,7 @@ export default function LearningScreen() {
                             全問題順次進行
                           </Text>
                           <Text style={styles.categorySubtitle}>
-                            302問完全制覇モード
+                            370問完全制覇モード
                           </Text>
                         </View>
                         <View
@@ -315,13 +315,13 @@ export default function LearningScreen() {
                             { backgroundColor: theme.colors.secondary },
                           ]}
                         >
-                          <Text style={styles.pointsText}>302問</Text>
+                          <Text style={styles.pointsText}>370問</Text>
                         </View>
                       </View>
 
                       <View style={styles.categoryInfo}>
                         <Text style={styles.categoryDescription}>
-                          第1問→第2問→第3問の全302問を順次進行
+                          第1問→第2問→第3問の全370問を順次進行
                         </Text>
                         <View style={styles.examInfo}>
                           <Text style={styles.examInfoText}>

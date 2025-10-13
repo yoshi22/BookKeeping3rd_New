@@ -15,7 +15,13 @@ import {
   ScrollView,
   Modal,
 } from "react-native";
-import { useTheme, useThemedStyles, useColors, useDynamicColors, type Theme } from "../context/ThemeContext";
+import {
+  useTheme,
+  useThemedStyles,
+  useColors,
+  useDynamicColors,
+  type Theme,
+} from "../context/ThemeContext";
 import {
   answerService,
   SubmitAnswerRequest,
@@ -123,7 +129,7 @@ export default function ChoiceAnswerForm({
         ]);
       }
     } catch (error) {
-      logger.error("[ChoiceAnswerForm] 解答送信エラー:", error  as Error);
+      logger.error("[ChoiceAnswerForm] 解答送信エラー:", error as Error);
       Alert.alert("エラー", "解答の送信に失敗しました");
     } finally {
       setIsSubmitting(false);
@@ -159,7 +165,11 @@ export default function ChoiceAnswerForm({
               styles.dropdownButtonText,
               (selectedOption || selectedOptions.length > 0) &&
                 styles.dropdownButtonTextSelected,
+              !(selectedOption || selectedOptions.length > 0) &&
+                styles.dropdownButtonTextPlaceholder,
             ]}
+            numberOfLines={1}
+            ellipsizeMode="tail"
           >
             {selectedText}
           </Text>
@@ -317,6 +327,10 @@ const createStyles = (theme: Theme) =>
       fontSize: 16,
       color: theme.colors.textSecondary,
       flex: 1,
+    },
+    dropdownButtonTextPlaceholder: {
+      fontSize: 14,
+      fontStyle: "italic",
     },
     dropdownButtonTextSelected: {
       color: theme.colors.primary,
