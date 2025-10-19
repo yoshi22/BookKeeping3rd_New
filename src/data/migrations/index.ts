@@ -139,10 +139,10 @@ async function performSampleDataLoad(): Promise<void> {
       allSampleQuestions.length,
     );
 
-    const SAMPLE_DATA_VERSION = "2025-10-12-q2-vocabulary-fixes";
+    const SAMPLE_DATA_VERSION = "2025-10-19-correct-category-counts-v3";
 
     // 環境変数による強制更新フラグ（開発時のみ）
-    const forceUpdate = false; // ✅ Q2_V用語問題修正完了 - ユーザーデータ保護のためfalseに復元
+    const forceUpdate = false; // ユーザーデータ保護のためfalse
 
     // 現在のデータバージョンを取得
     let currentVersion = null;
@@ -427,6 +427,29 @@ async function performSampleDataLoad(): Promise<void> {
       // 模試データの失敗は致命的でない
     }
     */
+
+    // カテゴリ情報を更新（名称・説明文・問題数）
+    console.log("[DEBUG] カテゴリ情報更新開始");
+    try {
+      await databaseService.executeSql(
+        `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
+        ["第一問（仕訳）", "仕訳問題", 250, "journal"],
+      );
+      await databaseService.executeSql(
+        `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
+        ["第二問（帳簿）", "帳簿・伝票等の問題", 70, "ledger"],
+      );
+      await databaseService.executeSql(
+        `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
+        ["第三問（試算表）", "試算表作成問題", 50, "trial_balance"],
+      );
+      console.log("[DEBUG] カテゴリ情報更新完了");
+    } catch (categoryError) {
+      console.log("[DEBUG] カテゴリ情報更新エラー:", categoryError);
+      logger.warn("[Database] カテゴリ情報更新エラー:", {
+        details: categoryError,
+      });
+    }
 
     // バージョン情報を保存
     try {

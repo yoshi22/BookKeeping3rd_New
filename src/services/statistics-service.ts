@@ -247,9 +247,9 @@ export class StatisticsService {
         "financial_statement",
       ];
       const categoryNames: Record<QuestionCategory, string> = {
-        journal: "仕訳",
-        ledger: "帳簿",
-        trial_balance: "試算表",
+        journal: "第一問（仕訳）",
+        ledger: "第二問（帳簿）",
+        trial_balance: "第三問（試算表）",
         financial_statement: "財務諸表",
         voucher_entry: "伝票記入",
         multiple_blank_choice: "複数空欄選択",
@@ -540,12 +540,12 @@ export class StatisticsService {
       category,
     ]);
 
-    // デフォルト値（仕様書ベース）
+    // デフォルト値（実データベース）
     const defaults: Record<QuestionCategory, number> = {
-      journal: 250,
-      ledger: 40,
-      trial_balance: 12,
-      financial_statement: 2,
+      journal: 250, // 第一問（仕訳）
+      ledger: 70, // 第二問（帳簿）
+      trial_balance: 50, // 第三問（試算表）
+      financial_statement: 0,
       voucher_entry: 0,
       multiple_blank_choice: 0,
     };
