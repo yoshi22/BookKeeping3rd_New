@@ -139,7 +139,7 @@ async function performSampleDataLoad(): Promise<void> {
       allSampleQuestions.length,
     );
 
-    const SAMPLE_DATA_VERSION = "2025-10-19-correct-category-counts-v3";
+    const SAMPLE_DATA_VERSION = "2025-10-19-simplified-category-names";
 
     // 環境変数による強制更新フラグ（開発時のみ）
     const forceUpdate = false; // ユーザーデータ保護のためfalse
@@ -433,15 +433,15 @@ async function performSampleDataLoad(): Promise<void> {
     try {
       await databaseService.executeSql(
         `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
-        ["第一問（仕訳）", "仕訳問題", 250, "journal"],
+        ["第一問", "仕訳問題", 250, "journal"],
       );
       await databaseService.executeSql(
         `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
-        ["第二問（帳簿）", "帳簿・伝票等の問題", 70, "ledger"],
+        ["第二問", "帳簿・伝票等の問題", 70, "ledger"],
       );
       await databaseService.executeSql(
         `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
-        ["第三問（試算表）", "試算表作成問題", 50, "trial_balance"],
+        ["第三問", "試算表作成問題", 50, "trial_balance"],
       );
       console.log("[DEBUG] カテゴリ情報更新完了");
     } catch (categoryError) {

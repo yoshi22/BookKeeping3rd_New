@@ -153,9 +153,9 @@ export const migration001: MigrationInfo = {
     // === 初期データ投入 ===
     // カテゴリ初期データ（新コンテンツ構成対応）
     `INSERT OR REPLACE INTO categories (id, name, description, sort_order, total_questions) VALUES
-      ('journal', '第一問（仕訳）', '仕訳問題', 1, 250),
-      ('ledger', '第二問（帳簿）', '帳簿・伝票等の問題', 2, 70),
-      ('trial_balance', '第三問（試算表）', '試算表作成問題', 3, 50)`,
+      ('journal', '第一問', '仕訳問題', 1, 250),
+      ('ledger', '第二問', '帳簿・伝票等の問題', 2, 70),
+      ('trial_balance', '第三問', '試算表作成問題', 3, 50)`,
 
     // アプリ設定初期データ
     `INSERT OR REPLACE INTO app_settings (key, value, type) VALUES
