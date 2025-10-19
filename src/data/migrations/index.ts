@@ -139,7 +139,7 @@ async function performSampleDataLoad(): Promise<void> {
       allSampleQuestions.length,
     );
 
-    const SAMPLE_DATA_VERSION = "2025-10-19-simplified-category-names";
+    const SAMPLE_DATA_VERSION = "2025-10-19-correct-category-counts-v3";
 
     // 環境変数による強制更新フラグ（開発時のみ）
     const forceUpdate = false; // ユーザーデータ保護のためfalse
@@ -428,28 +428,8 @@ async function performSampleDataLoad(): Promise<void> {
     }
     */
 
-    // カテゴリ情報を更新（名称・説明文・問題数）
-    console.log("[DEBUG] カテゴリ情報更新開始");
-    try {
-      await databaseService.executeSql(
-        `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
-        ["第一問", "仕訳問題", 250, "journal"],
-      );
-      await databaseService.executeSql(
-        `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
-        ["第二問", "帳簿・伝票等の問題", 70, "ledger"],
-      );
-      await databaseService.executeSql(
-        `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
-        ["第三問", "試算表作成問題", 50, "trial_balance"],
-      );
-      console.log("[DEBUG] カテゴリ情報更新完了");
-    } catch (categoryError) {
-      console.log("[DEBUG] カテゴリ情報更新エラー:", categoryError);
-      logger.warn("[Database] カテゴリ情報更新エラー:", {
-        details: categoryError,
-      });
-    }
+    // カテゴリ名称を更新（独立した関数で実行）
+    await updateCategoryNames();
 
     // バージョン情報を保存
     try {
@@ -477,6 +457,39 @@ async function performSampleDataLoad(): Promise<void> {
   } catch (error) {
     logger.warn("[Database] サンプルデータ読み込みエラー:", { details: error });
     // サンプルデータの読み込みエラーはアプリ起動を阻止しない
+  }
+}
+
+/**
+ * カテゴリ名称を更新する独立した関数
+ * 問題データの再読み込みをトリガーせずにカテゴリ名のみを更新
+ */
+async function updateCategoryNames(): Promise<void> {
+  try {
+    console.log("[DEBUG] カテゴリ名称更新開始");
+    const { databaseService } = await import("../database");
+
+    // カテゴリ情報を更新（名称・説明文・問題数）
+    await databaseService.executeSql(
+      `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
+      ["第一問", "仕訳問題", 250, "journal"],
+    );
+    await databaseService.executeSql(
+      `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
+      ["第二問", "帳簿・伝票等の問題", 70, "ledger"],
+    );
+    await databaseService.executeSql(
+      `UPDATE categories SET name = ?, description = ?, total_questions = ? WHERE id = ?`,
+      ["第三問", "試算表作成問題", 50, "trial_balance"],
+    );
+
+    console.log("[DEBUG] カテゴリ名称更新完了");
+  } catch (error) {
+    console.log("[DEBUG] カテゴリ名称更新エラー:", error);
+    logger.warn("[Database] カテゴリ名称更新エラー:", {
+      details: error,
+    });
+    // カテゴリ名更新の失敗は致命的でない
   }
 }
 
