@@ -144,7 +144,7 @@ async function performSampleDataLoad(): Promise<void> {
     const SAMPLE_DATA_VERSION = "2025-10-19-fix-orphaned-review-items-v4";
 
     // 環境変数による強制更新フラグ（開発時のみ）
-    const forceUpdate = true; // ⚠️ 一時的にtrue - orphaned review_itemsクリーンアップのため（検証後にfalseに戻す）
+    const forceUpdate = false;
 
     // 現在のデータバージョンを取得
     let currentVersion = null;
