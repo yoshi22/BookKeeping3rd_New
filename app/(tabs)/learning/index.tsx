@@ -23,6 +23,9 @@ import {
   useDynamicColors,
   type Theme,
 } from "../../../src/context/ThemeContext";
+import { AppIcon, IconContextSizes } from "../../../src/theme/icons";
+
+const withOpacity = (hex: string, alphaHex: string) => `${hex}${alphaHex}`;
 
 export default function LearningScreen() {
   const router = useRouter();
@@ -56,7 +59,7 @@ export default function LearningScreen() {
       description: "基本的な仕訳から応用仕訳まで",
       totalQuestions: questionCounts.journal,
       completedQuestions: 0,
-      icon: "📝",
+      icon: "journal" as const,
       color: theme.categoryColors.journal,
       points: "45点",
       examCount: "15問",
@@ -71,7 +74,7 @@ export default function LearningScreen() {
       description: "帳簿記入と勘定の理解",
       totalQuestions: questionCounts.ledger,
       completedQuestions: 0,
-      icon: "📋",
+      icon: "ledger" as const,
       color: theme.categoryColors.ledger,
       points: "20点",
       examCount: "2問",
@@ -85,7 +88,7 @@ export default function LearningScreen() {
       description: "財務諸表・精算表・試算表の作成",
       totalQuestions: questionCounts.trial_balance,
       completedQuestions: 0,
-      icon: "📊",
+      icon: "trialBalance" as const,
       color: theme.categoryColors.trialBalance,
       points: "35点",
       examCount: "1問",
@@ -288,14 +291,25 @@ export default function LearningScreen() {
                       accessibilityLabel="全問題順次進行を開始"
                     >
                       <View style={styles.categoryHeader}>
-                        <Text
+                        <View
                           style={[
                             styles.categoryIcon,
-                            { fontSize: deviceInfo.isTablet ? 36 : 30 },
+                            {
+                              width: deviceInfo.isTablet ? 56 : 48,
+                              height: deviceInfo.isTablet ? 56 : 48,
+                            },
                           ]}
                         >
-                          🎯
-                        </Text>
+                          <AppIcon
+                            name="challenge"
+                            size={
+                              deviceInfo.isTablet
+                                ? IconContextSizes.header
+                                : IconContextSizes.listItem
+                            }
+                            color={theme.colors.secondary}
+                          />
+                        </View>
                         <View style={styles.categoryTitleContainer}>
                           <Text
                             style={[
@@ -379,14 +393,25 @@ export default function LearningScreen() {
                         accessibilityLabel={`${category.name} ${category.subtitle}を開始`}
                       >
                         <View style={styles.categoryHeader}>
-                          <Text
+                          <View
                             style={[
                               styles.categoryIcon,
-                              { fontSize: deviceInfo.isTablet ? 36 : 30 },
+                              {
+                                width: deviceInfo.isTablet ? 56 : 48,
+                                height: deviceInfo.isTablet ? 56 : 48,
+                              },
                             ]}
                           >
-                            {category.icon}
-                          </Text>
+                            <AppIcon
+                              name={category.icon}
+                              size={
+                                deviceInfo.isTablet
+                                  ? IconContextSizes.header
+                                  : IconContextSizes.listItem
+                              }
+                              color={category.color}
+                            />
+                          </View>
                           <View style={styles.categoryTitleContainer}>
                             <Text
                               style={[
@@ -445,21 +470,6 @@ export default function LearningScreen() {
                               showPercentage={true}
                             />
                           </View>
-                        </View>
-
-                        <View
-                          style={[
-                            styles.categoryAction,
-                            { backgroundColor: category.color },
-                          ]}
-                          testID={`category-${category.id}-select`}
-                        >
-                          <Text
-                            style={styles.actionText}
-                            testID={`category-${category.id}-select-text`}
-                          >
-                            選択
-                          </Text>
                         </View>
                       </TouchableOpacity>
                     </ResponsiveGridItem>
@@ -520,24 +530,31 @@ const createStyles = (theme: Theme) =>
       fontStyle: "italic",
     },
     categoriesContainer: {
-      padding: 20,
+      padding: theme.spacing.xl,
     },
     categoryCard: {
       backgroundColor: theme.colors.surface,
-      padding: 15,
-      marginBottom: 15,
-      borderRadius: 10,
+      padding: theme.spacing.xl,
+      marginBottom: theme.spacing.lg,
+      borderRadius: theme.spacing["2xl"],
       borderLeftWidth: 4,
-      ...theme.shadows.medium,
+      shadowColor: "rgba(17, 24, 28, 0.08)",
+      shadowOpacity: 1,
+      shadowOffset: { width: 0, height: 12 },
+      shadowRadius: 24,
+      elevation: 6,
     },
     categoryHeader: {
       flexDirection: "row",
       alignItems: "center",
-      marginBottom: 10,
+      marginBottom: theme.spacing.md,
+      gap: theme.spacing.lg,
     },
     categoryIcon: {
-      fontSize: 30,
-      marginRight: 10,
+      borderRadius: theme.spacing.lg,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: withOpacity(theme.colors.primary, "12"),
     },
     categoryTitleContainer: {
       flex: 1,
@@ -563,7 +580,7 @@ const createStyles = (theme: Theme) =>
       fontSize: 14,
     },
     categoryInfo: {
-      marginLeft: 40,
+      marginLeft: theme.spacing.lg,
     },
     categoryDescription: {
       fontSize: 14,
