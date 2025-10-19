@@ -205,6 +205,60 @@ export class AnswerService {
         );
       }
 
+      // fill_in_trial_balance問題（新形式）の場合、answer_templateから正解値を補完
+      try {
+        const answerTemplate = safeJsonParse<QuestionTemplate>(
+          question.answer_template_json,
+          {} as QuestionTemplate,
+        );
+        if (
+          answerTemplate?.type === "fill_in_trial_balance" &&
+          answerTemplate.blanks &&
+          Array.isArray(answerTemplate.blanks) &&
+          answerTemplate.blanks.length > 0 &&
+          "id" in answerTemplate.blanks[0] // 新形式判定
+        ) {
+          // 新形式のtemplateBlanks
+          const templateBlanks = answerTemplate.blanks as Array<{
+            id: string;
+            choices: number[];
+            correct_answer: number;
+            explanation?: string;
+          }>;
+
+          // correctAnswerのblanksを拡張
+          if (correctAnswer.blanks && Array.isArray(correctAnswer.blanks)) {
+            correctAnswer.blanks = correctAnswer.blanks.map((blank, index) => {
+              const templateBlank = templateBlanks[index];
+              if (templateBlank) {
+                // 正解値をchoices配列のインデックスとして計算
+                const correctIndex = templateBlank.choices.indexOf(
+                  templateBlank.correct_answer,
+                );
+                return {
+                  index: blank.index || index,
+                  id: templateBlank.id,
+                  correctValue: templateBlank.correct_answer,
+                  correctIndex: correctIndex,
+                  explanation: templateBlank.explanation,
+                };
+              }
+              return blank;
+            });
+          }
+
+          logger.debug(
+            `[AnswerService] 新形式試算表問題の正解データを補完: ${question.id}`,
+            correctAnswer.blanks,
+          );
+        }
+      } catch (error) {
+        logger.error(
+          "[AnswerService] fill_in_trial_balance正解データ補完エラー:",
+          error as Error,
+        );
+      }
+
       const response: SubmitAnswerResponse = {
         success: true,
         isCorrect,
@@ -1857,10 +1911,10 @@ export class AnswerService {
   private validateFillInTrialBalanceAnswer(
     answerData: CBTAnswerData,
     template: QuestionTemplate & {
-      blanks?: Array<{
-        index: number;
-        choices: number[];
-      }>;
+      blanks?: Array<
+        | { index: number; choices: number[] } // 旧形式
+        | { id: string; choices: number[]; correct_answer: number } // 新形式
+      >;
     },
   ): string[] {
     const errors: string[] = [];
@@ -1873,16 +1927,20 @@ export class AnswerService {
 
     // すべての空欄に解答が入力されているかチェック
     const templateBlanks = template.blanks || [];
-    const userBlanks = data.blanks as Record<number, number>;
+    const userBlanks = data.blanks as Record<number | string, number>;
 
-    const unansweredBlanks = templateBlanks.filter(
-      (blank) => userBlanks[blank.index] === undefined,
-    );
+    const unansweredBlanks = templateBlanks.filter((blank) => {
+      // 新形式（string ID）か旧形式（numeric index）かを判定
+      const blankKey = "id" in blank ? blank.id : blank.index;
+      return userBlanks[blankKey] === undefined;
+    });
 
     if (unansweredBlanks.length > 0) {
-      errors.push(
-        `空欄 ${unansweredBlanks.map((b) => `(${b.index + 1})`).join(", ")} に解答を選択してください`,
-      );
+      const blankLabels = unansweredBlanks.map((b) => {
+        // 新形式はID（"①"など）、旧形式は"空欄N"形式
+        return "id" in b ? b.id : `空欄${b.index + 1}`;
+      });
+      errors.push(`${blankLabels.join(", ")} に解答を選択してください`);
     }
 
     return errors;
@@ -1967,16 +2025,22 @@ export class AnswerService {
     answerData: CBTAnswerData,
     correctAnswer: QuestionCorrectAnswer,
     answerTemplate: QuestionTemplate & {
-      blanks?: Array<{ index: number; choices: number[] }>;
+      blanks?: Array<
+        | { index: number; choices: number[] } // 旧形式（Q3_TB_001-010）
+        | { id: string; choices: number[]; correct_answer: number } // 新形式（Q3_TB_011-020）
+      >;
     },
   ): boolean {
     try {
-      // answerData: { blanks: Record<number, number> }
-      // correctAnswer: { blanks: Array<{index: number, correctIndex: number}> }
-      const userBlanks = (answerData as any).blanks as Record<number, number>;
+      // answerData: { blanks: Record<number | string, number> }
+      // correctAnswer: { blanks: Array<{index: number, correctIndex?: number}> }
+      const userBlanks = (answerData as any).blanks as Record<
+        number | string,
+        number
+      >;
       const correctBlanks = (correctAnswer as any).blanks as Array<{
         index: number;
-        correctIndex: number;
+        correctIndex?: number;
       }>;
       const templateBlanks = answerTemplate.blanks || [];
 
@@ -1987,9 +2051,16 @@ export class AnswerService {
         return false;
       }
 
+      // 新形式かどうかを判定（templateBlanksの最初の要素に`id`プロパティがあるか）
+      const isNewFormat =
+        templateBlanks.length > 0 && "id" in templateBlanks[0];
+
+      logger.debug(
+        `[AnswerService] fill_in_trial_balance問題の形式: ${isNewFormat ? "新形式（Q3_TB_011-020）" : "旧形式（Q3_TB_001-010）"}`,
+      );
+
       // すべての空欄が正解かチェック
       return correctBlanks.every((correctBlank, arrayIndex) => {
-        // correct_answer_jsonの配列インデックスに対応するtemplateのblankIndexを取得
         const templateBlank = templateBlanks[arrayIndex];
         if (!templateBlank) {
           logger.error(
@@ -1998,20 +2069,62 @@ export class AnswerService {
           return false;
         }
 
-        const blankIndex = templateBlank.index;
-        const userSelectedIndex = userBlanks[blankIndex];
+        if (isNewFormat) {
+          // 新形式（Q3_TB_011-020）の処理
+          const newTemplateBlank = templateBlank as {
+            id: string;
+            choices: number[];
+            correct_answer: number;
+          };
 
-        if (userSelectedIndex === undefined) {
-          logger.debug(`[AnswerService] 空欄${blankIndex}の解答がありません`);
-          return false;
+          const blankId = newTemplateBlank.id;
+          const correctAnswerValue = newTemplateBlank.correct_answer;
+          const choices = newTemplateBlank.choices;
+
+          // 正答値がchoices配列の何番目かを検索
+          const correctIndex = choices.indexOf(correctAnswerValue);
+          if (correctIndex === -1) {
+            logger.error(
+              `[AnswerService] 正答値${correctAnswerValue}がchoices配列に見つかりません: ${JSON.stringify(choices)}`,
+            );
+            return false;
+          }
+
+          const userSelectedIndex = userBlanks[blankId];
+
+          if (userSelectedIndex === undefined) {
+            logger.debug(`[AnswerService] 空欄${blankId}の解答がありません`);
+            return false;
+          }
+
+          const isCorrect = userSelectedIndex === correctIndex;
+          logger.debug(
+            `[AnswerService] 空欄${blankId} (array[${arrayIndex}]): user=${userSelectedIndex}, correct=${correctIndex}, correctValue=${correctAnswerValue}, match=${isCorrect}`,
+          );
+
+          return isCorrect;
+        } else {
+          // 旧形式（Q3_TB_001-010）の処理
+          const oldTemplateBlank = templateBlank as {
+            index: number;
+            choices: number[];
+          };
+
+          const blankIndex = oldTemplateBlank.index;
+          const userSelectedIndex = userBlanks[blankIndex];
+
+          if (userSelectedIndex === undefined) {
+            logger.debug(`[AnswerService] 空欄${blankIndex}の解答がありません`);
+            return false;
+          }
+
+          const isCorrect = userSelectedIndex === correctBlank.correctIndex;
+          logger.debug(
+            `[AnswerService] 空欄${blankIndex} (array[${arrayIndex}]): user=${userSelectedIndex}, correct=${correctBlank.correctIndex}, match=${isCorrect}`,
+          );
+
+          return isCorrect;
         }
-
-        const isCorrect = userSelectedIndex === correctBlank.correctIndex;
-        logger.debug(
-          `[AnswerService] 空欄${blankIndex} (array[${arrayIndex}]): user=${userSelectedIndex}, correct=${correctBlank.correctIndex}, match=${isCorrect}`,
-        );
-
-        return isCorrect;
       });
     } catch (error) {
       logger.error(

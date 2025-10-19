@@ -4,7 +4,7 @@
  * Step 2.2: 解答記録機能実装統合
  */
 
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { logger } from "../utils/logger";
 import {
@@ -310,11 +310,16 @@ function FillInTrialBalanceFormWrapper({
   onSubmitAnswer,
 }: FillInTrialBalanceFormWrapperProps) {
   const [selectedAnswers, setSelectedAnswers] = useState<
-    Record<number, number>
+    Record<number | string, number>
   >({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleAnswerChange = (answers: Record<number, number>) => {
+  // questionIdが変更された時にselectedAnswersをリセット
+  useEffect(() => {
+    setSelectedAnswers({});
+  }, [questionId]);
+
+  const handleAnswerChange = (answers: Record<number | string, number>) => {
     setSelectedAnswers(answers);
   };
 
@@ -405,11 +410,11 @@ function FillInComprehensiveTrialBalanceFormWrapper({
   onSubmitAnswer,
 }: FillInComprehensiveTrialBalanceFormWrapperProps) {
   const [selectedAnswers, setSelectedAnswers] = useState<
-    Record<number, number>
+    Record<number | string, number>
   >({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleAnswerChange = (answers: Record<number, number>) => {
+  const handleAnswerChange = (answers: Record<number | string, number>) => {
     setSelectedAnswers(answers);
   };
 
@@ -500,11 +505,11 @@ function FillInFinancialStatementFormWrapper({
   onSubmitAnswer,
 }: FillInFinancialStatementFormWrapperProps) {
   const [selectedAnswers, setSelectedAnswers] = useState<
-    Record<number, number>
+    Record<number | string, number>
   >({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleAnswerChange = (answers: Record<number, number>) => {
+  const handleAnswerChange = (answers: Record<number | string, number>) => {
     setSelectedAnswers(answers);
   };
 
