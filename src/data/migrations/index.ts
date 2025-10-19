@@ -11,6 +11,8 @@ import { migration003 } from "./003-add-question-structure";
 import { migration004 } from "./004-populate-question-structure";
 import { migration005 } from "./005-remove-mock-exams";
 import { logger } from "../../utils/logger";
+import type { DatabaseService } from "../database";
+import type { ReviewItemRepository } from "../repositories/review-item-repository";
 
 /**
  * 全マイグレーションの登録と実行
@@ -139,10 +141,10 @@ async function performSampleDataLoad(): Promise<void> {
       allSampleQuestions.length,
     );
 
-    const SAMPLE_DATA_VERSION = "2025-10-19-correct-category-counts-v3";
+    const SAMPLE_DATA_VERSION = "2025-10-19-fix-orphaned-review-items-v4";
 
     // 環境変数による強制更新フラグ（開発時のみ）
-    const forceUpdate = false; // ユーザーデータ保護のためfalse
+    const forceUpdate = true; // ⚠️ 一時的にtrue - orphaned review_itemsクリーンアップのため（検証後にfalseに戻す）
 
     // 現在のデータバージョンを取得
     let currentVersion = null;
@@ -244,6 +246,7 @@ async function performSampleDataLoad(): Promise<void> {
         }
       } else {
         logger.debug("[Database] 既存データをスキップ");
+        await ensureReviewItemsIntegrity(databaseService);
         return;
       }
     } else {
@@ -431,6 +434,8 @@ async function performSampleDataLoad(): Promise<void> {
     // カテゴリ名称を更新（独立した関数で実行）
     await updateCategoryNames();
 
+    await ensureReviewItemsIntegrity(databaseService);
+
     // バージョン情報を保存
     try {
       // 既存のバージョン情報を削除
@@ -491,6 +496,109 @@ async function updateCategoryNames(): Promise<void> {
     });
     // カテゴリ名更新の失敗は致命的でない
   }
+}
+
+/**
+ * review_itemsテーブルの整合性を確保
+ * - orphanedデータの削除
+ * - learning_historyからの復元
+ */
+async function ensureReviewItemsIntegrity(
+  databaseService: DatabaseService,
+): Promise<void> {
+  try {
+    const { reviewItemRepository } = await import(
+      "../repositories/review-item-repository"
+    );
+    const { statisticsCache } = await import("../../services/statistics-cache");
+
+    const deletedCount =
+      await reviewItemRepository.cleanupOrphanedItems(databaseService);
+    const restoredCount = await restoreReviewItemsFromHistory(
+      databaseService,
+      reviewItemRepository,
+    );
+
+    if (deletedCount === 0 && restoredCount === 0) {
+      logger.debug("[Database] review_items整合性チェック完了: 変更なし");
+      return;
+    }
+
+    statisticsCache.clearAll();
+    logger.debug(
+      "[Database] review_items整合性チェック後に統計キャッシュをクリア",
+    );
+
+    logger.info(
+      `[Database] review_items整合性チェック完了: 削除${deletedCount}件 / 復元${restoredCount}件`,
+    );
+  } catch (error) {
+    logger.warn("[Database] review_items整合性チェックエラー:", {
+      details: error,
+    });
+  }
+}
+
+/**
+ * learning_historyから欠損したreview_itemsを復元
+ */
+async function restoreReviewItemsFromHistory(
+  databaseService: DatabaseService,
+  reviewItemRepository: ReviewItemRepository,
+): Promise<number> {
+  type RestoreCandidateRow = {
+    question_id: string;
+    incorrect_attempts: number;
+    correct_attempts: number;
+    last_answered_at: string | null;
+  };
+
+  const candidates = await databaseService.executeSql<RestoreCandidateRow>(
+    `
+      SELECT
+        lh.question_id AS question_id,
+        SUM(CASE WHEN lh.is_correct = 0 THEN 1 ELSE 0 END) AS incorrect_attempts,
+        SUM(CASE WHEN lh.is_correct = 1 THEN 1 ELSE 0 END) AS correct_attempts,
+        MAX(lh.answered_at) AS last_answered_at
+      FROM learning_history lh
+      INNER JOIN questions q ON lh.question_id = q.id
+      LEFT JOIN review_items ri ON lh.question_id = ri.question_id
+      GROUP BY lh.question_id
+      HAVING incorrect_attempts > 0 AND ri.question_id IS NULL
+    `,
+    [],
+  );
+
+  if (candidates.rows.length === 0) {
+    logger.debug("[Database] review_items復元対象なし");
+    return 0;
+  }
+
+  let restoredCount = 0;
+  const restoredIds: string[] = [];
+
+  for (const row of candidates.rows) {
+    await reviewItemRepository.createOrUpdate({
+      questionId: row.question_id,
+      incorrectCount: row.incorrect_attempts,
+      consecutiveCorrectCount: 0, // 連続正解は再計算困難なため0で再開
+      status: "needs_review",
+      lastAnsweredAt: row.last_answered_at ?? new Date().toISOString(),
+    });
+
+    restoredCount += 1;
+    restoredIds.push(row.question_id);
+  }
+
+  logger.info(`[Database] review_items復元完了: ${restoredCount}件生成`, {
+    details: restoredIds.slice(0, 20),
+  });
+
+  if (restoredIds.length > 20) {
+    logger.debug("[Database] 復元対象ID一覧", { details: restoredIds });
+  }
+
+  return restoredCount;
 }
 
 // データベース初期化状態管理
