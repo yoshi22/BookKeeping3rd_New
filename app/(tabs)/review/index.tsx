@@ -215,7 +215,7 @@ export default function ReviewScreen() {
         weakAreas = [
           {
             category: "journal",
-            categoryName: "仕訳",
+            categoryName: "第一問",
             reviewCount: 0,
             averagePriority: 0,
             recommendation: "学習を開始してください",
@@ -223,7 +223,7 @@ export default function ReviewScreen() {
           },
           {
             category: "ledger",
-            categoryName: "帳簿",
+            categoryName: "第二問",
             reviewCount: 0,
             averagePriority: 0,
             recommendation: "学習を開始してください",
@@ -231,7 +231,7 @@ export default function ReviewScreen() {
           },
           {
             category: "trial_balance",
-            categoryName: "試算表",
+            categoryName: "第三問",
             reviewCount: 0,
             averagePriority: 0,
             recommendation: "学習を開始してください",
@@ -337,7 +337,7 @@ export default function ReviewScreen() {
       setWeaknessCategories([
         {
           id: "journal",
-          name: "仕訳",
+          name: "第一問",
           reviewCount: 0,
           priority: "low",
           averagePriority: 0,
@@ -347,7 +347,7 @@ export default function ReviewScreen() {
         },
         {
           id: "ledger",
-          name: "帳簿",
+          name: "第二問",
           reviewCount: 0,
           priority: "low",
           averagePriority: 0,
@@ -357,7 +357,7 @@ export default function ReviewScreen() {
         },
         {
           id: "trial_balance",
-          name: "試算表",
+          name: "第三問",
           reviewCount: 0,
           priority: "low",
           averagePriority: 0,
@@ -942,7 +942,11 @@ export default function ReviewScreen() {
                     <AppIcon
                       name="challenge"
                       color={theme.colors.surface}
-                      size={deviceInfo.isTablet ? IconContextSizes.header : IconContextSizes.listItem}
+                      size={
+                        deviceInfo.isTablet
+                          ? IconContextSizes.header
+                          : IconContextSizes.listItem
+                      }
                     />
                   </View>
                   <Text
@@ -976,7 +980,11 @@ export default function ReviewScreen() {
                     <AppIcon
                       name="refresh"
                       color={theme.colors.primary}
-                      size={deviceInfo.isTablet ? IconContextSizes.header : IconContextSizes.listItem}
+                      size={
+                        deviceInfo.isTablet
+                          ? IconContextSizes.header
+                          : IconContextSizes.listItem
+                      }
                     />
                   </View>
                   <Text
@@ -1040,7 +1048,11 @@ export default function ReviewScreen() {
                         >
                           <AppIcon
                             name={category.icon}
-                            size={deviceInfo.isTablet ? IconContextSizes.header : IconContextSizes.listItem}
+                            size={
+                              deviceInfo.isTablet
+                                ? IconContextSizes.header
+                                : IconContextSizes.listItem
+                            }
                             color={
                               theme.categoryColors[
                                 category.id as keyof typeof theme.categoryColors
@@ -1357,7 +1369,11 @@ export default function ReviewScreen() {
                                         ? "ledger"
                                         : "trialBalance"
                                   }
-                                  size={deviceInfo.isTablet ? IconContextSizes.header : IconContextSizes.listItem}
+                                  size={
+                                    deviceInfo.isTablet
+                                      ? IconContextSizes.header
+                                      : IconContextSizes.listItem
+                                  }
                                   color={
                                     theme.categoryColors[
                                       category.category as keyof typeof theme.categoryColors
@@ -1373,10 +1389,10 @@ export default function ReviewScreen() {
                               >
                                 {category.categoryName ||
                                   (category.category === "journal"
-                                    ? "仕訳"
+                                    ? "第一問"
                                     : category.category === "ledger"
-                                      ? "帳簿"
-                                      : "決算書")}
+                                      ? "第二問"
+                                      : "第三問")}
                               </Text>
                               <Text
                                 style={[
@@ -1414,26 +1430,26 @@ export default function ReviewScreen() {
                     <Text style={styles.dataInfoText}>
                       💡 統計データは学習・復習の進行に伴って自動更新されます
                     </Text>
-                <TouchableOpacity
-                  style={[
-                    styles.refreshButton,
-                    { backgroundColor: theme.colors.primary },
-                  ]}
-                  onPress={() => {
-                    loadReviewData();
-                    loadStatisticsData();
-                  }}
-                  testID="refresh-statistics-button"
-                >
-                  <View style={styles.tabButtonContent}>
-                    <AppIcon
-                      name="refresh"
-                      color={theme.colors.surface}
-                      size={IconContextSizes.button}
-                    />
-                    <Text style={styles.refreshButtonText}>データ更新</Text>
-                  </View>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[
+                        styles.refreshButton,
+                        { backgroundColor: theme.colors.primary },
+                      ]}
+                      onPress={() => {
+                        loadReviewData();
+                        loadStatisticsData();
+                      }}
+                      testID="refresh-statistics-button"
+                    >
+                      <View style={styles.tabButtonContent}>
+                        <AppIcon
+                          name="refresh"
+                          color={theme.colors.surface}
+                          size={IconContextSizes.button}
+                        />
+                        <Text style={styles.refreshButtonText}>データ更新</Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
                 </>
               )}
