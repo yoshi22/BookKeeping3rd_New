@@ -7,6 +7,7 @@
 import { BaseRepository } from "./base-repository";
 import { ReviewItem, QuestionCategory } from "../../types/models";
 import { logger } from "../../utils/logger";
+import type { DatabaseService } from "../database";
 
 /**
  * 復習優先度レベル
@@ -240,15 +241,16 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
   public async getReviewList(filter: ReviewFilter = {}): Promise<ReviewItem[]> {
     try {
       logger.debug("[ReviewItemRepository] getReviewList開始:");
+      // 常にINNER JOINを使用してorphaned review_itemsを除外
       let sql = `
         SELECT ri.* FROM review_items ri
+        INNER JOIN questions q ON ri.question_id = q.id
       `;
       const params: any[] = [];
       const whereConditions: string[] = [];
 
       // カテゴリフィルター
       if (filter.category) {
-        sql += " INNER JOIN questions q ON ri.question_id = q.id";
         whereConditions.push("q.category_id = ?");
         params.push(filter.category);
       }
@@ -320,14 +322,16 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
    */
   public async getReviewStatistics(): Promise<ReviewStatistics> {
     try {
-      // 基本統計
+      // 基本統計（mastered を除外した復習対象のみをカウント）
+      // INNER JOINでorphaned review_itemsを除外
       const basicStatsQuery = `
-        SELECT 
-          COUNT(*) as totalReviewItems,
-          SUM(CASE WHEN status = 'needs_review' THEN 1 ELSE 0 END) as needsReviewCount,
-          SUM(CASE WHEN status = 'priority_review' THEN 1 ELSE 0 END) as priorityReviewCount,
-          SUM(CASE WHEN status = 'mastered' THEN 1 ELSE 0 END) as masteredCount
-        FROM review_items
+        SELECT
+          SUM(CASE WHEN ri.status IN ('needs_review', 'priority_review') THEN 1 ELSE 0 END) as totalReviewItems,
+          SUM(CASE WHEN ri.status = 'needs_review' THEN 1 ELSE 0 END) as needsReviewCount,
+          SUM(CASE WHEN ri.status = 'priority_review' THEN 1 ELSE 0 END) as priorityReviewCount,
+          SUM(CASE WHEN ri.status = 'mastered' THEN 1 ELSE 0 END) as masteredCount
+        FROM review_items ri
+        INNER JOIN questions q ON ri.question_id = q.id
       `;
 
       const basicStatsResult = await this.executeQuery<any>(
@@ -336,17 +340,20 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
       );
       const basicStats = basicStatsResult.rows[0] || {};
 
-      // 優先度分布
+      // 優先度分布（mastered を除外）
+      // INNER JOINでorphaned review_itemsを除外
       const priorityDistQuery = `
-        SELECT 
-          CASE 
-            WHEN priority_score >= 80 THEN 'critical'
-            WHEN priority_score >= 60 THEN 'high'
-            WHEN priority_score >= 40 THEN 'medium'
+        SELECT
+          CASE
+            WHEN ri.priority_score >= 80 THEN 'critical'
+            WHEN ri.priority_score >= 60 THEN 'high'
+            WHEN ri.priority_score >= 40 THEN 'medium'
             ELSE 'low'
           END as priority_level,
           COUNT(*) as count
-        FROM review_items
+        FROM review_items ri
+        INNER JOIN questions q ON ri.question_id = q.id
+        WHERE ri.status IN ('needs_review', 'priority_review')
         GROUP BY priority_level
       `;
 
@@ -367,15 +374,15 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
         ] = row.count;
       });
 
-      // カテゴリ別統計（すべての復習アイテムをカウントし、ステータス別に集計）
+      // カテゴリ別統計（mastered を除外した復習対象のみをカウント）
       const categoryStatsQuery = `
         SELECT
           q.category_id,
-          COUNT(*) as total,
+          SUM(CASE WHEN ri.status IN ('needs_review', 'priority_review') THEN 1 ELSE 0 END) as total,
           SUM(CASE WHEN ri.status = 'needs_review' THEN 1 ELSE 0 END) as needsReview,
           SUM(CASE WHEN ri.status = 'priority_review' THEN 1 ELSE 0 END) as priorityReview,
           SUM(CASE WHEN ri.status = 'mastered' THEN 1 ELSE 0 END) as mastered,
-          AVG(ri.priority_score) as averagePriority
+          AVG(CASE WHEN ri.status IN ('needs_review', 'priority_review') THEN ri.priority_score ELSE NULL END) as averagePriority
         FROM review_items ri
         INNER JOIN questions q ON ri.question_id = q.id
         GROUP BY q.category_id
@@ -484,8 +491,8 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
       cutoffDate.setDate(cutoffDate.getDate() - retentionDays);
 
       const sql = `
-        DELETE FROM review_items 
-        WHERE status = 'mastered' 
+        DELETE FROM review_items
+        WHERE status = 'mastered'
         AND updated_at < ?
       `;
 
@@ -499,6 +506,106 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
     } catch (error) {
       logger.error(
         "[ReviewItemRepository] cleanupMasteredItems エラー:",
+        error as Error,
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Orphaned review_itemsのクリーンアップ
+   * 存在しない問題を参照しているreview_itemsを削除
+   *
+   * @returns 削除件数
+   */
+  public async cleanupOrphanedItems(
+    databaseServiceInstance?: DatabaseService,
+  ): Promise<number> {
+    try {
+      logger.debug("[ReviewItemRepository] orphaned review_items検出開始");
+
+      const db =
+        databaseServiceInstance ??
+        (await import("../database")).databaseService;
+
+      const reviewItemCount = await this.count();
+      if (reviewItemCount === 0) {
+        logger.debug(
+          "[ReviewItemRepository] クリーンアップ不要: review_itemsが空",
+        );
+        return 0;
+      }
+
+      const questionCountResult = await db.executeSql<{ count: number }>(
+        "SELECT COUNT(*) as count FROM questions",
+        [],
+      );
+      const questionCount = questionCountResult.rows[0]?.count ?? 0;
+
+      if (questionCount === 0) {
+        logger.warn(
+          "[ReviewItemRepository] cleanupOrphanedItemsをスキップ: questionsテーブルが0件（安全対策）",
+        );
+        return 0;
+      }
+
+      // Step 1: orphaned itemsの検出
+      const detectSql = `
+        SELECT 
+          ri.question_id,
+          ri.status,
+          ri.priority_score,
+          ri.updated_at
+        FROM review_items ri
+        LEFT JOIN questions q ON ri.question_id = q.id
+        WHERE q.id IS NULL
+      `;
+
+      const orphanedItems = await this.executeQuery<{
+        question_id: string;
+        status: string;
+        priority_score: number;
+        updated_at: string;
+      }>(detectSql, []);
+
+      if (orphanedItems.rows.length === 0) {
+        logger.debug(
+          "[ReviewItemRepository] orphaned review_itemsなし - データ整合性正常",
+        );
+        return 0;
+      }
+
+      logger.warn(
+        `[ReviewItemRepository] orphaned review_items検出: ${orphanedItems.rows.length}件`,
+        {
+          details: orphanedItems.rows.map((row) => ({
+            questionId: row.question_id,
+            status: row.status,
+            priority: row.priority_score,
+            updatedAt: row.updated_at,
+          })),
+        },
+      );
+
+      // Step 2: orphaned itemsの削除
+      const deleteSql = `
+        DELETE FROM review_items
+        WHERE NOT EXISTS (
+          SELECT 1 FROM questions
+          WHERE questions.id = review_items.question_id
+        )
+      `;
+
+      const result = await this.executeQuery(deleteSql, []);
+
+      logger.info(
+        `[ReviewItemRepository] orphaned review_itemsクリーンアップ完了: ${result.rowsAffected}件削除`,
+      );
+
+      return result.rowsAffected;
+    } catch (error) {
+      logger.error(
+        "[ReviewItemRepository] cleanupOrphanedItems エラー:",
         error as Error,
       );
       throw error;
