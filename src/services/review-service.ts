@@ -480,9 +480,6 @@ export class ReviewService {
         journal: "第一問",
         ledger: "第二問",
         trial_balance: "第三問",
-        financial_statement: "財務諸表",
-        voucher_entry: "伝票記入",
-        multiple_blank_choice: "複数空欄選択",
       };
 
       for (const [category, categoryStats] of Object.entries(
