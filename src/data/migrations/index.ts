@@ -544,6 +544,9 @@ async function performDatabaseSetup(): Promise<void> {
     if (!isHealthy) {
       logger.warn("[Database] データベース整合性チェック失敗");
     }
+
+    // カテゴリ名称を常に最新に更新（needsUpdateに関係なく実行）
+    await updateCategoryNames();
   } catch (error) {
     logger.error("[Database] データベースセットアップエラー:", error as Error);
     throw new Error(
