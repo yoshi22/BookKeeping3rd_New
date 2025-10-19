@@ -36,7 +36,7 @@ export default function ReviewQuestionScreen() {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
 
-  const { id, sessionId, sessionType, filteredQuestions } =
+  const { id, sessionId, sessionType, filteredQuestions, categoryFilter } =
     useLocalSearchParams();
   const router = useRouter();
 
@@ -116,11 +116,19 @@ export default function ReviewQuestionScreen() {
         }
         // 復習セッションの場合は復習対象問題のみを取得
         else if (sessionType === "review" && sessionId) {
-          // 復習リストから該当カテゴリの問題のみを取得
-          const reviewQuestions = await reviewService.generateReviewList({
-            category: category,
-            maxCount: 50, // 十分な数を設定
-          });
+          // categoryFilterパラメータでカテゴリフィルタの有無を判定
+          const shouldFilterByCategory = categoryFilter === "true";
+
+          const reviewQuestions = await reviewService.generateReviewList(
+            shouldFilterByCategory
+              ? {
+                  category: category,
+                  maxCount: 50, // 十分な数を設定
+                }
+              : {
+                  maxCount: 50, // カテゴリフィルタなし（全て復習モード）
+                },
+          );
 
           questions = reviewQuestions;
         } else {
@@ -151,7 +159,15 @@ export default function ReviewQuestionScreen() {
     };
 
     loadQuestions();
-  }, [id, category, sessionType, sessionId, filteredQuestions, router]);
+  }, [
+    id,
+    category,
+    sessionType,
+    sessionId,
+    filteredQuestions,
+    categoryFilter,
+    router,
+  ]);
 
   // 問題が切り替わった時にuserAnswersをリセット
   useEffect(() => {

@@ -383,15 +383,32 @@ export class ReviewService {
       // 問題データ取得
       const questionIds = reviewItems.map((item) => item.question_id);
       const questions: Question[] = [];
+      const missingQuestionIds: string[] = [];
 
       for (const questionId of questionIds) {
         const question = await this.questionRepository.findById(questionId);
         if (question) {
           questions.push(question);
+        } else {
+          // Orphaned review_item detected - review_item exists but question doesn't
+          missingQuestionIds.push(questionId);
+          logger.warn(
+            `[ReviewService] 警告: review_itemが存在しますが、対応する問題が見つかりません: ${questionId}`,
+          );
         }
       }
 
-      logger.debug("[ReviewService] 復習リスト生成完了: ${questions.length}件");
+      // Orphaned review_itemsの検出をログ出力
+      if (missingQuestionIds.length > 0) {
+        logger.warn(
+          `[ReviewService] Orphaned review_items検出: ${missingQuestionIds.length}/${reviewItems.length}件`,
+          { details: { missingQuestionIds, category: options.category } },
+        );
+      }
+
+      logger.debug(
+        `[ReviewService] 復習リスト生成完了: ${questions.length}/${reviewItems.length}件（orphaned: ${missingQuestionIds.length}件）`,
+      );
       return questions;
     } catch (error) {
       logger.error(

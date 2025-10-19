@@ -410,9 +410,37 @@ export default function ReviewScreen() {
       const categoryProgress = await statisticsService.getCategoryProgress();
       const learningTrends = await statisticsService.getLearningTrends();
 
+      const normalizedOverall = {
+        totalQuestions: stats.totalQuestions,
+        totalAnswered: stats.answeredQuestions,
+        correctAnswers: stats.correctAnswers,
+        incorrectAnswers: stats.incorrectAnswers,
+        accuracy: Math.round(stats.accuracyRate * 100),
+        totalStudyTime: Math.round(stats.totalStudyTimeMs / 1000),
+        averageStudyTime: Math.round(stats.averageStudyTimeMs / 1000),
+        currentStreak: stats.currentStreak,
+        maxStreak: stats.maxStreak,
+        lastStudiedAt: stats.lastStudiedAt,
+        firstStudiedAt: stats.firstStudiedAt,
+      };
+
+      const normalizedCategoryProgress = categoryProgress.map((category) => ({
+        category: category.category,
+        categoryName: category.categoryName,
+        answered: category.answeredQuestions,
+        correct: category.correctAnswers,
+        incorrect: category.incorrectAnswers,
+        accuracy: Math.round(category.accuracyRate * 100),
+        completionRate: Math.round(category.completionRate * 100),
+        reviewItems: category.reviewItemsCount,
+        mastered: category.masteredCount,
+        averageAnswerTime: category.averageAnswerTimeMs,
+        lastStudiedAt: category.lastStudiedAt,
+      }));
+
       setStatisticsData({
-        overall: stats,
-        categoryProgress,
+        overall: normalizedOverall,
+        categoryProgress: normalizedCategoryProgress,
         learningTrends,
       });
       logger.debug("[ReviewScreen] 統計データ読み込み完了");
@@ -466,6 +494,7 @@ export default function ReviewScreen() {
           id: session.questions[0].id,
           sessionId: session.sessionId,
           sessionType: "review",
+          categoryFilter: "false", // 全て復習モードなのでカテゴリフィルタなし
         },
       });
     } catch (error) {
@@ -493,6 +522,7 @@ export default function ReviewScreen() {
           id: session.questions[0].id,
           sessionId: session.sessionId,
           sessionType: "review",
+          categoryFilter: "true", // カテゴリ別復習モードなのでカテゴリフィルタあり
         },
       });
     } catch (error) {
