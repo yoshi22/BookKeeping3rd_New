@@ -523,6 +523,7 @@ export default function ReviewScreen() {
           sessionId: session.sessionId,
           sessionType: "review",
           categoryFilter: "true", // カテゴリ別復習モードなのでカテゴリフィルタあり
+          selectedCategory: categoryId, // 実際に選択されたカテゴリを渡す
         },
       });
     } catch (error) {

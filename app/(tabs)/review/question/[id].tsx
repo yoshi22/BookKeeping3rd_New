@@ -36,8 +36,14 @@ export default function ReviewQuestionScreen() {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
 
-  const { id, sessionId, sessionType, filteredQuestions, categoryFilter } =
-    useLocalSearchParams();
+  const {
+    id,
+    sessionId,
+    sessionType,
+    filteredQuestions,
+    categoryFilter,
+    selectedCategory,
+  } = useLocalSearchParams();
   const router = useRouter();
 
   // サービスインスタンス
@@ -119,10 +125,17 @@ export default function ReviewQuestionScreen() {
           // categoryFilterパラメータでカテゴリフィルタの有無を判定
           const shouldFilterByCategory = categoryFilter === "true";
 
+          // カテゴリフィルタリング時は、selectedCategoryが渡されていればそれを使用
+          // （カテゴリ別復習の場合）、なければIDから推定したカテゴリを使用（後方互換性）
+          const actualCategory =
+            shouldFilterByCategory && selectedCategory
+              ? (selectedCategory as "journal" | "ledger" | "trial_balance")
+              : category;
+
           const reviewQuestions = await reviewService.generateReviewList(
             shouldFilterByCategory
               ? {
-                  category: category,
+                  category: actualCategory,
                   maxCount: 50, // 十分な数を設定
                 }
               : {
@@ -166,6 +179,7 @@ export default function ReviewQuestionScreen() {
     sessionId,
     filteredQuestions,
     categoryFilter,
+    selectedCategory,
     router,
   ]);
 
