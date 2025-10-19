@@ -73,285 +73,262 @@ export interface ColorPalette {
   };
 }
 
-// 統合ブランドカラーパレット（Phase 1実装）
+// 統合ブランドカラーパレット（刷新トンマナ対応）
 export const brandColors = {
-  // プライマリ: 信頼感のある青（簿記の堅実さ + ゲーミフィケーションの楽しさ）
+  // プライマリ: 落ち着きのあるティール
   primary: {
-    50: "#E3F2FD", // 背景・淡い装飾
-    100: "#BBDEFB", // カード背景
-    200: "#90CAF9", // ボタン無効状態
-    300: "#64B5F6", // セカンダリボタン
-    400: "#42A5F5", // ホバー状態
-    500: "#2196F3", // メイン（現在の primary）
-    600: "#1E88E5", // アクティブ状態
-    700: "#1976D2", // 重要ボタン
-    800: "#1565C0", // フォーカス状態
-    900: "#0D47A1", // 最大強調
+    50: "#F0F6F7",
+    100: "#D7ECF0",
+    200: "#B7DEE4",
+    300: "#8DCBD4",
+    400: "#65BBC8",
+    500: "#3FADBB",
+    600: "#2F8795",
+    700: "#276F7B",
+    800: "#1F5360",
+    900: "#153A42",
   },
 
-  // セカンダリ: 成長・達成を表す緑（ゲーミフィケーション連携）
+  // セカンダリ: 温かみのあるコーラル
   secondary: {
-    50: "#E8F5E9",
-    100: "#C8E6C9",
-    200: "#A5D6A7",
-    300: "#81C784",
-    400: "#66BB6A",
-    500: "#4CAF50", // メイン
-    600: "#43A047",
-    700: "#388E3C", // 現在の secondary
-    800: "#2E7D32",
-    900: "#1B5E20",
+    50: "#FFF0EB",
+    100: "#FFD9CF",
+    200: "#FFB7A8",
+    300: "#FF927F",
+    400: "#FA7662",
+    500: "#EB6A55",
+    600: "#E15A3D",
+    700: "#C74A31",
+    800: "#AC3A24",
+    900: "#7F2616",
   },
 
-  // ゲーミフィケーション特化カラー（Phase 2以降で活用）
+  // ゲーミフィケーション特化カラー（トンマナ調整）
   gamification: {
-    // ランクカラー（簿記師レベル）
     rank: {
-      trainee: "#9E9E9E", // 見習い帳簿係
-      clerk: "#795548", // 帳簿管理者
-      supervisor: "#FF9800", // 経理主任
-      manager: "#FF5722", // 会計課長
-      director: "#9C27B0", // 経理部長
-      cfo: "#3F51B5", // CFO
-      master: "#FFD700", // 簿記マスター（金）
-      grandmaster: "#FFFFFF", // 簿記師範（プラチナ）
+      trainee: "#B8B1AD",
+      clerk: "#9B6B4E",
+      supervisor: "#E6A75A",
+      manager: "#EB6A55",
+      director: "#B15E79",
+      cfo: "#3FADBB",
+      master: "#F3C863",
+      grandmaster: "#F6F1E9",
     },
-
-    // BP（Bookkeeping Points）関連
     bp: {
-      primary: "#FFC107", // BPメインカラー
-      earn: "#4CAF50", // 獲得時
-      spend: "#FF5722", // 消費時
-      bonus: "#FF9800", // ボーナス倍率
+      primary: "#F3C863",
+      earn: "#3FADBB",
+      spend: "#E15A3D",
+      bonus: "#F58B5A",
     },
-
-    // ストリーク
     streak: {
-      active: "#FF5722", // アクティブストリーク
-      broken: "#9E9E9E", // 途切れたストリーク
-      milestone: "#FFD700", // マイルストーン
-      special: "#9C27B0", // 特殊ストリーク
+      active: "#E15A3D",
+      broken: "#9B9590",
+      milestone: "#F3C863",
+      special: "#B15E79",
     },
-
-    // バッジ・アチーブメント
     badge: {
-      bronze: "#CD7F32",
-      silver: "#C0C0C0",
-      gold: "#FFD700",
-      platinum: "#E5E4E2",
-      diamond: "#B9F2FF",
+      bronze: "#C0825E",
+      silver: "#C9C3BF",
+      gold: "#F3C863",
+      platinum: "#E8E2DC",
+      diamond: "#B8E0E4",
     },
-
-    // 会社シミュレーション
     company: {
-      level1: "#FFEB3B", // 個人商店
-      level5: "#FF9800", // 中小企業
-      level10: "#9C27B0", // 上場企業
-      revenue: "#4CAF50", // 売上
-      growth: "#2196F3", // 成長
+      level1: "#F7E6B5",
+      level5: "#F58B5A",
+      level10: "#B15E79",
+      revenue: "#3FADBB",
+      growth: "#2F8795",
     },
   },
 
   // セマンティックカラー（アクセシビリティ強化）
   semantic: {
-    success: "#4CAF50",
-    warning: "#FFC107", // コントラスト改善
-    error: "#F44336",
-    info: "#2196F3",
-
-    // 学習状態専用
-    notStarted: "#9E9E9E",
-    inProgress: "#FF9800",
-    completed: "#4CAF50",
-    mastered: "#2E7D32",
-    needsReview: "#FF5722",
+    success: "#2F8F80",
+    warning: "#E6A75A",
+    error: "#D6453D",
+    info: "#3FADBB",
+    notStarted: "#B8B1AD",
+    inProgress: "#EB6A55",
+    completed: "#3FADBB",
+    mastered: "#276F7B",
+    needsReview: "#D6453D",
   },
 
-  // ニュートラル（段階的グレースケール）
+  // ニュートラル（温かみのあるトーン）
   neutral: {
     0: "#FFFFFF",
-    50: "#FAFAFA",
-    100: "#F5F5F5",
-    200: "#EEEEEE",
-    300: "#E0E0E0",
-    400: "#BDBDBD",
-    500: "#9E9E9E",
-    600: "#757575",
-    700: "#616161",
-    800: "#424242",
+    50: "#FCFCFC",
+    100: "#F7F3F0",
+    200: "#EEE8E4",
+    300: "#E0DAD8",
+    400: "#CFC8C4",
+    500: "#B8B1AD",
+    600: "#9B9590",
+    700: "#78736E",
+    800: "#4F4B48",
     900: "#212121",
-    1000: "#000000",
+    1000: "#121111",
   },
 };
 
-// ダークモード対応（Phase 2で拡張予定）
+// ダークモード対応パレット
 export const darkBrandColors = {
   primary: {
-    50: "#0D47A1",
-    100: "#1565C0",
-    200: "#1976D2",
-    300: "#1E88E5",
-    400: "#2196F3",
-    500: "#42A5F5", // ダークモードメイン
-    600: "#64B5F6",
-    700: "#90CAF9",
-    800: "#BBDEFB",
-    900: "#E3F2FD",
+    50: "#102E33",
+    100: "#153D44",
+    200: "#1B4D57",
+    300: "#1F5E6A",
+    400: "#23707E",
+    500: "#2D8C99",
+    600: "#45A6B3",
+    700: "#6BC1CC",
+    800: "#95D5DD",
+    900: "#C4E7EE",
   },
-  // 他のカラーも同様に反転（Phase 2で完全実装）
-  secondary: brandColors.secondary, // 暫定的に同じ値を使用
+  secondary: {
+    50: "#401712",
+    100: "#561C16",
+    200: "#6E231B",
+    300: "#872B21",
+    400: "#A4352A",
+    500: "#C14136",
+    600: "#D95A4E",
+    700: "#E98177",
+    800: "#F4A9A0",
+    900: "#FCD4CC",
+  },
   gamification: brandColors.gamification,
   semantic: brandColors.semantic,
   neutral: {
-    0: "#000000",
-    50: "#121212",
-    100: "#1E1E1E",
-    200: "#2C2C2C",
-    300: "#424242",
-    400: "#616161",
-    500: "#757575",
-    600: "#9E9E9E",
-    700: "#BDBDBD",
-    800: "#E0E0E0",
-    900: "#F5F5F5",
+    0: "#0F1112",
+    50: "#141C1D",
+    100: "#192325",
+    200: "#1F2C2F",
+    300: "#28373B",
+    400: "#36474C",
+    500: "#4C5D62",
+    600: "#6A7A7E",
+    700: "#8EA0A4",
+    800: "#B5C3C5",
+    900: "#E0EBEC",
     1000: "#FFFFFF",
   },
 };
 
 // Phase 1: 既存インターフェース対応（後方互換性）
 export const lightColors: ColorPalette = {
-  // Primary - 新brandColorsを使用
-  primary: brandColors.primary[500],
+  primary: brandColors.primary[600],
   primaryLight: brandColors.primary[400],
   primaryDark: brandColors.primary[700],
 
-  // Secondary - 新brandColorsを使用
-  secondary: brandColors.secondary[700],
+  secondary: brandColors.secondary[600],
   secondaryLight: brandColors.secondary[400],
-  secondaryDark: brandColors.secondary[800],
+  secondaryDark: brandColors.secondary[700],
 
-  // Accent
-  accent: brandColors.primary[600],
+  accent: brandColors.secondary[500],
 
-  // Background
-  background: brandColors.neutral[0],
+  background: brandColors.neutral[50],
   backgroundSecondary: brandColors.neutral[100],
-  surface: brandColors.neutral[50],
-  card: brandColors.neutral[0],
+  surface: brandColors.neutral[0],
+  card: brandColors.secondary[50],
 
-  // Status Background Colors
   infoBackground: brandColors.primary[50],
-  warningBackground: "#FFF8E1",
-  successBackground: brandColors.secondary[50],
-  errorBackground: "#FFEBEE",
+  warningBackground: "#FFF3E5",
+  successBackground: "#E4F3F2",
+  errorBackground: "#FFE6E3",
 
-  // Text
   text: brandColors.neutral[900],
   textSecondary: brandColors.neutral[600],
   textDisabled: brandColors.neutral[400],
 
-  // Status - アクセシビリティ改善
   success: brandColors.semantic.success,
-  successDark: brandColors.secondary[800],
+  successDark: brandColors.primary[700],
   warning: brandColors.semantic.warning,
   error: brandColors.semantic.error,
   info: brandColors.semantic.info,
 
-  // Border
   border: brandColors.neutral[300],
   borderLight: brandColors.neutral[200],
 
-  // Status Border Colors
   successBorder: brandColors.semantic.success,
   errorBorder: brandColors.semantic.error,
   warningBorder: brandColors.semantic.warning,
   infoBorder: brandColors.semantic.info,
-  primaryBorder: brandColors.primary[500],
+  primaryBorder: brandColors.primary[600],
 
-  // Interactive
-  link: brandColors.primary[500],
+  link: brandColors.primary[600],
   linkHover: brandColors.primary[700],
-  buttonPrimary: brandColors.primary[500],
+  buttonPrimary: brandColors.primary[600],
   buttonSecondary: brandColors.neutral[500],
 
-  // Accessibility (Phase 1) - WCAG 2.2準拠
-  focus: brandColors.primary[600], // フォーカスリング
-  focusHighContrast: brandColors.primary[800], // ハイコントラストモード
-  outline: brandColors.primary[500], // アウトライン
-  disabled: brandColors.neutral[300], // 無効状態
+  focus: brandColors.secondary[600],
+  focusHighContrast: brandColors.secondary[700],
+  outline: brandColors.primary[600],
+  disabled: brandColors.neutral[300],
 
   contrast: {
-    high: brandColors.neutral[900], // 高コントラスト（テキスト）
-    medium: brandColors.neutral[600], // 中コントラスト（セカンダリテキスト）
-    low: brandColors.neutral[400], // 低コントラスト（装飾）
+    high: brandColors.neutral[900],
+    medium: brandColors.neutral[600],
+    low: brandColors.neutral[400],
   },
 };
 
 export const darkColors: ColorPalette = {
-  // Primary - ダークモード対応
   primary: darkBrandColors.primary[500],
   primaryLight: darkBrandColors.primary[400],
-  primaryDark: darkBrandColors.primary[700],
+  primaryDark: darkBrandColors.primary[600],
 
-  // Secondary
-  secondary: brandColors.secondary[400],
-  secondaryLight: brandColors.secondary[300],
-  secondaryDark: brandColors.secondary[600],
+  secondary: darkBrandColors.secondary[500],
+  secondaryLight: darkBrandColors.secondary[400],
+  secondaryDark: darkBrandColors.secondary[600],
 
-  // Accent
-  accent: darkBrandColors.primary[400],
+  accent: darkBrandColors.secondary[500],
 
-  // Background
   background: darkBrandColors.neutral[50],
-  backgroundSecondary: darkBrandColors.neutral[200],
+  backgroundSecondary: darkBrandColors.neutral[100],
   surface: darkBrandColors.neutral[100],
   card: darkBrandColors.neutral[200],
 
-  // Status Background Colors
   infoBackground: darkBrandColors.primary[100],
-  warningBackground: "#3E2723",
-  successBackground: brandColors.secondary[100],
-  errorBackground: "#421C1C",
+  warningBackground: "#4A3426",
+  successBackground: "#1F3C3B",
+  errorBackground: "#3B2221",
 
-  // Text
-  text: darkBrandColors.neutral[1000],
+  text: darkBrandColors.neutral[900],
   textSecondary: darkBrandColors.neutral[700],
   textDisabled: darkBrandColors.neutral[500],
 
-  // Status
-  success: brandColors.secondary[400],
-  successDark: brandColors.secondary[600],
-  warning: "#FFB74D",
-  error: "#EF5350",
+  success: brandColors.semantic.success,
+  successDark: darkBrandColors.primary[400],
+  warning: brandColors.semantic.warning,
+  error: brandColors.semantic.error,
   info: darkBrandColors.primary[500],
 
-  // Border
   border: darkBrandColors.neutral[300],
   borderLight: darkBrandColors.neutral[200],
 
-  // Status Border Colors
-  successBorder: brandColors.secondary[400],
-  errorBorder: "#EF5350",
-  warningBorder: "#FFB74D",
+  successBorder: brandColors.semantic.success,
+  errorBorder: brandColors.semantic.error,
+  warningBorder: brandColors.semantic.warning,
   infoBorder: darkBrandColors.primary[500],
-  primaryBorder: darkBrandColors.primary[500],
+  primaryBorder: darkBrandColors.primary[400],
 
-  // Interactive
   link: darkBrandColors.primary[500],
-  linkHover: darkBrandColors.primary[400],
+  linkHover: darkBrandColors.primary[600],
   buttonPrimary: darkBrandColors.primary[500],
   buttonSecondary: darkBrandColors.neutral[500],
 
-  // Accessibility (Phase 1) - ダークモード対応
-  focus: darkBrandColors.primary[400], // ダークモードでのフォーカスリング
-  focusHighContrast: darkBrandColors.primary[300], // ハイコントラストモード
-  outline: darkBrandColors.primary[500], // アウトライン
-  disabled: darkBrandColors.neutral[500], // 無効状態
+  focus: darkBrandColors.secondary[500],
+  focusHighContrast: darkBrandColors.secondary[600],
+  outline: darkBrandColors.primary[400],
+  disabled: darkBrandColors.neutral[500],
 
   contrast: {
-    high: darkBrandColors.neutral[1000], // 高コントラスト（テキスト）
-    medium: darkBrandColors.neutral[700], // 中コントラスト
-    low: darkBrandColors.neutral[500], // 低コントラスト
+    high: darkBrandColors.neutral[900],
+    medium: darkBrandColors.neutral[700],
+    low: darkBrandColors.neutral[500],
   },
 };
 
@@ -360,18 +337,18 @@ export const darkColors: ColorPalette = {
  */
 export const learningColors = {
   light: {
-    notStarted: "#E0E0E0",
-    inProgress: "#FFC107",
-    completed: "#4CAF50",
-    mastered: "#2E7D32",
-    needsReview: "#FF5722",
+    notStarted: "#D6D0CB",
+    inProgress: "#F3A46C",
+    completed: "#3FADBB",
+    mastered: "#276F7B",
+    needsReview: "#E15A3D",
   },
   dark: {
-    notStarted: "#424242",
-    inProgress: "#FFB74D",
-    completed: "#66BB6A",
-    mastered: "#81C784",
-    needsReview: "#FF7043",
+    notStarted: "#4C5D62",
+    inProgress: "#E6A75A",
+    completed: darkBrandColors.primary[500],
+    mastered: darkBrandColors.primary[300],
+    needsReview: darkBrandColors.secondary[500],
   },
 };
 
@@ -380,14 +357,14 @@ export const learningColors = {
  */
 export const categoryColors = {
   light: {
-    journal: "#1976D2", // 仕訳 - ブルー
-    ledger: "#388E3C", // 帳簿 - グリーン
-    trialBalance: "#F57C00", // 試算表 - オレンジ
+    journal: "#2F8795",
+    ledger: "#84B3AC",
+    trialBalance: "#E15A3D",
   },
   dark: {
-    journal: "#90CAF9",
-    ledger: "#81C784",
-    trialBalance: "#FFB74D",
+    journal: darkBrandColors.primary[600],
+    ledger: "#6BC1CC",
+    trialBalance: darkBrandColors.secondary[600],
   },
 };
 
@@ -396,18 +373,18 @@ export const categoryColors = {
  */
 export const gradients = {
   light: {
-    primary: ["#1976D2", "#42A5F5"],
-    secondary: ["#388E3C", "#66BB6A"],
-    success: ["#4CAF50", "#81C784"],
-    warning: ["#FF9800", "#FFB74D"],
-    background: ["#F5F7FA", "#FFFFFF"],
+    primary: [brandColors.primary[400], brandColors.primary[600]],
+    secondary: [brandColors.secondary[400], brandColors.secondary[600]],
+    success: ["#3FAD9A", "#2F8F80"],
+    warning: ["#F3A46C", "#E68041"],
+    background: ["#FFF7F4", "#FCFCFC"],
   },
   dark: {
-    primary: ["#64B5F6", "#90CAF9"],
-    secondary: ["#66BB6A", "#81C784"],
-    success: ["#66BB6A", "#A5D6A7"],
-    warning: ["#FFB74D", "#FFCC02"],
-    background: ["#121212", "#1E1E1E"],
+    primary: [darkBrandColors.primary[400], darkBrandColors.primary[600]],
+    secondary: [darkBrandColors.secondary[400], darkBrandColors.secondary[600]],
+    success: ["#2F6C6A", "#45A6B3"],
+    warning: ["#B8713C", "#E6A75A"],
+    background: ["#101517", "#192325"],
   },
 };
 

@@ -15,13 +15,11 @@ module.exports = {
     },
   },
   settings: {
-    // Temporarily disable typescript resolver due to dependency conflicts
-    // Will re-enable after resolving eslint-import-resolver-typescript compatibility
-    // "import/resolver": {
-    //   typescript: {
-    //     alwaysTryTypes: true,
-    //   },
-    // },
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+    },
   },
   rules: {
     "no-unused-vars": "off",
@@ -31,6 +29,7 @@ module.exports = {
     "import/namespace": "off", // TypeScript resolver issues - temporary disable
     "import/default": "off",
     "import/export": "off",
+    "import/named": "off",
     "@typescript-eslint/no-empty-object-type": "off", // この規則は存在しないため無効化
     "@typescript-eslint/no-wrapper-object-types": "off", // この規則は存在しないため無効化
   },

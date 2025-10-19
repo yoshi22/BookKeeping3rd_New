@@ -27,6 +27,9 @@ import {
   useDynamicColors,
   type Theme,
 } from "../../../src/context/ThemeContext";
+import { AppIcon, IconContextSizes } from "../../../src/theme/icons";
+
+const withOpacity = (hex: string, alphaHex: string) => `${hex}${alphaHex}`;
 
 export default function ReviewScreen() {
   const [reviewStats, setReviewStats] = useState<ReviewStatistics | null>(null);
@@ -255,10 +258,10 @@ export default function ReviewScreen() {
         lastReviewed: area.lastReviewedAt,
         icon:
           area.category === "journal"
-            ? "📝"
+            ? ("journal" as const)
             : area.category === "ledger"
-              ? "📋"
-              : "📊",
+              ? ("ledger" as const)
+              : ("trialBalance" as const),
       }));
 
       setWeaknessCategories(formattedCategories);
@@ -340,7 +343,7 @@ export default function ReviewScreen() {
           averagePriority: 0,
           recommendation: "学習を開始してください",
           lastReviewed: null,
-          icon: "📝",
+          icon: "journal" as const,
         },
         {
           id: "ledger",
@@ -350,7 +353,7 @@ export default function ReviewScreen() {
           averagePriority: 0,
           recommendation: "学習を開始してください",
           lastReviewed: null,
-          icon: "📋",
+          icon: "ledger" as const,
         },
         {
           id: "trial_balance",
@@ -360,7 +363,7 @@ export default function ReviewScreen() {
           averagePriority: 0,
           recommendation: "学習を開始してください",
           lastReviewed: null,
-          icon: "📊",
+          icon: "trialBalance" as const,
         },
       ]);
 
@@ -646,21 +649,30 @@ export default function ReviewScreen() {
               },
             ]}
           >
-            <Text
-              style={[
-                styles.title,
-                {
-                  fontSize: getValueByDevice({
-                    phone: 24,
-                    tablet: 28,
-                    desktop: 32,
-                    default: 24,
-                  }),
-                },
-              ]}
-            >
-              📊 復習・進捗
-            </Text>
+            <View style={styles.titleRow}>
+              <View style={styles.titleIcon}>
+                <AppIcon
+                  name="stats"
+                  color={theme.colors.primary}
+                  size={IconContextSizes.header}
+                />
+              </View>
+              <Text
+                style={[
+                  styles.title,
+                  {
+                    fontSize: getValueByDevice({
+                      phone: 24,
+                      tablet: 28,
+                      desktop: 32,
+                      default: 24,
+                    }),
+                  },
+                ]}
+              >
+                復習・進捗
+              </Text>
+            </View>
             <Text
               style={[
                 styles.subtitle,
@@ -700,14 +712,25 @@ export default function ReviewScreen() {
               onPress={() => setActiveTab("review")}
               testID="review-tab-button"
             >
-              <Text
-                style={[
-                  styles.tabButtonText,
-                  activeTab === "review" && styles.activeTabButtonText,
-                ]}
-              >
-                🔄 復習
-              </Text>
+              <View style={styles.tabButtonContent}>
+                <AppIcon
+                  name="review"
+                  color={
+                    activeTab === "review"
+                      ? theme.colors.surface
+                      : theme.colors.textSecondary
+                  }
+                  size={IconContextSizes.button}
+                />
+                <Text
+                  style={[
+                    styles.tabButtonText,
+                    activeTab === "review" && styles.activeTabButtonText,
+                  ]}
+                >
+                  復習
+                </Text>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
@@ -717,14 +740,25 @@ export default function ReviewScreen() {
               onPress={() => setActiveTab("statistics")}
               testID="statistics-tab-button"
             >
-              <Text
-                style={[
-                  styles.tabButtonText,
-                  activeTab === "statistics" && styles.activeTabButtonText,
-                ]}
-              >
-                📈 統計
-              </Text>
+              <View style={styles.tabButtonContent}>
+                <AppIcon
+                  name="stats"
+                  color={
+                    activeTab === "statistics"
+                      ? theme.colors.surface
+                      : theme.colors.textSecondary
+                  }
+                  size={IconContextSizes.button}
+                />
+                <Text
+                  style={[
+                    styles.tabButtonText,
+                    activeTab === "statistics" && styles.activeTabButtonText,
+                  ]}
+                >
+                  統計
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
 
@@ -904,14 +938,13 @@ export default function ReviewScreen() {
                   testID="review-priority-button"
                   accessibilityLabel="重点復習を開始"
                 >
-                  <Text
-                    style={[
-                      styles.buttonIcon,
-                      { fontSize: deviceInfo.isTablet ? 28 : 24 },
-                    ]}
-                  >
-                    🎯
-                  </Text>
+                  <View style={styles.buttonIconWrapper}>
+                    <AppIcon
+                      name="challenge"
+                      color={theme.colors.surface}
+                      size={deviceInfo.isTablet ? IconContextSizes.header : IconContextSizes.listItem}
+                    />
+                  </View>
                   <Text
                     style={[
                       styles.buttonTitle,
@@ -939,14 +972,13 @@ export default function ReviewScreen() {
                   testID="review-all-button"
                   accessibilityLabel="全て復習を開始"
                 >
-                  <Text
-                    style={[
-                      styles.buttonIcon,
-                      { fontSize: deviceInfo.isTablet ? 28 : 24 },
-                    ]}
-                  >
-                    🔄
-                  </Text>
+                  <View style={styles.buttonIconWrapper}>
+                    <AppIcon
+                      name="refresh"
+                      color={theme.colors.primary}
+                      size={deviceInfo.isTablet ? IconContextSizes.header : IconContextSizes.listItem}
+                    />
+                  </View>
                   <Text
                     style={[
                       styles.buttonTitle,
@@ -997,14 +1029,25 @@ export default function ReviewScreen() {
                         testID={`review-category-${category.id}-button`}
                         accessibilityLabel={`${category.name}の復習を開始`}
                       >
-                        <Text
+                        <View
                           style={[
                             styles.categoryIcon,
-                            { fontSize: deviceInfo.isTablet ? 36 : 30 },
+                            {
+                              width: deviceInfo.isTablet ? 56 : 48,
+                              height: deviceInfo.isTablet ? 56 : 48,
+                            },
                           ]}
                         >
-                          {category.icon}
-                        </Text>
+                          <AppIcon
+                            name={category.icon}
+                            size={deviceInfo.isTablet ? IconContextSizes.header : IconContextSizes.listItem}
+                            color={
+                              theme.categoryColors[
+                                category.id as keyof typeof theme.categoryColors
+                              ] ?? theme.colors.primary
+                            }
+                          />
+                        </View>
                         <View style={styles.categoryInfo}>
                           <Text
                             style={[
@@ -1187,7 +1230,7 @@ export default function ReviewScreen() {
                         { fontSize: deviceInfo.isTablet ? 20 : 18 },
                       ]}
                     >
-                      📈 学習統計
+                      学習統計
                     </Text>
                     <View
                       style={[
@@ -1282,7 +1325,7 @@ export default function ReviewScreen() {
                         { fontSize: deviceInfo.isTablet ? 20 : 18 },
                       ]}
                     >
-                      📊 分野別進捗
+                      分野別進捗
                     </Text>
                     <ResponsiveGrid>
                       {(statisticsData?.categoryProgress || []).map(
@@ -1297,18 +1340,31 @@ export default function ReviewScreen() {
                                 },
                               ]}
                             >
-                              <Text
+                              <View
                                 style={[
                                   styles.categoryProgressIcon,
-                                  { fontSize: deviceInfo.isTablet ? 32 : 28 },
+                                  {
+                                    width: deviceInfo.isTablet ? 56 : 48,
+                                    height: deviceInfo.isTablet ? 56 : 48,
+                                  },
                                 ]}
                               >
-                                {category.category === "journal"
-                                  ? "📝"
-                                  : category.category === "ledger"
-                                    ? "📋"
-                                    : "📊"}
-                              </Text>
+                                <AppIcon
+                                  name={
+                                    category.category === "journal"
+                                      ? "journal"
+                                      : category.category === "ledger"
+                                        ? "ledger"
+                                        : "trialBalance"
+                                  }
+                                  size={deviceInfo.isTablet ? IconContextSizes.header : IconContextSizes.listItem}
+                                  color={
+                                    theme.categoryColors[
+                                      category.category as keyof typeof theme.categoryColors
+                                    ] ?? theme.colors.primary
+                                  }
+                                />
+                              </View>
                               <Text
                                 style={[
                                   styles.categoryProgressName,
@@ -1358,21 +1414,26 @@ export default function ReviewScreen() {
                     <Text style={styles.dataInfoText}>
                       💡 統計データは学習・復習の進行に伴って自動更新されます
                     </Text>
-                    <TouchableOpacity
-                      style={[
-                        styles.refreshButton,
-                        { backgroundColor: theme.colors.primary },
-                      ]}
-                      onPress={() => {
-                        loadReviewData();
-                        loadStatisticsData();
-                      }}
-                      testID="refresh-statistics-button"
-                    >
-                      <Text style={styles.refreshButtonText}>
-                        🔄 データ更新
-                      </Text>
-                    </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.refreshButton,
+                    { backgroundColor: theme.colors.primary },
+                  ]}
+                  onPress={() => {
+                    loadReviewData();
+                    loadStatisticsData();
+                  }}
+                  testID="refresh-statistics-button"
+                >
+                  <View style={styles.tabButtonContent}>
+                    <AppIcon
+                      name="refresh"
+                      color={theme.colors.surface}
+                      size={IconContextSizes.button}
+                    />
+                    <Text style={styles.refreshButtonText}>データ更新</Text>
+                  </View>
+                </TouchableOpacity>
                   </View>
                 </>
               )}
@@ -1410,6 +1471,19 @@ const createStyles = (theme: Theme) =>
       padding: 20,
       alignItems: "center",
       paddingTop: 60, // ヘッダータイトル分のスペース
+    },
+    titleRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: theme.spacing.md,
+    },
+    titleIcon: {
+      width: 48,
+      height: 48,
+      borderRadius: theme.spacing.lg,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: withOpacity(theme.colors.primary, "12"),
     },
     title: {
       fontSize: 24,
@@ -1463,9 +1537,14 @@ const createStyles = (theme: Theme) =>
       alignItems: "center",
       ...theme.shadows.medium,
     },
-    buttonIcon: {
-      fontSize: 24,
-      marginBottom: 8,
+    buttonIconWrapper: {
+      width: 48,
+      height: 48,
+      borderRadius: theme.spacing.lg,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: withOpacity(theme.colors.surface, "1F"),
+      marginBottom: theme.spacing.sm,
     },
     buttonTitle: {
       fontSize: 18,
@@ -1490,18 +1569,27 @@ const createStyles = (theme: Theme) =>
     categoryCard: {
       flexDirection: "row",
       backgroundColor: theme.colors.surface,
-      padding: 15,
-      marginBottom: 15,
-      borderRadius: 10,
+      paddingVertical: theme.spacing.lg,
+      paddingHorizontal: theme.spacing.xl,
+      marginBottom: theme.spacing.lg,
+      borderRadius: theme.spacing["2xl"],
       alignItems: "center",
-      ...theme.shadows.medium,
+      gap: theme.spacing.lg,
+      shadowColor: "rgba(17, 24, 28, 0.08)",
+      shadowOpacity: 1,
+      shadowOffset: { width: 0, height: 10 },
+      shadowRadius: 20,
+      elevation: 6,
     },
     categoryIcon: {
-      fontSize: 30,
-      marginRight: 15,
+      borderRadius: theme.spacing.lg,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: withOpacity(theme.colors.primary, "12"),
     },
     categoryInfo: {
       flex: 1,
+      gap: theme.spacing.xs,
     },
     categoryName: {
       fontSize: 16,
@@ -1606,6 +1694,11 @@ const createStyles = (theme: Theme) =>
       alignItems: "center",
       justifyContent: "center",
     },
+    tabButtonContent: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: theme.spacing.xs,
+    },
     activeTabButton: {
       backgroundColor: theme.colors.primary,
       ...theme.shadows.small,
@@ -1646,21 +1739,23 @@ const createStyles = (theme: Theme) =>
     },
     categoryProgressCard: {
       backgroundColor: theme.colors.surface,
-      borderRadius: 15,
-      padding: 20,
+      borderRadius: theme.spacing["2xl"],
+      padding: theme.spacing.xl,
       ...theme.shadows.medium,
     },
     categoryProgressItem: {
-      backgroundColor: theme.colors.background,
-      borderRadius: 12,
-      padding: 15,
+      backgroundColor: withOpacity(theme.colors.primary, "08"),
+      borderRadius: theme.spacing["2xl"],
+      padding: theme.spacing.lg,
       alignItems: "center",
-      borderWidth: 1,
-      borderColor: theme.colors.border,
+      gap: theme.spacing.sm,
     },
     categoryProgressIcon: {
-      fontSize: 28,
-      marginBottom: 8,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: theme.spacing.lg,
+      backgroundColor: withOpacity(theme.colors.surface, "26"),
+      marginBottom: theme.spacing.sm,
     },
     categoryProgressName: {
       fontSize: 14,

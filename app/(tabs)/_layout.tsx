@@ -1,7 +1,8 @@
 import { Tabs } from "expo-router";
-import { Text, View, Platform } from "react-native";
+import { Platform, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemeProvider, useTheme } from "../../src/context/ThemeContext";
+import { AppIcon, IconContextSizes } from "../../src/theme/icons";
 
 function TabLayout() {
   const { theme } = useTheme();
@@ -26,7 +27,7 @@ function TabLayout() {
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.textSecondary,
         tabBarStyle: {
-          backgroundColor: theme.colors.card,
+          backgroundColor: theme.colors.surface,
           borderTopColor: theme.colors.border,
           borderTopWidth: 1,
           paddingTop: theme.spacing.xs,
@@ -40,11 +41,11 @@ function TabLayout() {
           marginTop: theme.spacing.xs,
         },
         headerStyle: {
-          backgroundColor: theme.colors.primary,
-          shadowColor: theme.colors.primary,
-          elevation: 4,
+          backgroundColor: theme.colors.surface,
+          shadowColor: "transparent",
+          elevation: 0,
         },
-        headerTintColor: theme.colors.background,
+        headerTintColor: theme.colors.text,
         headerTitleStyle: {
           fontWeight: "600",
           fontSize: theme.typography.h5.fontSize,
@@ -73,7 +74,7 @@ function TabLayout() {
           headerShown: false, // ヘッダー非表示
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name="book"
+              name="learning"
               color={color}
               focused={focused}
               testID="tab-learning"
@@ -88,7 +89,7 @@ function TabLayout() {
           headerShown: false, // ヘッダー非表示
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name="bar-chart"
+              name="stats"
               color={color}
               focused={focused}
               testID="tab-review"
@@ -115,22 +116,15 @@ function TabLayout() {
   );
 }
 
+type TabIconName = "home" | "learning" | "stats" | "settings";
+
 function TabBarIcon(props: {
-  name: string;
+  name: TabIconName;
   color: string;
   focused: boolean;
   testID?: string;
 }) {
   const { theme } = useTheme();
-
-  const iconMap: { [key: string]: string } = {
-    home: "🏠",
-    book: "📚",
-    refresh: "🔄",
-    "bar-chart": "📊",
-    test: "📝",
-    settings: "⚙️",
-  };
 
   return (
     <View
@@ -139,9 +133,9 @@ function TabBarIcon(props: {
         justifyContent: "center",
         minWidth: 44,
         minHeight: 32,
-        borderRadius: theme.spacing.sm,
+        borderRadius: theme.spacing.md,
         backgroundColor: props.focused
-          ? `${theme.colors.primary}20`
+          ? `${theme.colors.primary}22`
           : "transparent",
         paddingHorizontal: theme.spacing.sm,
       }}
@@ -150,15 +144,12 @@ function TabBarIcon(props: {
       accessibilityState={{ selected: props.focused }}
       testID={props.testID}
     >
-      <Text
-        style={{
-          color: props.color,
-          fontSize: 24,
-          transform: props.focused ? [{ scale: 1.1 }] : [{ scale: 1 }],
-        }}
-      >
-        {iconMap[props.name] || "📱"}
-      </Text>
+      <AppIcon
+        name={props.name}
+        size={IconContextSizes.tab}
+        color={props.color}
+        style={props.focused ? { transform: [{ scale: 1.05 }] } : undefined}
+      />
     </View>
   );
 }
