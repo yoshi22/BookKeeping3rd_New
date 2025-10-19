@@ -367,9 +367,9 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
         ] = row.count;
       });
 
-      // カテゴリ別統計（実際の復習対象のみをカウント）
+      // カテゴリ別統計（すべての復習アイテムをカウントし、ステータス別に集計）
       const categoryStatsQuery = `
-        SELECT 
+        SELECT
           q.category_id,
           COUNT(*) as total,
           SUM(CASE WHEN ri.status = 'needs_review' THEN 1 ELSE 0 END) as needsReview,
@@ -378,7 +378,6 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
           AVG(ri.priority_score) as averagePriority
         FROM review_items ri
         INNER JOIN questions q ON ri.question_id = q.id
-        WHERE ri.status IN ('needs_review', 'priority_review')
         GROUP BY q.category_id
       `;
 
