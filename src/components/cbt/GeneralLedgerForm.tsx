@@ -51,7 +51,7 @@ export const GeneralLedgerForm: React.FC<GeneralLedgerFormProps> = ({
     } else {
       initializeTableData();
     }
-  }, [template]);
+  }, [template, initialData]);
 
   // テーブルデータの初期化
   const initializeTableData = () => {
