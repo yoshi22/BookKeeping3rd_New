@@ -60,6 +60,7 @@ export interface ReviewSession {
  */
 export interface GenerateReviewListOptions {
   category?: QuestionCategory;
+  status?: ReviewStatus[];
   priorityLevels?: ("critical" | "high" | "medium" | "low")[];
   maxCount?: number;
   excludeRecentlyReviewed?: boolean;
@@ -345,7 +346,7 @@ export class ReviewService {
       logger.debug("[ReviewService] 復習リスト生成開始:", { details: options });
 
       const filter: ReviewFilter = {
-        status: ["needs_review", "priority_review"], // 復習対象のみ
+        status: options.status || ["needs_review", "priority_review"], // デフォルトは全復習対象
         category: options.category,
         limit: options.maxCount || 20,
       };

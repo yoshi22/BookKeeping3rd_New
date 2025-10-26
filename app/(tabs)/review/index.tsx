@@ -468,15 +468,19 @@ export default function ReviewScreen() {
     try {
       const options = priorityOnly
         ? {
-            priorityLevels: ["critical", "high", "medium"] as (
-              | "critical"
-              | "high"
-              | "medium"
-              | "low"
+            // 2回以上間違えた問題のみ（status='priority_review'）
+            status: ["priority_review"] as (
+              | "needs_review"
+              | "priority_review"
             )[],
             maxCount: 15,
           }
         : {
+            // 全ての復習問題（連続2回正解は既に削除済みで含まれない）
+            status: ["needs_review", "priority_review"] as (
+              | "needs_review"
+              | "priority_review"
+            )[],
             maxCount: 20,
           };
 
@@ -487,7 +491,7 @@ export default function ReviewScreen() {
         return;
       }
 
-      // 復習問題画面に遷移（セッション情報を渡す）
+      // 復習問題画面に遷移（セッション情報とフィルター済み問題リストを渡す）
       router.push({
         pathname: "/(tabs)/review/question/[id]",
         params: {
@@ -495,6 +499,7 @@ export default function ReviewScreen() {
           sessionId: session.sessionId,
           sessionType: "review",
           categoryFilter: "false", // 全て復習モードなのでカテゴリフィルタなし
+          filteredQuestions: session.questions.map((q) => q.id).join(","), // セッションの問題リストを渡す
         },
       });
     } catch (error) {
