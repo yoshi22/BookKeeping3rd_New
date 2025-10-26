@@ -509,6 +509,14 @@ function FillInFinancialStatementFormWrapper({
   >({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // questionIdが変更された時にselectedAnswersをリセット
+  useEffect(() => {
+    setSelectedAnswers({});
+    console.log(
+      `[FillInFinancialStatementFormWrapper] Answer reset for question ${questionId}`,
+    );
+  }, [questionId]);
+
   const handleAnswerChange = (answers: Record<number | string, number>) => {
     setSelectedAnswers(answers);
   };

@@ -12,9 +12,11 @@ export const migration003: MigrationInfo = {
 
   sql: [
     // problemsStrategy.mdに基づく詳細分類・順序制御・パターン分類列を追加
-    // エラーハンドリングで重複カラムエラーは無視される
+    // カラム追加は個別に試行し、既存の場合はエラーを無視
 
     // サブカテゴリ列（現金・預金取引、商品売買取引など）
+    // Note: SQLiteにはADD COLUMN IF NOT EXISTSがないため、
+    // migration-managerのエラーハンドリングに依存
     `ALTER TABLE questions ADD COLUMN subcategory TEXT`,
 
     // セクション番号列（第一問=1, 第二問=2, 第三問=3）
@@ -26,7 +28,7 @@ export const migration003: MigrationInfo = {
     // パターン種別列（現金過不足、仕訳パターンなど）
     `ALTER TABLE questions ADD COLUMN pattern_type TEXT`,
 
-    // インデックス作成
+    // インデックス作成（IF NOT EXISTSで安全）
     `CREATE INDEX IF NOT EXISTS idx_questions_subcategory ON questions (subcategory)`,
     `CREATE INDEX IF NOT EXISTS idx_questions_section_order ON questions (section_number, question_order)`,
     `CREATE INDEX IF NOT EXISTS idx_questions_pattern ON questions (pattern_type)`,

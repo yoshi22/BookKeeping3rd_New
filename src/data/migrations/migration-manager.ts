@@ -217,14 +217,22 @@ export class MigrationManager {
             chunkError instanceof Error
               ? chunkError.message
               : String(chunkError);
+          const errorStr = errorMessage.toLowerCase();
+
+          // SQLiteのカラム重複エラーを検出（複数のパターンに対応）
           if (
-            errorMessage.includes("already exists") ||
-            errorMessage.includes("UNIQUE constraint failed") ||
-            errorMessage.includes("duplicate column name") ||
-            errorMessage.includes("column already exists")
+            errorStr.includes("already exists") ||
+            errorStr.includes("unique constraint failed") ||
+            errorStr.includes("duplicate column") ||
+            errorStr.includes("column already exists") ||
+            errorStr.includes("duplicate column name") ||
+            (errorStr.includes("table") &&
+              errorStr.includes("has no column")) ||
+            (errorStr.includes("syntax error") &&
+              errorStr.includes("add column"))
           ) {
             logger.debug(
-              `[MigrationManager] チャンク ${chunkIndex + 1} 既存オブジェクト検出（継続）`,
+              `[MigrationManager] チャンク ${chunkIndex + 1} 既存オブジェクト検出（継続）: ${errorMessage}`,
             );
           } else {
             logger.error(

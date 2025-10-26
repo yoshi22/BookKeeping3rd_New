@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { Screen } from "../../../src/components/layout/ResponsiveLayout";
 import { QuestionRepository } from "../../../src/data/repositories/question-repository";
+import { LearningHistoryRepository } from "../../../src/data/repositories/learning-history-repository";
 import type { QuestionCategory } from "../../../src/types/models";
 import { WithScreenTransition } from "../../../src/hooks/useScreenTransitions";
 import {
@@ -39,6 +40,16 @@ export default function LearningScreen() {
     voucher_entry: 0,
     multiple_blank_choice: 0,
   });
+  const [completedCounts, setCompletedCounts] = useState<
+    Record<QuestionCategory, number>
+  >({
+    journal: 0,
+    ledger: 0,
+    trial_balance: 0,
+    financial_statement: 0,
+    voucher_entry: 0,
+    multiple_blank_choice: 0,
+  });
   const [loading, setLoading] = useState(true);
 
   // Phase 4: ダークモード対応のテーマシステム
@@ -58,7 +69,7 @@ export default function LearningScreen() {
       subtitle: "仕訳問題",
       description: "基本的な仕訳から応用仕訳まで",
       totalQuestions: questionCounts.journal,
-      completedQuestions: 0,
+      completedQuestions: completedCounts.journal,
       icon: "journal" as const,
       color: theme.categoryColors.journal,
       points: "45点",
@@ -73,7 +84,7 @@ export default function LearningScreen() {
       subtitle: "補助簿・勘定記入・伝票",
       description: "帳簿記入と勘定の理解",
       totalQuestions: questionCounts.ledger,
-      completedQuestions: 0,
+      completedQuestions: completedCounts.ledger,
       icon: "ledger" as const,
       color: theme.categoryColors.ledger,
       points: "20点",
@@ -87,7 +98,7 @@ export default function LearningScreen() {
       subtitle: "決算書作成",
       description: "財務諸表・精算表・試算表の作成",
       totalQuestions: questionCounts.trial_balance,
-      completedQuestions: 0,
+      completedQuestions: completedCounts.trial_balance,
       icon: "trialBalance" as const,
       color: theme.categoryColors.trialBalance,
       points: "35点",
@@ -121,9 +132,35 @@ export default function LearningScreen() {
             multiple_blank_choice: 0,
           });
         }
+
+        // 完了した問題数の取得
+        const learningHistoryRepository = new LearningHistoryRepository();
+        const answeredQuestions =
+          await learningHistoryRepository.getUniqueAnsweredQuestions();
+        const { categoryBreakdown } = answeredQuestions;
+
+        // カテゴリ別の正答問題数（完了問題数）を設定
+        setCompletedCounts({
+          journal: categoryBreakdown.journal.correctUnique,
+          ledger: categoryBreakdown.ledger.correctUnique,
+          trial_balance: categoryBreakdown.trial_balance.correctUnique,
+          financial_statement:
+            categoryBreakdown.financial_statement.correctUnique,
+          voucher_entry: categoryBreakdown.voucher_entry.correctUnique,
+          multiple_blank_choice:
+            categoryBreakdown.multiple_blank_choice.correctUnique,
+        });
       } catch {
         // エラー時はデフォルト値を設定
         setQuestionCounts({
+          journal: 0,
+          ledger: 0,
+          trial_balance: 0,
+          financial_statement: 0,
+          voucher_entry: 0,
+          multiple_blank_choice: 0,
+        });
+        setCompletedCounts({
           journal: 0,
           ledger: 0,
           trial_balance: 0,
@@ -320,7 +357,11 @@ export default function LearningScreen() {
                             全問題順次進行
                           </Text>
                           <Text style={styles.categorySubtitle}>
-                            370問完全制覇モード
+                            {Object.values(questionCounts).reduce(
+                              (a, b) => a + b,
+                              0,
+                            )}
+                            問完全制覇モード
                           </Text>
                         </View>
                         <View
@@ -329,17 +370,30 @@ export default function LearningScreen() {
                             { backgroundColor: theme.colors.secondary },
                           ]}
                         >
-                          <Text style={styles.pointsText}>370問</Text>
+                          <Text style={styles.pointsText}>
+                            {Object.values(questionCounts).reduce(
+                              (a, b) => a + b,
+                              0,
+                            )}
+                            問
+                          </Text>
                         </View>
                       </View>
 
                       <View style={styles.categoryInfo}>
                         <Text style={styles.categoryDescription}>
-                          第1問→第2問→第3問の全370問を順次進行
+                          第1問→第2問→第3問の全
+                          {Object.values(questionCounts).reduce(
+                            (a, b) => a + b,
+                            0,
+                          )}
+                          問を順次進行
                         </Text>
                         <View style={styles.examInfo}>
                           <Text style={styles.examInfoText}>
-                            📚 仕訳250問 • 📋 帳簿40問 • 📊 決算書12問
+                            📚 第1問{questionCounts.journal}問 • 📋 第2問
+                            {questionCounts.ledger}問 • 📊 第3問
+                            {questionCounts.trial_balance}問
                           </Text>
                         </View>
                         <Text style={styles.categoryDetails}>

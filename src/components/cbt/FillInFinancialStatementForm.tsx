@@ -77,13 +77,13 @@ export default function FillInFinancialStatementForm({
     }
   }, [question.answer_template_json]);
 
-  // initialAnswerが変更された時にselectedAnswersをリセット
+  // 問題変更や親からの初期解答更新が入ったら必ずリセット
   useEffect(() => {
     setSelectedAnswers(initialAnswer);
     console.log(
       `[FillInFinancialStatementForm] Answer reset for question ${question.id}`,
     );
-  }, [initialAnswer, question.id]);
+  }, [question.id, initialAnswer]);
 
   // 選択肢が選択されたときの処理
   const handleBlankSelect = (blankIndex: number, choiceIndex: number) => {
