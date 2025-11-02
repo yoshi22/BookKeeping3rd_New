@@ -16,12 +16,18 @@
       "ios": {
         "resourceClass": "m-medium",
         "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
       }
     },
     "production": {
       "distribution": "store",
       "ios": {
         "resourceClass": "m-medium"
+      },
+      "android": {
+        "buildType": "app-bundle"
       },
       "credentialsSource": "remote"
     }
