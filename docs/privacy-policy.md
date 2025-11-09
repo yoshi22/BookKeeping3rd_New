@@ -37,7 +37,7 @@
 
 本プライバシーポリシーに関するご質問は、以下までご連絡ください。
 
-**メールアドレス**：yoshi.muroi@gmail.com
+**メールアドレス**：yoshi.mario.developer@gmail.com
 
 ## プライバシーポリシーの変更について
 
