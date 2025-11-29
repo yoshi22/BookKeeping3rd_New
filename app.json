@@ -22,7 +22,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.yoshi.Boki3rdReviewMaster.alpha"
+      "package": "com.yoshi.Boki3rdReviewMaster.alpha",
+      "versionCode": 3,
+      "targetSdkVersion": 35
     },
     "web": {
       "favicon": "./assets/favicon.png",
