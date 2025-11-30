@@ -252,53 +252,65 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
   };
 
   // Render explanation content
-  const renderExplanationContent = () => (
-    <ScrollView
-      style={styles.scrollContent}
-      showsVerticalScrollIndicator={false}
-      testID={`${testID}-scroll`}
-    >
-      {/* Session Context Header */}
-      {sessionMode === "mock_exam" && (
-        <View style={styles.contextHeader}>
-          <Text style={styles.contextText}>模試解説</Text>
-        </View>
-      )}
+  // panelモードでは親のScrollViewを使用するため、Viewを使用
+  // modalモードでは独自のScrollViewを使用
+  const renderExplanationContent = (useScrollView: boolean = false) => {
+    const ContentWrapper = useScrollView ? ScrollView : View;
+    const wrapperProps = useScrollView
+      ? {
+          style: styles.scrollContent,
+          showsVerticalScrollIndicator: false,
+          testID: `${testID}-scroll`,
+        }
+      : {
+          style: styles.scrollContent,
+          testID: `${testID}-content`,
+        };
 
-      {/* Result Status */}
-      {resultStyle && (
-        <View
-          style={[
-            styles.resultStatus,
-            { backgroundColor: resultStyle.color + "20" },
-          ]}
-        >
-          <Text style={[styles.resultIcon, { color: resultStyle.color }]}>
-            {resultStyle.icon}
-          </Text>
-          <Text style={[styles.resultText, { color: resultStyle.color }]}>
-            {resultStyle.text}
-          </Text>
-        </View>
-      )}
+    return (
+      <ContentWrapper {...wrapperProps}>
+        {/* Session Context Header */}
+        {sessionMode === "mock_exam" && (
+          <View style={styles.contextHeader}>
+            <Text style={styles.contextText}>模試解説</Text>
+          </View>
+        )}
 
-      {/* Question Text (for modal mode) */}
-      {mode === "modal" && questionText && (
-        <View style={styles.questionSection}>
-          <Text style={styles.questionTitle}>問題</Text>
-          <Text style={styles.questionText}>
-            {formatExplanationText(questionText)}
-          </Text>
-        </View>
-      )}
+        {/* Result Status */}
+        {resultStyle && (
+          <View
+            style={[
+              styles.resultStatus,
+              { backgroundColor: resultStyle.color + "20" },
+            ]}
+          >
+            <Text style={[styles.resultIcon, { color: resultStyle.color }]}>
+              {resultStyle.icon}
+            </Text>
+            <Text style={[styles.resultText, { color: resultStyle.color }]}>
+              {resultStyle.text}
+            </Text>
+          </View>
+        )}
 
-      {/* Answer Comparison */}
-      {renderAnswerComparison()}
+        {/* Question Text (for modal mode) */}
+        {mode === "modal" && questionText && (
+          <View style={styles.questionSection}>
+            <Text style={styles.questionTitle}>問題</Text>
+            <Text style={styles.questionText}>
+              {formatExplanationText(questionText)}
+            </Text>
+          </View>
+        )}
 
-      {/* Explanation Content - Stepped or Regular */}
-      {renderSteppedExplanation()}
-    </ScrollView>
-  );
+        {/* Answer Comparison */}
+        {renderAnswerComparison()}
+
+        {/* Explanation Content - Stepped or Regular */}
+        {renderSteppedExplanation()}
+      </ContentWrapper>
+    );
+  };
 
   // Render panel mode
   if (mode === "panel") {
@@ -344,7 +356,7 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
         {/* Panel Content */}
         {(!expandable || isExpanded) && (
           <Animated.View style={styles.panelContent}>
-            {renderExplanationContent()}
+            {renderExplanationContent(false)}
           </Animated.View>
         )}
       </View>
@@ -377,7 +389,9 @@ export const UnifiedExplanation: React.FC<UnifiedExplanationProps> = ({
           </View>
 
           {/* Modal Content */}
-          <View style={styles.modalContent}>{renderExplanationContent()}</View>
+          <View style={styles.modalContent}>
+            {renderExplanationContent(true)}
+          </View>
         </View>
       </Modal>
     );
