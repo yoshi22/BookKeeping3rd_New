@@ -110,6 +110,7 @@ export interface DatabaseError extends Error {
   severity?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
   context?: Record<string, any>;
   recoverable?: boolean;
+  cause?: unknown;
 }
 
 // CBT解答データ構造（JSON格納用）

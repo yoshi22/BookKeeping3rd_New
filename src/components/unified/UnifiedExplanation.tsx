@@ -440,8 +440,8 @@ const createStyles = (theme: Theme): StyleSheet.NamedStyles<any> =>
       transform: [{ rotate: "-90deg" }],
     },
     panelContent: {
-      // maxHeightを削除して親コンテナに合わせて自動拡張
-      flex: 1,
+      // Android向け: 明示的な高さ計算指定
+      flexShrink: 0,
     },
 
     // Modal styles

@@ -307,7 +307,18 @@ export class DatabaseOperations {
     severity: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL",
     context?: Record<string, any>,
   ): DatabaseError {
-    const error = new Error(message) as DatabaseError;
+    const originalMessage =
+      originalError instanceof Error
+        ? originalError.message
+        : originalError
+        ? String(originalError)
+        : "";
+
+    const combinedMessage = originalMessage
+      ? `${message} (${originalMessage})`
+      : message;
+
+    const error = new Error(combinedMessage) as DatabaseError;
     error.name = "DatabaseError";
     error.code = "DB_ERROR";
     error.severity = severity;

@@ -3,7 +3,7 @@
  * Step 2.2: 解説表示機能実装
  */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -12,8 +12,10 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  InteractionManager,
+  Platform,
 } from "react-native";
-import { useTheme, useThemedStyles, type Theme } from "../context/ThemeContext";
+import { useThemedStyles, type Theme } from "../context/ThemeContext";
 import { SubmitAnswerResponse } from "../services/answer-service";
 import { UnifiedExplanation } from "./unified/UnifiedExplanation";
 
@@ -38,10 +40,52 @@ export default function AnswerResultDialog({
   onAddToReview,
   answerTemplate,
 }: AnswerResultDialogProps) {
-  const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
+  const [scrollVersion, setScrollVersion] = useState(0);
+
+  useEffect(() => {
+    if (Platform.OS !== "android") return;
+    if (!visible || !result) return;
+
+    let isCancelled = false;
+    const interactionHandle = InteractionManager.runAfterInteractions(() => {
+      if (isCancelled) return;
+      setScrollVersion((prev) => prev + 1);
+    });
+
+    const fallbackTimeout = setTimeout(() => {
+      if (isCancelled) return;
+      setScrollVersion((prev) => prev + 1);
+    }, 400);
+
+    return () => {
+      isCancelled = true;
+      interactionHandle.cancel();
+      clearTimeout(fallbackTimeout);
+    };
+  }, [visible, questionId, result?.explanation]);
+
+  useEffect(() => {
+    if (Platform.OS !== "android") return;
+    if (visible) return;
+    if (scrollVersion === 0) return;
+    setScrollVersion(0);
+  }, [visible, scrollVersion]);
 
   if (!result) return null;
+
+  const scrollKey = `${questionId ?? "result"}-${scrollVersion}`;
+  const determinedQuestionType =
+    answerTemplate?.type === "fill_in_ledger" ||
+    answerTemplate?.type === "vocabulary"
+      ? "ledger"
+      : answerTemplate?.type === "auxiliary_book"
+        ? "auxiliary_book"
+        : answerTemplate?.type === "fill_in_trial_balance" ||
+            answerTemplate?.type === "fill_in_comprehensive_trial_balance" ||
+            answerTemplate?.type === "fill_in_financial_statement"
+          ? "trial_balance"
+          : "journal";
 
   const formatAnswerTime = (timeMs: number): string => {
     const seconds = Math.floor(timeMs / 1000);
@@ -114,74 +158,63 @@ export default function AnswerResultDialog({
     return correctAnswer;
   };
 
-  return (
-    <Modal
-      visible={visible}
-      animationType="slide"
-      presentationStyle="pageSheet"
-      onRequestClose={onClose}
-    >
-      <View style={styles.container}>
-        {/* ヘッダー */}
-        <View
-          style={[
-            styles.header,
-            result.isCorrect ? styles.correctHeader : styles.incorrectHeader,
-          ]}
-        >
-          <View style={styles.headerContent}>
-            <View
-              style={[
-                styles.resultIcon,
-                result.isCorrect ? styles.correctIcon : styles.incorrectIcon,
-              ]}
-            >
-              <Text style={styles.resultIconText}>
-                {result.isCorrect ? "✓" : "✗"}
-              </Text>
-            </View>
-            <View style={styles.headerTextContainer}>
-              <Text style={styles.resultTitle}>
-                {result.isCorrect ? "正解！" : "不正解"}
-              </Text>
-              <Text style={styles.resultSubtitle}>
-                解答時間: {formatAnswerTime(result.answerTimeMs)}
-              </Text>
-            </View>
-            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-              <Text style={styles.closeButtonText}>✕</Text>
-            </TouchableOpacity>
+  const renderDialogContent = () => (
+    <View style={styles.container}>
+      {/* ヘッダー */}
+      <View
+        style={[
+          styles.header,
+          result.isCorrect ? styles.correctHeader : styles.incorrectHeader,
+        ]}
+      >
+        <View style={styles.headerContent}>
+          <View
+            style={[
+              styles.resultIcon,
+              result.isCorrect ? styles.correctIcon : styles.incorrectIcon,
+            ]}
+          >
+            <Text style={styles.resultIconText}>
+              {result.isCorrect ? "✓" : "✗"}
+            </Text>
           </View>
+          <View style={styles.headerTextContainer}>
+            <Text style={styles.resultTitle}>
+              {result.isCorrect ? "正解！" : "不正解"}
+            </Text>
+            <Text style={styles.resultSubtitle}>
+              解答時間: {formatAnswerTime(result.answerTimeMs)}
+            </Text>
+          </View>
+          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+            <Text style={styles.closeButtonText}>✕</Text>
+          </TouchableOpacity>
         </View>
+      </View>
 
-        <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-          {/* バリデーションエラー表示 */}
-          {result.validationErrors && result.validationErrors.length > 0 && (
-            <View style={styles.errorSection}>
-              <Text style={styles.errorTitle}>入力エラー</Text>
-              {result.validationErrors.map((error, index) => (
-                <Text key={index} style={styles.errorText}>
-                  • {error}
-                </Text>
-              ))}
-            </View>
-          )}
+      <ScrollView
+        key={scrollKey}
+        style={styles.content}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.contentContainer}
+        nestedScrollEnabled={true}
+        keyboardShouldPersistTaps="handled"
+      >
+        {/* バリデーションエラー表示 */}
+        {result.validationErrors && result.validationErrors.length > 0 && (
+          <View style={styles.errorSection}>
+            <Text style={styles.errorTitle}>入力エラー</Text>
+            {result.validationErrors.map((error, index) => (
+              <Text key={index} style={styles.errorText}>
+                • {error}
+              </Text>
+            ))}
+          </View>
+        )}
 
-          {/* 解説パネル */}
-          {(() => {
-            const determinedQuestionType =
-              answerTemplate?.type === "fill_in_ledger" ||
-              answerTemplate?.type === "vocabulary"
-                ? "ledger"
-                : answerTemplate?.type === "auxiliary_book"
-                  ? "auxiliary_book"
-                  : answerTemplate?.type === "fill_in_trial_balance" ||
-                      answerTemplate?.type ===
-                        "fill_in_comprehensive_trial_balance" ||
-                      answerTemplate?.type === "fill_in_financial_statement"
-                    ? "trial_balance"
-                    : "journal";
-
+        {/* 解説パネル */}
+        {(() => {
+          if (__DEV__) {
             console.log("[AnswerResultDialog] Debug Info:", {
               answerTemplateType: answerTemplate?.type,
               determinedQuestionType,
@@ -191,24 +224,24 @@ export default function AnswerResultDialog({
                 ? Object.keys(result.correctAnswer)
                 : [],
             });
+          }
 
-            return (
-              <UnifiedExplanation
-                explanation={result.explanation}
-                mode="panel"
-                isVisible={true}
-                isCorrect={result.isCorrect}
-                correctAnswer={formatCorrectAnswer(result.correctAnswer)}
-                showAnswerComparison={true}
-                questionType={determinedQuestionType}
-                questionTemplate={answerTemplate}
-                sessionMode="learning"
-              />
-            );
-          })()}
-        </ScrollView>
+          return (
+            <UnifiedExplanation
+              explanation={result.explanation}
+              mode="panel"
+              isVisible={true}
+              isCorrect={result.isCorrect}
+              correctAnswer={formatCorrectAnswer(result.correctAnswer)}
+              showAnswerComparison={true}
+              questionType={determinedQuestionType}
+              questionTemplate={answerTemplate}
+              sessionMode="learning"
+            />
+          );
+        })()}
 
-        {/* アクションボタン */}
+        {/* アクションボタン - ScrollView内に移動（Android Flexバグ回避） */}
         <View style={styles.actionButtons}>
           {/* 正解時のみ復習対象追加ボタンを表示 */}
           {result.isCorrect && questionId && onAddToReview && (
@@ -228,7 +261,18 @@ export default function AnswerResultDialog({
             </TouchableOpacity>
           )}
         </View>
-      </View>
+      </ScrollView>
+    </View>
+  );
+
+  return (
+    <Modal
+      visible={visible}
+      animationType="slide"
+      presentationStyle="pageSheet"
+      onRequestClose={onClose}
+    >
+      {renderDialogContent()}
     </Modal>
   );
 }
@@ -239,6 +283,7 @@ const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
+      minHeight: screenHeight,
       backgroundColor: theme.colors.background,
     },
     header: {
@@ -303,7 +348,11 @@ const createStyles = (theme: Theme) =>
     },
     content: {
       flex: 1,
+    },
+    contentContainer: {
       paddingTop: 10,
+      paddingBottom: 32,
+      flexGrow: 1,
     },
     errorSection: {
       backgroundColor: theme.colors.warningBackground,

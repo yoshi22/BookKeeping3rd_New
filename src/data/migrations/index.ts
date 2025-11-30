@@ -664,6 +664,14 @@ async function performDatabaseSetup(): Promise<void> {
 }
 
 /**
+ * データベース初期化状態をリセット（データベースリセット時に使用）
+ */
+export function resetDatabaseInitialization(): void {
+  initializationPromise = null;
+  logger.debug("[Database] 初期化状態をリセット");
+}
+
+/**
  * マイグレーション管理システムのエクスポート
  */
 export { migrationManager } from "./migration-manager";
