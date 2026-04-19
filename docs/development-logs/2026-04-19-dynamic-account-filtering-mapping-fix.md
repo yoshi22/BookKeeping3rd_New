@@ -46,6 +46,8 @@ node scripts/data/generate-question-mappings.js
 ### 3. TestFlight準備
 
 `eas.json` の `appVersionSource` は `local` のため、iOS の `buildNumber` を `16` から `17` に更新した。
+また、ネイティブ iOS ディレクトリが存在するため、`ios/3Alpha/Info.plist` の `CFBundleVersion` と
+`ios/3Alpha.xcodeproj/project.pbxproj` の `CURRENT_PROJECT_VERSION` / `MARKETING_VERSION` も同期した。
 
 ## 結果
 
