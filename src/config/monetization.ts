@@ -40,12 +40,12 @@ const TEST_AD_UNITS = {
  */
 const PROD_AD_UNITS = {
   ios: {
-    banner: "ca-app-pub-XXXXXXXXXXXXX/XXXXXXXXXX", // TODO: 本番IDに置き換え
-    interstitial: "ca-app-pub-XXXXXXXXXXXXX/XXXXXXXXXX", // TODO: 本番IDに置き換え
+    banner: "ca-app-pub-7827379728198573/3106688878",
+    interstitial: "ca-app-pub-7827379728198573/9532496421",
   },
   android: {
-    banner: "ca-app-pub-XXXXXXXXXXXXX/XXXXXXXXXX", // TODO: 本番IDに置き換え
-    interstitial: "ca-app-pub-XXXXXXXXXXXXX/XXXXXXXXXX", // TODO: 本番IDに置き換え
+    banner: "ca-app-pub-XXXXXXXXXXXXX/XXXXXXXXXX", // TODO: Androidリリース時に設定
+    interstitial: "ca-app-pub-XXXXXXXXXXXXX/XXXXXXXXXX", // TODO: Androidリリース時に設定
   },
 };
 
