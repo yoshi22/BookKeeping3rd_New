@@ -2,7 +2,7 @@
   "expo": {
     "name": "簿記3級「復習マスター」Alpha",
     "slug": "fukushumaster-alpha",
-    "version": "1.0.5",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
