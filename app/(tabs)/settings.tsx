@@ -6,6 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import { Screen } from "../../src/components/layout/ResponsiveLayout";
 import { AppIcon, IconContextSizes } from "../../src/theme/icons";
@@ -15,13 +17,26 @@ import {
   ThemeMode,
   type Theme,
 } from "../../src/context/ThemeContext";
+import { usePurchase } from "../../src/context/PurchaseContext";
 import { confirmResetDatabase } from "../../src/utils/reset-database";
 import { TestDataCreator } from "../../src/components/dev-tools/TestDataCreator";
+import { REMOVE_ADS_DISPLAY_PRICE } from "../../src/config/monetization";
+import { logRemoveAdsCTAClicked } from "../../src/services/analytics-service";
 
 export default function SettingsScreen() {
   // Phase 4: ダークモード対応のテーマシステム
   const { theme, getStatusBarStyle, themeMode, setThemeMode } = useTheme();
   const styles = useThemedStyles(createStyles);
+
+  // 購入状態
+  const {
+    isPremium,
+    isLoading: isPurchaseLoading,
+    purchaseRemoveAds,
+    restorePurchases,
+    error: purchaseError,
+    clearError,
+  } = usePurchase();
 
   // カスタムテーマ選択モーダル状態
   const [showThemeModal, setShowThemeModal] = useState(false);
@@ -29,6 +44,34 @@ export default function SettingsScreen() {
 
   // 開発者モード状態
   const [showTestDataCreator, setShowTestDataCreator] = useState(false);
+
+  // 購入エラー表示
+  React.useEffect(() => {
+    if (purchaseError) {
+      Alert.alert("エラー", purchaseError, [
+        { text: "OK", onPress: clearError },
+      ]);
+    }
+  }, [purchaseError, clearError]);
+
+  // 広告削除購入ハンドラー
+  const handlePurchaseRemoveAds = async () => {
+    logRemoveAdsCTAClicked("settings");
+    const success = await purchaseRemoveAds();
+    if (success) {
+      Alert.alert("購入完了", "広告が削除されました。ありがとうございます！");
+    }
+  };
+
+  // 購入復元ハンドラー
+  const handleRestorePurchases = async () => {
+    const success = await restorePurchases();
+    if (success) {
+      Alert.alert("復元完了", "購入が復元されました。");
+    } else {
+      Alert.alert("復元結果", "復元可能な購入は見つかりませんでした。");
+    }
+  };
 
   // テーマ情報
   const themeOptions: {
@@ -152,6 +195,87 @@ export default function SettingsScreen() {
                 color={theme.colors.textSecondary}
               />
             </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* 広告削除セクション */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <AppIcon
+              name="badge"
+              size={IconContextSizes.listItem}
+              color={theme.colors.primary}
+            />
+            <Text style={styles.sectionTitle}>広告削除</Text>
+          </View>
+
+          <View style={styles.card}>
+            {isPremium ? (
+              <>
+                <View style={styles.premiumBadge}>
+                  <AppIcon
+                    name="correct"
+                    size="small"
+                    color={theme.colors.surface}
+                  />
+                  <Text style={styles.premiumBadgeText}>購入済み</Text>
+                </View>
+                <Text style={styles.premiumDescription}>
+                  広告削除を購入いただきありがとうございます。
+                  広告なしで快適に学習をお楽しみください。
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text style={styles.cardTitle}>集中モードで学習効率UP</Text>
+                <Text style={styles.description}>
+                  広告を削除して、より集中して学習に取り組めます。
+                  一度購入すると永続的に広告が非表示になります。
+                </Text>
+
+                <View style={styles.priceContainer}>
+                  <Text style={styles.priceLabel}>価格</Text>
+                  <Text style={styles.priceValue}>
+                    {REMOVE_ADS_DISPLAY_PRICE}
+                  </Text>
+                  <Text style={styles.priceNote}>（買い切り）</Text>
+                </View>
+
+                <TouchableOpacity
+                  style={[
+                    styles.purchaseButton,
+                    isPurchaseLoading && styles.purchaseButtonDisabled,
+                  ]}
+                  onPress={handlePurchaseRemoveAds}
+                  disabled={isPurchaseLoading}
+                  testID="settings-purchase-button"
+                  accessibilityLabel="広告を削除"
+                >
+                  {isPurchaseLoading ? (
+                    <ActivityIndicator color={theme.colors.surface} />
+                  ) : (
+                    <>
+                      <AppIcon
+                        name="badge"
+                        size={IconContextSizes.button}
+                        color="white"
+                      />
+                      <Text style={styles.purchaseButtonText}>広告を削除</Text>
+                    </>
+                  )}
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.restoreButton}
+                  onPress={handleRestorePurchases}
+                  disabled={isPurchaseLoading}
+                  testID="settings-restore-button"
+                  accessibilityLabel="購入を復元"
+                >
+                  <Text style={styles.restoreButtonText}>購入を復元</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         </View>
 
@@ -588,5 +712,81 @@ const createStyles = (theme: Theme) =>
     themeOptionDescription: {
       fontSize: 14,
       color: theme.colors.textSecondary,
+    },
+    // 購入関連スタイル
+    premiumBadge: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: theme.colors.success,
+      paddingVertical: 12,
+      paddingHorizontal: 20,
+      borderRadius: 8,
+      marginBottom: 15,
+    },
+    premiumBadgeText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "bold",
+      marginLeft: 8,
+    },
+    premiumDescription: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      textAlign: "center",
+      lineHeight: 20,
+    },
+    priceContainer: {
+      flexDirection: "row",
+      alignItems: "baseline",
+      justifyContent: "center",
+      marginVertical: 15,
+      padding: 15,
+      backgroundColor: theme.colors.primaryLight,
+      borderRadius: 8,
+    },
+    priceLabel: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      marginRight: 8,
+    },
+    priceValue: {
+      fontSize: 24,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+    },
+    priceNote: {
+      fontSize: 12,
+      color: theme.colors.textSecondary,
+      marginLeft: 4,
+    },
+    purchaseButton: {
+      backgroundColor: theme.colors.primary,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 15,
+      borderRadius: 8,
+      marginTop: 10,
+    },
+    purchaseButtonDisabled: {
+      opacity: 0.6,
+    },
+    purchaseButtonText: {
+      color: theme.colors.surface,
+      fontSize: 16,
+      fontWeight: "600",
+      marginLeft: 8,
+    },
+    restoreButton: {
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 12,
+      marginTop: 10,
+    },
+    restoreButtonText: {
+      color: theme.colors.primary,
+      fontSize: 14,
+      textDecorationLine: "underline",
     },
   });

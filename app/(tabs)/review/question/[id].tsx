@@ -1,9 +1,10 @@
 /**
  * 復習モード問題表示画面
  * タブ内スタックナビゲーション対応版
+ * 10問バッチセッション対応
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -30,6 +31,9 @@ import {
   useThemedStyles,
   type Theme,
 } from "../../../../src/context/ThemeContext";
+import { BannerAdWrapper } from "@/components/ads/BannerAdWrapper";
+import { useSession } from "@/hooks/useSession";
+import { SESSION_BATCH_SIZE } from "@/config/monetization";
 
 export default function ReviewQuestionScreen() {
   // Phase 4: ダークモード対応のテーマシステム
@@ -46,6 +50,15 @@ export default function ReviewQuestionScreen() {
   } = useLocalSearchParams();
   const router = useRouter();
 
+  // セッション管理（10問バッチ）
+  const {
+    session,
+    isSessionComplete,
+    startSession,
+    recordAnswer,
+    completeSession,
+  } = useSession();
+
   // サービスインスタンス
   const reviewService = new ReviewService();
   const questionRepository = new QuestionRepository();
@@ -61,6 +74,7 @@ export default function ReviewQuestionScreen() {
     Date.now(),
   );
   const [categoryQuestions, setCategoryQuestions] = useState<Question[]>([]);
+  const [sessionStarted, setSessionStarted] = useState(false);
 
   // 問題IDからカテゴリを推定
   const getCategoryFromId = (
@@ -164,6 +178,15 @@ export default function ReviewQuestionScreen() {
         // 問題開始時間を記録
         setQuestionStartTime(Date.now());
 
+        // セッション開始（まだ開始していない場合）
+        if (!sessionStarted) {
+          startSession(
+            "review",
+            questions.map((q) => q.id),
+          );
+          setSessionStarted(true);
+        }
+
         setIsLoading(false);
       } catch {
         Alert.alert("エラー", "問題の読み込みに失敗しました");
@@ -204,6 +227,9 @@ export default function ReviewQuestionScreen() {
     setSubmitResult(result);
     setShowResultDialog(true);
 
+    // セッションに解答を記録
+    recordAnswer(result.isCorrect);
+
     // 間違いの場合は復習リストに自動追加する処理を追加可能
     if (!result.isCorrect) {
     }
@@ -234,7 +260,30 @@ export default function ReviewQuestionScreen() {
   };
 
   // 次の問題へ
-  const handleNextQuestion = () => {
+  const handleNextQuestion = useCallback(async () => {
+    // セッション完了（10問解答済み）の場合は結果画面へ
+    if (isSessionComplete) {
+      const result = await completeSession();
+      setShowResultDialog(false);
+      setSubmitResult(null);
+
+      if (result) {
+        // セッション結果画面へ遷移
+        router.push({
+          pathname: "/(tabs)/review/session-result",
+          params: {
+            totalQuestions: result.totalQuestions,
+            correctAnswers: result.correctAnswers,
+            incorrectAnswers: result.incorrectAnswers,
+            accuracy: result.accuracy,
+            totalTimeMs: result.totalTimeMs,
+            averageTimeMs: result.averageTimeMs,
+          },
+        });
+      }
+      return;
+    }
+
     if (canGoNext) {
       setShowResultDialog(false);
       setSubmitResult(null);
@@ -242,10 +291,11 @@ export default function ReviewQuestionScreen() {
       setQuestionStartTime(Date.now());
       goToNext();
     } else {
+      // 復習問題の最後だが、セッション途中の場合
       Alert.alert("復習完了", "復習対象の問題を全て完了しました！");
       router.back();
     }
-  };
+  }, [isSessionComplete, canGoNext, completeSession, goToNext, router]);
 
   // 戻るボタン（タブ内ナビゲーション用）
   const handleGoBack = () => {
@@ -368,60 +418,98 @@ export default function ReviewQuestionScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {/* 問題ナビゲーション */}
-      <QuestionNavigation
-        currentQuestionIndex={currentIndex}
-        totalQuestions={totalQuestions}
-        categoryName={getCategoryName()}
-        onPrevious={goToPrevious}
-        onNext={goToNext}
-        onQuestionSelect={goToQuestion}
-        canGoPrevious={canGoPrevious}
-        canGoNext={canGoNext}
-        showQuestionNumbers={false}
-      />
+    <View style={styles.mainContainer}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* セッション進捗表示 */}
+        {session && (
+          <View style={styles.sessionProgress}>
+            <Text style={styles.sessionProgressText}>
+              セッション: {session.answeredCount}/{SESSION_BATCH_SIZE}問
+            </Text>
+          </View>
+        )}
 
-      {/* 問題表示 */}
-      <QuestionDisplay
-        questionId={currentQuestion.id}
-        categoryName={getCategoryName()}
-        questionText={currentQuestion.question_text}
-        difficulty={currentQuestion.difficulty}
-        answerFields={getAnswerFields(currentQuestion)}
-        answers={userAnswers}
-        explanation={submitResult?.explanation || currentQuestion.explanation}
-        showExplanation={showExplanation}
-        isCorrect={submitResult?.isCorrect}
-        correctAnswer={submitResult?.correctAnswer}
-        onBack={handleGoBack}
-        onAnswerChange={handleAnswerChange}
-        sessionType="review"
-        startTime={questionStartTime}
-        onSubmitAnswer={handleAnswerSubmitted}
-        answerTemplate={getAnswerTemplate(currentQuestion)}
-      />
+        {/* 問題ナビゲーション */}
+        <QuestionNavigation
+          currentQuestionIndex={currentIndex}
+          totalQuestions={totalQuestions}
+          categoryName={getCategoryName()}
+          onPrevious={goToPrevious}
+          onNext={goToNext}
+          onQuestionSelect={goToQuestion}
+          canGoPrevious={canGoPrevious}
+          canGoNext={canGoNext}
+          showQuestionNumbers={false}
+        />
 
-      {/* 解答結果ダイアログ */}
-      <AnswerResultDialog
-        visible={showResultDialog}
-        result={submitResult}
-        onClose={handleCloseResultDialog}
-        onNextQuestion={handleNextQuestion}
-        showNextButton={canGoNext}
-        questionId={currentQuestion.id}
-        onAddToReview={handleAddToReview}
-        answerTemplate={getAnswerTemplate(currentQuestion)}
-      />
-    </ScrollView>
+        {/* 問題表示 */}
+        <QuestionDisplay
+          questionId={currentQuestion.id}
+          categoryName={getCategoryName()}
+          questionText={currentQuestion.question_text}
+          difficulty={currentQuestion.difficulty}
+          answerFields={getAnswerFields(currentQuestion)}
+          answers={userAnswers}
+          explanation={submitResult?.explanation || currentQuestion.explanation}
+          showExplanation={showExplanation}
+          isCorrect={submitResult?.isCorrect}
+          correctAnswer={submitResult?.correctAnswer}
+          onBack={handleGoBack}
+          onAnswerChange={handleAnswerChange}
+          sessionType="review"
+          startTime={questionStartTime}
+          onSubmitAnswer={handleAnswerSubmitted}
+          answerTemplate={getAnswerTemplate(currentQuestion)}
+        />
+
+        {/* 解答結果ダイアログ */}
+        <AnswerResultDialog
+          visible={showResultDialog}
+          result={submitResult}
+          onClose={handleCloseResultDialog}
+          onNextQuestion={handleNextQuestion}
+          showNextButton={canGoNext || isSessionComplete}
+          questionId={currentQuestion.id}
+          onAddToReview={handleAddToReview}
+          answerTemplate={getAnswerTemplate(currentQuestion)}
+        />
+      </ScrollView>
+
+      {/* バナー広告（非プレミアムユーザーのみ） */}
+      <BannerAdWrapper />
+    </View>
   );
 }
 
 const createStyles = (theme: Theme) =>
   StyleSheet.create({
+    mainContainer: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
+    },
+    scrollContent: {
+      paddingBottom: 20,
+    },
+    sessionProgress: {
+      backgroundColor: theme.colors.primaryLight,
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      marginHorizontal: 16,
+      marginTop: 8,
+      borderRadius: 8,
+    },
+    sessionProgressText: {
+      color: theme.colors.primary,
+      fontSize: 14,
+      fontWeight: "600",
+      textAlign: "center",
     },
     loadingContainer: {
       flex: 1,
