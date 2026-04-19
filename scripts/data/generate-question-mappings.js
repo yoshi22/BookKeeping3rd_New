@@ -34,37 +34,46 @@ function loadMasterQuestions() {
 // 正答から勘定科目を抽出
 function extractAccountsFromAnswer(correctAnswerJson) {
   const accounts = new Set();
+  const addEntryAccounts = (entry) => {
+    if (entry.account) accounts.add(entry.account);
+    if (entry.debit_account) accounts.add(entry.debit_account);
+    if (entry.credit_account) accounts.add(entry.credit_account);
+  };
 
   try {
     const answer = JSON.parse(correctAnswerJson);
 
+    if (Array.isArray(answer)) {
+      answer.forEach(addEntryAccounts);
+      return Array.from(accounts).filter((account) => account && account.trim());
+    }
+
+    const isJournalEntryAnswer =
+      answer.type === "journal_entry" ||
+      answer.journalEntry ||
+      answer.journalEntries ||
+      Array.isArray(answer.entries);
+
     // 仕訳問題の場合
-    if (answer.type === "journal_entry") {
+    if (isJournalEntryAnswer) {
       // journalEntryがオブジェクトの場合（単一仕訳）
       if (answer.journalEntry && !Array.isArray(answer.journalEntry)) {
-        if (answer.journalEntry.debit_account) {
-          accounts.add(answer.journalEntry.debit_account);
-        }
-        if (answer.journalEntry.credit_account) {
-          accounts.add(answer.journalEntry.credit_account);
-        }
+        addEntryAccounts(answer.journalEntry);
       }
 
       // journalEntryが配列の場合（複合仕訳）
       if (Array.isArray(answer.journalEntry)) {
-        answer.journalEntry.forEach((entry) => {
-          if (entry.debit_account) accounts.add(entry.debit_account);
-          if (entry.credit_account) accounts.add(entry.credit_account);
-        });
+        answer.journalEntry.forEach(addEntryAccounts);
+      }
+
+      // journalEntries が配列の場合（実際のデータ形式 - 複数形）
+      if (Array.isArray(answer.journalEntries)) {
+        answer.journalEntries.forEach(addEntryAccounts);
       }
 
       // 古い形式の互換性対応
-      if (answer.entries) {
-        answer.entries.forEach((entry) => {
-          if (entry.account) accounts.add(entry.account);
-          if (entry.debit_account) accounts.add(entry.debit_account);
-          if (entry.credit_account) accounts.add(entry.credit_account);
-        });
+      if (Array.isArray(answer.entries)) {
+        answer.entries.forEach(addEntryAccounts);
       }
     }
 

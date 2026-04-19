@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.yoshi.Boki3rdReviewMaster.alpha",
-      "buildNumber": "16",
+      "buildNumber": "17",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSUserTrackingUsageDescription": "パーソナライズされた広告を表示するために使用します。",

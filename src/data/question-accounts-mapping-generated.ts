@@ -2,7 +2,7 @@
  * 問題-勘定科目マッピングデータ（自動生成）
  * 動的フィルタリング機能で使用する問題別の関連勘定科目
  *
- * 生成日時: 2025-10-12T14:34:36.510Z
+ * 生成日時: 2026-04-19T10:15:00.511Z
  * 総問題数: 370
  * 生成スクリプト: scripts/data/generate-question-mappings.js
  */
@@ -175,11 +175,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_007": {
     "questionId": "Q_J_007",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "旅費交通費",
+      "消耗品費",
+      "小口現金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
-      "小口現金",
       "当座預金",
       "普通預金",
       "定期預金",
@@ -225,9 +228,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_009": {
     "questionId": "Q_J_009",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
+      "給料",
       "現金",
+      "預り金"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -300,9 +306,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_012": {
     "questionId": "Q_J_012",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "仮払金",
+      "受取利息"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1128,10 +1137,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_043": {
     "questionId": "Q_J_043",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "現金"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
       "買掛金",
@@ -1142,7 +1153,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "支払手形",
       "発送費",
       "保管費",
-      "現金",
       "当座預金"
     ],
     "supplementaryAccounts": [
@@ -1160,13 +1170,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_044": {
     "questionId": "Q_J_044",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "買掛金"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
-      "買掛金",
       "繰越商品",
       "前払金",
       "前受金",
@@ -1192,9 +1203,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_045": {
     "questionId": "Q_J_045",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "売上"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1216,12 +1229,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_046": {
     "questionId": "Q_J_046",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "売掛金",
+      "売上"
+    ],
     "relatedAccounts": [
       "商品",
       "仕入",
-      "売上",
-      "売掛金",
       "買掛金",
       "繰越商品",
       "前払金",
@@ -1247,9 +1261,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_047": {
     "questionId": "Q_J_047",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1259,7 +1275,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "売掛金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "商品売買",
@@ -1273,9 +1291,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_048": {
     "questionId": "Q_J_048",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "売掛金"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1285,7 +1305,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "買掛金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "商品売買",
@@ -1298,9 +1320,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_049": {
     "questionId": "Q_J_049",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1324,9 +1348,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_050": {
     "questionId": "Q_J_050",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1349,9 +1375,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_051": {
     "questionId": "Q_J_051",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "前払金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1361,7 +1389,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "前受金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "商品売買",
@@ -1374,7 +1404,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_052": {
     "questionId": "Q_J_052",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "前払金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
@@ -1386,7 +1419,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "前受金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "商品売買",
@@ -1398,9 +1433,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_053": {
     "questionId": "Q_J_053",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "前受金"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1410,7 +1447,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "前払金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "商品売買",
@@ -1423,7 +1462,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_054": {
     "questionId": "Q_J_054",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "前受金",
+      "売上"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
@@ -1435,7 +1477,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "前払金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "商品売買",
@@ -1447,9 +1491,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_055": {
     "questionId": "Q_J_055",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1473,9 +1519,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_056": {
     "questionId": "Q_J_056",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "売上"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1499,9 +1547,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_057": {
     "questionId": "Q_J_057",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "売上"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1524,9 +1574,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_058": {
     "questionId": "Q_J_058",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "仕入"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1551,13 +1603,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_059": {
     "questionId": "Q_J_059",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "仕入"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
-      "買掛金",
       "繰越商品",
       "前払金",
       "前受金",
@@ -1585,13 +1638,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_060": {
     "questionId": "Q_J_060",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "仕入"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
-      "買掛金",
       "繰越商品",
       "前払金",
       "前受金",
@@ -1617,7 +1671,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_061": {
     "questionId": "Q_J_061",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "現金",
+      "前払金"
+    ],
     "relatedAccounts": [
       "商品",
       "仕入",
@@ -1625,13 +1682,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "売掛金",
       "買掛金",
       "繰越商品",
-      "前払金",
       "前受金",
       "受取手形",
       "支払手形",
       "発送費",
       "保管費",
-      "現金",
       "当座預金"
     ],
     "supplementaryAccounts": [
@@ -1650,13 +1705,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_062": {
     "questionId": "Q_J_062",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "仕入"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
-      "買掛金",
       "繰越商品",
       "前払金",
       "前受金",
@@ -1683,9 +1739,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_063": {
     "questionId": "Q_J_063",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "売上",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1709,12 +1767,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_064": {
     "questionId": "Q_J_064",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "売上",
+      "売掛金"
+    ],
     "relatedAccounts": [
       "商品",
       "仕入",
-      "売上",
-      "売掛金",
       "買掛金",
       "繰越商品",
       "前払金",
@@ -1742,12 +1801,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_065": {
     "questionId": "Q_J_065",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "売上",
+      "売掛金"
+    ],
     "relatedAccounts": [
       "商品",
       "仕入",
-      "売上",
-      "売掛金",
       "買掛金",
       "繰越商品",
       "前払金",
@@ -1775,7 +1835,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_066": {
     "questionId": "Q_J_066",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "前受金",
+      "現金"
+    ],
     "relatedAccounts": [
       "商品",
       "仕入",
@@ -1784,12 +1847,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "買掛金",
       "繰越商品",
       "前払金",
-      "前受金",
       "受取手形",
       "支払手形",
       "発送費",
       "保管費",
-      "現金",
       "当座預金"
     ],
     "supplementaryAccounts": [
@@ -1807,11 +1868,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_067": {
     "questionId": "Q_J_067",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "売上",
+      "現金"
+    ],
     "relatedAccounts": [
       "商品",
       "仕入",
-      "売上",
       "売掛金",
       "買掛金",
       "繰越商品",
@@ -1821,7 +1884,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "支払手形",
       "発送費",
       "保管費",
-      "現金",
       "当座預金"
     ],
     "supplementaryAccounts": [
@@ -1840,9 +1902,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_068": {
     "questionId": "Q_J_068",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1867,9 +1931,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_069": {
     "questionId": "Q_J_069",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "立替金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1894,9 +1960,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_070": {
     "questionId": "Q_J_070",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1921,9 +1989,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_071": {
     "questionId": "Q_J_071",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1948,9 +2018,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_072": {
     "questionId": "Q_J_072",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -1974,13 +2046,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_073": {
     "questionId": "Q_J_073",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "買掛金"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
-      "買掛金",
       "繰越商品",
       "前払金",
       "前受金",
@@ -2006,9 +2079,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_074": {
     "questionId": "Q_J_074",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "発送費",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -2030,9 +2105,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_075": {
     "questionId": "Q_J_075",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "売掛金",
+      "売上",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -2042,7 +2120,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "買掛金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "諸掛り",
@@ -2057,9 +2137,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_076": {
     "questionId": "Q_J_076",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "売上"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -2081,9 +2163,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_077": {
     "questionId": "Q_J_077",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
+      "支払手数料",
       "現金",
+      "広告宣伝費"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -2107,12 +2192,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_078": {
     "questionId": "Q_J_078",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "売上",
+      "売掛金"
+    ],
     "relatedAccounts": [
       "商品",
       "仕入",
-      "売上",
-      "売掛金",
       "買掛金",
       "繰越商品",
       "前払金",
@@ -2138,9 +2224,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_079": {
     "questionId": "Q_J_079",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "広告宣伝費",
+      "商品"
+    ],
     "relatedAccounts": [
-      "商品",
       "仕入",
       "売上",
       "売掛金",
@@ -2171,14 +2259,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_080": {
     "questionId": "Q_J_080",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "繰越商品"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
       "買掛金",
-      "繰越商品",
       "前払金",
       "前受金",
       "受取手形",
@@ -2206,10 +2295,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_081": {
     "questionId": "Q_J_081",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "商品",
+    "primaryAccounts": [
       "仕入",
+      "商品"
+    ],
+    "relatedAccounts": [
       "売上",
       "売掛金",
       "買掛金",
@@ -2239,14 +2329,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_082": {
     "questionId": "Q_J_082",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "繰越商品",
+      "仕入"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
       "買掛金",
-      "繰越商品",
       "前払金",
       "前受金",
       "受取手形",
@@ -2274,13 +2365,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_083": {
     "questionId": "Q_J_083",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "買掛金"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
-      "買掛金",
       "繰越商品",
       "前払金",
       "前受金",
@@ -2305,9 +2397,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_084": {
     "questionId": "Q_J_084",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "売上"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -2329,13 +2423,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_085": {
     "questionId": "Q_J_085",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "仕入"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
-      "買掛金",
       "繰越商品",
       "前払金",
       "前受金",
@@ -2360,12 +2455,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_086": {
     "questionId": "Q_J_086",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "売上",
+      "売掛金"
+    ],
     "relatedAccounts": [
       "商品",
       "仕入",
-      "売上",
-      "売掛金",
       "買掛金",
       "繰越商品",
       "前払金",
@@ -2391,13 +2487,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_087": {
     "questionId": "Q_J_087",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "買掛金"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
-      "買掛金",
       "繰越商品",
       "前払金",
       "前受金",
@@ -2422,12 +2519,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_088": {
     "questionId": "Q_J_088",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "売掛金",
+      "売上"
+    ],
     "relatedAccounts": [
       "商品",
       "仕入",
-      "売上",
-      "売掛金",
       "買掛金",
       "繰越商品",
       "前払金",
@@ -2454,9 +2552,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_089": {
     "questionId": "Q_J_089",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "売掛金"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -2466,7 +2566,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "買掛金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "売掛金",
@@ -2478,9 +2580,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_090": {
     "questionId": "Q_J_090",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "売掛金"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -2490,7 +2594,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "買掛金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "売掛金",
@@ -2503,11 +2609,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_091": {
     "questionId": "Q_J_091",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "売掛金",
-      "買掛金",
+    "primaryAccounts": [
       "受取手形",
+      "売掛金"
+    ],
+    "relatedAccounts": [
+      "買掛金",
       "支払手形",
       "貸付金",
       "借入金",
@@ -2538,7 +2645,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_092": {
     "questionId": "Q_J_092",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "売掛金"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -2556,9 +2666,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_093": {
     "questionId": "Q_J_093",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "貸倒損失",
+      "売掛金"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "買掛金",
       "現金",
       "当座預金",
       "普通預金"
@@ -2574,10 +2688,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_094": {
     "questionId": "Q_J_094",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "現金",
+      "貸倒引当金戻入"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
-      "現金",
       "当座預金",
       "普通預金"
     ],
@@ -2591,9 +2707,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_095": {
     "questionId": "Q_J_095",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "売掛金",
+      "受取利息"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -2603,7 +2722,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "買掛金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "売掛金",
@@ -2616,13 +2737,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_096": {
     "questionId": "Q_J_096",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "買掛金"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
-      "買掛金",
       "繰越商品",
       "前払金",
       "前受金",
@@ -2649,11 +2771,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_097": {
     "questionId": "Q_J_097",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "当座預金"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "売掛金",
       "現金",
-      "当座預金",
       "普通預金"
     ],
     "category": AccountCategory.OTHER,
@@ -2667,9 +2792,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_098": {
     "questionId": "Q_J_098",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -2679,7 +2806,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "売掛金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "買掛金",
@@ -2692,12 +2821,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_099": {
     "questionId": "Q_J_099",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "支払手形"
+    ],
     "relatedAccounts": [
       "売掛金",
-      "買掛金",
       "受取手形",
-      "支払手形",
       "貸付金",
       "借入金",
       "未収金",
@@ -2727,7 +2857,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_100": {
     "questionId": "Q_J_100",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "売掛金"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -2777,9 +2910,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_102": {
     "questionId": "Q_J_102",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "仕入"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -2804,11 +2939,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_103": {
     "questionId": "Q_J_103",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "売掛金",
-      "買掛金",
+    "primaryAccounts": [
       "受取手形",
+      "売掛金"
+    ],
+    "relatedAccounts": [
+      "買掛金",
       "支払手形",
       "貸付金",
       "借入金",
@@ -2839,19 +2975,23 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_104": {
     "questionId": "Q_J_104",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "当座預金",
+      "受取手形"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "支払手形"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "受取手形",
@@ -2866,11 +3006,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_105": {
     "questionId": "Q_J_105",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "受取手形"
+    ],
     "relatedAccounts": [
       "売掛金",
-      "買掛金",
-      "受取手形",
       "支払手形",
       "貸付金",
       "借入金",
@@ -2901,19 +3042,24 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_106": {
     "questionId": "Q_J_106",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "当座預金",
+      "受取手形",
+      "手形売却損"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "支払手形"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "受取手形",
@@ -3002,11 +3148,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_109": {
     "questionId": "Q_J_109",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "貸倒損失",
+      "受取手形"
+    ],
     "relatedAccounts": [
       "売掛金",
       "買掛金",
-      "受取手形",
       "支払手形",
       "貸付金",
       "借入金",
@@ -3037,19 +3185,24 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_110": {
     "questionId": "Q_J_110",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "当座預金",
+      "受取手形",
+      "支払手数料"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "支払手形"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "受取手形",
@@ -3064,12 +3217,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_111": {
     "questionId": "Q_J_111",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "買掛金",
+      "支払手形"
+    ],
     "relatedAccounts": [
       "売掛金",
-      "買掛金",
       "受取手形",
-      "支払手形",
       "貸付金",
       "借入金",
       "未収金",
@@ -3099,19 +3253,23 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_112": {
     "questionId": "Q_J_112",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "支払手形",
+      "当座預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "受取手形"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "支払手形",
@@ -3126,9 +3284,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_113": {
     "questionId": "Q_J_113",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
+      "支払手形",
       "現金",
+      "受取利息"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3138,7 +3299,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "受取手形"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "支払手形",
@@ -3152,12 +3315,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_114": {
     "questionId": "Q_J_114",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "支払手形",
+      "支払利息"
+    ],
     "relatedAccounts": [
       "売掛金",
       "買掛金",
       "受取手形",
-      "支払手形",
       "貸付金",
       "借入金",
       "未収金",
@@ -3167,7 +3332,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "仮払金",
       "仮受金",
       "受取利息",
-      "支払利息",
       "手形売却損"
     ],
     "supplementaryAccounts": [
@@ -3187,7 +3351,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_115": {
     "questionId": "Q_J_115",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "支払手形",
+      "買掛金",
+      "支払利息"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
@@ -3199,7 +3367,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "受取手形",
+      "売掛金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "支払手形",
@@ -3214,9 +3385,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_116": {
     "questionId": "Q_J_116",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "支払手数料",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3240,9 +3413,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_117": {
     "questionId": "Q_J_117",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "租税公課",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3302,9 +3477,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_119": {
     "questionId": "Q_J_119",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "貸付金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3314,7 +3491,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "借入金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "貸付金",
@@ -3327,9 +3506,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_120": {
     "questionId": "Q_J_120",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "未収利息",
+      "受取利息"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3353,9 +3535,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_121": {
     "questionId": "Q_J_121",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "貸付金"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3365,7 +3549,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "借入金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "貸付金回収",
@@ -3379,13 +3565,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_122": {
     "questionId": "Q_J_122",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "貸倒損失",
+      "貸付金"
+    ],
     "relatedAccounts": [
       "売掛金",
       "買掛金",
       "受取手形",
       "支払手形",
-      "貸付金",
       "借入金",
       "未収金",
       "未払金",
@@ -3414,19 +3602,23 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_123": {
     "questionId": "Q_J_123",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "貸付金",
+      "当座預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "借入金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "役員貸付",
@@ -3439,19 +3631,23 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_124": {
     "questionId": "Q_J_124",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "当座預金",
+      "借入金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "貸付金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "借入金",
@@ -3465,9 +3661,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_125": {
     "questionId": "Q_J_125",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未払利息",
+      "支払利息",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3491,9 +3690,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_126": {
     "questionId": "Q_J_126",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "借入金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3503,7 +3704,9 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "貸付金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "借入金",
@@ -3517,19 +3720,23 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_127": {
     "questionId": "Q_J_127",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "借入金",
+      "当座預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "貸付金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "借入金",
@@ -3544,19 +3751,23 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_128": {
     "questionId": "Q_J_128",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "借入金",
+      "当座預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
       "雑損失"
     ],
-    "supplementaryAccounts": [],
+    "supplementaryAccounts": [
+      "貸付金"
+    ],
     "category": AccountCategory.CASH_DEPOSIT,
     "keywords": [
       "借入金",
@@ -3571,7 +3782,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_129": {
     "questionId": "Q_J_129",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "給料",
+      "未払給料"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -3589,7 +3803,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_130": {
     "questionId": "Q_J_130",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "給料",
+      "未払給料"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -3607,9 +3824,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_131": {
     "questionId": "Q_J_131",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未払給料",
+      "預り金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3632,12 +3852,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_132": {
     "questionId": "Q_J_132",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未払給料",
+      "預り金",
+      "普通預金"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
-      "当座預金",
-      "普通預金"
+      "当座預金"
     ],
     "category": AccountCategory.OTHER,
     "keywords": [
@@ -3649,9 +3872,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_133": {
     "questionId": "Q_J_133",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未払給料",
+      "預り金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3674,9 +3900,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_134": {
     "questionId": "Q_J_134",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未払給料",
+      "預り金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3698,9 +3927,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_135": {
     "questionId": "Q_J_135",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未払給料",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -3723,7 +3954,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_136": {
     "questionId": "Q_J_136",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "給料",
+      "未払給料"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -3740,23 +3974,23 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_137": {
     "questionId": "Q_J_137",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未払賞与",
+      "預り金",
+      "普通預金"
+    ],
     "relatedAccounts": [
       "給料",
       "賞与",
       "賞与引当金",
       "賞与引当金繰入",
       "法定福利費",
-      "預り金",
       "未払給料",
-      "未払賞与",
       "現金",
       "当座預金",
       "福利厚生費"
     ],
-    "supplementaryAccounts": [
-      "普通預金"
-    ],
+    "supplementaryAccounts": [],
     "category": AccountCategory.PAYROLL,
     "keywords": [
       "賞与支給",
@@ -3770,16 +4004,17 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_138": {
     "questionId": "Q_J_138",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "賞与",
+      "未払賞与"
+    ],
     "relatedAccounts": [
       "給料",
-      "賞与",
       "賞与引当金",
       "賞与引当金繰入",
       "法定福利費",
       "預り金",
       "未払給料",
-      "未払賞与",
       "現金",
       "当座預金",
       "福利厚生費"
@@ -3799,23 +4034,24 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_139": {
     "questionId": "Q_J_139",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "退職給付費用",
+      "預り金",
+      "普通預金"
+    ],
     "relatedAccounts": [
       "給料",
       "賞与",
       "賞与引当金",
       "賞与引当金繰入",
       "法定福利費",
-      "預り金",
       "未払給料",
       "未払賞与",
       "現金",
       "当座預金",
       "福利厚生費"
     ],
-    "supplementaryAccounts": [
-      "普通預金"
-    ],
+    "supplementaryAccounts": [],
     "category": AccountCategory.PAYROLL,
     "keywords": [
       "退職金",
@@ -3827,13 +4063,16 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_140": {
     "questionId": "Q_J_140",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "役員報酬",
+      "預り金",
+      "普通預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
-      "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
@@ -3853,13 +4092,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_141": {
     "questionId": "Q_J_141",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法定福利費",
+      "普通預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
-      "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
@@ -3881,13 +4122,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_142": {
     "questionId": "Q_J_142",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "福利厚生費",
+      "普通預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
-      "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
@@ -3907,13 +4150,16 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_143": {
     "questionId": "Q_J_143",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法定福利費",
+      "預り金",
+      "普通預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
-      "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
@@ -3932,17 +4178,18 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_144": {
     "questionId": "Q_J_144",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未払給料",
+      "預り金",
+      "現金"
+    ],
     "relatedAccounts": [
       "給料",
       "賞与",
       "賞与引当金",
       "賞与引当金繰入",
       "法定福利費",
-      "預り金",
-      "未払給料",
       "未払賞与",
-      "現金",
       "当座預金",
       "福利厚生費"
     ],
@@ -3959,12 +4206,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_145": {
     "questionId": "Q_J_145",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "預り金",
+      "当座預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
@@ -3984,9 +4233,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_146": {
     "questionId": "Q_J_146",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "給料",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4008,17 +4259,18 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_147": {
     "questionId": "Q_J_147",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "賞与",
+      "預り金",
+      "現金"
+    ],
     "relatedAccounts": [
       "給料",
-      "賞与",
       "賞与引当金",
       "賞与引当金繰入",
       "法定福利費",
-      "預り金",
       "未払給料",
       "未払賞与",
-      "現金",
       "当座預金",
       "福利厚生費"
     ],
@@ -4036,9 +4288,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_148": {
     "questionId": "Q_J_148",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "退職金",
+      "預り金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4061,9 +4316,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_149": {
     "questionId": "Q_J_149",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "支払手数料",
+      "預り金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4087,12 +4345,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_150": {
     "questionId": "Q_J_150",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "預り金",
+      "当座預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
@@ -4113,9 +4373,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_151": {
     "questionId": "Q_J_151",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
+      "預り金",
       "現金",
+      "租税公課"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4139,12 +4402,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_152": {
     "questionId": "Q_J_152",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "給料",
+      "預り金",
+      "当座預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
@@ -4165,12 +4431,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_153": {
     "questionId": "Q_J_153",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "預り金",
+      "当座預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
@@ -4191,11 +4459,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_154": {
     "questionId": "Q_J_154",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "給料",
+      "預り金",
+      "当座預金"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
-      "当座預金",
       "普通預金"
     ],
     "category": AccountCategory.OTHER,
@@ -4209,9 +4480,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_155": {
     "questionId": "Q_J_155",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "給料",
+      "預り金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4234,14 +4508,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_156": {
     "questionId": "Q_J_156",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "給料",
+      "預り金"
+    ],
+    "relatedAccounts": [
       "賞与",
       "賞与引当金",
       "賞与引当金繰入",
       "法定福利費",
-      "預り金",
       "未払給料",
       "未払賞与",
       "現金",
@@ -4262,13 +4537,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_157": {
     "questionId": "Q_J_157",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法定福利費",
+      "未払金"
+    ],
     "relatedAccounts": [
       "給料",
       "賞与",
       "賞与引当金",
       "賞与引当金繰入",
-      "法定福利費",
       "預り金",
       "未払給料",
       "未払賞与",
@@ -4291,17 +4568,19 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_158": {
     "questionId": "Q_J_158",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未払金",
+      "預り金",
+      "現金"
+    ],
     "relatedAccounts": [
       "給料",
       "賞与",
       "賞与引当金",
       "賞与引当金繰入",
       "法定福利費",
-      "預り金",
       "未払給料",
       "未払賞与",
-      "現金",
       "当座預金",
       "福利厚生費"
     ],
@@ -4320,14 +4599,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_159": {
     "questionId": "Q_J_159",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "給料",
+      "預り金"
+    ],
+    "relatedAccounts": [
       "賞与",
       "賞与引当金",
       "賞与引当金繰入",
       "法定福利費",
-      "預り金",
       "未払給料",
       "未払賞与",
       "現金",
@@ -4348,14 +4628,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_160": {
     "questionId": "Q_J_160",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "賞与",
+      "預り金"
+    ],
     "relatedAccounts": [
       "給料",
-      "賞与",
       "賞与引当金",
       "賞与引当金繰入",
       "法定福利費",
-      "預り金",
       "未払給料",
       "未払賞与",
       "現金",
@@ -4376,9 +4657,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_161": {
     "questionId": "Q_J_161",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "預り金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4399,9 +4682,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_162": {
     "questionId": "Q_J_162",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法定福利費",
+      "預り金",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4423,9 +4709,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_163": {
     "questionId": "Q_J_163",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法定福利費",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4446,13 +4734,16 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_164": {
     "questionId": "Q_J_164",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法定福利費",
+      "預り金",
+      "普通預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
-      "普通預金",
       "定期預金",
       "当座借越",
       "雑収入",
@@ -4470,9 +4761,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_165": {
     "questionId": "Q_J_165",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法人税等",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4492,12 +4785,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_166": {
     "questionId": "Q_J_166",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法人税等",
+      "当座預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
@@ -4516,9 +4811,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_167": {
     "questionId": "Q_J_167",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法人税等",
+      "租税公課",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4539,12 +4837,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_168": {
     "questionId": "Q_J_168",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法人税等",
+      "当座預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
@@ -4563,12 +4863,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_169": {
     "questionId": "Q_J_169",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法人税等",
+      "当座預金"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
       "小口現金",
-      "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
@@ -4587,7 +4889,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_170": {
     "questionId": "Q_J_170",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法人税等",
+      "未払法人税等"
+    ],
     "relatedAccounts": [
       "貸倒引当金",
       "貸倒引当金繰入",
@@ -4619,9 +4924,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_171": {
     "questionId": "Q_J_171",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "備品",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4642,9 +4949,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_172": {
     "questionId": "Q_J_172",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "建物",
+      "未払金"
+    ],
+    "relatedAccounts": [
       "建物減価償却累計額",
       "備品",
       "備品減価償却累計額",
@@ -4658,7 +4967,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "固定資産売却損",
       "固定資産除却損",
       "建設仮勘定",
-      "未払金",
       "現金",
       "当座預金"
     ],
@@ -4674,9 +4982,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_173": {
     "questionId": "Q_J_173",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "車両運搬具",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4697,9 +5007,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_174": {
     "questionId": "Q_J_174",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
+      "建物",
       "現金",
+      "未払金"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4720,9 +5033,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_175": {
     "questionId": "Q_J_175",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "車両運搬具",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4744,9 +5059,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_176": {
     "questionId": "Q_J_176",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "車両運搬具",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4767,9 +5084,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_177": {
     "questionId": "Q_J_177",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "建物",
+      "資本金"
+    ],
+    "relatedAccounts": [
       "建物減価償却累計額",
       "備品",
       "備品減価償却累計額",
@@ -4799,11 +5118,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_178": {
     "questionId": "Q_J_178",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "備品",
+      "受贈益"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
-      "備品",
       "備品減価償却累計額",
       "車両運搬具",
       "車両運搬具減価償却累計額",
@@ -4831,9 +5152,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_179": {
     "questionId": "Q_J_179",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "建設仮勘定",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4855,9 +5178,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_180": {
     "questionId": "Q_J_180",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "建物",
+      "建設仮勘定"
+    ],
+    "relatedAccounts": [
       "建物減価償却累計額",
       "備品",
       "備品減価償却累計額",
@@ -4870,7 +5195,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
-      "建設仮勘定",
       "未払金",
       "現金",
       "当座預金"
@@ -4889,7 +5213,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_181": {
     "questionId": "Q_J_181",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "機械装置",
+      "材料費",
+      "労務費",
+      "経費"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -4909,9 +5238,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_182": {
     "questionId": "Q_J_182",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "建物",
+      "修繕費",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4936,9 +5268,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_183": {
     "questionId": "Q_J_183",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "リース資産",
+      "リース債務",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4961,9 +5296,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_184": {
     "questionId": "Q_J_184",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "ソフトウェア",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -4985,14 +5322,17 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_185": {
     "questionId": "Q_J_185",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "投資不動産",
+      "借入金",
+      "現金"
+    ],
     "relatedAccounts": [
       "売掛金",
       "買掛金",
       "受取手形",
       "支払手形",
       "貸付金",
-      "借入金",
       "未収金",
       "未払金",
       "立替金",
@@ -5004,7 +5344,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "手形売却損"
     ],
     "supplementaryAccounts": [
-      "現金",
       "当座預金",
       "普通預金"
     ],
@@ -5020,18 +5359,19 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_186": {
     "questionId": "Q_J_186",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "車両運搬具減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
       "備品",
       "備品減価償却累計額",
       "車両運搬具",
-      "車両運搬具減価償却累計額",
       "土地",
       "機械装置",
       "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -5055,7 +5395,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_187": {
     "questionId": "Q_J_187",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "機械装置減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
@@ -5065,8 +5408,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "車両運搬具減価償却累計額",
       "土地",
       "機械装置",
-      "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -5092,10 +5433,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_188": {
     "questionId": "Q_J_188",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "建物減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
-      "建物減価償却累計額",
       "備品",
       "備品減価償却累計額",
       "車両運搬具",
@@ -5103,7 +5446,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "土地",
       "機械装置",
       "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -5128,7 +5470,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_189": {
     "questionId": "Q_J_189",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "機械装置減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
@@ -5138,8 +5483,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "車両運搬具減価償却累計額",
       "土地",
       "機械装置",
-      "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -5164,18 +5507,19 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_190": {
     "questionId": "Q_J_190",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "車両運搬具減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
       "備品",
       "備品減価償却累計額",
       "車両運搬具",
-      "車両運搬具減価償却累計額",
       "土地",
       "機械装置",
       "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -5200,9 +5544,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_191": {
     "questionId": "Q_J_191",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "消耗品費",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -5226,7 +5572,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_192": {
     "questionId": "Q_J_192",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "機械装置減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
@@ -5236,8 +5585,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "車両運搬具減価償却累計額",
       "土地",
       "機械装置",
-      "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -5262,18 +5609,19 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_193": {
     "questionId": "Q_J_193",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "車両運搬具減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
       "備品",
       "備品減価償却累計額",
       "車両運搬具",
-      "車両運搬具減価償却累計額",
       "土地",
       "機械装置",
       "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -5298,7 +5646,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_194": {
     "questionId": "Q_J_194",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "機械装置減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
@@ -5308,8 +5659,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "車両運搬具減価償却累計額",
       "土地",
       "機械装置",
-      "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -5334,7 +5683,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_195": {
     "questionId": "Q_J_195",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "機械装置減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
@@ -5344,8 +5696,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "車両運搬具減価償却累計額",
       "土地",
       "機械装置",
-      "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -5370,7 +5720,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_196": {
     "questionId": "Q_J_196",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "機械装置減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
@@ -5380,8 +5733,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "車両運搬具減価償却累計額",
       "土地",
       "機械装置",
-      "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -5406,7 +5757,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_197": {
     "questionId": "Q_J_197",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "機械装置減価償却累計額"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
@@ -5433,7 +5787,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_198": {
     "questionId": "Q_J_198",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "一括償却資産減価償却累計額"
+    ],
     "relatedAccounts": [
       "現金",
       "現金過不足",
@@ -5460,9 +5817,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_199": {
     "questionId": "Q_J_199",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "消耗品費",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -5485,7 +5844,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_200": {
     "questionId": "Q_J_200",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "繰延資産償却費",
+      "開業費"
+    ],
     "relatedAccounts": [
       "貸倒引当金",
       "貸倒引当金繰入",
@@ -5521,9 +5883,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_201": {
     "questionId": "Q_J_201",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "車両運搬具",
+      "車両運搬具減価償却累計額",
+      "固定資産売却益"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -5548,9 +5914,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_202": {
     "questionId": "Q_J_202",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "機械装置",
+      "機械装置減価償却累計額",
+      "固定資産売却損"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -5575,18 +5945,19 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_203": {
     "questionId": "Q_J_203",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "車両運搬具減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
       "備品",
       "備品減価償却累計額",
       "車両運搬具",
-      "車両運搬具減価償却累計額",
       "土地",
       "機械装置",
       "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -5611,9 +5982,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_204": {
     "questionId": "Q_J_204",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "建物",
+      "未収入金",
+      "固定資産売却益"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -5636,9 +6011,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_205": {
     "questionId": "Q_J_205",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "車両運搬具",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -5661,9 +6038,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_206": {
     "questionId": "Q_J_206",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "車両運搬具",
+      "固定資産売却益",
+      "仮受消費税"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -5686,12 +6067,14 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_207": {
     "questionId": "Q_J_207",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "備品減価償却累計額",
+      "備品",
+      "固定資産除却損"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
-      "備品",
-      "備品減価償却累計額",
       "車両運搬具",
       "車両運搬具減価償却累計額",
       "土地",
@@ -5700,7 +6083,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
-      "固定資産除却損",
       "建設仮勘定",
       "未払金",
       "現金",
@@ -5722,9 +6104,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_208": {
     "questionId": "Q_J_208",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "機械装置減価償却累計額",
+      "機械装置",
+      "固定資産除却損",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -5749,10 +6135,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_209": {
     "questionId": "Q_J_209",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "建物",
+    "primaryAccounts": [
       "建物減価償却累計額",
+      "建物",
+      "未収入金",
+      "災害損失"
+    ],
+    "relatedAccounts": [
       "備品",
       "備品減価償却累計額",
       "車両運搬具",
@@ -5786,9 +6175,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_210": {
     "questionId": "Q_J_210",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "建物減価償却累計額",
+      "建物",
+      "固定資産除却損",
+      "現金"
+    ],
     "relatedAccounts": [
-      "現金",
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -5814,10 +6207,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_211": {
     "questionId": "Q_J_211",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "貸倒引当金",
+    "primaryAccounts": [
       "貸倒引当金繰入",
+      "貸倒引当金"
+    ],
+    "relatedAccounts": [
       "貸倒引当金戻入",
       "減価償却費",
       "前払費用",
@@ -5849,11 +6243,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_212": {
     "questionId": "Q_J_212",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "貸倒引当金",
+      "貸倒引当金戻入"
+    ],
+    "relatedAccounts": [
       "貸倒引当金繰入",
-      "貸倒引当金戻入",
       "減価償却費",
       "前払費用",
       "前受収益",
@@ -5883,9 +6278,12 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_213": {
     "questionId": "Q_J_213",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "貸倒引当金",
+      "売掛金",
+      "貸倒損失"
+    ],
+    "relatedAccounts": [
       "貸倒引当金繰入",
       "貸倒引当金戻入",
       "減価償却費",
@@ -5893,7 +6291,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "前受収益",
       "未払費用",
       "未収収益",
-      "売掛金",
       "受取手形",
       "保険料",
       "支払家賃",
@@ -5902,6 +6299,7 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "受取利息"
     ],
     "supplementaryAccounts": [
+      "買掛金",
       "現金",
       "当座預金",
       "普通預金"
@@ -5918,9 +6316,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_214": {
     "questionId": "Q_J_214",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "現金",
+      "償却債権取立益"
+    ],
+    "relatedAccounts": [
       "現金過不足",
       "小口現金",
       "当座預金",
@@ -5942,10 +6342,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_215": {
     "questionId": "Q_J_215",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "貸倒引当金",
+    "primaryAccounts": [
       "貸倒引当金繰入",
+      "貸倒引当金"
+    ],
+    "relatedAccounts": [
       "貸倒引当金戻入",
       "減価償却費",
       "前払費用",
@@ -5977,10 +6378,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_216": {
     "questionId": "Q_J_216",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "貸倒引当金",
+    "primaryAccounts": [
       "貸倒引当金繰入",
+      "貸倒引当金"
+    ],
+    "relatedAccounts": [
       "貸倒引当金戻入",
       "減価償却費",
       "前払費用",
@@ -6012,10 +6414,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_217": {
     "questionId": "Q_J_217",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "貸倒引当金",
+    "primaryAccounts": [
       "貸倒引当金繰入",
+      "貸倒引当金"
+    ],
+    "relatedAccounts": [
       "貸倒引当金戻入",
       "減価償却費",
       "前払費用",
@@ -6046,10 +6449,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_218": {
     "questionId": "Q_J_218",
-    "primaryAccounts": [],
-    "relatedAccounts": [
-      "貸倒引当金",
+    "primaryAccounts": [
       "貸倒引当金繰入",
+      "貸倒引当金"
+    ],
+    "relatedAccounts": [
       "貸倒引当金戻入",
       "減価償却費",
       "前払費用",
@@ -6080,12 +6484,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_219": {
     "questionId": "Q_J_219",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "賞与引当金繰入",
+      "賞与引当金"
+    ],
     "relatedAccounts": [
       "給料",
       "賞与",
-      "賞与引当金",
-      "賞与引当金繰入",
       "法定福利費",
       "預り金",
       "未払給料",
@@ -6110,7 +6515,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_220": {
     "questionId": "Q_J_220",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "修繕引当金繰入",
+      "修繕引当金"
+    ],
     "relatedAccounts": [
       "貸倒引当金",
       "貸倒引当金繰入",
@@ -6147,9 +6555,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_221": {
     "questionId": "Q_J_221",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "前払費用",
+      "保険料"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "前受収益",
       "現金",
       "当座預金",
       "普通預金"
@@ -6163,9 +6575,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_222": {
     "questionId": "Q_J_222",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "前払費用",
+      "支払家賃"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "前受収益",
       "現金",
       "当座預金",
       "普通預金"
@@ -6180,7 +6596,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_223": {
     "questionId": "Q_J_223",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "前払費用",
+      "支払利息"
+    ],
     "relatedAccounts": [
       "売掛金",
       "買掛金",
@@ -6195,10 +6614,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "仮払金",
       "仮受金",
       "受取利息",
-      "支払利息",
       "手形売却損"
     ],
     "supplementaryAccounts": [
+      "前受収益",
       "現金",
       "当座預金",
       "普通預金"
@@ -6214,9 +6633,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_224": {
     "questionId": "Q_J_224",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "前払費用",
+      "広告宣伝費"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "前受収益",
       "現金",
       "当座預金",
       "普通預金"
@@ -6231,9 +6654,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_225": {
     "questionId": "Q_J_225",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "受取家賃",
+      "前受収益"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "前払費用",
       "現金",
       "当座預金",
       "普通預金"
@@ -6248,9 +6675,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_226": {
     "questionId": "Q_J_226",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "受取利息",
+      "前受収益"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "前払費用",
       "現金",
       "当座預金",
       "普通預金"
@@ -6265,9 +6696,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_227": {
     "questionId": "Q_J_227",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "受取手数料",
+      "前受収益"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "前払費用",
       "現金",
       "当座預金",
       "普通預金"
@@ -6282,9 +6717,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_228": {
     "questionId": "Q_J_228",
-    "primaryAccounts": [],
-    "relatedAccounts": [
+    "primaryAccounts": [
       "給料",
+      "未払費用"
+    ],
+    "relatedAccounts": [
       "賞与",
       "賞与引当金",
       "賞与引当金繰入",
@@ -6297,6 +6734,7 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "福利厚生費"
     ],
     "supplementaryAccounts": [
+      "未収収益",
       "普通預金"
     ],
     "category": AccountCategory.PAYROLL,
@@ -6309,7 +6747,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_229": {
     "questionId": "Q_J_229",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "支払利息",
+      "未払費用"
+    ],
     "relatedAccounts": [
       "売掛金",
       "買掛金",
@@ -6324,10 +6765,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "仮払金",
       "仮受金",
       "受取利息",
-      "支払利息",
       "手形売却損"
     ],
     "supplementaryAccounts": [
+      "未収収益",
       "現金",
       "当座預金",
       "普通預金"
@@ -6343,9 +6784,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_230": {
     "questionId": "Q_J_230",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "賃借料",
+      "未払費用"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "未収収益",
       "現金",
       "当座預金",
       "普通預金"
@@ -6361,9 +6806,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_231": {
     "questionId": "Q_J_231",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "水道光熱費",
+      "未払費用"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "未収収益",
       "現金",
       "当座預金",
       "普通預金"
@@ -6379,9 +6828,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_232": {
     "questionId": "Q_J_232",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未収収益",
+      "賃貸料"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "未払費用",
       "現金",
       "当座預金",
       "普通預金"
@@ -6397,9 +6850,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_233": {
     "questionId": "Q_J_233",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未収収益",
+      "受取利息"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "未払費用",
       "現金",
       "当座預金",
       "普通預金"
@@ -6415,9 +6872,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_234": {
     "questionId": "Q_J_234",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未収収益",
+      "受取手数料"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "未払費用",
       "現金",
       "当座預金",
       "普通預金"
@@ -6433,9 +6894,13 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_235": {
     "questionId": "Q_J_235",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "未収収益",
+      "受取手数料"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
+      "未払費用",
       "現金",
       "当座預金",
       "普通預金"
@@ -6451,7 +6916,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_236": {
     "questionId": "Q_J_236",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "消耗品",
+      "消耗品費"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -6468,7 +6936,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_237": {
     "questionId": "Q_J_237",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "材料費",
+      "貯蔵品"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -6485,7 +6956,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_238": {
     "questionId": "Q_J_238",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "製品",
+      "仕掛品"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -6502,14 +6976,16 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_239": {
     "questionId": "Q_J_239",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "棚卸減耗損",
+      "繰越商品"
+    ],
     "relatedAccounts": [
       "商品",
       "仕入",
       "売上",
       "売掛金",
       "買掛金",
-      "繰越商品",
       "前払金",
       "前受金",
       "受取手形",
@@ -6533,14 +7009,16 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_240": {
     "questionId": "Q_J_240",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "商品評価損",
+      "繰越商品"
+    ],
     "relatedAccounts": [
       "商品",
       "仕入",
       "売上",
       "売掛金",
       "買掛金",
-      "繰越商品",
       "前払金",
       "前受金",
       "受取手形",
@@ -6564,16 +7042,17 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_241": {
     "questionId": "Q_J_241",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "現金過不足",
+      "雑収入"
+    ],
     "relatedAccounts": [
       "現金",
-      "現金過不足",
       "小口現金",
       "当座預金",
       "普通預金",
       "定期預金",
       "当座借越",
-      "雑収入",
       "雑損失"
     ],
     "supplementaryAccounts": [],
@@ -6590,7 +7069,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_242": {
     "questionId": "Q_J_242",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "当期純利益",
+      "繰越利益剰余金"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -6607,7 +7089,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_243": {
     "questionId": "Q_J_243",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "資本金",
+      "引出金"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -6624,7 +7109,11 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_244": {
     "questionId": "Q_J_244",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "旅費交通費",
+      "仮払金",
+      "会議費"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -6642,7 +7131,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_245": {
     "questionId": "Q_J_245",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "受取手数料",
+      "雑収入"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -6659,7 +7151,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_246": {
     "questionId": "Q_J_246",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "減価償却費",
+      "減価償却累計額"
+    ],
     "relatedAccounts": [
       "建物",
       "建物減価償却累計額",
@@ -6670,7 +7165,6 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
       "土地",
       "機械装置",
       "機械装置減価償却累計額",
-      "減価償却費",
       "固定資産売却益",
       "固定資産売却損",
       "固定資産除却損",
@@ -6695,14 +7189,15 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_247": {
     "questionId": "Q_J_247",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "仕入",
+      "繰越商品"
+    ],
     "relatedAccounts": [
       "商品",
-      "仕入",
       "売上",
       "売掛金",
       "買掛金",
-      "繰越商品",
       "前払金",
       "前受金",
       "受取手形",
@@ -6728,7 +7223,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_248": {
     "questionId": "Q_J_248",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "法人税等",
+      "未払法人税等"
+    ],
     "relatedAccounts": [
       "貸倒引当金",
       "貸倒引当金繰入",
@@ -6761,7 +7259,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_249": {
     "questionId": "Q_J_249",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "租税公課",
+      "未払消費税"
+    ],
     "relatedAccounts": [
       "貸倒引当金",
       "貸倒引当金繰入",
@@ -6794,7 +7295,10 @@ export const GENERATED_QUESTION_ACCOUNT_MAPPINGS: Record<string, QuestionAccount
   },
   "Q_J_250": {
     "questionId": "Q_J_250",
-    "primaryAccounts": [],
+    "primaryAccounts": [
+      "圧縮損",
+      "機械装置"
+    ],
     "relatedAccounts": [],
     "supplementaryAccounts": [
       "現金",
@@ -8534,8 +9038,8 @@ export const GENERATION_STATS = {
     "settlement": 12,
     "fixed_assets": 18
   },
-  "avgPrimaryAccounts": 0.2,
-  "avgRelatedAccounts": 6.4
+  "avgPrimaryAccounts": 1.5,
+  "avgRelatedAccounts": 5.8
 };
 
 /**
