@@ -29,7 +29,7 @@ export interface LedgerFormState {
 }
 
 export interface AccountSelectionState {
-  type: "debitAccount" | "creditAccount";
+  type: "debitAccount" | "creditAccount" | "account";
   index: number;
 }
 

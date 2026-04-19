@@ -245,10 +245,13 @@ export class StatisticsService {
         "ledger",
         "trial_balance",
       ];
-      const categoryNames: Record<QuestionCategory, string> = {
+      const categoryNames: Partial<Record<QuestionCategory, string>> = {
         journal: "第一問",
         ledger: "第二問",
         trial_balance: "第三問",
+        financial_statement: "第三問",
+        voucher_entry: "第二問",
+        multiple_blank_choice: "第二問",
       };
 
       const statistics: CategoryStatistics[] = [];
@@ -285,7 +288,7 @@ export class StatisticsService {
 
         const categoryStats: CategoryStatistics = {
           category,
-          categoryName: categoryNames[category],
+          categoryName: categoryNames[category] ?? category,
           totalQuestions,
           answeredQuestions: uniqueAnswered, // ユニーク回答済み問題数
           correctAnswers: uniqueCorrect, // ユニーク正解問題数

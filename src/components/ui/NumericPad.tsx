@@ -10,14 +10,19 @@ import {
 } from "react-native";
 import { useTheme, type Theme } from "../../context/ThemeContext";
 
-interface NumericPadProps {
+export interface NumericPadProps {
   visible: boolean;
-  value: string;
-  onValueChange: (value: string) => void;
-  onClose: () => void;
+  value?: string;
+  onValueChange?: (value: string) => void;
+  onClose?: () => void;
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  onChange?: (value: string) => void;
+  initialValue?: string;
   placeholder?: string;
   label?: string;
   maxLength?: number;
+  testID?: string;
 }
 
 export default function NumericPad({
@@ -25,31 +30,46 @@ export default function NumericPad({
   value,
   onValueChange,
   onClose,
+  onConfirm,
+  onCancel,
+  onChange,
+  initialValue,
   placeholder = "金額を入力",
   label = "金額入力",
   maxLength = 10,
+  testID,
 }: NumericPadProps) {
+  const handleValueChange = onValueChange ?? (() => {});
+  const handleClose = onClose ?? (() => {});
   const { theme } = useTheme();
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
+  const effectiveValue = value ?? initialValue ?? "";
+
   const handleNumberPress = (num: string) => {
-    if (value.length < maxLength) {
-      onValueChange(value + num);
+    if (effectiveValue.length < maxLength) {
+      const nextValue = effectiveValue + num;
+      handleValueChange(nextValue);
+      onChange?.(nextValue);
     }
   };
 
   const handleDelete = () => {
-    if (value.length > 0) {
-      onValueChange(value.slice(0, -1));
+    if (effectiveValue.length > 0) {
+      const nextValue = effectiveValue.slice(0, -1);
+      handleValueChange(nextValue);
+      onChange?.(nextValue);
     }
   };
 
   const handleClear = () => {
-    onValueChange("");
+    handleValueChange("");
+    onChange?.("");
   };
 
   const handleConfirm = () => {
-    onClose();
+    onConfirm?.();
+    handleClose();
   };
 
   const formatAmount = (amount: string) => {
@@ -65,16 +85,16 @@ export default function NumericPad({
       visible={visible}
       transparent={true}
       animationType="slide"
-      onRequestClose={onClose}
+      onRequestClose={onCancel ?? handleClose}
     >
-      <View style={styles.overlay}>
+      <View style={styles.overlay} testID={testID}>
         <View style={styles.container}>
           <SafeAreaView style={styles.safeArea}>
             {/* ヘッダー */}
             <View style={styles.header}>
               <Text style={styles.headerText}>{label}</Text>
               <TouchableOpacity
-                onPress={onClose}
+                onPress={onCancel ?? handleClose}
                 style={styles.closeButton}
                 testID="numeric-pad-close"
               >
@@ -85,7 +105,7 @@ export default function NumericPad({
             {/* 表示エリア */}
             <View style={styles.displayArea}>
               <Text style={styles.displayText}>
-                {value ? formatAmount(value) : placeholder}
+                {effectiveValue ? formatAmount(effectiveValue) : placeholder}
               </Text>
               <Text style={styles.displayUnit}>円</Text>
             </View>

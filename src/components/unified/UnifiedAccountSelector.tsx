@@ -37,12 +37,15 @@ export type QuestionType = "journal" | "ledger" | "trial_balance";
 export interface UnifiedAccountSelectorProps {
   label?: string;
   value?: string;
-  onChange: (accountName: string) => void;
+  onChange?: (accountName: string) => void;
+  onSelect?: (account: { label: string; value: string }) => void;
+  onAccountSelect?: (accountName: string) => void;
   required?: boolean;
   excludeAccounts?: string[];
   placeholder?: string;
   mode?: AccountSelectionMode;
   questionType?: QuestionType;
+  selectedAccount?: string;
 
   // Modal mode specific props
   visible?: boolean;
@@ -50,7 +53,7 @@ export interface UnifiedAccountSelectorProps {
 
   // Advanced selection props
   currentSelection?: {
-    type: "debitAccount" | "creditAccount" | "debit" | "credit";
+    type: "debitAccount" | "creditAccount" | "debit" | "credit" | "account";
     index: number;
   };
 
@@ -69,11 +72,14 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
   label,
   value,
   onChange,
+  onSelect,
+  onAccountSelect,
   required = false,
   excludeAccounts = [],
   placeholder = "勘定科目を選択してください",
   mode = "dropdown",
   questionType = "journal",
+  selectedAccount,
   visible = false,
   onClose,
   currentSelection,
@@ -85,6 +91,7 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
   testID,
 }) => {
   const styles = useThemedStyles(createStyles);
+  const currentValue = value ?? selectedAccount ?? "";
   // For dropdown mode, use internal state only. For modal mode, use visible prop.
   const [internalModalVisible, setInternalModalVisible] = useState(false);
   const modalVisible = mode === "modal" ? visible : internalModalVisible;
@@ -171,7 +178,9 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
             setTimeout(() => showIOSActionSheet(), 100);
           } else {
             const selectedAccount = accountOptions[buttonIndex - 1];
-            onChange(selectedAccount.value);
+            onChange?.(selectedAccount.value);
+            onAccountSelect?.(selectedAccount.value);
+            onSelect?.(selectedAccount);
           }
         }
       },
@@ -180,7 +189,9 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
 
   const handleAccountSelect = (account: AccountOption) => {
     console.log("[UnifiedAccountSelector] Account selected:", account.value);
-    onChange(account.value);
+    onChange?.(account.value);
+    onAccountSelect?.(account.value);
+    onSelect?.(account);
     if (mode === "modal") {
       setInternalModalVisible(false);
       onClose?.();
@@ -222,7 +233,7 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
           </Text>
         )}
         <TouchableOpacity
-          style={[styles.dropdown, !value && styles.placeholder]}
+          style={[styles.dropdown, !currentValue && styles.placeholder]}
           onPress={() => {
             console.log("[UnifiedAccountSelector] TouchableOpacity pressed");
             openModal();
@@ -231,11 +242,14 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
           activeOpacity={0.7}
         >
           <Text
-            style={[styles.dropdownText, !value && styles.placeholderText]}
+            style={[
+              styles.dropdownText,
+              !currentValue && styles.placeholderText,
+            ]}
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {value || placeholder}
+            {currentValue || placeholder}
           </Text>
           <Text style={styles.dropdownArrow}>▼</Text>
         </TouchableOpacity>
@@ -285,7 +299,7 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
                     key={`${option.value}-${index}`}
                     style={[
                       styles.optionItem,
-                      value === option.value && styles.selectedOption,
+                      currentValue === option.value && styles.selectedOption,
                     ]}
                     onPress={() => handleAccountSelect(option)}
                     testID={`account-option-${option.value}`}
@@ -293,7 +307,8 @@ export const UnifiedAccountSelector: React.FC<UnifiedAccountSelectorProps> = ({
                     <Text
                       style={[
                         styles.optionText,
-                        value === option.value && styles.selectedOptionText,
+                        currentValue === option.value &&
+                          styles.selectedOptionText,
                       ]}
                       numberOfLines={1}
                       ellipsizeMode="tail"

@@ -162,6 +162,7 @@ export interface CBTAnswerTemplate {
   rows: RowDefinition[];
   columns: ColumnDefinition[];
   allowed_accounts?: string[];
+  guidance?: GuidanceStep[];
 }
 
 /**
@@ -171,10 +172,14 @@ export interface ColumnDefinition {
   key: string;
   label: string;
   input: "text" | "dropdown" | "number" | "currency" | "computed";
-  width?: string | number;
+  width?: any;
   options?: string[];
+  options_ref?: string;
+  group?: string;
   formula?: string;
   readonly?: boolean;
+  required?: boolean;
+  placeholder?: string;
 }
 
 /**
@@ -185,6 +190,13 @@ export interface RowDefinition {
   default_values?: Record<string, any>;
   label?: string;
   readonly?: boolean;
+  locked?: boolean;
+}
+
+export interface GuidanceStep {
+  stage: number;
+  title: string;
+  body: string;
 }
 
 /**
@@ -192,12 +204,25 @@ export interface RowDefinition {
  */
 export interface QuestionCorrectAnswer {
   // 仕訳問題の正解
-  journalEntry?: {
+  journalEntry?:
+    | {
+        debit_account: string;
+        debit_amount: number;
+        credit_account: string;
+        credit_amount: number;
+      }
+    | {
+        debit_account: string;
+        debit_amount: number;
+        credit_account: string;
+        credit_amount: number;
+      }[];
+  journalEntries?: {
     debit_account: string;
     debit_amount: number;
     credit_account: string;
     credit_amount: number;
-  };
+  }[];
 
   // 伝票問題の正解
   voucher_type?: string; // 入金伝票、出金伝票、振替伝票など

@@ -95,7 +95,7 @@ export const GuidancePanel: React.FC<GuidancePanelProps> = ({
               </View>
 
               <Ionicons
-                name={getStageIcon(step.stage, isExpanded)}
+                name={getStageIcon(step.stage, isExpanded) as any}
                 size={20}
                 color="#666666"
               />

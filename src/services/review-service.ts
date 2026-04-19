@@ -494,10 +494,13 @@ export class ReviewService {
       logger.debug("[ReviewService] 統計データに基づく分析:");
       const analysis = [];
 
-      const categoryNames: Record<QuestionCategory, string> = {
+      const categoryNames: Partial<Record<QuestionCategory, string>> = {
         journal: "第一問",
         ledger: "第二問",
         trial_balance: "第三問",
+        financial_statement: "第三問",
+        voucher_entry: "第二問",
+        multiple_blank_choice: "第二問",
       };
 
       for (const [category, categoryStats] of Object.entries(
@@ -526,7 +529,7 @@ export class ReviewService {
 
         analysis.push({
           category: categoryKey,
-          categoryName: categoryNames[categoryKey],
+          categoryName: categoryNames[categoryKey] ?? categoryKey,
           reviewCount: totalReview, // 統計と一致する件数を使用
           averagePriority: Math.round(categoryStats.averagePriority),
           recommendation,

@@ -1,38 +1,38 @@
 import React from "react";
-import {
-  BookOpen,
-  Repeat,
-  ChartLineUp,
-  Trash,
-  IconProps,
-} from "phosphor-react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "@/context/ThemeContext";
 
-type AppIconName = "book" | "repeat" | "chart" | "remove";
+type AppIconName = "book" | "repeat" | "refresh" | "chart" | "remove";
 
-const iconMap: Record<AppIconName, React.ComponentType<IconProps>> = {
-  book: BookOpen,
-  repeat: Repeat,
-  chart: ChartLineUp,
-  remove: Trash,
-};
+const iconMap: Record<AppIconName, keyof typeof MaterialCommunityIcons.glyphMap> =
+  {
+    book: "book-open-variant",
+    repeat: "refresh",
+    refresh: "refresh",
+    chart: "chart-line",
+    remove: "delete",
+  };
 
-interface AppIconProps extends Partial<IconProps> {
+interface AppIconProps {
   name: AppIconName;
   size?: number;
   color?: string;
+  weight?: string;
 }
 
 export const AppIcon: React.FC<AppIconProps> = ({
   name,
   size = 28,
   color,
-  weight = "duotone",
 }) => {
   const { theme } = useTheme();
-  const IconComponent = iconMap[name];
   const iconColor = color ?? theme.colors.text;
 
-  return <IconComponent size={size} color={iconColor} weight={weight} />;
+  return (
+    <MaterialCommunityIcons
+      name={iconMap[name]}
+      size={size}
+      color={iconColor}
+    />
+  );
 };
-

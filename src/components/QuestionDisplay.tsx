@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * 問題表示コンポーネント

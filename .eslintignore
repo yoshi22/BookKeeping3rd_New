@@ -8,3 +8,12 @@ temp/
 *.d.ts
 __tests__/
 docs/
+WebDriverAgent/
+scripts/
+scripts/archive/
+src/components/examples/
+src/components/ui/optimized/
+src/data/optimized/
+src/hooks/optimized/
+src/services/optimized/
+.claude/

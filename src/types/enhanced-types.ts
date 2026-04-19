@@ -91,8 +91,25 @@ export interface QuestionTemplate {
     | "voucher_entry"
     | "multiple_choice"
     | "single_choice"
-    | "vocabulary";
+    | "vocabulary"
+    | "auxiliary_book"
+    | "fill_in_ledger"
+    | "fill_in_trial_balance"
+    | "fill_in_comprehensive_trial_balance"
+    | "fill_in_financial_statement";
   fields?: QuestionField[];
+  blanks?: {
+    index?: number;
+    id?: string;
+    choices: number[];
+    correct_answer?: number;
+    explanation?: string;
+    hint?: string;
+  }[];
+  correctAnswers?: {
+    transactionIndex: number;
+    bookIds: string[];
+  }[];
   questions?: {
     id: string;
     label: string;

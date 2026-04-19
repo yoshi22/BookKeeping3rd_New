@@ -87,7 +87,7 @@ export type CBTAnswerFormat = "dropdown_input" | "number_input" | "text_input";
 export type QuestionDifficulty = 1 | 2 | 3 | 4 | 5;
 
 // セッション種別型
-export type SessionType = "learning" | "review";
+export type SessionType = "learning" | "review" | "mock_exam";
 
 // 復習ステータス型
 export type ReviewStatus = "needs_review" | "priority_review" | "mastered";

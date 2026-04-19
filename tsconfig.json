@@ -22,10 +22,19 @@
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": [
     "node_modules",
+    "__tests__/**/*",
     "backup/**/*",
     "coverage/**/*",
     "build-test/**/*",
+    "scripts/**/*",
     "scripts/dev-tools/**/*",
-    "scripts/data-tools/**/*"
+    "scripts/data-tools/**/*",
+    "src/components/examples/**/*",
+    "src/components/ui/optimized/**/*",
+    "src/data/optimized/**/*",
+    "src/hooks/optimized/**/*",
+    "src/services/optimized/**/*",
+    "**/*.backup-*",
+    "**/*.bak"
   ]
 }

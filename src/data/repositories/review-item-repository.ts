@@ -414,6 +414,27 @@ export class ReviewItemRepository extends BaseRepository<ReviewItem> {
           mastered: 0,
           averagePriority: 0,
         },
+        financial_statement: {
+          total: 0,
+          needsReview: 0,
+          priorityReview: 0,
+          mastered: 0,
+          averagePriority: 0,
+        },
+        voucher_entry: {
+          total: 0,
+          needsReview: 0,
+          priorityReview: 0,
+          mastered: 0,
+          averagePriority: 0,
+        },
+        multiple_blank_choice: {
+          total: 0,
+          needsReview: 0,
+          priorityReview: 0,
+          mastered: 0,
+          averagePriority: 0,
+        },
       };
 
       categoryStatsResult.rows.forEach((row) => {

@@ -24,6 +24,8 @@ export interface ColorPalette {
   background: string;
   backgroundSecondary: string;
   surface: string;
+  surfaceLight?: string;
+  surfaceVariant?: string;
   card: string;
 
   // Status Background Colors
@@ -39,8 +41,10 @@ export interface ColorPalette {
 
   // Status Colors
   success: string;
+  successLight?: string;
   successDark: string;
   warning: string;
+  warningLight?: string;
   error: string;
   info: string;
 

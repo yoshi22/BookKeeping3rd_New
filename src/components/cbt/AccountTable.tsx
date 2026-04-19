@@ -78,7 +78,7 @@ export default function AccountTable({
     if (typeof value === "number") {
       displayValue = value.toLocaleString("ja-JP");
     } else {
-      displayValue = value;
+      displayValue = value == null ? "" : String(value);
     }
 
     return (

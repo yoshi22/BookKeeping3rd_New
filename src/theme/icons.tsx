@@ -20,6 +20,7 @@ export const AppIcons = {
   // 学習関連
   learning: "school-outline" as IconName,
   review: "refresh" as IconName,
+  refresh: "refresh" as IconName,
   exam: "clipboard-text-outline" as IconName,
   mockExam: "file-document-multiple-outline" as IconName,
   study: "book-open-variant" as IconName,
@@ -256,6 +257,7 @@ export class IconUtils {
       // 学習関連
       learning: '学習',
       review: '復習',
+      refresh: '更新',
       exam: '試験',
       mockExam: '模試',
       study: '勉強',
