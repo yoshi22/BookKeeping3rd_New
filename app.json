@@ -2,7 +2,7 @@
   "expo": {
     "name": "簿記3級「復習マスター」Alpha",
     "slug": "fukushumaster-alpha",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,10 +15,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.yoshi.Boki3rdReviewMaster.alpha",
-      "buildNumber": "19",
+      "buildNumber": "20",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "NSUserTrackingUsageDescription": "パーソナライズされた広告を表示するために使用します。",
+        "NSUserTrackingUsageDescription": "広告の配信を最適化するため、このアプリでの行動データをトラッキングすることを許可してください。",
         "SKAdNetworkItems": [
           {
             "SKAdNetworkIdentifier": "cstr6suwn9.skadnetwork"
@@ -193,7 +193,13 @@
         {
           "androidAppId": "ca-app-pub-3940256099942544~3347511713",
           "iosAppId": "ca-app-pub-7827379728198573~3989013090",
-          "userTrackingUsageDescription": "広告の最適化のために使用します。"
+          "userTrackingUsageDescription": "広告の配信を最適化するため、このアプリでの行動データをトラッキングすることを許可してください。"
+        }
+      ],
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "広告の配信を最適化するため、このアプリでの行動データをトラッキングすることを許可してください。"
         }
       ],
       [

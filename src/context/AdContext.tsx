@@ -13,6 +13,10 @@ import React, {
 } from "react";
 import { Platform, AppState, type AppStateStatus } from "react-native";
 import mobileAds from "react-native-google-mobile-ads";
+import {
+  getTrackingPermissionsAsync,
+  requestTrackingPermissionsAsync,
+} from "expo-tracking-transparency";
 import { adService } from "@/services/ad-service";
 import { usePurchase } from "@/context/PurchaseContext";
 import type { AdContextType } from "@/types/monetization";
@@ -66,6 +70,7 @@ export function AdProvider({ children }: AdProviderProps): React.ReactElement {
 
   /**
    * AdMob SDKを初期化
+   * iOSではATT許可ダイアログを先に表示してからAdMobを初期化する
    */
   const initializeAds = useCallback(async () => {
     // Web環境またはプレミアムユーザーはスキップ
@@ -76,6 +81,22 @@ export function AdProvider({ children }: AdProviderProps): React.ReactElement {
     }
 
     try {
+      // iOSではATT許可ダイアログを表示（iOS 14.5+で必須）
+      if (Platform.OS === "ios") {
+        try {
+          const current = await getTrackingPermissionsAsync();
+          if (current.status === "undetermined") {
+            const result = await requestTrackingPermissionsAsync();
+            logger.info("ATT許可リクエスト結果", { status: result.status });
+          } else {
+            logger.info("ATT許可状態", { status: current.status });
+          }
+        } catch (attError) {
+          logger.error("ATT許可リクエストエラー", attError as Error);
+          // ATTエラー時も広告初期化は継続
+        }
+      }
+
       await mobileAds().initialize();
       setIsInitialized(true);
       logger.info("AdMob SDK初期化完了");
