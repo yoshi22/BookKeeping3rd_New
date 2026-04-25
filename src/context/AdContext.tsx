@@ -9,6 +9,7 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useRef,
   type ReactNode,
 } from "react";
 import { Platform, AppState, type AppStateStatus } from "react-native";
@@ -59,21 +60,60 @@ interface AdProviderProps {
  * アプリ全体で広告状態を管理
  */
 export function AdProvider({ children }: AdProviderProps): React.ReactElement {
-  const { isPremium, isLoading: isPurchaseLoading } = usePurchase();
+  const { isPremium } = usePurchase();
   const [isInitialized, setIsInitialized] = useState(false);
   const [isInterstitialReady, setIsInterstitialReady] = useState(false);
   const [canShowInterstitialState, setCanShowInterstitialState] =
     useState(false);
+  const [isTrackingPermissionResolved, setIsTrackingPermissionResolved] =
+    useState(Platform.OS !== "ios");
+  const hasRequestedTrackingPermissionRef = useRef(false);
 
   // プレミアムユーザーは広告非表示
   const showBannerAd = !isPremium && isInitialized;
 
   /**
+   * iOSではATT許可ダイアログを起動直後に一度だけ表示する
+   */
+  const requestTrackingPermission = useCallback(async () => {
+    if (Platform.OS !== "ios") {
+      setIsTrackingPermissionResolved(true);
+      return;
+    }
+
+    if (hasRequestedTrackingPermissionRef.current) {
+      return;
+    }
+
+    hasRequestedTrackingPermissionRef.current = true;
+
+    try {
+      logger.info("ATT許可状態の確認を開始");
+      const current = await getTrackingPermissionsAsync();
+
+      if (current.status === "undetermined") {
+        logger.info("ATT許可リクエストを表示");
+        const result = await requestTrackingPermissionsAsync();
+        logger.info("ATT許可リクエスト結果", { status: result.status });
+      } else {
+        logger.info("ATT許可状態", { status: current.status });
+      }
+    } catch (attError) {
+      logger.error("ATT許可リクエストエラー", attError as Error);
+    } finally {
+      setIsTrackingPermissionResolved(true);
+    }
+  }, []);
+
+  /**
    * AdMob SDKを初期化
-   * iOSではATT許可ダイアログを先に表示してからAdMobを初期化する
+   * iOSではATT判定完了後に初期化する
    */
   const initializeAds = useCallback(async () => {
-    // Web環境またはプレミアムユーザーはスキップ
+    if (isInitialized) {
+      return;
+    }
+
     if (Platform.OS === "web") {
       logger.info("AdContext: Web環境のため広告初期化をスキップ");
       setIsInitialized(true);
@@ -81,22 +121,6 @@ export function AdProvider({ children }: AdProviderProps): React.ReactElement {
     }
 
     try {
-      // iOSではATT許可ダイアログを表示（iOS 14.5+で必須）
-      if (Platform.OS === "ios") {
-        try {
-          const current = await getTrackingPermissionsAsync();
-          if (current.status === "undetermined") {
-            const result = await requestTrackingPermissionsAsync();
-            logger.info("ATT許可リクエスト結果", { status: result.status });
-          } else {
-            logger.info("ATT許可状態", { status: current.status });
-          }
-        } catch (attError) {
-          logger.error("ATT許可リクエストエラー", attError as Error);
-          // ATTエラー時も広告初期化は継続
-        }
-      }
-
       await mobileAds().initialize();
       setIsInitialized(true);
       logger.info("AdMob SDK初期化完了");
@@ -105,7 +129,23 @@ export function AdProvider({ children }: AdProviderProps): React.ReactElement {
       // エラーがあっても続行（広告なしで動作）
       setIsInitialized(true);
     }
-  }, []);
+  }, [isInitialized]);
+
+  /**
+   * 起動直後にATT確認を開始
+   */
+  useEffect(() => {
+    requestTrackingPermission();
+  }, [requestTrackingPermission]);
+
+  /**
+   * ATT判定完了後に広告を初期化
+   */
+  useEffect(() => {
+    if (isTrackingPermissionResolved) {
+      initializeAds();
+    }
+  }, [isTrackingPermissionResolved, initializeAds]);
 
   /**
    * インタースティシャル広告を読み込み
@@ -143,16 +183,6 @@ export function AdProvider({ children }: AdProviderProps): React.ReactElement {
 
     return success;
   }, [isPremium]);
-
-  /**
-   * 初期化処理
-   */
-  useEffect(() => {
-    // 購入状態の読み込みが完了してから初期化
-    if (!isPurchaseLoading) {
-      initializeAds();
-    }
-  }, [isPurchaseLoading, initializeAds]);
 
   /**
    * 広告初期化後にインタースティシャルを事前読み込み
