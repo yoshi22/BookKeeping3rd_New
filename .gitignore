@@ -67,3 +67,11 @@ src/**/*.js
 
 # WebDriverAgent (development dependency)
 WebDriverAgent/
+
+# Local iOS build artifacts
+ios/build-release/
+ios/build-release-verify/
+ios/build-release-launchable/
+
+# App Store review assets (local only)
+docs/appstore-response/
