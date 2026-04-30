@@ -5,11 +5,13 @@ import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "../src/context/ThemeContext";
 import { PurchaseProvider } from "../src/context/PurchaseContext";
 import { AdProvider } from "../src/context/AdContext";
+import { AttBootstrapper } from "../src/components/AttBootstrapper";
 import "expo-dev-client";
 
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
+      <AttBootstrapper />
       <ThemeProvider>
         <PurchaseProvider>
           <AdProvider>

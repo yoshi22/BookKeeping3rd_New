@@ -9,15 +9,10 @@ import React, {
   useState,
   useEffect,
   useCallback,
-  useRef,
   type ReactNode,
 } from "react";
 import { Platform, AppState, type AppStateStatus } from "react-native";
 import mobileAds from "react-native-google-mobile-ads";
-import {
-  getTrackingPermissionsAsync,
-  requestTrackingPermissionsAsync,
-} from "expo-tracking-transparency";
 import { adService } from "@/services/ad-service";
 import { usePurchase } from "@/context/PurchaseContext";
 import type { AdContextType } from "@/types/monetization";
@@ -65,45 +60,9 @@ export function AdProvider({ children }: AdProviderProps): React.ReactElement {
   const [isInterstitialReady, setIsInterstitialReady] = useState(false);
   const [canShowInterstitialState, setCanShowInterstitialState] =
     useState(false);
-  const [isTrackingPermissionResolved, setIsTrackingPermissionResolved] =
-    useState(Platform.OS !== "ios");
-  const hasRequestedTrackingPermissionRef = useRef(false);
 
   // プレミアムユーザーは広告非表示
   const showBannerAd = !isPremium && isInitialized;
-
-  /**
-   * iOSではATT許可ダイアログを起動直後に一度だけ表示する
-   */
-  const requestTrackingPermission = useCallback(async () => {
-    if (Platform.OS !== "ios") {
-      setIsTrackingPermissionResolved(true);
-      return;
-    }
-
-    if (hasRequestedTrackingPermissionRef.current) {
-      return;
-    }
-
-    hasRequestedTrackingPermissionRef.current = true;
-
-    try {
-      logger.info("ATT許可状態の確認を開始");
-      const current = await getTrackingPermissionsAsync();
-
-      if (current.status === "undetermined") {
-        logger.info("ATT許可リクエストを表示");
-        const result = await requestTrackingPermissionsAsync();
-        logger.info("ATT許可リクエスト結果", { status: result.status });
-      } else {
-        logger.info("ATT許可状態", { status: current.status });
-      }
-    } catch (attError) {
-      logger.error("ATT許可リクエストエラー", attError as Error);
-    } finally {
-      setIsTrackingPermissionResolved(true);
-    }
-  }, []);
 
   /**
    * AdMob SDKを初期化
@@ -132,20 +91,13 @@ export function AdProvider({ children }: AdProviderProps): React.ReactElement {
   }, [isInitialized]);
 
   /**
-   * 起動直後にATT確認を開始
+   * マウント後に広告を初期化
+   * ATTは AttBootstrapper が独立して処理するため、AdMob SDK は起動後すぐ初期化する。
+   * SDK 側が ATT ステータスを内部で参照して広告パーソナライズを制御する。
    */
   useEffect(() => {
-    requestTrackingPermission();
-  }, [requestTrackingPermission]);
-
-  /**
-   * ATT判定完了後に広告を初期化
-   */
-  useEffect(() => {
-    if (isTrackingPermissionResolved) {
-      initializeAds();
-    }
-  }, [isTrackingPermissionResolved, initializeAds]);
+    initializeAds();
+  }, [initializeAds]);
 
   /**
    * インタースティシャル広告を読み込み
