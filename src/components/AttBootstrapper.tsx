@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
 import { AppState, Platform } from "react-native";
-import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
+import {
+  getTrackingPermissionsAsync,
+  requestTrackingPermissionsAsync,
+} from "expo-tracking-transparency";
 import { logger } from "@/utils/logger";
 
 // AppState が "active" になるまで待つ。
@@ -32,8 +35,30 @@ export function AttBootstrapper(): null {
         await waitForActive();
         // SceneDelegate の activation 完了を待つ追加猶予
         await new Promise<void>((r) => setTimeout(r, 300));
+
+        const current = await getTrackingPermissionsAsync();
+        logger.info("ATT現在ステータス", {
+          status: current.status,
+          granted: current.granted,
+          canAskAgain: current.canAskAgain,
+        });
+
+        if (current.status !== "undetermined") {
+          logger.info("ATT許可リクエストをスキップ", {
+            reason: "already-determined",
+            status: current.status,
+            granted: current.granted,
+            canAskAgain: current.canAskAgain,
+          });
+          return;
+        }
+
         const result = await requestTrackingPermissionsAsync();
-        logger.info("ATT許可リクエスト結果", { status: result.status });
+        logger.info("ATT許可リクエスト結果", {
+          status: result.status,
+          granted: result.granted,
+          canAskAgain: result.canAskAgain,
+        });
       } catch (e) {
         logger.error("ATT許可リクエストエラー", e as Error);
       }

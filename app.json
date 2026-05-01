@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.yoshi.Boki3rdReviewMaster.alpha",
-      "buildNumber": "22",
+      "buildNumber": "23",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSUserTrackingUsageDescription": "広告の配信を最適化するため、このアプリでの行動データをトラッキングすることを許可してください。",

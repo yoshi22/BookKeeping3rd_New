@@ -4,6 +4,8 @@
 #import <React/RCTLinkingManager.h>
 #import <AppTrackingTransparency/AppTrackingTransparency.h>
 
+static NSString *const ATTNativeRequestAttemptedDefaultsKey = @"ATTNativeRequestAttempted";
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -13,6 +15,13 @@
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
+
+  if (@available(iOS 14, *)) {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(attSceneDidActivate:)
+                                                 name:UISceneDidActivateNotification
+                                               object:nil];
+  }
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
@@ -35,18 +44,53 @@
 // JS 経由より信頼性が高く、iPadOS 26 の Stage Manager / SceneDelegate でも確実に動作する。
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+  NSLog(@"[ATT] applicationDidBecomeActive called");
   [super applicationDidBecomeActive:application];
 
+  [self requestATTIfNeededFromSource:@"applicationDidBecomeActive"];
+}
+
+- (void)attSceneDidActivate:(NSNotification *)notification
+{
+  NSLog(@"[ATT] UISceneDidActivateNotification received");
+  [self requestATTIfNeededFromSource:@"UISceneDidActivateNotification"];
+}
+
+- (void)requestATTIfNeededFromSource:(NSString *)source
+{
   if (@available(iOS 14, *)) {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
-                     dispatch_get_main_queue(), ^{
-        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
-          NSLog(@"[ATT] Native authorization status: %ld", (long)status);
-        }];
-      });
+    ATTrackingManagerAuthorizationStatus currentStatus = ATTrackingManager.trackingAuthorizationStatus;
+    NSLog(@"[ATT] current status before request from %@: %ld", source, (long)currentStatus);
+
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+    if ([defaults boolForKey:ATTNativeRequestAttemptedDefaultsKey]) {
+      NSLog(@"[ATT] native request already attempted for this install. source=%@ status=%ld", source, (long)currentStatus);
+      return;
+    }
+
+    if (currentStatus != ATTrackingManagerAuthorizationStatusNotDetermined) {
+      [defaults setBool:YES forKey:ATTNativeRequestAttemptedDefaultsKey];
+      NSLog(@"[ATT] status already determined. skip native request. source=%@ status=%ld", source, (long)currentStatus);
+      return;
+    }
+
+    [defaults setBool:YES forKey:ATTNativeRequestAttemptedDefaultsKey];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+      ATTrackingManagerAuthorizationStatus delayedStatus = ATTrackingManager.trackingAuthorizationStatus;
+      NSLog(@"[ATT] delayed status before native request from %@: %ld", source, (long)delayedStatus);
+
+      if (delayedStatus != ATTrackingManagerAuthorizationStatusNotDetermined) {
+        NSLog(@"[ATT] delayed status already determined. skip native request. source=%@ status=%ld", source, (long)delayedStatus);
+        return;
+      }
+
+      [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+        NSLog(@"[ATT] native request completed from %@. status=%ld", source, (long)status);
+      }];
     });
+  } else {
+    NSLog(@"[ATT] ATT is unavailable before iOS 14. source=%@", source);
   }
 }
 
