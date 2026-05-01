@@ -18,6 +18,8 @@ import { usePurchase } from "@/context/PurchaseContext";
 import type { AdContextType } from "@/types/monetization";
 import { logger } from "@/utils/logger";
 
+const IOS_AD_INITIALIZATION_DELAY_MS = 4000;
+
 /**
  * 広告コンテキストのデフォルト値
  */
@@ -92,11 +94,21 @@ export function AdProvider({ children }: AdProviderProps): React.ReactElement {
 
   /**
    * マウント後に広告を初期化
-   * ATTは AttBootstrapper が独立して処理するため、AdMob SDK は起動後すぐ初期化する。
-   * SDK 側が ATT ステータスを内部で参照して広告パーソナライズを制御する。
+   * iOSではATT表示条件との競合を避けるため、AdMob SDK初期化を短時間遅延する。
    */
   useEffect(() => {
-    initializeAds();
+    if (Platform.OS !== "ios") {
+      initializeAds();
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      initializeAds();
+    }, IOS_AD_INITIALIZATION_DELAY_MS);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [initializeAds]);
 
   /**

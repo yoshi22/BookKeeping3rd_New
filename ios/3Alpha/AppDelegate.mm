@@ -5,6 +5,8 @@
 #import <AppTrackingTransparency/AppTrackingTransparency.h>
 
 static NSString *const ATTNativeRequestAttemptedDefaultsKey = @"ATTNativeRequestAttempted";
+static NSInteger const ATTNativeMaxRetryCount = 3;
+static BOOL ATTNativeRequestInFlight = NO;
 
 @implementation AppDelegate
 
@@ -17,6 +19,9 @@ static NSString *const ATTNativeRequestAttemptedDefaultsKey = @"ATTNativeRequest
   self.initialProps = @{};
 
   if (@available(iOS 14, *)) {
+    // build 23 の診断用永続フラグが残っていると再試行を阻害するため、build 24 以降で破棄する。
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:ATTNativeRequestAttemptedDefaultsKey];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(attSceneDidActivate:)
                                                  name:UISceneDidActivateNotification
@@ -58,40 +63,114 @@ static NSString *const ATTNativeRequestAttemptedDefaultsKey = @"ATTNativeRequest
 
 - (void)requestATTIfNeededFromSource:(NSString *)source
 {
-  if (@available(iOS 14, *)) {
-    ATTrackingManagerAuthorizationStatus currentStatus = ATTrackingManager.trackingAuthorizationStatus;
-    NSLog(@"[ATT] current status before request from %@: %ld", source, (long)currentStatus);
+  [self requestATTIfNeededFromSource:source attempt:1];
+}
 
-    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
-    if ([defaults boolForKey:ATTNativeRequestAttemptedDefaultsKey]) {
-      NSLog(@"[ATT] native request already attempted for this install. source=%@ status=%ld", source, (long)currentStatus);
+- (void)requestATTIfNeededFromSource:(NSString *)source attempt:(NSInteger)attempt
+{
+  if (@available(iOS 14, *)) {
+    UIApplicationState applicationState = UIApplication.sharedApplication.applicationState;
+    ATTrackingManagerAuthorizationStatus currentStatus = ATTrackingManager.trackingAuthorizationStatus;
+    NSLog(@"[ATT] evaluate request. source=%@ attempt=%ld appState=%ld status=%ld",
+          source,
+          (long)attempt,
+          (long)applicationState,
+          (long)currentStatus);
+
+    if (ATTNativeRequestInFlight) {
+      NSLog(@"[ATT] native request already in flight. source=%@ attempt=%ld status=%ld",
+            source,
+            (long)attempt,
+            (long)currentStatus);
       return;
     }
 
     if (currentStatus != ATTrackingManagerAuthorizationStatusNotDetermined) {
-      [defaults setBool:YES forKey:ATTNativeRequestAttemptedDefaultsKey];
-      NSLog(@"[ATT] status already determined. skip native request. source=%@ status=%ld", source, (long)currentStatus);
+      NSLog(@"[ATT] status already determined. skip native request. source=%@ attempt=%ld status=%ld",
+            source,
+            (long)attempt,
+            (long)currentStatus);
       return;
     }
 
-    [defaults setBool:YES forKey:ATTNativeRequestAttemptedDefaultsKey];
+    if (applicationState != UIApplicationStateActive) {
+      NSLog(@"[ATT] application is not active. schedule retry. source=%@ attempt=%ld appState=%ld",
+            source,
+            (long)attempt,
+            (long)applicationState);
+      [self scheduleATTRequestRetryFromSource:source attempt:attempt];
+      return;
+    }
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
+      UIApplicationState delayedApplicationState = UIApplication.sharedApplication.applicationState;
       ATTrackingManagerAuthorizationStatus delayedStatus = ATTrackingManager.trackingAuthorizationStatus;
-      NSLog(@"[ATT] delayed status before native request from %@: %ld", source, (long)delayedStatus);
+      NSLog(@"[ATT] delayed evaluation before native request. source=%@ attempt=%ld appState=%ld status=%ld",
+            source,
+            (long)attempt,
+            (long)delayedApplicationState,
+            (long)delayedStatus);
 
-      if (delayedStatus != ATTrackingManagerAuthorizationStatusNotDetermined) {
-        NSLog(@"[ATT] delayed status already determined. skip native request. source=%@ status=%ld", source, (long)delayedStatus);
+      if (ATTNativeRequestInFlight) {
+        NSLog(@"[ATT] native request became in flight during delay. source=%@ attempt=%ld status=%ld",
+              source,
+              (long)attempt,
+              (long)delayedStatus);
         return;
       }
 
+      if (delayedStatus != ATTrackingManagerAuthorizationStatusNotDetermined) {
+        NSLog(@"[ATT] delayed status already determined. skip native request. source=%@ attempt=%ld status=%ld",
+              source,
+              (long)attempt,
+              (long)delayedStatus);
+        return;
+      }
+
+      if (delayedApplicationState != UIApplicationStateActive) {
+        NSLog(@"[ATT] delayed application state is not active. schedule retry. source=%@ attempt=%ld appState=%ld",
+              source,
+              (long)attempt,
+              (long)delayedApplicationState);
+        [self scheduleATTRequestRetryFromSource:source attempt:attempt];
+        return;
+      }
+
+      ATTNativeRequestInFlight = YES;
       [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
-        NSLog(@"[ATT] native request completed from %@. status=%ld", source, (long)status);
+        dispatch_async(dispatch_get_main_queue(), ^{
+          ATTNativeRequestInFlight = NO;
+          NSLog(@"[ATT] native request completed. source=%@ attempt=%ld status=%ld",
+                source,
+                (long)attempt,
+                (long)status);
+
+          if (status == ATTrackingManagerAuthorizationStatusNotDetermined) {
+            [self scheduleATTRequestRetryFromSource:source attempt:attempt];
+          }
+        });
       }];
     });
   } else {
     NSLog(@"[ATT] ATT is unavailable before iOS 14. source=%@", source);
   }
+}
+
+- (void)scheduleATTRequestRetryFromSource:(NSString *)source attempt:(NSInteger)attempt
+{
+  if (attempt >= ATTNativeMaxRetryCount) {
+    NSLog(@"[ATT] native request retry limit reached. source=%@ attempt=%ld",
+          source,
+          (long)attempt);
+    return;
+  }
+
+  NSInteger nextAttempt = attempt + 1;
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)),
+                 dispatch_get_main_queue(), ^{
+    [self requestATTIfNeededFromSource:source attempt:nextAttempt];
+  });
 }
 
 // Linking API
