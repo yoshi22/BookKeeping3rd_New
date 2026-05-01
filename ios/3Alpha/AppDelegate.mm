@@ -2,6 +2,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
+#import <AppTrackingTransparency/AppTrackingTransparency.h>
 
 @implementation AppDelegate
 
@@ -28,6 +29,25 @@
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+}
+
+// ATT: Scene が完全に active になった後にプロンプトを表示する。
+// JS 経由より信頼性が高く、iPadOS 26 の Stage Manager / SceneDelegate でも確実に動作する。
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+  [super applicationDidBecomeActive:application];
+
+  if (@available(iOS 14, *)) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
+                     dispatch_get_main_queue(), ^{
+        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+          NSLog(@"[ATT] Native authorization status: %ld", (long)status);
+        }];
+      });
+    });
+  }
 }
 
 // Linking API
