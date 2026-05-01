@@ -4,10 +4,6 @@
 #import <React/RCTLinkingManager.h>
 #import <AppTrackingTransparency/AppTrackingTransparency.h>
 
-static NSString *const ATTNativeRequestAttemptedDefaultsKey = @"ATTNativeRequestAttempted";
-static NSInteger const ATTNativeMaxRetryCount = 3;
-static BOOL ATTNativeRequestInFlight = NO;
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -19,9 +15,6 @@ static BOOL ATTNativeRequestInFlight = NO;
   self.initialProps = @{};
 
   if (@available(iOS 14, *)) {
-    // build 23 の診断用永続フラグが残っていると再試行を阻害するため、build 24 以降で破棄する。
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:ATTNativeRequestAttemptedDefaultsKey];
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(attSceneDidActivate:)
                                                  name:UISceneDidActivateNotification
@@ -45,132 +38,27 @@ static BOOL ATTNativeRequestInFlight = NO;
 #endif
 }
 
-// ATT: Scene が完全に active になった後にプロンプトを表示する。
-// JS 経由より信頼性が高く、iPadOS 26 の Stage Manager / SceneDelegate でも確実に動作する。
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-  NSLog(@"[ATT] applicationDidBecomeActive called");
+  if (@available(iOS 14, *)) {
+    NSLog(@"[ATT] applicationDidBecomeActive called. status=%ld appState=%ld",
+          (long)ATTrackingManager.trackingAuthorizationStatus,
+          (long)application.applicationState);
+  } else {
+    NSLog(@"[ATT] applicationDidBecomeActive called. ATT unavailable before iOS 14");
+  }
   [super applicationDidBecomeActive:application];
-
-  [self requestATTIfNeededFromSource:@"applicationDidBecomeActive"];
 }
 
 - (void)attSceneDidActivate:(NSNotification *)notification
 {
-  NSLog(@"[ATT] UISceneDidActivateNotification received");
-  [self requestATTIfNeededFromSource:@"UISceneDidActivateNotification"];
-}
-
-- (void)requestATTIfNeededFromSource:(NSString *)source
-{
-  [self requestATTIfNeededFromSource:source attempt:1];
-}
-
-- (void)requestATTIfNeededFromSource:(NSString *)source attempt:(NSInteger)attempt
-{
   if (@available(iOS 14, *)) {
-    UIApplicationState applicationState = UIApplication.sharedApplication.applicationState;
-    ATTrackingManagerAuthorizationStatus currentStatus = ATTrackingManager.trackingAuthorizationStatus;
-    NSLog(@"[ATT] evaluate request. source=%@ attempt=%ld appState=%ld status=%ld",
-          source,
-          (long)attempt,
-          (long)applicationState,
-          (long)currentStatus);
-
-    if (ATTNativeRequestInFlight) {
-      NSLog(@"[ATT] native request already in flight. source=%@ attempt=%ld status=%ld",
-            source,
-            (long)attempt,
-            (long)currentStatus);
-      return;
-    }
-
-    if (currentStatus != ATTrackingManagerAuthorizationStatusNotDetermined) {
-      NSLog(@"[ATT] status already determined. skip native request. source=%@ attempt=%ld status=%ld",
-            source,
-            (long)attempt,
-            (long)currentStatus);
-      return;
-    }
-
-    if (applicationState != UIApplicationStateActive) {
-      NSLog(@"[ATT] application is not active. schedule retry. source=%@ attempt=%ld appState=%ld",
-            source,
-            (long)attempt,
-            (long)applicationState);
-      [self scheduleATTRequestRetryFromSource:source attempt:attempt];
-      return;
-    }
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
-                   dispatch_get_main_queue(), ^{
-      UIApplicationState delayedApplicationState = UIApplication.sharedApplication.applicationState;
-      ATTrackingManagerAuthorizationStatus delayedStatus = ATTrackingManager.trackingAuthorizationStatus;
-      NSLog(@"[ATT] delayed evaluation before native request. source=%@ attempt=%ld appState=%ld status=%ld",
-            source,
-            (long)attempt,
-            (long)delayedApplicationState,
-            (long)delayedStatus);
-
-      if (ATTNativeRequestInFlight) {
-        NSLog(@"[ATT] native request became in flight during delay. source=%@ attempt=%ld status=%ld",
-              source,
-              (long)attempt,
-              (long)delayedStatus);
-        return;
-      }
-
-      if (delayedStatus != ATTrackingManagerAuthorizationStatusNotDetermined) {
-        NSLog(@"[ATT] delayed status already determined. skip native request. source=%@ attempt=%ld status=%ld",
-              source,
-              (long)attempt,
-              (long)delayedStatus);
-        return;
-      }
-
-      if (delayedApplicationState != UIApplicationStateActive) {
-        NSLog(@"[ATT] delayed application state is not active. schedule retry. source=%@ attempt=%ld appState=%ld",
-              source,
-              (long)attempt,
-              (long)delayedApplicationState);
-        [self scheduleATTRequestRetryFromSource:source attempt:attempt];
-        return;
-      }
-
-      ATTNativeRequestInFlight = YES;
-      [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-          ATTNativeRequestInFlight = NO;
-          NSLog(@"[ATT] native request completed. source=%@ attempt=%ld status=%ld",
-                source,
-                (long)attempt,
-                (long)status);
-
-          if (status == ATTrackingManagerAuthorizationStatusNotDetermined) {
-            [self scheduleATTRequestRetryFromSource:source attempt:attempt];
-          }
-        });
-      }];
-    });
+    NSLog(@"[ATT] UISceneDidActivateNotification received. status=%ld appState=%ld",
+          (long)ATTrackingManager.trackingAuthorizationStatus,
+          (long)UIApplication.sharedApplication.applicationState);
   } else {
-    NSLog(@"[ATT] ATT is unavailable before iOS 14. source=%@", source);
+    NSLog(@"[ATT] UISceneDidActivateNotification received. ATT unavailable before iOS 14");
   }
-}
-
-- (void)scheduleATTRequestRetryFromSource:(NSString *)source attempt:(NSInteger)attempt
-{
-  if (attempt >= ATTNativeMaxRetryCount) {
-    NSLog(@"[ATT] native request retry limit reached. source=%@ attempt=%ld",
-          source,
-          (long)attempt);
-    return;
-  }
-
-  NSInteger nextAttempt = attempt + 1;
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)),
-                 dispatch_get_main_queue(), ^{
-    [self requestATTIfNeededFromSource:source attempt:nextAttempt];
-  });
 }
 
 // Linking API

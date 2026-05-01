@@ -14,11 +14,12 @@ import React, {
 import { Platform, AppState, type AppStateStatus } from "react-native";
 import mobileAds from "react-native-google-mobile-ads";
 import { adService } from "@/services/ad-service";
+import { useAtt } from "@/context/AttContext";
 import { usePurchase } from "@/context/PurchaseContext";
 import type { AdContextType } from "@/types/monetization";
 import { logger } from "@/utils/logger";
 
-const IOS_AD_INITIALIZATION_DELAY_MS = 4000;
+const IOS_AD_INITIALIZATION_MAX_WAIT_MS = 8000;
 
 /**
  * 広告コンテキストのデフォルト値
@@ -58,6 +59,7 @@ interface AdProviderProps {
  */
 export function AdProvider({ children }: AdProviderProps): React.ReactElement {
   const { isPremium } = usePurchase();
+  const { isInitialCheckComplete: isAttInitialCheckComplete } = useAtt();
   const [isInitialized, setIsInitialized] = useState(false);
   const [isInterstitialReady, setIsInterstitialReady] = useState(false);
   const [canShowInterstitialState, setCanShowInterstitialState] =
@@ -94,7 +96,7 @@ export function AdProvider({ children }: AdProviderProps): React.ReactElement {
 
   /**
    * マウント後に広告を初期化
-   * iOSではATT表示条件との競合を避けるため、AdMob SDK初期化を短時間遅延する。
+   * iOSではATTの初回判定後にAdMob SDKを初期化する。
    */
   useEffect(() => {
     if (Platform.OS !== "ios") {
@@ -102,14 +104,20 @@ export function AdProvider({ children }: AdProviderProps): React.ReactElement {
       return;
     }
 
-    const timer = setTimeout(() => {
+    if (isAttInitialCheckComplete) {
       initializeAds();
-    }, IOS_AD_INITIALIZATION_DELAY_MS);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      logger.info("ATT初回判定待機がタイムアウトしたためAdMob SDKを初期化");
+      initializeAds();
+    }, IOS_AD_INITIALIZATION_MAX_WAIT_MS);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [initializeAds]);
+  }, [initializeAds, isAttInitialCheckComplete]);
 
   /**
    * インタースティシャル広告を読み込み

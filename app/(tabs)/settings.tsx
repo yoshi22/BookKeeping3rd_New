@@ -8,6 +8,7 @@ import {
   Modal,
   Alert,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import { Screen } from "../../src/components/layout/ResponsiveLayout";
 import { AppIcon, IconContextSizes } from "../../src/theme/icons";
@@ -18,6 +19,7 @@ import {
   type Theme,
 } from "../../src/context/ThemeContext";
 import { usePurchase } from "../../src/context/PurchaseContext";
+import { useAtt } from "../../src/context/AttContext";
 import { confirmResetDatabase } from "../../src/utils/reset-database";
 import { TestDataCreator } from "../../src/components/dev-tools/TestDataCreator";
 import { REMOVE_ADS_DISPLAY_PRICE } from "../../src/config/monetization";
@@ -37,6 +39,18 @@ export default function SettingsScreen() {
     error: purchaseError,
     clearError,
   } = usePurchase();
+  const {
+    status: attStatus,
+    granted: isAttGranted,
+    canAskAgain: canAskAttAgain,
+    appState: attAppState,
+    lastCheckedAt: attLastCheckedAt,
+    isLoading: isAttLoading,
+    isRequesting: isAttRequesting,
+    refreshStatus: refreshAttStatus,
+    requestPermission: requestAttPermission,
+    openAppSettings,
+  } = useAtt();
 
   // カスタムテーマ選択モーダル状態
   const [showThemeModal, setShowThemeModal] = useState(false);
@@ -90,6 +104,23 @@ export default function SettingsScreen() {
     setSelectedTheme(mode);
     setThemeMode(mode);
     setShowThemeModal(false);
+  };
+
+  const attStatusLabel =
+    {
+      undetermined: "未確認",
+      granted: "許可済み",
+      denied: "拒否済み",
+      restricted: "制限中",
+      unavailable: "対象外",
+    }[attStatus] ?? attStatus;
+
+  const attLastCheckedLabel = attLastCheckedAt
+    ? new Date(attLastCheckedAt).toLocaleString("ja-JP")
+    : "未確認";
+
+  const handleRequestAtt = async () => {
+    await requestAttPermission("settings");
   };
 
   return (
@@ -158,6 +189,107 @@ export default function SettingsScreen() {
             </View>
           </View>
         </View>
+
+        {/* トラッキング許可診断セクション */}
+        {Platform.OS === "ios" && (
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <AppIcon
+                name="info"
+                size={IconContextSizes.listItem}
+                color={theme.colors.primary}
+              />
+              <Text style={styles.sectionTitle}>トラッキング許可診断</Text>
+            </View>
+
+            <View style={styles.card}>
+              <Text style={styles.cardTitle}>ATT ステータス</Text>
+              <Text style={styles.description}>
+                iOSの状態を確認します。拒否済みまたは制限中の場合、アプリ側からシステムダイアログを再表示することはできません。
+              </Text>
+
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>現在の状態</Text>
+                <Text style={styles.infoValue}>{attStatusLabel}</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>許可</Text>
+                <Text style={styles.infoValue}>
+                  {isAttGranted ? "はい" : "いいえ"}
+                </Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>再要求可能</Text>
+                <Text style={styles.infoValue}>
+                  {canAskAttAgain ? "はい" : "いいえ"}
+                </Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>AppState</Text>
+                <Text style={styles.infoValue}>{attAppState}</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>最終確認</Text>
+                <Text style={styles.infoValue}>{attLastCheckedLabel}</Text>
+              </View>
+
+              {attStatus === "undetermined" ? (
+                <TouchableOpacity
+                  style={[
+                    styles.purchaseButton,
+                    isAttRequesting && styles.purchaseButtonDisabled,
+                  ]}
+                  onPress={handleRequestAtt}
+                  disabled={isAttRequesting}
+                  testID="settings-att-request-button"
+                  accessibilityLabel="トラッキング許可をリクエスト"
+                >
+                  {isAttRequesting ? (
+                    <ActivityIndicator color={theme.colors.surface} />
+                  ) : (
+                    <Text style={styles.purchaseButtonText}>
+                      トラッキング許可をリクエスト
+                    </Text>
+                  )}
+                </TouchableOpacity>
+              ) : (
+                <Text style={styles.attHelpText}>
+                  {attStatus === "denied" || attStatus === "restricted"
+                    ? "この状態ではATTダイアログは再表示されません。iOSの設定で変更できる場合があります。"
+                    : "ATTの初回判定は完了しています。"}
+                </Text>
+              )}
+
+              <TouchableOpacity
+                style={styles.themeButton}
+                onPress={refreshAttStatus}
+                disabled={isAttLoading}
+                testID="settings-att-refresh-button"
+                accessibilityLabel="トラッキング許可状態を再確認"
+              >
+                <View style={styles.themeButtonContent}>
+                  <Text style={styles.themeButtonLabel}>状態を再確認</Text>
+                  <Text style={styles.themeButtonValue}>
+                    {isAttLoading ? "確認中..." : "再読み込み"}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+
+              {(attStatus === "denied" || attStatus === "restricted") && (
+                <TouchableOpacity
+                  style={styles.restoreButton}
+                  onPress={openAppSettings}
+                  testID="settings-att-open-settings-button"
+                  accessibilityLabel="アプリ設定を開く"
+                >
+                  <Text style={styles.restoreButtonText}>
+                    iOSのアプリ設定を開く
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+        )}
 
         {/* テーマ設定セクション */}
         <View style={styles.section}>
@@ -629,6 +761,12 @@ const createStyles = (theme: Theme) =>
       color: theme.colors.error,
       textAlign: "center",
       marginTop: 5,
+    },
+    attHelpText: {
+      fontSize: 13,
+      color: theme.colors.textSecondary,
+      lineHeight: 19,
+      marginTop: 15,
     },
     themeButton: {
       flexDirection: "row",
