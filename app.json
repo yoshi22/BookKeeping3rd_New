@@ -176,7 +176,13 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.yoshi.Boki3rdReviewMaster.alpha",
-      "versionCode": 3
+      "versionCode": 12,
+      "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.VIBRATE",
+        "com.google.android.gms.permission.AD_ID"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -206,6 +212,12 @@
         {
           "ios": {
             "deploymentTarget": "16.0"
+          },
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "minSdkVersion": 24,
+            "kotlinVersion": "1.9.25"
           }
         }
       ]

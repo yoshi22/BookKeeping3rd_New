@@ -44,8 +44,11 @@ const PROD_AD_UNITS = {
     interstitial: "ca-app-pub-7827379728198573/9532496421",
   },
   android: {
-    banner: "ca-app-pub-XXXXXXXXXXXXX/XXXXXXXXXX", // TODO: Androidリリース時に設定
-    interstitial: "ca-app-pub-XXXXXXXXXXXXX/XXXXXXXXXX", // TODO: Androidリリース時に設定
+    // TODO: Android本番リリース前に以下2点を差し替える
+    //   1. AdMobコンソール → アプリ追加 → Android版アプリIDを app.json の androidAppId にセット
+    //   2. 各広告ユニットを作成し、下記IDに貼り付ける
+    banner: "ca-app-pub-XXXXXXXXXXXXX/XXXXXXXXXX",
+    interstitial: "ca-app-pub-XXXXXXXXXXXXX/XXXXXXXXXX",
   },
 };
 
