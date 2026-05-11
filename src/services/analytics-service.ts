@@ -75,7 +75,7 @@ export function logBannerFailed(error: string): void {
 }
 
 /**
- * 広告削除CTAクリックをログ
+ * 広告非表示CTAクリックをログ
  */
 export function logRemoveAdsCTAClicked(
   source: "session_result" | "settings",

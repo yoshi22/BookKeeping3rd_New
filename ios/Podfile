@@ -52,6 +52,20 @@ target '3Alpha' do
       :ccache_enabled => podfile_properties['apple.ccacheEnabled'] == 'true',
     )
 
+    fmt_base_path = File.join(__dir__, 'Pods', 'fmt', 'include', 'fmt', 'base.h')
+    if File.exist?(fmt_base_path)
+      fmt_base = File.read(fmt_base_path)
+      fmt_base = fmt_base.gsub(
+        "#elif defined(__cpp_consteval)\n#  define FMT_USE_CONSTEVAL 1",
+        "#elif defined(__cpp_consteval)\n#  define FMT_USE_CONSTEVAL 0",
+      )
+      fmt_base = fmt_base.gsub(
+        "#elif FMT_GCC_VERSION >= 1002 || FMT_CLANG_VERSION >= 1101\n#  define FMT_USE_CONSTEVAL 1",
+        "#elif FMT_GCC_VERSION >= 1002 || FMT_CLANG_VERSION >= 1101\n#  define FMT_USE_CONSTEVAL 0",
+      )
+      File.write(fmt_base_path, fmt_base)
+    end
+
     # This is necessary for Xcode 14, because it signs resource bundles by default
     # when building for devices.
     installer.target_installation_results.pod_target_installation_results

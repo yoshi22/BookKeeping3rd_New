@@ -15,7 +15,6 @@ import { useTheme, useThemedStyles, type Theme } from "@/context/ThemeContext";
 import { usePurchase } from "@/context/PurchaseContext";
 import { AppIcon, IconContextSizes } from "@/theme/icons";
 import type { SessionResult } from "@/types/monetization";
-import { REMOVE_ADS_DISPLAY_PRICE } from "@/config/monetization";
 import { logRemoveAdsCTAClicked } from "@/services/analytics-service";
 
 /**
@@ -28,7 +27,7 @@ interface SessionResultScreenProps {
   onNextSession: () => void;
   /** 終了ボタン押下時 */
   onFinish: () => void;
-  /** 広告削除購入ボタン押下時 */
+  /** 広告非表示購入ボタン押下時 */
   onPurchaseRemoveAds?: () => void;
 }
 
@@ -88,7 +87,7 @@ export function SessionResultScreen({
 }: SessionResultScreenProps): React.ReactElement {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
-  const { isPremium } = usePurchase();
+  const { isPremium, canPurchaseRemoveAds } = usePurchase();
 
   const resultMessage = getResultMessage(result.accuracy);
 
@@ -152,8 +151,8 @@ export function SessionResultScreen({
         </View>
       </View>
 
-      {/* 広告削除カード（非プレミアムユーザーのみ） */}
-      {!isPremium && onPurchaseRemoveAds && (
+      {/* 広告非表示カード（非プレミアムユーザーのみ） */}
+      {!isPremium && canPurchaseRemoveAds && onPurchaseRemoveAds && (
         <View style={styles.removeAdsCard}>
           <View style={styles.removeAdsHeader}>
             <AppIcon
@@ -164,16 +163,14 @@ export function SessionResultScreen({
             <Text style={styles.removeAdsTitle}>集中モードで学習効率UP</Text>
           </View>
           <Text style={styles.removeAdsDescription}>
-            広告を削除して、より集中して学習に取り組めます。
+            一度の購入で広告を非表示にし、より集中して学習に取り組めます。
           </Text>
           <TouchableOpacity
             style={styles.removeAdsButton}
             onPress={handlePurchasePress}
             testID="session-result-purchase-button"
           >
-            <Text style={styles.removeAdsButtonText}>
-              広告を削除（{REMOVE_ADS_DISPLAY_PRICE}）
-            </Text>
+            <Text style={styles.removeAdsButtonText}>広告を非表示</Text>
           </TouchableOpacity>
         </View>
       )}

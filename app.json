@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.yoshi.Boki3rdReviewMaster.alpha",
-      "buildNumber": "25",
+      "buildNumber": "31",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSUserTrackingUsageDescription": "広告の配信を最適化するため、このアプリでの行動データをトラッキングすることを許可してください。",
@@ -176,8 +176,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.yoshi.Boki3rdReviewMaster.alpha",
-      "versionCode": 3,
-      "targetSdkVersion": 35
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png",

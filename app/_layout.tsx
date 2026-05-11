@@ -6,7 +6,10 @@ import { ThemeProvider } from "../src/context/ThemeContext";
 import { PurchaseProvider } from "../src/context/PurchaseContext";
 import { AdProvider } from "../src/context/AdContext";
 import { AttProvider } from "../src/context/AttContext";
+import { configureIap } from "../src/services/iap-service";
 import "expo-dev-client";
+
+configureIap();
 
 export default function RootLayout() {
   return (

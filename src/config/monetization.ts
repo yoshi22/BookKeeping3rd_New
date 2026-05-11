@@ -80,7 +80,7 @@ export const AD_UNITS = {
  * iOS/Android両方で同じIDを使用
  */
 export const IAP_PRODUCTS = {
-  /** 広告削除（買い切り） */
+  /** 広告を非表示（買い切り） */
   REMOVE_ADS: "remove_ads",
 };
 
@@ -129,16 +129,6 @@ export const REVIEW_PROMPT_CONDITIONS: ReviewPromptConditions = {
   /** 購入後の待機時間（24時間） */
   postPurchaseWaitHours: 24,
 };
-
-// ============================================
-// 広告削除の価格表示
-// ============================================
-
-/**
- * 広告削除の表示価格
- * 実際の価格はストアから取得するが、UI表示用のデフォルト値
- */
-export const REMOVE_ADS_DISPLAY_PRICE = "¥500";
 
 // ============================================
 // ストレージキー（SecureStore用）

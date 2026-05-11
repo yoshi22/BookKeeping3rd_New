@@ -45,6 +45,19 @@ export interface SessionResult {
 export type PurchaseState = "unknown" | "free" | "premium";
 
 /**
+ * 広告非表示商品のストア情報
+ */
+export interface RemoveAdsProduct {
+  productId: string;
+  price: string;
+  currency?: string;
+  countryCode?: string;
+  localizedPrice: string;
+  title: string;
+  description?: string;
+}
+
+/**
  * 購入コンテキストの型
  */
 export interface PurchaseContextType {
@@ -52,9 +65,15 @@ export interface PurchaseContextType {
   purchaseState: PurchaseState;
   /** ローディング中かどうか */
   isLoading: boolean;
-  /** プレミアム（広告削除済み）かどうか */
+  /** プレミアム（広告非表示済み）かどうか */
   isPremium: boolean;
-  /** 広告削除を購入 */
+  /** 広告非表示商品のストア情報 */
+  removeAdsProduct: RemoveAdsProduct | null;
+  /** 広告非表示を購入可能か */
+  canPurchaseRemoveAds: boolean;
+  /** ストアの商品情報を再取得 */
+  refreshPurchaseCatalog: () => Promise<void>;
+  /** 広告非表示を購入 */
   purchaseRemoveAds: () => Promise<boolean>;
   /** 購入を復元 */
   restorePurchases: () => Promise<boolean>;

@@ -9,6 +9,7 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useMemo,
   type ReactNode,
 } from "react";
 import { Platform } from "react-native";
@@ -27,13 +28,21 @@ import {
 } from "react-native-iap";
 import { settingsRepository } from "@/data/repositories/settings-repository";
 import { IAP_PRODUCTS, IAP_PRODUCT_IDS } from "@/config/monetization";
-import type { PurchaseContextType, PurchaseState } from "@/types/monetization";
+import type {
+  PurchaseContextType,
+  PurchaseState,
+  RemoveAdsProduct,
+} from "@/types/monetization";
 import {
   logPurchaseStarted,
   logPurchaseSuccess,
   logPurchaseFailed,
   logPurchaseRestored,
 } from "@/services/analytics-service";
+import {
+  getStorefrontDiagnostics,
+  type StorefrontDiagnostics,
+} from "@/services/iap-service";
 import { logger } from "@/utils/logger";
 
 /**
@@ -43,6 +52,9 @@ const defaultPurchaseContext: PurchaseContextType = {
   purchaseState: "unknown",
   isLoading: true,
   isPremium: false,
+  removeAdsProduct: null,
+  canPurchaseRemoveAds: false,
+  refreshPurchaseCatalog: async () => {},
   purchaseRemoveAds: async () => false,
   restorePurchases: async () => false,
   error: null,
@@ -85,12 +97,72 @@ export function PurchaseProvider({
   const [isConnected, setIsConnected] = useState(false);
 
   const isPremium = purchaseState === "premium";
+  const removeAdsProduct: RemoveAdsProduct | null = useMemo(() => {
+    const storeRemoveAdsProduct = products.find(
+      (product: Product) => product.productId === IAP_PRODUCTS.REMOVE_ADS,
+    );
+
+    if (!storeRemoveAdsProduct) {
+      return null;
+    }
+
+    return {
+      productId: storeRemoveAdsProduct.productId,
+      price: storeRemoveAdsProduct.price,
+      currency: storeRemoveAdsProduct.currency,
+      countryCode: storeRemoveAdsProduct.countryCode ?? undefined,
+      localizedPrice: storeRemoveAdsProduct.localizedPrice,
+      title: storeRemoveAdsProduct.title || "広告を非表示",
+      description: storeRemoveAdsProduct.description,
+    };
+  }, [products]);
+  const canPurchaseRemoveAds =
+    isConnected && !!removeAdsProduct && !isPremium;
 
   /**
    * エラーをクリア
    */
   const clearError = useCallback(() => {
     setError(null);
+  }, []);
+
+  const loadStoreProducts = useCallback(async (): Promise<void> => {
+    let diagnostics: StorefrontDiagnostics | null = null;
+
+    if (Platform.OS === "ios") {
+      diagnostics = await getStorefrontDiagnostics();
+      logger.info("storefront診断取得完了", diagnostics ?? {});
+    }
+
+    const availableProducts = await getProducts({ skus: IAP_PRODUCT_IDS });
+    const removeAdsStoreProduct = availableProducts.find(
+      (product: Product) => product.productId === IAP_PRODUCTS.REMOVE_ADS,
+    );
+    setProducts(availableProducts);
+    logger.info("IAP商品取得完了", {
+      count: availableProducts.length,
+      products: availableProducts.map((p: Product) => ({
+        productId: p.productId,
+        localizedPrice: p.localizedPrice,
+        price: p.price,
+        currency: p.currency,
+        countryCode: p.countryCode,
+        title: p.title,
+      })),
+      removeAdsPurchaseContext: removeAdsStoreProduct
+        ? {
+            localizedPrice: removeAdsStoreProduct.localizedPrice,
+            currency: removeAdsStoreProduct.currency,
+            countryCode:
+              diagnostics?.countryCode ??
+              removeAdsStoreProduct.countryCode ??
+              undefined,
+            storefrontId: diagnostics?.storefrontId,
+            receiptEnvironment: diagnostics?.receiptEnvironment ?? "unknown",
+            diagnosticSource: diagnostics?.source ?? "unavailable",
+          }
+        : undefined,
+    });
   }, []);
 
   /**
@@ -108,19 +180,36 @@ export function PurchaseProvider({
       const connection = await initConnection();
       logger.info("IAP接続成功", { connection });
       setIsConnected(true);
-
-      // 商品情報を取得
-      const availableProducts = await getProducts({ skus: IAP_PRODUCT_IDS });
-      setProducts(availableProducts);
-      logger.info("IAP商品取得完了", {
-        count: availableProducts.length,
-        products: availableProducts.map((p: Product) => p.productId),
-      });
+      await loadStoreProducts();
     } catch (err) {
       logger.error("IAP初期化エラー", err as Error);
       // エラーがあっても続行（無料版として動作）
     }
-  }, []);
+  }, [loadStoreProducts]);
+
+  const refreshPurchaseCatalog = useCallback(async (): Promise<void> => {
+    if (Platform.OS === "web") {
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      clearError();
+
+      if (!isConnected) {
+        const connection = await initConnection();
+        logger.info("IAP再接続成功", { connection });
+        setIsConnected(true);
+      }
+
+      await loadStoreProducts();
+    } catch (err) {
+      setError("価格情報の再取得に失敗しました");
+      logger.error("IAP商品再取得エラー", err as Error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [clearError, isConnected, loadStoreProducts]);
 
   /**
    * 保存済み購入状態を読み込み
@@ -163,11 +252,16 @@ export function PurchaseProvider({
   }, []);
 
   /**
-   * 広告削除を購入
+   * 広告非表示を購入
    */
   const purchaseRemoveAds = useCallback(async (): Promise<boolean> => {
-    if (!isConnected) {
-      setError("ストアに接続できません");
+    if (!isConnected || !removeAdsProduct) {
+      setError("広告非表示商品の読み込みが完了していません");
+      return false;
+    }
+
+    if (isPremium) {
+      setError("この端末ではすでに広告が非表示になっています");
       return false;
     }
 
@@ -194,7 +288,7 @@ export function PurchaseProvider({
     } finally {
       setIsLoading(false);
     }
-  }, [isConnected, clearError]);
+  }, [clearError, isConnected, isPremium, removeAdsProduct]);
 
   /**
    * 購入を復元
@@ -212,7 +306,7 @@ export function PurchaseProvider({
       const purchases = await getAvailablePurchases();
       logger.info("購入履歴取得", { count: purchases.length });
 
-      // 広告削除購入を探す
+      // 広告非表示購入を探す
       const removeAdsPurchase = purchases.find(
         (p: Purchase) => p.productId === IAP_PRODUCTS.REMOVE_ADS,
       );
@@ -302,6 +396,9 @@ export function PurchaseProvider({
     purchaseState,
     isLoading,
     isPremium,
+    removeAdsProduct,
+    canPurchaseRemoveAds,
+    refreshPurchaseCatalog,
     purchaseRemoveAds,
     restorePurchases,
     error,

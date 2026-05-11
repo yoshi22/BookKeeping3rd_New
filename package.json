@@ -70,5 +70,18 @@
     "ts-jest": "^29.1.0",
     "typescript": "^5.3.3"
   },
+  "expo": {
+    "install": {
+      "exclude": ["expo", "expo-router"]
+    },
+    "doctor": {
+      "appConfigFieldsNotSyncedCheck": {
+        "enabled": false
+      },
+      "reactNativeDirectoryCheck": {
+        "enabled": false
+      }
+    }
+  },
   "private": true
 }

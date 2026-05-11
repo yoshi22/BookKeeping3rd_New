@@ -22,7 +22,6 @@ import { usePurchase } from "../../src/context/PurchaseContext";
 import { useAtt } from "../../src/context/AttContext";
 import { confirmResetDatabase } from "../../src/utils/reset-database";
 import { TestDataCreator } from "../../src/components/dev-tools/TestDataCreator";
-import { REMOVE_ADS_DISPLAY_PRICE } from "../../src/config/monetization";
 import { logRemoveAdsCTAClicked } from "../../src/services/analytics-service";
 
 export default function SettingsScreen() {
@@ -34,6 +33,8 @@ export default function SettingsScreen() {
   const {
     isPremium,
     isLoading: isPurchaseLoading,
+    removeAdsProduct,
+    canPurchaseRemoveAds,
     purchaseRemoveAds,
     restorePurchases,
     error: purchaseError,
@@ -68,12 +69,12 @@ export default function SettingsScreen() {
     }
   }, [purchaseError, clearError]);
 
-  // 広告削除購入ハンドラー
+  // 広告非表示購入ハンドラー
   const handlePurchaseRemoveAds = async () => {
     logRemoveAdsCTAClicked("settings");
     const success = await purchaseRemoveAds();
     if (success) {
-      Alert.alert("購入完了", "広告が削除されました。ありがとうございます！");
+      Alert.alert("購入完了", "広告が非表示になりました。ありがとうございます！");
     }
   };
 
@@ -330,7 +331,7 @@ export default function SettingsScreen() {
           </View>
         </View>
 
-        {/* 広告削除セクション */}
+        {/* 広告非表示セクション */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <AppIcon
@@ -338,7 +339,7 @@ export default function SettingsScreen() {
               size={IconContextSizes.listItem}
               color={theme.colors.primary}
             />
-            <Text style={styles.sectionTitle}>広告削除</Text>
+            <Text style={styles.sectionTitle}>広告を非表示</Text>
           </View>
 
           <View style={styles.card}>
@@ -353,7 +354,7 @@ export default function SettingsScreen() {
                   <Text style={styles.premiumBadgeText}>購入済み</Text>
                 </View>
                 <Text style={styles.premiumDescription}>
-                  広告削除を購入いただきありがとうございます。
+                  広告を非表示をご購入いただきありがとうございます。
                   広告なしで快適に学習をお楽しみください。
                 </Text>
               </>
@@ -361,41 +362,40 @@ export default function SettingsScreen() {
               <>
                 <Text style={styles.cardTitle}>集中モードで学習効率UP</Text>
                 <Text style={styles.description}>
-                  広告を削除して、より集中して学習に取り組めます。
-                  一度購入すると永続的に広告が非表示になります。
+                  一度の購入で広告を非表示にし、より集中して学習に取り組めます。
                 </Text>
 
-                <View style={styles.priceContainer}>
-                  <Text style={styles.priceLabel}>価格</Text>
-                  <Text style={styles.priceValue}>
-                    {REMOVE_ADS_DISPLAY_PRICE}
+                {canPurchaseRemoveAds && removeAdsProduct ? (
+                  <TouchableOpacity
+                    style={[
+                      styles.purchaseButton,
+                      isPurchaseLoading && styles.purchaseButtonDisabled,
+                    ]}
+                    onPress={handlePurchaseRemoveAds}
+                    disabled={isPurchaseLoading}
+                    testID="settings-purchase-button"
+                    accessibilityLabel="広告を非表示"
+                  >
+                    {isPurchaseLoading ? (
+                      <ActivityIndicator color={theme.colors.surface} />
+                    ) : (
+                      <>
+                        <AppIcon
+                          name="badge"
+                          size={IconContextSizes.button}
+                          color="white"
+                        />
+                        <Text style={styles.purchaseButtonText}>
+                          広告を非表示
+                        </Text>
+                      </>
+                    )}
+                  </TouchableOpacity>
+                ) : (
+                  <Text style={styles.purchaseHelpText}>
+                    広告非表示商品の情報を読み込み中です。ストアに接続できると購入ボタンが表示されます。
                   </Text>
-                  <Text style={styles.priceNote}>（買い切り）</Text>
-                </View>
-
-                <TouchableOpacity
-                  style={[
-                    styles.purchaseButton,
-                    isPurchaseLoading && styles.purchaseButtonDisabled,
-                  ]}
-                  onPress={handlePurchaseRemoveAds}
-                  disabled={isPurchaseLoading}
-                  testID="settings-purchase-button"
-                  accessibilityLabel="広告を削除"
-                >
-                  {isPurchaseLoading ? (
-                    <ActivityIndicator color={theme.colors.surface} />
-                  ) : (
-                    <>
-                      <AppIcon
-                        name="badge"
-                        size={IconContextSizes.button}
-                        color="white"
-                      />
-                      <Text style={styles.purchaseButtonText}>広告を削除</Text>
-                    </>
-                  )}
-                </TouchableOpacity>
+                )}
 
                 <TouchableOpacity
                   style={styles.restoreButton}
@@ -874,29 +874,11 @@ const createStyles = (theme: Theme) =>
       textAlign: "center",
       lineHeight: 20,
     },
-    priceContainer: {
-      flexDirection: "row",
-      alignItems: "baseline",
-      justifyContent: "center",
-      marginVertical: 15,
-      padding: 15,
-      backgroundColor: theme.colors.primaryLight,
-      borderRadius: 8,
-    },
-    priceLabel: {
-      fontSize: 14,
+    purchaseHelpText: {
+      fontSize: 13,
       color: theme.colors.textSecondary,
-      marginRight: 8,
-    },
-    priceValue: {
-      fontSize: 24,
-      fontWeight: "bold",
-      color: theme.colors.primary,
-    },
-    priceNote: {
-      fontSize: 12,
-      color: theme.colors.textSecondary,
-      marginLeft: 4,
+      lineHeight: 20,
+      marginBottom: 16,
     },
     purchaseButton: {
       backgroundColor: theme.colors.primary,

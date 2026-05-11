@@ -1,4 +1,4 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# Learn more https://docs.expo.dev/build-reference/easignore/
 
 # dependencies
 node_modules/
@@ -41,7 +41,7 @@ app-example
 coverage/
 *.lcov
 
-# Build test directories  
+# Build test directories
 build-test/
 
 # IDE
@@ -53,7 +53,7 @@ build-test/
 *.log
 test-questions.db
 
-# Serena cache files (Claude Code)
+# Serena cache files
 .serena/cache/
 
 # Backup files
@@ -62,18 +62,21 @@ backup/
 # Archive files
 scripts/archive/
 
-# Compiled JavaScript files (TypeScript project)
+# Compiled JavaScript files
 src/**/*.js
 
-# WebDriverAgent (development dependency)
+# WebDriverAgent
 WebDriverAgent/
 
 # Local iOS build artifacts
+ios/build/
 ios/build-release/
+ios/build-release-local-unsigned/
 ios/build-release-verify/
 ios/build-release-launchable/
-ios/build-appreview-screenshot/
-ios/build-release-local-unsigned/
+ios/build-release-latest/
+ios/build-release-arm64/
 
-# App Store review assets (local only)
+# App Store review assets
 docs/appstore-response/
+docs/screenshots/appstore/raw/

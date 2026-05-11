@@ -16,7 +16,7 @@ import { logger } from "@/utils/logger";
 export default function ReviewSessionResultRoute() {
   const router = useRouter();
   const params = useLocalSearchParams();
-  const { isPremium, purchaseRemoveAds } = usePurchase();
+  const { isPremium, purchaseRemoveAds, canPurchaseRemoveAds } = usePurchase();
   const { showInterstitial, canShowInterstitial } = useAds();
 
   // セッション結果をパラメータから復元
@@ -64,7 +64,7 @@ export default function ReviewSessionResultRoute() {
     router.replace("/(tabs)/review");
   };
 
-  // 広告削除購入
+  // 広告非表示購入
   const handlePurchaseRemoveAds = async () => {
     await purchaseRemoveAds();
   };
@@ -74,7 +74,9 @@ export default function ReviewSessionResultRoute() {
       result={sessionResult}
       onNextSession={handleNextSession}
       onFinish={handleFinish}
-      onPurchaseRemoveAds={isPremium ? undefined : handlePurchaseRemoveAds}
+      onPurchaseRemoveAds={
+        !isPremium && canPurchaseRemoveAds ? handlePurchaseRemoveAds : undefined
+      }
     />
   );
 }

@@ -16,7 +16,7 @@ import { logger } from "@/utils/logger";
 export default function LearningSessionResultRoute() {
   const router = useRouter();
   const params = useLocalSearchParams();
-  const { isPremium, purchaseRemoveAds } = usePurchase();
+  const { isPremium, purchaseRemoveAds, canPurchaseRemoveAds } = usePurchase();
   const { showInterstitial, canShowInterstitial } = useAds();
 
   // セッション結果をパラメータから復元
@@ -64,7 +64,7 @@ export default function LearningSessionResultRoute() {
     router.replace("/(tabs)/learning");
   };
 
-  // 広告削除購入
+  // 広告非表示購入
   const handlePurchaseRemoveAds = async () => {
     await purchaseRemoveAds();
   };
@@ -74,7 +74,9 @@ export default function LearningSessionResultRoute() {
       result={sessionResult}
       onNextSession={handleNextSession}
       onFinish={handleFinish}
-      onPurchaseRemoveAds={isPremium ? undefined : handlePurchaseRemoveAds}
+      onPurchaseRemoveAds={
+        !isPremium && canPurchaseRemoveAds ? handlePurchaseRemoveAds : undefined
+      }
     />
   );
 }
