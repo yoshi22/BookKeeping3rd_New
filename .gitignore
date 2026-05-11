@@ -77,3 +77,7 @@ ios/build-release-local-unsigned/
 
 # App Store review assets (local only)
 docs/appstore-response/
+
+# Google Play service account key (never commit)
+google-service-account.json
+*-service-account.json
